@@ -1,4 +1,5 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import * as _ from 'lodash'
 import {
   default as ChatMessage,
   ChatMessageProps,
@@ -7,12 +8,13 @@ import {
 import { ChatMessageVariables } from './chatMessageVariables'
 import { screenReaderContainerStyles } from '../../../../lib/accessibility/Styles/accessibilityStyles'
 import { pxToRem } from '../../../../lib'
+import getBorderFocusStyles from '../../getBorderFocusStyles'
 
-const chatMessageStyles: ComponentSlotStylesInput<
+const chatMessageStyles: ComponentSlotStylesPrepared<
   ChatMessageProps & ChatMessageState,
   ChatMessageVariables
 > = {
-  root: ({ props: p, variables: v }): ICSSInJSStyle => ({
+  root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
     display: 'inline-block',
     position: 'relative',
 
@@ -50,35 +52,61 @@ const chatMessageStyles: ComponentSlotStylesInput<
       },
     }),
 
-    ':focus': {
-      ...(p.isFromKeyboard && {
-        outline: `.2rem solid ${v.contentFocusOutlineColor}`,
-      }),
-    },
-    ':hover': {
-      [`& .${ChatMessage.slotClassNames.actionMenu}`]: {
-        opacity: 1,
-        width: 'auto',
+    ...getBorderFocusStyles({ siteVariables }),
+
+    // actions menu's appearance can be controlled by the value of showActionMenu variable - in this
+    // case this variable will serve the single source of truth on whether actions menu should be shown.
+    // Otherwise, if the variable is not provided, the default appearance logic will be used for actions menu.
+    ...(_.isNil(v.showActionMenu) && {
+      ':hover': {
+        [`> .${ChatMessage.slotClassNames.actionMenu}`]: {
+          opacity: 1,
+          width: 'auto',
+        },
       },
-    },
+    }),
+
+    ...(p.attached === true && {
+      [p.mine ? 'borderTopRightRadius' : 'borderTopLeftRadius']: 0,
+      [p.mine ? 'borderBottomRightRadius' : 'borderBottomLeftRadius']: 0,
+      paddingTop: pxToRem(5),
+      paddingBottom: pxToRem(7),
+    }),
+    ...(p.attached === 'top' && {
+      [p.mine ? 'borderBottomRightRadius' : 'borderBottomLeftRadius']: 0,
+    }),
+    ...(p.attached === 'bottom' && {
+      [p.mine ? 'borderTopRightRadius' : 'borderTopLeftRadius']: 0,
+      paddingTop: pxToRem(5),
+      paddingBottom: pxToRem(7),
+    }),
   }),
 
   actionMenu: ({ props: p, variables: v }): ICSSInJSStyle => ({
     backgroundColor: v.backgroundColor,
     borderRadius: v.borderRadius,
     boxShadow: v.actionMenuBoxShadow,
-    position: 'absolute',
-    right: v.actionMenuPositionRight,
-    top: v.actionMenuPositionTop,
-    overflow: p.focused ? 'visible' : 'hidden',
+    // we need higher zIndex for the action menu in order to be displayed above the focus border of the chat message
+    zIndex: 1000,
 
-    // hide and squash actions menu to prevent accidental hovers over its invisible area
-    opacity: p.focused ? 1 : 0,
-    width: p.focused ? 'auto' : 0,
+    ...(_.isNil(v.showActionMenu) && {
+      overflow: p.focused ? 'visible' : 'hidden',
+      // hide and squash actions menu to prevent accidental hovers over its invisible area
+      opacity: p.focused ? 1 : 0,
+      width: p.focused ? 'auto' : 0,
+    }),
+
+    ...(!_.isNil(v.showActionMenu) && {
+      overflow: v.showActionMenu ? 'visible' : 'hidden',
+      // opacity should always be preferred over visibility in order to avoid accessibility bugs in
+      // JAWS behavior on Windows
+      opacity: v.showActionMenu ? 1 : 0,
+      width: v.showActionMenu ? 'auto' : 0,
+    }),
   }),
-
   author: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    ...(p.mine && screenReaderContainerStyles),
+    ...((p.mine || p.attached === 'bottom' || p.attached === true) && screenReaderContainerStyles),
+    color: v.authorColor,
     marginRight: v.authorMarginRight,
     marginBottom: v.headerMarginBottom,
     fontWeight: v.authorFontWeight,
@@ -89,14 +117,20 @@ const chatMessageStyles: ComponentSlotStylesInput<
     ...(p.mine && {
       color: v.timestampColorMine,
     }),
+    ...((p.attached === 'bottom' || p.attached === true) &&
+      !p.reactionGroup &&
+      screenReaderContainerStyles),
   }),
 
   content: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    color: v.contentColor,
     display: 'block',
-    '& a:focus': {
+    '& a': {
       outline: 'none',
-      color: v.contentFocusOutlineColor,
-      textDecoration: 'underline',
+      color: p.mine ? v.linkColorMine : v.linkColor,
+      ':focus': {
+        textDecoration: 'underline',
+      },
     },
     ...(p.badge &&
       p.badgePosition === 'end' && {
@@ -106,7 +140,7 @@ const chatMessageStyles: ComponentSlotStylesInput<
   badge: ({ props: p, variables: v }) => {
     const sidePosition = p.badgePosition === 'start' ? 'left' : 'right'
     return {
-      backgroundColor: v.hasMention ? v.hasMentionColor : v.isImportantColor,
+      backgroundColor: v.hasMention ? v.hasMentionNubbinColor : v.isImportantColor,
       color: v.badgeTextColor,
       boxShadow: v.badgeShadow,
       position: 'absolute',
@@ -115,7 +149,7 @@ const chatMessageStyles: ComponentSlotStylesInput<
       width: 'auto',
       borderRadius: '50%',
       top: pxToRem(4),
-      zIndex: '1',
+      zIndex: 1,
       [sidePosition]: 0,
       transform: p.badgePosition === 'start' ? 'translateX(-50%)' : 'translateX(50%)',
     }

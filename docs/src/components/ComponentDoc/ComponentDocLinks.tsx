@@ -29,12 +29,7 @@ export default class ComponentDocLinks extends React.PureComponent<any, any> {
           <Icon name="github" />
           <code>
             <a
-              style={{
-                color: 'rgba(0,0,0,.4)',
-                ':hover, :focus': {
-                  color: 'rgba(0,0,0,.8)',
-                },
-              }}
+              style={{ color: 'rgba(0,0,0,.4)' }}
               href={`${constants.repoURL}/blob/master/${repoPath}`}
               target="_blank"
               rel="noopener noreferrer"

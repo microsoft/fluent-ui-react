@@ -10,10 +10,11 @@ import {
   commonPropTypes,
   ColorComponentProps,
   rtlTextContainer,
+  ShorthandFactory,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps } from '../../types'
+
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface HeaderDescriptionProps
   extends UIComponentProps,
@@ -22,16 +23,12 @@ export interface HeaderDescriptionProps
     ColorComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 }
 
-/**
- * A header's description provides more detailed information.
- */
-class HeaderDescription extends UIComponent<ReactProps<HeaderDescriptionProps>, any> {
-  static create: Function
+class HeaderDescription extends UIComponent<WithAsProp<HeaderDescriptionProps>, any> {
+  static create: ShorthandFactory<HeaderDescriptionProps>
 
   static className = 'ui-header__description'
 
@@ -42,7 +39,6 @@ class HeaderDescription extends UIComponent<ReactProps<HeaderDescriptionProps>, 
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior,
     as: 'p',
   }
 
@@ -66,4 +62,9 @@ HeaderDescription.create = createShorthandFactory({
   mappedProp: 'content',
 })
 
-export default HeaderDescription
+/**
+ * A HeaderDescription provides more detailed information about the Header.
+ */
+export default withSafeTypeForAs<typeof HeaderDescription, HeaderDescriptionProps, 'p'>(
+  HeaderDescription,
+)

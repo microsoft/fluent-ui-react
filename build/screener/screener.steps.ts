@@ -1,7 +1,7 @@
-import * as _ from 'lodash'
-import * as fs from 'fs'
-import * as Steps from 'screener-runner/src/steps'
-import * as keys from 'screener-runner/src/keys'
+import _ from 'lodash'
+import fs from 'fs'
+import Steps from 'screener-runner/src/steps'
+import keys from 'screener-runner/src/keys'
 
 const DEFAULT_THEMES: ScreenerThemes = ['teams']
 
@@ -13,7 +13,7 @@ Steps.prototype.switchTheme = function switchTheme(themeName: ScreenerThemeName)
   return this.executeScript(`window.switchTheme("${themeName}")`)
 }
 
-const getScreenerSteps = (stepsModulePath: string): any[] => {
+const getScreenerSteps = (pageUrl: string, stepsModulePath: string): any[] => {
   if (!fs.existsSync(`${stepsModulePath}.ts`)) {
     return undefined
   }
@@ -29,7 +29,9 @@ const getScreenerSteps = (stepsModulePath: string): any[] => {
 
     _.forEach(screenerSteps, screenerStep => {
       screenerStep(stepsBuilder, keys)
-      stepsBuilder.resetExternalLayout()
+
+      // We need to reload page to reset mouse position between tests
+      stepsBuilder.url(pageUrl).switchTheme(themeName)
     })
   })
 

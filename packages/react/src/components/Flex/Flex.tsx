@@ -2,13 +2,11 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { UIComponent, commonPropTypes } from '../../lib'
-import { ReactProps } from '../../types'
+import { UIComponent, commonPropTypes, UIComponentProps, ChildrenComponentProps } from '../../lib'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 import FlexItem from './FlexItem'
 
-export interface FlexProps {
-  [key: string]: any
-
+export interface FlexProps extends UIComponentProps, ChildrenComponentProps {
   /** Defines if container should be inline element. */
   inline?: boolean
 
@@ -40,10 +38,7 @@ export interface FlexProps {
   fill?: boolean
 }
 
-/**
- * Arrange group of items aligned towards common direction.
- */
-class Flex extends UIComponent<ReactProps<FlexProps>> {
+class Flex extends UIComponent<WithAsProp<FlexProps>> {
   static Item = FlexItem
 
   static displayName = 'Flex'
@@ -53,7 +48,7 @@ class Flex extends UIComponent<ReactProps<FlexProps>> {
     as: 'div',
   }
 
-  public static propTypes = {
+  static propTypes = {
     ...commonPropTypes.createCommon({
       accessibility: false,
       content: false,
@@ -101,4 +96,7 @@ class Flex extends UIComponent<ReactProps<FlexProps>> {
   }
 }
 
-export default Flex
+/**
+ * A Flex is a layout component that arranges group of items aligned towards common direction (either row or column).
+ */
+export default withSafeTypeForAs<typeof Flex, FlexProps>(Flex)

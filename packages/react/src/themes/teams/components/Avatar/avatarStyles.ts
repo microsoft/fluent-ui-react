@@ -1,5 +1,5 @@
 import { pxToRem } from '../../../../lib'
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { AvatarProps } from '../../../../components/Avatar/Avatar'
 
 const sizeToPxValue = {
@@ -12,12 +12,11 @@ const sizeToPxValue = {
   largest: 48,
 }
 
-const avatarStyles: ComponentSlotStylesInput<AvatarProps, any> = {
+const avatarStyles: ComponentSlotStylesPrepared<AvatarProps, any> = {
   root: ({ props: { size } }): ICSSInJSStyle => {
     const sizeInRem = pxToRem(sizeToPxValue[size])
 
     return {
-      boxSizing: 'border-box',
       position: 'relative',
       backgroundColor: 'inherit',
       display: 'inline-block',
@@ -27,7 +26,6 @@ const avatarStyles: ComponentSlotStylesInput<AvatarProps, any> = {
     }
   },
   image: ({ variables: v }): ICSSInJSStyle => ({
-    boxSizing: 'border-box',
     borderColor: v.avatarBorderColor,
     borderStyle: 'solid',
     borderWidth: `${v.avatarBorderWidth}px`,
@@ -40,7 +38,6 @@ const avatarStyles: ComponentSlotStylesInput<AvatarProps, any> = {
   label: ({ props: { size } }): ICSSInJSStyle => {
     const sizeInRem = pxToRem(sizeToPxValue[size])
     return {
-      boxSizing: 'border-box',
       display: 'inline-block',
       width: sizeInRem,
       height: sizeInRem,

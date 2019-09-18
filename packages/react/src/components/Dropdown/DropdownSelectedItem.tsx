@@ -1,23 +1,34 @@
+import { Ref } from '@stardust-ui/react-component-ref'
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
 import keyboardKey from 'keyboard-key'
-import { ComponentEventHandler, ShorthandValue, ReactProps } from '../../types'
+import {
+  ComponentEventHandler,
+  ShorthandValue,
+  WithAsProp,
+  ComponentKeyboardEventHandler,
+  withSafeTypeForAs,
+} from '../../types'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import {
-  customPropTypes,
   createShorthandFactory,
   UIComponent,
   RenderResultConfig,
   commonPropTypes,
+  ShorthandFactory,
 } from '../../lib'
-import { Image, Icon, Label } from '../..'
-import { IconProps } from '../Icon/Icon'
-import Ref from '../Ref/Ref'
+import Icon, { IconProps } from '../Icon/Icon'
+import Image, { ImageProps } from '../Image/Image'
+import Label from '../Label/Label'
+import Box, { BoxProps } from '../Box/Box'
 
 export interface DropdownSelectedItemSlotClassNames {
-  removeIcon: string
+  header: string
+  icon: string
+  image: string
 }
 
 export interface DropdownSelectedItemProps extends UIComponentProps<DropdownSelectedItemProps> {
@@ -25,13 +36,13 @@ export interface DropdownSelectedItemProps extends UIComponentProps<DropdownSele
   active?: boolean
 
   /** Header of the selected item. */
-  header?: string
+  header?: ShorthandValue<BoxProps>
 
   /** Icon of the selected item. */
-  icon?: ShorthandValue
+  icon?: ShorthandValue<IconProps>
 
   /** Image of the selected item. */
-  image?: ShorthandValue
+  image?: ShorthandValue<ImageProps>
 
   /**
    * Called on selected item click.
@@ -47,7 +58,7 @@ export interface DropdownSelectedItemProps extends UIComponentProps<DropdownSele
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props and proposed value.
    */
-  onKeyDown?: ComponentEventHandler<DropdownSelectedItemProps>
+  onKeyDown?: ComponentKeyboardEventHandler<DropdownSelectedItemProps>
 
   /**
    * Called when item is removed from the selection list.
@@ -58,15 +69,11 @@ export interface DropdownSelectedItemProps extends UIComponentProps<DropdownSele
   onRemove?: ComponentEventHandler<DropdownSelectedItemProps>
 }
 
-/**
- * A DropdownSelectedItem is a sub-component of a multiple selection Dropdown.
- * It is used to display selected item.
- */
-class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemProps>, any> {
-  private itemRef = React.createRef<HTMLElement>()
+class DropdownSelectedItem extends UIComponent<WithAsProp<DropdownSelectedItemProps>, any> {
+  itemRef = React.createRef<HTMLElement>()
 
   static displayName = 'DropdownSelectedItem'
-  static create: Function
+  static create: ShorthandFactory<DropdownSelectedItemProps>
   static slotClassNames: DropdownSelectedItemSlotClassNames
   static className = 'ui-dropdown__selecteditem'
 
@@ -76,9 +83,9 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
       children: false,
     }),
     active: PropTypes.bool,
-    header: PropTypes.string,
-    icon: customPropTypes.itemShorthand,
-    image: customPropTypes.itemShorthand,
+    header: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
+    image: customPropTypes.itemShorthandWithoutJSX,
     onClick: PropTypes.func,
     onKeyDown: PropTypes.func,
     onRemove: PropTypes.func,
@@ -94,15 +101,16 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
     }
   }
 
-  private handleClick = (e: React.SyntheticEvent) => {
+  handleClick = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  private handleKeyDown = (e: React.SyntheticEvent) => {
+  handleKeyDown = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onKeyDown', e, this.props)
   }
 
-  private handleIconOverrides = (predefinedProps: IconProps) => ({
+  handleIconOverrides = props => (predefinedProps: IconProps) => ({
+    ...props,
     onClick: (e: React.SyntheticEvent, iconProps: IconProps) => {
       e.stopPropagation()
       _.invoke(this.props, 'onRemove', e, this.props)
@@ -117,36 +125,59 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
     },
   })
 
-  public renderComponent({
+  renderComponent({
     unhandledProps,
+    classes,
     styles,
   }: RenderResultConfig<DropdownSelectedItemProps>) {
     const { active, header, icon, image } = this.props
 
-    const iconElement = Icon.create(icon, {
+    const contentElement = Box.create(header, {
       defaultProps: {
-        'aria-label': `Remove ${header} from selection.`, // TODO: Extract this in a behaviour.
-        className: DropdownSelectedItem.slotClassNames.removeIcon,
-      },
-      overrideProps: this.handleIconOverrides,
-    })
-    const imageElement = Image.create(image, {
-      defaultProps: {
-        avatar: true,
+        as: 'span',
+        className: DropdownSelectedItem.slotClassNames.header,
+        styles: styles.header,
       },
     })
+    const renderIcon = _.isNil(icon)
+      ? icon
+      : render =>
+          render(icon, (ComponentType, props) =>
+            Icon.create(icon, {
+              defaultProps: {
+                'aria-label': `Remove ${header} from selection.`, // TODO: Extract this in a behaviour.
+                className: DropdownSelectedItem.slotClassNames.icon,
+                styles: styles.icon,
+              },
+              overrideProps: this.handleIconOverrides(props),
+            }),
+          )
+    const renderImage = _.isNil(image)
+      ? image
+      : render =>
+          render(image, (ComponentType, props) =>
+            Image.create(image, {
+              defaultProps: {
+                avatar: true,
+                className: DropdownSelectedItem.slotClassNames.image,
+                styles: styles.image,
+              },
+              overrideProps: props,
+            }),
+          )
 
     return (
       <Ref innerRef={this.itemRef}>
         <Label
+          className={classes.root}
           tabIndex={active ? 0 : -1}
           styles={styles.root}
           circular
           onClick={this.handleClick}
           onKeyDown={this.handleKeyDown}
-          content={header}
-          icon={iconElement}
-          image={imageElement}
+          content={contentElement}
+          icon={renderIcon}
+          image={renderImage}
           {...unhandledProps}
         />
       </Ref>
@@ -155,7 +186,9 @@ class DropdownSelectedItem extends UIComponent<ReactProps<DropdownSelectedItemPr
 }
 
 DropdownSelectedItem.slotClassNames = {
-  removeIcon: `${DropdownSelectedItem.className}__remove-icon`,
+  header: `${DropdownSelectedItem.className}__header`,
+  icon: `${DropdownSelectedItem.className}__icon`,
+  image: `${DropdownSelectedItem.className}__image`,
 }
 
 DropdownSelectedItem.create = createShorthandFactory({
@@ -163,4 +196,9 @@ DropdownSelectedItem.create = createShorthandFactory({
   mappedProp: 'header',
 })
 
-export default DropdownSelectedItem
+/**
+ * A DropdownSelectedItem represents a selected item of 'multiple-selection' Dropdown.
+ */
+export default withSafeTypeForAs<typeof DropdownSelectedItem, DropdownSelectedItemProps>(
+  DropdownSelectedItem,
+)

@@ -1,29 +1,26 @@
+import { Ref } from '@stardust-ui/react-component-ref'
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
 import {
-  customPropTypes,
   AutoControlledComponent,
   createShorthandFactory,
-  isFromKeyboard,
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
   applyAccessibilityKeyHandlers,
+  ShorthandFactory,
 } from '../../lib'
-import Box from '../Box/Box'
-import { ComponentEventHandler, ReactProps, ShorthandValue } from '../../types'
-import Icon from '../Icon/Icon'
-import Ref from '../Ref/Ref'
+import Box, { BoxProps } from '../Box/Box'
+import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
+import Icon, { IconProps } from '../Icon/Icon'
 import { Accessibility } from '../../lib/accessibility/types'
 import { radioGroupItemBehavior } from '../../lib/accessibility'
 
 export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default radioGroupItemBehavior
-   * */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Whether or not radio item is checked. */
@@ -37,7 +34,7 @@ export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponent
   checkedChanged?: ComponentEventHandler<RadioGroupItemProps>
 
   /** The label of the radio item. */
-  label?: ShorthandValue
+  label?: ShorthandValue<BoxProps>
 
   /** Initial checked value. */
   defaultChecked?: boolean
@@ -46,17 +43,10 @@ export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponent
   disabled?: boolean
 
   /** The radio item indicator can be user-defined icon */
-  icon?: ShorthandValue
+  icon?: ShorthandValue<IconProps>
 
   /** The HTML input name. */
   name?: string
-
-  /**
-   * Called after radio item blurs.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
-   */
-  onBlur?: ComponentEventHandler<RadioGroupItemProps>
 
   /**
    * Called after radio item is clicked.
@@ -64,13 +54,6 @@ export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponent
    * @param {object} data - All props.
    */
   onClick?: ComponentEventHandler<RadioGroupItemProps>
-
-  /**
-   * Called after radio item gets focus.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
-   */
-  onFocus?: ComponentEventHandler<RadioGroupItemProps>
 
   /** Whether should focus when checked */
   shouldFocus?: boolean // TODO: RFC #306
@@ -84,21 +67,15 @@ export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponent
 
 export interface RadioGroupItemState {
   checked: boolean
-  isFromKeyboard: boolean
 }
 
-/**
- * A single radio within a radio group.
- * @accessibility
- * Radio items need to be grouped in RadioGroup component to correctly handle accessibility.
- */
 class RadioGroupItem extends AutoControlledComponent<
-  ReactProps<RadioGroupItemProps>,
+  WithAsProp<RadioGroupItemProps>,
   RadioGroupItemState
 > {
-  private elementRef = React.createRef<HTMLElement>()
+  elementRef = React.createRef<HTMLElement>()
 
-  static create: Function
+  static create: ShorthandFactory<RadioGroupItemProps>
 
   static displayName = 'RadioGroupItem'
 
@@ -111,12 +88,10 @@ class RadioGroupItem extends AutoControlledComponent<
     checked: PropTypes.bool,
     defaultChecked: PropTypes.bool,
     disabled: PropTypes.bool,
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     label: customPropTypes.itemShorthand,
     name: PropTypes.string,
-    onBlur: PropTypes.func,
     onClick: PropTypes.func,
-    onFocus: PropTypes.func,
     checkedChanged: PropTypes.func,
     shouldFocus: PropTypes.bool,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -130,6 +105,17 @@ class RadioGroupItem extends AutoControlledComponent<
 
   static autoControlledProps = ['checked']
 
+  actionHandlers = {
+    performClick: e => {
+      e.preventDefault()
+      this.handleClick(e)
+    },
+  }
+
+  handleClick = e => {
+    _.invoke(this.props, 'onClick', e, this.props)
+  }
+
   componentDidUpdate(prevProps, prevState) {
     const checked = this.state.checked
     if (checked !== prevState.checked) {
@@ -138,39 +124,21 @@ class RadioGroupItem extends AutoControlledComponent<
     }
   }
 
-  handleFocus = (e: React.SyntheticEvent) => {
-    this.setState({ isFromKeyboard: isFromKeyboard() })
-    _.invoke(this.props, 'onFocus', e, this.props)
-  }
-
-  handleBlur = (e: React.SyntheticEvent) => {
-    this.setState({ isFromKeyboard: false })
-    _.invoke(this.props, 'onBlur', e, this.props)
-  }
-
-  handleClick = e => {
-    _.invoke(this.props, 'onClick', e, this.props)
-  }
-
   renderComponent({ ElementType, classes, unhandledProps, styles, accessibility }) {
     const { label, icon } = this.props
 
     return (
       <Ref innerRef={this.elementRef}>
         <ElementType
-          onFocus={this.handleFocus}
-          onBlur={this.handleBlur}
           onClick={this.handleClick}
           className={classes.root}
           {...accessibility.attributes.root}
           {...unhandledProps}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         >
-          {Icon.create(icon || '', {
+          {Icon.create(icon || 'stardust-circle', {
             defaultProps: {
-              circular: true,
-              bordered: true,
-              size: 'smaller',
+              size: 'small',
               styles: styles.icon,
             },
           })}
@@ -187,4 +155,10 @@ class RadioGroupItem extends AutoControlledComponent<
 
 RadioGroupItem.create = createShorthandFactory({ Component: RadioGroupItem, mappedProp: 'label' })
 
-export default RadioGroupItem
+/**
+ * A RadioGroupItem represents single input element within a RadioGroup.
+ *
+ * @accessibility
+ * Radio items need to be grouped to correctly handle accessibility.
+ */
+export default withSafeTypeForAs<typeof RadioGroupItem, RadioGroupItemProps>(RadioGroupItem)

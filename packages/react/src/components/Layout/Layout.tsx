@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 import cx from 'classnames'
 
 import { UIComponent, UIComponentProps, commonPropTypes, rtlTextContainer } from '../../lib'
-import { ReactProps } from '../../types'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 import { ICSSInJSStyle } from '../../themes/types'
 
 export interface LayoutSlotClassNames {
@@ -43,16 +43,10 @@ export interface LayoutProps extends UIComponentProps {
   reducing?: boolean
   /** A layout can render its content directly if only one piece of content exists. */
   disappearing?: boolean
-  truncateStart?: boolean
-  truncateMain?: boolean
-  truncateEnd?: boolean
   vertical?: boolean
 }
 
-/**
- * A layout is a utility for arranging the content of a component.
- */
-class Layout extends UIComponent<ReactProps<LayoutProps>, any> {
+class Layout extends UIComponent<WithAsProp<LayoutProps>, any> {
   static className = 'ui-layout'
 
   static displayName = 'Layout'
@@ -93,10 +87,6 @@ class Layout extends UIComponent<ReactProps<LayoutProps>, any> {
     gap: PropTypes.string,
     reducing: PropTypes.bool,
     disappearing: PropTypes.bool,
-
-    truncateStart: PropTypes.bool,
-    truncateMain: PropTypes.bool,
-    truncateEnd: PropTypes.bool,
 
     vertical: PropTypes.bool,
   }
@@ -165,7 +155,7 @@ class Layout extends UIComponent<ReactProps<LayoutProps>, any> {
       renderMainArea,
       renderEndArea,
       renderGap,
-    } = this.props as LayoutPropsWithDefaults
+    } = this.props
 
     const startArea = renderStartArea({ ...this.props, classes })
     const mainArea = renderMainArea({ ...this.props, classes })
@@ -219,5 +209,7 @@ Layout.slotClassNames = {
   reducedEnd: `${Layout.className}--reduced__end`,
 }
 
-export default Layout
-export type LayoutPropsWithDefaults = LayoutProps & typeof Layout.defaultProps
+/**
+ * (DEPRECATED) A layout is a utility for arranging the content of a component.
+ */
+export default withSafeTypeForAs<typeof Layout, LayoutProps>(Layout)

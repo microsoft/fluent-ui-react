@@ -1,11 +1,16 @@
-import { createRenderer } from 'fela'
-import felaSanitizeCss from './felaSanitizeCssPlugin'
+import { createRenderer as createFelaRenderer } from 'fela'
+import felaPluginEmbedded from 'fela-plugin-embedded'
 import felaPluginFallbackValue from 'fela-plugin-fallback-value'
 import felaPluginPlaceholderPrefixer from 'fela-plugin-placeholder-prefixer'
 import felaPluginPrefixer from 'fela-plugin-prefixer'
-import rtl from 'fela-plugin-rtl'
+import felaPluginRtl from 'fela-plugin-rtl'
 
 import { Renderer } from '../themes/types'
+import felaDisableAnimationsPlugin from './felaDisableAnimationsPlugin'
+import felaExpandCssShorthandsPlugin from './felaExpandCssShorthandsPlugin'
+import felaFocusVisibleEnhancer from './felaFocusVisibleEnhancer'
+import felaInvokeKeyframesPlugin from './felaInvokeKeyframesPlugin'
+import felaSanitizeCss from './felaSanitizeCssPlugin'
 
 let felaDevMode = false
 
@@ -15,14 +20,16 @@ try {
 
 if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
   if (felaDevMode) {
+    /* eslint-disable-next-line no-console */
     console.warn(
       [
         '@stardust-ui/react:',
         'You are running Fela in development mode and this can cause performance degrades.',
-        'To disable it please paste `window.localStorage.felaDevMode = false` to your browsers console and reload current page.',
+        'To disable it please paste `delete window.localStorage.felaDevMode` to your browsers console and reload current page.',
       ].join(' '),
     )
   } else {
+    /* eslint-disable-next-line no-console */
     console.warn(
       [
         '@stardust-ui/react:',
@@ -41,35 +48,34 @@ const blacklistedClassNames = ['fa', 'fas', 'far', 'fal', 'fab']
 const filterClassName = (className: string): boolean =>
   className.indexOf('ad') === -1 && blacklistedClassNames.indexOf(className) === -1
 
-const createRendererConfig = (options: any = {}) => ({
+const rendererConfig = {
   devMode: felaDevMode,
+  filterClassName,
+  enhancers: [felaFocusVisibleEnhancer],
   plugins: [
+    felaDisableAnimationsPlugin(),
+
     // is necessary to prevent accidental style typos
     // from breaking ALL the styles on the page
     felaSanitizeCss({
-      skip: ['content'],
+      skip: ['content', 'keyframe'],
     }),
 
     felaPluginPlaceholderPrefixer(),
+    felaInvokeKeyframesPlugin(),
+    felaPluginEmbedded(),
     felaPluginPrefixer(),
 
     // Heads up!
     // This is required after fela-plugin-prefixer to resolve the array of fallback values prefixer produces.
     felaPluginFallbackValue(),
-    ...(options.isRtl ? [rtl()] : []),
+
+    felaExpandCssShorthandsPlugin(),
+
+    felaPluginRtl(),
   ],
-  filterClassName,
-  enhancers: [],
-  ...(options.isRtl ? { selectorPrefix: 'rtl_' } : {}),
-  ...(options.rendererId ? { rendererId: options.rendererId } : {}),
-})
+}
 
-// TODO: { rendererId: 'default' } is a temporary workaround for https://github.com/stardust-ui/react/issues/948#issuecomment-466404630
-export const felaRenderer: Renderer = createRenderer(
-  createRendererConfig({ rendererId: 'default' }),
-)
-export const felaRtlRenderer: Renderer = createRenderer(
-  createRendererConfig({ isRtl: true, rendererId: 'rtl' }),
-)
+export const createRenderer = (): Renderer => createFelaRenderer(rendererConfig)
 
-export default felaRenderer
+export const felaRenderer = createRenderer()

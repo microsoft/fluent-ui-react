@@ -1,39 +1,38 @@
 import * as React from 'react'
-import LabelledButton from './ComponentButton'
+import ComponentButton from './ComponentButton'
 import * as _ from 'lodash'
 
 export default class ComponentControlsCopyLink extends React.Component<any, any> {
-  private mounted: boolean
-  private readonly btnLabel = 'Permalink'
+  mounted: boolean
+  readonly btnLabel = 'Permalink'
 
-  public state: any = {}
+  state: any = {}
 
-  public shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps, nextState) {
     return this.state.active !== nextState.active
   }
 
-  public componentDidMount() {
+  componentDidMount() {
     this.mounted = true
   }
 
-  public componentWillUnmount() {
+  componentWillUnmount() {
     this.mounted = false
   }
 
-  public render() {
+  render() {
     const { active } = this.state
 
     return (
-      <LabelledButton
+      <ComponentButton
         iconName="linkify"
         label={active ? 'Copied!' : this.btnLabel}
-        active={active}
         onClick={this.handleClick}
       />
     )
   }
 
-  private handleClick = e => {
+  handleClick = e => {
     e.preventDefault()
     _.invoke(this.props, 'onClick', e, this.props)
 
@@ -41,5 +40,5 @@ export default class ComponentControlsCopyLink extends React.Component<any, any>
     setTimeout(this.resetActive, 3000)
   }
 
-  private resetActive = () => this.mounted && this.setState({ active: false })
+  resetActive = () => this.mounted && this.setState({ active: false })
 }

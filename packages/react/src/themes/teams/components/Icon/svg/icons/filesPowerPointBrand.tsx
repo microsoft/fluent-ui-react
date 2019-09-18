@@ -13,9 +13,9 @@ export default {
           y2="30.87"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#fff" stop-opacity="0" />
-          <stop offset="0.86" stop-color="#5e5e5e" stop-opacity="0.06" />
-          <stop offset="1" stop-opacity="0.1" />
+          <stop offset="0" stopColor="#fff" stopOpacity="0" />
+          <stop offset="0.86" stopColor="#5e5e5e" stopOpacity="0.06" />
+          <stop offset="1" stopOpacity="0.1" />
         </linearGradient>
         <linearGradient
           id="linear-gradient-2"
@@ -25,13 +25,13 @@ export default {
           y2="5.14"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#fff" stop-opacity="0" />
-          <stop offset="0.45" stop-color="#fff" stop-opacity="0.01" />
-          <stop offset="0.64" stop-color="#fff" stop-opacity="0.04" />
-          <stop offset="0.78" stop-color="#fff" stop-opacity="0.08" />
-          <stop offset="0.89" stop-color="#fff" stop-opacity="0.15" />
-          <stop offset="0.99" stop-color="#fff" stop-opacity="0.24" />
-          <stop offset="1" stop-color="#fff" stop-opacity="0.25" />
+          <stop offset="0" stopColor="#fff" stopOpacity="0" />
+          <stop offset="0.45" stopColor="#fff" stopOpacity="0.01" />
+          <stop offset="0.64" stopColor="#fff" stopOpacity="0.04" />
+          <stop offset="0.78" stopColor="#fff" stopOpacity="0.08" />
+          <stop offset="0.89" stopColor="#fff" stopOpacity="0.15" />
+          <stop offset="0.99" stopColor="#fff" stopOpacity="0.24" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0.25" />
         </linearGradient>
         <linearGradient
           id="linear-gradient-3"
@@ -41,12 +41,12 @@ export default {
           y2="9.53"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#fff" stop-opacity="0" />
-          <stop offset="0.53" stop-color="#fff" stop-opacity="0.01" />
-          <stop offset="0.72" stop-color="#fff" stop-opacity="0.03" />
-          <stop offset="0.85" stop-color="#fff" stop-opacity="0.08" />
-          <stop offset="0.96" stop-color="#fff" stop-opacity="0.15" />
-          <stop offset="1" stop-color="#fff" stop-opacity="0.18" />
+          <stop offset="0" stopColor="#fff" stopOpacity="0" />
+          <stop offset="0.53" stopColor="#fff" stopOpacity="0.01" />
+          <stop offset="0.72" stopColor="#fff" stopOpacity="0.03" />
+          <stop offset="0.85" stopColor="#fff" stopOpacity="0.08" />
+          <stop offset="0.96" stopColor="#fff" stopOpacity="0.15" />
+          <stop offset="1" stopColor="#fff" stopOpacity="0.18" />
         </linearGradient>
         <linearGradient
           id="linear-gradient-4"
@@ -56,9 +56,9 @@ export default {
           y2="26.21"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#828282" stop-opacity="0" />
-          <stop offset="0.86" stop-color="#303030" stop-opacity="0.13" />
-          <stop offset="1" stop-opacity="0.2" />
+          <stop offset="0" stopColor="#828282" stopOpacity="0" />
+          <stop offset="0.86" stopColor="#303030" stopOpacity="0.13" />
+          <stop offset="1" stopOpacity="0.2" />
         </linearGradient>
         <linearGradient
           id="linear-gradient-5"
@@ -68,9 +68,9 @@ export default {
           y2="9.06"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0" stop-color="#828282" stop-opacity="0" />
-          <stop offset="0.86" stop-color="#303030" stop-opacity="0.06" />
-          <stop offset="1" stop-opacity="0.1" />
+          <stop offset="0" stopColor="#828282" stopOpacity="0" />
+          <stop offset="0.86" stopColor="#303030" stopOpacity="0.06" />
+          <stop offset="1" stopOpacity="0.1" />
         </linearGradient>
       </defs>
       <g>

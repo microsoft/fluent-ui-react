@@ -1,7 +1,62 @@
 import * as CSSType from 'csstype'
 import { IRenderer as FelaRenderer } from 'fela'
 import * as React from 'react'
-import { Extendable, ObjectOf, ObjectOrFunc } from '../types'
+import { Extendable, ObjectOf, ObjectOrFunc, Omit } from '../types'
+import { AccordionContentProps } from '../components/Accordion/AccordionContent'
+import { AccordionProps } from '../components/Accordion/Accordion'
+import { AccordionTitleProps } from '../components/Accordion/AccordionTitle'
+import { AlertProps } from '../components/Alert/Alert'
+import { AnimationProps } from '../components/Animation/Animation'
+import { AttachmentProps } from '../components/Attachment/Attachment'
+import { AvatarProps } from '../components/Avatar/Avatar'
+import { ButtonGroupProps } from '../components/Button/ButtonGroup'
+import { ButtonProps } from '../components/Button/Button'
+import { ChatItemProps } from '../components/Chat/ChatItem'
+import { ChatMessageProps } from '../components/Chat/ChatMessage'
+import { ChatProps } from '../components/Chat/Chat'
+import { CheckboxProps } from '../components/Checkbox/Checkbox'
+import { DividerProps } from '../components/Divider/Divider'
+import { DropdownProps } from '../components/Dropdown/Dropdown'
+import { EmbedProps } from '../components/Embed/Embed'
+import { FlexItemProps } from '../components/Flex/FlexItem'
+import { FlexProps } from '../components/Flex/Flex'
+import { FormFieldProps } from '../components/Form/FormField'
+import { FormProps } from '../components/Form/Form'
+import { GridProps } from '../components/Grid/Grid'
+import { HeaderDescriptionProps } from '../components/Header/HeaderDescription'
+import { HeaderProps } from '../components/Header/Header'
+import { IconProps } from '../components/Icon/Icon'
+import { ImageProps } from '../components/Image/Image'
+import { InputProps } from '../components/Input/Input'
+import { ItemLayoutProps } from '../components/ItemLayout/ItemLayout'
+import { LabelProps } from '../components/Label/Label'
+import { LayoutProps } from '../components/Layout/Layout'
+import { ListItemProps } from '../components/List/ListItem'
+import { ListProps } from '../components/List/List'
+import { LoaderProps } from '../components/Loader/Loader'
+import { MenuItemProps } from '../components/Menu/MenuItem'
+import { MenuProps } from '../components/Menu/Menu'
+import { PopupContentProps } from '../components/Popup/PopupContent'
+import { PopupProps } from '../components/Popup/Popup'
+import { PortalProps } from '../components/Portal/Portal'
+import { RadioGroupItemProps } from '../components/RadioGroup/RadioGroupItem'
+import { RadioGroupProps } from '../components/RadioGroup/RadioGroup'
+import { ReactionGroupProps } from '../components/Reaction/ReactionGroup'
+import { ReactionProps } from '../components/Reaction/Reaction'
+import { SegmentProps } from '../components/Segment/Segment'
+import { SliderProps } from '../components/Slider/Slider'
+import { StatusProps } from '../components/Status/Status'
+import { TextProps } from '../components/Text/Text'
+import { ToolbarDividerProps } from '../components/Toolbar/ToolbarDivider'
+import { ToolbarItemProps } from '../components/Toolbar/ToolbarItem'
+import { ToolbarProps } from '../components/Toolbar/Toolbar'
+import { ToolbarRadioGroupProps } from '../components/Toolbar/ToolbarRadioGroup'
+import { TooltipContentProps } from '../components/Tooltip/TooltipContent'
+import { TooltipProps } from '../components/Tooltip/Tooltip'
+import { HierarchicalTreeItemProps } from '../components/HierarchicalTree/HierarchicalTreeItem'
+import { HierarchicalTreeProps } from '../components/HierarchicalTree/HierarchicalTree'
+import { HierarchicalTreeTitleProps } from '../components/HierarchicalTree/HierarchicalTreeTitle'
+import { VideoProps } from '../components/Video/Video'
 
 // Themes go through 3 phases.
 // 1. Input - (from the user), variable and style objects/functions, some values optional
@@ -17,19 +72,29 @@ import { Extendable, ObjectOf, ObjectOrFunc } from '../types'
 /**
  * A type for a palette for a single color.
  */
-export type ColorVariants = {
-  50: string
-  100: string
-  200: string
-  300: string
-  400: string
-  500: string
-  600: string
-  700: string
-  800: string
-  900: string
-}
-
+export type ColorVariants = Extendable<
+  Partial<{
+    50: string
+    100: string
+    150: string
+    200: string
+    250: string
+    300: string
+    350: string
+    400: string
+    450: string
+    500: string
+    550: string
+    600: string
+    650: string
+    700: string
+    750: string
+    800: string
+    850: string
+    900: string
+  }>,
+  string
+>
 /**
  * A type for a predefined natural colors.
  */
@@ -53,6 +118,7 @@ export type NaturalColors = Extendable<NaturalColorsStrict, ColorVariants>
 export type ContextualColorsStrict = Partial<{
   text: ColorVariants
 
+  brand: ColorVariants
   danger: ColorVariants
   info: ColorVariants
   success: ColorVariants
@@ -79,7 +145,10 @@ export type ColorNames = keyof (EmphasisColorsStrict & NaturalColorsStrict)
 /**
  * A type for an extendable set of ColorNames properties of type T
  */
-export type ColorValues<T> = Extendable<Partial<Record<ColorNames, T>>, T>
+export type ColorValues<T, Colors extends string | number | symbol = ColorNames> = Extendable<
+  Partial<Record<Colors, T>>,
+  T
+>
 
 /**
  * A type for a base colors.
@@ -92,21 +161,74 @@ export type PrimitiveColors = Partial<{
 type ExtendablePalette<T> = T &
   { [K in keyof T]?: K extends keyof PrimitiveColors ? string : ColorVariants }
 
-export type ColorPalette = ExtendablePalette<
-  EmphasisColorsStrict & ContextualColorsStrict & NaturalColorsStrict & PrimitiveColors
+export type ColorPalette<T = {}> = ExtendablePalette<
+  EmphasisColorsStrict & ContextualColorsStrict & NaturalColorsStrict & PrimitiveColors & T
 >
+
+/**
+ * A type for all area names that can define color
+ */
+export type ComponentAreaName =
+  | 'foreground'
+  | 'background'
+  | 'border'
+  | 'shadow'
+  | 'foregroundHover'
+  | 'backgroundHover'
+  | 'borderHover'
+  | 'shadowHover'
+  | 'foregroundActive'
+  | 'backgroundActive'
+  | 'borderActive'
+  | 'shadowActive'
+  | 'foregroundFocus'
+  | 'backgroundFocus'
+  | 'borderFocus'
+  | 'shadowFocus'
+  | 'foregroundPressed'
+  | 'backgroundPressed'
+  | 'borderPressed'
+  | 'shadowPressed'
+  | 'foregroundDisabled'
+  | 'backgroundDisabled'
+  | 'borderDisabled'
+  | 'shadowDisabled'
 
 /**
  * A type for the generic color scheme of a component based on CSS property names
  */
-export type ColorScheme = {
-  foreground: string
-  background: string
-  border: string
-  shadow: string
+export type ColorScheme<T extends string | number | symbol = ComponentAreaName> = Extendable<
+  Record<T, string>,
+  string
+>
+
+export type ColorSchemeMapping<
+  Scheme = ColorScheme,
+  Colors extends string | number | symbol = ColorNames
+> = ColorValues<Extendable<Scheme, string>, Colors> & {
+  default?: Extendable<Scheme, string>
 }
 
-export type ColorSchemeMapping = ColorValues<ColorScheme> & { default?: ColorScheme }
+export type StrictColorScheme<T extends string | number | symbol = ComponentAreaName> = Record<
+  T,
+  string
+>
+
+export type StrictColorSchemeMapping<
+  Scheme = StrictColorScheme,
+  Colors extends string | number | symbol = ColorNames
+> = ColorValues<Scheme, Colors> & {
+  default?: Scheme
+}
+
+export type ColorSchemeMappingOverrides<
+  Scheme = ColorScheme,
+  Colors extends string | number | symbol = ColorNames
+> = ColorValues<Partial<Extendable<Scheme, string>>, Colors> & {
+  default?: Partial<Extendable<ColorScheme, string>>
+}
+
+export type ItemType<T> = T extends (infer TItem)[] ? TItem : never
 
 // ========================================================
 // Props
@@ -127,14 +249,7 @@ export type State = ObjectOf<any>
 // Variables
 // ========================================================
 
-export interface SiteVariablesInput extends ObjectOf<any> {
-  colors?: ColorPalette
-  colorScheme?: ColorSchemeMapping
-  contextualColors?: ContextualColors
-  emphasisColors?: EmphasisColors
-  naturalColors?: NaturalColorsStrict
-  htmlFontSize?: string
-}
+export interface SiteVariablesInput extends ObjectOf<any> {}
 
 export interface SiteVariablesPrepared extends SiteVariablesInput {
   fontSizes: ObjectOf<string>
@@ -144,9 +259,10 @@ export type ComponentVariablesObject = any
 
 export type ComponentVariablesPrepared = (
   siteVariables?: SiteVariablesPrepared,
-  props?: any,
+  props?: any, // TODO: REMOVE THIS CRUFT
 ) => ComponentVariablesObject
 
+// TODO: Make this generic
 export type ComponentVariablesInput = ComponentVariablesObject | ComponentVariablesPrepared
 
 // ========================================================
@@ -157,7 +273,18 @@ export interface ICSSPseudoElementStyle extends ICSSInJSStyle {
   content?: string
 }
 
-export interface ICSSInJSStyle extends React.CSSProperties {
+type AnimationKeyFrame = Record<'from' | 'to' | string, ICSSInJSStyle>
+
+export interface StardustAnimationName<P = Record<string, any>> {
+  keyframe?: AnimationKeyFrame | ((params: P) => AnimationKeyFrame)
+  params?: P
+}
+
+export type CSSProperties = Omit<React.CSSProperties, 'animationName'> & {
+  animationName?: StardustAnimationName | AnimationKeyFrame | string | 'none'
+}
+
+export interface ICSSInJSStyle extends CSSProperties {
   // TODO Questionable: how else would users target their own children?
   [key: string]: any
 
@@ -193,15 +320,48 @@ export interface ComponentStyleFunctionParam<
   TProps extends PropsWithVarsAndStyles = PropsWithVarsAndStyles,
   TVars extends ComponentVariablesObject = ComponentVariablesObject
 > {
+  displayName: string
   props: State & TProps
   variables: TVars
   theme: ThemePrepared
-  colors: Partial<ColorScheme>
+  rtl: boolean
+  disableAnimations: boolean
 }
 
-export type ComponentSlotStyleFunction<TProps = {}, TVars = {}> = ((
+// Heads Up!
+// Keep in sync with packages/react-proptypes/src/index.ts
+export type ComponentDesign = {
+  display?: ICSSInJSStyle['display']
+  position?: ICSSInJSStyle['position']
+
+  top?: ICSSInJSStyle['top']
+  bottom?: ICSSInJSStyle['bottom']
+  left?: ICSSInJSStyle['left']
+  right?: ICSSInJSStyle['right']
+
+  padding?: ICSSInJSStyle['padding']
+  paddingTop?: ICSSInJSStyle['paddingTop']
+  paddingRight?: ICSSInJSStyle['paddingRight']
+  paddingBottom?: ICSSInJSStyle['paddingBottom']
+  paddingLeft?: ICSSInJSStyle['paddingLeft']
+
+  margin?: ICSSInJSStyle['margin']
+  marginTop?: ICSSInJSStyle['marginTop']
+  marginRight?: ICSSInJSStyle['marginRight']
+  marginBottom?: ICSSInJSStyle['marginBottom']
+  marginLeft?: ICSSInJSStyle['marginLeft']
+
+  width?: ICSSInJSStyle['width']
+  height?: ICSSInJSStyle['height']
+  minWidth?: ICSSInJSStyle['minWidth']
+  maxWidth?: ICSSInJSStyle['maxWidth']
+  minHeight?: ICSSInJSStyle['minHeight']
+  maxHeight?: ICSSInJSStyle['maxHeight']
+}
+
+export type ComponentSlotStyleFunction<TProps = {}, TVars = {}> = (
   styleParam?: ComponentStyleFunctionParam<TProps, TVars>,
-) => ICSSInJSStyle)
+) => ICSSInJSStyle
 
 export type ComponentSlotStyle<TProps = {}, TVars = {}> =
   | ComponentSlotStyleFunction<TProps, TVars>
@@ -213,7 +373,6 @@ export interface ComponentSlotStylesInput<TProps = {}, TVars = {}>
 export interface ComponentSlotStylesPrepared<TProps = {}, TVars = {}>
   extends ObjectOf<ComponentSlotStyleFunction<TProps, TVars>> {}
 
-export interface ComponentSlotClasses extends ObjectOf<string> {}
 export interface ComponentSlotClasses extends ObjectOf<string> {}
 
 export type AnimationProp =
@@ -262,8 +421,6 @@ export interface ThemeInput {
   siteVariables?: SiteVariablesInput
   componentVariables?: ThemeComponentVariablesInput
   componentStyles?: ThemeComponentStylesInput
-  rtl?: boolean
-  renderer?: Renderer
   fontFaces?: FontFaces
   staticStyles?: StaticStyles
   icons?: ThemeIcons
@@ -283,184 +440,88 @@ export interface ThemePrepared {
   componentVariables: { [key in keyof ThemeComponentVariablesPrepared]: ComponentVariablesPrepared }
   componentStyles: { [key in keyof ThemeComponentStylesPrepared]: ComponentSlotStylesPrepared }
   icons: ThemeIcons
-  rtl: boolean
-  renderer: Renderer
   fontFaces: FontFaces
   staticStyles: StaticStyles
   animations: { [key: string]: ThemeAnimation }
 }
 
-export interface ThemeComponentStylesInput {
-  [key: string]: ComponentSlotStylesInput | undefined
-
-  Accordion?: ComponentSlotStylesInput
-  Alert?: ComponentSlotStylesInput
-  Animation?: ComponentSlotStylesInput
-  Attachment?: ComponentSlotStylesInput
-  Avatar?: ComponentSlotStylesInput
-  Button?: ComponentSlotStylesInput
-  ButtonGroup?: ComponentSlotStylesInput
-  Chat?: ComponentSlotStylesInput
-  ChatItem?: ComponentSlotStylesInput
-  ChatMessage?: ComponentSlotStylesInput
-  Divider?: ComponentSlotStylesInput
-  Dropdown?: ComponentSlotStylesInput
-  DropdownItem?: ComponentSlotStylesInput
-  DropdownSearchInput?: ComponentSlotStylesInput
-  Form?: ComponentSlotStylesInput
-  FormField?: ComponentSlotStylesInput
-  Grid?: ComponentSlotStylesInput
-  Header?: ComponentSlotStylesInput
-  HeaderDescription?: ComponentSlotStylesInput
-  Icon?: ComponentSlotStylesInput
-  Image?: ComponentSlotStylesInput
-  Input?: ComponentSlotStylesInput
-  ItemLayout?: ComponentSlotStylesInput
-  Label?: ComponentSlotStylesInput
-  Layout?: ComponentSlotStylesInput
-  List?: ComponentSlotStylesInput
-  ListItem?: ComponentSlotStylesInput
-  Menu?: ComponentSlotStylesInput
-  MenuItem?: ComponentSlotStylesInput
-  Portal?: ComponentSlotStylesInput
-  Popup?: ComponentSlotStylesInput
-  PopupContent?: ComponentSlotStylesInput
-  RadioGroup?: ComponentSlotStylesInput
-  RadioGroupItem?: ComponentSlotStylesInput
-  Reaction?: ComponentSlotStylesInput
-  ReactionGroup?: ComponentSlotStylesInput
-  Segment?: ComponentSlotStylesInput
-  Status?: ComponentSlotStylesInput
-  Text?: ComponentSlotStylesInput
+type ThemeStylesProps = {
+  Accordion?: AccordionProps
+  AccordionTitle?: AccordionTitleProps
+  AccordionContent?: AccordionContentProps
+  Alert?: AlertProps
+  Animation?: AnimationProps
+  Attachment?: AttachmentProps
+  Avatar?: AvatarProps
+  Button?: ButtonProps
+  ButtonGroup?: ButtonGroupProps
+  Chat?: ChatProps
+  ChatItem?: ChatItemProps
+  ChatMessage?: ChatMessageProps
+  Checkbox?: CheckboxProps
+  Divider?: DividerProps
+  Dropdown?: DropdownProps
+  Embed?: EmbedProps
+  Flex?: FlexProps
+  FlexItem?: FlexItemProps
+  Form?: FormProps
+  FormField?: FormFieldProps
+  Grid?: GridProps
+  Header?: HeaderProps
+  HeaderDescription?: HeaderDescriptionProps
+  Icon?: IconProps
+  Image?: ImageProps
+  Input?: InputProps
+  ItemLayout?: ItemLayoutProps
+  Label?: LabelProps
+  Layout?: LayoutProps
+  List?: ListProps
+  ListItem?: ListItemProps
+  Loader?: LoaderProps
+  Menu?: MenuProps
+  MenuItem?: MenuItemProps
+  Portal?: PortalProps
+  Popup?: PopupProps
+  PopupContent?: PopupContentProps
+  RadioGroup?: RadioGroupProps
+  RadioGroupItem?: RadioGroupItemProps
+  Reaction?: ReactionProps
+  ReactionGroup?: ReactionGroupProps
+  Segment?: SegmentProps
+  Slider?: SliderProps
+  Status?: StatusProps
+  Toolbar?: ToolbarProps
+  ToolbarItem?: ToolbarItemProps
+  ToolbarDivider?: ToolbarDividerProps
+  ToolbarRadioGroup?: ToolbarRadioGroupProps
+  Tooltip?: TooltipProps
+  TooltipContent?: TooltipContentProps
+  Text?: TextProps
+  HierarchicalTree?: HierarchicalTreeProps
+  HierarchicalTreeItem?: HierarchicalTreeItemProps
+  HierarchicalTreeTitle?: HierarchicalTreeTitleProps
+  Video?: VideoProps
 }
 
-export interface ThemeComponentStylesPrepared {
-  [key: string]: ComponentSlotStylesPrepared | undefined
+export type ThemeComponentVariablesInput = {
+  [K in keyof ThemeStylesProps]?: ComponentVariablesInput
+} &
+  Record<string, any>
 
-  Accordion?: ComponentSlotStylesPrepared
-  Alert?: ComponentSlotStylesPrepared
-  Animation?: ComponentSlotStylesPrepared
-  Attachment?: ComponentSlotStylesPrepared
-  Avatar?: ComponentSlotStylesPrepared
-  Button?: ComponentSlotStylesPrepared
-  ButtonGroup?: ComponentSlotStylesPrepared
-  Chat?: ComponentSlotStylesPrepared
-  ChatItem?: ComponentSlotStylesPrepared
-  ChatMessage?: ComponentSlotStylesPrepared
-  Divider?: ComponentSlotStylesPrepared
-  Dropdown?: ComponentSlotStylesPrepared
-  DropdownItem?: ComponentSlotStylesPrepared
-  DropdownSearchInput?: ComponentSlotStylesPrepared
-  Form?: ComponentSlotStylesPrepared
-  FormField?: ComponentSlotStylesPrepared
-  Grid?: ComponentSlotStylesPrepared
-  Header?: ComponentSlotStylesPrepared
-  HeaderDescription?: ComponentSlotStylesPrepared
-  Icon?: ComponentSlotStylesPrepared
-  Image?: ComponentSlotStylesPrepared
-  Input?: ComponentSlotStylesPrepared
-  ItemLayout?: ComponentSlotStylesPrepared
-  Label?: ComponentSlotStylesPrepared
-  Layout?: ComponentSlotStylesPrepared
-  List?: ComponentSlotStylesPrepared
-  ListItem?: ComponentSlotStylesPrepared
-  Menu?: ComponentSlotStylesPrepared
-  MenuItem?: ComponentSlotStylesPrepared
-  Portal?: ComponentSlotStylesPrepared
-  Popup?: ComponentSlotStylesPrepared
-  PopupContent?: ComponentSlotStylesPrepared
-  RadioGroup?: ComponentSlotStylesPrepared
-  RadioGroupItem?: ComponentSlotStylesPrepared
-  Reaction?: ComponentSlotStylesPrepared
-  ReactionGroup?: ComponentSlotStylesPrepared
-  Segment?: ComponentSlotStylesPrepared
-  Status?: ComponentSlotStylesPrepared
-  Text?: ComponentSlotStylesPrepared
-}
+export type ThemeComponentVariablesPrepared = {
+  [K in keyof ThemeStylesProps]?: ComponentVariablesPrepared
+} &
+  Record<string, any>
 
-export interface ThemeComponentVariablesInput {
-  [key: string]: any
+export type ThemeComponentStylesInput = {
+  [K in keyof ThemeStylesProps]?: ComponentSlotStylesInput<ThemeStylesProps[K]>
+} &
+  Record<string, ComponentSlotStylesInput | undefined>
 
-  Accordion?: ComponentVariablesInput
-  Alert?: ComponentVariablesInput
-  Animation?: ComponentVariablesInput
-  Attachment?: ComponentVariablesInput
-  Avatar?: ComponentVariablesInput
-  Button?: ComponentVariablesInput
-  ButtonGroup?: ComponentVariablesInput
-  Chat?: ComponentVariablesInput
-  ChatItem?: ComponentVariablesInput
-  ChatMessage?: ComponentVariablesInput
-  Divider?: ComponentVariablesInput
-  Dropdown?: ComponentVariablesInput
-  Form?: ComponentVariablesInput
-  FormField?: ComponentVariablesInput
-  Grid?: ComponentVariablesInput
-  Header?: ComponentVariablesInput
-  HeaderDescription?: ComponentVariablesInput
-  Icon?: ComponentVariablesInput
-  Image?: ComponentVariablesInput
-  Input?: ComponentVariablesInput
-  ItemLayout?: ComponentVariablesInput
-  Label?: ComponentVariablesInput
-  Layout?: ComponentVariablesInput
-  List?: ComponentVariablesInput
-  ListItem?: ComponentVariablesInput
-  Menu?: ComponentVariablesInput
-  MenuItem?: ComponentVariablesInput
-  Portal?: ComponentVariablesInput
-  Popup?: ComponentVariablesInput
-  PopupContent?: ComponentVariablesInput
-  RadioGroup?: ComponentVariablesInput
-  RadioGroupItem?: ComponentVariablesInput
-  Reaction?: ComponentVariablesInput
-  ReactionGroup?: ComponentVariablesInput
-  Segment?: ComponentVariablesInput
-  Status?: ComponentVariablesInput
-  Text?: ComponentVariablesInput
-}
-
-export interface ThemeComponentVariablesPrepared {
-  [key: string]: any
-
-  Accordion?: ComponentVariablesPrepared
-  Alert?: ComponentVariablesPrepared
-  Animation?: ComponentVariablesPrepared
-  Attachment?: ComponentVariablesPrepared
-  Avatar?: ComponentVariablesPrepared
-  Button?: ComponentVariablesPrepared
-  ButtonGroup?: ComponentVariablesPrepared
-  Chat?: ComponentVariablesPrepared
-  ChatItem?: ComponentVariablesPrepared
-  ChatMessage?: ComponentVariablesPrepared
-  Divider?: ComponentVariablesPrepared
-  Dropdown?: ComponentVariablesPrepared
-  Form?: ComponentVariablesPrepared
-  FormField?: ComponentVariablesPrepared
-  Grid?: ComponentVariablesPrepared
-  Header?: ComponentVariablesPrepared
-  HeaderDescription?: ComponentVariablesPrepared
-  Icon?: ComponentVariablesPrepared
-  Image?: ComponentVariablesPrepared
-  Input?: ComponentVariablesPrepared
-  ItemLayout?: ComponentVariablesPrepared
-  Label?: ComponentVariablesPrepared
-  Layout?: ComponentVariablesPrepared
-  List?: ComponentVariablesPrepared
-  ListItem?: ComponentVariablesPrepared
-  Menu?: ComponentVariablesPrepared
-  MenuItem?: ComponentVariablesPrepared
-  Portal?: ComponentVariablesPrepared
-  Popup?: ComponentVariablesPrepared
-  PopupContent?: ComponentVariablesPrepared
-  RadioGroup?: ComponentVariablesPrepared
-  RadioGroupItem?: ComponentVariablesPrepared
-  Reaction?: ComponentVariablesPrepared
-  ReactionGroup?: ComponentVariablesPrepared
-  Segment?: ComponentVariablesPrepared
-  Status?: ComponentVariablesPrepared
-  Text?: ComponentVariablesPrepared
-}
+export type ThemeComponentStylesPrepared = {
+  [K in keyof ThemeStylesProps]?: ComponentSlotStylesPrepared<ThemeStylesProps[K]>
+} &
+  Record<string, ComponentSlotStylesPrepared | undefined>
 
 export interface Renderer extends FelaRenderer {}
 
@@ -468,19 +529,19 @@ export interface Renderer extends FelaRenderer {}
 // Fonts
 // ========================================================
 
-export interface FontFaceStyle {
+export interface FontFaceProps {
   fontStretch?: string
   fontStyle?: string
   fontVariant?: string
   fontWeight?: number
-  localAlias?: string
+  localAlias?: string | string[]
   unicodeRange?: string
 }
 
 export interface FontFace {
   name: string
   paths: string[]
-  style: FontFaceStyle
+  props: FontFaceProps
 }
 
 export type FontFaces = FontFace[]
@@ -492,17 +553,30 @@ export type FontFaces = FontFace[]
 type SvgIconFuncArg = {
   classes: { [iconSlot: string]: string }
   rtl: boolean
+  props: IconProps
 }
 
 export type SvgIconSpec = ObjectOrFunc<React.ReactNode, SvgIconFuncArg>
-export type FontIconSpec = ObjectOrFunc<{
+export type FontIconSpec = {
   content: string
   fontFamily: string
-}>
+}
 
 export type ThemeIconSpec = {
   isSvg?: boolean
   icon: FontIconSpec | SvgIconSpec
 }
 
-export type ThemeIcons = { [iconName: string]: ThemeIconSpec }
+export type RequiredIconNames =
+  | 'stardust-checkmark'
+  | 'stardust-circle'
+  | 'stardust-close'
+  | 'stardust-arrow-end'
+  | 'stardust-arrow-up'
+  | 'stardust-arrow-down'
+  | 'stardust-pause'
+  | 'stardust-play'
+
+export type ThemeIcons = Partial<Record<RequiredIconNames, ThemeIconSpec>> & {
+  [iconName: string]: ThemeIconSpec
+}

@@ -3,7 +3,6 @@ import {
   Popup,
   Button,
   Menu,
-  popupFocusTrapBehavior,
   AvatarProps,
   ChatMessageProps,
   DividerProps,
@@ -76,7 +75,7 @@ function generateChatMsgProps(message: MessageData, fromUser: UserData): ChatIte
   }
 }
 
-function createMessageContent(message: MessageData): ShorthandValue {
+function createMessageContent(message: MessageData): ShorthandValue<ChatMessageProps> {
   const messageId = `content-${message.id}`
   return {
     id: message.withAttachment ? undefined : messageId,
@@ -87,8 +86,8 @@ function createMessageContent(message: MessageData): ShorthandValue {
 }
 
 function createMessageContentWithAttachments(content: string, messageId: string): JSX.Element {
-  const menuClickHandler = content => e => {
-    alert(`${content} clicked`)
+  const menuClickHandler = message => e => {
+    alert(`${message} clicked`)
     e.stopPropagation()
   }
 
@@ -119,7 +118,7 @@ function createMessageContentWithAttachments(content: string, messageId: string)
     />
   )
 
-  const stopPropagationOnKeys = (keys: number[]) => (e: Event) => {
+  const stopPropagationOnKeys = (keys: number[]) => (e: React.KeyboardEvent<any>) => {
     if (keys.indexOf(keyboardKey.getCode(e)) > -1) {
       e.stopPropagation()
     }
@@ -127,7 +126,7 @@ function createMessageContentWithAttachments(content: string, messageId: string)
 
   const actionPopup = (
     <Popup
-      accessibility={popupFocusTrapBehavior}
+      trapFocus
       trigger={
         <Button
           aria-label="More attachment options"
@@ -204,7 +203,7 @@ export function generateChatProps(chat: ChatData): ChatItem[] {
     chatProps.splice(
       myLastMsgIndex + 1,
       0,
-      generateDividerProps({ content: 'Last read', color: 'primary', important: true }),
+      generateDividerProps({ content: 'Last read', color: 'brand', important: true }),
     )
   }
 

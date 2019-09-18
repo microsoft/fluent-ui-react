@@ -14,9 +14,9 @@ const SCAN_RESULTS_DIR_PATH = paths.base(SCAN_RESULTS_DIR_NAME)
 const log = message => debug.log(message)
 log.success = message => debug.log(`✔ ${message}`)
 
-const ensureDirExists = path => {
-  if (!fs.existsSync(path)) {
-    sh(`mkdir -p ${path}`)
+const ensureDirExists = directoryPath => {
+  if (!fs.existsSync(directoryPath)) {
+    sh(`mkdir -p ${directoryPath}`)
   }
 }
 

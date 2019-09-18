@@ -1,6 +1,6 @@
 declare const __DEV__: boolean
 declare const __PATH_SEP__: string
-declare const __BASENAME__: boolean
+declare const __BASENAME__: string
 
 declare interface NodeModule {
   hot: any
@@ -15,8 +15,16 @@ declare module '*.json' {
   export default value
 }
 
+declare module '*.mdx' {
+  export const meta: {
+    title: string
+  }
+  const value: React.ComponentType
+
+  export default value
+}
+
 declare interface Window {
-  prettierPlugins: any
   resetExternalLayout?: () => void
   switchTheme?: (themeName: string) => void
 }

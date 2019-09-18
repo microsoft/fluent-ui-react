@@ -1,5 +1,6 @@
 // Copy of sindre's leven, wrapped in dead code elimination for production
 // https://github.com/sindresorhus/leven/blob/master/index.js
+/* eslint-disable */
 
 let leven = (a, b) => 0
 

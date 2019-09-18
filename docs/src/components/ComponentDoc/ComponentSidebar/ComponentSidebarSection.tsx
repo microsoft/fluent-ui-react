@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { Indicator, Tree } from '@stardust-ui/react'
+import { Icon, HierarchicalTree } from '@stardust-ui/react'
 
 import { examplePathToHash } from 'docs/src/utils'
 
@@ -96,14 +96,13 @@ export default class ComponentSidebarSection extends React.PureComponent<any, an
         {...restProps}
         styles={treeStyles}
         active={active}
+        onClick={this.handleTitleClick}
       >
         <span>{content}</span>
-        {hasSubtree && <Indicator direction={open ? 'bottom' : 'start'} />}
+        {hasSubtree && <Icon name="arrow-down" />}
       </Component>
     )
 
-    return (
-      <Tree items={items} onTitleClick={this.handleTitleClick} renderItemTitle={titleRenderer} />
-    )
+    return <HierarchicalTree items={items} renderItemTitle={titleRenderer} />
   }
 }

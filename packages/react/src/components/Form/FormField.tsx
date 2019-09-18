@@ -1,31 +1,31 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import {
   UIComponent,
-  customPropTypes,
   childrenExist,
   createShorthandFactory,
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  ShorthandFactory,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ShorthandValue } from '../../types'
-import Text from '../Text/Text'
+
+import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
+import Text, { TextProps } from '../Text/Text'
 import Input from '../Input/Input'
-import Box from '../Box/Box'
+import Box, { BoxProps } from '../Box/Box'
 
 export interface FormFieldProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
   /** A control for the form field. */
-  control?: ShorthandValue
+  control?: ShorthandValue<BoxProps>
 
   /** The HTML input id. This will be set on the control element and will be use for linking it with the label for correct accessibility. */
   id?: string
@@ -34,10 +34,10 @@ export interface FormFieldProps extends UIComponentProps, ChildrenComponentProps
   inline?: boolean
 
   /** A label for the form field. */
-  label?: ShorthandValue
+  label?: ShorthandValue<TextProps>
 
   /** Text message that will be displayed below the control (can be used for error, warning, success messages). */
-  message?: ShorthandValue
+  message?: ShorthandValue<TextProps>
 
   /** The HTML input name. */
   name?: string
@@ -49,17 +49,14 @@ export interface FormFieldProps extends UIComponentProps, ChildrenComponentProps
   type?: string
 }
 
-/**
- * A field is a form element containing a label and an input.
- */
-class FormField extends UIComponent<ReactProps<FormFieldProps>, any> {
-  public static displayName = 'FormField'
+class FormField extends UIComponent<WithAsProp<FormFieldProps>, any> {
+  static displayName = 'FormField'
 
-  public static className = 'ui-form__field'
+  static className = 'ui-form__field'
 
-  static create: Function
+  static create: ShorthandFactory<FormFieldProps>
 
-  public static propTypes = {
+  static propTypes = {
     ...commonPropTypes.createCommon({
       content: false,
     }),
@@ -73,17 +70,15 @@ class FormField extends UIComponent<ReactProps<FormFieldProps>, any> {
     type: PropTypes.string,
   }
 
-  public static defaultProps = {
-    accessibility: defaultBehavior,
+  static defaultProps = {
     as: 'div',
     control: { as: Input },
   }
 
-  public renderComponent({
+  renderComponent({
     ElementType,
     classes,
     accessibility,
-    variables,
     styles,
     unhandledProps,
   }): React.ReactNode {
@@ -123,7 +118,7 @@ class FormField extends UIComponent<ReactProps<FormFieldProps>, any> {
     )
   }
 
-  private shouldControlAppearFirst = () => {
+  shouldControlAppearFirst = () => {
     const { type } = this.props
     return type && (type === 'checkbox' || type === 'radio')
   }
@@ -131,4 +126,7 @@ class FormField extends UIComponent<ReactProps<FormFieldProps>, any> {
 
 FormField.create = createShorthandFactory({ Component: FormField, mappedProp: 'label' })
 
-export default FormField
+/**
+ * A FormField represents a Form element containing a label and an input.
+ */
+export default withSafeTypeForAs<typeof FormField, FormFieldProps>(FormField)

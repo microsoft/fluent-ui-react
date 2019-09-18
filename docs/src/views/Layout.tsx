@@ -1,18 +1,11 @@
 import * as React from 'react'
-import { Button, Box, Flex, Header, Icon, Segment, Divider } from '@stardust-ui/react'
+import { CodeSnippet } from '@stardust-ui/docs-components'
+import { Button, Box, Flex, Header, Segment, Divider } from '@stardust-ui/react'
 
-import CodeSnippet from '../components/CodeSnippet'
 import ExampleSnippet from '../components/ExampleSnippet'
 import DocPage from '../components/DocPage'
 import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
-
-const code = value => <code>{value}</code>
-
-const link = (content, href, isExternal = false) => (
-  <a href={href} {...isExternal && { target: 'blank' }}>
-    {content} {isExternal ? <Icon name="external" size="small" link fitted /> : ''}
-  </a>
-)
+import { code, link } from '../utils/helpers'
 
 const links = {
   flex: link('Flex', '/components/flex'),
@@ -69,6 +62,7 @@ export default () => (
         const OpaqueBackground = ({ children, color }) => (
           <Segment styles={{ backgroundColor: color }} content={{ children }} />
         )
+        OpaqueBackground.displayName = 'OpaqueBackground'
 
         return (
           <OpaqueBackground color="lightyellow">
@@ -92,9 +86,10 @@ export default () => (
         const RelativePositioned = ({ children, left }) => (
           <Box styles={{ position: 'relative', left }} content={children} />
         )
+        RelativePositioned.displayName = 'RelativePositioned'
 
         return (
-          <RelativePositioned left={'30px'}>
+          <RelativePositioned left="30px">
             This is a bad way to support relative-positioning :(
           </RelativePositioned>
         )
@@ -161,7 +156,6 @@ export default () => (
       {link(
         'flexbox usage scenarios',
         'https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Typical_Use_Cases_of_Flexbox',
-        true,
       )}{' '}
       (e.g. {code('push')} prop) - the value of these props is that they introduce the least amount
       of DOM elements necessary to accomplish corresponding use-case.
@@ -178,7 +172,7 @@ export default () => (
     <ExampleSnippet
       render={() => (
         <Flex space="between">
-          <Button content="Logo" icon="chess rook" />
+          <Button content="Logo" icon="emoji" />
 
           <Flex gap="gap.small">
             <Button content="Page 1" />
@@ -195,7 +189,7 @@ export default () => (
     <ExampleSnippet
       render={() => (
         <Flex gap="gap.small">
-          <Button content="Logo" icon="chess rook" />
+          <Button content="Logo" icon="emoji" />
           <Flex.Item push>
             <Button content="Page 1" />
           </Flex.Item>
@@ -215,7 +209,7 @@ export default () => (
       <strong>Each of these examples is optimized in terms of DOM elements rendered</strong>.
     </blockquote>
     <GuidesNavigationFooter
-      previous={{ name: 'Theming Examples', url: 'theming-examples' }}
+      previous={{ name: 'Colors', url: 'colors' }}
       next={{ name: 'Integrate Custom Components', url: 'integrate-custom-components' }}
     />
   </DocPage>

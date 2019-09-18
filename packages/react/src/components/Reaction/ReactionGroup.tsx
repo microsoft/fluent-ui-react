@@ -1,21 +1,21 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { ReactProps, ShorthandValue } from '../../types'
+import { WithAsProp, withSafeTypeForAs, ShorthandCollection } from '../../types'
 import {
   UIComponent,
   childrenExist,
-  customPropTypes,
   UIComponentProps,
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
   rtlTextContainer,
   createShorthandFactory,
+  ShorthandFactory,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
-import Reaction from './Reaction'
+import Reaction, { ReactionProps } from './Reaction'
 
 export interface ReactionGroupProps
   extends UIComponentProps,
@@ -23,34 +23,26 @@ export interface ReactionGroupProps
     ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
   /** The reactions contained inside the reaction group. */
-  items?: ShorthandValue[]
+  items?: ShorthandCollection<ReactionProps>
 }
 
-/**
- * A reaction group presents multiple reactions as a group.
- */
-class ReactionGroup extends UIComponent<ReactProps<ReactionGroupProps>> {
-  static create: Function
+class ReactionGroup extends UIComponent<WithAsProp<ReactionGroupProps>> {
+  static create: ShorthandFactory<ReactionGroupProps>
 
-  public static displayName = 'ReactionGroup'
+  static displayName = 'ReactionGroup'
 
-  public static className = 'ui-reactions'
+  static className = 'ui-reactions'
 
-  public static propTypes = {
+  static propTypes = {
     ...commonPropTypes.createCommon(),
     items: customPropTypes.collectionShorthand,
   }
 
-  public static defaultProps = {
-    accessibility: defaultBehavior,
-  }
-
-  public renderComponent({
+  renderComponent({
     ElementType,
     classes,
     accessibility,
@@ -91,4 +83,7 @@ ReactionGroup.create = createShorthandFactory({
   mappedArrayProp: 'items',
 })
 
-export default ReactionGroup
+/**
+ * A ReactionGroup groups multiple Reaction elements.
+ */
+export default withSafeTypeForAs<typeof ReactionGroup, ReactionGroupProps>(ReactionGroup)

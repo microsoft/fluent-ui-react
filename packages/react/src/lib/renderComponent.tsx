@@ -1,10 +1,8 @@
 import cx from 'classnames'
 import * as React from 'react'
 import * as _ from 'lodash'
-import { FelaTheme } from 'react-fela'
 
 import callable from './callable'
-import felaRenderer from './felaRenderer'
 import getClasses from './getClasses'
 import getElementType from './getElementType'
 import getUnhandledProps from './getUnhandledProps'
@@ -17,22 +15,22 @@ import {
   PropsWithVarsAndStyles,
   State,
   ThemePrepared,
+  ComponentSlotStylesInput,
 } from '../themes/types'
-import { Props } from '../types'
+import { Props, ProviderContextPrepared } from '../types'
 import {
-  AccessibilityBehavior,
   AccessibilityDefinition,
-  AccessibilityActionHandlers,
   FocusZoneMode,
   FocusZoneDefinition,
+  Accessibility,
 } from './accessibility/types'
-import { defaultBehavior } from './accessibility'
+import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/reactTypes'
 import getKeyDownHandlers from './getKeyDownHandlers'
-import { mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
-import { FocusZoneProps, FocusZone, FocusZone as FabricFocusZone } from './accessibility/FocusZone'
+import { emptyTheme, mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
+import { FocusZoneProps, FocusZone } from './accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 import createAnimationStyles from './createAnimationStyles'
-import { generateColorScheme } from '.'
+import Debug, { isEnabled as isDebugEnabled } from './debug'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
@@ -40,7 +38,7 @@ export interface RenderResultConfig<P> {
   unhandledProps: Props
   variables: ComponentVariablesObject
   styles: ComponentSlotStylesPrepared
-  accessibility: AccessibilityBehavior
+  accessibility: ReactAccessibilityBehavior
   rtl: boolean
   theme: ThemePrepared
 }
@@ -55,23 +53,32 @@ export interface RenderConfig<P> {
   props: PropsWithVarsAndStyles
   state: State
   actionHandlers: AccessibilityActionHandlers
-  focusZoneRef: (focusZone: FocusZone) => void
   render: RenderComponentCallback<P>
+  saveDebug: (debug: Debug | null) => void
+}
+
+const emptyBehavior: ReactAccessibilityBehavior = {
+  attributes: {},
+  keyHandlers: {},
 }
 
 const getAccessibility = (
-  props: State & PropsWithVarsAndStyles,
+  props: State & PropsWithVarsAndStyles & { accessibility?: Accessibility },
   actionHandlers: AccessibilityActionHandlers,
   isRtlEnabled: boolean,
-) => {
-  const { accessibility: customAccessibility, defaultAccessibility } = props
-  const accessibility: AccessibilityDefinition = (customAccessibility ||
-    defaultAccessibility ||
-    defaultBehavior)(props)
+): ReactAccessibilityBehavior => {
+  const { accessibility } = props
 
-  const keyHandlers = getKeyDownHandlers(actionHandlers, accessibility.keyActions, isRtlEnabled)
+  if (_.isNil(accessibility)) {
+    return emptyBehavior
+  }
+
+  const definition: AccessibilityDefinition = accessibility(props)
+  const keyHandlers = getKeyDownHandlers(actionHandlers, definition.keyActions, isRtlEnabled)
+
   return {
-    ...accessibility,
+    ...emptyBehavior,
+    ...definition,
     keyHandlers,
   }
 }
@@ -93,45 +100,50 @@ function wrapInGenericFocusZone<
   FocusZone: { new (...args: any[]): COMPONENT },
   props: PROPS | undefined,
   children: React.ReactNode,
-  ref: (focusZone: FocusZone) => void,
 ) {
   props[FOCUSZONE_WRAP_ATTRIBUTE] = true
-  return (
-    <FocusZone ref={ref} {...props}>
-      {children}
-    </FocusZone>
-  )
+  return <FocusZone {...props}>{children}</FocusZone>
 }
 
 const renderWithFocusZone = <P extends {}>(
   render: RenderComponentCallback<P>,
   focusZoneDefinition: FocusZoneDefinition,
   config: RenderResultConfig<P>,
-  focusZoneRef: (focusZone: FocusZone) => void,
 ): any => {
   if (focusZoneDefinition.mode === FocusZoneMode.Wrap) {
     return wrapInGenericFocusZone(
-      FabricFocusZone,
+      FocusZone,
       {
         ...focusZoneDefinition.props,
         isRtl: config.rtl,
       },
       render(config),
-      focusZoneRef,
     )
   }
   if (focusZoneDefinition.mode === FocusZoneMode.Embed) {
     const originalElementType = config.ElementType
-    config.ElementType = FabricFocusZone as any
+    config.ElementType = FocusZone as any
     config.unhandledProps = { ...config.unhandledProps, ...focusZoneDefinition.props }
     config.unhandledProps.as = originalElementType
-    config.unhandledProps.ref = focusZoneRef
     config.unhandledProps.isRtl = config.rtl
   }
   return render(config)
 }
 
-const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElement<P> => {
+const resolveStyles = (
+  styles: ComponentSlotStylesInput,
+  styleParam: ComponentStyleFunctionParam,
+): ComponentSlotStylesPrepared => {
+  return Object.keys(styles).reduce(
+    (acc, next) => ({ ...acc, [next]: callable(styles[next])(styleParam) }),
+    {},
+  )
+}
+
+const renderComponent = <P extends {}>(
+  config: RenderConfig<P>,
+  context?: ProviderContextPrepared,
+): React.ReactElement<P> => {
   const {
     className,
     defaultProps,
@@ -140,102 +152,92 @@ const renderComponent = <P extends {}>(config: RenderConfig<P>): React.ReactElem
     props,
     state,
     actionHandlers,
-    focusZoneRef,
     render,
+    saveDebug = () => {},
   } = config
 
-  return (
-    <FelaTheme>
-      {(theme: ThemePrepared) => {
-        if (_.isEmpty(theme)) {
-          logProviderMissingWarning()
-        }
+  if (_.isEmpty(context)) {
+    logProviderMissingWarning()
+  }
 
-        const {
-          siteVariables = {
-            colorScheme: {},
-            colors: {},
-            contextualColors: {},
-            emphasisColors: {},
-            naturalColors: {},
-            fontSizes: {},
-          },
-          componentVariables = {},
-          componentStyles = {},
-          rtl = false,
-          renderer = felaRenderer,
-        } = theme
-        const ElementType = getElementType({ defaultProps }, props) as React.ReactType<P>
+  const { disableAnimations = false, renderer = null, rtl = false, theme = emptyTheme } =
+    context || {}
 
-        const stateAndProps = { ...state, ...props }
+  const ElementType = getElementType({ defaultProps }, props) as React.ReactType<P>
+  const stateAndProps = { ...state, ...props }
 
-        // Resolve variables for this component, allow props.variables to override
-        const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
-          componentVariables[displayName],
-          props.variables,
-        )(siteVariables)
+  // Resolve variables for this component, allow props.variables to override
+  const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
+    theme.componentVariables[displayName],
+    props.variables,
+  )(theme.siteVariables)
 
-        const animationCSSProp = props.animation
-          ? createAnimationStyles(props.animation, theme)
-          : {}
+  const animationCSSProp = props.animation
+    ? createAnimationStyles(props.animation, context.theme)
+    : {}
 
-        // Resolve styles using resolved variables, merge results, allow props.styles to override
-        const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
-          componentStyles[displayName],
-          {
-            root: props.styles,
-          },
-        )
-
-        const accessibility: AccessibilityBehavior = getAccessibility(
-          stateAndProps,
-          actionHandlers,
-          rtl,
-        )
-
-        const unhandledProps = getUnhandledProps({ handledProps }, props)
-
-        const colors = generateColorScheme(stateAndProps.color, resolvedVariables.colorScheme)
-
-        const styleParam: ComponentStyleFunctionParam = {
-          props: stateAndProps,
-          variables: resolvedVariables,
-          theme,
-          colors,
-        }
-
-        mergedStyles.root = {
-          ...callable(mergedStyles.root)(styleParam),
-          ...animationCSSProp,
-        }
-
-        const resolvedStyles: ComponentSlotStylesPrepared = Object.keys(mergedStyles).reduce(
-          (acc, next) => ({ ...acc, [next]: callable(mergedStyles[next])(styleParam) }),
-          {},
-        )
-
-        const classes: ComponentSlotClasses = getClasses(renderer, mergedStyles, styleParam)
-        classes.root = cx(className, classes.root, props.className)
-
-        const config: RenderResultConfig<P> = {
-          ElementType,
-          unhandledProps,
-          classes,
-          variables: resolvedVariables,
-          styles: resolvedStyles,
-          accessibility,
-          rtl,
-          theme,
-        }
-
-        if (accessibility.focusZone) {
-          return renderWithFocusZone(render, accessibility.focusZone, config, focusZoneRef)
-        }
-
-        return render(config)
-      }}
-    </FelaTheme>
+  // Resolve styles using resolved variables, merge results, allow props.styles to override
+  const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
+    theme.componentStyles[displayName],
+    { root: props.design },
+    { root: props.styles },
+    { root: animationCSSProp },
   )
+
+  const accessibility: ReactAccessibilityBehavior = getAccessibility(
+    stateAndProps,
+    actionHandlers,
+    rtl,
+  )
+
+  const unhandledProps = getUnhandledProps({ handledProps }, props)
+
+  const styleParam: ComponentStyleFunctionParam = {
+    displayName,
+    props: stateAndProps,
+    variables: resolvedVariables,
+    theme,
+    rtl,
+    disableAnimations,
+  }
+
+  const resolvedStyles: ComponentSlotStylesPrepared = resolveStyles(mergedStyles, styleParam)
+
+  const classes: ComponentSlotClasses = renderer
+    ? getClasses(renderer, mergedStyles, styleParam)
+    : {}
+  classes.root = cx(className, classes.root, props.className)
+
+  const resolvedConfig: RenderResultConfig<P> = {
+    ElementType,
+    unhandledProps,
+    classes,
+    variables: resolvedVariables,
+    styles: resolvedStyles,
+    accessibility,
+    rtl,
+    theme,
+  }
+
+  if (accessibility.focusZone) {
+    return renderWithFocusZone(render, accessibility.focusZone, resolvedConfig)
+  }
+
+  // conditionally add sources for evaluating debug information to component
+  if (isDebugEnabled) {
+    saveDebug(
+      new Debug({
+        componentName: displayName,
+        themes: context ? context.originalThemes : [],
+        instanceStylesOverrides: props.styles,
+        instanceVariablesOverrides: props.variables,
+        resolveStyles: styles => resolveStyles(styles, styleParam),
+        resolveVariables: variables => callable(variables)(theme.siteVariables),
+      }),
+    )
+  }
+
+  return render(resolvedConfig)
 }
 
 export default renderComponent

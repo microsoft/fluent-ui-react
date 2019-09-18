@@ -1,10 +1,13 @@
-import { ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared } from '../../../types'
+import { AccordionProps } from '../../../../components/Accordion/Accordion'
 
-const accordionStyles = {
-  root: (): ICSSInJSStyle => ({
+const accordionStyles: ComponentSlotStylesPrepared<AccordionProps> = {
+  root: () => ({
     verticalAlign: 'middle',
     display: 'flex',
     flexDirection: 'column',
+    marginBlockEnd: 0,
+    marginBlockStart: 0,
   }),
 }
 

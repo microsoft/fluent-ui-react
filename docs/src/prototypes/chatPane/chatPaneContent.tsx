@@ -9,7 +9,7 @@ import chatProtoStyle from './chatProtoStyle'
 export type ChatPaneContainerProps = Props<{ chat: ChatData }>
 
 class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
-  public render() {
+  render() {
     const { chat } = this.props
     const items = this.generateChatItems(chat)
 
@@ -35,7 +35,7 @@ class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
     )
   }
 
-  private generateChatItems(chat: ChatData): JSX.Element[] {
+  generateChatItems(chat: ChatData): JSX.Element[] {
     return generateChatProps(chat).map(
       ({ mine, gutter, message: { itemType, ...props } }, index) => {
         const ElementType = this.getElementType(itemType)
@@ -50,30 +50,28 @@ class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
           <Chat.Item
             key={`chat-item-${index}`}
             contentPosition={mine ? 'end' : 'start'}
-            gutter={gutter && { content: <Avatar {...gutter} /> }}
-            message={{
-              content: (
-                <>
-                  {itemType === ChatItemTypes.message && (
-                    <div
-                      style={chatProtoStyle.screenReaderContainerStyles}
-                      role="heading"
-                      aria-level={4}
-                    >
-                      {this.getMessagePreviewForScreenReader(props)}
-                    </div>
-                  )}
-                  <ElementType {...props} text={undefined} {...maybeAttributesForDivider} />
-                </>
-              ),
-            }}
+            gutter={gutter && <Avatar {...gutter} />}
+            message={
+              <>
+                {itemType === ChatItemTypes.message && (
+                  <div
+                    style={chatProtoStyle.screenReaderContainerStyles}
+                    role="heading"
+                    aria-level={4}
+                  >
+                    {this.getMessagePreviewForScreenReader(props)}
+                  </div>
+                )}
+                <ElementType {...props} {...maybeAttributesForDivider} />
+              </>
+            }
           />
         )
       },
     )
   }
 
-  private getElementType = (itemType: ChatItemTypes) => {
+  getElementType = (itemType: ChatItemTypes): React.ElementType => {
     switch (itemType) {
       case ChatItemTypes.message:
         return Chat.Message
@@ -82,13 +80,13 @@ class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
     }
   }
 
-  private handleScrollRef(scrollRef: Scrollbars) {
+  handleScrollRef(scrollRef: Scrollbars) {
     if (scrollRef) {
       scrollRef.scrollToBottom()
     }
   }
 
-  private getMessagePreviewForScreenReader(props) {
+  getMessagePreviewForScreenReader(props) {
     /*  Show the first 44 characters from the message, reasons:
           - as NVDA splits it into 2 lines if more is shown
           - for announcements feature, messaging team went with 44 characters but that was not based on loc issues but some UI real estate issue.  */

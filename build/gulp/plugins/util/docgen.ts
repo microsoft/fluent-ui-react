@@ -1,6 +1,6 @@
-import * as fs from 'fs'
-import * as path from 'path'
-import * as ts from 'typescript'
+import fs from 'fs'
+import path from 'path'
+import ts from 'typescript'
 
 /**
  * THIS MODULE is largely based on the parser's logic
@@ -89,6 +89,8 @@ const defaultOptions: ts.CompilerOptions = {
   jsx: ts.JsxEmit.React,
   module: ts.ModuleKind.CommonJS,
   target: ts.ScriptTarget.Latest,
+  allowUnusedLabels: true,
+  allowUnreachableCode: true,
 }
 
 const reactComponentSymbolNames = [
@@ -128,9 +130,7 @@ export function withCustomConfig(tsconfigPath: string, parserOpts: ParserOptions
   )
 
   if (error !== undefined) {
-    const errorText = `Cannot load custom tsconfig.json from provided path: ${tsconfigPath}, with error code: ${
-      error.code
-    }, message: ${error.messageText}`
+    const errorText = `Cannot load custom tsconfig.json from provided path: ${tsconfigPath}, with error code: ${error.code}, message: ${error.messageText}`
     throw new Error(errorText)
   }
 

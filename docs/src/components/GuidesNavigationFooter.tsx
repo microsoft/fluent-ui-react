@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Link } from 'react-router-dom'
 import { Button, Flex, Divider } from '@stardust-ui/react'
 
-type PageDescriptor = {
+export type PageDescriptor = {
   name: string
   url: string
 }

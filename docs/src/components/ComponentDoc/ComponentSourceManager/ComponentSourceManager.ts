@@ -1,12 +1,13 @@
+import { prettifyCode } from '@stardust-ui/docs-components'
 import * as _ from 'lodash'
 import * as React from 'react'
 
 import { ExampleSource } from 'docs/src/types'
-import formatCode from 'docs/src/utils/formatCode'
 import { componentAPIs as APIdefinitions, ComponentAPIs } from './componentAPIs'
-import getExampleSource from './getExampeSource'
+import getExampleModule from './getExampeSource'
 
 export type ComponentSourceManagerRenderProps = ComponentSourceManagerState & {
+  component: React.ElementType
   handleCodeAPIChange: (newApi: keyof ComponentAPIs) => void
   handleCodeChange: (newCode: string) => void
   handleCodeFormat: () => void
@@ -22,6 +23,7 @@ export type ComponentSourceManagerProps = {
 }
 
 type ComponentSourceManagerAPIs = ComponentAPIs<{
+  component: React.ElementType
   sourceCode: ExampleSource | undefined
   supported: boolean
 }>
@@ -48,12 +50,13 @@ export default class ComponentSourceManager extends React.Component<
     super(props)
 
     const componentAPIs = _.mapValues(APIdefinitions, (definition, name: keyof ComponentAPIs) => {
-      const sourceCode = getExampleSource(props.examplePath, name)
+      const module = getExampleModule(props.examplePath, name)
 
       return {
         ...definition,
-        sourceCode,
-        supported: !!sourceCode,
+        component: module && module.component,
+        sourceCode: module ? module.source : '',
+        supported: !!module,
       }
     }) as ComponentSourceManagerAPIs
 
@@ -113,10 +116,10 @@ export default class ComponentSourceManager extends React.Component<
 
   handleCodeFormat = (): void => {
     const { currentCode, currentCodeLanguage } = this.state
-    const prettierParser = currentCodeLanguage === 'ts' ? 'typescript' : 'babylon'
+    const prettierParser = currentCodeLanguage === 'ts' ? 'typescript' : 'babel'
 
     try {
-      const formattedCode = formatCode(currentCode, prettierParser)
+      const formattedCode = prettifyCode(currentCode, prettierParser)
 
       this.setState({ currentCode: formattedCode, formattedCode })
     } catch (e) {}
@@ -136,6 +139,7 @@ export default class ComponentSourceManager extends React.Component<
   render() {
     return this.props.children({
       ...this.state,
+      component: this.state.componentAPIs[this.state.currentCodeAPI].component,
       handleCodeAPIChange: this.handleCodeAPIChange,
       handleCodeChange: this.handleCodeChange,
       handleCodeFormat: this.handleCodeFormat,

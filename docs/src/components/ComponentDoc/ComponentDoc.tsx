@@ -1,18 +1,20 @@
-import * as _ from 'lodash'
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { withRouter } from 'react-router'
-import { Flex, Header, Icon, Dropdown, Text, Grid } from '@stardust-ui/react'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
+import { Flex, Header, Icon, Dropdown, Text, Grid, Menu, Box } from '@stardust-ui/react'
 
-import componentInfoShape from 'docs/src/utils/componentInfoShape'
-import { scrollToAnchor, examplePathToHash, getFormattedHash } from 'docs/src/utils'
+import { getFormattedHash } from 'docs/src/utils'
 import ComponentDocLinks from './ComponentDocLinks'
 import ComponentDocSee from './ComponentDocSee'
-import ComponentExamples from './ComponentExamples'
+import { ComponentExamples } from './ComponentExamples'
 import ComponentProps from './ComponentProps'
-import ComponentAccessibility from './ComponentDocAccessibility'
+import { ComponentDocAccessibility } from './ComponentDocAccessibility'
 import { ThemeContext } from 'docs/src/context/ThemeContext'
 import ExampleContext from 'docs/src/context/ExampleContext'
+import ComponentPlayground from 'docs/src/components/ComponentPlayground/ComponentPlayground'
+import { ComponentInfo } from 'docs/src/types'
+import ComponentBestPractices from './ComponentBestPractices'
+import { tabListBehavior } from 'src/lib/accessibility'
+import * as _ from 'lodash'
 
 const exampleEndStyle: React.CSSProperties = {
   textAlign: 'center',
@@ -20,25 +22,63 @@ const exampleEndStyle: React.CSSProperties = {
   paddingTop: '75vh',
 }
 
-class ComponentDoc extends React.Component<any, any> {
-  static propTypes = {
-    history: PropTypes.object.isRequired,
-    info: componentInfoShape.isRequired,
+type ComponentDocProps = {
+  info: ComponentInfo
+  tabs: string[]
+} & RouteComponentProps<{}>
+
+type ComponentDocState = {
+  activePath: string
+  currentTabIndex: number
+  defaultPropComponent: string
+}
+
+class ComponentDoc extends React.Component<ComponentDocProps, ComponentDocState> {
+  state = {
+    activePath: '',
+    defaultPropComponent: '',
+    currentTabIndex: 0,
   }
 
-  state: any = {}
+  tabRegex = new RegExp(/[^\/]*$/)
+
+  getTabIndexOrRedirectToDefault(tab: string) {
+    const lowercaseTabs = _.map(this.props.tabs, tab => tab.toLowerCase())
+    const index = lowercaseTabs.indexOf(tab)
+    if (index === -1) {
+      const { history, location } = this.props
+      const at = location.pathname
+      const newLocation = at.replace(this.tabRegex, 'definition')
+      history.push(newLocation)
+      return 0
+    }
+    return index
+  }
+
+  getCurrentTabTitle() {
+    return this.props.tabs[this.state.currentTabIndex]
+  }
 
   componentWillMount() {
     const { history, location } = this.props
+    const tab = location.pathname.match(this.tabRegex)[0]
+    const tabIndex = this.getTabIndexOrRedirectToDefault(tab)
+    this.setState({ currentTabIndex: tabIndex })
 
     if (location.hash) {
       const activePath = getFormattedHash(location.hash)
-      history.replace(`${location.pathname}#${activePath}`)
+      history.replace({ ...history.location, hash: activePath })
       this.setState({ activePath })
+      if (this.props.tabs[tabIndex] === 'Props') {
+        this.setState({ defaultPropComponent: activePath })
+      }
     }
   }
 
-  componentWillReceiveProps({ info }) {
+  componentWillReceiveProps({ info, location }) {
+    const tab = location.pathname.match(this.tabRegex)[0]
+    this.setState({ currentTabIndex: this.getTabIndexOrRedirectToDefault(tab) })
+
     if (info.displayName !== this.props.info.displayName) {
       this.setState({ activePath: undefined })
     }
@@ -48,15 +88,30 @@ class ComponentDoc extends React.Component<any, any> {
     this.setState({ activePath: passedAnchorName })
   }
 
-  handleExamplesRef = examplesRef => this.setState({ examplesRef })
-
+  /* TODO: bring back the right floating menu
   handleSidebarItemClick = (e, { examplePath }) => {
-    const { history, location } = this.props
+    const { history } = this.props
     const activePath = examplePathToHash(examplePath)
 
-    history.replace(`${location.pathname}#${activePath}`)
+    history.replace({ ...history.location, hash: activePath })
     // set active hash path
     this.setState({ activePath }, scrollToAnchor)
+  }
+  */
+
+  handleTabClick = (e, props) => {
+    const newIndex = props.index
+    const { history, location } = this.props
+    const at = location.pathname
+    const newLocation = at.replace(this.tabRegex, this.props.tabs[newIndex].toLowerCase())
+
+    history.push(newLocation)
+    this.setState({ currentTabIndex: newIndex })
+  }
+
+  onPropComponentSelected = (e, props) => {
+    const { history } = this.props
+    history.push({ ...history.location, hash: props.value })
   }
 
   render() {
@@ -86,12 +141,12 @@ class ComponentDoc extends React.Component<any, any> {
       return ''
     }
 
-    const { info } = this.props
-    const { activePath } = this.state
+    const { info, tabs } = this.props
+    const { activePath, currentTabIndex, defaultPropComponent } = this.state
 
     return (
       <div style={{ padding: '20px' }}>
-        <Flex column>
+        <Flex column styles={{ paddingBottom: '1rem' }}>
           <Flex.Item padding="padding.medium">
             <ThemeContext.Consumer>
               {({ changeTheme, themeOptions }) => (
@@ -112,7 +167,7 @@ class ComponentDoc extends React.Component<any, any> {
                 <Flex.Item>
                   <Header
                     as="h1"
-                    aria-level="2"
+                    aria-level={2}
                     content={info.displayName}
                     variables={{ color: 'black' }}
                   />
@@ -126,44 +181,61 @@ class ComponentDoc extends React.Component<any, any> {
                   />
                 </Flex.Item>
               </Flex>
-              <Text
-                styles={{ marginBottom: '1.4rem' }}
-                content={_.join(info.docblock.description, ' ')}
+              <Menu
+                underlined
+                primary
+                activeIndex={currentTabIndex}
+                items={tabs}
+                onItemClick={this.handleTabClick}
+                accessibility={tabListBehavior}
               />
-              <ComponentAccessibility info={info} />
               <ComponentDocSee displayName={info.displayName} />
-
-              <ComponentProps displayName={info.displayName} props={info.props} />
             </>
           </Flex.Item>
         </Flex>
-        <Grid columns="auto 300px" styles={{ justifyContent: 'normal', justifyItems: 'stretch' }}>
-          <div ref={this.handleExamplesRef}>
-            <ExampleContext.Provider
-              value={{
-                activeAnchorName: activePath,
-                onExamplePassed: this.handleExamplePassed,
-              }}
+
+        {this.getCurrentTabTitle() === 'Accessibility' && <ComponentDocAccessibility info={info} />}
+
+        {this.getCurrentTabTitle() === 'Props' && (
+          <ComponentProps
+            displayName={info.displayName}
+            props={info.props}
+            defaultComponentProp={defaultPropComponent}
+            onPropComponentSelected={this.onPropComponentSelected}
+          />
+        )}
+
+        {this.getCurrentTabTitle() === 'Definition' && (
+          <>
+            <Text
+              size="large"
+              styles={{ marginBottom: '1.4rem' }}
+              content={info.docblock.description}
+            />
+            <Box styles={{ height: '10px' }} />
+            <ComponentPlayground componentName={info.displayName} key={info.displayName} />
+            <Grid
+              columns="auto 300px"
+              styles={{ justifyContent: 'normal', justifyItems: 'stretch' }}
             >
-              <ComponentExamples displayName={info.displayName} />
-            </ExampleContext.Provider>
+              <div>
+                <ComponentBestPractices displayName={info.displayName} />
+                <ExampleContext.Provider
+                  value={{
+                    activeAnchorName: activePath,
+                    onExamplePassed: this.handleExamplePassed,
+                  }}
+                >
+                  <ComponentExamples displayName={info.displayName} />
+                </ExampleContext.Provider>
+              </div>
+            </Grid>
+          </>
+        )}
 
-            <div style={exampleEndStyle}>
-              This is the bottom <Icon name="pointing down" />
-            </div>
-          </div>
-
-          {/* TODO: bring back the right floating menu
-            <Box styles={{ width: '25%', paddingLeft: '14px' }}>
-              <ComponentSidebar
-                activePath={activePath}
-                displayName={info.displayName}
-                examplesRef={examplesRef}
-                onItemClick={this.handleSidebarItemClick}
-              />
-            </Box>
-          */}
-        </Grid>
+        <div style={exampleEndStyle}>
+          This is the bottom <Icon name="pointing down" />
+        </div>
       </div>
     )
   }

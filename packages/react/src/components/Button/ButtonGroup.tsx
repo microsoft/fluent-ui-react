@@ -1,22 +1,22 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { ReactProps, ShorthandValue } from '../../types'
+import { WithAsProp, withSafeTypeForAs, ShorthandCollection } from '../../types'
 import {
   UIComponent,
   childrenExist,
-  customPropTypes,
   UIComponentProps,
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
   rtlTextContainer,
   createShorthandFactory,
+  ShorthandFactory,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
-import Button from './Button'
+import Button, { ButtonProps } from './Button'
 
 export interface ButtonGroupProps
   extends UIComponentProps,
@@ -24,39 +24,34 @@ export interface ButtonGroupProps
     ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
   /** The buttons contained inside the ButtonGroup. */
-  buttons?: ShorthandValue[]
+  buttons?: ShorthandCollection<ButtonProps>
 
   /** The buttons inside group can appear circular. */
   circular?: boolean
 }
 
-/**
- * A button group presents multiple related actions.
- */
-class ButtonGroup extends UIComponent<ReactProps<ButtonGroupProps>, any> {
-  public static create: Function
+class ButtonGroup extends UIComponent<WithAsProp<ButtonGroupProps>, any> {
+  static create: ShorthandFactory<ButtonGroupProps>
 
-  public static displayName = 'ButtonGroup'
+  static displayName = 'ButtonGroup'
 
-  public static className = 'ui-buttons'
+  static className = 'ui-buttons'
 
-  public static propTypes = {
+  static propTypes = {
     ...commonPropTypes.createCommon(),
     buttons: customPropTypes.collectionShorthand,
     circular: PropTypes.bool,
   }
 
-  public static defaultProps = {
-    accessibility: defaultBehavior,
+  static defaultProps = {
     as: 'div',
   }
 
-  public renderComponent({
+  renderComponent({
     ElementType,
     classes,
     accessibility,
@@ -112,4 +107,7 @@ ButtonGroup.create = createShorthandFactory({
   mappedArrayProp: 'buttons',
 })
 
-export default ButtonGroup
+/**
+ * A ButtonGroup represents multiple related actions as a group.
+ */
+export default withSafeTypeForAs<typeof ButtonGroup, ButtonGroupProps>(ButtonGroup)

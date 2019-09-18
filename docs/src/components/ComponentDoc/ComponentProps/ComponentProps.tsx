@@ -3,10 +3,10 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { getComponentGroup } from 'docs/src/utils'
-import ComponentTable from '../ComponentTable'
+import ComponentTableProps from '../ComponentPropsTable'
 import ComponentPropsComponents from './ComponentPropsComponents'
 import ComponentPropsDescription from './ComponentPropsDescription'
-import { ICSSInJSStyle, Input, Text, Flex } from '@stardust-ui/react'
+import { ICSSInJSStyle, Flex } from '@stardust-ui/react'
 
 const propsContainerStyle: ICSSInJSStyle = { overflowX: 'auto' }
 
@@ -14,12 +14,17 @@ export default class ComponentProps extends React.Component<any, any> {
   static propTypes = {
     displayName: PropTypes.string.isRequired,
     props: PropTypes.arrayOf(PropTypes.object).isRequired,
+    defaultComponentProp: PropTypes.string,
+    onPropComponentSelected: PropTypes.func,
   }
 
   componentWillMount() {
-    const { displayName } = this.props
+    const { displayName, defaultComponentProp } = this.props
 
-    this.setState({ componentGroup: getComponentGroup(displayName) })
+    this.setState({
+      componentGroup: getComponentGroup(displayName),
+      activeDisplayName: defaultComponentProp || displayName,
+    })
   }
 
   componentWillReceiveProps({ displayName: next }) {
@@ -33,55 +38,35 @@ export default class ComponentProps extends React.Component<any, any> {
     }
   }
 
-  handleComponentClick = (e, { name }) => {
-    this.setState({ activeDisplayName: name })
-  }
-
-  handleToggle = () => {
-    const { displayName } = this.props
-    const { activeDisplayName } = this.state
-
-    this.setState({ activeDisplayName: activeDisplayName ? false : displayName })
+  handleSelectedChange = (e, props) => {
+    this.setState({ activeDisplayName: props.value })
+    _.invoke(this.props, 'onPropComponentSelected', e, props)
   }
 
   render() {
     const { displayName } = this.props
     const { activeDisplayName, componentGroup } = this.state
     const displayNames = _.keys(componentGroup)
-    const { docblock, props } = (componentGroup[activeDisplayName] || {}) as any
+    const { docblock } = (componentGroup[activeDisplayName] || {}) as any
     const description = _.get(docblock, 'description', [])
 
     return (
-      <Flex column>
+      <Flex column gap="gap.small">
         <Flex.Item styles={{ display: 'block', verticalAlign: 'middle' }}>
-          <Flex>
-            {/* Should be toggle component - need to associate text with checkbox.   */}
-            <Flex.Item styles={{ display: 'inline-block' }}>
-              <>
-                <Input
-                  type="checkbox"
-                  checked={!!activeDisplayName}
-                  onClick={this.handleToggle}
-                  inline
-                />
-                <Text content="Props" styles={{ marginBottom: '0' }} />
-              </>
-            </Flex.Item>
-            <Flex.Item>
-              <ComponentPropsComponents
-                activeDisplayName={activeDisplayName}
-                displayNames={displayNames}
-                onItemClick={this.handleComponentClick}
-                parentDisplayName={displayName}
-              />
-            </Flex.Item>
+          <Flex gap="gap.medium">
+            <ComponentPropsComponents
+              activeDisplayName={activeDisplayName}
+              displayNames={displayNames}
+              onSelectedChange={this.handleSelectedChange}
+              parentDisplayName={displayName}
+            />
           </Flex>
         </Flex.Item>
         {activeDisplayName && (
           <Flex.Item style={propsContainerStyle}>
             <>
-              <ComponentPropsDescription description={_.join(description, ' ')} />
-              <ComponentTable displayName={activeDisplayName} props={props} />
+              <ComponentPropsDescription description={description} />
+              <ComponentTableProps componentName={activeDisplayName} />
             </>
           </Flex.Item>
         )}

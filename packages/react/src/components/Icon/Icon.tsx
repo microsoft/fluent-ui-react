@@ -1,28 +1,24 @@
-import * as React from 'react'
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
+import * as React from 'react'
 import {
   callable,
   UIComponent,
   createShorthandFactory,
-  customPropTypes,
   UIComponentProps,
   commonPropTypes,
   ColorComponentProps,
   SizeValue,
+  ShorthandFactory,
 } from '../../lib'
 import { iconBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-
-import { SvgIconSpec } from '../../themes/types'
-import { ReactProps } from '../../types'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 
 export interface IconProps extends UIComponentProps, ColorComponentProps {
-  /**
-   * Accessibility behavior if overriden by the user.
-   * @default iconBehavior
-   * */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Icon can appear with rectangular border. */
@@ -35,7 +31,7 @@ export interface IconProps extends UIComponentProps, ColorComponentProps {
   disabled?: boolean
 
   /** Name of the icon. */
-  name?: string
+  name: string
 
   /** An icon can provide an outline variant. */
   outline?: boolean
@@ -50,11 +46,8 @@ export interface IconProps extends UIComponentProps, ColorComponentProps {
   xSpacing?: IconXSpacing
 }
 
-/**
- * An icon is a glyph used to represent something else.
- */
-class Icon extends UIComponent<ReactProps<IconProps>, any> {
-  static create: Function
+class Icon extends UIComponent<WithAsProp<IconProps>, any> {
+  static create: ShorthandFactory<IconProps>
 
   static className = 'ui-icon'
 
@@ -69,7 +62,7 @@ class Icon extends UIComponent<ReactProps<IconProps>, any> {
     bordered: PropTypes.bool,
     circular: PropTypes.bool,
     disabled: PropTypes.bool,
-    name: PropTypes.string,
+    name: PropTypes.string.isRequired,
     outline: PropTypes.bool,
     rotate: PropTypes.number,
     size: customPropTypes.size,
@@ -83,49 +76,24 @@ class Icon extends UIComponent<ReactProps<IconProps>, any> {
     rotate: 0,
   }
 
-  private renderFontIcon(ElementType, classes, unhandledProps, accessibility): React.ReactNode {
-    return (
-      <ElementType
-        className={classes.root}
-        {...accessibility.attributes.root}
-        {...unhandledProps}
-      />
-    )
-  }
+  renderComponent({ ElementType, classes, unhandledProps, accessibility, theme, rtl, styles }) {
+    const { name } = this.props
+    const { icons = {} } = theme || {}
 
-  private renderSvgIcon(
-    ElementType,
-    svgIconDescriptor: SvgIconSpec,
-    classes,
-    unhandledProps,
-    accessibility,
-    rtl,
-  ): React.ReactNode {
+    const maybeIcon = icons[name]
+    const isSvgIcon = maybeIcon && maybeIcon.isSvg
+
     return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
-        {svgIconDescriptor && callable(svgIconDescriptor)({ classes, rtl })}
+        {isSvgIcon && callable(maybeIcon.icon)({ classes, rtl, props: this.props })}
       </ElementType>
     )
   }
-
-  public renderComponent({ ElementType, classes, unhandledProps, accessibility, theme, rtl }) {
-    const { icons = {} } = theme
-
-    const maybeIcon = icons[this.props.name]
-
-    return maybeIcon && maybeIcon.isSvg
-      ? this.renderSvgIcon(
-          ElementType,
-          maybeIcon.icon as SvgIconSpec,
-          classes,
-          unhandledProps,
-          accessibility,
-          rtl,
-        )
-      : this.renderFontIcon(ElementType, classes, unhandledProps, accessibility)
-  }
 }
 
-Icon.create = createShorthandFactory({ Component: Icon, mappedProp: 'name' })
+Icon.create = createShorthandFactory({ Component: Icon, mappedProp: 'name', allowsJSX: false })
 
-export default Icon
+/**
+ * An Icon displays a pictogram with semantic meaning.
+ */
+export default withSafeTypeForAs<typeof Icon, IconProps, 'span'>(Icon)

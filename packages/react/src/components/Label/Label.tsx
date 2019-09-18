@@ -1,10 +1,10 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import {
   childrenExist,
   createShorthandFactory,
-  customPropTypes,
   pxToRem,
   UIComponent,
   UIComponentProps,
@@ -13,27 +13,23 @@ import {
   commonPropTypes,
   ColorComponentProps,
   rtlTextContainer,
+  ShorthandFactory,
 } from '../../lib'
 
-import Icon from '../Icon/Icon'
-import Image from '../Image/Image'
+import Icon, { IconProps } from '../Icon/Icon'
+import Image, { ImageProps } from '../Image/Image'
 import Layout from '../Layout/Layout'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ShorthandValue } from '../../types'
-import {
-  ComplexColorPropType,
-  ColorValuesWithPrimitiveColors,
-} from '../../lib/commonPropInterfaces'
+
+import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 
 export interface LabelProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps,
-    ColorComponentProps<ComplexColorPropType<ColorValuesWithPrimitiveColors>> {
+    ColorComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
@@ -44,40 +40,36 @@ export interface LabelProps
   fluid?: boolean
 
   /** A Label can have an icon. */
-  icon?: ShorthandValue
+  icon?: ShorthandValue<IconProps>
 
   /** A Label can position its Icon at the start or end of the layout. */
   iconPosition?: 'start' | 'end'
 
   /** A Label can contain an image. */
-  image?: ShorthandValue
+  image?: ShorthandValue<ImageProps>
 
   /** A Label can position its image at the start or end of the layout. */
   imagePosition?: 'start' | 'end'
 }
 
-/**
- * A Label is used to classify content.
- */
-class Label extends UIComponent<ReactProps<LabelProps>, any> {
+class Label extends UIComponent<WithAsProp<LabelProps>, any> {
   static displayName = 'Label'
 
-  static create: Function
+  static create: ShorthandFactory<LabelProps>
 
   static className = 'ui-label'
 
   static propTypes = {
-    ...commonPropTypes.createCommon({ color: 'complex' }),
+    ...commonPropTypes.createCommon({ color: true }),
     circular: PropTypes.bool,
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     iconPosition: PropTypes.oneOf(['start', 'end']),
-    image: customPropTypes.itemShorthand,
+    image: customPropTypes.itemShorthandWithoutJSX,
     imagePosition: PropTypes.oneOf(['start', 'end']),
     fluid: PropTypes.bool,
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior,
     as: 'span',
     imagePosition: 'start',
     iconPosition: 'end',
@@ -158,4 +150,7 @@ class Label extends UIComponent<ReactProps<LabelProps>, any> {
 
 Label.create = createShorthandFactory({ Component: Label, mappedProp: 'content' })
 
-export default Label
+/**
+ * A Label allows user to classify content.
+ */
+export default withSafeTypeForAs<typeof Label, LabelProps, 'span'>(Label)

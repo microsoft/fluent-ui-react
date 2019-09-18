@@ -1,7 +1,9 @@
 import * as _ from 'lodash'
 import * as keyboardKey from 'keyboard-key'
-import keyboardHandlerFilter from './keyboardHandlerFilter'
-import { AccessibilityActionHandlers, ActionsKeyHandler, KeyActions } from './accessibility/types'
+import * as React from 'react'
+import shouldHandleOnKeys from './shouldHandleOnKeys'
+import { KeyActions } from './accessibility/types'
+import { AccessibilityActionHandlers, AccessibilityKeyHandlers } from './accessibility/reactTypes'
 
 const rtlKeyMap = {
   [keyboardKey.ArrowRight]: keyboardKey.ArrowLeft,
@@ -9,7 +11,7 @@ const rtlKeyMap = {
 }
 
 /**
- * Assigns onKeyDown handler to the Component's part element, based on Component's actions
+ * Assigns onKeyDown handler to the slot element, based on Component's actions
  * and keys mappings defined in Accessibility behavior
  * @param {AccessibilityActionHandlers} componentActionHandlers Actions handlers defined in a component.
  * @param {KeyActions} behaviorKeyActions Mappings of actions and keys defined in Accessibility behavior.
@@ -19,7 +21,7 @@ const getKeyDownHandlers = (
   componentActionHandlers: AccessibilityActionHandlers,
   behaviorKeyActions: KeyActions,
   isRtlEnabled?: boolean,
-): ActionsKeyHandler => {
+): AccessibilityKeyHandlers => {
   const keyHandlers = {}
 
   if (!componentActionHandlers || !behaviorKeyActions) return keyHandlers
@@ -33,7 +35,7 @@ const getKeyDownHandlers = (
     if (!handledActions.length) continue
 
     keyHandlers[componentPart] = {
-      onKeyDown: (event: KeyboardEvent) => {
+      onKeyDown: (event: React.KeyboardEvent) => {
         handledActions.forEach(actionName => {
           let keyCombinations = componentPartKeyAction[actionName].keyCombinations
 
@@ -47,12 +49,9 @@ const getKeyDownHandlers = (
             })
           }
 
-          const eventHandler = keyboardHandlerFilter(
-            componentActionHandlers[actionName],
-            keyCombinations,
-          )
-
-          eventHandler && eventHandler(event)
+          if (shouldHandleOnKeys(event, keyCombinations)) {
+            componentActionHandlers[actionName](event)
+          }
         })
       },
     }

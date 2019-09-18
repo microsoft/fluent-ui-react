@@ -1,13 +1,9 @@
+import { Ref, RefFindNode } from '@stardust-ui/react-component-ref'
 import * as faker from 'faker'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { ReactWrapper } from 'enzyme'
 import * as ReactDOMServer from 'react-dom/server'
-
-import { ThemeProvider, FelaTheme } from 'react-fela'
-
-import Ref from 'src/components/Ref/Ref'
-import RefFindNode from 'src/components/Ref/RefFindNode'
 
 import isExportedAtTopLevel from './isExportedAtTopLevel'
 import {
@@ -24,6 +20,7 @@ import * as stardust from 'src/index'
 import { Accessibility, AriaRole } from 'src/lib/accessibility/types'
 import { FocusZone, IS_FOCUSABLE_ATTRIBUTE } from 'src/lib/accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusUtilities'
+import { getEventTargetComponent, EVENT_TARGET_ATTRIBUTE } from './eventTarget'
 
 export interface Conformant {
   eventTargets?: object
@@ -58,7 +55,7 @@ export default (Component, options: Conformant = {}) => {
   const componentType = typeof Component
 
   const helperComponentNames = [
-    ...[ThemeProvider, FelaTheme, Ref, RefFindNode],
+    ...[Ref, RefFindNode],
     ...(wrapperComponent ? [wrapperComponent] : []),
   ].map(getDisplayName)
 
@@ -73,42 +70,20 @@ export default (Component, options: Conformant = {}) => {
   }
 
   const getComponent = (wrapper: ReactWrapper) => {
-    const componentElement = toNextNonTrivialChild(wrapper)
-    let topLevelChildElement = toNextNonTrivialChild(componentElement)
+    let componentElement = toNextNonTrivialChild(wrapper)
 
     // passing through Focus Zone wrappers
-    if (topLevelChildElement.type() === FocusZone) {
+    if (componentElement.type() === FocusZone) {
       // another HOC component is added: FocuZone
-      topLevelChildElement = topLevelChildElement.childAt(0) // skip through <FocusZone>
-      if (topLevelChildElement.prop(FOCUSZONE_WRAP_ATTRIBUTE)) {
-        topLevelChildElement = topLevelChildElement.childAt(0) // skip the additional wrap <div> of the FocusZone
+      componentElement = componentElement.childAt(0) // skip through <FocusZone>
+      if (componentElement.prop(FOCUSZONE_WRAP_ATTRIBUTE)) {
+        componentElement = componentElement.childAt(0) // skip the additional wrap <div> of the FocusZone
       }
     }
 
     // in that case 'topLevelChildElement' we've found so far is a wrapper's topmost child
     // thus, we should continue search
-    return wrapperComponent ? toNextNonTrivialChild(topLevelChildElement) : topLevelChildElement
-  }
-
-  const getEventTargetComponent = (wrapper: ReactWrapper, listenerName: string) => {
-    const eventTarget = eventTargets[listenerName]
-      ? wrapper
-          .find(eventTargets[listenerName])
-          .hostNodes()
-          .first()
-      : wrapper
-          .find('[data-simulate-event-here]')
-          .hostNodes()
-          .first()
-
-    // if (eventTarget.length === 0) {
-    //   throw new Error(
-    //     'The event prop was not delegated to the children. You probably ' +
-    //     'forgot to use `getUnhandledProps` util to spread the `unhandledProps` props.',
-    //   )
-    // }
-
-    return eventTarget
+    return wrapperComponent ? toNextNonTrivialChild(componentElement) : componentElement
   }
 
   // make sure components are properly exported
@@ -157,7 +132,7 @@ export default (Component, options: Conformant = {}) => {
   // ----------------------------------------
   // Docblock description
   // ----------------------------------------
-  const hasDocblockDescription = info.docblock.description.join('').trim().length > 0
+  const hasDocblockDescription = info.docblock.description.trim().length > 0
 
   test('has a docblock description', () => {
     expect(hasDocblockDescription).toEqual(true)
@@ -342,10 +317,6 @@ export default (Component, options: Conformant = {}) => {
       },
     })
 
-    test('defines an "accessibility" prop in Component.defaultProps', () => {
-      expect(Component.defaultProps).toHaveProperty('accessibility')
-    })
-
     test('defines an "accessibility" prop in Component.handledProps', () => {
       expect(Component.handledProps).toContain('accessibility')
     })
@@ -374,12 +345,12 @@ export default (Component, options: Conformant = {}) => {
 
         const wrapperProps = {
           ...requiredProps,
-          'data-simulate-event-here': true,
+          [EVENT_TARGET_ATTRIBUTE]: true,
           [listenerName]: handler,
         }
         const wrapper = mount(<Component {...wrapperProps} />)
 
-        getEventTargetComponent(wrapper, listenerName).simulate(eventName)
+        getEventTargetComponent(wrapper, listenerName, eventTargets).simulate(eventName)
         expect(handler).toBeCalledTimes(1)
       })
     })
@@ -407,11 +378,11 @@ export default (Component, options: Conformant = {}) => {
         const props = {
           ...requiredProps,
           [listenerName]: handlerSpy,
-          'data-simulate-event-here': true,
+          [EVENT_TARGET_ATTRIBUTE]: true,
         }
 
-        const component = mount(<Component {...props} />).childAt(0)
-        const eventTarget = getEventTargetComponent(component, listenerName)
+        const component = mount(<Component {...props} />)
+        const eventTarget = getEventTargetComponent(component, listenerName, eventTargets)
         const customHandler: Function = eventTarget.prop(listenerName)
 
         if (customHandler) {

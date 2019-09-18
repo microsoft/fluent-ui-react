@@ -21,7 +21,7 @@ const Variations = () => (
     />
     <ComponentExample
       title="Navigable with keyboard arrow buttons"
-      description="Use a Grid accessibility behavior, so Grid items can be keyboard navigable by adding 'data-is-focusable=true' attribute to each item. This attribute can be skipped if the Grid items are natively focusable elements, like buttons, anchors etc."
+      description="Choose between Grid's accessibility behaviors to provide needed keyboard navigation. Add 'data-is-focusable=true' attribute to grid items which aren't natively focusable but should be keyboard navigable."
       examplePath="components/Grid/Variations/GridExampleKeyboardNavigable"
     />
   </ExampleSection>

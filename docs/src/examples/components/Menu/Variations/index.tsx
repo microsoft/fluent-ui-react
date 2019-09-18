@@ -14,11 +14,6 @@ const Variations = () => (
       examplePath="components/Menu/Variations/MenuExampleVerticalPointing"
     />
     <ComponentExample
-      title="Primary"
-      description="A menu can have a primary color."
-      examplePath="components/Menu/Variations/MenuExamplePrimary"
-    />
-    <ComponentExample
       title="Fluid"
       description="A vertical menu can be fluid which takes up the full space of its container. A horizontal menu does this by default."
       examplePath="components/Menu/Variations/MenuExampleFluid"

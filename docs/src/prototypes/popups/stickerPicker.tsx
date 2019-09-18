@@ -6,6 +6,7 @@ import {
   dialogBehavior,
   tabBehavior,
   tabListBehavior,
+  MenuItemProps,
 } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import { arrayOfStickerImagesNames, getItemsData } from './dataMocks'
@@ -35,7 +36,7 @@ class StickerPicker extends React.Component {
     })
   }
 
-  getTabListItems = () => {
+  getTabListItems = (): MenuItemProps[] => {
     return _.map(tabListItemsContent, item => ({
       key: item,
       content: item,

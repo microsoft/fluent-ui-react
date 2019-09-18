@@ -1,19 +1,12 @@
-import {
-  Menu,
-  Provider,
-  ThemeInput,
-  toolbarBehavior,
-  toolbarButtonBehavior,
-} from '@stardust-ui/react'
+import { CopyToClipboard } from '@stardust-ui/docs-components'
+import { Menu, Provider, ThemeInput, menuAsToolbarBehavior } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
 
-import { updateForKeys } from 'docs/src/hoc'
 import ComponentButton from './ComponentButton'
 import { ComponentSourceManagerLanguage } from 'docs/src/components/ComponentDoc/ComponentSourceManager'
 import ComponentControlsCodeSandbox from './ComponentControlsCodeSandbox/ComponentControlsCodeSandbox'
-import CopyToClipboard from 'docs/src/components/CopyToClipboard'
 
 type ComponentControlsProps = {
   exampleCode: string
@@ -27,8 +20,8 @@ type ComponentControlsProps = {
   onShowVariables: (e: React.SyntheticEvent) => void
   showCode: boolean
   showRtl: boolean
-  showTransparent: boolean
   showVariables: boolean
+  showTransparent: boolean
 }
 
 const controlsTheme: ThemeInput = {
@@ -60,8 +53,8 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
     examplePath,
     showCode,
     showRtl,
-    showTransparent,
     showVariables,
+    showTransparent,
     onCopyLink,
     onShowCode,
     onShowRtl,
@@ -71,21 +64,18 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
   } = props
 
   return (
-    <Provider theme={controlsTheme}>
+    <Provider theme={controlsTheme} as={React.Fragment}>
       <Menu
         {...rest}
         fluid
-        color="green"
-        icon="labeled"
-        size="tiny"
         pills
-        accessibility={toolbarBehavior}
+        accessibility={menuAsToolbarBehavior}
         items={[
           {
             key: 'show-code',
-            content: <ComponentButton iconName="code" label="Try it" active={showCode} />,
+            content: <ComponentButton iconName="code" label="Try it" />,
             onClick: onShowCode,
-            accessibility: toolbarButtonBehavior,
+            active: showCode,
           },
           {
             key: 'show-codesandbox',
@@ -96,35 +86,28 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
                 exampleName={examplePath}
               />
             ),
-            accessibility: toolbarButtonBehavior,
           },
           {
             key: 'show-variables',
-            content: (
-              <ComponentButton iconName="paint brush" label="Theme it" active={showVariables} />
-            ),
+            content: <ComponentButton iconName="paint brush" label="Theme it" />,
             onClick: onShowVariables,
-            accessibility: toolbarButtonBehavior,
+            active: showVariables,
           },
           {
             key: 'show-transparent',
-            content: (
-              <ComponentButton iconName="adjust" label="Transparent" active={showTransparent} />
-            ),
+            content: <ComponentButton iconName="adjust" label="Transparent" />,
             onClick: onShowTransparent,
-            accessibility: toolbarButtonBehavior,
+            active: showTransparent,
           },
           {
             key: 'show-rtl',
-            content: <ComponentButton iconName="align right" label="RTL" active={showRtl} />,
+            content: <ComponentButton iconName="align right" label="RTL" />,
             onClick: onShowRtl,
-            accessibility: toolbarButtonBehavior,
+            active: showRtl,
           },
           {
             key: 'maximize',
-            content: (
-              <ComponentButton iconName="external alternate" label="Popout" active={false} />
-            ),
+            content: <ComponentButton iconName="external alternate" label="Popout" />,
             as: NavLink,
             to: `/maximize/${_.kebabCase(
               examplePath
@@ -134,25 +117,21 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
             )}/${showRtl}`,
             target: '_blank',
             rel: 'noopener noreferrer',
-            accessibility: toolbarButtonBehavior,
           },
           {
             key: 'copy-link',
             content: (
-              <CopyToClipboard
-                render={(active, onClick) => (
+              <CopyToClipboard value={anchorName}>
+                {(active, onClick) => (
                   <ComponentButton
                     iconName="linkify"
                     label={active ? 'Copied!' : 'Permalink'}
-                    active={active}
                     onClick={onClick}
                   />
                 )}
-                value={anchorName}
-              />
+              </CopyToClipboard>
             ),
             onClick: onCopyLink,
-            accessibility: toolbarButtonBehavior,
           },
         ]}
       />
@@ -160,11 +139,4 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
   )
 }
 
-export default updateForKeys([
-  'exampleCode',
-  'examplePath',
-  'showRtl',
-  'showCode',
-  'showTransparent',
-  'showVariables',
-])(ComponentControls, ComponentButton)
+export default React.memo(ComponentControls)

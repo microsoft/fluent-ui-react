@@ -17,7 +17,10 @@ const buttonImplementsShorthandProp = implementsShorthandProp(Button)
 
 describe('Button', () => {
   isConformant(Button)
-  buttonImplementsShorthandProp('icon', Icon, { mapsValueToProp: 'name' })
+  buttonImplementsShorthandProp('icon', Icon, {
+    mapsValueToProp: 'name',
+    requiredShorthandProps: { name: 'at' },
+  })
 
   describe('accessibility', () => {
     describe('button', () => {
@@ -39,9 +42,9 @@ describe('Button', () => {
         expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe('true')
       })
 
-      test('is set to false, if disabled attribute is not provided', () => {
+      test('is set to undefined, if disabled attribute is not provided', () => {
         const renderedComponent = mountWithProviderAndGetComponent(Button, <Button />)
-        expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe('false')
+        expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe(undefined)
       })
     })
 
@@ -117,12 +120,12 @@ describe('Button', () => {
           expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe('true')
         })
 
-        test('is set to false, if disabled attribute is not provided', () => {
+        test('is set to undefined, if disabled attribute is not provided', () => {
           const renderedComponent = mountWithProviderAndGetComponent(
             Button,
             <Button accessibility={toggleButtonBehavior} />,
           )
-          expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe('false')
+          expect(getRenderedAttribute(renderedComponent, 'aria-disabled', '')).toBe(undefined)
         })
       })
     })

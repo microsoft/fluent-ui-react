@@ -4,9 +4,10 @@ import {
   Input,
   Menu,
   Provider,
-  toolbarButtonBehavior,
-  toolbarBehavior,
+  menuAsToolbarBehavior,
   MenuItemProps,
+  ShorthandCollection,
+  IconXSpacing,
 } from '@stardust-ui/react'
 
 import { Props } from 'src/types'
@@ -42,7 +43,7 @@ const ComposeMessage: React.FunctionComponent<ComposeMessageProps> = props => (
           defaultActiveIndex={0}
           items={getMenuItems()}
           iconOnly
-          accessibility={toolbarBehavior}
+          accessibility={menuAsToolbarBehavior}
           aria-label="Compose Editor"
           styles={{ marginTop: '10px' }}
         />
@@ -57,7 +58,6 @@ const getInputWrapperStyles = ({ attached }: ComposeMessageProps): React.CSSProp
   const borderWidth = '1px'
 
   return {
-    boxSizing: 'border-box',
     borderStyle: 'solid',
     borderWidth,
     borderRadius: `${borderTopRadius} ${borderTopRadius} ${borderBottomRadius} ${borderBottomRadius}`,
@@ -74,8 +74,8 @@ const getInputWrapperStyles = ({ attached }: ComposeMessageProps): React.CSSProp
   }
 }
 
-const getMenuItems = (): MenuItemProps[] => {
-  const items: MenuItemProps[] = [
+const getMenuItems = (): ShorthandCollection<MenuItemProps> => {
+  const items: ShorthandCollection<MenuItemProps> = [
     'compose',
     'attach',
     'smile',
@@ -88,14 +88,13 @@ const getMenuItems = (): MenuItemProps[] => {
     key: `${index}-${name}`,
     icon: {
       name,
-      xSpacing: 'both',
-      variables: siteVars => ({ color: siteVars.gray02 }),
+      xSpacing: 'both' as IconXSpacing,
+      variables: siteVars => ({ color: siteVars.colors.grey[500] }),
     },
-    accessibility: toolbarButtonBehavior,
     'aria-label': `${name} tool`,
   }))
 
-  items.splice(-1, 0, { key: 'separator', styles: { flex: 1 } })
+  items.splice(-1, 0, { key: 'separator', styles: { flex: 1 } } as any)
 
   return items
 }

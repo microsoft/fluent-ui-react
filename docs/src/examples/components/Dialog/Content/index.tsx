@@ -10,6 +10,11 @@ const DialogContentExamples = () => (
       description="A dialog can contain a content."
       examplePath="components/Dialog/Content/DialogExampleContent"
     />
+    <ComponentExample
+      title="Header action"
+      description="A dialog can contain an action in the header."
+      examplePath="components/Dialog/Content/DialogExampleHeaderAction"
+    />
   </ExampleSection>
 )
 

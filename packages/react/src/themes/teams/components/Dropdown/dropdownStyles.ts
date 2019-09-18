@@ -1,7 +1,16 @@
-import { ComponentSlotStyle, ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
-import { DropdownProps, DropdownState } from '../../../../components/Dropdown/Dropdown'
+import {
+  ComponentSlotStylesPrepared,
+  ICSSInJSStyle,
+  ComponentSlotStyleFunction,
+} from '../../../types'
+import {
+  default as Dropdown,
+  DropdownProps,
+  DropdownState,
+} from '../../../../components/Dropdown/Dropdown'
 import { DropdownVariables } from './dropdownVariables'
 import { pxToRem } from '../../../../lib'
+import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 type DropdownPropsAndState = DropdownProps & DropdownState
 
@@ -21,7 +30,7 @@ const transparentColorStyleObj: ICSSInJSStyle = {
   },
 }
 
-const getIndicatorStyles: ComponentSlotStyle<DropdownPropsAndState, DropdownVariables> = ({
+const getIndicatorStyles: ComponentSlotStyleFunction<DropdownPropsAndState, DropdownVariables> = ({
   variables: v,
 }): ICSSInJSStyle => ({
   alignItems: 'center',
@@ -34,8 +43,8 @@ const getIndicatorStyles: ComponentSlotStyle<DropdownPropsAndState, DropdownVari
 
   margin: 0,
   position: 'absolute',
-  right: pxToRem(5),
-  height: v.toggleIndicatorSize,
+  right: pxToRem(-2),
+  height: '100%',
   width: v.toggleIndicatorSize,
 })
 
@@ -51,29 +60,40 @@ const getWidth = (p: DropdownPropsAndState, v: DropdownVariables): string => {
   return v.width
 }
 
-const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVariables> = {
+const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, DropdownVariables> = {
   root: ({ props: p }): ICSSInJSStyle => ({
-    ...(p.inline && {
-      display: 'inline-flex',
-    }),
+    ...(p.inline && { display: 'inline-flex' }),
   }),
 
   clearIndicator: getIndicatorStyles,
 
-  container: ({ props: p, variables: v }): ICSSInJSStyle => ({
+  container: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
     display: 'flex',
     flexWrap: 'wrap',
     position: 'relative',
-    boxSizing: 'border-box',
     borderStyle: 'solid',
-    borderColor: 'transparent',
+    borderColor: v.borderColor,
     outline: 0,
     width: getWidth(p, v),
-    borderWidth: v.borderWidth,
-    borderRadius: v.borderRadius,
+    borderWidth: p.search ? `0 0 ${v.searchBorderBottomWidth} 0` : v.borderWidth,
     color: v.color,
     backgroundColor: v.backgroundColor,
-    ...(p.focused && { borderBottomColor: v.borderColorFocus }),
+    borderRadius: v.containerBorderRadius,
+    ...(p.open && p.position === 'above' && { borderRadius: v.openAboveContainerBorderRadius }),
+    ...(p.open && p.position === 'below' && { borderRadius: v.openBelowContainerBorderRadius }),
+    ':hover': {
+      backgroundColor: v.backgroundColorHover,
+      [`& .${Dropdown.slotClassNames.triggerButton}`]: {
+        // reset all styles
+      },
+    },
+    ...(p.focused && {
+      ...(p.search && { borderBottomColor: v.borderColorFocus }),
+      ...(!p.search &&
+        !p.open &&
+        p.isFromKeyboard &&
+        getBorderFocusStyles({ siteVariables })[':focus-visible']),
+    }),
     ...(p.inline && {
       ...transparentColorStyleObj,
       alignItems: 'center',
@@ -95,17 +115,25 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
       margin: '0',
       justifyContent: 'left',
       padding: v.comboboxPaddingButton,
-      height: pxToRem(30),
+      height: pxToRem(32),
       ...(p.multiple && { minWidth: 0, flex: 1 }),
       ...transparentColorStyleObj,
       ':focus': {
+        color: v.color,
+      },
+      ':focus-visible': {
+        color: v.color,
         ...transparentColorStyle,
         ':after': {
-          top: '0',
-          bottom: '0',
+          borderColor: 'transparent',
+        },
+        ':before': {
           borderColor: 'transparent',
         },
         ':active': transparentColorStyle,
+      },
+      ':hover': {
+        ...transparentColorStyle,
       },
       ...(p.inline && {
         paddingLeft: 0,
@@ -117,14 +145,16 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
 
   list: ({ props: p, variables: v }): ICSSInJSStyle => ({
     outline: 0,
-    position: 'absolute',
-    borderRadius: v.listBorderRadius,
+    borderStyle: 'solid',
+    borderWidth: p.open ? v.listBorderWidth : '0px',
+    borderColor: v.listBorderColor,
     zIndex: 1000,
     maxHeight: v.listMaxHeight,
     overflowY: 'auto',
     width: getWidth(p, v),
-    top: 'calc(100% + 2px)', // leave room for container + its border
     background: v.listBackgroundColor,
+    ...(p.position === 'above' && { borderRadius: v.aboveListBorderRadius }),
+    ...(p.position === 'below' && { borderRadius: v.belowListBorderRadius }),
     ...(p.open && {
       boxShadow: v.listBoxShadow,
       padding: v.listPadding,

@@ -100,7 +100,7 @@ describe('AutoFocusZone', () => {
 
     it('goes to the element with containing the firstFocusableSelector if provided when focusing the ATZ', async () => {
       expect.assertions(1)
-      const { autoFocusZone, buttonB } = setupTest('b')
+      const { autoFocusZone, buttonB } = setupTest('.b')
 
       // By calling `componentDidMount`, AFZ will behave as just initialized and focus needed element
       // Focus within should go to the element containing the selector.

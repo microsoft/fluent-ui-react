@@ -1,58 +1,176 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Header, Flex, Text } from '@stardust-ui/react'
+import { Flex, Loader, Text, Segment, Header } from '@stardust-ui/react'
+import { link } from './../../utils/helpers'
+import { BehaviorInfo, ComponentInfo, BehaviorVariantionInfo } from 'docs/src/types'
+import { BehaviorCard, exampleStyle, behaviorVariantDisplayName } from './BehaviorCard'
+
+const InlineMarkdown = React.lazy(() => import('./InlineMarkdown'))
 
 const behaviorMenu = require('docs/src/behaviorMenu')
 
-const ComponentDocAccessibility = ({ info }) => {
-  const description = _.get(_.find(info.docblock.tags, { title: 'accessibility' }), 'description')
-  const defaultValue = _.get(_.find(info.props, { name: 'accessibility' }), 'defaultValue')
+const knownIsusesId = 'known-issues'
 
-  const stem = defaultValue && defaultValue.split('.').pop()
-  const filename = stem && `${stem}.ts`
+type ComponentDocAccessibility = {
+  info: ComponentInfo
+}
 
-  const behaviorName = behaviorMenu.reduce((acc, next) => {
-    return _.find(next.variations, { name: filename }) ? next.displayName : acc
-  }, null)
-
-  if (!behaviorName && !description) return null
-
+export function containsAccessibility(info) {
+  const defaulBehaviorName = getDefaultBehaviorName(info)
   return (
-    <Flex column>
-      <Flex.Item>
-        <>
-          <Header
-            as="h2"
-            className="no-anchor"
-            content="Accessibility"
-            variables={{ color: 'black' }}
-          />
-
-          {description && <Text style={{ whiteSpace: 'pre-line' }}>{description}</Text>}
-
-          {behaviorName && (
-            <Text>
-              Default behavior:{' '}
-              <a href={`behaviors/${behaviorName}#${_.kebabCase(stem)}`}>{behaviorName}</a>
-            </Text>
-          )}
-
-          {info.behaviors && (
-            <Text>
-              Available behaviors:{' '}
-              {info.behaviors.map(behavior => (
-                <React.Fragment key={`${behavior.category}-${behavior.name}`}>
-                  <a href={`behaviors/${behavior.category}#${_.kebabCase(behavior.name)}`}>
-                    {behavior.displayName}
-                  </a>{' '}
-                </React.Fragment>
-              ))}
-            </Text>
-          )}
-        </>
-      </Flex.Item>
-    </Flex>
+    !!getDescription(info) ||
+    !!getBehaviorName(defaulBehaviorName) ||
+    (info.behaviors && info.behaviors.length > 0) ||
+    !!getAccIssues(info)
   )
 }
 
-export default ComponentDocAccessibility
+function getDescription(info) {
+  return _.get(_.find(info.docblock.tags, { title: 'accessibility' }), 'description')
+}
+
+function getDefaultBehaviorName(info) {
+  const defaultValue = _.get(_.find(info.props, { name: 'accessibility' }), 'defaultValue')
+  return defaultValue && defaultValue.split('.').pop()
+}
+
+function getBehaviorName(defaulBehaviorName) {
+  const filename = defaulBehaviorName && `${_.camelCase(defaulBehaviorName)}.ts`
+  for (const category of behaviorMenu) {
+    const behavior = category.variations.find(variation => variation.name === filename)
+    if (behavior) {
+      return category.displayName
+    }
+  }
+}
+
+function getAvailableVariantsFromJson(
+  availableBehaviors: BehaviorInfo[],
+): BehaviorVariantionInfo[] {
+  const availableBehaviorsFromJson = []
+  availableBehaviors.forEach(availableBehavior => {
+    const fileName = `${availableBehavior.name}.ts`
+    behaviorMenu.forEach(category => {
+      const result = category.variations.find(variation => variation.name === fileName)
+      if (result) {
+        availableBehaviorsFromJson.push(result)
+      }
+    })
+  })
+  return availableBehaviorsFromJson
+}
+
+function getAccIssues(info) {
+  return _.get(_.find(info.docblock.tags, { title: 'accessibilityIssues' }), 'description')
+}
+
+function getAllAvailableBehaviors(
+  behaviorName: string,
+  defaultBehaviorFileName: string,
+  availableBehaviors: BehaviorInfo[],
+): BehaviorVariantionInfo[] {
+  let behaviorVariantsWithoutDefault = []
+  if (defaultBehaviorFileName && behaviorName) {
+    behaviorVariantsWithoutDefault = behaviorMenu
+      .find(behavior => behavior.displayName === behaviorName)
+      .variations.filter(behavior => behavior.name !== defaultBehaviorFileName)
+  }
+
+  let otherAvailableVariants = []
+  if (availableBehaviors) {
+    otherAvailableVariants = getAvailableVariantsFromJson(availableBehaviors)
+  }
+  return _.union(behaviorVariantsWithoutDefault, otherAvailableVariants)
+}
+
+export const ComponentDocAccessibility: React.FC<ComponentDocAccessibility> = ({ info }) => {
+  const defaultBehaviorName = getDefaultBehaviorName(info)
+  const defaultBehaviorFileName = `${_.camelCase(defaultBehaviorName)}.ts`
+  const description = getDescription(info)
+  const behaviorName = getBehaviorName(defaultBehaviorName)
+  const accIssues = getAccIssues(info)
+  const allAvailableBehaviors = getAllAvailableBehaviors(
+    behaviorName,
+    defaultBehaviorFileName,
+    info.behaviors,
+  )
+
+  if (!behaviorName && !description && (info.behaviors && info.behaviors.length === 0)) {
+    return null
+  }
+
+  const accessibilityDetails = (
+    <>
+      {description && (
+        <Text style={{ whiteSpace: 'pre-line' }}>
+          <InlineMarkdown value={description} />
+        </Text>
+      )}
+
+      {((behaviorName && allAvailableBehaviors.length > 0) ||
+        (behaviorName && accIssues) ||
+        (allAvailableBehaviors.length > 0 && accIssues)) && (
+        <ul>
+          <li>
+            Behaviors
+            <ul>
+              {behaviorName && <li>{link(`Default: ${behaviorName}`, '#default-behavior')} </li>}
+              {(info.behaviors || allAvailableBehaviors.length > 0) &&
+                allAvailableBehaviors.map(variant => {
+                  return (
+                    <li>
+                      {link(
+                        `${behaviorVariantDisplayName(variant.name)}`,
+                        `#${_.kebabCase(variant.name)}`,
+                      )}
+                    </li>
+                  )
+                })}
+            </ul>
+          </li>
+          {accIssues && <li>{link('Known issues', `#${knownIsusesId}`)} </li>}
+        </ul>
+      )}
+
+      {behaviorName && (
+        <>
+          <Header content="Default behavior" id="default-behavior" as="h2" />
+          {behaviorMenu
+            .find(behavior => behavior.displayName === behaviorName)
+            .variations.filter(behavior => behavior.name === defaultBehaviorFileName)
+            .map(variation => (
+              <BehaviorCard variation={variation} />
+            ))}
+        </>
+      )}
+
+      {(info.behaviors || allAvailableBehaviors.length > 0) && (
+        <>
+          <Text>
+            <Header content="Available behaviors" id="available-behaviors" as="h2" />
+            {allAvailableBehaviors.map(variation => {
+              return <BehaviorCard variation={variation} />
+            })}
+          </Text>
+        </>
+      )}
+
+      {accIssues && (
+        <>
+          <Header content="Known issues" id={knownIsusesId} as="h2" />
+          <Segment className="docs-example" styles={exampleStyle}>
+            <Text style={{ whiteSpace: 'pre-line' }}>
+              <InlineMarkdown value={accIssues} />
+            </Text>
+          </Segment>
+        </>
+      )}
+    </>
+  )
+
+  return (
+    <Flex column>
+      <React.Suspense fallback={<Loader />}>{accessibilityDetails}</React.Suspense>
+    </Flex>
+  )
+}

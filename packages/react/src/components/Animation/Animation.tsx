@@ -1,5 +1,6 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import cx from 'classnames'
 
 import {
   UIComponent,
@@ -7,10 +8,9 @@ import {
   StyledComponentProps,
   commonPropTypes,
   ChildrenComponentProps,
+  ShorthandFactory,
 } from '../../lib'
-import { AnimationProp } from '../../themes/types'
-import createAnimationStyles from '../../lib/createAnimationStyles'
-import { ReactProps } from '../../types'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface AnimationProps
   extends StyledComponentProps,
@@ -79,11 +79,8 @@ export interface AnimationProps
   timingFunction?: string
 }
 
-/**
- * An animation allows the user to animate their own components.
- */
-class Animation extends UIComponent<ReactProps<AnimationProps>, any> {
-  static create: Function
+class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
+  static create: ShorthandFactory<AnimationProps>
 
   static className = 'ui-animation'
 
@@ -107,28 +104,14 @@ class Animation extends UIComponent<ReactProps<AnimationProps>, any> {
     timingFunction: PropTypes.string,
   }
 
-  renderComponent({ ElementType, classes, unhandledProps, styles, variables, theme }) {
-    const { children, name } = this.props
-
-    const animation: AnimationProp = {
-      name,
-      keyframeParams: this.props.keyframeParams,
-      duration: this.props.duration,
-      delay: this.props.delay,
-      iterationCount: this.props.iterationCount,
-      direction: this.props.direction,
-      fillMode: this.props.fillMode,
-      playState: this.props.playState,
-      timingFunction: this.props.timingFunction,
-    }
-
-    const animationStyle = createAnimationStyles(animation, theme)
+  renderComponent({ ElementType, classes, unhandledProps }) {
+    const { children } = this.props
 
     const child =
       childrenExist(children) && (React.Children.only(children) as React.ReactElement<any>)
     const result = child
       ? React.cloneElement(child, {
-          style: { ...animationStyle, ...(child.props && child.props.style) },
+          className: cx(child.props.className, classes.children),
         })
       : ''
 
@@ -140,4 +123,7 @@ class Animation extends UIComponent<ReactProps<AnimationProps>, any> {
   }
 }
 
-export default Animation
+/**
+ * An Animation provides animation effects to rendered elements.
+ */
+export default withSafeTypeForAs<typeof Animation, AnimationProps>(Animation)

@@ -1,32 +1,31 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import Image from '../Image/Image'
-import Label from '../Label/Label'
+import Image, { ImageProps } from '../Image/Image'
+import Label, { LabelProps } from '../Label/Label'
 import Status, { StatusProps } from '../Status/Status'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ShorthandValue } from '../../types'
+import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import {
   createShorthandFactory,
-  customPropTypes,
   UIComponent,
   UIComponentProps,
   commonPropTypes,
   SizeValue,
+  ShorthandFactory,
 } from '../../lib'
 
 export interface AvatarProps extends UIComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
   /** Shorthand for the image. */
-  image?: ShorthandValue
+  image?: ShorthandValue<ImageProps>
 
   /** Shorthand for the label. */
-  label?: ShorthandValue
+  label?: ShorthandValue<LabelProps>
 
   /** The name used for displaying the initials of the avatar if the image is not provided. */
   name?: string
@@ -41,11 +40,8 @@ export interface AvatarProps extends UIComponentProps {
   getInitials?: (name: string) => string
 }
 
-/**
- * An avatar is a graphic representation of user.
- */
-class Avatar extends UIComponent<ReactProps<AvatarProps>, any> {
-  static create: Function
+class Avatar extends UIComponent<WithAsProp<AvatarProps>, any> {
+  static create: ShorthandFactory<AvatarProps>
 
   static className = 'ui-avatar'
 
@@ -57,7 +53,7 @@ class Avatar extends UIComponent<ReactProps<AvatarProps>, any> {
       content: false,
     }),
     name: PropTypes.string,
-    image: customPropTypes.itemShorthand,
+    image: customPropTypes.itemShorthandWithoutJSX,
     label: customPropTypes.itemShorthand,
     size: customPropTypes.size,
     status: customPropTypes.itemShorthand,
@@ -65,7 +61,6 @@ class Avatar extends UIComponent<ReactProps<AvatarProps>, any> {
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior,
     size: 'medium',
     getInitials(name: string) {
       if (!name) {
@@ -80,7 +75,7 @@ class Avatar extends UIComponent<ReactProps<AvatarProps>, any> {
       const initials = reducedName
         .split(' ')
         .filter(item => item !== '')
-        .map(name => name.charAt(0))
+        .map(item => item.charAt(0))
         .reduce((accumulator, currentValue) => accumulator + currentValue)
 
       if (initials.length > 2) {
@@ -129,4 +124,7 @@ class Avatar extends UIComponent<ReactProps<AvatarProps>, any> {
 
 Avatar.create = createShorthandFactory({ Component: Avatar, mappedProp: 'name' })
 
-export default Avatar
+/**
+ * An Avatar is a graphic representation of a user.
+ */
+export default withSafeTypeForAs<typeof Avatar, AvatarProps>(Avatar)

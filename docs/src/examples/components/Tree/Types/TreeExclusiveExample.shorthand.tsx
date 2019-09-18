@@ -1,27 +1,27 @@
 import * as React from 'react'
-import { Icon, Tree } from '@stardust-ui/react'
+import { Tree } from '@stardust-ui/react'
 
 const items = [
   {
-    key: '1',
+    id: '1',
     title: 'one',
     items: [
       {
-        key: '2',
+        id: '2',
         title: 'one one',
         items: [
           {
-            key: '3',
+            id: '3',
             title: 'one one one',
           },
         ],
       },
       {
-        key: '6',
+        id: '6',
         title: 'one two',
         items: [
           {
-            key: '7',
+            id: '7',
             title: 'one two one',
           },
         ],
@@ -29,24 +29,17 @@ const items = [
     ],
   },
   {
-    key: '4',
+    id: '4',
     title: 'two',
     items: [
       {
-        key: '5',
+        id: '5',
         title: 'two one',
       },
     ],
   },
 ]
 
-const titleRenderer = (Component, { content, open, hasSubtree, ...restProps }) => (
-  <Component open={open} hasSubtree={hasSubtree} {...restProps}>
-    {hasSubtree && <Icon name={open ? 'arrow down' : 'arrow right'} />}
-    <span>{content}</span>
-  </Component>
-)
-
-const TreeExclusiveExample = () => <Tree items={items} renderItemTitle={titleRenderer} exclusive />
+const TreeExclusiveExample = () => <Tree items={items} exclusive />
 
 export default TreeExclusiveExample

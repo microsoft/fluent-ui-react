@@ -18,38 +18,40 @@ export interface TestDefinition {
 }
 
 const skipSpecChecksForFiles = [
-  'chatBehavior.ts', // issue https://github.com/stardust-ui/react/issues/476
-  'chatMessageBehavior.ts', // issue https://github.com/stardust-ui/react/issues/476
   'listBehavior.ts', // tests are written in listBehavior-test.tsx
   'listItemBehavior.ts', // tests are written in listItemBehavior-test.tsx
+  'alertBehavior.ts', // tests are written in alertBehavior-test.tsx
+  'sliderBehavior.ts', // tests are written in sliderBehavior-test.ts
 ]
 
 export class TestHelper {
-  private behaviors: Map<string, Accessibility> = new Map<string, Accessibility>()
-  private testDefinitions: TestDefinition[] = []
+  behaviors: Map<string, Accessibility> = new Map<string, Accessibility>()
+  testDefinitions: TestDefinition[] = []
 
-  private filteredSpecificationWithAssignedTestMethod: FilteredSpecification[] = []
+  filteredSpecificationWithAssignedTestMethod: FilteredSpecification[] = []
 
-  public addBehavior(name: string, behavior: Accessibility) {
+  addBehavior(name: string, behavior: Accessibility) {
     this.behaviors.set(name, behavior)
   }
 
-  public addTest(regexp: RegExp, testMethod: (arg: TestMethod) => void) {
+  addTest(regexp: RegExp, testMethod: (arg: TestMethod) => void) {
     this.testDefinitions.push({ regexp, testMethod })
   }
 
-  public addTests(testDefinitions: TestDefinition[]) {
+  addTests(testDefinitions: TestDefinition[]) {
     testDefinitions.forEach(testDefinition => {
       this.testDefinitions.push(testDefinition)
     })
   }
 
-  public run(behaviorMenuItems: any) {
+  run(behaviorMenuItems: any) {
     this.findRegexAndAssingCorrespondingInfoToArray(behaviorMenuItems)
 
-    const groupedByBehavior = _(this.filteredSpecificationWithAssignedTestMethod)
-      .groupBy('behaviorName')
-      .value()
+    const groupedByBehavior = _.groupBy(
+      this.filteredSpecificationWithAssignedTestMethod,
+      'behaviorName',
+    )
+
     _.each(groupedByBehavior, (value, key) => {
       describe(key, () => {
         value.forEach(singleTest => {
@@ -64,7 +66,7 @@ export class TestHelper {
     })
   }
 
-  public findRegexAndAssingCorrespondingInfoToArray(behaviorMenuItems: any) {
+  findRegexAndAssingCorrespondingInfoToArray(behaviorMenuItems: any) {
     behaviorMenuItems.forEach(behavior => {
       behavior.variations.forEach(variant => {
         if (!variant.specification && !variant.description) {
@@ -83,7 +85,7 @@ export class TestHelper {
     })
   }
 
-  public iterateRegexDefinitions(specLine: string, behaviorName: string) {
+  iterateRegexDefinitions(specLine: string, behaviorName: string) {
     let regexMatched = false
     this.testDefinitions.forEach(testDefinition => {
       const regex = new RegExp(testDefinition.regexp)
@@ -106,7 +108,7 @@ export class TestHelper {
     }
   }
 
-  public getBehavior(behaviorName: string): Accessibility {
+  getBehavior(behaviorName: string): Accessibility {
     const baseBehaviorName = behaviorName.replace('.ts', '')
     const importedBehavior = this.behaviors.get(baseBehaviorName)
     if (!importedBehavior) {
@@ -115,7 +117,7 @@ export class TestHelper {
     return importedBehavior
   }
 
-  public convertToMatchingTypeIfApplicable(stringToConvert: any): boolean | number | string {
+  convertToMatchingTypeIfApplicable(stringToConvert: any): boolean | number | string {
     if (stringToConvert === 'true') {
       return true
     }
@@ -128,7 +130,7 @@ export class TestHelper {
     return stringToConvert
   }
 
-  private failSpecificationPresenceTest(behaviorFileName: string) {
+  failSpecificationPresenceTest(behaviorFileName: string) {
     test(`${behaviorFileName} : Accessibility behavior is missing specification tag.`, () => {
       fail(
         `Accessibility behavior should have specification tag. If tests are written in separate file then add behavior file name into 'skipSpecChecksForFiles'.`,
@@ -136,7 +138,7 @@ export class TestHelper {
     })
   }
 
-  private failDescriptionPresenceTest(behaviorFileName: string) {
+  failDescriptionPresenceTest(behaviorFileName: string) {
     test(`${behaviorFileName} : Accessibility behavior is missing description.`, () => {
       fail('Accessibility behavior should have description.')
     })

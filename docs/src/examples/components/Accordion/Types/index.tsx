@@ -14,6 +14,11 @@ const Types = () => (
       description="An exclusive Accordion."
       examplePath="components/Accordion/Types/AccordionExclusiveExample"
     />
+    <ComponentExample
+      title="Exclusive and Expanded"
+      description="An exclusive expanded Accordion."
+      examplePath="components/Accordion/Types/AccordionExclusiveExpandedExample"
+    />
   </ExampleSection>
 )
 

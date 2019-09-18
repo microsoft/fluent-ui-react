@@ -1,33 +1,40 @@
-import { pxToRem, getColorSchemeWithCustomDefaults } from '../../../../lib'
-import { ColorValues, ColorScheme, SiteVariablesPrepared } from '../../../types'
+import { pxToRem, stringLiteralsArray } from '../../../../lib'
+import { SiteVariablesPrepared, ItemType } from '../../../types'
+import { TeamsSchemeMappingWithAreas } from '../../types'
+import { extendColorScheme, pickValuesFromColorScheme } from '../../../colorUtils'
 
-type LabelColorScheme = Pick<ColorScheme, 'foreground' | 'background'>
+export const labelColorAreas = stringLiteralsArray('foreground', 'background')
+export type LabelColorSchemeMapping = TeamsSchemeMappingWithAreas<ItemType<typeof labelColorAreas>>
 
 export interface LabelVariables {
-  colorScheme: ColorValues<LabelColorScheme>
+  colorScheme: LabelColorSchemeMapping
   circularRadius: string
   padding: string
   startPaddingLeft: string
   endPaddingRight: string
   height: string
-  iconColor: string
 }
 
 export default (siteVars: SiteVariablesPrepared): LabelVariables => {
-  const color = 'rgba(0, 0, 0, 0.6)'
+  const colorScheme = extendColorScheme(siteVars.colorScheme, {
+    default: {
+      background: 'rgba(0, 0, 0, 0.6)',
+      foreground: 'rgb(232, 232, 232)',
+    },
+    brand: {
+      background: siteVars.colorScheme.brand.foreground4,
+    },
+    red: {
+      background: siteVars.colorScheme.red.foreground1,
+    },
+  })
 
   return {
-    colorScheme: getColorSchemeWithCustomDefaults(siteVars.colorScheme, {
-      foreground: color,
-      background: 'rgb(232, 232, 232)',
-    }),
+    colorScheme: pickValuesFromColorScheme(colorScheme, labelColorAreas),
     circularRadius: pxToRem(9999),
     padding: `0 ${pxToRem(4)} 0 ${pxToRem(4)}`,
     startPaddingLeft: '0px',
     endPaddingRight: '0px',
     height: pxToRem(20),
-
-    // variables for 'icon' part
-    iconColor: color,
   }
 }

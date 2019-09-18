@@ -7,7 +7,7 @@ import pkg from '../../../packages/react/package.json'
 import Logo from '../components/Logo/Logo'
 
 const Introduction = () => (
-  <div style={{ margin: '0 225px', fontSize: '1.125em', maxWidth: '80ch' }}>
+  <div style={{ margin: '0 225px', fontSize: '1.125em', maxWidth: '100ch' }}>
     <Flex column hAlign="center" padding="padding.medium">
       <Logo width="150px" />
       <Header

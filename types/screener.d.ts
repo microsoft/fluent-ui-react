@@ -50,10 +50,10 @@ declare global {
     /** This will send the provided keys to the first element matching the provided css selector. */
     keys(selector: string, key: string): ScreenerStepBuilder
 
-    /** This will pause execution for the specified number of ms.*/
+    /** This will pause execution for the specified number of ms. */
     wait(ms: number): ScreenerStepBuilder
 
-    /** This will override the global cssAnimations option for the current UI state. Set to true to enable CSS Animations, and set to false to disable.*/
+    /** This will override the global cssAnimations option for the current UI state. Set to true to enable CSS Animations, and set to false to disable. */
     cssAnimations(isEnabled: boolean): ScreenerStepBuilder
 
     /** This will set the current UI state to right-to-left direction. */
@@ -65,10 +65,10 @@ declare global {
     /** This will return the steps to be run. */
     end(): any[]
 
-    /** This will switch the theme */
+    /** This will switch the theme. */
     switchTheme(themeName: ScreenerThemeName): ScreenerStepBuilder
 
-    /** This will reset the layout */
+    /** This will reset the layout. */
     resetExternalLayout(): ScreenerStepBuilder
   }
 

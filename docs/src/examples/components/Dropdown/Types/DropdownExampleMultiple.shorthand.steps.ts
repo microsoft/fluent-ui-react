@@ -4,9 +4,7 @@ const selectors = {
   triggerButton: `.${Dropdown.slotClassNames.triggerButton}`,
   item: (itemIndex: number) => `.${Dropdown.slotClassNames.itemsList} li:nth-child(${itemIndex})`,
   removeItemIcon: (itemIndex: number) =>
-    `.${Dropdown.slotClassNames.selectedItems} span:nth-child(${itemIndex}) .${
-      DropdownSelectedItem.slotClassNames.removeIcon
-    }`,
+    `.${Dropdown.slotClassNames.selectedItems} span:nth-child(${itemIndex}) .${DropdownSelectedItem.slotClassNames.icon}`,
 }
 
 const config: ScreenerTestsConfig = {

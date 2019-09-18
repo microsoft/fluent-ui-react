@@ -2,12 +2,14 @@ import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+// @ts-ignore
+import { ThemeContext } from 'react-fela'
+
 import { isBrowser, ChildrenComponentProps, commonPropTypes } from '../../lib'
-import { ReactProps } from '../../types'
 
 export interface PortalInnerProps extends ChildrenComponentProps {
   /** Existing element the portal should be bound to. */
-  context?: HTMLElement
+  mountNode?: HTMLElement
 
   /**
    * Called when the portal is mounted on the DOM
@@ -25,10 +27,12 @@ export interface PortalInnerProps extends ChildrenComponentProps {
 }
 
 /**
- * An inner component that allows you to render children outside their parent.
+ * A PortalInner is a container for Portal's content.
  */
-class PortalInner extends React.Component<ReactProps<PortalInnerProps>> {
-  public static propTypes = {
+class PortalInner extends React.Component<PortalInnerProps> {
+  static contextType = ThemeContext
+
+  static propTypes = {
     ...commonPropTypes.createCommon({
       accessibility: false,
       animated: false,
@@ -37,27 +41,26 @@ class PortalInner extends React.Component<ReactProps<PortalInnerProps>> {
       content: false,
       styled: false,
     }),
-    context: PropTypes.object,
+    mountNode: PropTypes.object,
     onMount: PropTypes.func,
     onUnmount: PropTypes.func,
   }
 
-  public static defaultProps = {
-    context: isBrowser() ? document.body : null,
-  }
-
-  public componentDidMount() {
+  componentDidMount() {
     _.invoke(this.props, 'onMount', this.props)
   }
 
-  public componentWillUnmount() {
+  componentWillUnmount() {
     _.invoke(this.props, 'onUnmount', this.props)
   }
 
-  public render() {
-    const { children, context } = this.props
+  render() {
+    const { children, mountNode } = this.props
 
-    return context && ReactDOM.createPortal(children, context)
+    const target: HTMLElement | null = isBrowser() ? this.context.target.body : null
+    const container: HTMLElement | null = mountNode || target
+
+    return container && ReactDOM.createPortal(children, container)
   }
 }
 

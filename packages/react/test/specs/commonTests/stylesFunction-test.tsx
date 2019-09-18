@@ -28,16 +28,16 @@ const testStylesForComponent = ({
   expected,
 }: { props?: Props; state?: State; expected?: PropsAndState } = {}) => {
   class TestComponent extends UIComponent<Extendable<Props>, State> {
-    public static className = testClassName
-    public static propTypes = {
+    static className = testClassName
+    static propTypes = {
       propsAttr: PropTypes.any,
       commonAttr: PropTypes.any,
       styles: PropTypes.any,
     }
 
-    public state = state
+    state = state
 
-    public renderComponent({ ElementType, classes, unhandledProps }): React.ReactNode {
+    renderComponent({ ElementType, classes, unhandledProps }): React.ReactNode {
       return <ElementType {...unhandledProps} className={classes.root} />
     }
   }

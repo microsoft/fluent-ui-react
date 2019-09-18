@@ -9,7 +9,7 @@ export default {
       role="presentation"
       focusable="false"
       viewBox="8 8 16 16"
-      className={cx(classes.svg, classes.flipInRtl)}
+      className={classes.svgFlippingInRtl}
     >
       <g>
         <path

@@ -10,6 +10,21 @@ const Variations = () => (
       examplePath="components/Alert/Variations/AlertExampleInfo"
     />
     <ComponentExample
+      title="OOF"
+      description="An alert may be formatted to display an oof message."
+      examplePath="components/Alert/Variations/AlertExampleOofs"
+    />
+    <ComponentExample
+      title="Urgent"
+      description="An alert may be formatted to display an urgent message."
+      examplePath="components/Alert/Variations/AlertExampleUrgent"
+    />
+    <ComponentExample
+      title="Danger"
+      description="An alert may be formatted to display a danger or error message."
+      examplePath="components/Alert/Variations/AlertExampleDanger"
+    />
+    <ComponentExample
       title="Warning"
       description="An alert may be formatted to display a warning message."
       examplePath="components/Alert/Variations/AlertExampleWarning"
@@ -20,19 +35,14 @@ const Variations = () => (
       examplePath="components/Alert/Variations/AlertExampleSuccess"
     />
     <ComponentExample
-      title="Danger"
-      description="An alert may be formatted to display a danger message."
-      examplePath="components/Alert/Variations/AlertExampleDanger"
-    />
-    <ComponentExample
       title="Attached"
       description="An Alert can be can be formatted to attach itself to other content."
       examplePath="components/Alert/Variations/AlertExampleAttached"
     />
     <ComponentExample
-      title="Action"
-      description="An Alert can provide the user with an action. Click on the icon to see the effect."
-      examplePath="components/Alert/Variations/AlertExampleAction"
+      title="Fitted"
+      description="An alert can only take up the width of its content."
+      examplePath="components/Alert/Variations/AlertExampleFitted"
     />
   </ExampleSection>
 )

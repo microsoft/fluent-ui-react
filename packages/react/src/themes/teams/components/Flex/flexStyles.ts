@@ -1,10 +1,10 @@
-import { ComponentSlotStylesInput } from '../../../types'
+import { ComponentSlotStylesPrepared } from '../../../types'
 import { FlexProps } from '../../../../components/Flex/Flex'
 
 import { toFlexAlignment } from './utils'
 import { FlexVariables } from './flexVariables'
 
-const flexStyles: ComponentSlotStylesInput<FlexProps, FlexVariables> = {
+const flexStyles: ComponentSlotStylesPrepared<FlexProps, FlexVariables> = {
   root: ({ props: p, variables: v }) => ({
     display: 'flex',
     ...(p.debug && { border: '1px dotted grey', background: 'lightgrey' }),
@@ -27,6 +27,7 @@ const flexStyles: ComponentSlotStylesInput<FlexProps, FlexVariables> = {
     ...(p.wrap && { flexWrap: 'wrap' }),
 
     ...(p.fill && {
+      width: '100%',
       height: '100%',
     }),
 

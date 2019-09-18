@@ -1,13 +1,16 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { PopupProps } from '../../../../components/Popup/Popup'
 import { PopupVariables } from './popupVariables'
 
-const popupStyles: ComponentSlotStylesInput<PopupProps, PopupVariables> = {
+const popupStyles: ComponentSlotStylesPrepared<PopupProps, PopupVariables> = {
   root: (): ICSSInJSStyle => ({}),
 
-  popup: ({ variables }): ICSSInJSStyle => ({
-    zIndex: variables.zIndex,
+  popup: ({ variables: v }): ICSSInJSStyle => ({
+    zIndex: v.zIndex,
     position: 'absolute',
+    textAlign: 'left',
+    color: v.contentColor,
+    background: v.contentBackgroundColor,
   }),
 }
 

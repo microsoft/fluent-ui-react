@@ -18,8 +18,17 @@ const getClasses = (
   // root, icon, etc.
   const componentParts: string[] = Object.keys(componentStyles)
 
+  // Fela plugins rely on `direction` param in `theme` prop instead of RTL
+  // Our API should be aligned with it
+  // Heads Up! Keep in sync with Design.tsx render logic
+  const direction = styleParam.rtl ? 'rtl' : 'ltr'
+  const mergedStyleParam = {
+    ...styleParam,
+    theme: { ...styleParam.theme, direction },
+  }
+
   return componentParts.reduce((classes, partName) => {
-    classes[partName] = renderer.renderRule(callable(componentStyles[partName]), styleParam)
+    classes[partName] = renderer.renderRule(callable(componentStyles[partName]), mergedStyleParam)
 
     return classes
   }, {})

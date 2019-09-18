@@ -1,4 +1,6 @@
-import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
+import { EventListener } from '@stardust-ui/react-component-event-listener'
+import { handleRef, Ref, toRefObject } from '@stardust-ui/react-component-ref'
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
@@ -10,20 +12,16 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   ContentComponentProps,
-  handleRef,
   rtlTextContainer,
-  customPropTypes,
 } from '../../lib'
-import Ref from '../Ref/Ref'
 import PortalInner from './PortalInner'
 import { FocusTrapZone, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
-import { AccessibilityAttributes, OnKeyDownHandler } from '../../lib/accessibility/types'
-import { ReactProps } from '../../types'
+import { AccessibilityAttributes } from '../../lib/accessibility/types'
+import { AccessibilityHandlerProps } from '../../lib/accessibility/reactTypes'
 
-type ReactMouseEvent = React.MouseEvent<HTMLElement>
 export type TriggerAccessibility = {
   attributes?: AccessibilityAttributes
-  keyHandlers?: OnKeyDownHandler
+  keyHandlers?: AccessibilityHandlerProps
 }
 
 export interface PortalProps extends ChildrenComponentProps, ContentComponentProps {
@@ -64,14 +62,14 @@ export interface PortalProps extends ChildrenComponentProps, ContentComponentPro
    *
    * @param {object} data - All props.
    */
-  onTriggerClick?: (e: ReactMouseEvent) => void
+  onTriggerClick?: (e: React.MouseEvent) => void
 
   /**
    * Called when `click` event was invoked outside portal or trigger nodes.
    *
    * @param {object} data - All props.
    */
-  onOutsideClick?: (e: ReactMouseEvent) => void
+  onOutsideClick?: (e: React.MouseEvent) => void
 }
 
 export interface PortalState {
@@ -79,15 +77,15 @@ export interface PortalState {
 }
 
 /**
- * A component that allows you to render children outside their parent.
+ * A Portal allows to render children outside of their parent.
  */
-class Portal extends AutoControlledComponent<ReactProps<PortalProps>, PortalState> {
-  private portalNode: HTMLElement
-  private triggerNode: HTMLElement
+class Portal extends AutoControlledComponent<PortalProps, PortalState> {
+  portalNode: HTMLElement
+  triggerNode: HTMLElement
 
-  public static autoControlledProps = ['open']
+  static autoControlledProps = ['open']
 
-  public static propTypes = {
+  static propTypes = {
     ...commonPropTypes.createCommon({
       accessibility: false,
       animated: false,
@@ -107,11 +105,11 @@ class Portal extends AutoControlledComponent<ReactProps<PortalProps>, PortalStat
     trapFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
   }
 
-  public static defaultProps: PortalProps = {
+  static defaultProps: PortalProps = {
     triggerAccessibility: {},
   }
 
-  public renderComponent(): React.ReactNode {
+  renderComponent(): React.ReactNode {
     return (
       <React.Fragment>
         {this.renderPortal()}
@@ -120,11 +118,13 @@ class Portal extends AutoControlledComponent<ReactProps<PortalProps>, PortalStat
     )
   }
 
-  private renderPortal(): JSX.Element | undefined {
+  renderPortal(): JSX.Element | undefined {
     const { children, content, trapFocus } = this.props
     const { open } = this.state
+
     const contentToRender = childrenExist(children) ? children : content
     const focusTrapZoneProps = (_.keys(trapFocus).length && trapFocus) || {}
+    const targetRef = toRefObject(this.context.target)
 
     return (
       open && (
@@ -139,18 +139,14 @@ class Portal extends AutoControlledComponent<ReactProps<PortalProps>, PortalStat
             ) : (
               contentToRender
             )}
-            <EventListener
-              listener={this.handleDocumentClick}
-              targetRef={documentRef}
-              type="click"
-            />
+            <EventListener listener={this.handleDocumentClick} targetRef={targetRef} type="click" />
           </PortalInner>
         </Ref>
       )
     )
   }
 
-  private renderTrigger(): JSX.Element | undefined {
+  renderTrigger(): JSX.Element | undefined {
     const { trigger, triggerAccessibility } = this.props
 
     return (
@@ -165,41 +161,41 @@ class Portal extends AutoControlledComponent<ReactProps<PortalProps>, PortalStat
       )
     )
   }
-  private handleMount = () => {
+  handleMount = () => {
     _.invoke(this.props, 'onMount', this.props)
   }
 
-  private handleUnmount = () => {
+  handleUnmount = () => {
     _.invoke(this.props, 'onUnmount', this.props)
   }
 
-  private handlePortalRef = (portalNode: HTMLElement) => {
+  handlePortalRef = (portalNode: HTMLElement) => {
     this.portalNode = portalNode
   }
 
-  private handleTriggerRef = (triggerNode: HTMLElement) => {
+  handleTriggerRef = (triggerNode: HTMLElement) => {
     this.triggerNode = triggerNode
     handleRef(this.props.triggerRef, triggerNode)
   }
 
-  private handleTriggerClick = (e: ReactMouseEvent, ...unhandledProps) => {
+  handleTriggerClick = (e: React.MouseEvent, ...unhandledProps) => {
     const { trigger } = this.props
 
     _.invoke(this.props, 'onTriggerClick', e) // Call handler from parent component
     _.invoke(trigger, 'props.onClick', e, ...unhandledProps) // Call original event handler
-    this.trySetState({ open: !this.state.open })
+    this.setState({ open: !this.state.open })
   }
 
-  private handleDocumentClick = (e: MouseEvent) => {
+  handleDocumentClick = (e: MouseEvent) => {
     if (
       !this.portalNode || // no portal
-      doesNodeContainClick(this.triggerNode, e) || // event happened in trigger (delegate to trigger handlers)
-      doesNodeContainClick(this.portalNode, e) // event happened in the portal
+      doesNodeContainClick(this.triggerNode, e, this.context.target) || // event happened in trigger (delegate to trigger handlers)
+      doesNodeContainClick(this.portalNode, e, this.context.target) // event happened in the portal
     ) {
       return // ignore the click
     }
     _.invoke(this.props, 'onOutsideClick', e)
-    this.trySetState({ open: false })
+    this.setState({ open: false })
   }
 }
 

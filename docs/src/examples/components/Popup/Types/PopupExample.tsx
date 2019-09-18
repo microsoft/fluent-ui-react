@@ -3,7 +3,7 @@ import { Button, Popup } from '@stardust-ui/react'
 
 const PopupExample = () => (
   <Popup content="Hello from popup!">
-    <Button icon="expand" />
+    <Button icon="more" />
   </Popup>
 )
 

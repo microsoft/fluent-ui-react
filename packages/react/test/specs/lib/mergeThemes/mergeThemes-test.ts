@@ -1,5 +1,4 @@
 import mergeThemes, { mergeStyles } from 'src/lib/mergeThemes'
-import { felaRenderer, felaRtlRenderer } from 'src/lib'
 import { ComponentStyleFunctionParam, ICSSInJSStyle } from 'src/themes/types'
 
 describe('mergeThemes', () => {
@@ -60,12 +59,14 @@ describe('mergeThemes', () => {
       })
     })
 
-    test('disregards nested keys', () => {
-      const target = { siteVariables: { nested: { replaced: true } } }
-      const source = { siteVariables: { nested: { other: 'value' } } }
+    test('deep merges nested keys', () => {
+      const target = { siteVariables: { nested: { replaced: false, deep: { dOne: 1 } } } }
+      const source = { siteVariables: { nested: { other: 'value', deep: { dTwo: 'two' } } } }
 
       expect(mergeThemes(target, source)).toMatchObject({
-        siteVariables: { nested: { other: 'value' } },
+        siteVariables: {
+          nested: { replaced: false, other: 'value', deep: { dOne: 1, dTwo: 'two' } },
+        },
       })
     })
   })
@@ -103,6 +104,30 @@ describe('mergeThemes', () => {
         one: 'one',
         two: 'two',
         three: 3,
+      })
+    })
+
+    test('variables are deep merged', () => {
+      const target = {
+        componentVariables: {
+          Button: () => ({ one: { nestedOne: 1, nestedThree: 3, deep: { dOne: 1 } } }),
+        },
+      }
+      const source = {
+        componentVariables: {
+          Button: () => ({ one: { nestedOne: 'one', nestedTwo: 'two', deep: { dTwo: 'two' } } }),
+        },
+      }
+
+      const merged = mergeThemes(target, source)
+
+      expect(merged.componentVariables.Button()).toMatchObject({
+        one: {
+          nestedOne: 'one',
+          nestedTwo: 'two',
+          nestedThree: 3,
+          deep: { dOne: 1, dTwo: 'two' },
+        },
       })
     })
 
@@ -304,48 +329,6 @@ describe('mergeThemes', () => {
       ).toMatchObject({
         staticStyles: [{ body: { color: 'red' } }, '*{box-sizing:border-box;}'],
       })
-    })
-  })
-
-  describe('rtl', () => {
-    test('latest boolean value wins', () => {
-      expect(mergeThemes({ rtl: false }, { rtl: true })).toHaveProperty('rtl', true)
-      expect(mergeThemes({ rtl: true }, { rtl: false })).toHaveProperty('rtl', false)
-
-      expect(mergeThemes({ rtl: null }, { rtl: true })).toHaveProperty('rtl', true)
-      expect(mergeThemes({ rtl: null }, { rtl: false })).toHaveProperty('rtl', false)
-
-      expect(mergeThemes({ rtl: undefined }, { rtl: true })).toHaveProperty('rtl', true)
-      expect(mergeThemes({ rtl: undefined }, { rtl: false })).toHaveProperty('rtl', false)
-    })
-
-    test('null values do not override boolean values', () => {
-      expect(mergeThemes({ rtl: false }, { rtl: null })).toHaveProperty('rtl', false)
-      expect(mergeThemes({ rtl: true }, { rtl: null })).toHaveProperty('rtl', true)
-    })
-
-    test('undefined values do not override boolean values', () => {
-      expect(mergeThemes({ rtl: false }, { rtl: undefined })).toHaveProperty('rtl', false)
-      expect(mergeThemes({ rtl: true }, { rtl: undefined })).toHaveProperty('rtl', true)
-    })
-
-    test('default to false if no boolean was provided', () => {
-      expect(mergeThemes({ rtl: null }, { rtl: null })).toHaveProperty('rtl', false)
-      expect(mergeThemes({ rtl: null }, { rtl: undefined })).toHaveProperty('rtl', false)
-
-      expect(mergeThemes({ rtl: undefined }, { rtl: null })).toHaveProperty('rtl', false)
-      expect(mergeThemes({ rtl: undefined }, { rtl: undefined })).toHaveProperty('rtl', false)
-    })
-  })
-
-  describe('renderer', () => {
-    test('felaRtlRenderer is chosen if rtl is true', () => {
-      expect(mergeThemes({ rtl: true })).toHaveProperty('renderer', felaRtlRenderer)
-    })
-    test('felaRenderer is chosen if rtl is not true', () => {
-      expect(mergeThemes({ rtl: false })).toHaveProperty('renderer', felaRenderer)
-      expect(mergeThemes({ rtl: null })).toHaveProperty('renderer', felaRenderer)
-      expect(mergeThemes({ rtl: undefined })).toHaveProperty('renderer', felaRenderer)
     })
   })
 

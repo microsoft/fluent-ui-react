@@ -2,11 +2,24 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
 import * as _ from 'lodash'
-import { UIComponent, commonPropTypes } from '../../lib'
+import {
+  UIComponent,
+  commonPropTypes,
+  UIComponentProps,
+  ChildrenComponentProps,
+  ShorthandFactory,
+} from '../../lib'
 import { mergeStyles } from '../../lib/mergeThemes'
-import { Extendable } from '../../types'
+import { ComponentSlotStylesPrepared } from '../../themes/types'
 
-export interface FlexItemProps {
+type ChildrenFunction = (params: {
+  styles: ComponentSlotStylesPrepared
+  classes: string
+}) => React.ReactElement<any>
+
+export type FlexItemChildren = React.ReactElement<any> | ChildrenFunction
+
+export interface FlexItemProps extends UIComponentProps, ChildrenComponentProps<FlexItemChildren> {
   /** Controls item's alignment. */
   align?: 'auto' | 'start' | 'end' | 'center' | 'baseline' | 'stretch'
 
@@ -36,16 +49,22 @@ export interface FlexItemProps {
   flexDirection?: 'row' | 'column'
 }
 
-class FlexItem extends UIComponent<Extendable<FlexItemProps>> {
+/**
+ * A FlexItem is a layout component that customizes alignment of Flex child.
+ */
+class FlexItem extends UIComponent<FlexItemProps> {
   static className = 'ui-flex__item'
 
   static displayName = 'FlexItem'
 
   static propTypes = {
     ...commonPropTypes.createCommon({
+      children: false,
       accessibility: false,
       content: false,
     }),
+    children: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
+
     align: PropTypes.oneOf(['auto', 'start', 'end', 'center', 'baseline', 'stretch']),
     size: PropTypes.oneOf(['size.half', 'size.quarter', 'size.small', 'size.medium', 'size.large']),
 
@@ -62,7 +81,7 @@ class FlexItem extends UIComponent<Extendable<FlexItemProps>> {
 
   displayName: 'FlexItem'
 
-  static create: Function
+  static create: ShorthandFactory<FlexItemProps>
 
   // Boolean flag for now, Symbol-based approach may be used instead.
   // However, there are  concerns related to browser compatibility if Symbols will be used.

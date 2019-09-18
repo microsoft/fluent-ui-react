@@ -1,9 +1,9 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import {
   UIComponent,
   childrenExist,
-  customPropTypes,
   RenderResultConfig,
   UIComponentProps,
   ChildrenComponentProps,
@@ -11,19 +11,13 @@ import {
   ContentComponentProps,
   rtlTextContainer,
 } from '../../lib'
-import { ReactProps } from '../../types'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
-import ReactNode = React.ReactNode
 
-export interface GridProps
-  extends UIComponentProps,
-    ChildrenComponentProps,
-    ContentComponentProps<React.ReactNode | React.ReactNode[]> {
+export interface GridProps extends UIComponentProps, ChildrenComponentProps, ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
-   * @available gridBehavior
+   * @available gridBehavior, gridHorizontalBehavior
    * */
   accessibility?: Accessibility
 
@@ -34,17 +28,12 @@ export interface GridProps
   rows?: string | number
 }
 
-/**
- * A grid is used to harmonize negative space in a layout.
- * @accessibility This is example usage of the accessibility tag.
- * This should be replaced with the actual description after the PR is merged
- */
-class Grid extends UIComponent<ReactProps<GridProps>, any> {
-  public static displayName = 'Grid'
+class Grid extends UIComponent<WithAsProp<GridProps>> {
+  static displayName = 'Grid'
 
-  public static className = 'ui-grid'
+  static className = 'ui-grid'
 
-  public static propTypes = {
+  static propTypes = {
     ...commonPropTypes.createCommon({
       content: false,
     }),
@@ -59,17 +48,16 @@ class Grid extends UIComponent<ReactProps<GridProps>, any> {
     rows: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }
 
-  public static defaultProps: GridProps = {
+  static defaultProps: WithAsProp<GridProps> = {
     as: 'div',
-    accessibility: defaultBehavior,
   }
 
-  public renderComponent({
+  renderComponent({
     accessibility,
     ElementType,
     classes,
     unhandledProps,
-  }: RenderResultConfig<any>): ReactNode {
+  }: RenderResultConfig<any>): React.ReactNode {
     const { children, content } = this.props
 
     return (
@@ -85,4 +73,7 @@ class Grid extends UIComponent<ReactProps<GridProps>, any> {
   }
 }
 
-export default Grid
+/**
+ * A Grid is a layout component that harmonizes negative space, by controlling both the row and column alignment.
+ */
+export default withSafeTypeForAs<typeof Grid, GridProps>(Grid)

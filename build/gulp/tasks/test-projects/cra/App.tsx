@@ -8,7 +8,6 @@ import {
   Header,
   Icon,
   Image,
-  Indicator,
   Input,
   Popup,
   Provider,
@@ -17,7 +16,7 @@ import {
 import * as React from 'react'
 
 class App extends React.Component {
-  public render() {
+  render() {
     return (
       <Provider theme={themes.teams}>
         <div>
@@ -26,12 +25,11 @@ class App extends React.Component {
             <Icon name="umbrella" circular bordered />
           </Animation>
           <Attachment header="Document.docx" />
-          <Avatar src="//placehold.it" />
+          <Avatar image="//placehold.it" />
           <Button content="Click me" />
           <Divider />
           <Header content="This is " />
           <Image src="//placehold.it" />
-          <Indicator />
           <Input placeholder="Type here" />
           <Popup trigger={<Button content="Popup" />} content="Popup content" />
         </div>

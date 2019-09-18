@@ -6,6 +6,7 @@ const selectors = {
 }
 
 const config: ScreenerTestsConfig = {
+  themes: ['teams', 'teamsDark', 'teamsHighContrast'],
   steps: [
     builder => builder.click(selectors.triggerButton).snapshot('Shows list'),
     builder =>
@@ -19,6 +20,14 @@ const config: ScreenerTestsConfig = {
         .snapshot('Highlights another item')
         .click(selectors.triggerButton)
         .snapshot('Closes the list'),
+    (builder, keys) =>
+      builder
+        .keys('body', keys.tab)
+        .snapshot('Focuses trigger')
+        .keys(selectors.triggerButton, keys.downArrow)
+        .snapshot('Focuses first item')
+        .keys(selectors.triggerButton, keys.downArrow)
+        .snapshot('Focuses second item'),
   ],
 }
 

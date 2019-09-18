@@ -1,5 +1,13 @@
 import * as React from 'react'
-import { Grid, Image, Button, gridBehavior } from '@stardust-ui/react'
+import {
+  Grid,
+  Image,
+  Button,
+  Text,
+  Label,
+  gridBehavior,
+  gridHorizontalBehavior,
+} from '@stardust-ui/react'
 import * as _ from 'lodash'
 
 const imageNames = [
@@ -56,15 +64,29 @@ const gridStyles = {
 
 const GridExample = () => (
   <div>
-    Grid with images, which are not natively focusable elements. Set 'data-is-focusable=true' to
-    each item to make grid items focusable and navigable.
+    <Text size="medium">
+      Grid with images, which are not natively focusable elements. Set{' '}
+      <Label>data-is-focusable=true</Label> to each item to make grid items focusable and navigable.
+      Use <Label>gridBehavior</Label> to provide arrow key navigation in 4 directions.
+    </Text>
     <Grid accessibility={gridBehavior} styles={gridStyles} columns="7">
       {renderImages()}
     </Grid>
     <br />
-    Grid with images, wrapped with button components, which are natively focusable elements. No need
-    to add 'data-is-focusable'='true'
+    <Text size="medium">
+      Grid with buttons images, which are natively focusable elements. <b>No need</b> to add{' '}
+      <Label>data-is-focusable=true</Label>
+    </Text>
     <Grid accessibility={gridBehavior} styles={gridStyles} columns="7">
+      {renderImageButtons()}
+    </Grid>
+    <br />
+    <Text size="medium">
+      Grid with buttons images, which are natively focusable elements. Use{' '}
+      <Label>gridHorizontalBehavior</Label> to provide horizontal navigation within Grid with 4
+      arrow keys.
+    </Text>
+    <Grid accessibility={gridHorizontalBehavior} styles={gridStyles} columns="7">
       {renderImageButtons()}
     </Grid>
   </div>

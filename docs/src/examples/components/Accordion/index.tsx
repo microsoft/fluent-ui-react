@@ -7,8 +7,8 @@ import Usage from './Usage'
 const AccordionExamples = () => (
   <>
     <Types />
-    <Usage />
     <Rtl />
+    <Usage />
   </>
 )
 

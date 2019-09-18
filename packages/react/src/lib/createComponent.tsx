@@ -1,11 +1,12 @@
 import * as React from 'react'
 import * as _ from 'lodash'
+// @ts-ignore
+import { ThemeContext } from 'react-fela'
 
 import renderComponent, { RenderResultConfig } from './renderComponent'
-import { AccessibilityActionHandlers } from './accessibility/types'
-import { FocusZone } from './accessibility/FocusZone'
-import { createShorthandFactory } from './factories'
-import { ObjectOf } from '../types'
+import { AccessibilityActionHandlers } from './accessibility/reactTypes'
+import { createShorthandFactory, ShorthandFactory } from './factories'
+import { ObjectOf, ProviderContextPrepared } from '../types'
 
 export interface CreateComponentConfig<P> {
   displayName: string
@@ -15,12 +16,12 @@ export interface CreateComponentConfig<P> {
   handledProps?: string[]
   propTypes?: React.WeakValidationMap<P>
   actionHandlers?: AccessibilityActionHandlers
-  focusZoneRef?: (focusZone: FocusZone) => void
   render: (config: RenderResultConfig<P>, props: P) => React.ReactNode
 }
 
 export type CreateComponentReturnType<P> = React.FunctionComponent<P> & {
-  create: Function
+  className: string
+  create: ShorthandFactory<P>
 }
 
 const createComponent = <P extends ObjectOf<any> = any>({
@@ -31,7 +32,6 @@ const createComponent = <P extends ObjectOf<any> = any>({
   handledProps = [],
   propTypes,
   actionHandlers,
-  focusZoneRef, // TODO: setFocusZoneRef
   render,
 }: CreateComponentConfig<P>): CreateComponentReturnType<P> => {
   const mergedDefaultProps = {
@@ -40,18 +40,29 @@ const createComponent = <P extends ObjectOf<any> = any>({
   }
 
   const StardustComponent: CreateComponentReturnType<P> = (props): React.ReactElement<P> => {
-    return renderComponent({
-      className,
-      defaultProps,
-      displayName,
-      handledProps: _.keys(propTypes).concat(handledProps),
-      props,
-      state: {},
-      actionHandlers,
-      focusZoneRef,
-      render: config => render(config, props),
-    })
+    // Stores debug information for component.
+    // Note that this ref should go as the first one, to be discoverable by debug utils.
+    const stardustDebug = React.useRef(null)
+
+    const context: ProviderContextPrepared = React.useContext(ThemeContext)
+
+    return renderComponent(
+      {
+        className,
+        defaultProps,
+        displayName,
+        handledProps: _.keys(propTypes).concat(handledProps),
+        props,
+        state: {},
+        actionHandlers,
+        render: config => render(config, props),
+        saveDebug: updatedDebug => (stardustDebug.current = updatedDebug),
+      },
+      context,
+    )
   }
+
+  StardustComponent.className = className
 
   StardustComponent.create = createShorthandFactory({
     Component: mergedDefaultProps.as,

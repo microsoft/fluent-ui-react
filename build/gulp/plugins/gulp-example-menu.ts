@@ -1,8 +1,8 @@
-import * as gutil from 'gulp-util'
-import * as _ from 'lodash'
-import * as path from 'path'
-import * as through2 from 'through2'
-import * as Vinyl from 'vinyl'
+import gutil from 'gulp-util'
+import _ from 'lodash'
+import path from 'path'
+import through2 from 'through2'
+import Vinyl from 'vinyl'
 
 import { parseDocSection } from './util'
 import { ObjectOf } from 'packages/react/src/types'

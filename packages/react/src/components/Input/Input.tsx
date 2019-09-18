@@ -1,3 +1,5 @@
+import { handleRef, Ref } from '@stardust-ui/react-component-ref'
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
@@ -5,29 +7,30 @@ import * as _ from 'lodash'
 
 import {
   AutoControlledComponent,
-  customPropTypes,
   RenderResultConfig,
   partitionHTMLProps,
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
-  handleRef,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
 import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
-import { ReactProps, ShorthandValue, ComponentEventHandler } from '../../types'
-import Icon from '../Icon/Icon'
-import Ref from '../Ref/Ref'
-import Box from '../Box/Box'
+import { inputBehavior } from '../../lib/accessibility'
+import { SupportedIntrinsicInputProps } from '../../lib/htmlPropsUtils'
+import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
+import Icon, { IconProps } from '../Icon/Icon'
+import Box, { BoxProps } from '../Box/Box'
 
 export interface InputSlotClassNames {
   input: string
 }
 
-export interface InputProps extends UIComponentProps, ChildrenComponentProps {
+export interface InputProps
+  extends UIComponentProps,
+    ChildrenComponentProps,
+    SupportedIntrinsicInputProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
@@ -35,13 +38,13 @@ export interface InputProps extends UIComponentProps, ChildrenComponentProps {
   clearable?: boolean
 
   /** The default value of the input. */
-  defaultValue?: React.ReactText
+  defaultValue?: string | string[]
 
   /** An input can take the width of its container. */
   fluid?: boolean
 
   /** Optional Icon to display inside the Input. */
-  icon?: ShorthandValue
+  icon?: ShorthandValue<IconProps>
 
   /** An Input with icon can format the icon to appear at the start or at the end of the input field. */
   iconPosition?: 'start' | 'end'
@@ -50,7 +53,10 @@ export interface InputProps extends UIComponentProps, ChildrenComponentProps {
   inline?: boolean
 
   /** Shorthand for the input component. */
-  input?: ShorthandValue
+  input?: ShorthandValue<BoxProps>
+
+  /** An input can have inverted colors. */
+  inverted?: boolean
 
   /**
    * Called on change.
@@ -58,7 +64,7 @@ export interface InputProps extends UIComponentProps, ChildrenComponentProps {
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props and proposed value.
    */
-  onChange?: ComponentEventHandler<InputProps>
+  onChange?: ComponentEventHandler<InputProps & { value: string }>
 
   /** The HTML input type. */
   type?: string
@@ -67,26 +73,18 @@ export interface InputProps extends UIComponentProps, ChildrenComponentProps {
   inputRef?: React.Ref<HTMLElement>
 
   /** The value of the input. */
-  value?: React.ReactText
+  value?: string | number
 
   /** Shorthand for the wrapper component. */
-  wrapper?: ShorthandValue
+  wrapper?: ShorthandValue<BoxProps>
 }
 
 export interface InputState {
-  value?: React.ReactText
+  value?: InputProps['value']
 }
 
-/**
- * An input is a field used to elicit a response from a user.
- * @accessibility
- * For good screen reader experience set aria-label or aria-labelledby attribute for input.
- *
- * Other considerations:
- *  - if input is search, then use "role='search'"
- */
-class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> {
-  private inputRef = React.createRef<HTMLElement>()
+class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> {
+  inputRef = React.createRef<HTMLElement>()
 
   static className = 'ui-input'
 
@@ -101,11 +99,12 @@ class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> 
     clearable: PropTypes.bool,
     defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     fluid: PropTypes.bool,
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     iconPosition: PropTypes.oneOf(['start', 'end']),
     input: customPropTypes.itemShorthand,
     inputRef: customPropTypes.ref,
     inline: PropTypes.bool,
+    inverted: PropTypes.bool,
     onChange: PropTypes.func,
     type: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -113,13 +112,23 @@ class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> 
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior,
+    accessibility: inputBehavior,
     type: 'text',
     wrapper: {},
     iconPosition: 'end',
   }
 
   static autoControlledProps = ['value']
+
+  actionHandlers = {
+    clear: (e: React.KeyboardEvent) => {
+      if (this.props.clearable && this.state.value !== '') {
+        e.stopPropagation()
+        e.nativeEvent && e.nativeEvent.stopPropagation()
+        this.handleOnClear(e)
+      }
+    },
+  }
 
   renderComponent({
     accessibility,
@@ -153,6 +162,7 @@ class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> 
                   className: Input.slotClassNames.input,
                   styles: styles.input,
                   onChange: this.handleChange,
+                  ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.input, htmlInputProps),
                 },
               })}
             </Ref>
@@ -174,36 +184,35 @@ class Input extends AutoControlledComponent<ReactProps<InputProps>, InputState> 
     })
   }
 
-  private handleIconOverrides = predefinedProps => ({
+  handleIconOverrides = predefinedProps => ({
     onClick: (e: React.SyntheticEvent) => {
       this.handleOnClear(e)
       this.inputRef.current.focus()
       _.invoke(predefinedProps, 'onClick', e, this.props)
     },
-    ...(predefinedProps.onClick && { tabIndex: '0' }),
   })
 
-  private handleChange = (e: React.SyntheticEvent) => {
+  handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = _.get(e, 'target.value')
 
     _.invoke(this.props, 'onChange', e, { ...this.props, value })
 
-    this.trySetState({ value })
+    this.setState({ value })
   }
 
-  private handleOnClear = (e: React.SyntheticEvent) => {
+  handleOnClear = (e: React.SyntheticEvent) => {
     if (this.props.clearable) {
       _.invoke(this.props, 'onChange', e, { ...this.props, value: '' })
-      this.trySetState({ value: '' })
+      this.setState({ value: '' })
     }
   }
 
-  private computeIcon = (): ShorthandValue => {
+  computeIcon = (): ShorthandValue<IconProps> => {
     const { clearable, icon } = this.props
     const { value } = this.state
 
     if (clearable && (value as string).length !== 0) {
-      return 'close'
+      return 'stardust-close'
     }
 
     return icon || null
@@ -214,4 +223,10 @@ Input.slotClassNames = {
   input: `${Input.className}__input`,
 }
 
-export default Input
+/**
+ * An Input is a field used to elicit an input from a user.
+ *
+ * @accessibility
+ * For good screen reader experience set `aria-label` or `aria-labelledby` attribute for input.
+ */
+export default withSafeTypeForAs<typeof Input, InputProps, 'div'>(Input)

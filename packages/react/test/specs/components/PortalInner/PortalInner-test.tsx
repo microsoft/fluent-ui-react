@@ -1,10 +1,10 @@
 import * as React from 'react'
-import { mount } from 'enzyme'
 
 import PortalInner, { PortalInnerProps } from 'src/components/Portal/PortalInner'
+import { mountWithProvider } from 'test/utils'
 
 const mountPortalInner = (props: PortalInnerProps) =>
-  mount(
+  mountWithProvider(
     <PortalInner {...props}>
       <p />
     </PortalInner>,
@@ -13,29 +13,29 @@ const mountPortalInner = (props: PortalInnerProps) =>
 describe('PortalInner', () => {
   describe('render', () => {
     it('calls react createPortal', () => {
-      const context = document.createElement('div')
-      const comp = mountPortalInner({ context })
+      const mountNode = document.createElement('div')
+      const comp = mountPortalInner({ mountNode })
 
-      expect(context.contains(comp.getDOMNode())).toBeTruthy()
+      expect(mountNode.contains(comp.getDOMNode())).toBeTruthy()
     })
   })
 
   describe('onMount', () => {
     it('called when mounting', () => {
-      const handlerSpy = jest.fn()
-      mountPortalInner({ onMount: handlerSpy })
+      const onMount = jest.fn()
+      mountPortalInner({ onMount })
 
-      expect(handlerSpy).toHaveBeenCalledTimes(1)
+      expect(onMount).toHaveBeenCalledTimes(1)
     })
   })
 
   describe('onUnmount', () => {
     it('is called only once when unmounting', () => {
-      const handlerSpy = jest.fn()
-      const wrapper = mountPortalInner({ onUnmount: handlerSpy })
+      const onUnmount = jest.fn()
+      const wrapper = mountPortalInner({ onUnmount })
       wrapper.unmount()
 
-      expect(handlerSpy).toHaveBeenCalledTimes(1)
+      expect(onUnmount).toHaveBeenCalledTimes(1)
     })
   })
 })

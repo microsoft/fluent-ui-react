@@ -1,4 +1,7 @@
-const accordionTitleStyles = {
+import { ComponentSlotStylesPrepared } from '../../../types'
+import { AccordionTitleProps } from '../../../../components/Accordion/AccordionTitle'
+
+const accordionTitleStyles: ComponentSlotStylesPrepared<AccordionTitleProps> = {
   root: () => ({
     display: 'inline-block',
     verticalAlign: 'middle',

@@ -2,7 +2,6 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { neverUpdate } from 'docs/src/hoc'
 import ComponentPropExtra, { ComponentPropExtraProps } from './ComponentPropExtra'
 
 interface ComponentPropFunctionProps extends ComponentPropExtraProps {
@@ -75,4 +74,6 @@ ComponentPropFunctionSignature.propTypes = {
   tags: PropTypes.array,
 }
 
-export default neverUpdate(ComponentPropFunctionSignature)
+const arePropsEqual = () => true
+
+export default React.memo(ComponentPropFunctionSignature, arePropsEqual)

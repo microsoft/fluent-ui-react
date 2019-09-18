@@ -1,14 +1,14 @@
 import * as React from 'react'
 
-import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
+import ComponentPerfExample from 'docs/src/components/ComponentDoc/ComponentPerfExample'
 import NonPublicSection from 'docs/src/components/ComponentDoc/NonPublicSection'
 
 const Performance = () => (
   <NonPublicSection title="Performance">
-    <ComponentExample
+    <ComponentPerfExample
       title="Default"
       description="A default test."
-      examplePath="components/Attachment/Performance/Attachment.perf"
+      examplePath="components/Divider/Performance/Divider.perf"
     />
   </NonPublicSection>
 )

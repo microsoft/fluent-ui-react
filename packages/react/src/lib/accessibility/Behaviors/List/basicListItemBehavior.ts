@@ -1,4 +1,5 @@
 import { Accessibility } from '../../types'
+import { ListItemBehaviorProps } from './listItemBehavior'
 
 /**
  * @description
@@ -8,7 +9,7 @@ import { Accessibility } from '../../types'
  * Adds role='listitem'.
  */
 
-const basicListItemBehavior: Accessibility = (props: any) => ({
+const basicListItemBehavior: Accessibility<ListItemBehaviorProps> = props => ({
   attributes: {
     root: {
       role: 'listitem',

@@ -42,7 +42,7 @@ describe('felaSanitizeCssPlugin', () => {
   })
 
   test('should skip excluded CSS props', () => {
-    const sanitize = sanitizeCss({
+    const withSkip = sanitizeCss({
       skip: ['propertyWithInvalidValue'],
     })
 
@@ -52,7 +52,7 @@ describe('felaSanitizeCssPlugin', () => {
       propertyWithInvalidValue: 'rgba(',
     }
 
-    expect(sanitize(style)).toEqual(style)
+    expect(withSkip(style)).toEqual(style)
   })
 
   describe('should properly filter invalid bracket sequences', () => {

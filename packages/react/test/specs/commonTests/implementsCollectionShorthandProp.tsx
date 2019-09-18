@@ -37,9 +37,7 @@ export default ((Component: React.ComponentType) => {
       })
 
       if (options.mapsValueToProp) {
-        test(`array of string values is spread as ${
-          ShorthandComponent.displayName
-        }s' ${mapsValueToProp}`, () => {
+        test(`array of string values is spread as ${ShorthandComponent.displayName}s' ${mapsValueToProp}`, () => {
           const shorthandValue = ['some value', 'some other value']
           const props = { [shorthandPropertyName]: shorthandValue }
           const wrapper = mount(<Component {...props} />)

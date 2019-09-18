@@ -1,12 +1,16 @@
 import { pxToRem } from '../../../../lib'
 
 export type AttachmentVariables = {
-  padding: number
-  iconSpace: number
+  padding: string
+  iconSpace: string
 
+  borderColor: string
+  borderRadius: string
   backgroundColor: string
   backgroundColorHover: string
   textColor: string
+  textColorHover: string
+  boxShadow: string
 
   progressColor: string
   progressHeight: number
@@ -18,28 +22,27 @@ export type AttachmentVariables = {
   descriptionFontSize: string
   descriptionFontWeight: number
   descriptionLineHeight: number
-
-  focusOutlineColor: string
 }
 
-export default siteVariables => ({
-  padding: pxToRem(8),
+export default (siteVariables: any): AttachmentVariables => ({
+  padding: `${pxToRem(7)} ${pxToRem(3)} ${pxToRem(7)} ${pxToRem(11)}`, // padding set to 1px less to account for 1px border
   iconSpace: pxToRem(12),
+  borderColor: siteVariables.colors.grey[200],
+  borderRadius: pxToRem(3),
+  backgroundColor: siteVariables.colors.grey[100],
+  backgroundColorHover: siteVariables.colors.grey[200],
+  textColor: siteVariables.colors.grey[750],
+  textColorHover: siteVariables.colors.grey[750],
+  boxShadow: siteVariables.shadowLevel1,
 
-  backgroundColor: siteVariables.gray09,
-  backgroundColorHover: siteVariables.gray08,
-  textColor: siteVariables.colors.grey[900],
-
-  progressColor: siteVariables.naturalColors.lightGreen[900],
+  progressColor: siteVariables.colors.green[200],
   progressHeight: 4,
 
   headerFontSize: siteVariables.fontSizes.medium,
   headerFontWeight: siteVariables.fontWeightSemibold,
-  headerLineHeight: siteVariables.lineHeightSmall,
+  headerLineHeight: siteVariables.lineHeightMedium,
 
   descriptionFontSize: siteVariables.fontSizes.small,
   descriptionFontWeight: siteVariables.fontWeightRegular,
   descriptionLineHeight: siteVariables.lineHeightSmall,
-
-  focusOutlineColor: siteVariables.colors.primary[500],
 })

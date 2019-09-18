@@ -2,14 +2,16 @@ import { Grid, Loader } from '@stardust-ui/react'
 import * as React from 'react'
 
 const LoaderExampleSize: React.FC = () => (
-  <Grid columns="3" variables={{ gridGap: '20px' }}>
-    <Loader size="smallest" />
-    <Loader size="smaller" />
-    <Loader size="small" />
+  <Grid columns="4" variables={{ gridGap: '20px' }}>
+    <Loader size="smallest" label="smallest" labelPosition="below" />
+    <Loader size="smaller" label="smaller" labelPosition="below" />
+    <Loader size="small" label="small" labelPosition="below" />
 
-    <Loader size="large" />
-    <Loader size="larger" />
-    <Loader size="largest" />
+    <Loader label="medium (default)" labelPosition="below" />
+
+    <Loader size="large" label="large" labelPosition="below" />
+    <Loader size="larger" label="larger" labelPosition="below" />
+    <Loader size="largest" label="largest" labelPosition="below" />
   </Grid>
 )
 

@@ -17,7 +17,7 @@ type ShorthandConfig = {
   mappedArrayProp?: string
   overrideProps?: Props & ((props: Props) => Props) | Props
   generateKey?: boolean
-  valueOrRenderCallback?: ShorthandValue
+  valueOrRenderCallback?: ShorthandValue<Props>
   render?: ShorthandRenderFunction
 }
 
@@ -47,8 +47,8 @@ const getShorthand = ({
     },
   })
 
-const isValuePrimitive = (value: ShorthandValue) =>
-  typeof value === 'string' || typeof value === 'number'
+const isValuePrimitive = (value: ShorthandValue<Props>) =>
+  typeof value === 'string' || typeof value === 'number' || React.isValidElement(value)
 
 const testCreateShorthand = (shorthandArgs: ShorthandConfig, expectedResult: ObjectOf<any>) =>
   expect(shallow(getShorthand(shorthandArgs)).props()).toEqual(expectedResult)
@@ -77,7 +77,7 @@ const itReturnsAValidElement = valueOrRenderCallback => {
   })
 }
 
-const itAppliesDefaultProps = (valueOrRenderCallback: ShorthandValue) => {
+const itAppliesDefaultProps = (valueOrRenderCallback: ShorthandValue<Props>) => {
   test('applies defaultProps', () => {
     const defaultProps = { some: 'defaults' }
     const expectedResult = isValuePrimitive(valueOrRenderCallback)
@@ -100,7 +100,7 @@ const itDoesNotIncludePropsFromMappedProp = valueOrRenderCallback => {
 const itMergesClassNames = (
   classNameSource: string,
   extraClassName: string,
-  shorthandConfig: { valueOrRenderCallback?: ShorthandValue; mappedProp?: string },
+  shorthandConfig: { valueOrRenderCallback?: ShorthandValue<Props>; mappedProp?: string },
 ) => {
   test(`merges defaultProps className and ${classNameSource} className`, () => {
     const defaultProps = { className: 'default' }
@@ -445,10 +445,13 @@ describe('factories', () => {
         })
 
         test('works with falsy values', () => {
-          expect(getShorthand({ valueOrRenderCallback: <div key={null} /> })).toHaveProperty(
-            'key',
-            'null',
-          )
+          const elementWithoutKey = getShorthand({ valueOrRenderCallback: <p /> })
+          expect(elementWithoutKey).toHaveProperty('key', null)
+          expect(elementWithoutKey.props.children.key).toBe(null)
+
+          const elementWithNullKey = getShorthand({ valueOrRenderCallback: <p key={null} /> })
+          expect(elementWithNullKey).toHaveProperty('key', 'null')
+          expect(elementWithoutKey.props.children.key).toBe(null)
 
           expect(getShorthand({ valueOrRenderCallback: <div key={0} /> })).toHaveProperty(
             'key',
@@ -531,11 +534,9 @@ describe('factories', () => {
       test("is called with the user's element's and default props", () => {
         const defaultProps = { 'data-some': 'defaults' }
         const overrideProps = jest.fn(() => ({}))
-        const userProps = { 'data-user': 'props' }
-        const value = <div {...userProps} />
 
-        shallow(getShorthand({ defaultProps, overrideProps, valueOrRenderCallback: value }))
-        expect(overrideProps).toHaveBeenCalledWith({ ...defaultProps, ...userProps })
+        shallow(getShorthand({ defaultProps, overrideProps, valueOrRenderCallback: <div /> }))
+        expect(overrideProps).toHaveBeenCalledWith(defaultProps)
       })
 
       test("is called with the user's props object", () => {
@@ -571,24 +572,28 @@ describe('factories', () => {
     describe('from an element', () => {
       itReturnsAValidElement(<div />)
       itAppliesDefaultProps(<div />)
-      itDoesNotIncludePropsFromMappedProp(<div />)
-      itMergesClassNames('element', 'user', { valueOrRenderCallback: <div className="user" /> })
+      itMergesClassNames('mappedProp', 'mapped', {
+        valueOrRenderCallback: <div />,
+        mappedProp: 'className',
+      })
+
       itAppliesProps(
-        'element',
-        { foo: 'foo' },
-        { valueOrRenderCallback: <div {...{ foo: 'foo' } as any} /> },
+        'mappedProp',
+        { 'data-prop': <div /> },
+        {
+          valueOrRenderCallback: <div />,
+          mappedProp: 'data-prop',
+        },
       )
       itOverridesDefaultProps(
-        'element',
-        { some: 'defaults', overridden: false },
-        { some: 'defaults', overridden: true },
-        { valueOrRenderCallback: <div {...{ overridden: true } as any} /> },
+        'mappedProp',
+        { some: 'defaults', overridden: null },
+        { some: 'defaults', overridden: <div /> },
+        {
+          valueOrRenderCallback: <div />,
+          mappedProp: 'overridden',
+        },
       )
-      itOverridesDefaultPropsWithFalseyProps('element', {
-        valueOrRenderCallback: (
-          <div {...{ undef: undefined, nil: null, zero: 0, empty: '' } as any} />
-        ),
-      })
     })
 
     describe('from a string', () => {

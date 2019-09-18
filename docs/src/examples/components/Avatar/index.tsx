@@ -9,8 +9,8 @@ const AvatarExamples = () => (
   <>
     <Types />
     <Variations />
-    <Usage />
     <Rtl />
+    <Usage />
   </>
 )
 

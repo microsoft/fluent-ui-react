@@ -1,5 +1,10 @@
 import * as React from 'react'
-import { ComponentVariablesInput, ComponentSlotStyle, AnimationProp } from '../themes/types'
+import {
+  ComponentVariablesInput,
+  ComponentSlotStyle,
+  AnimationProp,
+  ComponentDesign,
+} from '../themes/types'
 import { ReactChildren } from '../types'
 
 export interface StyledComponentProps<P = any, V = any> {
@@ -18,43 +23,16 @@ export interface AnimatedComponentProps {
 export interface UIComponentProps<P = any, V = any>
   extends StyledComponentProps<P, V>,
     AnimatedComponentProps {
-  [key: string]: any
-
-  /** An element type to render as (string or function). */
-  as?: any
-
   /** Additional CSS class name(s) to apply.  */
   className?: string
+  design?: ComponentDesign
 }
 
 export type SizeValue = 'smallest' | 'smaller' | 'small' | 'medium' | 'large' | 'larger' | 'largest'
 
-export type ColorValue =
-  | 'primary'
-  | 'secondary'
-  | 'blue'
-  | 'green'
-  | 'grey'
-  | 'orange'
-  | 'pink'
-  | 'purple'
-  | 'teal'
-  | 'red'
-  | 'yellow'
-  | string
+export type AlignValue = 'start' | 'end' | 'center' | 'justify'
 
-export type ColorValuesWithPrimitiveColors = ColorValue | 'black' | 'white'
-
-export type ComplexColorPropType<TColorValue = ColorValue> =
-  | {
-      foreground?: TColorValue
-      background?: TColorValue
-      border?: TColorValue
-      shadow?: TColorValue
-    }
-  | TColorValue
-
-export interface ColorComponentProps<TColor = ColorValue> {
+export interface ColorComponentProps<TColor = string> {
   /** A component can have a color. */
   color?: TColor
 }

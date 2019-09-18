@@ -11,17 +11,22 @@ export interface ChatMessageVariables {
   offset: string
   padding: string
   authorMarginRight: string
+  authorColor: string
   authorFontWeight: number
   headerMarginBottom: string
-  contentFocusOutlineColor: string
+  contentColor: string
+  linkColor: string
+  linkColorMine: string
   border: string
   badgeShadow: string
   isImportant: boolean
   hasMention: boolean
   hasMentionColor: string
+  hasMentionNubbinColor: string
   isImportantColor: string
   badgeTextColor: string
   reactionGroupMarginLeft: string
+  showActionMenu?: boolean
   timestampColorMine: string
 }
 
@@ -30,22 +35,27 @@ export default (siteVars): ChatMessageVariables => ({
   actionMenuPositionRight: pxToRem(5),
   actionMenuPositionTop: pxToRem(-30),
   backgroundColor: siteVars.colors.white,
-  backgroundColorMine: '#E5E5F1',
+  backgroundColorMine: siteVars.colors.brand[100],
   borderRadius: pxToRem(3),
   color: 'rgb(64, 64, 64)',
   offset: pxToRem(100),
   padding: pxToRem(16),
   authorMarginRight: pxToRem(12),
-  authorFontWeight: siteVars.fontWeightBold,
+  authorColor: siteVars.colors.grey[500],
+  authorFontWeight: siteVars.fontWeightRegular,
   headerMarginBottom: pxToRem(2),
-  contentFocusOutlineColor: siteVars.colors.primary[500],
+  contentColor: siteVars.colors.grey[750],
+  linkColor: siteVars.colorScheme.brand.foreground1,
+  linkColorMine: siteVars.colorScheme.brand.foreground2,
   border: 'none',
   badgeShadow: siteVars.shadowLevel1Darker,
   isImportant: false,
   hasMention: false,
-  hasMentionColor: siteVars.naturalColors.darkOrange[400],
-  isImportantColor: siteVars.colors.red[900],
+  hasMentionColor: siteVars.colors.orange[300],
+  hasMentionNubbinColor: siteVars.colors.orange[400],
+  isImportantColor: siteVars.colors.red[400],
   badgeTextColor: siteVars.colors.white,
   reactionGroupMarginLeft: pxToRem(12),
-  timestampColorMine: siteVars.gray02,
+  showActionMenu: undefined,
+  timestampColorMine: siteVars.colors.grey[500],
 })

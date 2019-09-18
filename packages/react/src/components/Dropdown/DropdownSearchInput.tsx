@@ -1,3 +1,4 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
@@ -7,9 +8,9 @@ import {
   RenderResultConfig,
   createShorthandFactory,
   commonPropTypes,
-  customPropTypes,
+  ShorthandFactory,
 } from '../../lib'
-import { ComponentEventHandler, ReactProps } from '../../types'
+import { ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import Input from '../Input/Input'
 
@@ -19,6 +20,12 @@ export interface DropdownSearchInputSlotClassNames {
 }
 
 export interface DropdownSearchInputProps extends UIComponentProps<DropdownSearchInputProps> {
+  /** Accessibility props for combobox slot. */
+  accessibilityComboboxProps?: any
+
+  /** Accessibility props for input slot. */
+  accessibilityInputProps?: any
+
   /** A dropdown search input can be formatted to appear inline in the context of a Dropdown. */
   inline?: boolean
 
@@ -61,12 +68,9 @@ export interface DropdownSearchInputProps extends UIComponentProps<DropdownSearc
   placeholder?: string
 }
 
-/**
- * A DropdownSearchInput is a sub-component of a Dropdown that also has a search function, used to display the search input field.
- */
-class DropdownSearchInput extends UIComponent<ReactProps<DropdownSearchInputProps>, any> {
+class DropdownSearchInput extends UIComponent<WithAsProp<DropdownSearchInputProps>, any> {
   static displayName = 'DropdownSearchInput'
-  static create: Function
+  static create: ShorthandFactory<DropdownSearchInputProps>
   static slotClassNames: DropdownSearchInputSlotClassNames
   static className = 'ui-dropdown__searchinput'
 
@@ -87,23 +91,23 @@ class DropdownSearchInput extends UIComponent<ReactProps<DropdownSearchInputProp
     placeholder: PropTypes.string,
   }
 
-  private handleFocus = (e: React.SyntheticEvent) => {
+  handleFocus = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 
-  private handleInputKeyDown = (e: React.SyntheticEvent) => {
+  handleInputKeyDown = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onInputKeyDown', e, this.props)
   }
 
-  private handleInputBlur = (e: React.SyntheticEvent) => {
+  handleInputBlur = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onInputBlur', e, this.props)
   }
 
-  private handleKeyUp = (e: React.SyntheticEvent) => {
+  handleKeyUp = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onKeyUp', e, this.props)
   }
 
-  public renderComponent({ unhandledProps, styles }: RenderResultConfig<DropdownSearchInputProps>) {
+  renderComponent({ unhandledProps, styles }: RenderResultConfig<DropdownSearchInputProps>) {
     const {
       accessibilityComboboxProps,
       accessibilityInputProps,
@@ -144,4 +148,10 @@ DropdownSearchInput.slotClassNames = {
 
 DropdownSearchInput.create = createShorthandFactory({ Component: DropdownSearchInput })
 
-export default DropdownSearchInput
+/**
+ * A DropdownSearchInput represents item of 'search' Dropdown.
+ * Used to display the search input field.
+ */
+export default withSafeTypeForAs<typeof DropdownSearchInput, DropdownSearchInputProps>(
+  DropdownSearchInput,
+)

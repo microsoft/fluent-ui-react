@@ -10,10 +10,11 @@ import {
   commonPropTypes,
   ContentComponentProps,
   rtlTextContainer,
+  ShorthandFactory,
 } from '../../lib'
 import Layout from '../Layout/Layout'
-import { ComponentSlotClasses, ICSSInJSStyle } from '../../themes/types'
-import { ReactProps } from '../../types'
+import { ComponentSlotClasses } from '../../themes/types'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface ItemLayoutSlotClassNames {
   header: string
@@ -49,28 +50,23 @@ export interface ItemLayoutProps extends UIComponentProps, ContentComponentProps
     classes: ComponentSlotClasses,
   ) => React.ReactNode
   /** Styled applied to the root element of the rendered component. */
-  rootCSS?: ICSSInJSStyle
+  rootCSS?: React.CSSProperties
   /** Styled applied to the media element of the rendered component. */
-  mediaCSS?: ICSSInJSStyle
+  mediaCSS?: React.CSSProperties
   /** Styled applied to the header element of the rendered component. */
-  headerCSS?: ICSSInJSStyle
+  headerCSS?: React.CSSProperties
   /** Styled applied to the header media element of the rendered component. */
-  headerMediaCSS?: ICSSInJSStyle
+  headerMediaCSS?: React.CSSProperties
   /** Styled applied to the content element of the rendered component. */
-  contentCSS?: ICSSInJSStyle
+  contentCSS?: React.CSSProperties
   /** Styled applied to the content element of the rendered component. */
-  contentMediaCSS?: ICSSInJSStyle
+  contentMediaCSS?: React.CSSProperties
   /** Styled applied to the end media element of the rendered component. */
-  endMediaCSS?: ICSSInJSStyle
-  truncateContent?: boolean
-  truncateHeader?: boolean
+  endMediaCSS?: React.CSSProperties
 }
 
-/**
- * The Item Layout handles layout styles for menu items, list items and other similar item templates.
- */
-class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
-  static create: Function
+class ItemLayout extends UIComponent<WithAsProp<ItemLayoutProps>, any> {
+  static create: ShorthandFactory<ItemLayoutProps>
 
   static displayName = 'ItemLayout'
 
@@ -101,8 +97,6 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
     contentCSS: PropTypes.object,
     contentMediaCSS: PropTypes.object,
     endMediaCSS: PropTypes.object,
-    truncateContent: PropTypes.bool,
-    truncateHeader: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -128,7 +122,7 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
     },
 
     renderHeaderArea: (props, state, classes) => {
-      const { debug, header, headerMedia, truncateHeader, headerCSS, headerMediaCSS } = props
+      const { debug, header, headerMedia, headerCSS, headerMediaCSS } = props
 
       const mergedClasses = cx(ItemLayout.slotClassNames.header, classes.header)
       const mediaClasses = cx(ItemLayout.slotClassNames.headerMedia, classes.headerMedia)
@@ -139,7 +133,6 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
           alignItems="end"
           gap={pxToRem(8)}
           debug={debug}
-          truncateMain={truncateHeader}
           main={rtlTextContainer.createFor({ element: header })}
           rootCSS={headerCSS}
           end={
@@ -154,7 +147,7 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
     },
 
     renderContentArea: (props, state, classes) => {
-      const { debug, content, contentMedia, truncateContent, contentCSS, contentMediaCSS } = props
+      const { debug, content, contentMedia, contentCSS, contentMediaCSS } = props
 
       const mergedClasses = cx(ItemLayout.slotClassNames.content, classes.content)
       const mediaClasses = cx(ItemLayout.slotClassNames.contentMedia, classes.contentMedia)
@@ -165,7 +158,6 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
           alignItems="start"
           gap={pxToRem(8)}
           debug={debug}
-          truncateMain={truncateContent}
           rootCSS={contentCSS}
           main={rtlTextContainer.createFor({ element: content })}
           end={
@@ -180,9 +172,17 @@ class ItemLayout extends UIComponent<ReactProps<ItemLayoutProps>, any> {
     },
   }
 
-  renderComponent({ ElementType, classes, unhandledProps, styles }) {
-    const { as, debug, endMedia, media, renderMainArea, rootCSS, mediaCSS, endMediaCSS } = this
-      .props as ItemLayoutPropsWithDefaults
+  renderComponent({ classes, unhandledProps, styles }) {
+    const {
+      as,
+      debug,
+      endMedia,
+      media,
+      renderMainArea,
+      rootCSS,
+      mediaCSS,
+      endMediaCSS,
+    } = this.props
 
     const startArea = media
     const mainArea = renderMainArea(this.props, this.state, classes)
@@ -233,6 +233,7 @@ ItemLayout.slotClassNames = {
   endMedia: `${ItemLayout.className}__endMedia`,
 }
 
-export default ItemLayout
-
-export type ItemLayoutPropsWithDefaults = ItemLayoutProps & typeof ItemLayout.defaultProps
+/**
+ * (DEPRECATED) The Item Layout handles layout styles for menu items, list items and other similar item templates.
+ */
+export default withSafeTypeForAs<typeof ItemLayout, ItemLayoutProps>(ItemLayout)

@@ -1,31 +1,29 @@
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import Icon from '../Icon/Icon'
+import Icon, { IconProps } from '../Icon/Icon'
 import { statusBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 
 import {
-  customPropTypes,
   UIComponent,
   createShorthandFactory,
   UIComponentProps,
   commonPropTypes,
   SizeValue,
+  ShorthandFactory,
 } from '../../lib'
-import { ReactProps, ShorthandValue } from '../../types'
+import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 
 export interface StatusProps extends UIComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default statusBehavior
-   */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** A custom color. */
   color?: string
 
   /** Shorthand for the icon, to provide customizing status */
-  icon?: ShorthandValue
+  icon?: ShorthandValue<IconProps>
 
   /** Size multiplier */
   size?: SizeValue
@@ -34,13 +32,8 @@ export interface StatusProps extends UIComponentProps {
   state?: 'success' | 'info' | 'warning' | 'error' | 'unknown'
 }
 
-/**
- * A status graphically represents someone's or something's state.
- * @accessibility
- * The 'img' role is used to identify an element as image. 'Title' attribute have to be provided on status component. Then reader narrate content of 'title' attribute.
- */
-class Status extends UIComponent<ReactProps<StatusProps>, any> {
-  static create: Function
+class Status extends UIComponent<WithAsProp<StatusProps>, any> {
+  static create: ShorthandFactory<StatusProps>
 
   static className = 'ui-status'
 
@@ -52,7 +45,7 @@ class Status extends UIComponent<ReactProps<StatusProps>, any> {
       content: false,
     }),
     color: PropTypes.string,
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     size: customPropTypes.size,
     state: PropTypes.oneOf(['success', 'info', 'warning', 'error', 'unknown']),
   }
@@ -83,4 +76,10 @@ class Status extends UIComponent<ReactProps<StatusProps>, any> {
 
 Status.create = createShorthandFactory({ Component: Status, mappedProp: 'state' })
 
-export default Status
+/**
+ * A Status represents someone's or something's state.
+ *
+ * @accessibility
+ * Implements [ARIA img](https://www.w3.org/TR/wai-aria-1.1/#img) role.
+ */
+export default withSafeTypeForAs<typeof Status, StatusProps, 'span'>(Status)

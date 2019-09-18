@@ -1,21 +1,36 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
-import { pxToRem } from '../../../../lib'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { PopupContentProps } from '../../../../components/Popup/PopupContent'
 import { PopupContentVariables } from './popupContentVariables'
+import getPointerStyles from '../../getPointerStyles'
 
-const popupContentStyles: ComponentSlotStylesInput<PopupContentProps, PopupContentVariables> = {
-  root: ({ props, variables }): ICSSInJSStyle => {
-    const { backgroundColor, borderColor, padding } = variables
+const popupContentStyles: ComponentSlotStylesPrepared<PopupContentProps, PopupContentVariables> = {
+  root: ({ props: p, variables: v, rtl }): ICSSInJSStyle => ({
+    border: `${v.borderSize} solid ${v.borderColor}`,
+    borderRadius: v.borderRadius,
+    boxShadow: v.boxShadow,
 
-    return {
-      display: 'block',
-      backgroundColor,
-      padding,
-      border: `1px solid ${borderColor}`,
-      borderRadius: pxToRem(3),
-      boxShadow: `0 2px 4px 0 ${borderColor}, 0 2px 10px 0 ${borderColor}`,
-    }
-  },
+    display: 'block',
+    ...(p.pointing && getPointerStyles(v.pointerOffset, v.pointerMargin, rtl, p.placement).root),
+  }),
+
+  pointer: ({ props: p, variables: v, rtl }): ICSSInJSStyle => ({
+    display: 'block',
+    position: 'absolute',
+
+    backgroundColor: 'inherit',
+    borderBottom: `${v.borderSize} solid ${v.borderColor}`,
+    borderRight: `${v.borderSize} solid ${v.borderColor}`,
+
+    height: v.pointerSize,
+    width: v.pointerSize,
+
+    ...getPointerStyles(v.pointerOffset, v.pointerMargin, rtl, p.placement).pointer,
+  }),
+
+  content: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    display: 'block',
+    padding: v.padding,
+  }),
 }
 
 export default popupContentStyles

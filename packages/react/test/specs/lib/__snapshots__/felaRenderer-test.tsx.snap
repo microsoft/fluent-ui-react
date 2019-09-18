@@ -1,0 +1,123 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CSS fallback values are rendered 1`] = `
+".a {
+  color: red;
+  color: blue;
+}
+
+
+<div className=ui-box a />;
+"
+`;
+
+exports[`array returned by keyframe results in CSS fallback values 1`] = `
+"@-webkit-keyframes k1 {
+  0% {
+    color: blue;
+    color: red;
+    color: yellow;
+  }
+  100% {
+    color: blue;
+    color: red;
+    color: yellow;
+  }
+}
+@-moz-keyframes k1 {
+  0% {
+    color: blue;
+    color: red;
+    color: yellow;
+  }
+  100% {
+    color: blue;
+    color: red;
+    color: yellow;
+  }
+}
+@keyframes k1 {
+  0% {
+    color: blue;
+    color: red;
+    color: yellow;
+  }
+  100% {
+    color: blue;
+    color: red;
+    color: yellow;
+  }
+}
+.a {
+  animation-name: k1;
+}
+
+
+<div className=ui-provider__box dir=ltr>
+  <div className=ui-box a />
+</div>;
+"
+`;
+
+exports[`basic styles are rendered 1`] = `
+".a {
+  color: red;
+}
+
+
+<div className=ui-box a />;
+"
+`;
+
+exports[`keyframe colors are rendered 1`] = `
+"@-webkit-keyframes k1 {
+  from {
+    color: red;
+  }
+  to {
+    color: blue;
+  }
+}
+@-moz-keyframes k1 {
+  from {
+    color: red;
+  }
+  to {
+    color: blue;
+  }
+}
+@keyframes k1 {
+  from {
+    color: red;
+  }
+  to {
+    color: blue;
+  }
+}
+.a {
+  animation-name: k1;
+}
+.b {
+  animation-duration: 5s;
+}
+
+
+<div className=ui-provider__box dir=ltr>
+  <div className=ui-box a b />
+</div>;
+"
+`;
+
+exports[`marginLeft is rendered into marginRight due to RTL 1`] = `
+".a {
+  margin-right: 10px;
+}
+
+
+<div className=ui-provider__box dir=rtl>
+  <span className=ui-text a dir=auto>
+    Hello
+  </span>
+</div>;
+"
+`;

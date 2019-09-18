@@ -1,9 +1,8 @@
+import { CodeSnippet } from '@stardust-ui/docs-components'
 import { Dropdown, DropdownProps, Flex, Label, Loader } from '@stardust-ui/react'
 import * as faker from 'faker'
 import * as _ from 'lodash'
 import * as React from 'react'
-
-import CodeSnippet from '../../components/CodeSnippet'
 
 // ----------------------------------------
 // Types
@@ -57,7 +56,7 @@ class AsyncDropdownSearch extends React.Component<{}, SearchPageState> {
     if (this.state.items.length > 10) return
 
     this.setState({ loading: true })
-    this.searchTimer = setTimeout(() => {
+    this.searchTimer = window.setTimeout(() => {
       this.setState(prevState => ({
         loading: false,
         items: [...prevState.items, ..._.times<Entry>(2, createEntry)],
@@ -75,9 +74,7 @@ class AsyncDropdownSearch extends React.Component<{}, SearchPageState> {
             fluid
             items={items}
             loading={loading}
-            loadingMessage={{
-              content: <Loader label="Loading..." labelPosition="end" size="larger" />,
-            }}
+            loadingMessage={<Loader label="Loading..." labelPosition="end" />}
             multiple
             onSearchQueryChange={this.handleSearchQueryChange}
             onSelectedChange={this.handleSelectedChange}

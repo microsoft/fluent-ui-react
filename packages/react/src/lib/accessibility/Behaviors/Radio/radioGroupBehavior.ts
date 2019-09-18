@@ -9,7 +9,7 @@ import * as keyboardKey from 'keyboard-key'
  *  Triggers 'nextItem' action with 'ArrowDown' or 'ArrowRight' on 'root'.
  *  Triggers 'prevItem' action with 'ArrowUp' or 'ArrowLeft' on 'root'.
  */
-const radioGroupBehavior: Accessibility = (props: any) => ({
+const radioGroupBehavior: Accessibility = () => ({
   attributes: {
     root: {
       role: 'radiogroup',

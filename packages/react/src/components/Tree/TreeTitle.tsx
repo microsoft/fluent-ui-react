@@ -11,20 +11,28 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   rtlTextContainer,
+  applyAccessibilityKeyHandlers,
+  ShorthandFactory,
 } from '../../lib'
 import { treeTitleBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
-import { ComponentEventHandler, ReactProps } from '../../types'
+import { ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface TreeTitleProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default treeTitleBehavior
-   */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
+
+  /** Whether or not the title has a subtree. */
+  hasSubtree?: boolean
+
+  /** The index of the title among its siblings. Count starts at 1. */
+  index?: number
+
+  /** Level of the tree/subtree that contains this title. */
+  level?: number
 
   /**
    * Called on click.
@@ -34,15 +42,15 @@ export interface TreeTitleProps
    */
   onClick?: ComponentEventHandler<TreeTitleProps>
 
-  /** Whether or not the subtree of the item is in the open state. */
+  /** Whether or not the subtree of the title is in the open state. */
   open?: boolean
 
-  /** Whether or not the item has a subtree. */
-  hasSubtree?: boolean
+  /** Size of the tree containing this title without any children. */
+  treeSize?: number
 }
 
-class TreeTitle extends UIComponent<ReactProps<TreeTitleProps>> {
-  static create: Function
+class TreeTitle extends UIComponent<WithAsProp<TreeTitleProps>> {
+  static create: ShorthandFactory<TreeTitleProps>
 
   static className = 'ui-tree__title'
 
@@ -50,15 +58,24 @@ class TreeTitle extends UIComponent<ReactProps<TreeTitleProps>> {
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
+    hasSubtree: PropTypes.bool,
+    index: PropTypes.number,
+    level: PropTypes.number,
     onClick: PropTypes.func,
     open: PropTypes.bool,
-    hasSubtree: PropTypes.bool,
+    treeSize: PropTypes.number,
   }
 
-  public static defaultProps = {
+  static defaultProps = {
     as: 'a',
-    href: '#',
     accessibility: treeTitleBehavior,
+  }
+
+  actionHandlers = {
+    performClick: e => {
+      e.preventDefault()
+      this.handleClick(e)
+    },
   }
 
   handleClick = e => {
@@ -75,6 +92,7 @@ class TreeTitle extends UIComponent<ReactProps<TreeTitleProps>> {
         {...accessibility.attributes.root}
         {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
         {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
         {childrenExist(children) ? children : content}
       </ElementType>
@@ -82,6 +100,12 @@ class TreeTitle extends UIComponent<ReactProps<TreeTitleProps>> {
   }
 }
 
-TreeTitle.create = createShorthandFactory({ Component: TreeTitle, mappedProp: 'content' })
+TreeTitle.create = createShorthandFactory({
+  Component: TreeTitle,
+  mappedProp: 'content',
+})
 
-export default TreeTitle
+/**
+ * A TreeTitle renders a title of TreeItem.
+ */
+export default withSafeTypeForAs<typeof TreeTitle, TreeTitleProps, 'a'>(TreeTitle)

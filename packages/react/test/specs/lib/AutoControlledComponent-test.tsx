@@ -45,11 +45,36 @@ describe('extending AutoControlledComponent', () => {
     shallow(<TestClass />)
   })
 
-  describe('trySetState', () => {
-    test('is an instance method', () => {
-      expect(typeof getAutoControlledInstance().trySetState).toBe('function')
-    })
+  test('getAutoControlledStateFromProps', () => {
+    consoleUtil.disableOnce()
 
+    TestClass = createTestClass({
+      autoControlledProps: ['open'],
+      defaultProps: ['defaultOpen'],
+      state: { open: false, value: 'initial' },
+    })
+    TestClass.getAutoControlledStateFromProps = (props, state) => {
+      return {
+        openProp: props.open,
+        openState: state.open,
+        modifiedValue: `${state.value} + auto`,
+      }
+    }
+    const wrapper = shallow(<TestClass open />)
+
+    expect(wrapper.state('open')).toBe(true)
+    expect(wrapper.state('openProp')).toBe(true)
+
+    // will be "true" because logic of ACC was executed before
+    expect(wrapper.state('openState')).toBe(true)
+
+    // "getAutoControlledStateFromProps" has access to whole state
+    expect(wrapper.state('modifiedValue')).toBe('initial + auto')
+    // original "value" will be kept
+    expect(wrapper.state('value')).toBe('initial')
+  })
+
+  describe('trySetState', () => {
     test('sets state for autoControlledProps', () => {
       consoleUtil.disableOnce()
 
@@ -60,20 +85,9 @@ describe('extending AutoControlledComponent', () => {
       TestClass = createTestClass({ autoControlledProps })
       const wrapper = shallow(<TestClass />)
 
-      getAutoControlledInstance(wrapper).trySetState({ [randomProp]: randomValue })
+      getAutoControlledInstance(wrapper).setState({ [randomProp]: randomValue })
 
       expect(wrapper.state()).toHaveProperty(randomProp, randomValue)
-    })
-
-    test('does not set state for non autoControlledProps', () => {
-      consoleUtil.disableOnce()
-
-      TestClass = createTestClass({ autoControlledProps: [], state: {} })
-      const wrapper = shallow(<TestClass />)
-
-      getAutoControlledInstance(wrapper).trySetState({ ['system']: 'compress' })
-
-      expect(wrapper.state()).toEqual({})
     })
 
     test('does not set state for props defined by the parent', () => {
@@ -89,7 +103,7 @@ describe('extending AutoControlledComponent', () => {
       TestClass = createTestClass({ autoControlledProps, state: {} })
       const wrapper = shallow(<TestClass {...props} />)
 
-      getAutoControlledInstance(wrapper).trySetState({ [randomProp]: randomValue })
+      getAutoControlledInstance(wrapper).setState({ [randomProp]: randomValue })
 
       // not updated
       expect(wrapper.state()).not.toHaveProperty(randomProp, randomValue)
@@ -113,7 +127,7 @@ describe('extending AutoControlledComponent', () => {
       TestClass = createTestClass({ autoControlledProps, state: {} })
       const wrapper = shallow(<TestClass {...props} />)
 
-      getAutoControlledInstance(wrapper).trySetState({ [randomProp]: randomValue })
+      getAutoControlledInstance(wrapper).setState({ [randomProp]: randomValue })
 
       expect(wrapper.state()).toHaveProperty(randomProp, randomValue)
     })
@@ -133,7 +147,7 @@ describe('extending AutoControlledComponent', () => {
       TestClass = createTestClass({ autoControlledProps, state: {} })
       const wrapper = shallow(<TestClass {...props} />)
 
-      getAutoControlledInstance(wrapper).trySetState({ [randomProp]: randomValue })
+      getAutoControlledInstance(wrapper).setState({ [randomProp]: randomValue })
 
       // not updated
       expect(wrapper.state()).not.toHaveProperty(randomProp, randomValue)
@@ -151,7 +165,9 @@ describe('extending AutoControlledComponent', () => {
       const autoControlledProps = _.keys(props)
 
       TestClass = createTestClass({ autoControlledProps, state: {} })
-      expect(shallow(<TestClass {...props} />).state()).toEqual(props)
+      expect(shallow(<TestClass {...props} />).state()).toEqual(
+        expect.objectContaining({ autoControlledProps, ...props }),
+      )
     })
 
     test('does not include non autoControlledProps', () => {
@@ -221,7 +237,7 @@ describe('extending AutoControlledComponent', () => {
       consoleUtil.disableOnce()
       TestClass.autoControlledProps.push('value')
 
-      expect(shallow(<TestClass multiple />).state()).toEqual({ value: [] })
+      expect(shallow(<TestClass multiple />).state()).toHaveProperty('value', [])
     })
   })
 
@@ -234,7 +250,9 @@ describe('extending AutoControlledComponent', () => {
       const defaultProps = makeDefaultProps(props)
 
       TestClass = createTestClass({ autoControlledProps, state: {} })
-      expect(shallow(<TestClass {...defaultProps} />).state()).toEqual(props)
+      expect(shallow(<TestClass {...defaultProps} />).state()).toEqual(
+        expect.objectContaining(props),
+      )
     })
 
     test('are not applied to state for normal props', () => {
@@ -262,7 +280,7 @@ describe('extending AutoControlledComponent', () => {
       TestClass = createTestClass({ autoControlledProps, state: {} })
       const wrapper = shallow(<TestClass {...defaultProps} />)
 
-      getAutoControlledInstance(wrapper).trySetState({ [randomProp]: randomValue })
+      getAutoControlledInstance(wrapper).setState({ [randomProp]: randomValue })
 
       expect(wrapper.state()).toHaveProperty(randomProp, randomValue)
     })
