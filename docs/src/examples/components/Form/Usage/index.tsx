@@ -3,7 +3,7 @@ import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
 import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 
 const Usage = () => (
-  <ExampleSection title="">
+  <ExampleSection title="Usage">
     <ComponentExample
       title="Checkbox"
       description="A form can have a Checkbox as a field."
