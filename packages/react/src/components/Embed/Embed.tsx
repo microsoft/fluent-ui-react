@@ -129,9 +129,17 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
     },
   })
 
+  renderIframePlaceholderImageIfNecessary(placeholderImage: JSX.Element) {
+    const { active, iframeLoaded } = this.state
+    if (active && !iframeLoaded) {
+      return placeholderImage
+    }
+    return null
+  }
+
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
     const { control, iframe, placeholder, video } = this.props
-    const { active, iframeLoaded } = this.state
+    const { active } = this.state
     const controlVisible = !_.isNil(video) || !active
     const placeholderImage = placeholder ? (
       <Image
@@ -149,7 +157,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
         {...unhandledProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
-        {iframe && active && !iframeLoaded && placeholderImage}
+        {iframe && this.renderIframePlaceholderImageIfNecessary(placeholderImage)}
         {active ? (
           <>
             {Video.create(video, {
