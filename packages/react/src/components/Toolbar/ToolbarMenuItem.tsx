@@ -125,7 +125,16 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
   }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles }) {
-    const { active, activeIndicator, children, content, disabled, icon, popup, wrapper } = this.props
+    const {
+      active,
+      activeIndicator,
+      children,
+      content,
+      disabled,
+      icon,
+      popup,
+      wrapper,
+    } = this.props
 
     const elementType = (
       <ElementType
