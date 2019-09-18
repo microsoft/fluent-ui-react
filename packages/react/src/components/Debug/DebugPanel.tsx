@@ -1,6 +1,5 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import PortalInner from '../Portal/PortalInner'
 import DebugPanelItem from './DebugPanelItem'
 
 export type DebugPanelProps = {
@@ -85,92 +84,91 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
   })
 
   return (
-    <PortalInner>
-      <div style={debugPanelRoot(left)}>
-        <div style={debugPanelOptions}>
-          <div tabIndex={0} onClick={onActivateDebugSelectorClick} style={debugPanelArrowIcon}>
-            {'\u21f1'}
-          </div>
-          <div style={{ float: 'right' }}>
-            <div style={debugPanelIcon(true, left)} onClick={e => setLeft(true)} />
-            <div style={debugPanelIcon(false, left)} onClick={e => setLeft(false)} />
-          </div>
+    <div style={debugPanelRoot(left)}>
+      <div style={debugPanelOptions}>
+        <div tabIndex={0} onClick={onActivateDebugSelectorClick} style={debugPanelArrowIcon}>
+          {'\u21f1'}
         </div>
-
-        <div style={debugPanelBody}>
-          {componentName && (
-            <div style={debugPanel}>
-              <h2 style={{ marginTop: 0 }}>{componentName}</h2>
-            </div>
-          )}
-
-          {!_.isEmpty(siteVariablesData) && !_.isEmpty(uniqSiteVariables) ? (
-            <div style={debugPanel}>
-              <div style={debugHeaderContainer()}>
-                <div style={debugHeader()}>Site variables</div>
-              </div>
-              <DebugPanelItem data={siteVariablesData} />
-            </div>
-          ) : (
-            <div style={debugNoDataHeader()}>No site variables defined/used</div>
-          )}
-
-          {!_.isEmpty(debugData.componentVariables) ? (
-            <div style={debugPanel}>
-              <div style={debugHeaderContainer()}>
-                <div style={debugHeader()}>Variables</div>
-              </div>
-              <DebugPanelItem
-                data={debugData.componentVariables}
-                valueKey="resolved"
-                commentKey="input"
-                commentKeyPredicate={val =>
-                  typeof val === 'string' && val.indexOf('siteVariables.') > -1
-                }
-              />
-            </div>
-          ) : (
-            <div style={debugNoDataHeader()}>No variables defined</div>
-          )}
-
-          {!_.isEmpty(debugData.componentStyles) ? (
-            <div style={debugPanel}>
-              <div style={debugHeaderContainer()}>
-                <div style={debugHeader()}>Styles</div>
-                <div style={debugPanelSelectContainer()}>
-                  <select value={slot} onChange={e => setSlot(e.target.value)}>
-                    {styleSlots.map(val => (
-                      <option value={val} key={val}>
-                        Slot: {val}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              <DebugPanelItem
-                data={debugData.componentStyles[slot]}
-                valueKey="styles"
-                idKey="debugId"
-              />
-            </div>
-          ) : (
-            <div style={debugNoDataHeader()}>No styles defined</div>
-          )}
+        <div style={{ float: 'right' }}>
+          <div style={debugPanelIcon(true, left)} onClick={e => setLeft(true)} />
+          <div style={debugPanelIcon(false, left)} onClick={e => setLeft(false)} />
         </div>
+      </div>
 
-        {!!cssStyles && !!cssStyles.length && (
+      <div style={debugPanelBody}>
+        {componentName && (
           <div style={debugPanel}>
-            <div style={debugHeader()}>HTML Styles</div>
-            <div style={{ clear: 'both', paddingBottom: '10rem' }}>
-              {cssStyles.map(l => (
-                <pre key={l}>{l}</pre>
-              ))}
-            </div>
+            <div style={debugHeader1()}>{`<${componentName} />`}</div>
           </div>
         )}
+
+        <div style={debugPanel}>
+          <div style={debugHeaderContainer()}>
+            <div style={debugHeader2()}>Site variables</div>
+          </div>
+          {!_.isEmpty(siteVariablesData) && !_.isEmpty(uniqSiteVariables) ? (
+            <DebugPanelItem data={siteVariablesData} />
+          ) : (
+            <div style={debugNoData()}>None in use</div>
+          )}
+        </div>
+
+        <div style={debugPanel}>
+          <div style={debugHeaderContainer()}>
+            <div style={debugHeader2()}>Variables</div>
+          </div>
+          {!_.isEmpty(debugData.componentVariables) ? (
+            <DebugPanelItem
+              data={debugData.componentVariables}
+              valueKey="resolved"
+              commentKey="input"
+              commentKeyPredicate={val =>
+                typeof val === 'string' && val.indexOf('siteVariables.') > -1
+              }
+            />
+          ) : (
+            <div style={debugNoData()}>None in use</div>
+          )}
+        </div>
+
+        <div style={debugPanel}>
+          <div style={debugHeaderContainer()}>
+            <div style={debugHeader2()}>Styles</div>
+            {!_.isEmpty(debugData.componentStyles) && (
+              <div style={debugPanelSelectContainer()}>
+                <select value={slot} onChange={e => setSlot(e.target.value)}>
+                  {styleSlots.map(val => (
+                    <option value={val} key={val}>
+                      Slot: {val}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+          </div>
+          {!_.isEmpty(debugData.componentStyles) ? (
+            <DebugPanelItem
+              data={debugData.componentStyles[slot]}
+              valueKey="styles"
+              idKey="debugId"
+            />
+          ) : (
+            <div style={debugNoData()}>None in use</div>
+          )}
+        </div>
       </div>
-    </PortalInner>
+
+      {!_.isEmpty(cssStyles) && (
+        <div style={debugPanel}>
+          <div style={debugHeader2()}>HTML Styles</div>
+          <div style={{ clear: 'both', paddingBottom: '10rem' }}>
+            {cssStyles.map(l => (
+              <pre key={l}>{l}</pre>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
   )
 }
 
@@ -188,32 +186,39 @@ const debugPanelRoot = (left): React.CSSProperties => ({
   [left ? 'left' : 'right']: 0,
   top: 0,
   zIndex: 999999999,
-  maxWidth: '500px',
+  width: '25rem',
   height: '100vh',
   color: '#222',
   background: '#fff',
   lineHeight: 1.1,
   fontSize: '12px',
   overflowY: 'auto',
-  boxShadow: '0 0 .25em .5em rgba(0, 0, 0, .1)',
+  boxShadow: '0 0 .5em rgba(0, 0, 0, .1)',
 })
 
 const debugHeaderContainer = (): React.CSSProperties => ({
   display: 'flex',
   justifyContent: 'space-between',
+  alignItems: 'center',
   marginBottom: '0.5em',
 })
 
-const debugHeader = (): React.CSSProperties => ({
-  float: 'left',
-  fontSize: '1rem',
+const debugHeader1 = (): React.CSSProperties => ({
+  fontSize: '16px',
   fontWeight: 'bold',
 })
 
-const debugNoDataHeader = (): React.CSSProperties => ({
-  fontSize: '1rem',
+const debugHeader2 = (): React.CSSProperties => ({
+  float: 'left',
+  fontSize: '14px',
   fontWeight: 'bold',
-  padding: '10px',
+})
+
+const debugNoData = (): React.CSSProperties => ({
+  padding: '0.5em',
+  color: 'rgba(0, 0, 0, 0.75)',
+  textAlign: 'center',
+  background: 'rgba(0, 0, 0, 0.05)',
 })
 
 const debugPanelSelectContainer = (): React.CSSProperties => ({
@@ -230,7 +235,7 @@ const debugPanelIcon = (left, isLeftActive): React.CSSProperties => ({
   width: '16px',
   height: '14px',
   ...(left && {
-    marginRight: '10px',
+    marginRight: '0.5em',
   }),
   ...(left === isLeftActive && {
     borderColor: '#6495ed',
@@ -241,7 +246,7 @@ const debugPanelIcon = (left, isLeftActive): React.CSSProperties => ({
 const debugPanelOptions: React.CSSProperties = {
   position: 'sticky',
   top: 0,
-  padding: '10px',
+  padding: '0.5em',
 }
 
 const debugPanelBody: React.CSSProperties = {
@@ -252,7 +257,7 @@ const debugPanelBody: React.CSSProperties = {
 }
 
 const debugPanel: React.CSSProperties = {
-  padding: '10px',
+  padding: '0.5em',
 }
 
 export default DebugPanel
