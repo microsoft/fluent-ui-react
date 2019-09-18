@@ -18,7 +18,6 @@ const INITIAL_STATE = {
   stardustDOMNode: null,
   stardustComponent: null,
   stardustInstance: null,
-  debugPanelPosition: null,
 }
 
 type DebugProps = {
@@ -40,7 +39,10 @@ type DebugState = {
 class Debug extends React.Component<DebugProps, DebugState> {
   selectorRef = React.createRef<HTMLPreElement>()
 
-  state = INITIAL_STATE
+  state = {
+    ...INITIAL_STATE,
+    debugPanelPosition: null,
+  }
 
   static defaultProps = {
     mountDocument: isBrowser() ? window.document : null,
@@ -305,9 +307,7 @@ class Debug extends React.Component<DebugProps, DebugState> {
         {!isSelecting && stardustInstance && (
           <DebugPanel
             onActivateDebugSelectorClick={() => this.setState({ isSelecting: true })}
-            onClose={() =>
-              this.setState({ ...INITIAL_STATE, debugPanelPosition: this.state.debugPanelPosition })
-            }
+            onClose={() => this.setState(INITIAL_STATE)}
             componentName={componentName}
             // TODO: Integrate CSS in JS Styles for Host Components (DOM nodes)
             // cssStyles={stylesForNode(stardustDOMNode)}
