@@ -23,6 +23,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Documentation
 - Fix broken code editor in some doc site examples and improve error experience @levithomason ([#1906](https://github.com/stardust-ui/react/pull/1906))
+- Fix props links @lucivpav ([#1892](https://github.com/stardust-ui/react/pull/1892))
 
 <!--------------------------------[ v0.38.0 ]------------------------------- -->
 ## [v0.38.0](https://github.com/stardust-ui/react/tree/v0.38.0) (2019-09-06)
