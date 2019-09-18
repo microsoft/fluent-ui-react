@@ -5,7 +5,7 @@ import DebugPanelItem from './DebugPanelItem'
 
 export type DebugPanelProps = {
   debugData: {
-    componentStyles: object[]
+    componentStyles: { [key: string]: { styles: any; debugId: string } }
     componentVariables: {
       input: { [key: string]: any }
       resolved: { [key: string]: any }
@@ -39,7 +39,20 @@ const getValues = (value, predicate) => {
 const DebugPanel: React.FC<DebugPanelProps> = props => {
   const [left, setLeft] = React.useState(false)
   const [slot, setSlot] = React.useState('root')
-  const { debugData } = props
+  const { debugData: inputDebugData } = props
+
+  const debugData =
+    _.isNil(inputDebugData) || _.isEmpty(inputDebugData)
+      ? {
+          componentStyles: {},
+          componentVariables: [],
+          siteVariables: [],
+        }
+      : inputDebugData
+
+  debugData.componentStyles = debugData.componentStyles || {}
+  debugData.componentVariables = debugData.componentVariables || []
+  debugData.siteVariables = debugData.siteVariables || []
 
   const styleSlots = Object.keys(debugData.componentStyles)
   let siteVariablesKey = []
@@ -72,44 +85,56 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
         </div>
 
         <div style={debugPanelBody}>
-          <div style={debugPanel}>
-            <div style={debugHeader()}>Site variables</div>
-            <DebugPanelItem data={siteVariablesData} />
-          </div>
-          <div style={debugPanel}>
-            <div style={debugHeaderContainer()}>
-              <div style={debugHeader()}>Variables</div>
+          {!_.isEmpty(debugData.siteVariables) ? (
+            <div style={debugPanel}>
+              <div style={debugHeader()}>Site variables</div>
+              <DebugPanelItem data={siteVariablesData} />
             </div>
-            <DebugPanelItem
-              data={debugData.componentVariables}
-              valueKey="resolved"
-              commentKey="input"
-              commentKeyPredicate={val =>
-                typeof val === 'string' && val.indexOf('siteVariables.') > -1
-              }
-            />
-          </div>
-
-          <div style={debugPanel}>
-            <div style={debugHeaderContainer()}>
-              <div style={debugHeader()}>Styles</div>
-              <div style={debugPanelSelectContainer()}>
-                <select value={slot} onChange={e => setSlot(e.target.value)}>
-                  {styleSlots.map(val => (
-                    <option value={val} key={val}>
-                      Slot: {val}
-                    </option>
-                  ))}
-                </select>
+          ) : (
+            <div style={debugNoDataHeader()}>No Site variables defined</div>
+          )}
+          {!_.isEmpty(debugData.componentVariables) ? (
+            <div style={debugPanel}>
+              <div style={debugHeaderContainer()}>
+                <div style={debugHeader()}>Variables</div>
               </div>
+              <DebugPanelItem
+                data={debugData.componentVariables}
+                valueKey="resolved"
+                commentKey="input"
+                commentKeyPredicate={val =>
+                  typeof val === 'string' && val.indexOf('siteVariables.') > -1
+                }
+              />
             </div>
+          ) : (
+            <div style={debugNoDataHeader()}>No variables defined</div>
+          )}
 
-            <DebugPanelItem
-              data={debugData.componentStyles[slot]}
-              valueKey="styles"
-              idKey="debugId"
-            />
-          </div>
+          {!_.isEmpty(debugData.componentStyles) ? (
+            <div style={debugPanel}>
+              <div style={debugHeaderContainer()}>
+                <div style={debugHeader()}>Styles</div>
+                <div style={debugPanelSelectContainer()}>
+                  <select value={slot} onChange={e => setSlot(e.target.value)}>
+                    {styleSlots.map(val => (
+                      <option value={val} key={val}>
+                        Slot: {val}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <DebugPanelItem
+                data={debugData.componentStyles[slot]}
+                valueKey="styles"
+                idKey="debugId"
+              />
+            </div>
+          ) : (
+            <div style={debugNoDataHeader()}>No styles defined</div>
+          )}
         </div>
       </div>
     </PortalInner>
@@ -139,6 +164,12 @@ const debugHeaderContainer = (): React.CSSProperties => ({
 
 const debugHeader = (): React.CSSProperties => ({
   float: 'left',
+  fontSize: '1rem',
+  fontWeight: 'bold',
+})
+
+const debugNoDataHeader = (): React.CSSProperties => ({
+  marginTop: '40px',
   fontSize: '1rem',
   fontWeight: 'bold',
 })
