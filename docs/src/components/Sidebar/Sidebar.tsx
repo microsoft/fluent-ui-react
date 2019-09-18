@@ -275,6 +275,15 @@ class Sidebar extends React.Component<any, any> {
         public: false,
       },
       {
+        key: 'chat-in-lightning-design-system',
+        title: {
+          content: 'Chat In Lightning Design System',
+          as: NavLink,
+          to: '/prototype-chat-in-lightning-design-system',
+        },
+        public: true,
+      },
+      {
         key: 'chatMssages',
         title: { content: 'Chat Messages', as: NavLink, to: '/prototype-chat-messages' },
         public: true,

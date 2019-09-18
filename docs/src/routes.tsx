@@ -28,6 +28,7 @@ import FocusTrapZone from './views/FocusTrapZoneDoc'
 import AutoFocusZone from './views/AutoFocusZoneDoc'
 import CustomToolbarPrototype from './prototypes/customToolbar'
 import ChatPanePrototype from './prototypes/chatPane'
+import ChatInLightningDesignSystem from './prototypes/ChatInLightningDesignSystem'
 import ChatMessagesPrototype from './prototypes/chatMessages'
 import AsyncShorthandPrototype from './prototypes/AsyncShorthand'
 import EmployeeCardPrototype from './prototypes/employeeCard'
@@ -60,6 +61,11 @@ const Routes = () => (
           <Route exact path="/behaviors/:name" component={DocsBehaviorRoot} sidebar />
           <Route exact path="/quick-start" component={QuickStart} />
           <Route exact path="/prototype-chat-pane" component={ChatPanePrototype} />
+          <Route
+            exact
+            path="/prototype-chat-in-lightning-design-system"
+            component={ChatInLightningDesignSystem}
+          />
           <Route exact path="/prototype-chat-messages" component={ChatMessagesPrototype} />
           <Route exact path="/prototype-custom-toolbar" component={CustomToolbarPrototype} />
           <Route exact path="/prototype-async-shorthand" component={AsyncShorthandPrototype} />
