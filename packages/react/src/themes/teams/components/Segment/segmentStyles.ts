@@ -1,9 +1,9 @@
 import { SegmentProps } from '../../../../components/Segment/Segment'
-import { ICSSInJSStyle, ComponentSlotStylesInput } from '../../../types'
+import { ICSSInJSStyle, ComponentSlotStylesPrepared } from '../../../types'
 import { SegmentVariables } from './segmentVariables'
 import { getColorScheme } from '../../colors'
 
-const segmentStyles: ComponentSlotStylesInput<SegmentProps, SegmentVariables> = {
+const segmentStyles: ComponentSlotStylesPrepared<SegmentProps, SegmentVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
     const colors = getColorScheme(v.colorScheme, p.color)
 

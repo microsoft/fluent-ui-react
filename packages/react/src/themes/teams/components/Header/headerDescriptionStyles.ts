@@ -1,11 +1,14 @@
 import * as _ from 'lodash'
 
-import { ICSSInJSStyle, ComponentSlotStylesInput } from '../../../types'
+import { ICSSInJSStyle, ComponentSlotStylesPrepared } from '../../../types'
 import { HeaderDescriptionProps } from '../../../../components/Header/HeaderDescription'
 import { HeaderDescriptionVariables } from './headerDescriptionVariables'
 import { pxToRem } from '../../../../lib'
 
-const headerStyles: ComponentSlotStylesInput<HeaderDescriptionProps, HeaderDescriptionVariables> = {
+const headerStyles: ComponentSlotStylesPrepared<
+  HeaderDescriptionProps,
+  HeaderDescriptionVariables
+> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
     const colors = v.colorScheme[p.color]
     return {

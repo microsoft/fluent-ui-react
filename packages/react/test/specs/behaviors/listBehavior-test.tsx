@@ -9,6 +9,15 @@ describe('ListBehavior.ts', () => {
     expect(expectedResult.attributes.root.role).toEqual('listbox')
   })
 
+  test('use NavigableListBehavior if navigable prop is defined', () => {
+    const property = {
+      navigable: true,
+    }
+    const expectedResult = listBehavior(property)
+    expect(expectedResult.attributes.root.role).toEqual('menu')
+    expect(expectedResult.focusZone).toBeTruthy()
+  })
+
   test('use BasicListItemBehavior if selectable prop is NOT defined', () => {
     const property = {}
     const expectedResult = listBehavior(property)

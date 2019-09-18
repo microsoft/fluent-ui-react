@@ -1,7 +1,7 @@
 {
   "name": "@stardust-ui/react",
   "description": "A themable React component library.",
-  "version": "0.38.0",
+  "version": "0.38.1",
   "author": "Levi Thomason <me@levithomason.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
@@ -11,7 +11,7 @@
     "@stardust-ui/react-component-ref": "^0.38.0",
     "@stardust-ui/react-proptypes": "^0.38.0",
     "classnames": "^2.2.5",
-    "downshift": "^3.2.10",
+    "downshift": "~3.2.10",
     "fast-memoize": "^2.5.1",
     "fela": "^10.6.1",
     "fela-plugin-embedded": "^10.6.1",
@@ -29,7 +29,8 @@
   },
   "devDependencies": {
     "@stardust-ui/internal-tooling": "^0.38.0",
-    "lerna-alias": "^3.0.3-0"
+    "lerna-alias": "^3.0.3-0",
+    "qs": "^6.8.0"
   },
   "files": [
     "dist"

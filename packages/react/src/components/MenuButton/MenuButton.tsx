@@ -56,6 +56,14 @@ export interface MenuButtonProps extends StyledComponentProps<MenuButtonProps>, 
   open?: boolean
 
   /**
+   * Called after user's click on a menu item.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onMenuItemClick?: ComponentEventHandler<MenuItemProps>
+
+  /**
    * Event for request to change 'open' value.
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props and proposed value.
@@ -122,6 +130,7 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
       PropTypes.arrayOf(PropTypes.oneOf(['hover', 'focus', 'context'])),
     ]),
     open: PropTypes.bool,
+    onMenuItemClick: PropTypes.func,
     onOpenChange: PropTypes.func,
     position: PropTypes.oneOf(POSITIONS),
     target: PropTypes.any,
@@ -184,6 +193,7 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
   handleMenuOverrides = (predefinedProps?: MenuProps) => ({
     onItemClick: (e: React.SyntheticEvent, itemProps: MenuItemProps) => {
       _.invoke(predefinedProps, 'onItemClick', e, itemProps)
+      _.invoke(this.props, 'onMenuItemClick', e, itemProps)
       if (!itemProps || !itemProps.menu) {
         // do not close if clicked on item with submenu
         this.setState({ open: false })
@@ -254,7 +264,8 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
       overrideProps: this.handleMenuOverrides,
     })
 
-    const overrideProps = {
+    const overrideProps: PopupProps = {
+      accessibility: () => accessibility,
       open: this.state.open,
       onOpenChange: this.handleOpenChange,
       content: {
@@ -270,7 +281,6 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
             tabbableTrigger: false,
           }
         : {
-            accessibility: () => accessibility,
             inline: true,
             autoFocus: true,
           }),

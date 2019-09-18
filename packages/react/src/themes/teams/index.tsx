@@ -1,7 +1,5 @@
-import { ThemeIconSpec, ThemeIcons, SvgIconSpec } from '../types'
+import { ThemeIconSpec, ThemeIcons, SvgIconSpec, ThemePrepared } from '../types'
 
-import mergeThemes from '../../lib/mergeThemes'
-import base from '../base'
 import animations from './animations'
 import * as siteVariables from './siteVariables'
 import * as componentVariables from './componentVariables'
@@ -48,7 +46,7 @@ const icons: ThemeIcons = {
   'stardust-play': themeIcons['play'],
 }
 
-export default mergeThemes(base, {
+const teamsTheme: ThemePrepared = {
   siteVariables,
   componentVariables,
   componentStyles,
@@ -56,4 +54,6 @@ export default mergeThemes(base, {
   staticStyles,
   icons,
   animations,
-})
+}
+
+export default teamsTheme
