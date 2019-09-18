@@ -13,41 +13,35 @@ const items: ShorthandCollection<ChatItemProps> = [
   {
     attached: 'top',
     contentPosition: 'end',
-    message: (
-      <Chat.Message
-        actionMenu={actionMenu}
-        content="Hello"
-        author="John Doe"
-        timestamp="Yesterday, 10:15 PM"
-        mine
-      />
-    ),
+    message: {
+      actionMenu,
+      content: 'Hello',
+      author: 'John Doe',
+      timestamp: 'Yesterday, 10:15 PM',
+      mine: true,
+    },
     key: 'message-1',
   },
   {
     attached: 'bottom',
     contentPosition: 'end',
     key: 'message-2',
-    message: (
-      <Chat.Message
-        actionMenu={actionMenu}
-        content="I'm back!"
-        author="John Doe"
-        timestamp="Yesterday, 10:15 PM"
-        mine
-      />
-    ),
+    message: {
+      actionMenu,
+      content: "I'm back!",
+      author: 'John Doe',
+      timestamp: 'Yesterday, 10:15 PM',
+      mine: true,
+    },
   },
   {
     gutter: <Avatar image="public/images/avatar/small/ade.jpg" />,
-    message: (
-      <Chat.Message
-        actionMenu={actionMenu}
-        content="Hi"
-        author="Jane Doe"
-        timestamp="Yesterday, 10:15 PM"
-      />
-    ),
+    message: {
+      actionMenu,
+      content: 'Hi',
+      author: 'Jane Doe',
+      timestamp: 'Yesterday, 10:15 PM',
+    },
     key: 'message-3',
   },
 ]
