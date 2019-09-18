@@ -322,14 +322,14 @@ class FiberNavigator {
   }
 
   get instance() {
-    const owner = this.owner
-
-    return owner.isClassComponent
-      ? owner.__fiber.stateNode
-      : owner.isFunctionComponent // TODO: assumes functional component w/useRef
-      ? owner.__fiber.memoizedState &&
-        owner.__fiber.memoizedState.memoizedState &&
-        owner.__fiber.memoizedState.memoizedState.current
+    return this.isClassComponent
+      ? this.__fiber.stateNode
+      : this.isFunctionComponent // TODO: assumes functional component w/useRef
+      ? this.__fiber.memoizedState &&
+        this.__fiber.memoizedState.memoizedState &&
+        this.__fiber.memoizedState.memoizedState.current
+      : this.isHostComponent
+      ? this.owner.instance
       : null
   }
 
