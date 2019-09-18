@@ -31,6 +31,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `TextArea` component @lucivpav ([#1897](https://github.com/stardust-ui/react/pull/1897))
 - Export `bell-slash` and `bell-snooze` icon to Teams theme @musingh ([#1921](https://github.com/stardust-ui/react/pull/1921))
 - Add support for radio & checkbox groups to `Toolbar` component @layershifter ([#1920](https://github.com/stardust-ui/react/pull/1920))
+- Add support for `Popup` in `ToolbarMenu` @lucivpav ([#1927](https://github.com/stardust-ui/react/pull/1927))
 
 <!--------------------------------[ v0.38.1 ]------------------------------- -->
 ## [v0.38.1](https://github.com/stardust-ui/react/tree/v0.38.1) (2019-09-13)
