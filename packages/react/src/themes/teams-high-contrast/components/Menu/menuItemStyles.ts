@@ -1,11 +1,11 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { MenuVariables } from '../../../teams/components/Menu/menuVariables'
 import { MenuItemProps, MenuItemState } from '../../../../components/Menu/MenuItem'
 import { underlinedItem } from '../../../teams/components/Menu/menuItemStyles'
 
 type MenuItemPropsAndState = MenuItemProps & MenuItemState
 
-const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariables> = {
+const menuItemStyles: ComponentSlotStylesPrepared<MenuItemPropsAndState, MenuVariables> = {
   wrapper: ({ props: p, variables: v }): ICSSInJSStyle => {
     const {
       iconOnly,

@@ -1,5 +1,5 @@
 import { pxToRem } from '../../../../lib'
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { MenuProps, MenuState } from '../../../../components/Menu/Menu'
 import { MenuVariables } from './menuVariables'
 import {
@@ -64,4 +64,4 @@ export default {
         : { margin: `0 ${horizontalPillsRightMargin} 0 0` }),
     }),
   }),
-} as ComponentSlotStylesInput<MenuPropsAndState, MenuVariables>
+} as ComponentSlotStylesPrepared<MenuPropsAndState, MenuVariables>

@@ -1,7 +1,34 @@
-import { InputVariables } from '../../../base/components/Input/inputVariables'
 import { pxToRem } from '../../../../lib'
 
-export default (siteVars): Partial<InputVariables> => ({
+export interface InputVariables {
+  backgroundColor: string
+  backgroundColorInverted: string
+  borderColor: string
+  borderRadius: string
+  borderWidth: string
+  fontColor: string
+  fontSize: string
+  iconColor: string
+  iconPosition: string
+  iconRight: string
+  iconLeft: string
+  inputPaddingWithIconAtStart: string
+  inputPaddingWithIconAtEnd: string
+  inputPadding: string
+  inputFocusBorderColor: string
+  inputFocusBorderRadius: string
+  placeholderColor: string
+}
+
+export default (siteVars): InputVariables => ({
+  iconPosition: 'absolute',
+  iconRight: pxToRem(10),
+  iconLeft: pxToRem(6),
+  inputPaddingWithIconAtStart: `${pxToRem(7)} ${pxToRem(12)} ${pxToRem(7)} ${pxToRem(24)}`,
+  inputPaddingWithIconAtEnd: `${pxToRem(7)} ${pxToRem(24)} ${pxToRem(7)} ${pxToRem(12)}`,
+
+  inputPadding: `${pxToRem(7)} ${pxToRem(12)}`,
+
   borderColor: 'transparent',
   borderRadius: `${pxToRem(3)} ${pxToRem(3)} ${pxToRem(2)} ${pxToRem(2)}`,
   borderWidth: `0 0 ${pxToRem(2)} 0`,

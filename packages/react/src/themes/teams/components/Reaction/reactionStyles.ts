@@ -1,12 +1,12 @@
 import { FontWeightProperty } from 'csstype'
-import { ICSSInJSStyle, ComponentSlotStylesInput } from '../../../types'
+import { ICSSInJSStyle, ComponentSlotStylesPrepared } from '../../../types'
 import { default as Reaction, ReactionProps } from '../../../../components/Reaction/Reaction'
 import { pxToRem } from '../../../../lib'
 import { ReactionVariables } from './reactionVariables'
 
 const contentClassNameSelector = `& .${Reaction.slotClassNames.content}`
 
-const reactionStyles: ComponentSlotStylesInput<ReactionProps, ReactionVariables> = {
+const reactionStyles: ComponentSlotStylesPrepared<ReactionProps, ReactionVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     cursor: 'pointer',
     background: 'transparent',
