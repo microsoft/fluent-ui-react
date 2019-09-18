@@ -1,6 +1,8 @@
 import keyboardKey from 'keyboard-key'
+import _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 import * as Stardust from '@stardust-ui/react'
 import { toRefObject } from '@stardust-ui/react-component-ref'
 import { EventListener } from '@stardust-ui/react-component-event-listener'
@@ -251,9 +253,7 @@ class FiberNavigator {
   static domNodeToReactFiber = (elm: HTMLElement): Fiber => {
     for (const k in elm) {
       if (k.startsWith('__reactInternalInstance$')) {
-        const fiber = elm[k]
-        // console.debug('domNodeToReactFiber', { k, elm, fiber })
-        return fiber
+        return elm[k]
       }
     }
 
@@ -262,84 +262,106 @@ class FiberNavigator {
 
   static fromFiber = fiber => {
     const fiberNavigator = new FiberNavigator()
-    fiberNavigator.__fiber = fiber
+
+    Object.defineProperty(fiberNavigator, '__fiber', {
+      value: fiber,
+      enumerable: false,
+      writable: false,
+      configurable: false,
+    })
+
     return fiberNavigator
   }
 
   static fromDOMNode = domNode => {
-    const fiberNavigator = new FiberNavigator()
-    fiberNavigator.__fiber = FiberNavigator.domNodeToReactFiber(domNode)
+    const fiber = FiberNavigator.domNodeToReactFiber(domNode)
 
-    if (!fiberNavigator.__fiber) {
-      throw new Error('There is no React fiber for this DOM node.')
+    if (!fiber) {
+      return null
     }
+
+    const fiberNavigator = new FiberNavigator()
+
+    Object.defineProperty(fiberNavigator, '__fiber', {
+      value: fiber,
+      enumerable: false,
+      writable: false,
+      configurable: false,
+    })
 
     return fiberNavigator
   }
 
-  static isFiber = fiber => {
-    return fiber && fiber.elementType && fiber.type && fiber.tag && fiber.key && fiber.stateNode
-  }
-
   get name() {
-    return this.__fiber.stateNode.constructor.name
+    return this.isClassComponent || this.isFunctionComponent
+      ? this.__fiber.type.displayName || this.__fiber.type.name
+      : this.isHostComponent
+      ? this.__fiber.stateNode.constructor.name
+      : null
   }
 
   get parent(): FiberNavigator {
     return FiberNavigator.fromFiber(this.__fiber.return)
   }
 
-  get domNode() {
-    // TODO: what the hell, clean this up.....
-    // TODO: what the hell, clean this up.....
-    // TODO: what the hell, clean this up.....
-    // TODO: what the hell, clean this up.....
-    // TODO: what the hell, clean this up.....
-    let fiber = this.__fiber
-
-    if (fiber.stateNode instanceof HTMLElement) {
-      return fiber.stateNode
-    }
-
-    // TODO: and if no child?
-    do {
-      fiber = fiber.child
-    } while (!(fiber.stateNode instanceof HTMLElement))
-
-    // TODO: and if nothing?
-    return fiber.stateNode
-  }
-
   get owner() {
     return FiberNavigator.fromFiber(this.__fiber._debugOwner)
   }
 
-  get ref() {
-    // TODO: hey, only works for classes :/ womp...
-    return this.__fiber.stateNode
+  get domNode() {
+    return this.isHostComponent
+      ? this.__fiber.stateNode
+      : this.isClassComponent
+      ? ReactDOM.findDOMNode(this.__fiber.stateNode)
+      : // : this.isFunctionComponent
+        //   // TODO: assumes functional component w/useRef
+        // ? this.__fiber.memoizedState &&
+        //   this.__fiber.memoizedState.memoizedState &&
+        //   this.__fiber.memoizedState.memoizedState.current
+        null
+  }
+
+  get instance() {
+    const owner = this.owner
+
+    return owner.isClassComponent
+      ? owner.__fiber.stateNode
+      : owner.isFunctionComponent // TODO: assumes functional component w/useRef
+      ? owner.__fiber.memoizedState &&
+        owner.__fiber.memoizedState.memoizedState &&
+        owner.__fiber.memoizedState.memoizedState.current
+      : null
+  }
+
+  get reactComponent() {
+    return this.owner.elementType
   }
 
   get elementType() {
     return this.__fiber.elementType
   }
 
+  usesHook(name) {
+    return this.__fiber._debugHookTypes.some(hook => hook === name)
+  }
+
   //
   // Component Types
   //
 
-  isClassComponent = () => {
+  get isClassComponent() {
     // React.Component subclasses have this flag
     // https://reactjs.org/docs/implementation-notes.html
-    const { type } = this.__fiber
-    return typeof type === 'function' && !!type.prototype.isReactComponent
+    return typeof this.__fiber.type === 'function' && !!this.__fiber.type.prototype.isReactComponent
   }
 
-  isFunctionComponent = () => {
-    const { type } = this.__fiber
-    return typeof type === 'function' && !this.isClassComponent()
+  get isFunctionComponent() {
+    // React.Component subclasses have this flag
+    // https://reactjs.org/docs/implementation-notes.html
+    return typeof this.__fiber.type === 'function' && !this.__fiber.type.prototype.isReactComponent
   }
 
-  isHostComponent = () => {
+  get isHostComponent() {
     // Host components are platform components (i.e. 'div' on web)
     // https://github.com/acdlite/react-fiber-architecture#type-and-key
     return typeof this.__fiber.type === 'string'
@@ -349,14 +371,15 @@ class FiberNavigator {
   // What this fiber component renders
   //
 
-  isDOMComponent() {
-    const childNavigator = FiberNavigator.fromFiber(this.__fiber.child)
-
-    return childNavigator.isHostComponent()
+  get isDOMComponent() {
+    return !!this.__fiber.child && FiberNavigator.fromFiber(this.__fiber.child).isHostComponent
   }
 
-  isCompositeComponent() {
-    return !this.isDOMComponent()
+  // https://github.com/facebook/react/blob/16.8.6/packages/react-dom/src/test-utils/ReactTestUtils.js#L193
+  get isCompositeComponent() {
+    return this.isDOMComponent
+      ? false
+      : !!this.instance && !!this.instance.render && !!this.instance.setState
   }
 }
 
@@ -381,13 +404,17 @@ const stylesForNode = (node: HTMLElement) => {
       return acc
     }, [])
 }
-;(window as any).F = FiberNavigator
+
+if (isBrowser()) {
+  ;(window as any).F = FiberNavigator
+}
 
 const INITIAL_STATE = {
+  intermediaryFibers: [],
   isSelecting: false,
   stardustDOMNode: null,
   stardustComponent: null,
-  stardustRef: null,
+  stardustInstance: null,
 }
 
 type DebugProps = {
@@ -431,63 +458,72 @@ class Debug extends React.Component<DebugProps> {
     }
   }
 
-  handleClick = e => {
-    e.preventDefault(e)
+  handleStardustDOMNodeClick = e => {
+    const { stardustDOMNode, stardustInstance, stardustComponent } = this.state
 
-    this.setState({
-      isSelecting: false,
+    console.debug('Clicked stardustDOMNode. Prevent default and stop propagation.', {
+      stardustDOMNode,
+      stardustInstance,
+      stardustComponent,
     })
+
+    e.preventDefault()
+    e.stopPropagation()
+
+    this.setState({ isSelecting: false })
   }
 
-  handleMouseMove = e => {
-    let stardustDOMNode: HTMLElement
+  handleMouseMoveThrottled = _.throttle(e => {
+    let stardustDOMNode
     let stardustComponent: React.Component
-    let stardustRef: React.ElementType
-
-    // We start from a DOM node
-    // We need to traverse up the React tree until we find a DOM component responsible for this DOM node
-    // That component owns the DOM node.
-    // All intermediary components are CompositeComponents and should be overlooked
+    let stardustInstance: object
+    const intermediaryFibers = []
 
     // console.group('MOUSEMOVE')
 
     let fiberNav = FiberNavigator.fromDOMNode(e.target)
 
-    while (!stardustDOMNode && fiberNav && fiberNav.parent) {
-      const owner = fiberNav.owner
-      const SDComponent = Stardust[owner.name]
-
+    while (!stardustDOMNode && fiberNav) {
       // console.group('WHILE')
       // console.debug({ node, fiberNav, SDComponent })
 
-      if (SDComponent) {
-        stardustDOMNode = owner.domNode
-        stardustComponent = SDComponent
-        stardustRef = owner.ref
+      if (Stardust[fiberNav.owner.name]) {
+        stardustDOMNode = e.target
+        stardustComponent = fiberNav.reactComponent
+        stardustInstance = fiberNav.instance
+
+        console.debug('FOUND', {
+          intermediaryFibers,
+          fiberNav,
+          stardustInstance,
+          stardustDOMNode,
+          stardustComponent,
+        })
       } else {
+        intermediaryFibers.push(fiberNav)
         fiberNav = fiberNav.parent
+
+        console.debug('SEARCHING', {
+          intermediaryFibers,
+          fiberNav,
+          stardustDOMNode,
+        })
       }
 
-      console.debug({
-        node: fiberNav.domNode,
-        fiberNav,
-        stardustRef,
-        stardustDOMNode,
-        stardustComponent,
-      })
       // console.groupEnd()
     }
 
     // console.groupEnd()
 
     if (
+      intermediaryFibers !== this.state.intermediaryFibers ||
       stardustDOMNode !== this.state.stardustDOMNode ||
       stardustComponent !== this.state.stardustComponent ||
-      stardustRef !== this.state.stardustRef
+      stardustInstance !== this.state.stardustInstance
     ) {
-      this.setState({ stardustDOMNode, stardustComponent, stardustRef })
+      this.setState({ stardustDOMNode, stardustComponent, stardustInstance })
     }
-  }
+  }, 30)
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     // console.debug('DEBUG componentDidUpdate', { state: this.state, prevState })
@@ -511,12 +547,18 @@ class Debug extends React.Component<DebugProps> {
 
   render() {
     const { mountDocument } = this.props
-    const { stardustComponent, stardustRef, stardustDOMNode, isSelecting } = this.state
+    const {
+      intermediaryFibers,
+      stardustComponent,
+      stardustInstance,
+      stardustDOMNode,
+      isSelecting,
+    } = this.state
 
-    const domNodeClassString = (stardustDOMNode && stardustDOMNode.getAttribute('class')) || ''
+    const componentName = stardustComponent
+      ? stardustComponent.displayName || stardustComponent.name
+      : ''
 
-    const cssStyles = stylesForNode(stardustDOMNode)
-    console.log(cssStyles)
     return (
       <>
         <EventListener
@@ -524,37 +566,21 @@ class Debug extends React.Component<DebugProps> {
           listener={this.handleKeyDown}
           type="keydown"
         />
-        {stardustDOMNode && (
+        {isSelecting && (
+          <EventListener
+            targetRef={toRefObject(mountDocument.body)}
+            listener={this.handleMouseMoveThrottled}
+            type="mousemove"
+          />
+        )}
+        {isSelecting && stardustDOMNode && (
           <EventListener
             targetRef={toRefObject(stardustDOMNode)}
-            listener={e => {
-              console.debug('Clicked stardustDOMNode. Prevent default and stop propagation.', {
-                stardustDOMNode,
-                stardustRef,
-                stardustComponent,
-              })
-              e.preventDefault()
-              e.stopPropagation()
-              this.setState({ isSelecting: false })
-            }}
+            listener={this.handleStardustDOMNodeClick}
             type="click"
           />
         )}
-        {isSelecting && (
-          <>
-            <EventListener
-              targetRef={toRefObject(mountDocument.body)}
-              listener={this.handleMouseMove}
-              type="mousemove"
-            />
-            <EventListener
-              targetRef={toRefObject(mountDocument.body)}
-              listener={this.handleClick}
-              type="click"
-            />
-          </>
-        )}
-        {stardustComponent && (
+        {isSelecting && stardustComponent && (
           <pre
             ref={this.selectorRef}
             style={{
@@ -579,9 +605,7 @@ class Debug extends React.Component<DebugProps> {
                 background: '#6495ed',
               }}
             >
-              <span style={{ fontWeight: 'bold' }}>
-                {`<${stardustComponent.displayName || stardustComponent.name} />`}
-              </span>
+              <span style={{ fontWeight: 'bold' }}>{`<${componentName} />`}</span>
             </div>
             {stardustDOMNode && (
               <div
@@ -595,20 +619,29 @@ class Debug extends React.Component<DebugProps> {
                   background: '#6495ed',
                 }}
               >
+                <div>
+                  {intermediaryFibers.map(fiberNav => {
+                    return <div key={fiberNav.name}>{fiberNav.name}</div>
+                  })}
+                </div>
                 <strong style={{ fontWeight: 'bold', color: 'hsl(160, 100%, 80%)' }}>
                   {stardustDOMNode.tagName.toLowerCase()}
                 </strong>
-                {domNodeClassString && (
+                {stardustDOMNode.hasAttribute('class') && (
                   <span style={{ color: 'rgba(255, 255, 255, 0.75)' }}>
-                    .{domNodeClassString.replace(/ +/g, '.')}
+                    .{(stardustDOMNode.getAttribute('class') || '').replace(/ +/g, '.')}
                   </span>
                 )}
               </div>
             )}
           </pre>
         )}
-        {!isSelecting && stardustRef && stardustRef.stardustDebug && (
-          <DebugPanel cssStyles={cssStyles} debugData={stardustRef.stardustDebug} />
+        {!isSelecting && stardustInstance && (
+          <DebugPanel
+            componentName={componentName}
+            cssStyles={stylesForNode(stardustDOMNode)}
+            debugData={stardustInstance.stardustDebug}
+          />
         )}
       </>
     )

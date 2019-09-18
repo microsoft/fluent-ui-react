@@ -5,6 +5,7 @@ import DebugPanelItem from './DebugPanelItem'
 
 export type DebugPanelProps = {
   cssStyles: string[]
+  componentName: string
   debugData: {
     componentStyles: { [key: string]: { styles: any; debugId: string } }
     componentVariables: {
@@ -40,7 +41,7 @@ const getValues = (value, predicate) => {
 const DebugPanel: React.FC<DebugPanelProps> = props => {
   const [left, setLeft] = React.useState(false)
   const [slot, setSlot] = React.useState('root')
-  const { cssStyles, debugData: inputDebugData } = props
+  const { cssStyles, componentName, debugData: inputDebugData } = props
 
   const debugData =
     _.isNil(inputDebugData) || _.isEmpty(inputDebugData)
@@ -86,6 +87,12 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
         </div>
 
         <div style={debugPanelBody}>
+          {componentName && (
+            <div style={debugPanel}>
+              <h2>{componentName}</h2>
+            </div>
+          )}
+
           {!_.isEmpty(debugData.siteVariables) ? (
             <div style={debugPanel}>
               <div style={debugHeader()}>Site variables</div>
@@ -94,6 +101,7 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
           ) : (
             <div style={debugNoDataHeader()}>No Site variables defined</div>
           )}
+
           {!_.isEmpty(debugData.componentVariables) ? (
             <div style={debugPanel}>
               <div style={debugHeaderContainer()}>
