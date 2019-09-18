@@ -163,7 +163,6 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
               defaultProps: {
                 as: 'iframe',
                 styles: styles.iframe,
-                style: { visibility: iframeLoaded ? 'visible' : 'hidden' },
               },
               overrideProps: {
                 onLoad: () => {
