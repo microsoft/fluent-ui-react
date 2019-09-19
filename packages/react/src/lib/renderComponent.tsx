@@ -228,7 +228,8 @@ const renderComponent = <P extends {}>(
   if (isDebugEnabled) {
     saveDebug({
       componentName: displayName,
-      componentVariables: resolvedVariables._debug.filter(
+      componentVariables: _.filter(
+        resolvedVariables._debug,
         variables => !_.isEmpty(variables.resolved),
       ),
       componentStyles: _.mapValues(resolvedStylesDebug, v =>
@@ -236,7 +237,7 @@ const renderComponent = <P extends {}>(
           return !_.isEmpty(v.styles)
         }),
       ),
-      siteVariables: theme.siteVariables._debug.filter(siteVars => {
+      siteVariables: _.filter(theme.siteVariables._debug, siteVars => {
         if (_.isEmpty(siteVars)) {
           return false
         }

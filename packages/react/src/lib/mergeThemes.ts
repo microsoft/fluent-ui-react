@@ -91,11 +91,14 @@ export const mergeComponentVariables = (
       } = callable(next)(siteVariables) || {}
 
       const merged = deepmerge(accumulatedVariables, computedComponentVariables)
+
       merged._debug = _debug.concat(
         computedDebug || {
           resolved: computedComponentVariables,
           debugId: _debugId,
-          input: callable(next)(siteVariables._invertedKeys),
+          input: siteVariables
+            ? siteVariables._invertedKeys && callable(next)(siteVariables._invertedKeys)
+            : callable(next)(),
         },
       )
       return merged
