@@ -73,6 +73,9 @@ export interface DropdownProps
   /** A slot for a clearing indicator. */
   clearIndicator?: ShorthandValue<IconProps>
 
+  /** Determines how two items are being compared in multiple selection. Default is by the header prop. */
+  compareBy?: (item: ShorthandValue<DropdownItemProps>) => any
+
   /** The initial value for the index of the currently active selected item, in a multiple selection. */
   defaultActiveSelectedIndex?: number
 
@@ -126,7 +129,7 @@ export interface DropdownProps
   items?: ShorthandCollection<DropdownItemProps>
 
   /**
-   * Function that converts an item to string. Used when dropdown has the `search` boolean prop set to true. It is also used in multiple selection.
+   * Function that converts an item to string. Used when dropdown has the `search` boolean prop set to true.
    * By default, it:
    * - returns the `header` property (if it exists on an item)
    * - converts an item to string (if the item is a primitive)
@@ -260,6 +263,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     checkableIndicator: customPropTypes.itemShorthandWithoutJSX,
     clearable: PropTypes.bool,
     clearIndicator: customPropTypes.itemShorthand,
+    compareBy: PropTypes.func,
     defaultActiveSelectedIndex: PropTypes.number,
     defaultOpen: PropTypes.bool,
     defaultHighlightedIndex: PropTypes.number,
@@ -307,6 +311,14 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     as: 'div',
     checkableIndicator: 'stardust-checkmark',
     clearIndicator: 'stardust-close',
+    compareBy: item => {
+      if (!item || React.isValidElement(item)) {
+        return ''
+      }
+
+      // targets DropdownItem shorthand objects
+      return (item as any).header || String(item)
+    },
     itemToString: item => {
       if (!item || React.isValidElement(item)) {
         return ''
@@ -363,14 +375,14 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
    * their string equivalents, in order to be used throughout the component.
    */
   static getAutoControlledStateFromProps(props: DropdownProps, state: DropdownState) {
-    const { items, itemToString, multiple, search } = props
+    const { compareBy, items, itemToString, multiple, search } = props
     const { searchQuery, value: rawValue } = state
 
     // `normalizedValue` should be normilized always as it can be received from props
     const normalizedValue = _.isArray(rawValue) ? rawValue : [rawValue]
     const value = multiple ? normalizedValue : normalizedValue.slice(0, 1)
 
-    const filteredItemsByValue = multiple ? _.differenceBy(items, value, itemToString) : items
+    const filteredItemsByValue = multiple ? _.differenceBy(items, value, compareBy) : items
     const filteredItemStrings = _.map(filteredItemsByValue, filteredItem =>
       itemToString(filteredItem).toLowerCase(),
     )
