@@ -45,29 +45,29 @@ const getValues = (value, predicate) => {
   return []
 }
 
-const removeNulls = object =>
-  _.transform(
-    object,
-    (result, value, key) => {
-      // Exclude null values.
-      if (value !== null) {
-        let val = value
+const removeNulls = o => {
+  if (typeof o !== 'object' && o !== null) {
+    return o
+  }
+  const result = {}
 
-        // Recurse into arrays and objects.
-        if (Array.isArray(value) || _.isPlainObject(value)) {
-          val = removeNulls(value)
-        }
-
-        if (Array.isArray(result)) {
-          result.push(val)
-        }
-
-        result[key] = val
+  Object.keys(o).forEach(k => {
+    if (!o[k] || typeof o[k] !== 'object') {
+      if (o[k]) {
+        result[k] = o[k] // If not null or not an object, copy value
       }
-      return result
-    },
-    {},
-  )
+    }
+
+    // The property is an object
+    const val = removeNulls(o[k])
+
+    if (typeof val === 'object' && val != null && Object.keys(val).length > 0) {
+      result[k] = val
+    }
+  })
+
+  return result
+}
 
 const DebugPanel: React.FC<DebugPanelProps> = props => {
   const [slot, setSlot] = React.useState('root')
