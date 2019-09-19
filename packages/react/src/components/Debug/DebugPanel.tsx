@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 import DebugPanelItem from './DebugPanelItem'
 import FiberNavigator from './FiberNavigator'
+import DebugRect from './DebugRect'
 
 export type DebugPanelProps = {
   cssStyles?: string[]
@@ -19,6 +20,7 @@ export type DebugPanelProps = {
   onPositionLeft: (e) => void
   onPositionRight: (e) => void
   position: 'left' | 'right'
+  onFiberChanged?: (f: FiberNavigator) => void
 }
 
 const getValues = (value, predicate) => {
@@ -45,6 +47,9 @@ const getValues = (value, predicate) => {
 
 const DebugPanel: React.FC<DebugPanelProps> = props => {
   const [slot, setSlot] = React.useState('root')
+  const [showOwnerRect, setShowOwnerRect] = React.useState(false)
+  const [showParentRect, setShowParentRect] = React.useState(false)
+
   const {
     cssStyles,
     debugData: inputDebugData,
@@ -54,6 +59,7 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
     position,
     onPositionLeft,
     onPositionRight,
+    onFiberChanged,
   } = props
 
   const left = position === 'left'
@@ -120,13 +126,27 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
           {stardustOwner && (
             <div style={debugHeader2()}>
               <span style={{ display: 'inline-block', width: '60px', opacity: 0.5 }}>Owner:</span>{' '}
-              {`<${stardustOwner.name} />`}
+              <span
+                style={{ cursor: 'pointer', outline: 0 }}
+                tabIndex={0}
+                onClick={() => onFiberChanged(stardustOwner)}
+                onMouseEnter={e => setShowOwnerRect(true)}
+                onMouseLeave={e => setShowOwnerRect(false)}
+              >{`<${stardustOwner.name} />`}
+              </span>
             </div>
           )}
           {stardustParent && (
             <div style={debugHeader2()}>
               <span style={{ display: 'inline-block', width: '60px', opacity: 0.5 }}>Parent:</span>{' '}
-              {`<${stardustParent.name} />`}
+              <span
+                style={{ cursor: 'pointer', outline: 0 }}
+                tabIndex={0}
+                onClick={() => onFiberChanged(stardustParent)}
+                onMouseEnter={e => setShowParentRect(true)}
+                onMouseLeave={e => setShowParentRect(false)}
+              >{`<${stardustParent.name} />`}
+              </span>
             </div>
           )}
           {fiberNav.name && (
@@ -137,6 +157,9 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
           )}
         </div>
       </div>
+
+      {showOwnerRect && <DebugRect fiberNav={stardustOwner} />}
+      {showParentRect && <DebugRect fiberNav={stardustParent} />}
 
       <div style={debugPanelBody}>
         <div style={debugPanel}>
@@ -206,7 +229,7 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
         </div>
       )}
 
-      <div styles={{ padding: '200px 0' }} />
+      <div style={{ padding: '50px 0' }} />
     </div>
   )
 }

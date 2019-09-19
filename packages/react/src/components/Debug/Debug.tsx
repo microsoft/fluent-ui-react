@@ -8,6 +8,7 @@ import { isBrowser } from '../../lib'
 
 import DebugPanel from './DebugPanel'
 import FiberNavigator from './FiberNavigator'
+import DebugRect from './DebugRect'
 
 type DebugProps = {
   /** Existing document the popup should add listeners. */
@@ -26,8 +27,6 @@ const INITIAL_STATE: DebugState = {
 }
 
 class Debug extends React.Component<DebugProps, DebugState> {
-  selectorRef = React.createRef<HTMLPreElement>()
-
   state = INITIAL_STATE
 
   static defaultProps = {
@@ -97,26 +96,6 @@ class Debug extends React.Component<DebugProps, DebugState> {
     }
   }
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    // console.debug('DEBUG componentDidUpdate', { state: this.state, prevState })
-    this.setDebugSelectorPosition()
-  }
-
-  setDebugSelectorPosition = () => {
-    const { fiberNav } = this.state
-
-    if (fiberNav && fiberNav.domNode && this.selectorRef.current) {
-      const rect = fiberNav.domNode.getBoundingClientRect()
-
-      this.selectorRef.current.style.top = `${rect.top}px`
-      this.selectorRef.current.style.left = `${rect.left}px`
-      this.selectorRef.current.style.width = `${rect.width}px`
-      this.selectorRef.current.style.height = `${rect.height}px`
-
-      requestAnimationFrame(this.setDebugSelectorPosition)
-    }
-  }
-
   render() {
     const { mountDocument } = this.props
     const { fiberNav, isSelecting, debugPanelPosition } = this.state
@@ -142,57 +121,7 @@ class Debug extends React.Component<DebugProps, DebugState> {
             type="click"
           />
         )}
-        {isSelecting && fiberNav && (
-          <pre
-            ref={this.selectorRef}
-            style={{
-              position: 'fixed',
-              padding: 0,
-              margin: 0,
-              background: '#6495ed22',
-              border: '1px solid #6495edcc',
-              zIndex: 99999999,
-              pointerEvents: 'none',
-              userSelect: 'none',
-            }}
-          >
-            <div
-              style={{
-                position: 'absolute',
-                padding: '2px 4px',
-                margin: '-1px 0 0 -1px',
-                bottom: '100%',
-                left: 0,
-                color: '#fff',
-                background: '#6495ed',
-              }}
-            >
-              <span style={{ fontWeight: 'bold' }}>{`<${fiberNav.name} />`}</span>
-            </div>
-            {fiberNav.domNode && (
-              <div
-                style={{
-                  fontSize: '0.9em',
-                  position: 'absolute',
-                  padding: '2px 4px',
-                  margin: '0 0 1px -1px',
-                  top: '100%',
-                  left: 0,
-                  background: '#6495ed',
-                }}
-              >
-                <strong style={{ fontWeight: 'bold', color: 'hsl(160, 100%, 80%)' }}>
-                  {fiberNav.domNode.tagName.toLowerCase()}
-                </strong>
-                {fiberNav.domNode.hasAttribute('class') && (
-                  <span style={{ color: 'rgba(255, 255, 255, 0.75)' }}>
-                    .{(fiberNav.domNode.getAttribute('class') || '').replace(/ +/g, '.')}
-                  </span>
-                )}
-              </div>
-            )}
-          </pre>
-        )}
+        {isSelecting && fiberNav && <DebugRect fiberNav={fiberNav} />}
         {!isSelecting && fiberNav && fiberNav.instance && (
           <DebugPanel
             fiberNav={fiberNav}
@@ -204,6 +133,7 @@ class Debug extends React.Component<DebugProps, DebugState> {
             position={debugPanelPosition || 'right'}
             onPositionLeft={() => this.setState({ debugPanelPosition: 'left' })}
             onPositionRight={() => this.setState({ debugPanelPosition: 'right' })}
+            onFiberChanged={f => this.setState({ fiberNav: f })}
           />
         )}
       </>
