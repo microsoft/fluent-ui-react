@@ -25,6 +25,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix `CreateShorthandOptions` should be typed @lucivpav ([#1886](https://github.com/stardust-ui/react/pull/1886))
 - Add `shadowLevel1Dark` in Teams themes @notandrew ([#1887](https://github.com/stardust-ui/react/pull/1887))
 - When merging themes use deep merge for site and component variables @miroslavstastny ([#1907](https://github.com/stardust-ui/react/pull/1907))
+- Fix `Dropdown` to properly accept `id` on `searchInput` @silviuavram ([#1938](https://github.com/stardust-ui/react/pull/1938))
 - Fix white flash when activating `Embed` component @lucivpav ([#1909](https://github.com/stardust-ui/react/pull/1909))
 
 ### Features
@@ -32,6 +33,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Export `bell-slash` and `bell-snooze` icon to Teams theme @musingh ([#1921](https://github.com/stardust-ui/react/pull/1921))
 - Add support for radio & checkbox groups to `Toolbar` component @layershifter ([#1920](https://github.com/stardust-ui/react/pull/1920))
 - Add support for `Popup` in `ToolbarMenu` @lucivpav ([#1927](https://github.com/stardust-ui/react/pull/1927))
+- Add behaviors for `Tree` as list and linked them using childBehaviors @silviuavram ([#1928](https://github.com/stardust-ui/react/pull/1928))
 
 ### Documentation
 - Remove Usage tab @lucivpav ([#1948](https://github.com/stardust-ui/react/pull/1948))
