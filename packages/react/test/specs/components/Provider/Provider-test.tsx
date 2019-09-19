@@ -37,6 +37,8 @@ describe('Provider', () => {
         expect.objectContaining({
           theme: expect.objectContaining({
             siteVariables: {
+              _debug: expect.anything(),
+              _invertedKeys: expect.anything(),
               brand: 'blue',
               secondary: 'yellow',
               fontSizes: {},
@@ -64,6 +66,8 @@ describe('Provider', () => {
         expect.objectContaining({
           theme: expect.objectContaining({
             siteVariables: {
+              _debug: expect.anything(),
+              _invertedKeys: expect.anything(),
               secondary: 'yellow',
               fontSizes: {},
             },
