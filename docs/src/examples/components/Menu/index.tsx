@@ -5,6 +5,7 @@ import Types from './Types'
 import Slots from './Slots'
 import States from './States'
 import Variations from './Variations'
+import Usage from './Usage'
 
 const MenuExamples = () => (
   <div>
@@ -13,6 +14,7 @@ const MenuExamples = () => (
     <States />
     <Variations />
     <Rtl />
+    <Usage />
   </div>
 )
 

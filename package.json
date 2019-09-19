@@ -132,7 +132,6 @@
     "react-test-renderer": "^16.8.5",
     "react-virtualized": "^9.21.1",
     "react-vis": "^1.11.6",
-    "react-visibility-sensor": "^5.1.0",
     "read-package-json": "^2.0.13",
     "request-promise-native": "^1.0.5",
     "rimraf": "^2.6.1",
