@@ -8,12 +8,17 @@ const Usage = () => (
     <ComponentExample
       title="Custom Title"
       description="A Tree with customized title rendering."
-      examplePath="components/Tree/Types/TreeTitleCustomizationExample"
+      examplePath="components/Tree/Usage/TreeTitleCustomizationExample"
     />
     <ComponentExample
       title="Initially Open"
       description="A Tree with some items initially open."
-      examplePath="components/Tree/Types/TreeInitiallyOpenExample"
+      examplePath="components/Tree/Usage/TreeInitiallyOpenExample"
+    />
+    <ComponentExample
+      title="As a List"
+      description="A Tree with list accessibility roles."
+      examplePath="components/Tree/Usage/TreeAsListExample"
     />
   </ExampleSection>
 )
