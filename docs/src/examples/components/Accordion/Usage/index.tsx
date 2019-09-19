@@ -3,7 +3,7 @@ import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
 import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 
 const Usage = () => (
-  <ExampleSection title="">
+  <ExampleSection title="Usage">
     <ComponentExample
       title="Custom panel title"
       description="Accordion panel's title can be customized."

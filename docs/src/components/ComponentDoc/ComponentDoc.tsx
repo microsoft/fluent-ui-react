@@ -6,7 +6,6 @@ import { getFormattedHash } from 'docs/src/utils'
 import ComponentDocLinks from './ComponentDocLinks'
 import ComponentDocSee from './ComponentDocSee'
 import { ComponentExamples } from './ComponentExamples'
-import { ComponentUsage } from './ComponentUsage'
 import ComponentProps from './ComponentProps'
 import { ComponentDocAccessibility } from './ComponentDocAccessibility'
 import { ThemeContext } from 'docs/src/context/ThemeContext'
@@ -232,31 +231,6 @@ class ComponentDoc extends React.Component<ComponentDocProps, ComponentDocState>
               </div>
             </Grid>
           </>
-        )}
-
-        {this.getCurrentTabTitle() === 'Usage' && (
-          <Grid columns="auto 300px" styles={{ justifyContent: 'normal', justifyItems: 'stretch' }}>
-            <div>
-              <ExampleContext.Provider
-                value={{
-                  activeAnchorName: activePath,
-                  onExamplePassed: this.handleExamplePassed,
-                }}
-              >
-                <ComponentUsage displayName={info.displayName} />
-              </ExampleContext.Provider>
-            </div>
-            {/* TODO: bring back the right floating menu
-            <Box styles={{ width: '25%', paddingLeft: '14px' }}>
-              <ComponentSidebar
-                activePath={activePath}
-                displayName={info.displayName}
-                examplesRef={examplesRef}
-                onItemClick={this.handleSidebarItemClick}
-              />
-            </Box>
-          */}
-          </Grid>
         )}
 
         <div style={exampleEndStyle}>

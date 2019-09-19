@@ -100,6 +100,7 @@ export { default as ToolbarItem } from './components/Toolbar/toolbarItemStyles'
 export { default as ToolbarMenu } from './components/Toolbar/toolbarMenuStyles'
 export { default as ToolbarMenuDivider } from './components/Toolbar/toolbarMenuDividerStyles'
 export { default as ToolbarMenuItem } from './components/Toolbar/toolbarMenuItemStyles'
+export { default as ToolbarMenuRadioGroup } from './components/Toolbar/toolbarMenuRadioGroupStyles'
 
 export { default as Tree } from './components/Tree/treeStyles'
 export { default as TreeItem } from './components/Tree/treeItemStyles'
