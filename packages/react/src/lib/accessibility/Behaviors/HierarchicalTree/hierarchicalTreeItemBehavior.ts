@@ -21,7 +21,7 @@ const hierarchicalTreeItemBehavior: Accessibility<TreeItemBehaviorProps> = props
       role: 'none',
       ...(props.items &&
         props.items.length && {
-          'aria-expanded': props.open ? 'true' : 'false',
+          'aria-expanded': props.open,
           tabIndex: -1,
           [IS_FOCUSABLE_ATTRIBUTE]: true,
           role: 'treeitem',

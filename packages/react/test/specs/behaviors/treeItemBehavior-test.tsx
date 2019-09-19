@@ -1,48 +1,43 @@
-import { hierarchicalTreeItemBehavior } from 'src/lib/accessibility'
+import { treeItemBehavior } from 'src/lib/accessibility'
 
-describe('HierarchicalTreeItemBehavior', () => {
+describe('TreeItemBehavior', () => {
   describe('tabIndex', () => {
     test(`is added with '0' value to an item that is expandable`, () => {
-      const expectedResult = hierarchicalTreeItemBehavior({ items: [{ key: '1' }] })
+      const expectedResult = treeItemBehavior({ hasSubtree: true })
       expect(expectedResult.attributes.root.tabIndex).toEqual(-1)
     })
 
     test(`is not added to a leaf item (no items)`, () => {
-      const expectedResult = hierarchicalTreeItemBehavior({})
-      expect(expectedResult.attributes.root.tabIndex).toBeUndefined()
-    })
-
-    test(`is not added to a leaf item (empty items)`, () => {
-      const expectedResult = hierarchicalTreeItemBehavior({ items: [] })
+      const expectedResult = treeItemBehavior({})
       expect(expectedResult.attributes.root.tabIndex).toBeUndefined()
     })
   })
 
   describe('aria-expanded', () => {
     test(`is not added to a leaf item`, () => {
-      const expectedResult = hierarchicalTreeItemBehavior({})
+      const expectedResult = treeItemBehavior({})
       expect(expectedResult.attributes.root['aria-expanded']).toBeUndefined()
     })
 
     test(`is added with 'false' value to an item that is expandable but not open`, () => {
-      const expectedResult = hierarchicalTreeItemBehavior({ items: [{ key: '1' }], open: false })
+      const expectedResult = treeItemBehavior({ hasSubtree: true, open: false })
       expect(expectedResult.attributes.root['aria-expanded']).toEqual(false)
     })
 
     test(`is added with 'false' value to an item that is expandable and open`, () => {
-      const expectedResult = hierarchicalTreeItemBehavior({ items: [{ key: '1' }], open: true })
+      const expectedResult = treeItemBehavior({ hasSubtree: true, open: true })
       expect(expectedResult.attributes.root['aria-expanded']).toEqual(true)
     })
   })
 
   describe('role', () => {
     test(`is 'treeitem' if not a leaf`, () => {
-      const expectedResult = hierarchicalTreeItemBehavior({ items: [{ key: '1' }] })
+      const expectedResult = treeItemBehavior({ hasSubtree: true })
       expect(expectedResult.attributes.root.role).toEqual('treeitem')
     })
 
     test(`is 'none' if a leaf`, () => {
-      const expectedResult = hierarchicalTreeItemBehavior({})
+      const expectedResult = treeItemBehavior({})
       expect(expectedResult.attributes.root.role).toEqual('none')
     })
   })
