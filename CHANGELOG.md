@@ -26,10 +26,21 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `shadowLevel1Dark` in Teams themes @notandrew ([#1887](https://github.com/stardust-ui/react/pull/1887))
 - When merging themes use deep merge for site and component variables @miroslavstastny ([#1907](https://github.com/stardust-ui/react/pull/1907))
 - Updating `Button` styles for Teams dark & high contrast themes to match design @notandrew ([#1933](https://github.com/stardust-ui/react/pull/1933))
+- Fix `Dropdown` to properly accept `id` on `searchInput` @silviuavram ([#1938](https://github.com/stardust-ui/react/pull/1938))
+- Fix white flash when activating `Embed` component @lucivpav ([#1909](https://github.com/stardust-ui/react/pull/1909))
 
 ### Features
 - Add `TextArea` component @lucivpav ([#1897](https://github.com/stardust-ui/react/pull/1897))
 - Export `bell-slash` and `bell-snooze` icon to Teams theme @musingh ([#1921](https://github.com/stardust-ui/react/pull/1921))
+- Add support for radio & checkbox groups to `Toolbar` component @layershifter ([#1920](https://github.com/stardust-ui/react/pull/1920))
+- Add support for `Popup` in `ToolbarMenu` @lucivpav ([#1927](https://github.com/stardust-ui/react/pull/1927))
+- Add behaviors for `Tree` as list and linked them using childBehaviors @silviuavram ([#1928](https://github.com/stardust-ui/react/pull/1928))
+
+### Documentation
+- Remove Usage tab @lucivpav ([#1948](https://github.com/stardust-ui/react/pull/1948))
+
+### Documentation
+- Remove cancel button in a `Dialog` example with a close action @lucivpav ([#1949](https://github.com/stardust-ui/react/pull/1949))
 
 <!--------------------------------[ v0.38.1 ]------------------------------- -->
 ## [v0.38.1](https://github.com/stardust-ui/react/tree/v0.38.1) (2019-09-13)

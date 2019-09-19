@@ -4,6 +4,7 @@ import Content from './Content'
 import Rtl from './Rtl'
 import Types from './Types'
 import Performance from './Performance'
+import Usage from './Usage'
 
 const ChatExamples = () => (
   <>
@@ -11,6 +12,7 @@ const ChatExamples = () => (
     <Content />
     <Rtl />
     <Performance />
+    <Usage />
   </>
 )
 

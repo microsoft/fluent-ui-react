@@ -27,6 +27,7 @@ import {
   ShorthandCollection,
 } from '../../types'
 import { hasSubtree } from './lib'
+import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 
 export interface TreeItemSlotClassNames {
   title: string
@@ -191,7 +192,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>, TreeItemState> {
     },
   })
 
-  renderContent() {
+  renderContent(accessibility: ReactAccessibilityBehavior) {
     const { title, renderItemTitle, open, level, index } = this.props
     const { hasSubtree, treeSize } = this.state
 
@@ -204,13 +205,16 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>, TreeItemState> {
         level,
         treeSize,
         index,
+        accessibility: accessibility.childBehaviors
+          ? accessibility.childBehaviors.title
+          : undefined,
       },
       render: renderItemTitle,
       overrideProps: this.handleTitleOverrides,
     })
   }
 
-  renderComponent({ ElementType, accessibility, classes, unhandledProps, styles, variables }) {
+  renderComponent({ ElementType, accessibility, classes, unhandledProps }) {
     const { children, contentRef } = this.props
     const element = (
       <ElementType
@@ -220,7 +224,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>, TreeItemState> {
         {...unhandledProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
-        {childrenExist(children) ? children : this.renderContent()}
+        {childrenExist(children) ? children : this.renderContent(accessibility)}
       </ElementType>
     )
 
