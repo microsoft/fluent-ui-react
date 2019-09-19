@@ -290,7 +290,7 @@ function createShorthandFromValue<P>({
   }
 
   if (typeof props.children === 'function') {
-    return props.children(Component, props)
+    return props.children(Component, { ...props, children: undefined })
   }
 
   if (!allowsJSX && valIsReactElement) {
