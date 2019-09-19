@@ -4,6 +4,15 @@
 export const exampleIndexContext = require.context('docs/src/examples/', true, /index.tsx$/)
 
 /**
+ * The Webpack Context for doc examples.
+ */
+export const examplesContext = require.context(
+  'docs/src/examples/',
+  true,
+  /(\w+Example(\w|\.)*|\w+.perf)\.tsx$/,
+)
+
+/**
  * The Webpack Context for doc site usage groups.
  */
 export const usageIndexContext = require.context('docs/src/examples', true, /Usage\/index.tsx$/)

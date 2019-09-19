@@ -53,6 +53,10 @@ export const imports: Record<string, { version: string; module: any }> = {
     version: stardustReactPackageJson.dependencies['react-fela'],
     module: ReactFela,
   },
+  prettier: {
+    version: docsComponentsPackageJson.peerDependencies['prettier'],
+    module: null, // no need to use it in our examples
+  },
 }
 
 export const importResolver = importName => imports[importName].module
