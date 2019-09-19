@@ -115,27 +115,30 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
             ✕
           </div>
         </div>
-      </div>
 
-      <div style={debugPanelBody}>
-        <div style={debugPanel}>
+        <div style={{ marginTop: '8px', clear: 'both' }}>
           {stardustOwner && (
-            <div style={debugHeader1()}>
-              <span style={{ opacity: 0.5 }}>Owner:</span> {`<${stardustOwner.name} />`}
+            <div style={debugHeader2()}>
+              <span style={{ display: 'inline-block', width: '60px', opacity: 0.5 }}>Owner:</span>{' '}
+              {`<${stardustOwner.name} />`}
             </div>
           )}
           {stardustParent && (
-            <div style={debugHeader1()}>
-              <span style={{ opacity: 0.5 }}>Parent:</span> {`<${stardustParent.name} />`}
+            <div style={debugHeader2()}>
+              <span style={{ display: 'inline-block', width: '60px', opacity: 0.5 }}>Parent:</span>{' '}
+              {`<${stardustParent.name} />`}
             </div>
           )}
           {fiberNav.name && (
             <div style={debugHeader1()}>
-              <span style={{ opacity: 0.5 }}>Name:</span> {`<${fiberNav.name} />`}
+              <span style={{ display: 'inline-block', width: '60px', opacity: 0.5 }}>Name:</span>{' '}
+              {`<${fiberNav.name} />`}
             </div>
           )}
         </div>
+      </div>
 
+      <div style={debugPanelBody}>
         <div style={debugPanel}>
           <div style={debugHeaderContainer()}>
             <div style={debugHeader2()}>Site variables</div>
@@ -167,7 +170,7 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
 
         <div style={debugPanel}>
           <div style={debugHeaderContainer()}>
-            <div style={debugHeader2()}>Styles</div>
+            <div style={{ ...debugHeader2(), float: 'left' }}>Styles</div>
             {!_.isEmpty(debugData.componentStyles) && (
               <div style={debugPanelSelectContainer()}>
                 <select value={slot} onChange={e => setSlot(e.target.value)}>
@@ -273,7 +276,6 @@ const debugHeader1 = (): React.CSSProperties => ({
 })
 
 const debugHeader2 = (): React.CSSProperties => ({
-  float: 'left',
   fontSize: '14px',
   fontWeight: 'bold',
 })
@@ -291,8 +293,11 @@ const debugPanelSelectContainer = (): React.CSSProperties => ({
 
 const debugPanelOptions: React.CSSProperties = {
   position: 'sticky',
-  top: 0,
   padding: '8px',
+  marginBottom: '8px',
+  top: 0,
+  background: '#fff',
+  borderBottom: '1px solid rgba(0, 0, 0, 0.2)',
 }
 
 const debugPanelBody: React.CSSProperties = {
