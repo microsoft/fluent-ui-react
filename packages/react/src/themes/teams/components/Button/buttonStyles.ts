@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import { pxToRem } from '../../../../lib'
+import { pxToRem, createAnimationStyles } from '../../../../lib'
 import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import Loader from '../../../../components/Loader/Loader'
 import { ButtonProps } from '../../../../components/Button/Button'
@@ -47,8 +47,11 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         borderStyle: 'solid',
         borderColor: v.borderColor,
         boxShadow: v.boxShadow,
-        transform: 'translateZ(0)',
-        transition: 'all .1s cubic-bezier(.78, 0, .22, 1)',
+
+        ...createAnimationStyles('fadeEnterMedium', siteVariables.theme),
+
+        // transform: 'translateZ(0)',
+        // transition: 'all .1s cubic-bezier(.78, 0, .22, 1)',
 
         ':hover': {
           color: v.colorHover,
