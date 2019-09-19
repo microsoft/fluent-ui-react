@@ -7,6 +7,7 @@ import ComponentPropsRow from './ComponentPropsRow'
 const tableStyles: React.CSSProperties = {
   textAlign: 'left',
   borderCollapse: 'collapse',
+  width: '100%',
 }
 
 type ComponentPropsTable = {

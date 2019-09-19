@@ -30,7 +30,6 @@ type ComponentDocProps = {
 type ComponentDocState = {
   activePath: string
   currentTabIndex: number
-  propComponent: string
 }
 
 class ComponentDoc extends React.Component<ComponentDocProps, ComponentDocState> {
@@ -69,9 +68,6 @@ class ComponentDoc extends React.Component<ComponentDocProps, ComponentDocState>
       const activePath = getFormattedHash(location.hash)
       history.replace({ ...history.location, hash: activePath })
       this.setState({ activePath })
-      if (this.props.tabs[tabIndex] === 'Props') {
-        this.setState({ propComponent: activePath })
-      }
     }
   }
 
@@ -82,11 +78,6 @@ class ComponentDoc extends React.Component<ComponentDocProps, ComponentDocState>
 
     if (info.displayName !== this.props.info.displayName) {
       this.setState({ activePath: undefined })
-    }
-
-    const activePath = location.hash ? getFormattedHash(location.hash) : ''
-    if (this.props.tabs[tabIndex] === 'Props') {
-      this.setState({ propComponent: activePath })
     }
   }
 
@@ -113,13 +104,6 @@ class ComponentDoc extends React.Component<ComponentDocProps, ComponentDocState>
 
     history.push(newLocation)
     this.setState({ currentTabIndex: newIndex })
-  }
-
-  onPropComponentSelected = (e, props) => {
-    const { history, location } = this.props
-    history.replace(`${location.pathname}#${props.value}`)
-    history.push({ ...history.location, hash: props.value })
-    this.setState({ propComponent: props.value })
   }
 
   render() {
@@ -150,7 +134,7 @@ class ComponentDoc extends React.Component<ComponentDocProps, ComponentDocState>
     }
 
     const { info, tabs } = this.props
-    const { activePath, currentTabIndex, propComponent } = this.state
+    const { activePath, currentTabIndex } = this.state
 
     return (
       <div style={{ padding: '20px' }}>
@@ -205,12 +189,7 @@ class ComponentDoc extends React.Component<ComponentDocProps, ComponentDocState>
         {this.getCurrentTabTitle() === 'Accessibility' && <ComponentDocAccessibility info={info} />}
 
         {this.getCurrentTabTitle() === 'Props' && (
-          <ComponentProps
-            displayName={info.displayName}
-            props={info.props}
-            componentProp={propComponent}
-            onPropComponentSelected={this.onPropComponentSelected}
-          />
+          <ComponentProps displayName={info.displayName} props={info.props} />
         )}
 
         {this.getCurrentTabTitle() === 'Definition' && (
