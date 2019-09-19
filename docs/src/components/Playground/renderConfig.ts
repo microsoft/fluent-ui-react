@@ -6,6 +6,7 @@ import * as _ from 'lodash'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as Classnames from 'classnames'
+import * as prettier from 'prettier'
 
 const docsComponentsPackageJson = require('@stardust-ui/docs-components/package.json')
 const stardustReactPackageJson = require('@stardust-ui/react/package.json')
@@ -52,6 +53,10 @@ export const imports: Record<string, { version: string; module: any }> = {
   'react-fela': {
     version: stardustReactPackageJson.dependencies['react-fela'],
     module: ReactFela,
+  },
+  prettier: {
+    version: docsComponentsPackageJson.peerDependencies['prettier'],
+    module: prettier,
   },
 }
 
