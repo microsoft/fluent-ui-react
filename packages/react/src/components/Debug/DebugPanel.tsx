@@ -45,6 +45,30 @@ const getValues = (value, predicate) => {
   return []
 }
 
+const removeNulls = object =>
+  _.transform(
+    object,
+    (result, value, key) => {
+      // Exclude null values.
+      if (value !== null) {
+        let val = value
+
+        // Recurse into arrays and objects.
+        if (Array.isArray(value) || _.isPlainObject(value)) {
+          val = removeNulls(value)
+        }
+
+        if (Array.isArray(result)) {
+          result.push(val)
+        }
+
+        result[key] = val
+      }
+      return result
+    },
+    {},
+  )
+
 const DebugPanel: React.FC<DebugPanelProps> = props => {
   const [slot, setSlot] = React.useState('root')
   const [showOwnerRect, setShowOwnerRect] = React.useState(false)
@@ -91,12 +115,16 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
     )
 
   const uniqSiteVariables = _.uniq(siteVariablesKey)
-  const siteVariablesData = debugData.siteVariables.map(val => {
+  const siteVariablesDataWithNulls = debugData.siteVariables.map(val => {
     return uniqSiteVariables.reduce((acc, next) => {
       const key = _.replace(next, 'siteVariables.', '')
-      acc[key] = _.get(val, key)
+      _.set(acc, key, _.get(val, key))
       return acc
     }, {})
+  })
+
+  const siteVariablesData = siteVariablesDataWithNulls.map(val => {
+    return removeNulls(val)
   })
 
   const stardustParent = fiberNav.parent.find(
@@ -132,7 +160,8 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
                 onClick={() => onFiberChanged(stardustOwner)}
                 onMouseEnter={e => setShowOwnerRect(true)}
                 onMouseLeave={e => setShowOwnerRect(false)}
-              >{`<${stardustOwner.name} />`}
+              >
+                {`<${stardustOwner.name} />`}
               </span>
             </div>
           )}
@@ -145,7 +174,8 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
                 onClick={() => onFiberChanged(stardustParent)}
                 onMouseEnter={e => setShowParentRect(true)}
                 onMouseLeave={e => setShowParentRect(false)}
-              >{`<${stardustParent.name} />`}
+              >
+                {`<${stardustParent.name} />`}
               </span>
             </div>
           )}
