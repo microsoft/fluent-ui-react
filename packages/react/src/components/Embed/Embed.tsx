@@ -18,6 +18,7 @@ import Image from '../Image/Image'
 import Video, { VideoProps } from '../Video/Video'
 import Box, { BoxProps } from '../Box/Box'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
+import { Ref } from '@stardust-ui/react-component-ref'
 
 export interface EmbedSlotClassNames {
   control: string
@@ -81,11 +82,17 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
     active: PropTypes.bool,
     defaultActive: PropTypes.bool,
     control: customPropTypes.itemShorthand,
-    iframe: customPropTypes.itemShorthand,
+    iframe: customPropTypes.every([
+      customPropTypes.disallow(['video']),
+      customPropTypes.itemShorthand,
+    ]),
     onActiveChanged: PropTypes.func,
     onClick: PropTypes.func,
     placeholder: PropTypes.string,
-    video: customPropTypes.itemShorthand,
+    video: customPropTypes.every([
+      customPropTypes.disallow(['iframe']),
+      customPropTypes.itemShorthand,
+    ]),
   }
 
   static defaultProps = {
@@ -103,6 +110,8 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
   actionHandlers = {
     performClick: event => this.handleClick(event),
   }
+
+  frameRef = React.createRef<HTMLFrameElement>()
 
   getInitialAutoControlledState(): EmbedState {
     return { active: false, iframeLoaded: false }
@@ -125,29 +134,28 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
   handleFrameOverrides = predefinedProps => ({
     onLoad: (e: React.SyntheticEvent) => {
       _.invoke(predefinedProps, 'onLoad', e)
+
       this.setState({ iframeLoaded: true })
+      this.frameRef.current.contentWindow.focus()
     },
   })
 
-  renderIframePlaceholderImageIfNecessary(placeholderImage: JSX.Element) {
-    const { active, iframeLoaded } = this.state
-    if (active && !iframeLoaded) {
-      return placeholderImage
-    }
-    return null
-  }
-
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
     const { control, iframe, placeholder, video } = this.props
-    const { active } = this.state
-    const controlVisible = !_.isNil(video) || !active
-    const placeholderImage = placeholder ? (
+    const { active, iframeLoaded } = this.state
+
+    const placeholderElement = placeholder ? (
       <Image
         src={placeholder}
         styles={styles.image}
         variables={{ width: variables.width, height: variables.height }}
       />
     ) : null
+
+    const hasIframe = !_.isNil(iframe)
+    const hasVideo = !_.isNil(video)
+    const controlVisible = !active || hasVideo
+    const placeholderVisible = !active || (hasIframe && active && !iframeLoaded)
 
     return (
       <ElementType
@@ -157,8 +165,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
         {...unhandledProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
-        {iframe && this.renderIframePlaceholderImageIfNecessary(placeholderImage)}
-        {active ? (
+        {active && (
           <>
             {Video.create(video, {
               defaultProps: {
@@ -174,18 +181,19 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
                 },
               },
             })}
-            {Box.create(iframe, {
-              defaultProps: {
-                as: 'iframe',
-                styles: styles.iframe,
-              },
-              overrideProps: this.handleFrameOverrides,
-            })}
+            <Ref innerRef={this.frameRef}>
+              {Box.create(iframe, {
+                defaultProps: {
+                  as: 'iframe',
+                  styles: styles.iframe,
+                },
+                overrideProps: this.handleFrameOverrides,
+              })}
+            </Ref>
           </>
-        ) : (
-          placeholderImage
         )}
 
+        {placeholderVisible && placeholderElement}
         {controlVisible &&
           Icon.create(control, {
             defaultProps: {

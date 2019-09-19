@@ -50,6 +50,6 @@ export default {
   }),
   iframe: ({ props: p }): ICSSInJSStyle => ({
     display: 'block',
-    visibility: p.iframeLoaded ? 'visible' : 'hidden',
+    ...(!p.iframeLoaded && { display: 'none' }),
   }),
 } as ComponentSlotStylesPrepared<EmbedProps & EmbedState, EmbedVariables>
