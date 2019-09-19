@@ -125,7 +125,9 @@ class Debug extends React.Component<DebugProps, DebugState> {
         {!isSelecting && fiberNav && fiberNav.instance && (
           <DebugPanel
             fiberNav={fiberNav}
-            onActivateDebugSelectorClick={() => this.setState({ isSelecting: true })}
+            onActivateDebugSelectorClick={() =>
+              this.setState({ ...INITIAL_STATE, isSelecting: true })
+            }
             onClose={() => this.setState(INITIAL_STATE)}
             // TODO: Integrate CSS in JS Styles for Host Components (DOM nodes)
             // cssStyles={stylesForNode(stardustDOMNode)}
