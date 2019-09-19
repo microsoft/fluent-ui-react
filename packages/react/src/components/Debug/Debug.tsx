@@ -84,10 +84,7 @@ class Debug extends React.Component<DebugProps, DebugState> {
       return
     }
 
-    fiberNav = fiberNav.find(
-      fiber => fiber.instance && fiber.instance.stardustDebug,
-      fiber => fiber.owner,
-    )
+    fiberNav = fiberNav.findOwner(fiber => fiber.stardustDebug)
 
     if (fiberNav !== this.state.fiberNav) {
       this.setState({ fiberNav })
@@ -127,7 +124,7 @@ class Debug extends React.Component<DebugProps, DebugState> {
             onClose={() => this.setState(INITIAL_STATE)}
             // TODO: Integrate CSS in JS Styles for Host Components (DOM nodes)
             // cssStyles={stylesForNode(stardustDOMNode)}
-            debugData={fiberNav.instance.stardustDebug}
+            debugData={fiberNav.stardustDebug}
             position={debugPanelPosition || 'right'}
             onPositionLeft={() => this.setState({ debugPanelPosition: 'left' })}
             onPositionRight={() => this.setState({ debugPanelPosition: 'right' })}

@@ -73,11 +73,14 @@ const DebugPanelItem = props => {
           <pre
             key={idx}
             style={{
+              position: 'relative',
               padding: '0.5em 0',
               borderTop: idx > 0 ? '1px solid #ddd' : 'none',
             }}
           >
-            {ids && ids[idx] && <div style={{ marginBottom: '10px' }}>{ids[idx]}</div>}
+            {ids && ids[idx] && (
+              <div style={{ position: 'absolute', right: 0, opacity: 0.75 }}>{ids[idx]}</div>
+            )}
             <DebugPanelData
               data={filteredTheme}
               comments={comments[idx]}

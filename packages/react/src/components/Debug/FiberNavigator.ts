@@ -255,6 +255,11 @@ class FiberNavigator {
     return null
   }
 
+  // TODO: Fibers can become stale.
+  //      The only current fiber is the one found on the DOM node.
+  //      There is no way to start at a React Component fiber, go the DOM node,
+  //      get the current fiber, and find your way back to the React Component fiber.
+  //      Probably need to remove fromFiber and re-implement using only DOM node weak map.
   static fromFiber = fiber => {
     if (!fiber) return null
 
@@ -334,9 +339,22 @@ class FiberNavigator {
     return this.__fiber.elementType
   }
 
+  get stardustDebug() {
+    return this.instance && this.instance.stardustDebug ? this.instance.stardustDebug : null
+  }
+
+  get jsxString() {
+    return `<${this.name} />`
+  }
+
   //
   // Methods
   //
+
+  isEqual(fiberNav: FiberNavigator) {
+    // TODO: do equality check on __fiber instead, however, see fromFiber TODO :/
+    return !!fiberNav && fiberNav.instance === this.instance
+  }
 
   usesHook(name) {
     return this.__fiber._debugHookTypes.some(hook => hook === name)
@@ -353,6 +371,14 @@ class FiberNavigator {
     }
 
     return null
+  }
+
+  findOwner(condition) {
+    return this.find(condition, fiber => fiber.owner)
+  }
+
+  findParent(condition) {
+    return this.find(condition, fiber => fiber.parent)
   }
 
   //
@@ -392,5 +418,7 @@ class FiberNavigator {
       : !!this.instance && !!this.instance.render && !!this.instance.setState
   }
 }
+
+window.F = FiberNavigator
 
 export default FiberNavigator

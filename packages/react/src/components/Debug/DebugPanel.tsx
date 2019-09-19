@@ -45,11 +45,55 @@ const getValues = (value, predicate) => {
   return []
 }
 
-const DebugPanel: React.FC<DebugPanelProps> = props => {
-  const [slot, setSlot] = React.useState('root')
-  const [showOwnerRect, setShowOwnerRect] = React.useState(false)
-  const [showParentRect, setShowParentRect] = React.useState(false)
+class ScrollToBottom extends React.Component<any> {
+  ref = React.createRef()
 
+  componentDidMount() {
+    this.scrollToBottom()
+  }
+
+  scrollToBottom() {
+    this.ref.current.scrollTo({ behavior: 'smooth', top: 999999 })
+  }
+
+  render() {
+    return <div ref={this.ref} {...this.props} />
+  }
+}
+
+const Line: React.FC<{
+  [key: string]: any
+  children: React.ReactNode
+  active?: boolean
+  indent?: number
+  style?: React.CSSProperties
+  badge?: string
+  actionable?: boolean
+}> = ({ active, indent = 0, actionable, children, style, badge, ...rest }) => (
+  <a
+    style={{
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      paddingLeft: `${indent * 2}ch`,
+      outline: 0,
+      ...(actionable && {
+        color: 'cornflowerblue',
+        cursor: 'pointer',
+      }),
+      ...(active && {
+        background: 'rgba(255, 255, 255, 0.1)',
+      }),
+      ...style,
+    }}
+    {...rest}
+  >
+    {children}
+    {badge && <span style={{ padding: '0 4px', fontSize: 10, opacity: 0.75 }}>{badge}</span>}
+  </a>
+)
+
+const DebugPanel: React.FC<DebugPanelProps> = props => {
   const {
     cssStyles,
     debugData: inputDebugData,
@@ -61,6 +105,9 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
     onPositionRight,
     onFiberChanged,
   } = props
+
+  const [slot, setSlot] = React.useState('root')
+  const [selectedFiberNav, selectFiberNav] = React.useState(null)
 
   const left = position === 'left'
 
@@ -99,18 +146,21 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
     }, {})
   })
 
-  const stardustParent = fiberNav.parent.find(
-    fiber => fiber.instance && fiber.instance.stardustDebug,
-    fiber => fiber.parent,
-  )
-  const stardustOwner = fiberNav.owner.find(
-    fiber => fiber.instance && fiber.instance.stardustDebug,
-    fiber => fiber.owner,
-  )
+  const ownerNav = fiberNav.owner
+
+  const parentNavs = []
+  let parentNav = fiberNav.parent
+
+  while (parentNav && !parentNav.isEqual(ownerNav)) {
+    if (parentNav.stardustDebug) parentNavs.unshift(parentNav)
+    parentNav = parentNav.parent
+  }
+
+  const component = fiberNav.name && <Line>{fiberNav.jsxString}</Line>
 
   return (
     <div style={debugPanelRoot(left)}>
-      <div style={debugPanelOptions}>
+      <div style={debugPanelHeader}>
         <div tabIndex={0} onClick={onActivateDebugSelectorClick} style={debugPanelArrowIcon}>
           ⇱
         </div>
@@ -121,50 +171,68 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
             ✕
           </div>
         </div>
-
-        <div style={{ marginTop: '8px', clear: 'both' }}>
-          {stardustOwner && (
-            <div style={debugHeader2()}>
-              <span style={{ display: 'inline-block', width: '60px', opacity: 0.5 }}>Owner:</span>{' '}
-              <span
-                style={{ cursor: 'pointer', outline: 0 }}
-                tabIndex={0}
-                onClick={() => onFiberChanged(stardustOwner)}
-                onMouseEnter={e => setShowOwnerRect(true)}
-                onMouseLeave={e => setShowOwnerRect(false)}
-              >{`<${stardustOwner.name} />`}
-              </span>
-            </div>
-          )}
-          {stardustParent && (
-            <div style={debugHeader2()}>
-              <span style={{ display: 'inline-block', width: '60px', opacity: 0.5 }}>Parent:</span>{' '}
-              <span
-                style={{ cursor: 'pointer', outline: 0 }}
-                tabIndex={0}
-                onClick={() => onFiberChanged(stardustParent)}
-                onMouseEnter={e => setShowParentRect(true)}
-                onMouseLeave={e => setShowParentRect(false)}
-              >{`<${stardustParent.name} />`}
-              </span>
-            </div>
-          )}
-          {fiberNav.name && (
-            <div style={debugHeader1()}>
-              <span style={{ display: 'inline-block', width: '60px', opacity: 0.5 }}>Name:</span>{' '}
-              {`<${fiberNav.name} />`}
-            </div>
-          )}
-        </div>
       </div>
 
-      {showOwnerRect && <DebugRect fiberNav={stardustOwner} />}
-      {showParentRect && <DebugRect fiberNav={stardustParent} />}
+      <ScrollToBottom style={debugPanelComponents}>
+        <Line
+          indent={0}
+          {...(ownerNav.stardustDebug && {
+            actionable: true,
+            badge: 'debuggable',
+            tabIndex: 0,
+            onClick: e => {
+              e.preventDefault()
+              onFiberChanged(ownerNav)
+            },
+            onMouseEnter: e => selectFiberNav(ownerNav),
+            onMouseLeave: e => selectFiberNav(null),
+          })}
+        >
+          {ownerNav.name}
+        </Line>
+        <Line indent={1} style={{ color: '#ba645e' }}>
+          render()
+        </Line>
+        {parentNavs.map((parent, i) => (
+          <Line
+            key={i}
+            indent={2 + i}
+            actionable
+            badge="debuggable"
+            tabIndex="0"
+            onClick={e => {
+              e.preventDefault()
+              onFiberChanged(parent)
+            }}
+            onMouseEnter={e => selectFiberNav(parent)}
+            onMouseLeave={e => selectFiberNav(null)}
+          >
+            {parent.jsxString}
+          </Line>
+        ))}
+        <Line
+          indent={3 + parentNavs.length}
+          active
+          badge="active"
+          actionable
+          tabIndex="0"
+          onClick={e => {
+            e.preventDefault()
+            onFiberChanged(fiberNav)
+          }}
+          onMouseEnter={e => selectFiberNav(fiberNav)}
+          onMouseLeave={e => selectFiberNav(null)}
+        >
+          {component}
+        </Line>
+      </ScrollToBottom>
+
+      {selectedFiberNav && <DebugRect fiberNav={selectedFiberNav} />}
 
       <div style={debugPanelBody}>
         <div style={debugPanel}>
           <div style={debugHeaderContainer()}>
-            <div style={debugHeader2()}>Site variables</div>
+            <div style={debugHeader()}>Site variables</div>
           </div>
           {!_.isEmpty(siteVariablesData) && !_.isEmpty(uniqSiteVariables) ? (
             <DebugPanelItem data={siteVariablesData} />
@@ -175,7 +243,7 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
 
         <div style={debugPanel}>
           <div style={debugHeaderContainer()}>
-            <div style={debugHeader2()}>Variables</div>
+            <div style={debugHeader()}>Variables</div>
           </div>
           {!_.isEmpty(debugData.componentVariables) ? (
             <DebugPanelItem
@@ -194,7 +262,7 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
 
         <div style={debugPanel}>
           <div style={debugHeaderContainer()}>
-            <div style={{ ...debugHeader2(), float: 'left' }}>Styles</div>
+            <div style={debugHeader()}>Styles</div>
             {!_.isEmpty(debugData.componentStyles) && (
               <div style={debugPanelSelectContainer()}>
                 <select value={slot} onChange={e => setSlot(e.target.value)}>
@@ -221,7 +289,7 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
 
       {!_.isEmpty(cssStyles) && (
         <div style={debugPanel}>
-          <div style={debugHeader2()}>HTML Styles</div>
+          <div style={debugHeader()}>HTML Styles</div>
           <div style={{ clear: 'both' }}>
             {cssStyles.map(l => (
               <pre key={l}>{l}</pre>
@@ -235,9 +303,21 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
   )
 }
 
+const debugPanelHeader: React.CSSProperties = {
+  position: 'sticky',
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  padding: '0 0 2px',
+  top: '0',
+  background: '#fff',
+}
+
 const commonIconStyle: React.CSSProperties = {
   display: 'inline-block',
   cursor: 'pointer',
+  lineHeight: 1,
+  margin: '0 4px',
 }
 
 const debugPanelCloseIcon: React.CSSProperties = {
@@ -250,8 +330,7 @@ const debugPanelCloseIcon: React.CSSProperties = {
 
 const debugPanelArrowIcon: React.CSSProperties = {
   ...commonIconStyle,
-  float: 'left',
-  fontSize: '20px',
+  fontSize: '24px',
   color: 'grey',
   marginTop: '-4px',
   outline: '0',
@@ -262,11 +341,9 @@ const debugPanelIcon = (left, isLeftActive): React.CSSProperties => ({
   borderWidth: '2px',
   borderStyle: 'solid ',
   borderColor: '#888',
-  backgroundColor: 'white',
   [left ? 'borderLeftWidth' : 'borderRightWidth']: '6px',
   width: '16px',
   height: '14px',
-  marginRight: '0.8em',
   ...(left === isLeftActive && {
     borderColor: '#6495ed',
   }),
@@ -277,13 +354,13 @@ const debugPanelRoot = (left): React.CSSProperties => ({
   [left ? 'left' : 'right']: 0,
   top: 0,
   zIndex: 999999999,
-  width: '300px',
+  width: '350px',
   height: '100vh',
   color: '#222',
   background: '#fff',
   lineHeight: 1.1,
   fontSize: '12px',
-  overflowY: 'auto',
+  overflowY: 'scroll',
   boxShadow: '0 0 8px rgba(0, 0, 0, .1)',
 })
 
@@ -294,12 +371,7 @@ const debugHeaderContainer = (): React.CSSProperties => ({
   marginBottom: '8px',
 })
 
-const debugHeader1 = (): React.CSSProperties => ({
-  fontSize: '16px',
-  fontWeight: 'bold',
-})
-
-const debugHeader2 = (): React.CSSProperties => ({
+const debugHeader = (): React.CSSProperties => ({
   fontSize: '14px',
   fontWeight: 'bold',
 })
@@ -312,16 +384,19 @@ const debugNoData = (): React.CSSProperties => ({
 })
 
 const debugPanelSelectContainer = (): React.CSSProperties => ({
-  float: 'right',
+  width: 'auto',
 })
 
-const debugPanelOptions: React.CSSProperties = {
-  position: 'sticky',
+const debugPanelComponents: React.CSSProperties = {
+  fontSize: '14px',
   padding: '8px',
+  whiteSpace: 'pre',
   marginBottom: '8px',
-  top: 0,
-  background: '#fff',
-  borderBottom: '1px solid rgba(0, 0, 0, 0.2)',
+  lineHeight: 1.4,
+  background: '#222',
+  overflowY: 'auto',
+  color: '#CCC',
+  fontFamily: 'monospace',
 }
 
 const debugPanelBody: React.CSSProperties = {

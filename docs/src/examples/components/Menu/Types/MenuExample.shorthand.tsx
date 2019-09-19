@@ -1,5 +1,5 @@
-import * as React from 'react'
-import { Menu } from '@stardust-ui/react'
+import React from 'react'
+import { Menu, Icon } from '@stardust-ui/react'
 
 const MyComponent = p => <strong {...p} />
 
@@ -10,21 +10,32 @@ const items = [
   },
   {
     key: 'review',
-    content: 'Reviews',
+    content: () => <p>Reviews</p>,
   },
   {
-    wrapper: { as: 'li', design: { padding: '20px', background: 'red' } },
+    wrapper: {
+      as: 'li',
+      design: {
+        padding: '20px',
+        background: 'red',
+      },
+    },
     key: 'events',
     content: resolve => {
       return resolve('wrapped content', (C, p) => {
         return (
           <MyComponent>
-            <C {...p} />
+            <C {...p}>
+              <Icon name="user" />
+              {p.children}
+            </C>
           </MyComponent>
         )
       })
     },
-    styles: { background: 'pink' },
+    styles: {
+      background: 'pink',
+    },
   },
 ]
 
