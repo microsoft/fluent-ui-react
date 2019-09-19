@@ -93,6 +93,30 @@ const Line: React.FC<{
   </a>
 )
 
+const removeNulls = o => {
+  if (typeof o !== 'object' && o !== null) {
+    return o
+  }
+  const result = {}
+
+  Object.keys(o).forEach(k => {
+    if (!o[k] || typeof o[k] !== 'object') {
+      if (o[k]) {
+        result[k] = o[k] // If not null or not an object, copy value
+      }
+    }
+
+    // The property is an object
+    const val = removeNulls(o[k])
+
+    if (typeof val === 'object' && val != null && Object.keys(val).length > 0) {
+      result[k] = val
+    }
+  })
+
+  return result
+}
+
 const DebugPanel: React.FC<DebugPanelProps> = props => {
   const {
     cssStyles,
@@ -138,12 +162,16 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
     )
 
   const uniqSiteVariables = _.uniq(siteVariablesKey)
-  const siteVariablesData = debugData.siteVariables.map(val => {
+  const siteVariablesDataWithNulls = debugData.siteVariables.map(val => {
     return uniqSiteVariables.reduce((acc, next) => {
       const key = _.replace(next, 'siteVariables.', '')
-      acc[key] = _.get(val, key)
+      _.set(acc, key, _.get(val, key))
       return acc
     }, {})
+  })
+
+  const siteVariablesData = siteVariablesDataWithNulls.map(val => {
+    return removeNulls(val)
   })
 
   const ownerNav = fiberNav.owner
