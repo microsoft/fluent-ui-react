@@ -181,15 +181,17 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
                 },
               },
             })}
-            <Ref innerRef={this.frameRef}>
-              {Box.create(iframe, {
-                defaultProps: {
-                  as: 'iframe',
-                  styles: styles.iframe,
-                },
-                overrideProps: this.handleFrameOverrides,
-              })}
-            </Ref>
+            {iframe && (
+              <Ref innerRef={this.frameRef}>
+                {Box.create(iframe, {
+                  defaultProps: {
+                    as: 'iframe',
+                    styles: styles.iframe,
+                  },
+                  overrideProps: this.handleFrameOverrides,
+                })}
+              </Ref>
+            )}
           </>
         )}
 
