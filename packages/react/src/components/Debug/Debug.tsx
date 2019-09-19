@@ -61,9 +61,7 @@ class Debug extends React.Component<DebugProps, DebugState> {
   }
 
   handleStardustDOMNodeClick = e => {
-    const { fiberNav } = this.state
-
-    console.debug('Clicked stardustDOMNode. Prevent default and stop propagation.', fiberNav)
+    // console.debug('Clicked stardustDOMNode. Prevent default and stop propagation.', this.state.fiberNav)
 
     e.preventDefault()
     e.stopPropagation()

@@ -1,4 +1,3 @@
-import * as ReactDOM from 'react-dom'
 import { isBrowser } from '../../lib'
 
 // ========================================================
@@ -241,6 +240,8 @@ type Fiber = {
   _debugHookTypes?: HookType[] | null
 }
 
+const isDOMNode = e => e && typeof e.tagName === 'string' && e.nodeType === Node.ELEMENT_NODE
+
 class FiberNavigator {
   __fiber: Fiber
 
@@ -305,13 +306,17 @@ class FiberNavigator {
   }
 
   get domNode() {
-    return this.isHostComponent
-      ? this.__fiber.stateNode
-      : this.isClassComponent
-      ? ReactDOM.findDOMNode(this.__fiber.stateNode)
-      : this.isFunctionComponent
-      ? this.__fiber.child && this.__fiber.child.stateNode
-      : null
+    let fiber = this.__fiber
+
+    do {
+      if (isDOMNode(fiber.stateNode)) {
+        return fiber.stateNode
+      } 
+        fiber = fiber.child
+      
+    } while (fiber)
+
+    return null
   }
 
   get instance() {
