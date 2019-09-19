@@ -1,10 +1,11 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import DebugPanelItem from './DebugPanelItem'
+import FiberNavigator from './FiberNavigator'
 
 export type DebugPanelProps = {
   cssStyles?: string[]
-  componentName: string
+  fiberNav: FiberNavigator
   debugData: {
     componentStyles: { [key: string]: { styles: any; debugId: string } }
     componentVariables: {
@@ -41,12 +42,7 @@ const getValues = (value, predicate) => {
 const DebugPanel: React.FC<DebugPanelProps> = props => {
   const [left, setLeft] = React.useState(false)
   const [slot, setSlot] = React.useState('root')
-  const {
-    cssStyles,
-    componentName,
-    debugData: inputDebugData,
-    onActivateDebugSelectorClick,
-  } = props
+  const { cssStyles, fiberNav, debugData: inputDebugData, onActivateDebugSelectorClick } = props
 
   const debugData =
     _.isNil(inputDebugData) || _.isEmpty(inputDebugData)
@@ -83,6 +79,15 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
     }, {})
   })
 
+  const stardustParent = fiberNav.parent.find(
+    fiber => fiber.instance && fiber.instance.stardustDebug,
+    fiber => fiber.parent,
+  )
+  const stardustOwner = fiberNav.owner.find(
+    fiber => fiber.instance && fiber.instance.stardustDebug,
+    fiber => fiber.owner,
+  )
+
   return (
     <div style={debugPanelRoot(left)}>
       <div style={debugPanelOptions}>
@@ -96,11 +101,23 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
       </div>
 
       <div style={debugPanelBody}>
-        {componentName && (
-          <div style={debugPanel}>
-            <div style={debugHeader1()}>{`<${componentName} />`}</div>
-          </div>
-        )}
+        <div style={debugPanel}>
+          {stardustOwner && (
+            <div style={debugHeader1()}>
+              <span style={{ opacity: 0.5 }}>Owner:</span> {`<${stardustOwner.name} />`}
+            </div>
+          )}
+          {stardustParent && (
+            <div style={debugHeader1()}>
+              <span style={{ opacity: 0.5 }}>Parent:</span> {`<${stardustParent.name} />`}
+            </div>
+          )}
+          {fiberNav.name && (
+            <div style={debugHeader1()}>
+              <span style={{ opacity: 0.5 }}>Name:</span> {`<${fiberNav.name} />`}
+            </div>
+          )}
+        </div>
 
         <div style={debugPanel}>
           <div style={debugHeaderContainer()}>
@@ -161,13 +178,15 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
       {!_.isEmpty(cssStyles) && (
         <div style={debugPanel}>
           <div style={debugHeader2()}>HTML Styles</div>
-          <div style={{ clear: 'both', paddingBottom: '10rem' }}>
+          <div style={{ clear: 'both' }}>
             {cssStyles.map(l => (
               <pre key={l}>{l}</pre>
             ))}
           </div>
         </div>
       )}
+
+      <div styles={{ padding: '200px 0' }} />
     </div>
   )
 }
@@ -186,21 +205,21 @@ const debugPanelRoot = (left): React.CSSProperties => ({
   [left ? 'left' : 'right']: 0,
   top: 0,
   zIndex: 999999999,
-  width: '25rem',
+  width: '300px',
   height: '100vh',
   color: '#222',
   background: '#fff',
   lineHeight: 1.1,
   fontSize: '12px',
   overflowY: 'auto',
-  boxShadow: '0 0 .5em rgba(0, 0, 0, .1)',
+  boxShadow: '0 0 8px rgba(0, 0, 0, .1)',
 })
 
 const debugHeaderContainer = (): React.CSSProperties => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  marginBottom: '0.5em',
+  marginBottom: '8px',
 })
 
 const debugHeader1 = (): React.CSSProperties => ({
@@ -215,7 +234,7 @@ const debugHeader2 = (): React.CSSProperties => ({
 })
 
 const debugNoData = (): React.CSSProperties => ({
-  padding: '0.5em',
+  padding: '8px',
   color: 'rgba(0, 0, 0, 0.75)',
   textAlign: 'center',
   background: 'rgba(0, 0, 0, 0.05)',
@@ -235,7 +254,7 @@ const debugPanelIcon = (left, isLeftActive): React.CSSProperties => ({
   width: '16px',
   height: '14px',
   ...(left && {
-    marginRight: '0.5em',
+    marginRight: '8px',
   }),
   ...(left === isLeftActive && {
     borderColor: '#6495ed',
@@ -246,7 +265,7 @@ const debugPanelIcon = (left, isLeftActive): React.CSSProperties => ({
 const debugPanelOptions: React.CSSProperties = {
   position: 'sticky',
   top: 0,
-  padding: '0.5em',
+  padding: '8px',
 }
 
 const debugPanelBody: React.CSSProperties = {
@@ -257,7 +276,7 @@ const debugPanelBody: React.CSSProperties = {
 }
 
 const debugPanel: React.CSSProperties = {
-  padding: '0.5em',
+  padding: '8px',
 }
 
 export default DebugPanel

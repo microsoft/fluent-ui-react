@@ -245,6 +245,8 @@ class FiberNavigator {
   __fiber: Fiber
 
   static domNodeToReactFiber = (elm: HTMLElement): Fiber => {
+    if (!elm) return null
+
     for (const k in elm) {
       if (k.startsWith('__reactInternalInstance$')) {
         return elm[k]
@@ -307,12 +309,9 @@ class FiberNavigator {
       ? this.__fiber.stateNode
       : this.isClassComponent
       ? ReactDOM.findDOMNode(this.__fiber.stateNode)
-      : // : this.isFunctionComponent
-        //   // TODO: assumes functional component w/useRef
-        // ? this.__fiber.memoizedState &&
-        //   this.__fiber.memoizedState.memoizedState &&
-        //   this.__fiber.memoizedState.memoizedState.current
-        null
+      : this.isFunctionComponent
+      ? this.__fiber.child && this.__fiber.child.stateNode
+      : null
   }
 
   get instance() {
@@ -333,8 +332,25 @@ class FiberNavigator {
     return this.__fiber.elementType
   }
 
+  //
+  // Methods
+  //
+
   usesHook(name) {
     return this.__fiber._debugHookTypes.some(hook => hook === name)
+  }
+
+  find(condition, move) {
+    let fiber: FiberNavigator = FiberNavigator.fromFiber(this.__fiber)
+
+    while (fiber) {
+      if (condition(fiber)) {
+        return fiber
+      }
+      fiber = move(fiber)
+    }
+
+    return null
   }
 
   //
