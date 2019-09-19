@@ -7,6 +7,6 @@ import withDebugId from '../../lib/withDebugId'
 
 export default mergeThemes(teams, {
   siteVariables,
-  componentVariables,
-  componentStyles: withDebugId(componentStyles, 'teamsHC'),
+  componentVariables: withDebugId(componentVariables, 'teams-high-contrast'),
+  componentStyles: withDebugId(componentStyles, 'teams-high-contrast'),
 })

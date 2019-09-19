@@ -22,6 +22,7 @@ import callable from './callable'
 import toCompactArray from './toCompactArray'
 import deepmerge from './deepmerge'
 import objectKeyToValues from './objectKeysToValues'
+import withDebugId from './withDebugId'
 
 export const emptyTheme: ThemePrepared = {
   siteVariables: {
@@ -83,13 +84,17 @@ export const mergeComponentVariables = (
   return sources.reduce<ComponentVariablesPrepared>((acc, next) => {
     return siteVariables => {
       const { _debug = [], ...accumulatedVariables } = acc(siteVariables)
-      const { _debug: computedDebug = undefined, ...computedComponentVariables } =
-        callable(next)(siteVariables) || {}
+      const {
+        _debug: computedDebug = undefined,
+        _debugId = undefined,
+        ...computedComponentVariables
+      } = callable(next)(siteVariables) || {}
 
       const merged = deepmerge(accumulatedVariables, computedComponentVariables)
       merged._debug = _debug.concat(
         computedDebug || {
           resolved: computedComponentVariables,
+          debugId: _debugId,
           input: callable(next)(siteVariables._invertedKeys),
         },
       )
@@ -138,7 +143,9 @@ export const mergeThemeVariables = (
 ): ThemeComponentVariablesPrepared => {
   const displayNames = _.union(..._.map(sources, _.keys))
   return displayNames.reduce((componentVariables, displayName) => {
-    componentVariables[displayName] = mergeComponentVariables(..._.map(sources, displayName))
+    componentVariables[displayName] = mergeComponentVariables(
+      ..._.map(sources, source => source && withDebugId(source[displayName], source._debugId)),
+    )
     return componentVariables
   }, {})
 }

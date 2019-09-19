@@ -49,7 +49,7 @@ const icons: ThemeIcons = {
 
 export default {
   siteVariables,
-  componentVariables,
+  componentVariables: withDebugId(componentVariables, 'teams'),
   componentStyles: withDebugId(componentStyles, 'teams'),
   fontFaces,
   staticStyles,

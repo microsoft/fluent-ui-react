@@ -2,11 +2,14 @@ import * as React from 'react'
 import { Button, Provider, themes, mergeThemes, withDebugId } from '@stardust-ui/react'
 
 const customTheme = {
-  componentVariables: {
-    Button: {
-      backgroundColor: 'green',
+  componentVariables: withDebugId(
+    {
+      Button: {
+        backgroundColor: 'green',
+      },
     },
-  },
+    'customTheme',
+  ),
   componentStyles: withDebugId(
     {
       Button: {

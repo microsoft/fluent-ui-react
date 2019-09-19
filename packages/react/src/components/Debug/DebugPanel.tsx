@@ -181,6 +181,7 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
             <DebugPanelItem
               data={debugData.componentVariables}
               valueKey="resolved"
+              idKey="debugId"
               commentKey="input"
               commentKeyPredicate={val =>
                 typeof val === 'string' && val.indexOf('siteVariables.') > -1

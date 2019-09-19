@@ -1,4 +1,6 @@
 import { mergeComponentVariables } from '../../../../src/lib/mergeThemes'
+import objectKeyToValues from 'src/lib/objectKeysToValues'
+import { withDebugId } from 'src/lib'
 
 describe('mergeComponentVariables', () => {
   test(`always returns a function that returns an object`, () => {
@@ -94,9 +96,13 @@ describe('mergeComponentVariables', () => {
         colorForC: 'c_color',
       },
     }
-    const target = { a: 1, b: 2, c: 3, d: 4, e: 5 }
+    siteVariables['_invertedKeys'] = objectKeyToValues(siteVariables)
+    const target = withDebugId({ a: 1, b: 2, c: 3, d: 4, e: 5 }, 'target')
     const source1 = { b: 'bS1', d: false, bb: 'bbS1' }
-    const source2 = sv => ({ c: sv.colors.colorForC, cc: 'bbS2' })
+    const source2 = withDebugId(
+      withDebugId(sv => ({ c: sv.colors.colorForC, cc: 'bbS2' }), 'source2'),
+      'source2.wrapped',
+    )
     const source3 = { d: 'bS3', dd: 'bbS3' }
 
     expect(mergeComponentVariables(target, source1, source2, source3)(siteVariables)).toStrictEqual(
@@ -119,9 +125,13 @@ describe('mergeComponentVariables', () => {
         colorForC: 'c_color',
       },
     }
-    const target = { a: 1, b: 2, c: 3, d: 4, e: 5 }
+    siteVariables['_invertedKeys'] = objectKeyToValues(siteVariables)
+    const target = withDebugId({ a: 1, b: 2, c: 3, d: 4, e: 5 }, 'target')
     const source1 = { b: 'bS1', d: false, bb: 'bbS1' }
-    const source2 = sv => ({ c: sv.colors.colorForC, cc: 'bbS2' })
+    const source2 = withDebugId(
+      withDebugId(sv => ({ c: sv.colors.colorForC, cc: 'bbS2' }), 'source2'),
+      'source2.wrapped',
+    )
     const source3 = { d: 'bS3', dd: 'bbS3' }
 
     expect(
