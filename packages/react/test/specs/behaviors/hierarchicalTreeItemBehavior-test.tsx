@@ -26,22 +26,22 @@ describe('HierarchicalTreeItemBehavior', () => {
 
     test(`is added with 'false' value to an item that is expandable but not open`, () => {
       const expectedResult = hierarchicalTreeItemBehavior({ items: [{ key: '1' }], open: false })
-      expect(expectedResult.attributes.root['aria-expanded']).toEqual('false')
+      expect(expectedResult.attributes.root['aria-expanded']).toEqual(false)
     })
 
     test(`is added with 'false' value to an item that is expandable and open`, () => {
       const expectedResult = hierarchicalTreeItemBehavior({ items: [{ key: '1' }], open: true })
-      expect(expectedResult.attributes.root['aria-expanded']).toEqual('true')
+      expect(expectedResult.attributes.root['aria-expanded']).toEqual(true)
     })
   })
 
   describe('role', () => {
-    test(`is 'none' if not a leaf`, () => {
+    test(`is 'treeitem' if not a leaf`, () => {
       const expectedResult = hierarchicalTreeItemBehavior({ items: [{ key: '1' }] })
       expect(expectedResult.attributes.root.role).toEqual('treeitem')
     })
 
-    test(`is 'treeitem' if not a leaf`, () => {
+    test(`is 'none' if a leaf`, () => {
       const expectedResult = hierarchicalTreeItemBehavior({})
       expect(expectedResult.attributes.root.role).toEqual('none')
     })
