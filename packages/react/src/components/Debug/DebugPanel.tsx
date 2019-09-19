@@ -149,30 +149,32 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
   debugData.siteVariables = debugData.siteVariables || []
 
   const styleSlots = Object.keys(debugData.componentStyles)
-  let siteVariablesKey = []
+  let siteVariablesUsedInComponentVariables = []
 
   debugData.componentVariables
     .map(val => val.input)
     .forEach(
       val =>
-        (siteVariablesKey = _.concat(
-          siteVariablesKey,
+        (siteVariablesUsedInComponentVariables = _.concat(
+          siteVariablesUsedInComponentVariables,
           getValues(val, val => val.indexOf('siteVariables.') > -1),
         )),
     )
 
-  const uniqSiteVariables = _.uniq(siteVariablesKey)
-  const siteVariablesDataWithNulls = debugData.siteVariables.map(val => {
-    return uniqSiteVariables.reduce((acc, next) => {
+  const uniqUsedSiteVariables = _.uniq(siteVariablesUsedInComponentVariables)
+  const siteVariablesDataWithNulls = debugData.siteVariables.map(val => ({
+    ...val,
+    resolved: uniqUsedSiteVariables.reduce((acc, next) => {
       const key = _.replace(next, 'siteVariables.', '')
-      _.set(acc, key, _.get(val, key))
+      _.set(acc, key, _.get(val['resolved'], key))
       return acc
-    }, {})
-  })
+    }, {}),
+  }))
 
-  const siteVariablesData = siteVariablesDataWithNulls.map(val => {
-    return removeNulls(val)
-  })
+  const siteVariablesData = siteVariablesDataWithNulls.map(val => ({
+    ...val,
+    resolved: removeNulls(val.resolved),
+  }))
 
   const ownerNav = fiberNav.owner
 
@@ -262,8 +264,8 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
           <div style={debugHeaderContainer()}>
             <div style={debugHeader()}>Site variables</div>
           </div>
-          {!_.isEmpty(siteVariablesData) && !_.isEmpty(uniqSiteVariables) ? (
-            <DebugPanelItem data={siteVariablesData} />
+          {!_.isEmpty(siteVariablesData) && !_.isEmpty(uniqUsedSiteVariables) ? (
+            <DebugPanelItem data={siteVariablesData} valueKey="resolved" idKey="debugId" />
           ) : (
             <div style={debugNoData()}>None in use</div>
           )}

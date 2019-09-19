@@ -91,39 +91,42 @@ class DocsLayout extends React.Component<any, any> {
     return (
       <>
         <Provider
-          theme={mergeThemes(themes.teamsDark, {
-            // adjust Teams' theme to Semantic UI's font size scheme
-            componentVariables: {
-              HierarchicalTreeItem: {
-                padding: `${pxToRem(7)} ${pxToRem(16)}`,
-                textDecoration: 'none',
-                fontSize: pxToRem(12),
-                fontWeight: 400,
-                color: '#ffffff80',
-
-                '& .active': {
-                  fontWeight: 'bold',
-                },
-              },
-            },
-            componentStyles: withDebugId(
+          theme={mergeThemes(
+            themes.teamsDark,
+            withDebugId(
               {
-                HierarchicalTreeItem: {
-                  root: ({ variables: v, props: p }) => ({
-                    ...(!p.items && treeItemStyle),
-                    ...(p.items && treeSectionStyle),
-                  }),
+                // adjust Teams' theme to Semantic UI's font size scheme
+                componentVariables: {
+                  HierarchicalTreeItem: {
+                    padding: `${pxToRem(7)} ${pxToRem(16)}`,
+                    textDecoration: 'none',
+                    fontSize: pxToRem(12),
+                    fontWeight: 400,
+                    color: '#ffffff80',
+
+                    '& .active': {
+                      fontWeight: 'bold',
+                    },
+                  },
                 },
-                HierarchicalTreeTitle: {
-                  root: {
-                    display: 'block',
-                    width: '100%',
+                componentStyles: {
+                  HierarchicalTreeItem: {
+                    root: ({ variables: v, props: p }) => ({
+                      ...(!p.items && treeItemStyle),
+                      ...(p.items && treeSectionStyle),
+                    }),
+                  },
+                  HierarchicalTreeTitle: {
+                    root: {
+                      display: 'block',
+                      width: '100%',
+                    },
                   },
                 },
               },
               'DocsLayout',
             ),
-          })}
+          )}
         >
           <Sidebar width={sidebarWidth} treeItemStyle={treeItemStyle} />
         </Provider>

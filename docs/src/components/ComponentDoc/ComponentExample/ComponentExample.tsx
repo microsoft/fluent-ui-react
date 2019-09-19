@@ -516,7 +516,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                 <SourceRender
                   babelConfig={babelConfig}
                   source={currentCode}
-                  renderHtml={false}
+                  renderHtml={showCode}
                   resolver={importResolver}
                   wrap={this.renderElement}
                   unstable_hot

@@ -238,12 +238,16 @@ const renderComponent = <P extends {}>(
         }),
       ),
       siteVariables: _.filter(theme.siteVariables._debug, siteVars => {
-        if (_.isEmpty(siteVars)) {
+        if (_.isEmpty(siteVars) || _.isEmpty(siteVars.resolved)) {
           return false
         }
 
-        const keys = Object.keys(siteVars)
-        if (keys.length === 1 && keys.pop() === 'fontSizes' && _.isEmpty(siteVars['fontSizes'])) {
+        const keys = Object.keys(siteVars.resolved)
+        if (
+          keys.length === 1 &&
+          keys.pop() === 'fontSizes' &&
+          _.isEmpty(siteVars.resolved['fontSizes'])
+        ) {
           return false
         }
 

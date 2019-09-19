@@ -120,17 +120,22 @@ export const mergeSiteVariables = (
   const initial: SiteVariablesPrepared = {
     fontSizes: {},
   }
-
   return sources.reduce<SiteVariablesPrepared>((acc, next) => {
     const { _debug = [], ...accumulatedSiteVariables } = acc
-    const { _debug: computedDebug = undefined, _invertedKeys = undefined, ...nextSiteVariables } =
-      next || {}
+    const {
+      _debug: computedDebug = undefined,
+      _invertedKeys = undefined,
+      _debugId = undefined,
+      ...nextSiteVariables
+    } = next || {}
 
     const merged = deepmerge(
       { ...accumulatedSiteVariables, _invertedKeys: undefined },
       nextSiteVariables,
     )
-    merged._debug = _debug.concat(computedDebug || nextSiteVariables)
+    merged._debug = _debug.concat(
+      computedDebug || { resolved: nextSiteVariables, debugId: _debugId },
+    )
     merged._invertedKeys = _invertedKeys || objectKeyToValues(merged, key => `siteVariables.${key}`)
     return merged
   }, initial)
@@ -215,12 +220,22 @@ const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
   return themes.reduce<ThemePrepared>(
     (acc: ThemePrepared, next: ThemeInput) => {
       if (!next) return acc
+      const nextDebugId = next['_debugId']
 
-      acc.siteVariables = mergeSiteVariables(acc.siteVariables, next.siteVariables)
+      acc.siteVariables = mergeSiteVariables(
+        acc.siteVariables,
+        withDebugId(next.siteVariables, nextDebugId),
+      )
 
-      acc.componentVariables = mergeThemeVariables(acc.componentVariables, next.componentVariables)
+      acc.componentVariables = mergeThemeVariables(
+        acc.componentVariables,
+        withDebugId(next.componentVariables, nextDebugId),
+      )
 
-      acc.componentStyles = mergeThemeStyles(acc.componentStyles, next.componentStyles)
+      acc.componentStyles = mergeThemeStyles(
+        acc.componentStyles,
+        withDebugId(next.componentStyles, nextDebugId),
+      )
 
       // Merge icons set, last one wins in case of collisions
       acc.icons = mergeIcons(acc.icons, next.icons)

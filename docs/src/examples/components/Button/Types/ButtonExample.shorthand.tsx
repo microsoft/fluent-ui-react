@@ -1,26 +1,23 @@
 import * as React from 'react'
 import { Button, Provider, themes, mergeThemes, withDebugId } from '@stardust-ui/react'
 
-const customTheme = {
-  componentVariables: withDebugId(
-    {
+const customTheme = withDebugId(
+  {
+    componentVariables: {
       Button: {
         backgroundColor: 'green',
       },
     },
-    'customTheme',
-  ),
-  componentStyles: withDebugId(
-    {
+    componentStyles: {
       Button: {
         root: {
           outline: '5px solid red',
         },
       },
     },
-    'customTheme',
-  ),
-}
+  },
+  'customTheme',
+)
 
 const ButtonExample = () => (
   <Provider theme={mergeThemes(customTheme, themes.teamsHighContrast)}>

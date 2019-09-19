@@ -47,12 +47,15 @@ const icons: ThemeIcons = {
   'stardust-play': themeIcons['play'],
 }
 
-export default {
-  siteVariables,
-  componentVariables: withDebugId(componentVariables, 'teams'),
-  componentStyles: withDebugId(componentStyles, 'teams'),
-  fontFaces,
-  staticStyles,
-  icons,
-  animations,
-}
+export default withDebugId(
+  {
+    siteVariables,
+    componentVariables,
+    componentStyles,
+    fontFaces,
+    staticStyles,
+    icons,
+    animations,
+  },
+  'teams',
+)
