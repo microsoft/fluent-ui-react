@@ -58,6 +58,16 @@ export function createShorthand<P>({
   const valIsRenderFunction =
     typeof valueOrRenderCallback === 'function' && !React.isValidElement(valueOrRenderCallback)
   if (valIsRenderFunction) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.warn(
+        [
+          '@stardust-ui/react:',
+          'The usage of render callback is deprecated and will be removed soon. Please use render props for shorthands instead.',
+          'See: https://stardust-ui.github.io/react/shorthand-props',
+        ].join(' '),
+      )
+    }
+
     return createShorthandFromRenderCallback({
       allowsJSX,
       Component,
@@ -277,6 +287,10 @@ function createShorthandFromValue<P>({
   const { render } = options
   if (render) {
     return render(Component, props)
+  }
+
+  if (typeof props.children === 'function') {
+    return props.children(Component, props)
   }
 
   if (!allowsJSX && valIsReactElement) {
