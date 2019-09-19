@@ -14,6 +14,11 @@ const Usage = () => (
       description="A text area can have a custom height."
       examplePath="components/TextArea/Usage/TextAreaExampleHeight"
     />
+    <ComponentExample
+      title="Resize"
+      description="A text area can be resized either horizontally, vertically, or in both directions. (Not supported in IE)"
+      examplePath="components/TextArea/Usage/TextAreaExampleResize"
+    />
   </ExampleSection>
 )
 

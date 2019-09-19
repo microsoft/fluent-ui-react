@@ -17,7 +17,7 @@ export interface TextAreaVariables {
   height: string
 }
 
-export default (siteVars): Partial<TextAreaVariables> => ({
+export default (siteVars): TextAreaVariables => ({
   margin: '0',
   padding: `${pxToRem(7)} ${pxToRem(12)}`,
 
