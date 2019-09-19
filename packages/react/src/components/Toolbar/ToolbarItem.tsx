@@ -37,6 +37,11 @@ import Popup, { PopupProps } from '../Popup/Popup'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 import { ToolbarMenuItemProps } from '../Toolbar/ToolbarMenuItem'
 import { ToolbarItemShorthandKinds } from '@stardust-ui/react'
+import {
+  GetRefs,
+  NodeRef,
+  Unstable_NestingAuto,
+} from '@stardust-ui/react-component-nesting-registry'
 
 export interface ToolbarItemProps
   extends UIComponentProps,
@@ -166,43 +171,36 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
   }
 
   itemRef = React.createRef<HTMLElement>()
-  menuRef = React.createRef<HTMLElement>()
 
-  renderSubmenu(menu, variables) {
-    const targetRef = toRefObject(this.context.target)
+  handleMenuOverrides = (getRefs: GetRefs, variables) => (predefinedProps: ToolbarItemProps) => ({
+    onBlur: (e: React.FocusEvent) => {
+      const isInside = _.some(getRefs(), (childRef: NodeRef) => {
+        return childRef.current.contains(e.relatedTarget as HTMLElement)
+      })
 
-    return (
-      <>
-        <Ref innerRef={this.menuRef}>
-          <Popper align="start" position="above" targetRef={this.itemRef}>
-            {ToolbarMenu.create(menu, {
-              overrideProps: (predefinedProps: ToolbarItemProps) => ({
-                onItemClick: (e, itemProps: ToolbarItemProps) => {
-                  _.invoke(predefinedProps, 'onItemClick', e, itemProps)
-                  // TODO: should we pass toolbarMenuItem to the user callback so he can decide if he wants to close the menu?
-                  this.trySetMenuOpen(false, e)
-                  if (this.itemRef) {
-                    this.itemRef.current.focus()
-                  }
-                },
-                variables: mergeComponentVariables(variables, predefinedProps.variables),
-              }),
-            })}
-          </Popper>
-        </Ref>
-        <EventListener
-          listener={this.handleOutsideClick}
-          targetRef={targetRef}
-          type="click"
-          capture
-        />
-      </>
-    )
-  }
+      if (!isInside) {
+        this.trySetMenuOpen(false, e)
+      }
+    },
+    onItemClick: (e, itemProps: ToolbarItemProps) => {
+      _.invoke(predefinedProps, 'onItemClick', e, itemProps)
+      if (itemProps.popup) {
+        return
+      }
+      // TODO: should we pass toolbarMenuItem to the user callback so he can decide if he wants to close the menu?
+      this.trySetMenuOpen(false, e)
+      if (this.itemRef) {
+        this.itemRef.current.focus()
+      }
+    },
+    variables: mergeComponentVariables(variables, predefinedProps.variables),
+  })
 
   renderComponent({ ElementType, classes, unhandledProps, accessibility, variables }) {
     const { icon, children, disabled, popup, menu, menuOpen, wrapper } = this.props
-    const renderedItem = (
+    const targetRef = toRefObject(this.context.target)
+
+    const itemElement = (
       <ElementType
         {...accessibility.attributes.root}
         {...unhandledProps}
@@ -216,8 +214,27 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
         {childrenExist(children) ? children : Icon.create(icon)}
       </ElementType>
     )
-
-    const submenu = menuOpen ? this.renderSubmenu(menu, variables) : null
+    const submenuElement = menuOpen ? (
+      <Unstable_NestingAuto>
+        {(getRefs, nestingRef) => (
+          <>
+            <Ref innerRef={nestingRef}>
+              <Popper align="start" position="above" targetRef={this.itemRef}>
+                {ToolbarMenu.create(menu, {
+                  overrideProps: this.handleMenuOverrides(getRefs, variables),
+                })}
+              </Popper>
+            </Ref>
+            <EventListener
+              listener={this.handleOutsideClick(getRefs)}
+              targetRef={targetRef}
+              type="click"
+              capture
+            />
+          </>
+        )}
+      </Unstable_NestingAuto>
+    ) : null
 
     if (popup) {
       return Popup.create(popup, {
@@ -225,14 +242,21 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
           trapFocus: true,
         },
         overrideProps: {
-          trigger: renderedItem,
-          children: undefined, // force-reset `children` defined for `Popup` as it collides with the `trigger
+          trigger: itemElement,
+          children: undefined, // force-reset `children` defined for `Popup` as it collides with the `trigger`
         },
       })
     }
 
     // wrap the item if it has menu (even if it is closed = not rendered)
     if (menu) {
+      const contentElement = (
+        <>
+          <Ref innerRef={this.itemRef}>{itemElement}</Ref>
+          {submenuElement}
+        </>
+      )
+
       if (wrapper) {
         return Box.create(wrapper, {
           defaultProps: {
@@ -241,32 +265,15 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
             ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, wrapper),
           },
           overrideProps: () => ({
-            children: (
-              <>
-                <Ref innerRef={this.itemRef}>{renderedItem}</Ref>
-                {submenu}
-              </>
-            ),
-            onBlur: this.handleWrapperBlur,
+            children: contentElement,
           }),
         })
       }
 
-      return (
-        <>
-          <Ref innerRef={this.itemRef}>{renderedItem}</Ref>
-          {submenu}
-        </>
-      )
+      return contentElement
     }
 
-    return <Ref innerRef={this.itemRef}>{renderedItem}</Ref>
-  }
-
-  handleWrapperBlur = e => {
-    if (this.props.menu && !e.currentTarget.contains(e.relatedTarget)) {
-      this.trySetMenuOpen(false, e)
-    }
+    return <Ref innerRef={this.itemRef}>{itemElement}</Ref>
   }
 
   handleBlur = (e: React.SyntheticEvent) => {
@@ -292,11 +299,14 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  handleOutsideClick = (e: MouseEvent) => {
-    if (
-      !doesNodeContainClick(this.menuRef.current, e, this.context.target) &&
-      !doesNodeContainClick(this.itemRef.current, e, this.context.target)
-    ) {
+  handleOutsideClick = (getRefs: GetRefs) => (e: MouseEvent) => {
+    const isItemClick = doesNodeContainClick(this.itemRef.current, e, this.context.target)
+    const isNestedClick = _.some(getRefs(), (childRef: NodeRef) => {
+      return doesNodeContainClick(childRef.current as HTMLElement, e, this.context.target)
+    })
+    const isInside = isItemClick || isNestedClick
+
+    if (!isInside) {
       this.trySetMenuOpen(false, e)
     }
   }

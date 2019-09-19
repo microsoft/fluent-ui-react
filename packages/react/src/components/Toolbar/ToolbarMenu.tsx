@@ -17,12 +17,13 @@ import {
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
 import { ComponentEventHandler, ShorthandCollection, withSafeTypeForAs } from '../../types'
-import { submenuBehavior } from '../../lib/accessibility'
+import { submenuBehavior, toolbarMenuItemCheckboxBehavior } from '../../lib/accessibility'
 
+import ToolbarMenuRadioGroup, { ToolbarMenuRadioGroupProps } from './ToolbarMenuRadioGroup'
 import ToolbarMenuDivider from './ToolbarMenuDivider'
 import ToolbarMenuItem, { ToolbarMenuItemProps } from './ToolbarMenuItem'
 
-export type ToolbarMenuItemShorthandKinds = 'divider' | 'item'
+export type ToolbarMenuItemShorthandKinds = 'divider' | 'item' | 'toggle'
 
 export interface ToolbarMenuProps
   extends UIComponentProps,
@@ -70,16 +71,38 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
     variables: mergeComponentVariables(variables, predefinedProps.variables),
   })
 
+  handleRadioGroupOverrides = variables => (predefinedProps: ToolbarMenuRadioGroupProps) => ({
+    onItemClick: (e, itemProps) => {
+      _.invoke(predefinedProps, 'onItemClick', e, itemProps)
+      _.invoke(this.props, 'onItemClick', e, itemProps)
+    },
+    variables: mergeComponentVariables(variables, predefinedProps.variables),
+  })
+
   renderItems(items, variables) {
     const itemOverridesFn = this.handleItemOverrides(variables)
     const dividerOverridesFn = this.handleDividerOverrides(variables)
+    const radioGroupOverrides = this.handleRadioGroupOverrides(variables)
 
     return _.map(items, item => {
       const kind = _.get(item, 'kind', 'item')
-      if (kind === 'divider') {
-        return ToolbarMenuDivider.create(item, { overrideProps: dividerOverridesFn })
+
+      switch (kind) {
+        case 'divider':
+          return ToolbarMenuDivider.create(item, { overrideProps: dividerOverridesFn })
+
+        case 'group':
+          return ToolbarMenuRadioGroup.create(item, { overrideProps: radioGroupOverrides })
+
+        case 'toggle':
+          return ToolbarMenuItem.create(item, {
+            defaultProps: { accessibility: toolbarMenuItemCheckboxBehavior },
+            overrideProps: itemOverridesFn,
+          })
+
+        default:
+          return ToolbarMenuItem.create(item, { overrideProps: itemOverridesFn })
       }
-      return ToolbarMenuItem.create(item, { overrideProps: itemOverridesFn })
     })
   }
 

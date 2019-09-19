@@ -4,7 +4,7 @@ import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
 import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 
 const Usage = () => (
-  <ExampleSection title="">
+  <ExampleSection title="Usage">
     <ComponentExample
       title="In scrollable container"
       description="A Chat can be placed in a scrollable container."
