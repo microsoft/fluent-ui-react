@@ -1,5 +1,3 @@
-import { isBrowser } from '../../lib'
-
 // ========================================================
 // react/packages/shared/ReactTypes.js
 // ========================================================
@@ -311,9 +309,8 @@ class FiberNavigator {
     do {
       if (isDOMNode(fiber.stateNode)) {
         return fiber.stateNode
-      } 
-        fiber = fiber.child
-      
+      }
+      fiber = fiber.child
     } while (fiber)
 
     return null
@@ -394,10 +391,6 @@ class FiberNavigator {
       ? false
       : !!this.instance && !!this.instance.render && !!this.instance.setState
   }
-}
-
-if (isBrowser()) {
-  ;(window as any).F = FiberNavigator
 }
 
 export default FiberNavigator
