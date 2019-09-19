@@ -27,6 +27,15 @@ export {
 } from './Behaviors/Toolbar/menuItemAsToolbarButtonBehavior'
 export { default as toolbarBehavior } from './Behaviors/Toolbar/toolbarBehavior'
 export { default as toolbarItemBehavior } from './Behaviors/Toolbar/toolbarItemBehavior'
+export {
+  default as toolbarMenuItemCheckboxBehavior,
+} from './Behaviors/Toolbar/toolbarMenuItemCheckboxBehavior'
+export {
+  default as toolbarMenuItemRadioBehavior,
+} from './Behaviors/Toolbar/toolbarMenuItemRadioBehavior'
+export {
+  default as toolbarMenuRadioGroupBehavior,
+} from './Behaviors/Toolbar/toolbarMenuRadioGroupBehavior'
 export { default as toolbarRadioGroupBehavior } from './Behaviors/Toolbar/toolbarRadioGroupBehavior'
 export {
   default as toolbarRadioGroupItemBehavior,
@@ -66,3 +75,8 @@ export { default as treeBehavior } from './Behaviors/Tree/treeBehavior'
 export { default as treeItemBehavior } from './Behaviors/Tree/treeItemBehavior'
 export { default as treeTitleBehavior } from './Behaviors/Tree/treeTitleBehavior'
 export { default as textAreaBehavior } from './Behaviors/TextArea/textAreaBehavior'
+export { default as treeAsListBehavior } from './Behaviors/Tree/treeAsListBehavior'
+export { default as treeItemAsListItemBehavior } from './Behaviors/Tree/treeItemAsListItemBehavior'
+export {
+  default as treeTitleAsListItemTitleBehavior,
+} from './Behaviors/Tree/treeTitleAsListItemTitleBehavior'

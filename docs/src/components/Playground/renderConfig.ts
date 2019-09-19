@@ -1,3 +1,4 @@
+import * as CodeSandbox from '@stardust-ui/code-sandbox'
 import * as DocsComponent from '@stardust-ui/docs-components'
 import * as Stardust from '@stardust-ui/react'
 import * as ReactFela from 'react-fela'
@@ -20,6 +21,10 @@ export const babelConfig = {
 }
 
 export const imports: Record<string, { version: string; module: any }> = {
+  '@stardust-ui/code-sandbox': {
+    version: 'latest',
+    module: CodeSandbox,
+  },
   '@stardust-ui/docs-components': {
     version: docsComponentsPackageJson.version,
     module: DocsComponent,
@@ -47,6 +52,10 @@ export const imports: Record<string, { version: string; module: any }> = {
   'react-fela': {
     version: stardustReactPackageJson.dependencies['react-fela'],
     module: ReactFela,
+  },
+  prettier: {
+    version: docsComponentsPackageJson.peerDependencies['prettier'],
+    module: null, // no need to use it in our examples
   },
 }
 

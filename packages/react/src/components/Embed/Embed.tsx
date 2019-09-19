@@ -14,10 +14,11 @@ import {
 import { embedBehavior } from '../../lib/accessibility'
 import { Accessibility } from '../../lib/accessibility/types'
 import Icon, { IconProps } from '../Icon/Icon'
-import Image, { ImageProps } from '../Image/Image'
+import Image from '../Image/Image'
 import Video, { VideoProps } from '../Video/Video'
 import Box, { BoxProps } from '../Box/Box'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
+import { Ref } from '@stardust-ui/react-component-ref'
 
 export interface EmbedSlotClassNames {
   control: string
@@ -55,7 +56,7 @@ export interface EmbedProps extends UIComponentProps {
   onClick?: ComponentEventHandler<EmbedProps>
 
   /** Image source URL for when video isn't playing. */
-  placeholder?: ShorthandValue<ImageProps>
+  placeholder?: string
 
   /** Shorthand for an embedded video. */
   video?: ShorthandValue<VideoProps>
@@ -63,6 +64,7 @@ export interface EmbedProps extends UIComponentProps {
 
 export interface EmbedState {
   active: boolean
+  iframeLoaded: boolean
 }
 
 class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> {
@@ -80,11 +82,17 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
     active: PropTypes.bool,
     defaultActive: PropTypes.bool,
     control: customPropTypes.itemShorthand,
-    iframe: customPropTypes.itemShorthand,
+    iframe: customPropTypes.every([
+      customPropTypes.disallow(['video']),
+      customPropTypes.itemShorthand,
+    ]),
     onActiveChanged: PropTypes.func,
     onClick: PropTypes.func,
     placeholder: PropTypes.string,
-    video: customPropTypes.itemShorthand,
+    video: customPropTypes.every([
+      customPropTypes.disallow(['iframe']),
+      customPropTypes.itemShorthand,
+    ]),
   }
 
   static defaultProps = {
@@ -103,8 +111,10 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
     performClick: event => this.handleClick(event),
   }
 
+  frameRef = React.createRef<HTMLFrameElement>()
+
   getInitialAutoControlledState(): EmbedState {
-    return { active: false }
+    return { active: false, iframeLoaded: false }
   }
 
   handleClick = e => {
@@ -121,10 +131,31 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
     _.invoke(this.props, 'onClick', e, { ...this.props, active: !this.state.active })
   }
 
+  handleFrameOverrides = predefinedProps => ({
+    onLoad: (e: React.SyntheticEvent) => {
+      _.invoke(predefinedProps, 'onLoad', e)
+
+      this.setState({ iframeLoaded: true })
+      this.frameRef.current.contentWindow.focus()
+    },
+  })
+
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
     const { control, iframe, placeholder, video } = this.props
-    const { active } = this.state
-    const controlVisible = !_.isNil(video) || !active
+    const { active, iframeLoaded } = this.state
+
+    const placeholderElement = placeholder ? (
+      <Image
+        src={placeholder}
+        styles={styles.image}
+        variables={{ width: variables.width, height: variables.height }}
+      />
+    ) : null
+
+    const hasIframe = !_.isNil(iframe)
+    const hasVideo = !_.isNil(video)
+    const controlVisible = !active || hasVideo
+    const placeholderVisible = !active || (hasIframe && active && !iframeLoaded)
 
     return (
       <ElementType
@@ -134,7 +165,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
         {...unhandledProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
-        {active ? (
+        {active && (
           <>
             {Video.create(video, {
               defaultProps: {
@@ -142,6 +173,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
                 controls: false,
                 loop: true,
                 muted: true,
+                poster: placeholder,
                 styles: styles.video,
                 variables: {
                   width: variables.width,
@@ -149,20 +181,21 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
                 },
               },
             })}
-            {Box.create(iframe, { defaultProps: { as: 'iframe', styles: styles.iframe } })}
+            {iframe && (
+              <Ref innerRef={this.frameRef}>
+                {Box.create(iframe, {
+                  defaultProps: {
+                    as: 'iframe',
+                    styles: styles.iframe,
+                  },
+                  overrideProps: this.handleFrameOverrides,
+                })}
+              </Ref>
+            )}
           </>
-        ) : (
-          Image.create(placeholder, {
-            defaultProps: {
-              styles: styles.image,
-              variables: {
-                width: variables.width,
-                height: variables.height,
-              },
-            },
-          })
         )}
 
+        {placeholderVisible && placeholderElement}
         {controlVisible &&
           Icon.create(control, {
             defaultProps: {
