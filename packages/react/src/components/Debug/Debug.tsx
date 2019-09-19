@@ -9,16 +9,20 @@ import { isBrowser } from '../../lib'
 import DebugPanel from './DebugPanel'
 import FiberNavigator from './FiberNavigator'
 
-type DebugState = { fiberNav: FiberNavigator; isSelecting: boolean }
+type DebugProps = {
+  /** Existing document the popup should add listeners. */
+  mountDocument?: Document
+}
+
+type DebugState = {
+  debugPanelPosition?: 'left' | 'right'
+  fiberNav: FiberNavigator
+  isSelecting: boolean
+}
 
 const INITIAL_STATE: DebugState = {
   fiberNav: null,
   isSelecting: false,
-}
-
-type DebugProps = {
-  /** Existing document the popup should add listeners. */
-  mountDocument?: Document
 }
 
 class Debug extends React.Component<DebugProps, DebugState> {
@@ -115,7 +119,7 @@ class Debug extends React.Component<DebugProps, DebugState> {
 
   render() {
     const { mountDocument } = this.props
-    const { fiberNav, isSelecting } = this.state
+    const { fiberNav, isSelecting, debugPanelPosition } = this.state
 
     return (
       <>
@@ -192,12 +196,14 @@ class Debug extends React.Component<DebugProps, DebugState> {
         {!isSelecting && fiberNav && fiberNav.instance && (
           <DebugPanel
             fiberNav={fiberNav}
-            onActivateDebugSelectorClick={() => {
-              this.setState({ isSelecting: true })
-            }}
+            onActivateDebugSelectorClick={() => this.setState({ isSelecting: true })}
+            onClose={() => this.setState(INITIAL_STATE)}
             // TODO: Integrate CSS in JS Styles for Host Components (DOM nodes)
             // cssStyles={stylesForNode(stardustDOMNode)}
             debugData={fiberNav.instance.stardustDebug}
+            position={debugPanelPosition || 'right'}
+            onPositionLeft={() => this.setState({ debugPanelPosition: 'left' })}
+            onPositionRight={() => this.setState({ debugPanelPosition: 'right' })}
           />
         )}
       </>
