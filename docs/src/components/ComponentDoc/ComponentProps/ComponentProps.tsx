@@ -43,8 +43,7 @@ export default class ComponentProps extends React.Component<any, any> {
           </Flex>
         </Flex.Item>
         {_.map(displayNames, displayName => {
-          const { docblock } = (componentGroup[displayName] || {}) as any
-          const description = _.get(docblock, 'description', [])
+          const description = _.get(componentGroup, [displayName, 'docblock', 'description'], '')
           const showHeader = displayNames.length > 1
           return (
             <>
