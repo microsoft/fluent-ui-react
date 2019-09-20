@@ -1,9 +1,9 @@
 import * as _ from 'lodash'
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { link } from 'docs/src/utils/helpers'
 
-const ComponentPropsOutline: any = ({ displayNames, parentDisplayName }) => {
+const ComponentPropsOutline: any = (props: ComponentPropsOutlineProps) => {
+  const { displayNames, parentDisplayName } = props
   if (displayNames.length < 2) return null
 
   const items: string[] = _.map(displayNames, displayName =>
@@ -20,9 +20,9 @@ const ComponentPropsOutline: any = ({ displayNames, parentDisplayName }) => {
   )
 }
 
-ComponentPropsOutline.propTypes = {
-  displayNames: PropTypes.array,
-  parentDisplayName: PropTypes.string.isRequired,
+export interface ComponentPropsOutlineProps {
+  displayNames: string[]
+  parentDisplayName: string
 }
 
 export default ComponentPropsOutline
