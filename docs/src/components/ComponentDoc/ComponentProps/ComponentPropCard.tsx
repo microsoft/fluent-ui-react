@@ -11,15 +11,12 @@ type ComponentPropCardProps = {
   description: string
 }
 
-export class ComponentPropCard extends React.Component<ComponentPropCardProps> {
-  render() {
-    const { name, description } = this.props
-    return (
-      <Segment styles={cardStyle}>
-        <div>{description}</div>
-        <Divider />
-        <ComponentTableProps componentName={name} />
-      </Segment>
-    )
-  }
-}
+const ComponentPropCard: React.FC<ComponentPropCardProps> = ({ name, description }) => (
+  <Segment styles={cardStyle}>
+    <div>{description}</div>
+    <Divider />
+    <ComponentTableProps componentName={name} />
+  </Segment>
+)
+
+export default ComponentPropCard

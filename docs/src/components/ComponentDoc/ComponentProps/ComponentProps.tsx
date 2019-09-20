@@ -5,7 +5,7 @@ import * as React from 'react'
 import { getComponentGroup, scrollToAnchor } from 'docs/src/utils'
 import ComponentPropsOutline from './ComponentPropsOutline'
 import { Flex, Header } from '@stardust-ui/react'
-import { ComponentPropCard } from './ComponentPropCard'
+import ComponentPropCard from './ComponentPropCard'
 
 export default class ComponentProps extends React.Component<any, any> {
   static propTypes = {
