@@ -1,9 +1,9 @@
 import * as _ from 'lodash'
 import * as _prettier from 'prettier/standalone'
 
-import 'prettier/parser-babylon'
-import 'prettier/parser-html'
-import 'prettier/parser-typescript'
+import babylon from 'prettier/parser-babylon'
+import html from 'prettier/parser-html'
+import typescript from 'prettier/parser-typescript'
 
 import { CodeSnippetMode, CodeSnippetValue } from './types'
 
@@ -18,7 +18,11 @@ const prettierConfig = {
   semi: false,
   singleQuote: true,
   trailingComma: 'all',
-  plugins: typeof window !== 'undefined' ? (window as any).prettierPlugins : [],
+  plugins: {
+    babylon,
+    html,
+    typescript,
+  },
 }
 
 const normalizeToString = (value: CodeSnippetValue): string => {
