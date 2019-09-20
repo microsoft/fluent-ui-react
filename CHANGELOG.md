@@ -25,6 +25,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix `CreateShorthandOptions` should be typed @lucivpav ([#1886](https://github.com/stardust-ui/react/pull/1886))
 - Add `shadowLevel1Dark` in Teams themes @notandrew ([#1887](https://github.com/stardust-ui/react/pull/1887))
 - When merging themes use deep merge for site and component variables @miroslavstastny ([#1907](https://github.com/stardust-ui/react/pull/1907))
+- Fix styles for Teams theme for `Textarea` and add support for `inverted`, `fluid` and `resize` props @codepretty ([#1922](https://github.com/stardust-ui/react/pull/1922))
+- Fix `Dropdown` to properly accept `id` on `searchInput` @silviuavram ([#1938](https://github.com/stardust-ui/react/pull/1938))
+- Fix white flash when activating `Embed` component @lucivpav ([#1909](https://github.com/stardust-ui/react/pull/1909))
+- Fix comparison of custom objects in `Dropdown` @lucivpav ([#1943](https://github.com/stardust-ui/react/pull/1943))
 
 ### Features
 - Add `TextArea` component @lucivpav ([#1897](https://github.com/stardust-ui/react/pull/1897))
@@ -35,6 +39,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Documentation
 - Remove Usage tab @lucivpav ([#1948](https://github.com/stardust-ui/react/pull/1948))
+- Put props on a single page, fix props links @lucivpav ([#1892](https://github.com/stardust-ui/react/pull/1892))
+
+### Documentation
+- Remove cancel button in a `Dialog` example with a close action @lucivpav ([#1949](https://github.com/stardust-ui/react/pull/1949))
 
 <!--------------------------------[ v0.38.1 ]------------------------------- -->
 ## [v0.38.1](https://github.com/stardust-ui/react/tree/v0.38.1) (2019-09-13)

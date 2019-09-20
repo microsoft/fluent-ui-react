@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { ComponentProp, ComponentPropType } from 'docs/src/types'
 import componentInfoContext from 'docs/src/utils/componentInfoContext'
 import ComponentPropName from '../ComponentProp/ComponentPropName'
+import { getComponentGroup } from 'docs/src/utils'
 
 const InlineMarkdown = React.lazy(() => import('../InlineMarkdown'))
 
@@ -23,11 +24,14 @@ const ComponentPropValue: React.FunctionComponent<ComponentPropType> = props => 
     const kindParam = parameters[1] && parameters[1].name !== 'never'
     const kindIsVisible = name === 'ShorthandCollection' && kindParam
 
+    const showHash = parentInfo.parentDisplayName || _.size(getComponentGroup(componentName)) > 1
+    const propsSection = showHash ? `#${_.kebabCase(componentName)}` : ''
+
     return (
       <span>
         {name}
         {`<`}
-        <Link to={`/components/${linkName}`}>{parameters[0].name}</Link>
+        <Link to={`/components/${linkName}/props${propsSection}`}>{parameters[0].name}</Link>
         {kindIsVisible && <span>, {parameters[1].name}</span>}
         {`>`}
       </span>
