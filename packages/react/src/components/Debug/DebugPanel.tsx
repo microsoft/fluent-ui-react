@@ -210,7 +210,6 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
           indent={0}
           {...(ownerNav.stardustDebug && {
             actionable: true,
-            badge: 'debuggable',
             tabIndex: 0,
             onClick: e => {
               e.preventDefault()
@@ -220,7 +219,7 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
             onMouseLeave: e => selectFiberNav(null),
           })}
         >
-          {ownerNav.name}
+          {ownerNav.jsxString}
         </Line>
         <Line indent={1} style={{ color: '#ba645e' }}>
           render()
@@ -230,7 +229,6 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
             key={i}
             indent={2 + i}
             actionable
-            badge="debuggable"
             tabIndex="0"
             onClick={e => {
               e.preventDefault()
@@ -245,7 +243,7 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
         <Line
           indent={3 + parentNavs.length}
           active
-          badge="active"
+          badge="selected"
           actionable
           tabIndex="0"
           onClick={e => {
