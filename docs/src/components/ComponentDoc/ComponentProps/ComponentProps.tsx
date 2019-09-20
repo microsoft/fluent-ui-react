@@ -47,14 +47,10 @@ export default class ComponentProps extends React.Component<any, any> {
           const description = _.get(docblock, 'description', [])
           const showHeader = displayNames.length > 1
           return (
-            <Flex.Item>
-              <>
-                {showHeader && (
-                  <Header content={displayName} id={_.kebabCase(displayName)} as="h2" />
-                )}
-                <ComponentPropCard name={displayName} description={description} />
-              </>
-            </Flex.Item>
+            <>
+              {showHeader && <Header content={displayName} id={_.kebabCase(displayName)} as="h2" />}
+              <ComponentPropCard name={displayName} description={description} />
+            </>
           )
         })}
       </Flex>
