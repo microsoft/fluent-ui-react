@@ -1,4 +1,4 @@
-import { knobComponents } from '@stardust-ui/code-sandbox'
+import { knobComponents, KnobsSnippet } from '@stardust-ui/code-sandbox'
 import {
   CopyToClipboard,
   KnobInspector,
@@ -24,7 +24,6 @@ import ComponentSourceManager, {
   ComponentSourceManagerRenderProps,
 } from '../ComponentSourceManager'
 import { ThemeInput } from 'packages/react/src/themes/types'
-import ComponentExampleKnobs from './ComponentExampleKnobs'
 import VariableResolver from 'docs/src/components/VariableResolver/VariableResolver'
 import ComponentExampleVariables from 'docs/src/components/ComponentDoc/ComponentExample/ComponentExampleVariables'
 
@@ -492,7 +491,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
               </Flex>
 
               <KnobInspector>
-                {knobs => knobs && <ComponentExampleKnobs>{knobs}</ComponentExampleKnobs>}
+                {knobs => knobs && <KnobsSnippet>{knobs}</KnobsSnippet>}
               </KnobInspector>
             </Segment>
 
@@ -553,12 +552,15 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                 )}
               </SourceRender>
             ) : (
-              <Segment
-                className={`rendered-example ${this.getKebabExamplePath()}`}
-                styles={exampleStyles}
-              >
-                {React.createElement(component)}
-              </Segment>
+              <>
+                <Segment
+                  className={`rendered-example ${this.getKebabExamplePath()}`}
+                  styles={exampleStyles}
+                >
+                  {React.createElement(component)}
+                </Segment>
+                <LogInspector silent />
+              </>
             )}
 
             {showVariables && (

@@ -2,74 +2,56 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { getComponentGroup } from 'docs/src/utils'
-import ComponentTableProps from '../ComponentPropsTable'
-import ComponentPropsComponents from './ComponentPropsComponents'
-import ComponentPropsDescription from './ComponentPropsDescription'
-import { ICSSInJSStyle, Flex } from '@stardust-ui/react'
-
-const propsContainerStyle: ICSSInJSStyle = { overflowX: 'auto' }
+import { getComponentGroup, scrollToAnchor } from 'docs/src/utils'
+import ComponentPropsOutline from './ComponentPropsOutline'
+import { Flex, Header } from '@stardust-ui/react'
+import ComponentPropCard from './ComponentPropCard'
 
 export default class ComponentProps extends React.Component<any, any> {
   static propTypes = {
     displayName: PropTypes.string.isRequired,
     props: PropTypes.arrayOf(PropTypes.object).isRequired,
-    defaultComponentProp: PropTypes.string,
-    onPropComponentSelected: PropTypes.func,
   }
 
   componentWillMount() {
-    const { displayName, defaultComponentProp } = this.props
+    const { displayName } = this.props
 
     this.setState({
       componentGroup: getComponentGroup(displayName),
-      activeDisplayName: defaultComponentProp || displayName,
     })
+    scrollToAnchor()
   }
 
-  componentWillReceiveProps({ displayName: next }) {
-    const current = this.props.displayName
+  componentWillReceiveProps(nextProps) {
+    const { displayName } = nextProps
 
-    if (current !== next) {
-      this.setState({
-        activeDisplayName: null,
-        componentGroup: getComponentGroup(next),
-      })
-    }
-  }
-
-  handleSelectedChange = (e, props) => {
-    this.setState({ activeDisplayName: props.value })
-    _.invoke(this.props, 'onPropComponentSelected', e, props)
+    this.setState({
+      componentGroup: getComponentGroup(displayName),
+    })
+    scrollToAnchor()
   }
 
   render() {
-    const { displayName } = this.props
-    const { activeDisplayName, componentGroup } = this.state
+    const { componentGroup } = this.state
     const displayNames = _.keys(componentGroup)
-    const { docblock } = (componentGroup[activeDisplayName] || {}) as any
-    const description = _.get(docblock, 'description', [])
 
     return (
       <Flex column gap="gap.small">
         <Flex.Item styles={{ display: 'block', verticalAlign: 'middle' }}>
           <Flex gap="gap.medium">
-            <ComponentPropsComponents
-              activeDisplayName={activeDisplayName}
-              displayNames={displayNames}
-              onSelectedChange={this.handleSelectedChange}
-              parentDisplayName={displayName}
-            />
+            <ComponentPropsOutline displayNames={displayNames} />
           </Flex>
         </Flex.Item>
-        {activeDisplayName && (
-          <Flex.Item style={propsContainerStyle}>
+        {_.map(displayNames, displayName => {
+          const description = _.get(componentGroup, [displayName, 'docblock', 'description'], '')
+          const showHeader = displayNames.length > 1
+          return (
             <>
-              <ComponentPropsDescription description={description} />
-              <ComponentTableProps componentName={activeDisplayName} />
+              {showHeader && <Header content={displayName} id={_.kebabCase(displayName)} as="h2" />}
+              <ComponentPropCard name={displayName} description={description} />
             </>
-          </Flex.Item>
-        )}
+          )
+        })}
       </Flex>
     )
   }
