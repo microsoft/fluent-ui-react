@@ -36,6 +36,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add support for radio & checkbox groups to `Toolbar` component @layershifter ([#1920](https://github.com/stardust-ui/react/pull/1920))
 - Add support for `Popup` in `ToolbarMenu` @lucivpav ([#1927](https://github.com/stardust-ui/react/pull/1927))
 - Add behaviors for `Tree` as list and linked them using childBehaviors @silviuavram ([#1928](https://github.com/stardust-ui/react/pull/1928))
+- Add `notes` icon and update `link` icon in Teams theme @codepretty ([#1953](https://github.com/stardust-ui/react/pull/1953))
 
 ### Documentation
 - Remove Usage tab @lucivpav ([#1948](https://github.com/stardust-ui/react/pull/1948))
