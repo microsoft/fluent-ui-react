@@ -32,7 +32,6 @@ export default class ComponentProps extends React.Component<any, any> {
   }
 
   render() {
-    const { displayName } = this.props
     const { componentGroup } = this.state
     const displayNames = _.keys(componentGroup)
 
@@ -40,7 +39,7 @@ export default class ComponentProps extends React.Component<any, any> {
       <Flex column gap="gap.small">
         <Flex.Item styles={{ display: 'block', verticalAlign: 'middle' }}>
           <Flex gap="gap.medium">
-            <ComponentPropsOutline displayNames={displayNames} parentDisplayName={displayName} />
+            <ComponentPropsOutline displayNames={displayNames} />
           </Flex>
         </Flex.Item>
         {_.map(displayNames, displayName => {

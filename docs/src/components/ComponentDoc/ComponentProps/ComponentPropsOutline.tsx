@@ -3,17 +3,12 @@ import * as React from 'react'
 import { link } from 'docs/src/utils/helpers'
 
 const ComponentPropsOutline: any = (props: ComponentPropsOutlineProps) => {
-  const { displayNames, parentDisplayName } = props
+  const { displayNames } = props
   if (displayNames.length < 2) return null
 
-  const items: string[] = _.map(displayNames, displayName =>
-    displayName === parentDisplayName
-      ? displayName
-      : displayName.replace(parentDisplayName, `${parentDisplayName}`),
-  )
   return (
     <ul>
-      {_.map(items, item => (
+      {_.map(displayNames, item => (
         <li key={item}>{link(item, `#${_.kebabCase(item)}`)}</li>
       ))}
     </ul>
@@ -22,7 +17,6 @@ const ComponentPropsOutline: any = (props: ComponentPropsOutlineProps) => {
 
 export interface ComponentPropsOutlineProps {
   displayNames: string[]
-  parentDisplayName: string
 }
 
 export default ComponentPropsOutline
