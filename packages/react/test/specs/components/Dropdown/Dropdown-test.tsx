@@ -1432,10 +1432,10 @@ describe('Dropdown', () => {
       expect(getItemAtIndexWrapper(wrapper, items.length - 1).exists()).toBe(true)
     })
 
-    it('does not contain duplicates when proper compareBy prop is used', () => {
+    it('does not contain duplicates when proper itemToValue prop is used', () => {
       const items = [{ id: '1', header: 'James Smith' }]
       const value = [{ id: '1', header: 'John Locke' }]
-      const compareBy = (item: ShorthandValue<DropdownItemProps>): string => {
+      const itemToValue = (item: ShorthandValue<DropdownItemProps>): string => {
         if (!item || !React.isValidElement(item)) {
           return ''
         }
@@ -1443,7 +1443,7 @@ describe('Dropdown', () => {
       }
 
       const wrapper = mountWithProvider(
-        <Dropdown multiple items={items} value={value} compareBy={compareBy} />,
+        <Dropdown multiple items={items} value={value} itemToValue={itemToValue} />,
       )
       const triggerButton = getTriggerButtonWrapper(wrapper)
       triggerButton.simulate('click')

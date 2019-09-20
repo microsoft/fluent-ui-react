@@ -73,9 +73,6 @@ export interface DropdownProps
   /** A slot for a clearing indicator. */
   clearIndicator?: ShorthandValue<IconProps>
 
-  /** Determines how two items are being compared in multiple selection. Default is by the header prop. */
-  compareBy?: (item: ShorthandValue<DropdownItemProps>) => any
-
   /** The initial value for the index of the currently active selected item, in a multiple selection. */
   defaultActiveSelectedIndex?: number
 
@@ -135,6 +132,9 @@ export interface DropdownProps
    * - converts an item to string (if the item is a primitive)
    */
   itemToString?: (item: ShorthandValue<DropdownItemProps>) => string
+
+  /** Used when comparing two items in multiple selection. Default comparison is by the header prop. */
+  itemToValue?: (item: ShorthandValue<DropdownItemProps>) => any
 
   /** A dropdown can show that it is currently loading data. */
   loading?: boolean
@@ -263,7 +263,6 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     checkableIndicator: customPropTypes.itemShorthandWithoutJSX,
     clearable: PropTypes.bool,
     clearIndicator: customPropTypes.itemShorthand,
-    compareBy: PropTypes.func,
     defaultActiveSelectedIndex: PropTypes.number,
     defaultOpen: PropTypes.bool,
     defaultHighlightedIndex: PropTypes.number,
@@ -280,6 +279,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     inline: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     itemToString: PropTypes.func,
+    itemToValue: PropTypes.func,
     loading: PropTypes.bool,
     loadingMessage: customPropTypes.itemShorthand,
     moveFocusOnTab: PropTypes.bool,
@@ -311,7 +311,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     as: 'div',
     checkableIndicator: 'stardust-checkmark',
     clearIndicator: 'stardust-close',
-    compareBy: item => {
+    itemToString: item => {
       if (!item || React.isValidElement(item)) {
         return ''
       }
@@ -319,7 +319,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       // targets DropdownItem shorthand objects
       return (item as any).header || String(item)
     },
-    itemToString: item => {
+    itemToValue: item => {
       if (!item || React.isValidElement(item)) {
         return ''
       }
@@ -375,14 +375,14 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
    * their string equivalents, in order to be used throughout the component.
    */
   static getAutoControlledStateFromProps(props: DropdownProps, state: DropdownState) {
-    const { compareBy, items, itemToString, multiple, search } = props
+    const { items, itemToString, itemToValue, multiple, search } = props
     const { searchQuery, value: rawValue } = state
 
     // `normalizedValue` should be normilized always as it can be received from props
     const normalizedValue = _.isArray(rawValue) ? rawValue : [rawValue]
     const value = multiple ? normalizedValue : normalizedValue.slice(0, 1)
 
-    const filteredItemsByValue = multiple ? _.differenceBy(items, value, compareBy) : items
+    const filteredItemsByValue = multiple ? _.differenceBy(items, value, itemToValue) : items
     const filteredItemStrings = _.map(filteredItemsByValue, filteredItem =>
       itemToString(filteredItem).toLowerCase(),
     )
