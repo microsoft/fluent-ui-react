@@ -419,6 +419,4 @@ class FiberNavigator {
   }
 }
 
-window.F = FiberNavigator
-
 export default FiberNavigator

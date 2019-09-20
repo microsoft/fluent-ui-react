@@ -35,7 +35,7 @@ const DebugPanelData = props => {
             <span style={{ background: highlight ? 'rgb(255,255,224)' : '' }}>
               {' '.repeat(indent)}
               <span style={{ textDecoration: overridden ? 'line-through' : 'none' }}>
-                <span style={{ color: typeof value === 'object' ? 'grey' : 'red' }}>{key}</span>
+                <span style={{ color: typeof value === 'object' ? 'grey' : '#b82519' }}>{key}</span>
                 {': '}
                 <DebugPanelData
                   data={value}

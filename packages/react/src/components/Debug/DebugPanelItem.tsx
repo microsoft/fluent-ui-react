@@ -44,7 +44,7 @@ const DebugPanelItem = props => {
     <>
       <input
         onChange={e => setValue(e.target.value)}
-        style={{ padding: '2px 4px', width: '100%', border: '1px solid #ccc' }}
+        style={{ padding: '2px 4px', width: '100%', border: '1px solid #ccc', background: 'none' }}
         placeholder="Filter"
       />
       {data.map((theme, idx) => {
@@ -79,7 +79,7 @@ const DebugPanelItem = props => {
             }}
           >
             {ids && ids[idx] && (
-              <div style={{ position: 'absolute', right: 0, opacity: 0.75 }}>{ids[idx]}</div>
+              <div style={{ position: 'absolute', right: 0, color: '#707070' }}>{ids[idx]}</div>
             )}
             <DebugPanelData
               data={filteredTheme}

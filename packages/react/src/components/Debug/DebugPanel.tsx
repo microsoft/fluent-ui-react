@@ -190,6 +190,8 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
 
   return (
     <div style={debugPanelRoot(left)}>
+      {selectedFiberNav && <DebugRect fiberNav={selectedFiberNav} />}
+
       <div style={debugPanelHeader}>
         <div tabIndex={0} onClick={onActivateDebugSelectorClick} style={debugPanelArrowIcon}>
           ⇱
@@ -257,38 +259,8 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
         </Line>
       </ScrollToBottom>
 
-      {selectedFiberNav && <DebugRect fiberNav={selectedFiberNav} />}
-
       <div style={debugPanelBody}>
-        <div style={debugPanel}>
-          <div style={debugHeaderContainer()}>
-            <div style={debugHeader()}>Site variables</div>
-          </div>
-          {!_.isEmpty(siteVariablesData) && !_.isEmpty(uniqUsedSiteVariables) ? (
-            <DebugPanelItem data={siteVariablesData} valueKey="resolved" idKey="debugId" />
-          ) : (
-            <div style={debugNoData()}>None in use</div>
-          )}
-        </div>
-
-        <div style={debugPanel}>
-          <div style={debugHeaderContainer()}>
-            <div style={debugHeader()}>Variables</div>
-          </div>
-          {!_.isEmpty(debugData.componentVariables) ? (
-            <DebugPanelItem
-              data={debugData.componentVariables}
-              valueKey="resolved"
-              idKey="debugId"
-              commentKey="input"
-              commentKeyPredicate={val =>
-                typeof val === 'string' && val.indexOf('siteVariables.') > -1
-              }
-            />
-          ) : (
-            <div style={debugNoData()}>None in use</div>
-          )}
-        </div>
+        {/* Styles */}
 
         <div style={debugPanel}>
           <div style={debugHeaderContainer()}>
@@ -311,6 +283,40 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
               valueKey="styles"
               idKey="debugId"
             />
+          ) : (
+            <div style={debugNoData()}>None in use</div>
+          )}
+        </div>
+
+        {/* Component Variables */}
+
+        <div style={debugPanel}>
+          <div style={debugHeaderContainer()}>
+            <div style={debugHeader()}>Variables</div>
+          </div>
+          {!_.isEmpty(debugData.componentVariables) ? (
+            <DebugPanelItem
+              data={debugData.componentVariables}
+              valueKey="resolved"
+              idKey="debugId"
+              commentKey="input"
+              commentKeyPredicate={val =>
+                typeof val === 'string' && val.indexOf('siteVariables.') > -1
+              }
+            />
+          ) : (
+            <div style={debugNoData()}>None in use</div>
+          )}
+        </div>
+
+        {/* Site Variables */}
+
+        <div style={debugPanel}>
+          <div style={debugHeaderContainer()}>
+            <div style={debugHeader()}>Site variables</div>
+          </div>
+          {!_.isEmpty(siteVariablesData) && !_.isEmpty(uniqUsedSiteVariables) ? (
+            <DebugPanelItem data={siteVariablesData} valueKey="resolved" idKey="debugId" />
           ) : (
             <div style={debugNoData()}>None in use</div>
           )}
@@ -338,14 +344,15 @@ const debugPanelHeader: React.CSSProperties = {
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  padding: '0 0 2px',
+  padding: '2px 2px 4px',
   top: '0',
-  background: '#fff',
+  background: '#f3f3f3',
 }
 
 const commonIconStyle: React.CSSProperties = {
   display: 'inline-block',
   cursor: 'pointer',
+  color: '#555',
   lineHeight: 1,
   margin: '0 4px',
 }
@@ -353,7 +360,6 @@ const commonIconStyle: React.CSSProperties = {
 const debugPanelCloseIcon: React.CSSProperties = {
   ...commonIconStyle,
   fontSize: '20px',
-  color: 'grey',
   outline: '0',
   cursor: 'pointer',
 }
@@ -361,7 +367,6 @@ const debugPanelCloseIcon: React.CSSProperties = {
 const debugPanelArrowIcon: React.CSSProperties = {
   ...commonIconStyle,
   fontSize: '24px',
-  color: 'grey',
   marginTop: '-4px',
   outline: '0',
 }
@@ -370,7 +375,7 @@ const debugPanelIcon = (left, isLeftActive): React.CSSProperties => ({
   ...commonIconStyle,
   borderWidth: '2px',
   borderStyle: 'solid ',
-  borderColor: '#888',
+  borderColor: '#555',
   [left ? 'borderLeftWidth' : 'borderRightWidth']: '6px',
   width: '16px',
   height: '14px',
@@ -386,11 +391,12 @@ const debugPanelRoot = (left): React.CSSProperties => ({
   zIndex: 999999999,
   width: '350px',
   height: '100vh',
-  color: '#222',
+  color: '#313941',
   background: '#fff',
   lineHeight: 1.1,
   fontSize: '12px',
   overflowY: 'scroll',
+  [left ? 'borderRight' : 'borderLeft']: '1px solid rgba(0, 0, 0, 0.2)',
   boxShadow: '0 0 8px rgba(0, 0, 0, .1)',
 })
 
@@ -398,7 +404,12 @@ const debugHeaderContainer = (): React.CSSProperties => ({
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
-  marginBottom: '8px',
+  padding: '8px',
+  margin: '0 -4px 4px',
+  overflow: 'hidden',
+  background: '#f3f3f3',
+  borderTop: '1px solid #d0d0d0',
+  borderBottom: '1px solid #d0d0d0',
 })
 
 const debugHeader = (): React.CSSProperties => ({
@@ -418,15 +429,14 @@ const debugPanelSelectContainer = (): React.CSSProperties => ({
 })
 
 const debugPanelComponents: React.CSSProperties = {
-  fontSize: '14px',
   padding: '8px',
   whiteSpace: 'pre',
-  marginBottom: '8px',
   lineHeight: 1.4,
   background: '#222',
   overflowY: 'auto',
   color: '#CCC',
   fontFamily: 'monospace',
+  fontWeight: 'bold',
 }
 
 const debugPanelBody: React.CSSProperties = {
@@ -437,7 +447,7 @@ const debugPanelBody: React.CSSProperties = {
 }
 
 const debugPanel: React.CSSProperties = {
-  padding: '8px',
+  padding: '0 4px',
 }
 
 export default DebugPanel
