@@ -22,9 +22,14 @@ function TreeVirtualizer(props: TreeVirtualizerProps) {
         {React.cloneElement(renderedItems[index], {
           style,
           onFocusParent: (e, treeItemProps: TreeItemProps) => {
+            const { parent } = treeItemProps
+
             renderedItems[index].props.onFocusParent(e, treeItemProps)
 
-            const { parent } = treeItemProps
+            if (!parent) {
+              return
+            }
+
             const indexOfParent = renderedItems.findIndex(
               (renderedItem: React.ReactElement) => renderedItem.props['id'] === parent['id'],
             )
