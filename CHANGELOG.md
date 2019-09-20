@@ -28,6 +28,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix styles for Teams theme for `Textarea` and add support for `inverted`, `fluid` and `resize` props @codepretty ([#1922](https://github.com/stardust-ui/react/pull/1922))
 - Fix `Dropdown` to properly accept `id` on `searchInput` @silviuavram ([#1938](https://github.com/stardust-ui/react/pull/1938))
 - Fix white flash when activating `Embed` component @lucivpav ([#1909](https://github.com/stardust-ui/react/pull/1909))
+- Update Office brand icons with latest version @notandrew ([#1954](https://github.com/stardust-ui/react/pull/1954))
 
 ### Features
 - Add `TextArea` component @lucivpav ([#1897](https://github.com/stardust-ui/react/pull/1897))
