@@ -40,14 +40,6 @@ class DocsLayout extends React.Component<any, any> {
     clearTimeout(this.scrollStartTimeout)
   }
 
-  getUrlWithoutHash(url: string): string {
-    const start = url.indexOf('#')
-    if (start === -1) {
-      return url
-    }
-    return url.substr(0, start)
-  }
-
   resetPage = () => {
     const { location } = this.props
     // only reset the page when changing routes
@@ -67,7 +59,9 @@ class DocsLayout extends React.Component<any, any> {
     // Anchor links has issues with <base>
     // https://stackoverflow.com/questions/8108836/make-anchor-links-refer-to-the-current-page-when-using-base
     document.querySelectorAll('a.anchor-link').forEach(link => {
-      const value = `${this.getUrlWithoutHash(document.location.href)}${link.getAttribute('href')}`
+      const value = `${document.location.origin}${document.location.pathname}${link.getAttribute(
+        'href',
+      )}`
       link.setAttribute('href', value)
     })
   }
