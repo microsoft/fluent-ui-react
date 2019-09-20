@@ -14,7 +14,7 @@ const ComponentPropsOutline: any = ({ displayNames, parentDisplayName }) => {
   return (
     <ul>
       {_.map(items, item => (
-        <li>{link(item, `#${_.kebabCase(item)}`)}</li>
+        <li key={item}>{link(item, `#${_.kebabCase(item)}`)}</li>
       ))}
     </ul>
   )
