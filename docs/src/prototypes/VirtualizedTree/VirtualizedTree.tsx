@@ -34,6 +34,10 @@ function TreeVirtualizer(props: TreeVirtualizerProps) {
               (renderedItem: React.ReactElement) => renderedItem.props['id'] === parent['id'],
             )
 
+            if (renderedItems[indexOfParent].props['contentRef'].current) {
+              return
+            }
+
             setScrollToIndex(indexOfParent)
           },
         })}
