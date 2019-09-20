@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Tree } from '@stardust-ui/react'
+import { Tree, TreeItemProps } from '@stardust-ui/react'
 import { CellMeasurer, CellMeasurerCache, List as ReactVirtualizedList } from 'react-virtualized'
 import getItems from './itemsGenerator'
 
@@ -12,13 +12,26 @@ function TreeVirtualizer(props: TreeVirtualizerProps) {
     defaultHeight: 20,
     fixedWidth: true,
   })
+  const [scrollToIndex, setScrollToIndex] = React.useState()
 
   const rowRenderer = ({ index, isScrolling, key, parent, style }) => {
     const { renderedItems } = props
 
     return (
       <CellMeasurer cache={cache} columnIndex={0} key={key} parent={parent} rowIndex={index}>
-        {React.cloneElement(renderedItems[index], { style })}
+        {React.cloneElement(renderedItems[index], {
+          style,
+          onFocusParent: (e, treeItemProps: TreeItemProps) => {
+            renderedItems[index].props.onFocusParent(e, treeItemProps)
+
+            const { parent } = treeItemProps
+            const indexOfParent = renderedItems.findIndex(
+              (renderedItem: React.ReactElement) => renderedItem.props['id'] === parent['id'],
+            )
+
+            setScrollToIndex(indexOfParent)
+          },
+        })}
       </CellMeasurer>
     )
   }
@@ -32,6 +45,13 @@ function TreeVirtualizer(props: TreeVirtualizerProps) {
       height={300}
       rowCount={props.renderedItems.length}
       width={600}
+      scrollToIndex={scrollToIndex}
+      onRowsRendered={() => {
+        if (scrollToIndex !== undefined) {
+          props.renderedItems[scrollToIndex].props.contentRef.current.focus()
+          setScrollToIndex(undefined)
+        }
+      }}
     />
   )
 }
