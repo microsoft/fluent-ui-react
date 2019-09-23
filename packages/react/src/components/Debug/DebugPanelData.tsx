@@ -1,8 +1,17 @@
 import * as React from 'react'
 import { find, isOverridden } from './utils'
 
-const DebugPanelData = props => {
-  const { data, indent = 2, highlightKey, prevMergedData, comments, commentKeyPredicate } = props
+interface DebugPanelDataProps {
+  data: any
+  overrides?: any
+  comments?: any
+  indent?: number
+  highlightKey?: string
+  commentKeyPredicate?: (val: any) => boolean
+}
+
+const DebugPanelData: React.FC<DebugPanelDataProps> = props => {
+  const { data, indent = 2, highlightKey, overrides, comments, commentKeyPredicate } = props
 
   const isValidComment =
     typeof comments === 'string' && commentKeyPredicate && commentKeyPredicate(comments)
@@ -28,7 +37,7 @@ const DebugPanelData = props => {
         const comment = comments && comments[key]
 
         const highlight = find(data, key, highlightKey)
-        const overridden = isOverridden(data, key, prevMergedData)
+        const overridden = isOverridden(data, key, overrides)
 
         return (
           <div key={key}>
@@ -42,7 +51,7 @@ const DebugPanelData = props => {
                   comments={comment}
                   commentKeyPredicate={commentKeyPredicate}
                   indent={indent + 2}
-                  prevMergedData={prevMergedData ? prevMergedData[key] : null}
+                  overrides={overrides ? overrides[key] : null}
                   highlightKey={highlightKey}
                 />
               </span>

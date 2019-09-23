@@ -3,7 +3,15 @@ import * as _ from 'lodash'
 import DebugPanelData from './DebugPanelData'
 import { filter } from './utils'
 
-const DebugPanelItem = props => {
+interface DebugPanelItemProps {
+  data: any
+  valueKey?: string
+  commentKey?: string
+  idKey?: string
+  commentKeyPredicate?: (val: any) => boolean
+}
+
+const DebugPanelItem: React.FC<DebugPanelItemProps> = props => {
   const [value, setValue] = React.useState('')
   const { data: propData, valueKey, commentKey, commentKeyPredicate, idKey } = props
 
@@ -47,7 +55,7 @@ const DebugPanelItem = props => {
               data={filteredTheme}
               comments={comments[idx]}
               commentKeyPredicate={commentKeyPredicate}
-              prevMergedData={mergedThemes[idx]}
+              overrides={mergedThemes[idx]}
               highlightKey={value}
             />
           </pre>

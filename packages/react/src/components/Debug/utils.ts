@@ -11,12 +11,12 @@ export const find = (data, key, search) => {
   )
 }
 
-export const isOverridden = (data, key, prevData) => {
+export const isOverridden = (data, key, overrides) => {
   return (
     typeof data[key] !== 'object' &&
-    prevData &&
-    prevData[key] !== null &&
-    prevData[key] !== undefined
+    !!overrides &&
+    overrides[key] !== null &&
+    overrides[key] !== undefined
   )
 }
 
