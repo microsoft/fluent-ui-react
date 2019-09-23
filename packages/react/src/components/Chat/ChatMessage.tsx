@@ -217,7 +217,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
         modifiers={{
           // https://popper.js.org/popper-documentation.html#modifiers..flip.behavior
           // Forces to flip only in "top-*" positions
-          flip: { behavior: ['top'] },
+          // flip: { behavior: ['top'] },
           preventOverflow: {
             escapeWithReference: false,
             // https://popper.js.org/popper-documentation.html#modifiers..preventOverflow.priority
