@@ -16,12 +16,19 @@ import {
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
 } from '../../lib'
-import { ComponentEventHandler, ShorthandValue, WithAsProp, withSafeTypeForAs } from '../../types'
+import {
+  ComponentEventHandler,
+  ShorthandValue,
+  WithAsProp,
+  withSafeTypeForAs,
+  Omit,
+} from '../../types'
 import { Accessibility } from '../../lib/accessibility/types'
 import { menuItemBehavior } from '../../lib/accessibility'
 
 import Box, { BoxProps } from '../Box/Box'
 import Icon, { IconProps } from '../Icon/Icon'
+import Popup, { PopupProps } from '../Popup/Popup'
 
 export interface ToolbarMenuItemProps
   extends UIComponentProps,
@@ -35,11 +42,17 @@ export interface ToolbarMenuItemProps
   /** A toolbar item can be active. */
   active?: boolean
 
+  /** A slot for a selected indicator in the dropdown list. */
+  activeIndicator?: ShorthandValue<IconProps>
+
   /** A toolbar item can show it is currently unable to be interacted with. */
   disabled?: boolean
 
   /** Name or shorthand for Toolbar Item Icon */
   icon?: ShorthandValue<IconProps>
+
+  /** ToolbarMenuItem index inside ToolbarMenu. */
+  index?: number
 
   /**
    * Called on click.
@@ -49,11 +62,20 @@ export interface ToolbarMenuItemProps
    */
   onClick?: ComponentEventHandler<ToolbarMenuItemProps>
 
+  /**
+   * Attaches a `Popup` component to the ToolbarMenuItem.
+   * Accepts all props as a `Popup`, except `trigger` and `children`.
+   * Traps focus by default.
+   * @see PopupProps
+   */
+  popup?: Omit<PopupProps, 'trigger' | 'children'> | string
+
   /** Shorthand for the wrapper component. */
   wrapper?: ShorthandValue<BoxProps>
 }
 
 export interface ToolbarMenuItemSlotClassNames {
+  activeIndicator: string
   wrapper: string
 }
 
@@ -63,6 +85,7 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
   static className = 'ui-toolbar__menuitem'
 
   static slotClassNames: ToolbarMenuItemSlotClassNames = {
+    activeIndicator: `${ToolbarMenuItem.className}__activeIndicator`,
     wrapper: `${ToolbarMenuItem.className}__wrapper`,
   }
 
@@ -71,15 +94,26 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
   static propTypes = {
     ...commonPropTypes.createCommon(),
     active: PropTypes.bool,
+    activeIndicator: customPropTypes.itemShorthand,
     disabled: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
+    index: PropTypes.number,
     onClick: PropTypes.func,
+    popup: PropTypes.oneOfType([
+      PropTypes.shape({
+        ...Popup.propTypes,
+        trigger: customPropTypes.never,
+        children: customPropTypes.never,
+      }),
+      PropTypes.string,
+    ]),
     wrapper: customPropTypes.itemShorthand,
   }
 
   static defaultProps = {
     as: 'button',
     accessibility: menuItemBehavior as Accessibility,
+    activeIndicator: 'stardust-checkmark',
     wrapper: { as: 'li' },
   }
 
@@ -90,12 +124,19 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
     },
   }
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
-    const { children, content, disabled, icon, wrapper } = this.props
+  renderComponent({ ElementType, classes, accessibility, unhandledProps, styles }) {
+    const {
+      active,
+      activeIndicator,
+      children,
+      content,
+      disabled,
+      icon,
+      popup,
+      wrapper,
+    } = this.props
 
-    const menuItemInner = childrenExist(children) ? (
-      children
-    ) : (
+    const elementType = (
       <ElementType
         {...accessibility.attributes.root}
         {...unhandledProps}
@@ -110,10 +151,33 @@ class ToolbarMenuItem extends UIComponent<WithAsProp<ToolbarMenuItemProps>> {
           <>
             {Icon.create(icon, { defaultProps: { xSpacing: !!content ? 'after' : 'none' } })}
             {content}
+            {active &&
+              Icon.create(activeIndicator, {
+                defaultProps: {
+                  className: ToolbarMenuItem.slotClassNames.activeIndicator,
+                  styles: styles.activeIndicator,
+                },
+              })}
           </>
         )}
       </ElementType>
     )
+
+    const hasChildren = childrenExist(children)
+
+    if (popup && !hasChildren) {
+      return Popup.create(popup, {
+        defaultProps: {
+          trapFocus: true,
+        },
+        overrideProps: {
+          trigger: elementType,
+          children: undefined, // force-reset `children` defined for `Popup` as it collides with the `trigger`
+        },
+      })
+    }
+
+    const menuItemInner = hasChildren ? children : elementType
 
     if (!wrapper) {
       return menuItemInner

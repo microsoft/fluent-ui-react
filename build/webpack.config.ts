@@ -31,10 +31,10 @@ const webpackConfig: any = {
     '@babel/standalone': 'Babel',
     'anchor-js': 'AnchorJS',
     'prettier/standalone': 'prettier',
-    // These Prettier plugins doesn't have any exports
-    'prettier/parser-babylon': 'window',
-    'prettier/parser-html': 'window',
-    'prettier/parser-typescript': 'window',
+    // These Prettier plugins are available under window.prettierPlugins
+    'prettier/parser-babylon': ['prettierPlugins', 'babylon'],
+    'prettier/parser-html': ['prettierPlugins', 'html'],
+    'prettier/parser-typescript': ['prettierPlugins', 'typescript'],
     'prop-types': 'PropTypes',
     react: 'React',
     'react-dom': 'ReactDOM',

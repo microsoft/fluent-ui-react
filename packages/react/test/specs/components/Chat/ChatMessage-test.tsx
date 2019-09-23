@@ -1,4 +1,7 @@
+import * as React from 'react'
+
 import { handlesAccessibility, implementsShorthandProp, isConformant } from 'test/specs/commonTests'
+import { mountWithProvider } from 'test/utils'
 
 import ChatMessage from 'src/components/Chat/ChatMessage'
 import { chatMessageBehavior } from 'src/lib/accessibility'
@@ -18,6 +21,16 @@ describe('ChatMessage', () => {
   describe('accessibility', () => {
     handlesAccessibility(ChatMessage, {
       focusZoneDefinition: (chatMessageBehavior as AccessibilityDefinition).focusZone,
+    })
+  })
+
+  describe('onMouseEnter', () => {
+    it('performs position update', () => {
+      const wrapper = mountWithProvider(<ChatMessage />)
+      const update = jest.spyOn(wrapper.instance(), 'updateActionsMenuPosition')
+
+      wrapper.simulate('mouseenter')
+      expect(update).toBeCalledTimes(1)
     })
   })
 })

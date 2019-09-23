@@ -5,7 +5,6 @@ import * as React from 'react'
 import ComponentDoc from '../components/ComponentDoc'
 import PageNotFound from '../views/PageNotFound'
 import componentInfoContext from '../utils/componentInfoContext'
-import { containsUsage } from './ComponentDoc/ComponentUsage'
 import { containsAccessibility } from './ComponentDoc/ComponentDocAccessibility'
 
 class DocsRoot extends React.Component<any, any> {
@@ -23,10 +22,6 @@ class DocsRoot extends React.Component<any, any> {
 
   getNonEmptyTabs(info) {
     const tabs = ['Definition']
-
-    if (containsUsage(info.displayName)) {
-      tabs.push('Usage')
-    }
 
     tabs.push('Props')
 

@@ -157,6 +157,9 @@ export { default as Text } from './components/Text/Text'
 export * from './components/Animation/Animation'
 export { default as Animation } from './components/Animation/Animation'
 
+export * from './components/TextArea/TextArea'
+export { default as TextArea } from './components/TextArea/TextArea'
+
 export * from './components/Toolbar/Toolbar'
 export { default as Toolbar } from './components/Toolbar/Toolbar'
 export * from './components/Toolbar/ToolbarCustomItem'
@@ -171,6 +174,8 @@ export * from './components/Toolbar/ToolbarMenuDivider'
 export { default as ToolbarMenuDivider } from './components/Toolbar/ToolbarMenuDivider'
 export * from './components/Toolbar/ToolbarMenuItem'
 export { default as ToolbarMenuItem } from './components/Toolbar/ToolbarMenuItem'
+export * from './components/Toolbar/ToolbarMenuRadioGroup'
+export { default as ToolbarMenuRadioGroup } from './components/Toolbar/ToolbarMenuRadioGroup'
 export * from './components/Toolbar/ToolbarRadioGroup'
 export { default as ToolbarRadioGroup } from './components/Toolbar/ToolbarRadioGroup'
 
@@ -194,6 +199,9 @@ export * from './components/Reaction/Reaction'
 export { default as Reaction } from './components/Reaction/Reaction'
 export * from './components/Reaction/ReactionGroup'
 export { default as ReactionGroup } from './components/Reaction/ReactionGroup'
+
+export * from './components/SplitButton/SplitButton'
+export { default as SplitButton } from './components/SplitButton/SplitButton'
 
 export * from './components/Video/Video'
 export { default as Video } from './components/Video/Video'

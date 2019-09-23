@@ -27,6 +27,8 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { treeBehavior } from '../../lib/accessibility'
 import { getNextElement } from '../../lib/accessibility/FocusZone/focusUtilities'
 import { hasSubtree, removeItemAtIndex } from './lib'
+import { TreeTitleProps } from './TreeTitle'
+import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 
 export interface TreeSlotClassNames {
   item: string
@@ -55,7 +57,16 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
    * @param {object} props - The computed props for this slot.
    * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
    */
-  renderItemTitle?: ShorthandRenderFunction
+  renderItemTitle?: ShorthandRenderFunction<TreeTitleProps>
+
+  /**
+   * Callback that provides rendered tree items to be used by react-virtualized for instance.
+   * Acts as a render prop, with the rendered tree items being the re-used logic.
+   *
+   * @param {React.ReactElement[]} renderedItem The array of rendered items.
+   * @return {React.ReactNode} The render prop result.
+   */
+  renderedItems?: (renderedItems: React.ReactElement[]) => React.ReactNode
 }
 
 export interface TreeItemForRenderProps {
@@ -92,6 +103,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     exclusive: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     renderItemTitle: PropTypes.func,
+    renderedItems: PropTypes.func,
   }
 
   static defaultProps = {
@@ -250,7 +262,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     },
   })
 
-  renderContent(): React.ReactElement[] {
+  renderContent(accessibility: ReactAccessibilityBehavior): React.ReactElement[] {
     const { itemsForRender } = this.state
     const { items, renderItemTitle } = this.props
 
@@ -263,32 +275,25 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
           const { elementRef, ...restItemForRender } = itemForRender
           const isSubtree = hasSubtree(item)
           const isSubtreeOpen = isSubtree && this.isActiveItem(item['id'])
-
           const renderedItem = TreeItem.create(item, {
             defaultProps: {
+              accessibility: accessibility.childBehaviors
+                ? accessibility.childBehaviors.item
+                : undefined,
               className: Tree.slotClassNames.item,
               open: isSubtreeOpen,
               renderItemTitle,
               key: item['id'],
+              contentRef: elementRef,
               ...restItemForRender,
             },
             overrideProps: this.handleTreeItemOverrides,
           })
 
-          // Only need refs of the items that spawn subtrees, when they need to be focused
-          // by any of their children, using Arrow Left.
-          const finalRenderedItem = isSubtree ? (
-            <Ref key={item['id']} innerRef={elementRef}>
-              {renderedItem}
-            </Ref>
-          ) : (
-            renderedItem
-          )
-
           return [
             ...renderedItems,
-            finalRenderedItem,
-            ...([isSubtreeOpen ? renderItems(item['items']) : []] as any),
+            renderedItem,
+            ...(isSubtreeOpen ? renderItems(item['items']) : ([] as any)),
           ]
         },
         [],
@@ -298,8 +303,8 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     return renderItems(items)
   }
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
-    const { children } = this.props
+  renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
+    const { children, renderedItems } = this.props
 
     return (
       <Ref innerRef={this.treeRef}>
@@ -310,7 +315,11 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
           {...unhandledProps}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         >
-          {childrenExist(children) ? children : this.renderContent()}
+          {childrenExist(children)
+            ? children
+            : renderedItems
+            ? renderedItems(this.renderContent(accessibility))
+            : this.renderContent(accessibility)}
         </ElementType>
       </Ref>
     )

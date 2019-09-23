@@ -1,4 +1,4 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { pxToRem } from '../../../../lib'
 import Embed, { EmbedProps, EmbedState } from '../../../../components/Embed/Embed'
 import { EmbedVariables } from './embedVariables'
@@ -48,7 +48,8 @@ export default {
     top: '50%',
     transform: 'translate(-50%, -50%)',
   }),
-  iframe: (): ICSSInJSStyle => ({
+  iframe: ({ props: p }): ICSSInJSStyle => ({
     display: 'block',
+    ...(!p.iframeLoaded && { display: 'none' }),
   }),
-} as ComponentSlotStylesInput<EmbedProps & EmbedState, EmbedVariables>
+} as ComponentSlotStylesPrepared<EmbedProps & EmbedState, EmbedVariables>

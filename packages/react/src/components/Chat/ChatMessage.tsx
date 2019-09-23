@@ -90,6 +90,13 @@ export interface ChatMessageProps
    */
   onFocus?: ComponentEventHandler<ChatMessageProps>
 
+  /**
+   * Called after user enters by mouse.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props.
+   */
+  onMouseEnter?: ComponentEventHandler<ChatMessageProps>
+
   /** Reaction group applied to the message. */
   reactionGroup?: ShorthandValue<ReactionGroupProps> | ShorthandCollection<ReactionProps>
 
@@ -126,6 +133,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     timestamp: customPropTypes.itemShorthand,
     onBlur: PropTypes.func,
     onFocus: PropTypes.func,
+    onMouseEnter: PropTypes.func,
     reactionGroup: PropTypes.oneOfType([
       customPropTypes.collectionShorthand,
       customPropTypes.itemShorthand,
@@ -181,6 +189,11 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     _.invoke(this.props, 'onBlur', e, this.props)
   }
 
+  handleMouseEnter = (e: React.SyntheticEvent) => {
+    this.updateActionsMenuPosition()
+    _.invoke(this.props, 'onMouseEnter', e, this.props)
+  }
+
   renderActionMenu(
     actionMenu: ChatMessageProps['actionMenu'],
     styles: ComponentSlotStylesPrepared,
@@ -199,7 +212,22 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     }
 
     return (
-      <Popper unstable_pinned targetRef={this.state.messageDomNode} position="above" align="end">
+      <Popper
+        align="end"
+        modifiers={{
+          // https://popper.js.org/popper-documentation.html#modifiers..flip.behavior
+          // Forces to flip only in "top-*" positions
+          flip: { behavior: ['top'] },
+          preventOverflow: {
+            escapeWithReference: false,
+            // https://popper.js.org/popper-documentation.html#modifiers..preventOverflow.priority
+            // Forces to stop prevent overflow on bottom and bottom
+            priority: ['left', 'right'],
+          },
+        }}
+        position="above"
+        targetRef={this.state.messageDomNode}
+      >
         {({ scheduleUpdate }) => {
           this.updateActionsMenuPosition = scheduleUpdate
           return actionMenuElement
@@ -277,7 +305,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
         <ElementType
           onBlur={this.handleBlur}
           onFocus={this.handleFocus}
-          onMouseEnter={() => this.updateActionsMenuPosition()}
+          onMouseEnter={this.handleMouseEnter}
           className={className}
           {...accessibility.attributes.root}
           {...unhandledProps}
