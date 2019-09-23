@@ -1,4 +1,4 @@
-import { find, isOverridden } from 'src/components/Debug/utils'
+import { find, isOverridden, filter } from 'src/components/Debug/utils'
 
 describe('debugUtils', () => {
   describe('find', () => {
@@ -95,6 +95,95 @@ describe('debugUtils', () => {
       }
       expect(isOverridden(data, key, overrides)).toEqual(false)
       expect(() => isOverridden(data, key, overrides)).not.toThrow()
+    })
+  })
+
+  describe('filter', () => {
+    test('filters primitives correctly by keys', () => {
+      const search = 'backgroundColor'
+      const data = {
+        color: 'red',
+        backgroundColor: 'white',
+      }
+
+      expect(filter(data, search)).toMatchObject({
+        backgroundColor: 'white',
+      })
+    })
+
+    test('filters primitives correctly by value', () => {
+      const search = 'white'
+      const data = {
+        color: 'red',
+        backgroundColor: 'white',
+      }
+
+      expect(filter(data, search)).toMatchObject({
+        backgroundColor: 'white',
+      })
+    })
+
+    test('filters primitives correctly by key (includes)', () => {
+      const search = 'color'
+      const data = {
+        color: 'red',
+        backgroundColor: 'white',
+      }
+
+      expect(filter(data, search)).toMatchObject(data)
+    })
+
+    test('filters objects correctly by key', () => {
+      const search = 'color'
+      const data = {
+        color: 'red',
+        backgroundColor: 'white',
+        ':hover': {
+          color: 'red',
+          border: '1px',
+        },
+      }
+
+      expect(filter(data, search)).toMatchObject(data)
+    })
+
+    test('filters objects correctly by object key', () => {
+      const search = ':hover'
+      const data = {
+        color: 'red',
+        backgroundColor: 'white',
+        ':hover': {
+          color: 'red',
+          border: '1px',
+        },
+      }
+
+      expect(filter(data, search)).toMatchObject({
+        ':hover': {
+          color: 'red',
+          border: '1px',
+        },
+      })
+    })
+
+    test('filters objects correctly by value', () => {
+      const search = 'red'
+      const data = {
+        color: 'red',
+        backgroundColor: 'white',
+        ':hover': {
+          color: 'red',
+          border: '1px',
+        },
+      }
+
+      expect(filter(data, search)).toMatchObject({
+        color: 'red',
+        ':hover': {
+          color: 'red',
+          border: '1px',
+        },
+      })
     })
   })
 })
