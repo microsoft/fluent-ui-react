@@ -8,7 +8,8 @@ import getBorderFocusStyles from '../../getBorderFocusStyles'
 import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 
 const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = {
-  root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
+  root: ({ props: p, variables: v, theme }): ICSSInJSStyle => {
+    const { siteVariables } = theme
     const { borderWidth } = siteVariables
 
     const borderFocusStyles = getBorderFocusStyles({
@@ -48,7 +49,7 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         borderColor: v.borderColor,
         boxShadow: v.boxShadow,
 
-        ...createAnimationStyles('fadeEnterMedium', siteVariables.theme),
+        ...createAnimationStyles('fadeEnterMedium', theme),
 
         // transform: 'translateZ(0)',
         // transition: 'all .1s cubic-bezier(.78, 0, .22, 1)',

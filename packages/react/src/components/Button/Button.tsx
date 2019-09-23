@@ -140,6 +140,7 @@ class Button extends UIComponent<WithAsProp<ButtonProps>> {
         className={classes.root}
         disabled={disabled}
         onClick={this.handleClick}
+        theme={styles.theme}
         onFocus={this.handleFocus}
         {...accessibility.attributes.root}
         {...rtlTextContainer.getAttributes({ forElements: [children] })}
