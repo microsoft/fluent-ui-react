@@ -1,7 +1,7 @@
 import * as React from 'react'
-import * as _ from 'lodash'
 import DebugPanelData from './DebugPanelData'
 import { filter } from './utils'
+import deepmerge from '../../lib/deepmerge'
 
 interface DebugPanelItemProps {
   data: any
@@ -26,7 +26,7 @@ const DebugPanelItem: React.FC<DebugPanelItemProps> = props => {
   mergedThemes.push({}) // init
 
   for (let i = 1; i < data.length; i++) {
-    mergedThemes.push(_.merge({}, mergedThemes[i - 1], data[i - 1]))
+    mergedThemes.push(deepmerge(mergedThemes[i - 1], data[i - 1]))
   }
 
   return (
