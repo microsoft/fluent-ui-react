@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.39.0 ]------------------------------- -->
+## [v0.39.0](https://github.com/stardust-ui/react/tree/v0.39.0) (2019-09-23)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.38.1...v0.39.0)
+
 ### BREAKING CHANGES
 - Remove base theme and move everything to teams theme @mnajdova ([#1908](https://github.com/stardust-ui/react/pull/1908))
 
