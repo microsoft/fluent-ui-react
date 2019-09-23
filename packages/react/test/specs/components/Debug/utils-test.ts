@@ -1,4 +1,4 @@
-import { find, isOverridden, filter } from 'src/components/Debug/utils'
+import { find, isOverridden, filter, getValues } from 'src/components/Debug/utils'
 
 describe('debugUtils', () => {
   describe('find', () => {
@@ -184,6 +184,56 @@ describe('debugUtils', () => {
           border: '1px',
         },
       })
+    })
+  })
+
+  describe('getValues', () => {
+    const prefix = 'prefix.'
+    const predicate = val => val.indexOf(prefix) === 0
+
+    test('returns value if it is string', () => {
+      const val = `${prefix}value`
+
+      expect(getValues(val, predicate)).toEqual([val])
+    })
+
+    test('returns value if it is object', () => {
+      const val = `${prefix}value`
+
+      expect(getValues({ someKey: val }, predicate)).toEqual([val])
+    })
+
+    test('returns empty array if predicate does not match on primitive value', () => {
+      const val = `value`
+
+      expect(getValues(val, predicate)).toEqual([])
+    })
+
+    test('returns empty array if predicate does not match on object', () => {
+      const val = `value`
+
+      expect(getValues({ someKey: val }, predicate)).toEqual([])
+    })
+
+    test('returns array with all matching values', () => {
+      const data = {
+        key1: `${prefix}value1`,
+        key2: 'value2',
+        key3: {
+          key4: 'value4',
+          key5: `${prefix}value5`,
+          key6: {
+            key7: `${prefix}value7`,
+            key8: `value8`,
+          },
+        },
+      }
+
+      expect(getValues(data, predicate)).toEqual([
+        `${prefix}value1`,
+        `${prefix}value5`,
+        `${prefix}value7`,
+      ])
     })
   })
 })
