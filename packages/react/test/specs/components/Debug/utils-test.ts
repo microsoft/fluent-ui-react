@@ -1,4 +1,4 @@
-import { find, isOverridden, filter, getValues } from 'src/components/Debug/utils'
+import { find, isOverridden, filter, getValues, removeNulls } from 'src/components/Debug/utils'
 
 describe('debugUtils', () => {
   describe('find', () => {
@@ -234,6 +234,44 @@ describe('debugUtils', () => {
         `${prefix}value5`,
         `${prefix}value7`,
       ])
+    })
+  })
+
+  describe('removeNulls', () => {
+    test('removes nulls values on first level', () => {
+      const data = {
+        key1: null,
+        key2: 'value2',
+      }
+
+      expect(removeNulls(data)).toMatchObject({ key2: 'value2' })
+    })
+
+    test('removes nested nulls values', () => {
+      const data = {
+        key1: {
+          key2: null,
+          key3: 'value2',
+        },
+      }
+
+      expect(removeNulls(data)).toMatchObject({
+        key1: {
+          key3: 'value2',
+        },
+      })
+    })
+
+    test('removes nested object if all values are removed', () => {
+      const data = {
+        key1: {
+          key2: null,
+          key3: null,
+        },
+        key4: 'value4',
+      }
+
+      expect(removeNulls(data)).toMatchObject({ key4: 'value4' })
     })
   })
 })

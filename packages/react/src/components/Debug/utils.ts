@@ -92,13 +92,13 @@ export const removeNulls = o => {
       if (o[k]) {
         result[k] = o[k] // If not null or not an object, copy value
       }
-    }
+    } else {
+      // The property is an object
+      const val = removeNulls(o[k])
 
-    // The property is an object
-    const val = removeNulls(o[k])
-
-    if (typeof val === 'object' && val != null && Object.keys(val).length > 0) {
-      result[k] = val
+      if (typeof val === 'object' && val != null && Object.keys(val).length > 0) {
+        result[k] = val
+      }
     }
   })
 
