@@ -58,3 +58,49 @@ export const filter = (data, value) => {
       return obj
     }, {})
 }
+
+export const getValues = (value, predicate) => {
+  if (_.isNil(value)) {
+    return []
+  }
+
+  if (typeof value === 'string') {
+    if (predicate(value)) {
+      return [value]
+    }
+  }
+
+  if (typeof value === 'object') {
+    let arr = []
+    Object.keys(value).forEach(key => {
+      arr = _.concat(arr, getValues(value[key], predicate))
+    })
+    return arr
+  }
+
+  return []
+}
+
+export const removeNulls = o => {
+  if (typeof o !== 'object' && o !== null) {
+    return o
+  }
+  const result = {}
+
+  Object.keys(o).forEach(k => {
+    if (!o[k] || typeof o[k] !== 'object') {
+      if (o[k]) {
+        result[k] = o[k] // If not null or not an object, copy value
+      }
+    }
+
+    // The property is an object
+    const val = removeNulls(o[k])
+
+    if (typeof val === 'object' && val != null && Object.keys(val).length > 0) {
+      result[k] = val
+    }
+  })
+
+  return result
+}

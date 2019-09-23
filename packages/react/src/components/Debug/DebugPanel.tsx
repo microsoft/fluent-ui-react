@@ -2,7 +2,10 @@ import * as React from 'react'
 import * as _ from 'lodash'
 import DebugPanelItem from './DebugPanelItem'
 import FiberNavigator from './FiberNavigator'
+import Line from './Line'
+import ScrollToBottom from './ScrollToBottom'
 import DebugRect from './DebugRect'
+import { getValues, removeNulls } from './utils'
 
 export type DebugPanelProps = {
   cssStyles?: string[]
@@ -21,100 +24,6 @@ export type DebugPanelProps = {
   onPositionRight: (e) => void
   position: 'left' | 'right'
   onFiberChanged?: (f: FiberNavigator) => void
-}
-
-const getValues = (value, predicate) => {
-  if (_.isNil(value)) {
-    return []
-  }
-
-  if (typeof value === 'string') {
-    if (predicate(value)) {
-      return [value]
-    }
-  }
-
-  if (typeof value === 'object') {
-    let arr = []
-    Object.keys(value).forEach(key => {
-      arr = _.concat(arr, getValues(value[key], predicate))
-    })
-    return arr
-  }
-
-  return []
-}
-
-class ScrollToBottom extends React.Component<any> {
-  ref = React.createRef<HTMLDivElement>()
-
-  componentDidMount() {
-    this.scrollToBottom()
-  }
-
-  scrollToBottom() {
-    this.ref.current.scrollTo({ behavior: 'smooth', top: 999999 })
-  }
-
-  render() {
-    return <div ref={this.ref} {...this.props} />
-  }
-}
-
-const Line: React.FC<{
-  [key: string]: any
-  children: React.ReactNode
-  active?: boolean
-  indent?: number
-  style?: React.CSSProperties
-  badge?: string
-  actionable?: boolean
-}> = ({ active, indent = 0, actionable, children, style, badge, ...rest }) => (
-  <a
-    style={{
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      paddingLeft: `${indent * 2}ch`,
-      outline: 0,
-      ...(actionable && {
-        color: 'cornflowerblue',
-        cursor: 'pointer',
-      }),
-      ...(active && {
-        background: 'rgba(255, 255, 255, 0.1)',
-      }),
-      ...style,
-    }}
-    {...rest}
-  >
-    {children}
-    {badge && <span style={{ padding: '0 4px', fontSize: 10, opacity: 0.75 }}>{badge}</span>}
-  </a>
-)
-
-const removeNulls = o => {
-  if (typeof o !== 'object' && o !== null) {
-    return o
-  }
-  const result = {}
-
-  Object.keys(o).forEach(k => {
-    if (!o[k] || typeof o[k] !== 'object') {
-      if (o[k]) {
-        result[k] = o[k] // If not null or not an object, copy value
-      }
-    }
-
-    // The property is an object
-    const val = removeNulls(o[k])
-
-    if (typeof val === 'object' && val != null && Object.keys(val).length > 0) {
-      result[k] = val
-    }
-  })
-
-  return result
 }
 
 const DebugPanel: React.FC<DebugPanelProps> = props => {
