@@ -55,13 +55,17 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add behaviors for `Tree` as list and linked them using childBehaviors @silviuavram ([#1928](https://github.com/stardust-ui/react/pull/1928))
 - Add `notes` icon and update `link` icon in Teams theme @codepretty ([#1953](https://github.com/stardust-ui/react/pull/1953))
 
-### Performance
-- Resolve styles once in `renderComponent()` @layershifter ([#1957](https://github.com/stardust-ui/react/pull/1957))
-
 ### Documentation
 - Remove Usage tab @lucivpav ([#1948](https://github.com/stardust-ui/react/pull/1948))
 - Put props on a single page, fix props links @lucivpav ([#1892](https://github.com/stardust-ui/react/pull/1892))
 - Remove cancel button in a `Dialog` example with a close action @lucivpav ([#1949](https://github.com/stardust-ui/react/pull/1949))
+
+<!--------------------------------[ v0.38.2 ]------------------------------- -->
+## [v0.38.2](https://github.com/stardust-ui/react/tree/v0.38.2) (2019-09-26)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.38.1...v0.38.2)
+
+### Performance
+- Resolve styles once in `renderComponent()` @layershifter ([#1957](https://github.com/stardust-ui/react/pull/1957))
 
 <!--------------------------------[ v0.38.1 ]------------------------------- -->
 ## [v0.38.1](https://github.com/stardust-ui/react/tree/v0.38.1) (2019-09-13)
