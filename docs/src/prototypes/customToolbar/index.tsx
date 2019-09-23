@@ -1,5 +1,6 @@
 import * as _ from 'lodash'
 import * as React from 'react'
+import { KnobsSnippet } from '@stardust-ui/code-sandbox'
 import {
   KnobProvider,
   useBooleanKnob,
@@ -12,7 +13,6 @@ import { darkThemeOverrides } from './darkThemeOverrides'
 import { highContrastThemeOverrides } from './highContrastThemeOverrides'
 
 import CustomToolbar, { CustomToolbarProps } from './CustomToolbar'
-import ComponentExampleKnobs from 'docs/src/components/ComponentDoc/ComponentExample/ComponentExampleKnobs'
 
 const CustomToolbarPrototype: React.FunctionComponent = () => {
   const [rtl] = useBooleanKnob({
@@ -68,9 +68,9 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
   return (
     <div style={{ height: '100vh' }}>
       <Flex column fill>
-        <ComponentExampleKnobs>
+        <KnobsSnippet>
           <KnobInspector />
-        </ComponentExampleKnobs>
+        </KnobsSnippet>
 
         <Provider theme={theme} rtl={rtl}>
           <Flex
