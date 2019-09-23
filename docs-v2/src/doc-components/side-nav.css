@@ -1,0 +1,15 @@
+.sui-side-nav-container {
+  height: 100%;
+  background: var(--sui-rail-background);
+  overflow-y: auto;
+}
+
+.sui-side-nav-item {
+  position: relative;
+  display: block;
+  padding: 0.25rem 1rem 0.25rem 2rem;
+  font-size: 1.65rem;
+  color: inherit;
+  text-decoration: none;
+  border: 1px solid transparent;
+}

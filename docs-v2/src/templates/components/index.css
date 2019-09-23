@@ -1,0 +1,53 @@
+/* TODO: get rid of these overrides; this layout should not inherit from Article */
+.sui-component-list {
+  max-width: 110rem !important;
+}
+
+.sui-component-list .ui-provider__box {
+  background: none !important;
+}
+
+/* TODO: get rid of these overrides; this layout should not inherit from Article */
+.sui-component-list .sui-article__content {
+  font-size: 1.4rem !important;
+  line-height: 1.4286 !important;
+}
+
+.sui-component-preview {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  animation: fade-in 0.5s forwards;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Fix styling issues in certain component previews */
+.sui-component-preview .ui-alert {
+  width: 100%;
+}
+
+.sui-component-preview .ui-divider {
+  width: 100%;
+}
+
+.sui-component-preview .ui-chat {
+  background: none !important;
+  border: none !important;
+  max-width: 100% !important;
+}
+
+.sui-component-preview .ui-chat__message {
+  margin: 0 0 0 1rem !important;
+  max-width: 100% !important;
+}

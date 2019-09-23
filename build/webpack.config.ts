@@ -62,7 +62,7 @@ const webpackConfig: any = {
       },
       {
         test: /\.mdx?$/,
-        use: ['babel-loader', '@mdx-js/loader'],
+        use: ['babel-loader'],
       },
     ],
   },

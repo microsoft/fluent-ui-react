@@ -42,9 +42,5 @@ const getStateForPath = (examplePath: string) => {
   }
 }
 
-const screenerStates = filteredPaths.reduce((states, examplePath) => {
-  states.push(getStateForPath(examplePath))
-  return states
-}, [])
-
+const screenerStates = filteredPaths.map(getStateForPath)
 export default screenerStates

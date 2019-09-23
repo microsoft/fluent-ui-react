@@ -1,0 +1,34 @@
+.sui-standalone-playground {
+  position: relative;
+  height: 100vh;
+  width: 100vw;
+  padding-top: 4.65rem;
+}
+
+.sui-standalone-playground > div {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+}
+
+.sui-standalone-playground .playground {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  border: none;
+}
+
+.sui-standalone-playground .playground-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.sui-standalone-playground .playground-body {
+  flex: 1;
+  height: auto;
+  min-height: 0;
+}

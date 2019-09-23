@@ -1,0 +1,7 @@
+.DS_STORE
+*.log
+.idea
+.vscode
+.cache
+node_modules
+public

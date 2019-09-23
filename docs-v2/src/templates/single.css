@@ -1,0 +1,14 @@
+.sui-article {
+  max-width: 65rem;
+  margin: 0 auto;
+}
+
+.sui-article__content {
+  margin-top: 2rem;
+  font-size: 1.6rem;
+  line-height: 1.4;
+}
+
+.sui-article .gatsby-highlight {
+  margin: 2.5rem 0;
+}

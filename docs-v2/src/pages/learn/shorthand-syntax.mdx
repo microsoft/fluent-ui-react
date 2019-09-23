@@ -1,0 +1,43 @@
+---
+title: Shorthand Syntax
+description: Learn about Stardust's concise shorthand syntax for constructing and customizing React components.
+order: 2
+---
+
+If you're familiar with React, you're probably accustomed to composing components by arranging them directly within each other. This is just fine for simple use cases, but it quickly gets complicated once you need to dynamically rearrange components.
+
+Stardust addresses this by introducing a **shorthand syntax** that allows you to easily configure components. This syntax makes common use cases simple
+
+This helps you clearly
+Stardust. Its Shorthand syntax is designed to make common use cases easy by cutting through the boilerplate.
+
+```jsx
+<Button>
+  <Icon name="call" /> I am a button
+</Button>
+```
+
+Stardust supports this syntax, but it also introduces something it calls **shorthand syntax**. Here's the same example from above, but this time written in shorthand:
+
+```jsx
+<Button icon="call" text="I am a button" />
+```
+
+This syntax gives components an ergonomic API that help cut through the boilerplate. It's a powerful concept, and beyond its simplicity it's designed to:
+
+1. Make common use cases **compact** by reducing the amount of syntax needed to express a components's intent.
+2. Allow components to make **smart decisions** about how to render content, or even attach special behaviors to those areas.
+3. Give you the **freedom** to modify as many parts of a component as you wish, without giving up the **state**, **styling**, and **accessibility** that built-in components enjoy.
+
+Shorthand also helps express relationships between props. Looking at that button, again, we learn that it's possible to attach an `iconPosition` prop to dictate where the icon should be rendered:
+
+```jsx
+// A Button knows how to reposition its content.
+<Button
+  text="I am a button"
+  icon="alert"
+  iconPosition="after" // places icon after text
+/>
+```
+
+If you were using the traditional children syntax, it would be up to you to rearrange the elements yourself. This gets especially messy when properties become conditional.

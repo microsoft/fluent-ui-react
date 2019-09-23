@@ -1,0 +1,48 @@
+---
+title: Installation
+description: All you need to know to get up and running with Stardust.
+order: 1
+---
+
+Using your favorite package manager, add [@stardust-ui/react](https://www.npmjs.com/package/@stardust-ui/react) to your project:
+
+```bash
+# npm
+npm install --save @stardust-ui/react
+
+# yarn
+yarn add @stardust-ui/react
+```
+
+With Stardust installed, it's time to get it into your React application. To do this, mount Stardust's [Provider](/components/provider) at the root of your application and select your preferred theme.
+
+```jsx{3,6-8}
+import React from "react"
+import ReactDOM from "react-dom"
+import {Provider, themes} from "@stardust-ui/react"
+
+const App = () => (
+  <Provider theme={themes.teams}>
+    {/* The rest of your application goes here. */}
+  </Provider>
+)
+
+ReactDOM.render(<App />, document.getElementById("root"))
+```
+
+Now that you have a Provider at the top of your React tree, you're ready to start using Stardust components. Below is an example that renders a simple [Header](/components/header) with some content.
+
+```jsx{2,6}
+import React from "react"
+import {Header} from "@stardust-ui/react"
+
+const App = () => (
+  <Provider theme={themes.teams}>
+    <Header>Hello World</Header>
+  </Provider>
+)
+```
+
+Stardust provides many primitive building-blocks, such as [Flex](/components/flex), [Text](/components/text), and more. These small components are the foundation of the library, and while they are useful on their own, they become more interesting when combined to build larger, more complicated components.
+
+While you will find that most high-level components meet your requirements exactly, sometimes you may need to customize individual parts within them. Learn how in the next section!

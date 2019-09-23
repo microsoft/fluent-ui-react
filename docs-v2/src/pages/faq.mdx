@@ -1,0 +1,68 @@
+---
+title: FAQ
+header: Frequently Asked Questions
+description: Get quick answers to the most frequently-asked questions about Stardust.
+---
+
+## Does Stardust support mobile platforms?
+
+Not yet! We're still in pre-release, and are therefore focusing exclusively on desktop platforms. In the future, we do plan to support handheld devices like tablets and phones.
+
+## How do I write reusable mixins?
+
+Mixins are are utilities that allow you to generate styles, perhaps based on some input. These are probably familiar to you if you're coming from a language like SASS or LESS.
+
+Styles in Stardust are written in JavaScript using [CSS in JS](https://github.com/fela/fela), where the styles themselves are described by plain objects. Therefore, writing a mixin is as simple as writing a JavaScript function.
+
+```js
+function scale(ratio) {
+  return {
+    transform: `scale(${ratio})`
+  }
+}
+```
+
+## I'm reusing an existing theme. How do I change just a few things?
+
+Themes, just like styles, are described by plain JavaScript objects, so modifying a value in the theme is the same as modifying an object. As an example, here's how you would change the fonts loaded by the Teams theme:
+
+```jsx
+import {themes} from "@stardust-ui/react"
+
+// Clone the theme so that anyone using the original theme
+// doesn't see your changes (skip this if you do want that).
+const MyTheme = {...themes.teams}
+
+// Change the desired theme value. In this example, we're
+// changing the font face to "Segoe UI".
+MyTheme.fontFaces = [
+  {
+    name: 'Segoe UI',
+    paths: ['https://...'],
+    style: { fontWeight: 600 },
+  },
+]
+
+// Use your newly-customized theme.
+<Provider theme={MyTheme}>
+  {/* ... */}
+</Provider>
+```
+
+## How do I know when an image has finished loading?
+
+Any props that don't have special behavior from Stardust are passed through to the underlying element (in Stardust, these are called "unhandled props"). So, using [Image](/components/image) as an example, you can provide **onLoad** and **onError** props just like you would with a regular **img** element, and Stardust will pass these through to the underlying img element.
+
+```jsx
+import {Image} from "@stardust-ui/react"
+
+const MyComponent = () => {
+  return (
+    <Image
+      src="//placehold.it/300"
+      onLoad={() => console.log("loaded")}
+      onError={() => console.log("error")}
+    />
+  )
+}
+```

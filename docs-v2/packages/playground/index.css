@@ -1,0 +1,136 @@
+.playground {
+  color: var(--sui-color) !important;
+  border: 1px solid var(--sui-card-border-color);
+  border-radius: 0.25rem;
+}
+
+.playground-body {
+  display: flex;
+  flex-direction: row-reverse;
+  height: 35rem;
+}
+
+.playground-banner {
+  display: flex;
+  padding: 1rem;
+  background: var(--sui-playground-banner-background);
+  border-bottom: 1px solid var(--sui-card-border-color);
+}
+
+.playground-maximize {
+  margin-left: auto;
+  padding: 0;
+  font-size: 1.75rem;
+  color: var(--sui-color);
+  background: none;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.75;
+}
+
+.playground-maximize:hover {
+  opacity: 1;
+}
+
+.playground-preview-controls {
+  display: flex;
+}
+
+.playground-preview-control {
+  display: flex;
+  align-items: center;
+}
+
+.playground-preview-control-label {
+  display: block;
+  font-weight: bold;
+  margin: 0 1rem 0 0;
+  color: var(--sui-color);
+}
+
+.playground-preview {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 2rem;
+}
+
+.playground-examples {
+  position: relative;
+  display: flex;
+  width: 25rem;
+  flex-direction: column;
+  max-height: 100%;
+  overflow: auto;
+}
+
+.playground-example-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.playground-example {
+  position: relative;
+  padding: 1rem;
+  border-bottom: 1px solid #ddd !important;
+}
+
+.playground-example-title {
+  display: block;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 950px) {
+  .playground-body {
+    display: block;
+  }
+
+  .playground-banner-rail-title {
+    display: none;
+  }
+
+  .playground-examples {
+    max-height: 12rem;
+  }
+}
+
+@media screen and (max-width: 568px) {
+  .playground-preview-controls {
+    display: block;
+  }
+
+  .playground-preview-control {
+    margin: 0 0 0.75rem;
+  }
+
+  .playground-preview-control:last-of-type {
+    margin: 0;
+  }
+
+  .playground-preview-control-label {
+    width: 10rem;
+  }
+
+  .playground-preview-control .ui-checkbox {
+    padding: 0 !important;
+  }
+
+  .playground-preview-control .ui-checkbox .ui-icon {
+    margin-left: -0.3rem;
+  }
+
+  .playground-banner {
+    display: block;
+  }
+
+  .playground-banner-rail-title {
+    display: block;
+    margin: 1.5rem -1rem 0;
+    padding: 1rem 1rem 0 1rem;
+    border-top: 1px solid #ddd;
+  }
+}

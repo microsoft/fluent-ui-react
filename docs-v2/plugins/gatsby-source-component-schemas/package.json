@@ -1,0 +1,8 @@
+{
+  "name": "gatsby-source-component-schemas",
+  "version": "1.0.0",
+  "repository": "git@github.com:davezuko/standard-ui-docs",
+  "author": "David Zukowski <dazukows@microsoft.com>",
+  "license": "MIT",
+  "main": "gatsby-node.js"
+}

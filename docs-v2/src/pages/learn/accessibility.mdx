@@ -1,0 +1,165 @@
+---
+title: Accessibility
+description: See how Stardust's built-in high contrast themes, screen reader support, and other accessibility features ensure every user has a great experience.
+order: 3
+---
+
+Stardust components follow WAI-ARIA 1.1 authoring practises . They can be easily composed into accesible experiences with correct keyboard navigation, screen reader support, high contrast theme and zooming.
+
+Stardust introduces the concept of accessibility behaviors which are responsible for translating the natural Stardust API into correct ARIA roles, attributes and keyboard key handlers. Default behaviors can be overriden and customized.
+
+The consumer of the library should generally be shielded from the intricates of applying the correct ARIA roles, testing on multiple screen reader / os combinations. This allows spending more time on the usability aspects of accessibility.
+
+Following steps help to design an accessible user experience:
+
+- decompose UI to parts and identify components, variants and behaviors to use
+- define usage of headings and landmarks
+- verify usage of color and contrast to convey information
+- define tab order and arrow key navigation
+- specify labels, especially for components without textual information (icon only buttons) and for containers (menus, toolbars and so on)
+- specify texts for state change announcements (number of available items in dropdown, error messages, confirmations, ...)
+- identify UI parts that appear on hover or focus and specify keyboard and screen reader interaction with them
+  list cases when focus needs to be moved programatically (if parts of the UI are appearing/disappearing or other cases)
+- list cases when focus needs to be trapped in sections of the UI (for dialogs and popups or for hierarchical navigation)
+- if extending existing functionality, how does it fit into current experience with regards to discoverability, interaction, keyboard navigation and screen reader navigation?
+
+## Out of Scope
+
+Internationalization, globalization, keyboard shortcuts and language detection are deliberately not part of Stardust and should be handled by the hosting application.
+
+Making an app / page accessible
+Besides component level accessibility there are application / page level considerations, mostly regarding the logical structure. Follow ARIA Landmarks Example to identify and implement page areas.
+
+In some cases, ARIA attributes need to be provided by the consumer of Stardust if the required information cannot be derived from the components.
+
+Focusable elements that do not contain any textual information need to be labelled so that the screen reader can present them to the user. In addition to that, information that is relevant to the screen reader user only can be added to the label:
+
+```jsx
+<>
+  <Button icon="envelope" />
+  <Button icon="envelope" aria-label="Send message" />
+  <Radio aria-label="Include history from the past day. Press TAB to change the number of days." />
+</>
+```
+
+Most typical examples are aria-label, aria-labelledby and title attributes. In some cases the values need to be dynamically changed based on the state of the component/application.
+
+Semantic HTML
+While Stardust goes a long way in making the application accessible by default, it does build on having correct semantic HTML as the base.
+
+One way to look at this is that by looking at the HTML, you should immediately be able to see what the function is on every part of the page. For example,
+
+```jsx
+<Button aria-label="Download file">
+  <Icon name="download" />
+</Button>
+```
+
+This is a simple example, clearly here the intent is to display a button with an icon labelled 'Download'. HTML representation is semantically correct and specifies essentialaria-\* attributes:
+
+```html
+<button class="ui-button" aria-label="Download file">
+  <i class="ui-icon" aria-hidden="true"></i>
+</button>
+```
+
+Although we highly recommend using semantically correct HTML elements, it is possible to render a `<Button>` component as `<div>`, for example, and remain semantic by provided out of the box role attributes.
+
+```jsx
+<Button as="div" aria-label="Download file">
+  <Icon name="download" />
+</Button>
+```
+
+Attribute role="button" is added to button container:
+
+```html
+<div class="ui-button" role="button" aria-label="Download file">
+  <i class="ui-icon" aria-hidden="true"></i>
+</div>
+```
+
+Basic rules for semantically correct HTML:
+
+- Preserve DOM order and put elements in their correct position - use css to style appearance, not position
+- Use appropriate semantic elements (for example `<table>` for a table, ul and lifor a list)
+- Use appropriate roles and aria-\* attributes
+- Design Considerations
+- Having a clear idea of how users would use the keyboard and screen readers to navigate through your app before development starts is critical to both getting the ordering of components right and choosing the correct behaviors. For example
+
+How does the user expect to navigate this? It looks a bit similar to a breadcrumb-like control, but the final element isn't focusable. So should we follow the ARIA recommendations for breadcrumbs or do something else? Both 'Stardust UI' and the '...' menu are actionable, so one approach is for focus to first land on 'Stardust UI', and then when you press Tab to move to '...'. Alternatively, this could be regarded as one control and you would navigate within the control using arrow keys / Enter / Escape and pressing Tab would move you to the next area. When you land on the control in both cases the screen reader needs to give context and announce the team and channel and that there are options available.
+
+Similarly, the controls
+
+could be implemented as separate controls, so you would navigate between them with Tab. Or they could be grouped together to behave as a toolbar. The first approach has advantages that blind users would have awareness of all the controls available to them, but at the expense of having to press Tab multiple times to move around the application.
+
+These types of decisions are ultimately what will make the application easy or hard for users to navigate - and although Stardust make this easier to change than pure html implementations, it is still costly in terms of developer time to correctly make these types of changes later.
+
+Our strong recommendation here is to have clear accessibility designs and example user flows as early in the design process as possible.
+
+Keyboard Navigation
+The ability to navigate and interact with the application without a mouse is something that most now take for granted. It's often easier for users to select a particular item in a list using arrow keys, rather than attempting to select with the pointing device for example.
+
+Tabbing and arrow key navigation
+The Tab key is used to move between focusable elements, and many users are familiar with this behavior as they, for example, move between fields in form using Tab. This is provided by the browser and for simple applications may be sufficient.
+
+However, for complex applications, particularly those which display large amounts of actionable data on the screen the number of 'focusable' elements can become huge and the process of moving between them with Tab becomes unusable. This can be solved by breaking the application up into 'Zones', and the user navigates with the Tab key between the zones, and between the actionable elements with navigation keys. Stardust uses Focus Zones both within it's own library components and as a component that can be added by the user.
+
+Virtual Screen Reader Navigation
+Screen readers use different mode of keyboard navigation. They allow the user to navigate using their virtual navigation methods and/or list different types of elements (headings, buttons, menus). Every screen reader has its own implementation of virtual navigation, but they all operate based on the ARIA roles and attributes. Stardust will render these attributes based on the Accessibility Behaviors of the component.
+
+Accessibility Behaviors
+In Stardust, accessibility behaviors encapsulate keyboard navigation and screen reader navigation. They essentially add ARIA roles, ARIA attributes and event handlers. The idea is to compose visual components and apply a behavior on top of them to achieve desired keyboard or screen reader navigation. Users can override these and provide their own roles and attributes by changing the behavior applied. Read more about Accessibility Behaviors.
+
+Focus Zone
+Focus zones allow the Tab navigation to be broken down into smaller parts, so that user can use the tab key to navigate between higher level components (for example tool bars, menus, lists) and use arrow key navigation within these higher level components (buttons in a toolbar, items in a list). Read more about FocusZone.
+
+Focus Trap Zone
+FocusTrapZone is used to grab and trap the focus inside an HTML element. Currently can be used only in Popup and Dialog components. Pressing TAB key will circle focus within the inner focusable elements of the FocusTrapZone. For example, when Popup opens, we want the focus to go inside Popup and trap there. Read more about FocusTrapZone.
+
+Auto Focus Zone
+AutoFocusZone is used to focus inner element on mount. Currently can be used in Popup. For example, when we want to focus inner element in Popup when it mounts, but still without focus trap. Read more about AutoFocusZone.
+
+Focus indicator
+When a user is navigating through the application using the keyboard, it's important to make the element that currently has focus clearly visible, so the users can see where they are on the page. This is handled in Stardust by focus indicator functionality. Focus indicator will be displayed only if the application is in keyboard mode. Application switches to keyboard mode when a key relevant to navigation is pressed. It disables keyboard mode on mouse click events.
+
+The implementation and requirements on the consuming application/experience are work in progress.
+
+Right Click Support
+Screen reader has to make the user aware about the presence of the secondary action by a short meaningful label or description on the trigger element.
+
+Elements that appear on hover over another element
+Tooltips, popups and similar elements might appear only when the trigger element is hovered by mouse. Users using keyboard or screen readers to navigate are not able to hover the trigger element. Therefore such elements need to be visible also when the trigger element is in focused state.
+
+Screen Readers
+Textual Representation
+There are multiple ways (aria-label, aria-labelledby, title) to set the text that is announced by screen readers. Many times, the correct text will be read by the reader without any additional work. However, if you do need to customize behavior, then ARIA attributes can be passed to components as properties.
+
+There are cases when passing of the attributes is required. For example an icon-only button needs to have textual representation. It depends on the use case which attribute needs to be used:
+
+title attribute represents the text that is shown as a tooltip on hover, screen readers also read this text when the element is focused
+aria-label allows the user to add custom text that the screen reader will read on focus. There might be scenarios where the information read by the screen reader needs to be different than the information that comes from the visual representation of the component/element
+aria-labelledby is similar to aria-label, but is only a reference to a different element present in DOM.
+Stardust does not do any assumption and does not try to use the most appropriate option from these three. Instead, it is up to the user to decide which option fits best.
+
+Example:
+
+```jsx
+<Button icon="book" aria-label="Confirm booking" primary />
+```
+
+Rendered HTML:
+
+```jsx
+<button class="ui-button" aria-label="Confirm booking">
+  <span class="ui-icon" color="white"></span>
+</button>
+```
+
+- **Live Regions** — Out of scope for now. Can be used react-aria-live library for that purpose.
+- **High Contrast** — There will be a standard high contrast theme. Additionally, the DocSite can be used to test individual components work in HC mode and achieve sufficient clarity for partially sighted.
+- **Zoom** — Stardust components are tested zoomed up to 200%.
+
+```
+
+```

@@ -1,0 +1,33 @@
+[data-theme="dark"] {
+  --sui-color: #fff;
+  --sui-accent-color: #aba4f7;
+  --sui-accent-color-foreground: #fff;
+  --sui-accent-color-background: rgba(178, 174, 255, 0.5);
+  --sui-heading-background: rgba(178, 174, 255, 0.75);
+  --sui-background: rgb(50, 50, 50);
+  --sui-shadow-color: rgb(30, 30, 30);
+  --sui-link-color: #fff;
+
+  --sui-rail-background: rgb(60, 60, 60);
+
+  --sui-navbar-background: rgb(35, 35, 35);
+
+  --sui-card-background: #201f1f;
+  --sui-card-border-color: #666;
+  --sui-card-footer-background: rgb(60, 60, 60);
+
+  --sui-divider-color: #555;
+
+  --sui-search-background: rgb(55, 55, 55);
+  --sui-search-color: #eee;
+  --sui-search-placeholder-color: #ccc;
+
+  --sui-playground-banner-background: rgb(30, 30, 30);
+
+  --sui-table-color: #fff;
+  --sui-table-background: rgb(35, 35, 35);
+  --sui-table-border-color: var(--sui-card-border-color);
+  --sui-table-header-background: rgb(30, 30, 30);
+  --sui-table-cell-border-color: var(--sui-card-border-color);
+  --sui-table-striped-row-background: rgb(45, 45, 45);
+}

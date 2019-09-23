@@ -1,0 +1,9 @@
+{
+  "name": "@standard-ui-docs/prop-table",
+  "version": "1.0.0",
+  "repository": "git@github.com:davezuko/stardust-ui-docs",
+  "author": "David Zukowski <dazukows@microsoft.com>",
+  "license": "MIT",
+  "main": "index.js",
+  "sideEffects": ["*.css"]
+}

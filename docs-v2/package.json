@@ -1,0 +1,61 @@
+{
+  "name": "stardust-ui-docs",
+  "version": "1.0.0",
+  "repository": "git@github.com:davezuko/stardust-ui-docs",
+  "author": "David Zukowski <dazukows@microsoft.com>",
+  "license": "MIT",
+  "sideEffects": ["*.css"],
+  "scripts": {
+    "build": "gatsby build",
+    "start": "gatsby develop --port 3000",
+    "serve": "gatsby serve",
+    "lint": "eslint .",
+    "test-ci": "node tools/run-ci-tests.js"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "prettier": {
+    "semi": false,
+    "bracketSpacing": false
+  },
+  "devDependencies": {
+    "@mdx-js/mdx": "^1.5.0",
+    "@mdx-js/react": "^1.5.0",
+    "eslint-config-react-app": "^5.0.1",
+    "express": "^4.17.1",
+    "front-matter": "^3.0.2",
+    "gatsby": "^2.15.28",
+    "gatsby-cli": "^2.7.53",
+    "gatsby-image": "^2.2.23",
+    "gatsby-plugin-alias-imports": "^1.0.5",
+    "gatsby-plugin-catch-links": "^2.1.12",
+    "gatsby-plugin-manifest": "^2.2.20",
+    "gatsby-plugin-mdx": "^1.0.46",
+    "gatsby-plugin-offline": "^3.0.11",
+    "gatsby-plugin-react-helmet": "^3.1.10",
+    "gatsby-plugin-remove-trailing-slashes": "^2.1.9",
+    "gatsby-plugin-sharp": "^2.2.27",
+    "gatsby-plugin-sitemap": "^2.2.16",
+    "gatsby-plugin-typescript": "^2.1.11",
+    "gatsby-remark-prismjs": "^3.3.16",
+    "gatsby-source-filesystem": "^2.1.28",
+    "gatsby-transformer-remark": "^2.6.26",
+    "gatsby-transformer-sharp": "^2.2.19",
+    "prettier": "^1.18.2",
+    "ts-node": "^8.4.1",
+    "worker-farm": "^1.7.0"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.23",
+    "@fortawesome/free-regular-svg-icons": "^5.11.0",
+    "@fortawesome/free-solid-svg-icons": "^5.11.0",
+    "@fortawesome/react-fontawesome": "^0.1.4",
+    "normalize.css": "^8.0.1",
+    "prismjs": "^1.17.1",
+    "react": "^16.9.0",
+    "react-ace": "^7.0.4",
+    "react-dom": "^16.9.0",
+    "react-helmet": "^5.2.1"
+  }
+}

@@ -1,0 +1,3 @@
+[build]
+publish = "docs-v2/public"
+command = "cd docs-v2 && yarn build"
