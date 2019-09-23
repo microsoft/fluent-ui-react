@@ -3,15 +3,15 @@ import { createComponent, Flex } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 
-const componentExampleKnobsStyles = {
+const knobsSnippetStyles = {
   background: 'whitesmoke',
   color: '#777',
   lineHeight: '1.5',
   padding: `5px 10px`,
 }
 
-const ComponentExampleKnobs = createComponent({
-  displayName: 'ComponentExampleKnobs',
+const KnobsSnippet = createComponent({
+  displayName: 'KnobsSnippet',
   render: ({ children, stardust }) => {
     const knobs = useKnobValues()
     const values = _.fromPairs(knobs.map(knob => [knob.name, knob.value]))
@@ -36,8 +36,8 @@ const ComponentExampleKnobs = createComponent({
   },
 })
 
-ComponentExampleKnobs.defaultProps = {
-  styles: componentExampleKnobsStyles,
+KnobsSnippet.defaultProps = {
+  styles: knobsSnippetStyles,
 }
 
-export default ComponentExampleKnobs
+export default KnobsSnippet

@@ -1,6 +1,7 @@
 import { Accessibility } from '../../types'
 import * as keyboardKey from 'keyboard-key'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
+import treeTitleBehavior from './treeTitleBehavior'
 
 /**
  * @description
@@ -55,6 +56,9 @@ const treeItemBehavior: Accessibility<TreeItemBehaviorProps> = props => ({
         keyCombinations: [{ keyCode: keyboardKey['*'] }],
       },
     },
+  },
+  childBehaviors: {
+    title: treeTitleBehavior,
   },
 })
 

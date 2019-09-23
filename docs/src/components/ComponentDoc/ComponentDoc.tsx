@@ -6,7 +6,6 @@ import { getFormattedHash } from 'docs/src/utils'
 import ComponentDocLinks from './ComponentDocLinks'
 import ComponentDocSee from './ComponentDocSee'
 import { ComponentExamples } from './ComponentExamples'
-import { ComponentUsage } from './ComponentUsage'
 import ComponentProps from './ComponentProps'
 import { ComponentDocAccessibility } from './ComponentDocAccessibility'
 import { ThemeContext } from 'docs/src/context/ThemeContext'
@@ -31,20 +30,19 @@ type ComponentDocProps = {
 type ComponentDocState = {
   activePath: string
   currentTabIndex: number
-  defaultPropComponent: string
 }
 
 class ComponentDoc extends React.Component<ComponentDocProps, ComponentDocState> {
   state = {
     activePath: '',
-    defaultPropComponent: '',
+    propComponent: '',
     currentTabIndex: 0,
   }
 
   tabRegex = new RegExp(/[^\/]*$/)
 
-  getTabIndexOrRedirectToDefault(tab: string) {
-    const lowercaseTabs = _.map(this.props.tabs, tab => tab.toLowerCase())
+  getTabIndexOrRedirectToDefault(tab: string, tabs) {
+    const lowercaseTabs = _.map(tabs, tab => tab.toLowerCase())
     const index = lowercaseTabs.indexOf(tab)
     if (index === -1) {
       const { history, location } = this.props
@@ -61,24 +59,22 @@ class ComponentDoc extends React.Component<ComponentDocProps, ComponentDocState>
   }
 
   componentWillMount() {
-    const { history, location } = this.props
+    const { history, location, tabs } = this.props
     const tab = location.pathname.match(this.tabRegex)[0]
-    const tabIndex = this.getTabIndexOrRedirectToDefault(tab)
+    const tabIndex = this.getTabIndexOrRedirectToDefault(tab, tabs)
     this.setState({ currentTabIndex: tabIndex })
 
     if (location.hash) {
       const activePath = getFormattedHash(location.hash)
       history.replace({ ...history.location, hash: activePath })
       this.setState({ activePath })
-      if (this.props.tabs[tabIndex] === 'Props') {
-        this.setState({ defaultPropComponent: activePath })
-      }
     }
   }
 
-  componentWillReceiveProps({ info, location }) {
+  componentWillReceiveProps({ info, location, tabs }) {
     const tab = location.pathname.match(this.tabRegex)[0]
-    this.setState({ currentTabIndex: this.getTabIndexOrRedirectToDefault(tab) })
+    const tabIndex = this.getTabIndexOrRedirectToDefault(tab, tabs)
+    this.setState({ currentTabIndex: tabIndex })
 
     if (info.displayName !== this.props.info.displayName) {
       this.setState({ activePath: undefined })
@@ -110,11 +106,6 @@ class ComponentDoc extends React.Component<ComponentDocProps, ComponentDocState>
     this.setState({ currentTabIndex: newIndex })
   }
 
-  onPropComponentSelected = (e, props) => {
-    const { history } = this.props
-    history.push({ ...history.location, hash: props.value })
-  }
-
   render() {
     const getA11ySelectionMessage = {
       onAdd: item => `${item} has been selected.`,
@@ -143,7 +134,7 @@ class ComponentDoc extends React.Component<ComponentDocProps, ComponentDocState>
     }
 
     const { info, tabs } = this.props
-    const { activePath, currentTabIndex, defaultPropComponent } = this.state
+    const { activePath, currentTabIndex } = this.state
 
     return (
       <div style={{ padding: '20px' }}>
@@ -198,12 +189,7 @@ class ComponentDoc extends React.Component<ComponentDocProps, ComponentDocState>
         {this.getCurrentTabTitle() === 'Accessibility' && <ComponentDocAccessibility info={info} />}
 
         {this.getCurrentTabTitle() === 'Props' && (
-          <ComponentProps
-            displayName={info.displayName}
-            props={info.props}
-            defaultComponentProp={defaultPropComponent}
-            onPropComponentSelected={this.onPropComponentSelected}
-          />
+          <ComponentProps displayName={info.displayName} props={info.props} />
         )}
 
         {this.getCurrentTabTitle() === 'Definition' && (
@@ -232,31 +218,6 @@ class ComponentDoc extends React.Component<ComponentDocProps, ComponentDocState>
               </div>
             </Grid>
           </>
-        )}
-
-        {this.getCurrentTabTitle() === 'Usage' && (
-          <Grid columns="auto 300px" styles={{ justifyContent: 'normal', justifyItems: 'stretch' }}>
-            <div>
-              <ExampleContext.Provider
-                value={{
-                  activeAnchorName: activePath,
-                  onExamplePassed: this.handleExamplePassed,
-                }}
-              >
-                <ComponentUsage displayName={info.displayName} />
-              </ExampleContext.Provider>
-            </div>
-            {/* TODO: bring back the right floating menu
-            <Box styles={{ width: '25%', paddingLeft: '14px' }}>
-              <ComponentSidebar
-                activePath={activePath}
-                displayName={info.displayName}
-                examplesRef={examplesRef}
-                onItemClick={this.handleSidebarItemClick}
-              />
-            </Box>
-          */}
-          </Grid>
         )}
 
         <div style={exampleEndStyle}>

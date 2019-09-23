@@ -1,4 +1,4 @@
-import { knobComponents } from '@stardust-ui/code-sandbox'
+import { knobComponents, KnobsSnippet } from '@stardust-ui/code-sandbox'
 import {
   CopyToClipboard,
   KnobInspector,
@@ -12,7 +12,6 @@ import { RouteComponentProps, withRouter } from 'react-router-dom'
 import * as copyToClipboard from 'copy-to-clipboard'
 import qs from 'qs'
 import SourceRender from 'react-source-render'
-import VisibilitySensor from 'react-visibility-sensor'
 
 import { examplePathToHash, getFormattedHash, scrollToAnchor } from 'docs/src/utils'
 import { constants } from 'src/lib'
@@ -25,8 +24,6 @@ import ComponentSourceManager, {
   ComponentSourceManagerRenderProps,
 } from '../ComponentSourceManager'
 import { ThemeInput } from 'packages/react/src/themes/types'
-import ComponentExampleKnobs from './ComponentExampleKnobs'
-import ExamplePlaceholder from '../../ExamplePlaceholder'
 import VariableResolver from 'docs/src/components/VariableResolver/VariableResolver'
 import ComponentExampleVariables from 'docs/src/components/ComponentDoc/ComponentExample/ComponentExampleVariables'
 
@@ -51,7 +48,6 @@ interface ComponentExampleState {
   showRtl: boolean
   showTransparent: boolean
   showVariables: boolean
-  wasEverVisible: boolean
 }
 
 const childrenStyle: React.CSSProperties = {
@@ -155,7 +151,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       showRtl: false,
       showTransparent: false,
       showVariables: false,
-      wasEverVisible: false,
       ...(isActiveHash && ComponentExample.getStateFromURL(props)),
       ...(/\.rtl$/.test(props.examplePath) && { showRtl: true }),
     }
@@ -220,22 +215,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     if (!this.kebabExamplePath) this.kebabExamplePath = _.kebabCase(this.props.examplePath)
 
     return this.kebabExamplePath
-  }
-
-  renderElement = (element: React.ReactElement<any>) => {
-    const { showRtl, showTransparent, componentVariables } = this.state
-    const newTheme: ThemeInput = {
-      componentVariables: {
-        ...componentVariables,
-        ProviderBox: { background: showTransparent ? 'initial' : undefined },
-      },
-    }
-
-    return (
-      <Provider theme={newTheme} rtl={showRtl}>
-        {element}
-      </Provider>
-    )
   }
 
   getDisplayName = () => this.props.examplePath.split('/')[1]
@@ -445,18 +424,16 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     this.setState({ usedVariables: variables })
   }
 
-  handleVisibility = (willBeVisible: boolean) => {
-    if (willBeVisible && !this.state.wasEverVisible) this.setState({ wasEverVisible: true })
-  }
-
   render() {
     const {
+      component,
       children,
       currentCode,
       currentCodeLanguage,
       currentCodePath,
       description,
       title,
+      wasCodeChanged,
     } = this.props
     const {
       anchorName,
@@ -466,126 +443,136 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       showRtl,
       showTransparent,
       showVariables,
-      wasEverVisible,
     } = this.state
 
+    const newTheme: ThemeInput = {
+      componentVariables: {
+        ...componentVariables,
+        ProviderBox: { background: showTransparent ? 'initial' : undefined },
+      },
+    }
+    const exampleStyles = {
+      padding: '2rem',
+      ...(showTransparent && {
+        backgroundImage:
+          'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
+        backgroundRepeat: 'repeat',
+      }),
+    }
+
     return (
-      <VisibilitySensor
-        delayedCall={!wasEverVisible}
-        partialVisibility
-        onChange={this.handleVisibility}
-      >
-        <Flex column>
-          <Flex.Item>
-            <KnobProvider components={knobComponents}>
-              {/* Ensure anchor links don't occlude card shadow effect */}
-              <div id={anchorName} style={{ position: 'relative', bottom: '1rem' }} />
+      <Flex column>
+        <Flex.Item>
+          <KnobProvider components={knobComponents}>
+            {/* Ensure anchor links don't occlude card shadow effect */}
+            <div id={anchorName} style={{ position: 'relative', bottom: '1rem' }} />
 
-              <ExamplePlaceholder visible={wasEverVisible}>
-                <Segment styles={{ borderBottom: '1px solid #ddd' }}>
-                  <Flex>
-                    <ComponentExampleTitle description={description} title={title} />
+            <Segment styles={{ borderBottom: '1px solid #ddd' }}>
+              <Flex>
+                <ComponentExampleTitle description={description} title={title} />
 
-                    <Flex.Item push>
-                      <ComponentControls
-                        anchorName={anchorName}
-                        exampleCode={currentCode}
-                        exampleLanguage={currentCodeLanguage}
-                        examplePath={currentCodePath}
-                        onShowCode={this.handleShowCodeClick}
-                        onCopyLink={this.handleDirectLinkClick}
-                        onShowRtl={this.handleShowRtlClick}
-                        onShowVariables={this.handleShowVariablesClick}
-                        onShowTransparent={this.handleShowTransparentClick}
-                        showCode={showCode}
-                        showRtl={showRtl}
-                        showVariables={showVariables}
-                        showTransparent={showTransparent}
-                      />
-                    </Flex.Item>
-                  </Flex>
+                <Flex.Item push>
+                  <ComponentControls
+                    anchorName={anchorName}
+                    exampleCode={currentCode}
+                    exampleLanguage={currentCodeLanguage}
+                    examplePath={currentCodePath}
+                    onShowCode={this.handleShowCodeClick}
+                    onCopyLink={this.handleDirectLinkClick}
+                    onShowRtl={this.handleShowRtlClick}
+                    onShowVariables={this.handleShowVariablesClick}
+                    onShowTransparent={this.handleShowTransparentClick}
+                    showCode={showCode}
+                    showRtl={showRtl}
+                    showVariables={showVariables}
+                    showTransparent={showTransparent}
+                  />
+                </Flex.Item>
+              </Flex>
 
-                  <KnobInspector>
-                    {knobs => knobs && <ComponentExampleKnobs>{knobs}</ComponentExampleKnobs>}
-                  </KnobInspector>
-                </Segment>
-              </ExamplePlaceholder>
+              <KnobInspector>
+                {knobs => knobs && <KnobsSnippet>{knobs}</KnobsSnippet>}
+              </KnobInspector>
+            </Segment>
 
-              {children && <Segment styles={childrenStyle}>{children}</Segment>}
+            {children && <Segment styles={childrenStyle}>{children}</Segment>}
 
-              <ExamplePlaceholder visible={wasEverVisible} size="larger">
-                <SourceRender
-                  babelConfig={babelConfig}
-                  source={currentCode}
-                  renderHtml={false}
-                  resolver={importResolver}
-                  wrap={this.renderElement}
-                  unstable_hot
-                >
-                  {({ element, error }) => (
-                    <>
-                      <Segment
-                        className={`rendered-example ${this.getKebabExamplePath()}`}
-                        styles={{
-                          padding: '2rem',
-                          ...(showTransparent && {
-                            backgroundImage:
-                              'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
-                            backgroundRepeat: 'repeat',
-                          }),
-                        }}
-                      >
+            {showCode || wasCodeChanged ? (
+              <SourceRender
+                babelConfig={babelConfig}
+                source={currentCode}
+                renderHtml={false}
+                resolver={importResolver}
+                unstable_hot
+              >
+                {({ element, error }) => (
+                  <>
+                    <Segment
+                      className={`rendered-example ${this.getKebabExamplePath()}`}
+                      styles={exampleStyles}
+                    >
+                      <Provider theme={newTheme} rtl={showRtl}>
                         <VariableResolver onResolve={this.handleVariableResolve}>
                           {element}
                         </VariableResolver>
-                      </Segment>
+                      </Provider>
+                    </Segment>
 
-                      <LogInspector silent />
+                    <LogInspector silent />
 
-                      {showCode && (
-                        <div
-                          style={{
-                            boxShadow: `0 0 0 0.5em ${error ? ERROR_COLOR : 'transparent'}`,
-                          }}
-                        >
-                          {this.renderSourceCode()}
-                          {error && (
-                            <pre
-                              style={{
-                                position: 'sticky',
-                                bottom: 0,
-                                padding: '1em',
-                                // don't block viewport
-                                maxHeight: '50vh',
-                                overflowY: 'auto',
-                                color: '#fff',
-                                background: ERROR_COLOR,
-                                whiteSpace: 'pre-wrap',
-                                // above code editor text :/
-                                zIndex: 4,
-                              }}
-                            >
-                              {error.toString()}
-                            </pre>
-                          )}
-                        </div>
-                      )}
-                    </>
-                  )}
-                </SourceRender>
-
-                {showVariables && (
-                  <ComponentExampleVariables
-                    onChange={this.handleVariableChange}
-                    overriddenVariables={componentVariables}
-                    usedVariables={usedVariables}
-                  />
+                    {showCode && (
+                      <div
+                        style={{
+                          boxShadow: `0 0 0 0.5em ${error ? ERROR_COLOR : 'transparent'}`,
+                        }}
+                      >
+                        {this.renderSourceCode()}
+                        {error && (
+                          <pre
+                            style={{
+                              position: 'sticky',
+                              bottom: 0,
+                              padding: '1em',
+                              // don't block viewport
+                              maxHeight: '50vh',
+                              overflowY: 'auto',
+                              color: '#fff',
+                              background: ERROR_COLOR,
+                              whiteSpace: 'pre-wrap',
+                              // above code editor text :/
+                              zIndex: 4,
+                            }}
+                          >
+                            {error.toString()}
+                          </pre>
+                        )}
+                      </div>
+                    )}
+                  </>
                 )}
-              </ExamplePlaceholder>
-            </KnobProvider>
-          </Flex.Item>
-        </Flex>
-      </VisibilitySensor>
+              </SourceRender>
+            ) : (
+              <>
+                <Segment
+                  className={`rendered-example ${this.getKebabExamplePath()}`}
+                  styles={exampleStyles}
+                >
+                  {React.createElement(component)}
+                </Segment>
+                <LogInspector silent />
+              </>
+            )}
+
+            {showVariables && (
+              <ComponentExampleVariables
+                onChange={this.handleVariableChange}
+                overriddenVariables={componentVariables}
+                usedVariables={usedVariables}
+              />
+            )}
+          </KnobProvider>
+        </Flex.Item>
+      </Flex>
     )
   }
 }

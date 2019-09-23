@@ -100,6 +100,7 @@ import messageSeen from './messageSeen'
 import mic from './mic'
 import micOff from './micOff'
 import more from './more'
+import notes from './notes'
 import oneDrive from './oneDrive'
 import microsoftStream from './microsoftStream'
 import userPhone from './userPhone'
@@ -249,6 +250,7 @@ export default {
   menu,
   'message-seen': messageSeen,
   mic,
+  notes,
   'speaker-mute': speakerMute,
   hand,
   'mic-off': micOff,
