@@ -7,7 +7,7 @@ const tooltipStyles: ComponentSlotStylesPrepared<TooltipProps, TooltipVariables>
 
   content: ({ variables: v, props: p }): ICSSInJSStyle => ({
     ...(!p.open && {
-      visibility: 'hidden',
+      opacity: 0,
     }),
     zIndex: v.zIndex,
     position: 'absolute',
