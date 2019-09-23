@@ -56,7 +56,7 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         },
 
         ':active': {
-          ...createAnimationStyles('scaleButton', theme),
+          ...createAnimationStyles('scaleDownSoft', theme),
         },
 
         ':focus': {

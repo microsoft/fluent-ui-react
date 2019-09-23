@@ -93,7 +93,7 @@ const scaleAnimations = {
     timingFunction: easeIn,
     fillMode: 'forwards',
   },
-  scaleButton: {
+  scaleDownSoft: {
     keyframe: {
       '0%': {
         transform: 'scale(1)',
