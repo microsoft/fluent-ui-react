@@ -46,7 +46,7 @@ const getValues = (value, predicate) => {
 }
 
 class ScrollToBottom extends React.Component<any> {
-  ref = React.createRef()
+  ref = React.createRef<HTMLDivElement>()
 
   componentDidMount() {
     this.scrollToBottom()

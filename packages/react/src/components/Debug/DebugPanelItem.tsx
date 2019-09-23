@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import DebugPanelData from './DebugPanelData'
-import { find } from './utils'
+import { filter } from './utils'
 
 const DebugPanelItem = props => {
   const [value, setValue] = React.useState('')
@@ -21,25 +21,6 @@ const DebugPanelItem = props => {
     mergedThemes.push(_.merge({}, mergedThemes[i - 1], data[i - 1]))
   }
 
-  const filterR = (search, data) => {
-    let result = false
-
-    Object.keys(data).forEach(key => {
-      const value = data[key]
-
-      if (find(data, key, search)) {
-        result = true
-      }
-
-      // If the value is object invoke again
-      if (typeof value === 'object' && filterR(search, value)) {
-        result = true
-      }
-    })
-
-    return result
-  }
-
   return (
     <>
       <input
@@ -48,26 +29,7 @@ const DebugPanelItem = props => {
         placeholder="Filter"
       />
       {data.map((theme, idx) => {
-        const filteredTheme =
-          value === ''
-            ? theme
-            : Object.keys(theme)
-                .filter(key => {
-                  if (find(theme, key, value)) {
-                    return true
-                  }
-
-                  // if the value is object invoke again
-                  if (typeof theme[key] === 'object' && theme[key] !== null) {
-                    return filterR(value, theme[key])
-                  }
-
-                  return false
-                })
-                .reduce((obj, key) => {
-                  obj[key] = theme[key]
-                  return obj
-                }, {})
+        const filteredTheme = value === '' ? theme : filter(theme, value)
 
         return (
           <pre
