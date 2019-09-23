@@ -49,11 +49,6 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         borderColor: v.borderColor,
         boxShadow: v.boxShadow,
 
-        ...createAnimationStyles('fadeEnterMedium', theme),
-
-        // transform: 'translateZ(0)',
-        // transition: 'all .1s cubic-bezier(.78, 0, .22, 1)',
-
         ':hover': {
           color: v.colorHover,
           backgroundColor: v.backgroundColorHover,
@@ -61,7 +56,7 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         },
 
         ':active': {
-          transform: 'scale(.96)',
+          ...createAnimationStyles('scaleButton', theme),
         },
 
         ':focus': {
