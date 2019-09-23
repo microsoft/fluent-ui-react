@@ -78,7 +78,8 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
     }
 
     const pointerTargetRefElement = pointerTargetRef && pointerTargetRef.current
-    const popperHasScrollableParent = getScrollParent(contentRef.current) !== document.body
+    const scrollParentElement = getScrollParent(contentRef.current)
+    const popperHasScrollableParent = scrollParentElement !== scrollParentElement.ownerDocument.body
 
     const modifiers: PopperJS.Modifiers = _.merge(
       { preventOverflow: { padding: 0 } },
