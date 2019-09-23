@@ -501,7 +501,10 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
               <SourceRender
                 babelConfig={babelConfig}
                 source={currentCode}
-                renderHtml={false}
+                // Temporary workaround for:
+                // https://github.com/stardust-ui/react/issues/1952
+                // renderHtml={false}
+                renderHtml={showCode}
                 resolver={importResolver}
                 unstable_hot
               >
