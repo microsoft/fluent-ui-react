@@ -150,7 +150,7 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
           </Line>
         ))}
         <Line
-          indent={3 + parentNavs.length}
+          indent={3 + (parentNavs.length - 1)}
           active
           badge="selected"
           actionable

@@ -33,7 +33,13 @@ const DebugPanelItem: React.FC<DebugPanelItemProps> = props => {
     <>
       <input
         onChange={e => setValue(e.target.value)}
-        style={{ padding: '2px 4px', width: '100%', border: '1px solid #ccc', background: 'none' }}
+        style={{
+          padding: '2px 4px',
+          marginBottom: '4px',
+          width: '100%',
+          border: '1px solid #ccc',
+          background: 'none',
+        }}
         placeholder="Filter"
       />
       {data.map((theme, idx) => {
@@ -44,7 +50,7 @@ const DebugPanelItem: React.FC<DebugPanelItemProps> = props => {
             key={idx}
             style={{
               position: 'relative',
-              padding: '0.5em 0',
+              marginBottom: '4px',
               borderTop: idx > 0 ? '1px solid #ddd' : 'none',
             }}
           >
