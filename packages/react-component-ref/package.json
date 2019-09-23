@@ -1,7 +1,7 @@
 {
   "name": "@stardust-ui/react-component-ref",
   "description": "A set of components and utils to deal with React refs.",
-  "version": "0.38.0",
+  "version": "0.39.0",
   "author": "Oleksandr Fediashov <olfedias@microsoft.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
@@ -10,7 +10,7 @@
     "react-is": "^16.6.3"
   },
   "devDependencies": {
-    "@stardust-ui/internal-tooling": "^0.38.0",
+    "@stardust-ui/internal-tooling": "^0.39.0",
     "lerna-alias": "^3.0.3-0"
   },
   "files": [

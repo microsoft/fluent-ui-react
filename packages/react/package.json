@@ -1,15 +1,15 @@
 {
   "name": "@stardust-ui/react",
   "description": "A themable React component library.",
-  "version": "0.38.1",
+  "version": "0.39.0",
   "author": "Levi Thomason <me@levithomason.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "@stardust-ui/react-component-event-listener": "^0.38.0",
-    "@stardust-ui/react-component-nesting-registry": "^0.38.0",
-    "@stardust-ui/react-component-ref": "^0.38.0",
-    "@stardust-ui/react-proptypes": "^0.38.0",
+    "@stardust-ui/react-component-event-listener": "^0.39.0",
+    "@stardust-ui/react-component-nesting-registry": "^0.39.0",
+    "@stardust-ui/react-component-ref": "^0.39.0",
+    "@stardust-ui/react-proptypes": "^0.39.0",
     "classnames": "^2.2.5",
     "downshift": "~3.2.10",
     "fast-memoize": "^2.5.1",
@@ -28,7 +28,7 @@
     "react-resize-detector": "^4.2.0"
   },
   "devDependencies": {
-    "@stardust-ui/internal-tooling": "^0.38.0",
+    "@stardust-ui/internal-tooling": "^0.39.0",
     "lerna-alias": "^3.0.3-0",
     "qs": "^6.8.0"
   },
