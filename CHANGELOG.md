@@ -19,6 +19,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixes
 - Fix comparison for `scrollParent` in `unstable_Popper` @layershifter ([#1959](https://github.com/stardust-ui/react/pull/1959))
+- Update Office brand icons in Teams theme with latest version @notandrew ([#1954](https://github.com/stardust-ui/react/pull/1954))
 
 <!--------------------------------[ v0.39.0 ]------------------------------- -->
 ## [v0.39.0](https://github.com/stardust-ui/react/tree/v0.39.0) (2019-09-23)
@@ -35,7 +36,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix styles for Teams theme for `Textarea` and add support for `inverted`, `fluid` and `resize` props @codepretty ([#1922](https://github.com/stardust-ui/react/pull/1922))
 - Fix `Dropdown` to properly accept `id` on `searchInput` @silviuavram ([#1938](https://github.com/stardust-ui/react/pull/1938))
 - Fix white flash when activating `Embed` component @lucivpav ([#1909](https://github.com/stardust-ui/react/pull/1909))
-- Update Office brand icons in Teams theme with latest version @notandrew ([#1954](https://github.com/stardust-ui/react/pull/1954))
 - Fix comparison of custom objects in `Dropdown` @lucivpav ([#1943](https://github.com/stardust-ui/react/pull/1943))
 - Fix make `tooltip` visible for screen reader @kolaps33 ([#1942](https://github.com/stardust-ui/react/pull/1942))
 
