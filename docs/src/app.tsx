@@ -1,11 +1,14 @@
 import * as React from 'react'
 import { hot } from 'react-hot-loader/root'
-import { Provider, themes } from '@stardust-ui/react'
+import { Provider, enableAccessibilityValidation, themes } from '@stardust-ui/react'
 
 import { mergeThemes } from 'src/lib'
 import { ThemeContext, ThemeContextData, themeContextDefaults } from './context/ThemeContext'
 import Routes from './routes'
 import { PerfDataProvider } from './components/ComponentDoc/PerfChart'
+
+// Experimental dev-time only accessibility attributes validation.
+enableAccessibilityValidation()
 
 class App extends React.Component<any, ThemeContextData> {
   // State also contains the updater function so it will

@@ -1,121 +1,340 @@
 {
   "version": "1.0",
-
   "constraints": {
     "$atomic": {
       "xpath": "not(boolean((.//*[@role and @role != 'none' and @role != 'presentation'] | .//a | .//area | .//button | .//input | .//object | .//select | .//textarea)[ancestor-or-self::*[@aria-hidden != 'true']]))",
       "description": "Component cannot contain other accessible components"
     },
-
     "$hasText": {
       "xpath": ".//text()[normalize-space(.) != '']",
       "description": "Component must contain text nodes"
     },
-
     "$existingIDs": {
       "js": "checkIdentifiers",
       "description": "Value must be space-separated list of existing element identifiers"
     }
   },
-
   "parameters": {
     "$label": {
       "one": [
         {
           "name": "label",
-          "attribute": "aria-label"
+          "attributes": [
+            {
+              "name": "aria-label"
+            }
+          ]
         },
         {
           "name": "labelledBy",
-          "attribute": "aria-labelledby",
-          "constraints": [{ "ref": "$existingIDs" }]
+          "attributes": [
+            {
+              "name": "aria-labelledby",
+              "constraints": [
+                {
+                  "ref": "$existingIDs"
+                }
+              ]
+            }
+          ]
         }
       ]
     },
-
     "$describedBy": {
       "name": "describedBy",
-      "attribute": "aria-describedby",
-      "constraints": [{ "ref": "$existingIDs" }]
-    },
-
-    "$checked": {
-      "name": "checked",
-      "attribute": "aria-checked",
-      "value": [
-        { "parameter": true, "attribute": "true" },
-        { "parameter": false, "attribute": "false" }
+      "attributes": [
+        {
+          "name": "aria-describedby",
+          "constraints": [
+            {
+              "ref": "$existingIDs"
+            }
+          ]
+        }
       ]
     },
-
+    "$disabled": {
+      "name": "disabled",
+      "attributes": [
+        {
+          "name": "disabled",
+          "value": [
+            {
+              "parameter": true,
+              "attribute": true
+            },
+            {
+              "parameter": false,
+              "attribute": false
+            }
+          ]
+        },
+        {
+          "name": "aria-disabled",
+          "value": [
+            {
+              "parameter": true,
+              "attribute": "true"
+            },
+            {
+              "parameter": false,
+              "attribute": "false"
+            }
+          ],
+          "optional": true
+        }
+      ]
+    },
+    "$disabled-custom": {
+      "name": "disabled",
+      "attributes": [
+        {
+          "name": "aria-disabled",
+          "value": [
+            {
+              "parameter": true,
+              "attribute": "true"
+            },
+            {
+              "parameter": false,
+              "attribute": false
+            }
+          ]
+        },
+        {
+          "name": "disabled",
+          "value": [
+            {
+              "parameter": true,
+              "attribute": true
+            },
+            {
+              "parameter": false,
+              "attribute": false
+            }
+          ],
+          "optional": true
+        }
+      ]
+    },
     "$tabbable": {
       "name": "tabbable",
-      "attribute": "tabindex",
-      "value": [{ "parameter": true, "attribute": "0" }, { "parameter": false, "attribute": "-1" }]
+      "attributes": [
+        {
+          "name": "tabindex",
+          "value": [
+            {
+              "parameter": true,
+              "attribute": "0"
+            },
+            {
+              "parameter": false,
+              "attribute": "-1"
+            }
+          ]
+        }
+      ]
+    },
+    "$hasPopup": {
+      "name": "hasPopup",
+      "attributes": [
+        {
+          "name": "aria-haspopup",
+          "value": [
+            {
+              "parameter": true,
+              "attribute": "true"
+            },
+            {
+              "parameter": false,
+              "attribute": false
+            }
+          ]
+        }
+      ]
     }
   },
-
   "attributes": {
     "$tabindex": {
       "name": "tabindex",
       "value": ["0", "-1"]
     }
   },
-
   "classes": {
     "Body": {
-      "assumptions": [{ "tag": "<body>" }],
-      "tags": { "<body>": {} }
+      "assumptions": [
+        {
+          "tag": "<body>"
+        }
+      ],
+      "tags": {
+        "<body>": {}
+      }
     },
-
     "Header1": {
       "assumptions": [
-        { "tag": "<h1>" },
+        {
+          "tag": "<h1>"
+        },
         {
           "tag": "<div>",
           "attributes": [
-            { "name": "role", "value": "heading" },
-            { "name": "aria-level", "value": "1" }
+            {
+              "name": "role",
+              "value": "heading"
+            },
+            {
+              "name": "aria-level",
+              "value": "1"
+            }
           ]
         }
       ],
-
-      "parameters": [{ "ref": "$label", "optional": { "ref": "$hasText" } }],
-
+      "parameters": [
+        {
+          "ref": "$label",
+          "optional": {
+            "ref": "$hasText"
+          }
+        }
+      ],
       "tags": {
         "<h1>": {},
         "<div>": {
           "attributes": [
-            { "name": "role", "value": "heading" },
-            { "name": "aria-level", "value": "1" }
+            {
+              "name": "role",
+              "value": "heading"
+            },
+            {
+              "name": "aria-level",
+              "value": "1"
+            }
           ]
         }
       }
     },
-
     "Button": {
       "assumptions": [
-        { "tag": "<button>" },
-        { "tag": "<div>", "attributes": [{ "name": "role", "value": "button" }] }
-      ],
-
-      "constraints": [{ "ref": "$atomic" }],
-
-      "parameters": [
-        { "ref": "$label", "optional": { "ref": "$hasText" } },
-        { "ref": "$describedBy", "optional": true },
-        { "ref": "$tabbable", "optional": true }
-      ],
-
-      "tags": {
-        "<button>": {},
-
-        "<input>": {
-          "attributes": [{ "name": "type", "value": ["button", "submit", "reset"] }]
+        {
+          "tag": "<button>"
         },
-
+        {
+          "tag": "<div>",
+          "attributes": [
+            {
+              "name": "role",
+              "value": "button"
+            }
+          ]
+        }
+      ],
+      "constraints": [
+        {
+          "ref": "$atomic"
+        }
+      ],
+      "parameters": [
+        {
+          "rel": "@label"
+        },
+        {
+          "ref": "$describedBy",
+          "optional": true
+        },
+        {
+          "rel": "@tabbable"
+        },
+        {
+          "rel": "@disabled"
+        },
+        {
+          "ref": "$hasPopup",
+          "optional": true
+        }
+      ],
+      "tags": {
+        "<button>": {
+          "parameters": {
+            "@label": {
+              "ref": "$label",
+              "optional": {
+                "ref": "$hasText"
+              }
+            },
+            "@tabbable": {
+              "ref": "$tabbable",
+              "optional": true
+            },
+            "@disabled": {
+              "ref": "$disabled",
+              "optional": true
+            }
+          },
+          "attributes": [
+            {
+              "name": "role",
+              "value": "button",
+              "optional": true
+            }
+          ]
+        },
+        "<input>": {
+          "parameters": {
+            "@label": {
+              "ref": "$label",
+              "optional": {
+                "xpath": "normalize-space(@value) != ''",
+                "description": "Component must contain value attribute"
+              }
+            },
+            "@tabbable": {
+              "ref": "$tabbable",
+              "optional": true
+            },
+            "@disabled": {
+              "ref": "$disabled",
+              "optional": true
+            }
+          },
+          "attributes": [
+            {
+              "name": "type",
+              "value": ["button", "submit", "reset"]
+            },
+            {
+              "name": "role",
+              "value": "button",
+              "optional": true
+            }
+          ]
+        },
         "<div>, <span>": {
-          "attributes": [{ "name": "role", "value": ["button"] }, { "ref": "$tabindex" }]
+          "parameters": {
+            "@label": {
+              "ref": "$label",
+              "optional": {
+                "ref": "$hasText"
+              }
+            },
+            "@tabbable": {
+              "ref": "$tabbable",
+              "optional": true
+            },
+            "@disabled": {
+              "ref": "$disabled-custom",
+              "optional": true
+            }
+          },
+          "attributes": [
+            {
+              "name": "role",
+              "value": "button"
+            },
+            {
+              "ref": "$tabindex"
+            }
+          ]
         }
       }
     }
