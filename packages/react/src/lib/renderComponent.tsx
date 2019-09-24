@@ -199,10 +199,13 @@ const renderComponent = <P extends {}>(
   }
 
   const resolvedStyles: ComponentSlotStylesPrepared = {}
+  const resolvedStylesDebug: { [key: string]: { styles: ComponentSlotStylesPrepared }[] } = {}
   const classes: ComponentSlotClasses = {}
 
   Object.keys(mergedStyles).forEach(slotName => {
-    resolvedStyles[slotName] = callable(mergedStyles[slotName])(styleParam)
+    const { _debug, ...resolvedSlotStyles } = callable(mergedStyles[slotName])(styleParam)
+    resolvedStyles[slotName] = resolvedSlotStyles
+    resolvedStylesDebug[slotName] = _debug
 
     if (renderer) {
       classes[slotName] = renderer.renderRule(callable(resolvedStyles[slotName]), felaParam)
