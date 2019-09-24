@@ -15,6 +15,7 @@ import felaSanitizeCss from './felaSanitizeCssPlugin'
 let felaDevMode = false
 
 try {
+  // eslint-disable-next-line no-undef
   felaDevMode = !!window.localStorage.felaDevMode
 } catch {}
 

@@ -273,7 +273,9 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     const lastContentRef = getRefs().pop()
     const isLastOpenedPopup: boolean =
       lastContentRef && lastContentRef.current === this.popupDomElement
-    const bodyHasFocus: boolean = document.activeElement === document.body
+
+    const activeDocument = this.props.mountDocument || this.context.target
+    const bodyHasFocus: boolean = activeDocument.activeElement === activeDocument.body
 
     if (keyCode === keyboardKey.Escape && bodyHasFocus && isLastOpenedPopup) {
       this.close(e, () => _.invoke(this.triggerFocusableDomElement, 'focus'))
