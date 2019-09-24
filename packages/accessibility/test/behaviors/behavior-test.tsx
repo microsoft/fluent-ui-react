@@ -68,7 +68,7 @@ import {
 import { TestHelper } from './testHelper'
 import definitions from './testDefinitions'
 
-const behaviorMenuItems = require('docs/src/behaviorMenu')
+const behaviorMenuItems = require('../../../../docs/src/behaviorMenu')
 
 const testHelper = new TestHelper()
 testHelper.addTests(definitions)
