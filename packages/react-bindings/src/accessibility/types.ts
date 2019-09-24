@@ -1,11 +1,7 @@
 import { AccessibilityAttributesBySlot, AccessibilityDefinition } from '@stardust-ui/accessibility'
 import * as React from 'react'
 
-/*
- * Accessibility types for React implementation.
- */
-
-export interface ReactAccessibilityBehavior extends AccessibilityDefinition {
+export interface AccessibilityBehavior extends AccessibilityDefinition {
   attributes: AccessibilityAttributesBySlot
   keyHandlers: AccessibilityKeyHandlers
 }
@@ -15,11 +11,11 @@ export type AccessibilityKeyHandlers = {
 }
 
 export type AccessibilityHandlerProps = {
-  onKeyDown?: KeyboardEventHandler
+  onKeyDown?: AccessibilityKeyboardHandler
 }
 
 export type AccessibilityActionHandlers = {
-  [actionName: string]: KeyboardEventHandler
+  [actionName: string]: AccessibilityKeyboardHandler
 }
 
-export type KeyboardEventHandler = (event: React.KeyboardEvent) => void
+export type AccessibilityKeyboardHandler = (event: React.KeyboardEvent) => void

@@ -1,16 +1,11 @@
 import {
-  AccessibilityDefinition,
-  FocusZoneMode,
-  FocusZoneDefinition,
-  Accessibility,
-} from '@stardust-ui/accessibility'
-import {
+  AccessibilityBehavior,
+  AccessibilityActionHandlers,
   callable,
-  FocusZone,
-  FocusZoneProps,
-  FOCUSZONE_WRAP_ATTRIBUTE,
   getElementType,
   getUnhandledProps,
+  unstable_getAccessibility as getAccessibility,
+  unstable_wrapInFocusZone as wrapInFocusZone,
 } from '@stardust-ui/react-bindings'
 import cx from 'classnames'
 import * as React from 'react'
@@ -28,8 +23,6 @@ import {
   ComponentSlotStylesInput,
 } from '../themes/types'
 import { Props, ProviderContextPrepared } from '../types'
-import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/reactTypes'
-import getKeyDownHandlers from './getKeyDownHandlers'
 import { emptyTheme, mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import createAnimationStyles from './createAnimationStyles'
 import Debug, { isEnabled as isDebugEnabled } from './debug'
@@ -40,7 +33,7 @@ export interface RenderResultConfig<P> {
   unhandledProps: Props
   variables: ComponentVariablesObject
   styles: ComponentSlotStylesPrepared
-  accessibility: ReactAccessibilityBehavior
+  accessibility: AccessibilityBehavior
   rtl: boolean
   theme: ThemePrepared
 }
@@ -56,94 +49,6 @@ export interface RenderConfig<P> {
   actionHandlers: AccessibilityActionHandlers
   render: RenderComponentCallback<P>
   saveDebug: (debug: Debug | null) => void
-}
-
-const emptyBehavior: ReactAccessibilityBehavior = {
-  attributes: {},
-  keyHandlers: {},
-}
-
-const getAccessibility = (
-  displayName: string,
-  props: State & PropsWithVarsAndStyles & { accessibility?: Accessibility },
-  actionHandlers: AccessibilityActionHandlers,
-  isRtlEnabled: boolean,
-): ReactAccessibilityBehavior => {
-  const { accessibility } = props
-
-  if (_.isNil(accessibility)) {
-    return emptyBehavior
-  }
-
-  const definition: AccessibilityDefinition = accessibility(props)
-  const keyHandlers = getKeyDownHandlers(actionHandlers, definition.keyActions, isRtlEnabled)
-
-  if (process.env.NODE_ENV !== 'production') {
-    // For the non-production builds we enable the runtime accessibility attributes validator.
-    // We're adding the data-aa-class attribute which is being consumed by the validator, the
-    // schema is located in @stardust-ui/ability-attributes package.
-    if (definition.attributes) {
-      const slotNames = Object.keys(definition.attributes)
-      slotNames.forEach(slotName => {
-        definition.attributes[slotName]['data-aa-class'] = `${displayName}${
-          slotName === 'root' ? '' : `__${slotName}`
-        }`
-      })
-    }
-  }
-
-  return {
-    ...emptyBehavior,
-    ...definition,
-    keyHandlers,
-  }
-}
-
-/**
- * This function provides compile-time type checking for the following:
- * - if FocusZone implements FocusZone interface,
- * - if FocusZone properties extend FocusZoneProps, and
- * - if the passed properties extend FocusZoneProps.
- *
- * Should the FocusZone implementation change at any time, this function should provide a compile-time guarantee
- * that the new implementation is backwards compatible with the old implementation.
- */
-function wrapInGenericFocusZone<
-  COMPONENT_PROPS extends FocusZoneProps,
-  PROPS extends COMPONENT_PROPS,
-  COMPONENT extends FocusZone & React.Component<COMPONENT_PROPS>
->(
-  FocusZone: { new (...args: any[]): COMPONENT },
-  props: PROPS | undefined,
-  children: React.ReactNode,
-) {
-  props[FOCUSZONE_WRAP_ATTRIBUTE] = true
-  return <FocusZone {...props}>{children}</FocusZone>
-}
-
-const renderWithFocusZone = <P extends {}>(
-  render: RenderComponentCallback<P>,
-  focusZoneDefinition: FocusZoneDefinition,
-  config: RenderResultConfig<P>,
-): any => {
-  if (focusZoneDefinition.mode === FocusZoneMode.Wrap) {
-    return wrapInGenericFocusZone(
-      FocusZone,
-      {
-        ...focusZoneDefinition.props,
-        isRtl: config.rtl,
-      },
-      render(config),
-    )
-  }
-  if (focusZoneDefinition.mode === FocusZoneMode.Embed) {
-    const originalElementType = config.ElementType
-    config.ElementType = FocusZone as any
-    config.unhandledProps = { ...config.unhandledProps, ...focusZoneDefinition.props }
-    config.unhandledProps.as = originalElementType
-    config.unhandledProps.isRtl = config.rtl
-  }
-  return render(config)
 }
 
 const resolveStyles = (
@@ -199,11 +104,12 @@ const renderComponent = <P extends {}>(
     { root: animationCSSProp },
   )
 
-  const accessibility: ReactAccessibilityBehavior = getAccessibility(
+  const accessibility: AccessibilityBehavior = getAccessibility(
     displayName,
+    props.accessibility,
     stateAndProps,
-    actionHandlers,
     rtl,
+    actionHandlers,
   )
 
   const unhandledProps = getUnhandledProps(handledProps, props)
@@ -249,10 +155,6 @@ const renderComponent = <P extends {}>(
     theme,
   }
 
-  if (accessibility.focusZone) {
-    return renderWithFocusZone(render, accessibility.focusZone, resolvedConfig)
-  }
-
   // conditionally add sources for evaluating debug information to component
   if (isDebugEnabled) {
     saveDebug(
@@ -267,7 +169,7 @@ const renderComponent = <P extends {}>(
     )
   }
 
-  return render(resolvedConfig)
+  return wrapInFocusZone(render(resolvedConfig), accessibility, rtl)
 }
 
 export default renderComponent

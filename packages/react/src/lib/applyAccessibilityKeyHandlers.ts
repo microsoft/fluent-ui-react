@@ -1,8 +1,11 @@
+import {
+  AccessibilityHandlerProps,
+  AccessibilityKeyboardHandler,
+} from '@stardust-ui/react-bindings'
 import * as _ from 'lodash'
 import * as React from 'react'
 
 import { Props, ShorthandValue } from '../types'
-import { AccessibilityHandlerProps, KeyboardEventHandler } from './accessibility/reactTypes'
 
 // Makes sure that 'onKeyDown' is correctly overriden on the slots.
 // It should be applied after 'unhandledProps' because they can contain 'onKeyDown' from user and is handled by UTs in isConformant()
@@ -20,7 +23,7 @@ const applyAccessibilityKeyHandlers = (
 
   return _.mapValues(
     keyHandlers,
-    (accessibilityHandler: KeyboardEventHandler, handleName: string) => (
+    (accessibilityHandler: AccessibilityKeyboardHandler, handleName: string) => (
       e: React.KeyboardEvent,
       ...args: any[]
     ) => {

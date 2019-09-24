@@ -1,4 +1,5 @@
 import { Accessibility, treeItemBehavior } from '@stardust-ui/accessibility'
+import { AccessibilityBehavior } from '@stardust-ui/react-bindings'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -26,7 +27,6 @@ import {
   ShorthandCollection,
 } from '../../types'
 import { hasSubtree } from './lib'
-import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 
 export interface TreeItemSlotClassNames {
   title: string
@@ -191,7 +191,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>, TreeItemState> {
     },
   })
 
-  renderContent(accessibility: ReactAccessibilityBehavior) {
+  renderContent(accessibility: AccessibilityBehavior) {
     const { title, renderItemTitle, open, level, index } = this.props
     const { hasSubtree, treeSize } = this.state
 

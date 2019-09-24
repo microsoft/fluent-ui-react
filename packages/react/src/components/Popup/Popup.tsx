@@ -1,5 +1,9 @@
 import { Accessibility, popupBehavior } from '@stardust-ui/accessibility'
-import { AutoFocusZoneProps, FocusTrapZoneProps } from '@stardust-ui/react-bindings'
+import {
+  AccessibilityBehavior,
+  AutoFocusZoneProps,
+  FocusTrapZoneProps,
+} from '@stardust-ui/react-bindings'
 import { EventListener } from '@stardust-ui/react-component-event-listener'
 import { NodeRef, Unstable_NestingAuto } from '@stardust-ui/react-component-nesting-registry'
 import { handleRef, toRefObject, Ref } from '@stardust-ui/react-component-ref'
@@ -32,7 +36,6 @@ import {
 } from '../../lib/positioner'
 import PopupContent, { PopupContentProps } from './PopupContent'
 
-import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 import { createShorthandFactory, ShorthandFactory } from '../../lib/factories'
 import createReferenceFromContextClick from './createReferenceFromContextClick'
 import isRightClick from '../../lib/isRightClick'
@@ -454,7 +457,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   renderPopupContent(
     popupPositionClasses: string,
     rtl: boolean,
-    accessibility: ReactAccessibilityBehavior,
+    accessibility: AccessibilityBehavior,
   ): JSX.Element {
     const { align, position, offset, target, unstable_pinned } = this.props
 
@@ -477,7 +480,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   renderPopperChildren = (
     popupPositionClasses: string,
     rtl: boolean,
-    accessibility: ReactAccessibilityBehavior,
+    accessibility: AccessibilityBehavior,
     { placement, scheduleUpdate }: PopperChildrenProps,
   ) => {
     const {

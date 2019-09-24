@@ -1,13 +1,13 @@
+import { AccessibilityBehavior, AccessibilityActionHandlers } from '@stardust-ui/react-bindings'
 import createComponentInternal, { CreateComponentReturnType } from './createComponent'
 import * as React from 'react'
 import * as _ from 'lodash'
 
 import { ComponentSlotClasses, ComponentSlotStylesPrepared } from '../themes/types'
-import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/reactTypes'
 import { ObjectOf } from '../types'
 
 export interface RenderStardustResultConfig {
-  accessibility: ReactAccessibilityBehavior
+  accessibility: AccessibilityBehavior
   classes: ComponentSlotClasses
   rtl: boolean
   styles: ComponentSlotStylesPrepared
