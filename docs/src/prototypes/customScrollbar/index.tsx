@@ -39,13 +39,11 @@ const ScrollbarPopupPrototype = () => {
 
   return (
     <Popup
-      unstable_pinned
       trigger={<Button content="Open popup" />}
-      content={
-        <Scrollbars style={{ height: '20rem' }}>
-          <div style={{ width: '20rem' }}>{lines}</div>
-        </Scrollbars>
-      }
+      content={{
+        styles: { width: '20rem' },
+        content: <Scrollbars style={{ height: '20rem' }}>{lines}</Scrollbars>,
+      }}
     />
   )
 }
@@ -58,11 +56,10 @@ const ScrollbarDialogPrototype = () => {
       trigger={<Button content="Open popup" />}
       header="Dialog with scrollbar"
       cancelButton="Close"
-      content={
-        <Scrollbars style={{ height: '20rem' }}>
-          <div style={{ width: '20rem' }}>{lines}</div>
-        </Scrollbars>
-      }
+      content={{
+        styles: { width: '100%' },
+        content: <Scrollbars style={{ height: '20rem' }}>{lines}</Scrollbars>,
+      }}
     />
   )
 }
