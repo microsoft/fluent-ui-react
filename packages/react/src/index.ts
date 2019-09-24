@@ -232,7 +232,7 @@ import {
   getNextElement,
   getPreviousElement,
   focusAsync,
-} from './lib/accessibility/FocusZone/focusUtilities'
+} from '@stardust-ui/react-bindings'
 
 export const FocusZoneUtilities = {
   getFirstTabbable,
@@ -243,10 +243,7 @@ export const FocusZoneUtilities = {
   getPreviousElement,
   focusAsync,
 }
-export * from './lib/accessibility/FocusZone/FocusZone.types'
-export * from './lib/accessibility/FocusZone/FocusTrapZone.types'
-export * from './lib/accessibility/FocusZone/AutoFocusZone.types'
-export * from './lib/accessibility/reactTypes'
 
 export * from '@stardust-ui/accessibility'
 export * from '@stardust-ui/react-component-ref'
+export * from '@stardust-ui/react-bindings'

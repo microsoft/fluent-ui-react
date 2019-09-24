@@ -1,7 +1,6 @@
+import { FocusZone, AutoFocusZone } from '@stardust-ui/react-bindings'
 import * as React from 'react'
 import * as ReactTestUtils from 'react-dom/test-utils'
-
-import { FocusZone, AutoFocusZone } from '../../../src/lib/accessibility/FocusZone'
 
 // rAF does not exist in node - let's mock it
 window.requestAnimationFrame = (callback: FrameRequestCallback) => {

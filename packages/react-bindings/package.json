@@ -19,12 +19,13 @@
   "license": "MIT",
   "main": "dist/commonjs/index.js",
   "module": "dist/es/index.js",
+  "optionalDependencies": {
+    "@stardust-ui/accessibility": "^0.39.0",
+    "@stardust-ui/state": "^0.39.0"
+  },
   "peerDependencies": {
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
-  },
-  "optionalDependencies": {
-    "@stardust-ui/state": "^0.39.0"
   },
   "publishConfig": {
     "access": "public"

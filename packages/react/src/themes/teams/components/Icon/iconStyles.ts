@@ -1,6 +1,7 @@
+import { callable } from '@stardust-ui/react-bindings'
 import * as _ from 'lodash'
 
-import { callable, pxToRem, SizeValue } from '../../../../lib'
+import { pxToRem, SizeValue } from '../../../../lib'
 import {
   ComponentSlotStylesPrepared,
   ICSSInJSStyle,

@@ -1,4 +1,5 @@
 import { Accessibility, dialogBehavior } from '@stardust-ui/accessibility'
+import { FocusTrapZoneProps } from '@stardust-ui/react-bindings'
 import { Unstable_NestingAuto } from '@stardust-ui/react-component-nesting-registry'
 import { EventListener } from '@stardust-ui/react-component-event-listener'
 import { Ref, toRefObject } from '@stardust-ui/react-component-ref'
@@ -17,7 +18,6 @@ import {
   applyAccessibilityKeyHandlers,
   getOrGenerateIdFromShorthand,
 } from '../../lib'
-import { FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Button, { ButtonProps } from '../Button/Button'
 import ButtonGroup from '../Button/ButtonGroup'
