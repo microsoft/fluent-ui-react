@@ -42,6 +42,7 @@ export default () => {
               'silver',
               'onyx',
               'amethyst',
+              'formatting',
             ]}
             defaultValue={'brand'}
             placeholder="Select the color"

@@ -268,6 +268,10 @@ export const colorScheme: ColorSchemeMapping = {
     backgroundHover1: colors.grey[750],
     backgroundActive: colors.amethyst[700],
   }),
+  formatting: createColorScheme({
+    textColorRed: categoryColors.red[250],
+    backgroundColorRed: categoryColors.red[700],
+  }),
 }
 
 colorScheme.grey = colorScheme.default
