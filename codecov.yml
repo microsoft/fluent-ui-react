@@ -1,6 +1,7 @@
 coverage:
   ignore:
     - docs/*
+    - packges/ability-attributes/src/*
     - packges/react/src/lib/*
     - packges/react/src/themes/*
     - packges/react/src/styles/*
