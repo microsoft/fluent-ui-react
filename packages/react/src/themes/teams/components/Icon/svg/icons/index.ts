@@ -12,6 +12,7 @@ import ban from './ban'
 import bellMute from './bellMute'
 import bold from './bold'
 import bookmark from './bookmark'
+import bot from './bot'
 import broadcast from './broadcast'
 import bullets from './bullets'
 import calendar from './calendar'
@@ -39,6 +40,7 @@ import chevronRightMedium from './chevronRightMedium'
 import clipboardCopiedTo from './clipboardCopiedTo'
 import close from './close'
 import codeSnippet from './codeSnippet'
+import connectorBadge from './connectorBadge'
 import filesAftereffects from './filesAftereffects'
 import filesCode from './filesCode'
 import filesEmpty from './filesEmpty'
@@ -138,6 +140,7 @@ import star from './star'
 import stardustCircle from './stardustCircle'
 import sticker from './sticker'
 import strike from './strike'
+import tabBadge from './tabBadge'
 import table from './table'
 import tableAdd from './tableAdd'
 import tableDelete from './tableDelete'
@@ -173,6 +176,7 @@ export default {
   'bell-slash': bellMute,
   bold,
   bookmark,
+  bot,
   broadcast,
   bullets,
   calendar,
@@ -200,6 +204,7 @@ export default {
   'chevron-right-medium': chevronRightMedium,
   'clipboard-copied-to': clipboardCopiedTo,
   close,
+  'connector-badge': connectorBadge,
   'code-snippet': codeSnippet,
   'files-aftereffects': filesAftereffects,
   'files-code': filesCode,
@@ -286,6 +291,7 @@ export default {
   star,
   sticker,
   strike,
+  'tab-badge': tabBadge,
   table,
   'table-add': tableAdd,
   'table-delete': tableDelete,
