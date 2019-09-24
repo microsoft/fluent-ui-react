@@ -21,6 +21,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix `bodyBackground` color for Teams dark theme to be the correct grey value @codepretty ([#1961](https://github.com/stardust-ui/react/pull/1961))
 - Fix comparison for `scrollParent` in `unstable_Popper` @layershifter ([#1959](https://github.com/stardust-ui/react/pull/1959))
 - Updating `Button` styles for Teams dark & high contrast themes to match design @notandrew ([#1933](https://github.com/stardust-ui/react/pull/1933))
+- Add bounce animation to button clicks in Teams theme @notandrew ([#1724](https://github.com/stardust-ui/react/pull/1724))
 
 <!--------------------------------[ v0.39.0 ]------------------------------- -->
 ## [v0.39.0](https://github.com/stardust-ui/react/tree/v0.39.0) (2019-09-23)
@@ -70,7 +71,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Features
 - Add `navigable` `List` variant @jurokapsiar ([#1904](https://github.com/stardust-ui/react/pull/1904))
 - Add the `SplitButton` component @silviuavram ([#1789](https://github.com/stardust-ui/react/pull/1798))
-- Add bounce animation to button clicks in Teams theme @notandrew ([#1724](https://github.com/stardust-ui/react/pull/1724))
 
 ### Documentation
 - Fix broken code editor in some doc site examples and improve error experience @levithomason ([#1906](https://github.com/stardust-ui/react/pull/1906))
