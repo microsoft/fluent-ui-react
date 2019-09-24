@@ -2284,19 +2284,19 @@ abbrev@1, abbrev@^1.1.1:
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
   integrity sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==
 
-ability-attributes-generator@^0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/ability-attributes-generator/-/ability-attributes-generator-0.0.4.tgz#820176ebe34981133de201812edfbe6283160373"
-  integrity sha512-b8fN5gOnnCvUp8Xufo8h2e02bpkZsZGhxSOdcy2DZkCCUt39OGP3EyPA2te2U/62hHmUKD29DD8GEmdvBufwPA==
+ability-attributes-generator@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/ability-attributes-generator/-/ability-attributes-generator-0.0.5.tgz#bb3ab4afad5f3a10fb1ebb1fb138efc6e3e9d488"
+  integrity sha512-YJg/3m/sMjTKp4BaBxBguefpvjIoNxTALAJuIPjMbalrBtCDQ4epIm7t6+opmag1k2L2OPC7kWWV2bBTP/4UTA==
   dependencies:
-    ability-attributes "^0.0.4"
+    ability-attributes "^0.0.5"
     ajv "^6.10.0"
     commander "^2.20.0"
 
-ability-attributes@^0.0.4:
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/ability-attributes/-/ability-attributes-0.0.4.tgz#8a15b138afc705ea7872a11e185b36f9ba21effc"
-  integrity sha512-DgcsawE9q5ogoHFlJpBGVmtqwJPHLfPqnlrIwX04g322EXuQI/jjfNotLMDayjZ8Gs7C5OmoDaNZQwoCKKEOeQ==
+ability-attributes@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/ability-attributes/-/ability-attributes-0.0.5.tgz#9496e904b2701fbe98f487411d1cbdf6ab86137f"
+  integrity sha512-H4i+hTuIEiTh6dsFGCG+h0G7nnJdTdb0mr3q35+XgATRlEWJwUie8SsDZhq7dKzc2UrgS1goVoYwMuHOWDHq2g==
 
 accepts@~1.3.5, accepts@~1.3.7:
   version "1.3.7"
