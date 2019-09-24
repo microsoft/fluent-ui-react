@@ -17,6 +17,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixes
+- Fix comparison for `scrollParent` in `unstable_Popper` @layershifter ([#1959](https://github.com/stardust-ui/react/pull/1959))
+
+<!--------------------------------[ v0.39.0 ]------------------------------- -->
+## [v0.39.0](https://github.com/stardust-ui/react/tree/v0.39.0) (2019-09-23)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.38.1...v0.39.0)
+
 ### BREAKING CHANGES
 - Remove base theme and move everything to teams theme @mnajdova ([#1908](https://github.com/stardust-ui/react/pull/1908))
 
@@ -30,6 +37,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix white flash when activating `Embed` component @lucivpav ([#1909](https://github.com/stardust-ui/react/pull/1909))
 - Update Office brand icons in Teams theme with latest version @notandrew ([#1954](https://github.com/stardust-ui/react/pull/1954))
 - Fix comparison of custom objects in `Dropdown` @lucivpav ([#1943](https://github.com/stardust-ui/react/pull/1943))
+- Fix make `tooltip` visible for screen reader @kolaps33 ([#1942](https://github.com/stardust-ui/react/pull/1942))
 
 ### Features
 - Add `TextArea` component @lucivpav ([#1897](https://github.com/stardust-ui/react/pull/1897))
@@ -37,12 +45,14 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add support for radio & checkbox groups to `Toolbar` component @layershifter ([#1920](https://github.com/stardust-ui/react/pull/1920))
 - Add support for `Popup` in `ToolbarMenu` @lucivpav ([#1927](https://github.com/stardust-ui/react/pull/1927))
 - Add behaviors for `Tree` as list and linked them using childBehaviors @silviuavram ([#1928](https://github.com/stardust-ui/react/pull/1928))
+- Add `notes` icon and update `link` icon in Teams theme @codepretty ([#1953](https://github.com/stardust-ui/react/pull/1953))
+
+### Performance
+- Resolve styles once in `renderComponent()` @layershifter ([#1957](https://github.com/stardust-ui/react/pull/1957))
 
 ### Documentation
 - Remove Usage tab @lucivpav ([#1948](https://github.com/stardust-ui/react/pull/1948))
 - Put props on a single page, fix props links @lucivpav ([#1892](https://github.com/stardust-ui/react/pull/1892))
-
-### Documentation
 - Remove cancel button in a `Dialog` example with a close action @lucivpav ([#1949](https://github.com/stardust-ui/react/pull/1949))
 
 <!--------------------------------[ v0.38.1 ]------------------------------- -->

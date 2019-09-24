@@ -22,7 +22,7 @@ function Design<DesignProps>({ config, children }) {
   const theme = React.useContext<ProviderContextPrepared>(ThemeContext)
   const getConfig = React.useCallback(() => config, [config])
 
-  // Heads Up! Keep in sync with getClasses.ts
+  // Heads Up! Keep in sync with renderComponent.tsx
   const styleParam = {
     theme: { direction: theme.rtl ? 'rtl' : 'ltr' },
   }
