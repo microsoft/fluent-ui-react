@@ -2,9 +2,6 @@ module.exports = {
   extends: ['airbnb', 'prettier'],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint', 'jest', 'import', 'react-hooks', '@stardust-ui'],
-  env: {
-    'jest/globals': true,
-  },
   rules: {
     // False positive on arg types:
     // https://github.com/typescript-eslint/typescript-eslint/issues/46
@@ -83,7 +80,6 @@ module.exports = {
     'no-restricted-syntax': 'off',
     'no-throw-literal': 'off',
     'no-sparse-arrays': 'off',
-    'no-undef': 'off',
     'no-undef-init': 'off',
     'no-underscore-dangle': 'off',
     'no-unused-expressions': 'off',
@@ -104,6 +100,10 @@ module.exports = {
     },
     {
       files: '**/test/**/*.{ts,tsx}',
+      env: {
+        browser: true,
+        'jest/globals': true,
+      },
       rules: {
         'import/no-extraneous-dependencies': 'off',
       },
@@ -126,6 +126,9 @@ module.exports = {
       node: {
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
+    },
+    react: {
+      version: '16.8',
     },
   },
 }
