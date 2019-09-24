@@ -98,150 +98,151 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
   const component = fiberNav.name && <Line>{fiberNav.jsxString}</Line>
 
   return (
-    <div style={debugPanelRoot(left)}>
+    <div>
       {selectedFiberNav && <DebugRect fiberNav={selectedFiberNav} />}
-
-      <div style={debugPanelHeader}>
-        <div tabIndex={0} onClick={onActivateDebugSelectorClick} style={debugPanelArrowIcon}>
-          ⇱
-        </div>
-        <div style={{ float: 'right' }}>
-          <div tabIndex={0} style={debugPanelIcon(true, left)} onClick={onPositionLeft} />
-          <div tabIndex={0} style={debugPanelIcon(false, left)} onClick={onPositionRight} />
-          <div tabIndex={0} onClick={onClose} style={debugPanelCloseIcon}>
-            ✕
+      <div style={debugPanelRoot(left)}>
+        <div style={debugPanelHeader}>
+          <div tabIndex={0} onClick={onActivateDebugSelectorClick} style={debugPanelArrowIcon}>
+            ⇱
+          </div>
+          <div style={{ float: 'right' }}>
+            <div tabIndex={0} style={debugPanelIcon(true, left)} onClick={onPositionLeft} />
+            <div tabIndex={0} style={debugPanelIcon(false, left)} onClick={onPositionRight} />
+            <div tabIndex={0} onClick={onClose} style={debugPanelCloseIcon}>
+              ✕
+            </div>
           </div>
         </div>
-      </div>
 
-      <ScrollToBottom style={debugPanelComponents}>
-        <Line
-          indent={0}
-          {...(ownerNav.stardustDebug && {
-            actionable: true,
-            tabIndex: 0,
-            onClick: e => {
-              e.preventDefault()
-              onFiberChanged(ownerNav)
-            },
-            onMouseEnter: e => selectFiberNav(ownerNav),
-            onMouseLeave: e => selectFiberNav(null),
-          })}
-        >
-          {ownerNav.jsxString}
-        </Line>
-        <Line indent={1} style={{ color: '#ba645e' }}>
-          render()
-        </Line>
-        {parentNavs.map((parent, i) => (
+        <ScrollToBottom style={debugPanelComponents}>
           <Line
-            key={i}
-            indent={2 + i}
+            indent={0}
+            {...(ownerNav.stardustDebug && {
+              actionable: true,
+              tabIndex: 0,
+              onClick: e => {
+                e.preventDefault()
+                onFiberChanged(ownerNav)
+              },
+              onMouseEnter: e => selectFiberNav(ownerNav),
+              onMouseLeave: e => selectFiberNav(null),
+            })}
+          >
+            {ownerNav.jsxString}
+          </Line>
+          <Line indent={1} style={{ color: '#ba645e' }}>
+            render()
+          </Line>
+          {parentNavs.map((parent, i) => (
+            <Line
+              key={i}
+              indent={2 + i}
+              actionable
+              tabIndex="0"
+              onClick={e => {
+                e.preventDefault()
+                onFiberChanged(parent)
+              }}
+              onMouseEnter={e => selectFiberNav(parent)}
+              onMouseLeave={e => selectFiberNav(null)}
+            >
+              {parent.jsxString}
+            </Line>
+          ))}
+          <Line
+            indent={3 + (parentNavs.length - 1)}
+            active
+            badge="selected"
             actionable
             tabIndex="0"
             onClick={e => {
               e.preventDefault()
-              onFiberChanged(parent)
+              onFiberChanged(fiberNav)
             }}
-            onMouseEnter={e => selectFiberNav(parent)}
+            onMouseEnter={e => selectFiberNav(fiberNav)}
             onMouseLeave={e => selectFiberNav(null)}
           >
-            {parent.jsxString}
+            {component}
           </Line>
-        ))}
-        <Line
-          indent={3 + (parentNavs.length - 1)}
-          active
-          badge="selected"
-          actionable
-          tabIndex="0"
-          onClick={e => {
-            e.preventDefault()
-            onFiberChanged(fiberNav)
-          }}
-          onMouseEnter={e => selectFiberNav(fiberNav)}
-          onMouseLeave={e => selectFiberNav(null)}
-        >
-          {component}
-        </Line>
-      </ScrollToBottom>
+        </ScrollToBottom>
 
-      <div style={debugPanelBody}>
-        {/* Styles */}
+        <div style={debugPanelBody}>
+          {/* Styles */}
 
-        <div style={debugPanel}>
-          <div style={debugHeaderContainer()}>
-            <div style={debugHeader()}>Styles</div>
-            {!_.isEmpty(debugData.componentStyles) && (
-              <div style={debugPanelSelectContainer()}>
-                <select value={slot} onChange={e => setSlot(e.target.value)}>
-                  {styleSlots.map(val => (
-                    <option value={val} key={val}>
-                      Slot: {val}
-                    </option>
-                  ))}
-                </select>
-              </div>
+          <div style={debugPanel}>
+            <div style={debugHeaderContainer()}>
+              <div style={debugHeader()}>Styles</div>
+              {!_.isEmpty(debugData.componentStyles) && (
+                <div style={debugPanelSelectContainer()}>
+                  <select value={slot} onChange={e => setSlot(e.target.value)}>
+                    {styleSlots.map(val => (
+                      <option value={val} key={val}>
+                        Slot: {val}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+            </div>
+            {!_.isEmpty(debugData.componentStyles) ? (
+              <DebugPanelItem
+                data={debugData.componentStyles[slot]}
+                valueKey="styles"
+                idKey="debugId"
+              />
+            ) : (
+              <div style={debugNoData()}>None in use</div>
             )}
           </div>
-          {!_.isEmpty(debugData.componentStyles) ? (
-            <DebugPanelItem
-              data={debugData.componentStyles[slot]}
-              valueKey="styles"
-              idKey="debugId"
-            />
-          ) : (
-            <div style={debugNoData()}>None in use</div>
-          )}
-        </div>
 
-        {/* Component Variables */}
+          {/* Component Variables */}
 
-        <div style={debugPanel}>
-          <div style={debugHeaderContainer()}>
-            <div style={debugHeader()}>Variables</div>
+          <div style={debugPanel}>
+            <div style={debugHeaderContainer()}>
+              <div style={debugHeader()}>Variables</div>
+            </div>
+            {!_.isEmpty(debugData.componentVariables) ? (
+              <DebugPanelItem
+                data={debugData.componentVariables}
+                valueKey="resolved"
+                idKey="debugId"
+                commentKey="input"
+                commentKeyPredicate={val =>
+                  typeof val === 'string' && val.indexOf('siteVariables.') > -1
+                }
+              />
+            ) : (
+              <div style={debugNoData()}>None in use</div>
+            )}
           </div>
-          {!_.isEmpty(debugData.componentVariables) ? (
-            <DebugPanelItem
-              data={debugData.componentVariables}
-              valueKey="resolved"
-              idKey="debugId"
-              commentKey="input"
-              commentKeyPredicate={val =>
-                typeof val === 'string' && val.indexOf('siteVariables.') > -1
-              }
-            />
-          ) : (
-            <div style={debugNoData()}>None in use</div>
-          )}
-        </div>
 
-        {/* Site Variables */}
+          {/* Site Variables */}
 
-        <div style={debugPanel}>
-          <div style={debugHeaderContainer()}>
-            <div style={debugHeader()}>Site variables</div>
+          <div style={debugPanel}>
+            <div style={debugHeaderContainer()}>
+              <div style={debugHeader()}>Site variables</div>
+            </div>
+            {!_.isEmpty(siteVariablesData) && !_.isEmpty(uniqUsedSiteVariables) ? (
+              <DebugPanelItem data={siteVariablesData} valueKey="resolved" idKey="debugId" />
+            ) : (
+              <div style={debugNoData()}>None in use</div>
+            )}
           </div>
-          {!_.isEmpty(siteVariablesData) && !_.isEmpty(uniqUsedSiteVariables) ? (
-            <DebugPanelItem data={siteVariablesData} valueKey="resolved" idKey="debugId" />
-          ) : (
-            <div style={debugNoData()}>None in use</div>
-          )}
         </div>
+
+        {!_.isEmpty(cssStyles) && (
+          <div style={debugPanel}>
+            <div style={debugHeader()}>HTML Styles</div>
+            <div style={{ clear: 'both' }}>
+              {cssStyles.map(l => (
+                <pre key={l}>{l}</pre>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div style={{ padding: '50px 0' }} />
       </div>
-
-      {!_.isEmpty(cssStyles) && (
-        <div style={debugPanel}>
-          <div style={debugHeader()}>HTML Styles</div>
-          <div style={{ clear: 'both' }}>
-            {cssStyles.map(l => (
-              <pre key={l}>{l}</pre>
-            ))}
-          </div>
-        </div>
-      )}
-
-      <div style={{ padding: '50px 0' }} />
     </div>
   )
 }
@@ -254,6 +255,7 @@ const debugPanelHeader: React.CSSProperties = {
   padding: '2px 2px 4px',
   top: '0',
   background: '#f3f3f3',
+  zIndex: 1,
 }
 
 const commonIconStyle: React.CSSProperties = {
@@ -329,6 +331,7 @@ const debugNoData = (): React.CSSProperties => ({
   color: 'rgba(0, 0, 0, 0.75)',
   textAlign: 'center',
   background: 'rgba(0, 0, 0, 0.05)',
+  marginBottom: '4px',
 })
 
 const debugPanelSelectContainer = (): React.CSSProperties => ({

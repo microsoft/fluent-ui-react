@@ -1,17 +1,17 @@
-import React from 'react'
-import { Design } from '@stardust-ui/react'
+import * as React from 'react'
+import { Box } from '@stardust-ui/react'
 
 const BoxShorthandExample = () => (
-  <Design
-    config={{
-      margin: '20px',
+  <Box
+    content="Box"
+    styles={{
+      border: '1px dashed #ccc',
+      color: 'blue',
+      textAlign: 'center',
+      width: '50px',
+      ':hover': { color: 'red' },
     }}
-  >
-    {({ className }) => {
-      console.log(className)
-      return <div className={className}>inside Design</div>
-    }}
-  </Design>
+  />
 )
 
 export default BoxShorthandExample
