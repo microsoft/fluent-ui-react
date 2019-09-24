@@ -3,7 +3,6 @@ import * as React from 'react'
 import * as _ from 'lodash'
 
 import callable from './callable'
-import getClasses from './getClasses'
 import getElementType from './getElementType'
 import getUnhandledProps from './getUnhandledProps'
 import logProviderMissingWarning from './providerMissingHandler'
@@ -15,7 +14,6 @@ import {
   PropsWithVarsAndStyles,
   State,
   ThemePrepared,
-  ComponentSlotStylesInput,
 } from '../themes/types'
 import { Props, ProviderContextPrepared } from '../types'
 import {
@@ -131,20 +129,6 @@ const renderWithFocusZone = <P extends {}>(
   return render(config)
 }
 
-const resolveStyles = (
-  styles: ComponentSlotStylesInput,
-  styleParam: ComponentStyleFunctionParam,
-): any[] => {
-  // FIXME: ComponentSlotStylesPrepared tuple
-  return Object.keys(styles).reduce(
-    (acc, next) => {
-      const { _debug, ...resolvedStyles } = callable(styles[next])(styleParam)
-      return [{ ...acc[0], [next]: resolvedStyles }, { ...acc[1], [next]: _debug }]
-    },
-    [{}, {}],
-  )
-}
-
 const renderComponent = <P extends {}>(
   config: RenderConfig<P>,
   context?: ProviderContextPrepared,
@@ -206,11 +190,25 @@ const renderComponent = <P extends {}>(
     disableAnimations,
   }
 
-  const [resolvedStyles, resolvedStylesDebug] = resolveStyles(mergedStyles, styleParam)
+  // Fela plugins rely on `direction` param in `theme` prop instead of RTL
+  // Our API should be aligned with it
+  // Heads Up! Keep in sync with Design.tsx render logic
+  const direction = rtl ? 'rtl' : 'ltr'
+  const felaParam = {
+    theme: { direction },
+  }
 
-  const classes: ComponentSlotClasses = renderer
-    ? getClasses(renderer, mergedStyles, styleParam)
-    : {}
+  const resolvedStyles: ComponentSlotStylesPrepared = {}
+  const classes: ComponentSlotClasses = {}
+
+  Object.keys(mergedStyles).forEach(slotName => {
+    resolvedStyles[slotName] = callable(mergedStyles[slotName])(styleParam)
+
+    if (renderer) {
+      classes[slotName] = renderer.renderRule(callable(resolvedStyles[slotName]), felaParam)
+    }
+  })
+
   classes.root = cx(className, classes.root, props.className)
 
   const resolvedConfig: RenderResultConfig<P> = {

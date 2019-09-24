@@ -1,7 +1,7 @@
 {
   "name": "@stardust-ui/react-proptypes",
   "description": "Set of custom reusable PropTypes for React components, some of them are specific for Stardust UI.",
-  "version": "0.38.0",
+  "version": "0.39.0",
   "author": "Oleksandr Fediashov <olfedias@microsoft.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
@@ -10,7 +10,7 @@
     "prop-types": "^15.7.2"
   },
   "devDependencies": {
-    "@stardust-ui/internal-tooling": "^0.38.0",
+    "@stardust-ui/internal-tooling": "^0.39.0",
     "lerna-alias": "^3.0.3-0"
   },
   "files": [

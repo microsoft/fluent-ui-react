@@ -15,10 +15,10 @@ import { CodeSnippetMode, CodeSnippetProps } from './types'
 import CodeSnippetLabel from './CodeSnippetLabel'
 
 const CodeSnippet: React.FunctionComponent<CodeSnippetProps> = props => {
-  const { className, fitted, mode, value } = props
+  const { className, fitted, formattable, mode, value } = props
 
   const codeClassName = `language-${mode}`
-  const code = formatCode(value, mode)
+  const code = formattable ? formatCode(value, mode) : value
   const codeRef = React.useRef(null)
 
   React.useLayoutEffect(() => {
@@ -46,6 +46,7 @@ const CodeSnippet: React.FunctionComponent<CodeSnippetProps> = props => {
 
 CodeSnippet.defaultProps = {
   copyable: true,
+  formattable: true,
   mode: 'jsx',
 }
 
@@ -53,6 +54,7 @@ CodeSnippet.propTypes = {
   className: PropTypes.string,
   copyable: PropTypes.bool,
   fitted: PropTypes.bool,
+  formattable: PropTypes.bool,
   label: PropTypes.oneOfType([PropTypes.node, PropTypes.bool]),
   mode: PropTypes.oneOf(['bash', 'json', 'js', 'jsx', 'html'] as CodeSnippetMode[]),
   style: PropTypes.object,

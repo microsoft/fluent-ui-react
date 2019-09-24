@@ -3,11 +3,21 @@ import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
 import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 
 const Usage = () => (
-  <ExampleSection title="">
+  <ExampleSection title="Usage">
     <ComponentExample
-      title="Max length"
-      description="A text area with a limited space."
-      examplePath="components/TextArea/Usage/TextAreaMaxLengthExample"
+      title="Maximum character length"
+      description="A text area with a limited character length allowed."
+      examplePath="components/TextArea/Usage/TextAreaExampleMaxLength"
+    />
+    <ComponentExample
+      title="Custom height"
+      description="A text area can have a custom height."
+      examplePath="components/TextArea/Usage/TextAreaExampleHeight"
+    />
+    <ComponentExample
+      title="Resize"
+      description="A text area can be resized either horizontally, vertically, or in both directions. (Not supported in IE)"
+      examplePath="components/TextArea/Usage/TextAreaExampleResize"
     />
   </ExampleSection>
 )

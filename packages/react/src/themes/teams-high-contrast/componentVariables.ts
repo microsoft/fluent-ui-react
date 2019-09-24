@@ -13,6 +13,7 @@ export { default as Menu } from './components/Menu/menuVariables'
 export { default as RadioGroupItem } from './components/RadioGroup/radioGroupItemVariables'
 export { default as Segment } from './components/Segment/segmentVariables'
 export { default as Text } from './components/Text/textVariables'
+export { default as TextArea } from './components/TextArea/textAreaVariables'
 export { default as Toolbar } from './components/Toolbar/toolbarVariables'
 export {
   default as HierarchicalTreeTitle,

@@ -133,6 +133,9 @@ export interface DropdownProps
    */
   itemToString?: (item: ShorthandValue<DropdownItemProps>) => string
 
+  /** Used when comparing two items in multiple selection. Default comparison is by the header prop. */
+  itemToValue?: (item: ShorthandValue<DropdownItemProps>) => any
+
   /** A dropdown can show that it is currently loading data. */
   loading?: boolean
 
@@ -276,6 +279,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     inline: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     itemToString: PropTypes.func,
+    itemToValue: PropTypes.func,
     loading: PropTypes.bool,
     loadingMessage: customPropTypes.itemShorthand,
     moveFocusOnTab: PropTypes.bool,
@@ -308,6 +312,14 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     checkableIndicator: 'stardust-checkmark',
     clearIndicator: 'stardust-close',
     itemToString: item => {
+      if (!item || React.isValidElement(item)) {
+        return ''
+      }
+
+      // targets DropdownItem shorthand objects
+      return (item as any).header || String(item)
+    },
+    itemToValue: item => {
       if (!item || React.isValidElement(item)) {
         return ''
       }
@@ -363,14 +375,14 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
    * their string equivalents, in order to be used throughout the component.
    */
   static getAutoControlledStateFromProps(props: DropdownProps, state: DropdownState) {
-    const { items, itemToString, multiple, search } = props
+    const { items, itemToString, itemToValue, multiple, search } = props
     const { searchQuery, value: rawValue } = state
 
     // `normalizedValue` should be normilized always as it can be received from props
     const normalizedValue = _.isArray(rawValue) ? rawValue : [rawValue]
     const value = multiple ? normalizedValue : normalizedValue.slice(0, 1)
 
-    const filteredItemsByValue = multiple ? _.difference(items, value) : items
+    const filteredItemsByValue = multiple ? _.differenceBy(items, value, itemToValue) : items
     const filteredItemStrings = _.map(filteredItemsByValue, filteredItem =>
       itemToString(filteredItem).toLowerCase(),
     )
@@ -431,6 +443,11 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
           onStateChange={this.handleStateChange}
           labelId={this.props['aria-labelledby']}
           environment={this.context.target.defaultView}
+          inputId={
+            this.props.searchInput && this.props.searchInput['id']
+              ? this.props.searchInput['id']
+              : undefined
+          }
         >
           {({
             getInputProps,
