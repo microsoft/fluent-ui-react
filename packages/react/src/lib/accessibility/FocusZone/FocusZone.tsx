@@ -1,15 +1,16 @@
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
-import * as PropTypes from 'prop-types'
 import {
   FocusZoneDirection,
   FocusZoneTabbableElements,
-  IFocusZone,
-  FocusZoneProps,
-} from './FocusZone.types'
-import * as keyboardKey from 'keyboard-key'
+  IS_FOCUSABLE_ATTRIBUTE,
+} from '@stardust-ui/accessibility'
+import * as React from 'react'
 import cx from 'classnames'
 import * as _ from 'lodash'
+import * as keyboardKey from 'keyboard-key'
+import * as ReactDOM from 'react-dom'
+import * as PropTypes from 'prop-types'
+
+import { FocusZoneProps, IFocusZone } from './FocusZone.types'
 import {
   getNextElement,
   getPreviousElement,
@@ -21,7 +22,6 @@ import {
   getElementIndexPath,
   getFocusableByIndexPath,
   getParent,
-  IS_FOCUSABLE_ATTRIBUTE,
   FOCUSZONE_ID_ATTRIBUTE,
 } from './focusUtilities'
 import getUnhandledProps from '../../getUnhandledProps'

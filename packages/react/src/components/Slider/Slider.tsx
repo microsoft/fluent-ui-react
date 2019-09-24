@@ -1,3 +1,4 @@
+import { Accessibility, sliderBehavior } from '@stardust-ui/accessibility'
 import * as React from 'react'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -22,8 +23,6 @@ import {
   withSafeTypeForAs,
   Omit,
 } from '../../types'
-import { Accessibility } from '../../lib/accessibility/types'
-import { sliderBehavior } from '../../lib/accessibility'
 import { SupportedIntrinsicInputProps } from '../../lib/htmlPropsUtils'
 import Box, { BoxProps } from '../Box/Box'
 

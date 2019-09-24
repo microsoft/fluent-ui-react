@@ -1,3 +1,9 @@
+import {
+  AccessibilityDefinition,
+  FocusZoneMode,
+  FocusZoneDefinition,
+  Accessibility,
+} from '@stardust-ui/accessibility'
 import cx from 'classnames'
 import * as React from 'react'
 import * as _ from 'lodash'
@@ -17,12 +23,6 @@ import {
   ComponentSlotStylesInput,
 } from '../themes/types'
 import { Props, ProviderContextPrepared } from '../types'
-import {
-  AccessibilityDefinition,
-  FocusZoneMode,
-  FocusZoneDefinition,
-  Accessibility,
-} from './accessibility/types'
 import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/reactTypes'
 import getKeyDownHandlers from './getKeyDownHandlers'
 import { emptyTheme, mergeComponentStyles, mergeComponentVariables } from './mergeThemes'

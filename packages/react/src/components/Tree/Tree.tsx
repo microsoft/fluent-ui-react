@@ -23,8 +23,7 @@ import {
   ShorthandCollection,
   ShorthandValue,
 } from '../../types'
-import { Accessibility } from '../../lib/accessibility/types'
-import { treeBehavior } from '../../lib/accessibility'
+import { Accessibility, treeBehavior } from '@stardust-ui/accessibility'
 import { getNextElement } from '../../lib/accessibility/FocusZone/focusUtilities'
 import { hasSubtree, removeItemAtIndex } from './lib'
 import { TreeTitleProps } from './TreeTitle'

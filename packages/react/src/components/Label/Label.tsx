@@ -1,3 +1,4 @@
+import { Accessibility } from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -19,7 +20,6 @@ import {
 import Icon, { IconProps } from '../Icon/Icon'
 import Image, { ImageProps } from '../Image/Image'
 import Layout from '../Layout/Layout'
-import { Accessibility } from '../../lib/accessibility/types'
 
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 

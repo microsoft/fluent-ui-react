@@ -1,3 +1,4 @@
+import { Accessibility, accordionBehavior } from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -12,10 +13,8 @@ import {
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
 } from '../../lib'
-import { accordionBehavior } from '../../lib/accessibility'
 import AccordionTitle, { AccordionTitleProps } from './AccordionTitle'
 import AccordionContent, { AccordionContentProps } from './AccordionContent'
-import { Accessibility } from '../../lib/accessibility/types'
 
 import {
   ComponentEventHandler,

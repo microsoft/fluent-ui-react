@@ -1,3 +1,4 @@
+import { Accessibility, menuBehavior } from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -17,8 +18,6 @@ import {
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
 import MenuItem, { MenuItemProps } from './MenuItem'
-import { menuBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 import { ComponentVariablesObject, ComponentSlotStylesPrepared } from '../../themes/types'
 import {
