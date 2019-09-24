@@ -18,7 +18,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### Fixes
+- Fix `bodyBackground` color for Teams dark theme to be the correct grey value @codepretty ([#1961](https://github.com/stardust-ui/react/pull/1961))
 - Fix comparison for `scrollParent` in `unstable_Popper` @layershifter ([#1959](https://github.com/stardust-ui/react/pull/1959))
+- Updating `Button` styles for Teams dark & high contrast themes to match design @notandrew ([#1933](https://github.com/stardust-ui/react/pull/1933))
 - Update Office brand icons in Teams theme with latest version @notandrew ([#1954](https://github.com/stardust-ui/react/pull/1954))
 
 <!--------------------------------[ v0.39.0 ]------------------------------- -->
