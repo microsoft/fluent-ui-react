@@ -3,7 +3,6 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint', 'jest', 'import', 'react-hooks', '@stardust-ui'],
   env: {
-    browser: true,
     'jest/globals': true,
   },
   rules: {
