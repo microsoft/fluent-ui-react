@@ -7,13 +7,6 @@ import isBrowser from './isBrowser'
  * variables
  */
 
-// cache document.documentElement
-
-const docElem = isBrowser() ? document.documentElement : null
-
-// currently focused dom element
-let currentElement = null
-
 // last used input type
 let currentInput = 'initial'
 
@@ -83,7 +76,7 @@ const setUp = () => {
   inputMap[detectWheel()] = 'mouse'
 
   addListeners(window)
-  doUpdate()
+  doUpdate(window.document)
 }
 
 /*
@@ -117,10 +110,6 @@ const addListeners = (eventTarget: Window) => {
   // keyboard events
   eventTarget.addEventListener('keydown', eventBuffer, true)
   eventTarget.addEventListener('keyup', eventBuffer, true)
-
-  // focus events
-  eventTarget.addEventListener('focusin', setElement)
-  eventTarget.addEventListener('focusout', clearElement)
 }
 
 // checks conditions before updating new input
@@ -145,37 +134,14 @@ const setInput = event => {
         window.sessionStorage.setItem('what-input', currentInput)
       } catch (e) {}
 
-      doUpdate()
+      doUpdate(event.view.document)
     }
   }
 }
 
 // updates the doc and `inputTypes` array with new input
-const doUpdate = () => {
-  docElem.setAttribute(`data-whatinput`, currentInput)
-}
-
-const setElement = event => {
-  if (!event.target.nodeName) {
-    // If nodeName is undefined, clear the element
-    // This can happen if click inside an <svg> element.
-    clearElement()
-    return
-  }
-
-  currentElement = event.target.nodeName.toLowerCase()
-  docElem.setAttribute('data-whatelement', currentElement)
-
-  if (event.target.classList && event.target.classList.length) {
-    docElem.setAttribute('data-whatclasses', event.target.classList.toString().replace(' ', ','))
-  }
-}
-
-const clearElement = () => {
-  currentElement = null
-
-  docElem.removeAttribute('data-whatelement')
-  docElem.removeAttribute('data-whatclasses')
+const doUpdate = (target: Document) => {
+  target.documentElement.setAttribute(`data-whatinput`, currentInput)
 }
 
 // buffers events that frequently also fire mouse events
@@ -253,7 +219,7 @@ export const setUpWhatInput = (target: Document) => {
     target[whatInputInitialized] = true
 
     addListeners(targetWindow)
-    doUpdate()
+    doUpdate(target)
   }
 }
 
