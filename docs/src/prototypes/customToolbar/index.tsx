@@ -84,7 +84,7 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
     setTimeout(() => {
       setNewAlert(prevState => {
         if (prevState.filter(alert => alert.content === alertDefinition.content).length === 0) {
-          return [...prevState, alertDefinition]
+          return [alertDefinition, ...prevState]
         }
         return prevState
       })
@@ -136,7 +136,7 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
       "Your microphone isn't working. Switch to a different device or try reconnecting this one.",
     position: 'top',
     label: 'Alert',
-    contentId: 'alert-2',
+    contentId: 'alert-3',
     buttons: [
       <Button content="Device settings" onClick={() => alert('any action here')} primary />,
       <Button content="Call me back" onClick={() => alert('any action here')} primary />,
@@ -149,6 +149,25 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
         text
         title="Dismiss"
         onClick={() => removeAlert(thirdAlertDefinition)}
+        primary
+      />
+    ),
+  }
+
+  const fourthAlertDefinition = {
+    content: 'Something went wrong.',
+    position: 'top',
+    label: 'Alert',
+    contentId: 'alert-4',
+    buttons: [<Button content="Call me back" onClick={() => alert('any action here')} primary />],
+    closeButton: (
+      <Button
+        key="closeButton"
+        icon="close"
+        iconOnly
+        text
+        title="Dismiss"
+        onClick={() => removeAlert(fourthAlertDefinition)}
         primary
       />
     ),
@@ -245,6 +264,10 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
                   <MouseTrigger
                     content="Add alert 3"
                     setter={() => addAlert(thirdAlertDefinition)}
+                  />
+                  <MouseTrigger
+                    content="Add alert 4"
+                    setter={() => addAlert(fourthAlertDefinition)}
                   />
 
                   {/* <MouseTrigger

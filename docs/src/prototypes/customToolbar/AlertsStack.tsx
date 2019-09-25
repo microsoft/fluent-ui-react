@@ -1,6 +1,7 @@
 import * as React from 'react'
 import Ufd from './Ufd'
-import { Button, Text } from '@stardust-ui/react'
+import { Button, Text, Ref } from '@stardust-ui/react'
+import chatProtoStyle from '.././chatPane/chatProtoStyle'
 
 interface AlertStackProps {
   alerts: any[]
@@ -18,6 +19,9 @@ export class AlertStacks extends React.PureComponent<AlertStackProps, AlertStack
     }
   }
 
+  nextButtonRef = React.createRef<HTMLButtonElement>()
+  previousButtonRef = React.createRef<HTMLButtonElement>()
+
   static getDerivedStateFromProps(props, state) {
     if (props.alerts.length === state.currentAlert) {
       return {
@@ -27,68 +31,97 @@ export class AlertStacks extends React.PureComponent<AlertStackProps, AlertStack
     return state
   }
 
+  updateAriaLiveElement(textToUpdate: string) {
+    setTimeout(() => {
+      document.getElementById('ariaLive').innerText = textToUpdate
+    }, 250)
+  }
+
   setPrevious() {
-    this.setState(prevState => ({
-      currentAlert: prevState.currentAlert - 1 < 0 ? 0 : prevState.currentAlert - 1,
-    }))
+    this.setState(
+      prevState => ({
+        currentAlert: prevState.currentAlert - 1 < 0 ? 0 : prevState.currentAlert - 1,
+      }),
+      this.handlePreviousFocus,
+    )
+  }
+
+  handlePreviousFocus() {
+    if (this && this.state && this.state.currentAlert === 0) {
+      this.nextButtonRef.current.focus()
+    }
+    this.updateAriaLiveElement(`${this.state.currentAlert + 1} of ${this.props.alerts.length}`)
+  }
+
+  handleNextFocus() {
+    if (this.state.currentAlert + 1 === this.props.alerts.length) {
+      this.previousButtonRef.current.focus()
+    }
+    this.updateAriaLiveElement(`${this.state.currentAlert + 1} of ${this.props.alerts.length}`)
   }
 
   setNext() {
-    this.setState(prevState => ({
-      currentAlert:
-        prevState.currentAlert + 1 === this.props.alerts.length
-          ? this.props.alerts.length - 1
-          : prevState.currentAlert + 1,
-    }))
+    this.setState(
+      prevState => ({
+        currentAlert:
+          prevState.currentAlert + 1 === this.props.alerts.length
+            ? this.props.alerts.length - 1
+            : prevState.currentAlert + 1,
+      }),
+      this.handleNextFocus,
+    )
   }
 
   getNextButtonTitle() {
     if (this.state.currentAlert + 1 === this.props.alerts.length) {
       return `No next alert`
     }
-    return `Next alert ${this.state.currentAlert + 2} of ${this.props.alerts.length}`
+    // return `Next alert ${this.state.currentAlert + 2} of ${this.props.alerts.length}`
+    return `Next alert`
   }
 
   getPreviousButtonTitle() {
     if (this.state.currentAlert === 0) {
       return `No previous alert`
     }
-    return `Previous alert ${this.state.currentAlert} of ${this.props.alerts.length}`
+    // return `Previous alert ${this.state.currentAlert} of ${this.props.alerts.length}`
+    return `Previous alert`
   }
 
   alertButtonsForMultipleAlerts(anotherButtons, closeButton) {
     const baseButtons = [
-      <Button
-        aria-disabled={this.state.currentAlert === 0}
-        key="previousAlert"
-        iconOnly
-        icon={{
-          name: 'chevron-down',
-          rotate: 90,
-          outline: true,
-        }}
-        title={this.getPreviousButtonTitle()}
-        onClick={() => this.setPrevious()}
-        primary
-      />,
-      // <Button content={`${this.state.currentAlert + 1} of ${this.props.alerts.length}`} text />,
+      <Ref innerRef={this.previousButtonRef} key="previousAlert">
+        <Button
+          disabled={this.state.currentAlert === 0}
+          iconOnly
+          icon={{
+            name: 'chevron-down',
+            rotate: 90,
+            outline: true,
+          }}
+          title={this.getPreviousButtonTitle()}
+          onClick={() => this.setPrevious()}
+          primary
+        />
+      </Ref>,
       <Text
         id="pagination"
         content={`${this.state.currentAlert + 1} of ${this.props.alerts.length}`}
       />,
-      <Button
-        aria-disabled={this.state.currentAlert + 1 === this.props.alerts.length}
-        iconOnly
-        key="nextAlert"
-        icon={{
-          name: 'chevron-down',
-          rotate: -90,
-          outline: true,
-        }}
-        title={this.getNextButtonTitle()}
-        onClick={() => this.setNext()}
-        primary
-      />,
+      <Ref innerRef={this.nextButtonRef} key="nextAlert">
+        <Button
+          disabled={this.state.currentAlert + 1 === this.props.alerts.length}
+          iconOnly
+          icon={{
+            name: 'chevron-down',
+            rotate: -90,
+            outline: true,
+          }}
+          title={this.getNextButtonTitle()}
+          onClick={() => this.setNext()}
+          primary
+        />
+      </Ref>,
     ]
     const allButtons = anotherButtons.concat(baseButtons)
     if (allButtons.indexOf(closeButton) === -1) {
@@ -112,47 +145,52 @@ export class AlertStacks extends React.PureComponent<AlertStackProps, AlertStack
 
   render() {
     const { alerts } = this.props
-    const reverseAlerts = alerts.reverse()
 
     return (
       <div>
-        {reverseAlerts && reverseAlerts.length === 1 && (
+        {alerts && alerts.length === 1 && (
           <div
             role="dialog"
             aria-label="alerts"
-            aria-describedby={reverseAlerts[this.state.currentAlert].contentId}
+            aria-describedby={alerts[this.state.currentAlert].contentId}
           >
             <Ufd
-              content={reverseAlerts[0].content}
-              position={reverseAlerts[0].position}
-              label={reverseAlerts[0].label}
-              contentId={reverseAlerts[0].contentId}
-              buttons={this.getButtonsForSingleAlert(
-                reverseAlerts[0].buttons,
-                reverseAlerts[0].closeButton,
-              )}
+              content={alerts[0].content}
+              position={alerts[0].position}
+              label={alerts[0].label}
+              contentId={alerts[0].contentId}
+              buttons={this.getButtonsForSingleAlert(alerts[0].buttons, alerts[0].closeButton)}
             />
           </div>
         )}
 
-        {reverseAlerts && reverseAlerts.length > 1 && (
+        {alerts && alerts.length > 1 && (
           <div
             role="alertdialog"
-            aria-describedby={`pagination ${reverseAlerts[this.state.currentAlert].contentId}`}
+            aria-describedby={`pagination ${alerts[this.state.currentAlert].contentId}`}
             aria-modal={false}
           >
             <Ufd
-              content={reverseAlerts[this.state.currentAlert].content}
-              position={reverseAlerts[this.state.currentAlert].position}
-              label={reverseAlerts[this.state.currentAlert].label}
-              contentId={reverseAlerts[this.state.currentAlert].contentId}
+              content={alerts[this.state.currentAlert].content}
+              position={alerts[this.state.currentAlert].position}
+              label={alerts[this.state.currentAlert].label}
+              contentId={alerts[this.state.currentAlert].contentId}
               buttons={this.alertButtonsForMultipleAlerts(
-                reverseAlerts[this.state.currentAlert].buttons,
-                reverseAlerts[this.state.currentAlert].closeButton,
+                alerts[this.state.currentAlert].buttons,
+                alerts[this.state.currentAlert].closeButton,
               )}
             />
           </div>
         )}
+        <div
+          id="ariaLive"
+          aria-live="polite"
+          aria-atomic="true"
+          style={chatProtoStyle.screenReaderContainerStyles}
+        >
+          {/* {`${this.state.currentAlert + 1} of ${this.props.alerts.length}`} */}
+          {/* {setTimeout( () => `${this.state.currentAlert + 1} of ${this.props.alerts.length}`, 1000 )} */}
+        </div>
       </div>
     )
   }
