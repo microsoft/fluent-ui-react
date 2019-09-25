@@ -8,12 +8,14 @@ const registeredRenderers = new WeakMap<Document, Renderer>()
 export const mergeRenderers = (
   current: Renderer,
   next?: Renderer,
-  target: Document = document,
+  target: Document = document, // eslint-disable-line no-undef
 ): Renderer => {
   if (next) {
     return next
   }
 
+  // A valid comparison, default renderer will be used
+  // eslint-disable-next-line no-undef
   if (target === document) {
     return felaRenderer
   }
@@ -50,7 +52,7 @@ const mergeProviderContexts = (
     rtl: false,
     disableAnimations: false,
     originalThemes: [],
-    target: document,
+    target: document, // eslint-disable-line no-undef
   } as ProviderContextPrepared
 
   return contexts.reduce<ProviderContextPrepared>(

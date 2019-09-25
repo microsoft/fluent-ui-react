@@ -19,5 +19,5 @@ export const shadowLevel4 = '0 .6rem 1.8rem -0.4rem rgba(0, 0, 0, .25)'
 //
 // SEMANTIC ASSIGNMENTS
 //
-export const bodyBackground = colors.grey[800]
+export const bodyBackground = colors.grey[650]
 export const bodyColor = colors.white

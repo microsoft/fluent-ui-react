@@ -8,6 +8,14 @@ import Routes from './routes'
 import { PerfDataProvider } from './components/ComponentDoc/PerfChart'
 import Debug from '../../packages/react/src/components/Debug/Debug'
 
+// Experimental dev-time accessibility attributes integrity validation.
+import { setup } from '@stardust-ui/ability-attributes'
+
+// Temporarily disabling the validation for Screener.
+if (process.env.NODE_ENV !== 'production' && !process.env.SCREENER) {
+  setup()
+}
+
 class App extends React.Component<any, ThemeContextData> {
   // State also contains the updater function so it will
   // be passed down into the context provider
