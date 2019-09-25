@@ -84,6 +84,7 @@ const config = {
     __SKIP_ERRORS__,
     'process.env': {
       NODE_ENV: JSON.stringify(env),
+      SCREENER: !!process.env.SCREENER_API_KEY,
     },
     __PATH_SEP__: JSON.stringify(path.sep),
   },
