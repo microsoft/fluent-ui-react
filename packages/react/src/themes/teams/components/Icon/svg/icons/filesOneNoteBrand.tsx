@@ -4,84 +4,36 @@ import { TeamsProcessedSvgIconSpec } from '../types'
 export default {
   icon: ({ classes }) => (
     <svg role="presentation" focusable="false" viewBox="0 0 32 32" className={classes.svg}>
-      <defs>
-        <linearGradient
-          id="onenote-1"
-          x1="6.0695"
-          x2="28.1195"
-          y1="29.2192"
-          y2="2.9393"
-          gradientTransform="matrix(1 0 0 -1 0 32)"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop offset="0" stopColor="#fff" stopOpacity="0" />
-          <stop offset=".86" stopColor="#5e5e5e" stopOpacity=".06" />
-          <stop offset="1" stopOpacity=".1" />
-        </linearGradient>
-        <linearGradient
-          id="onenote-2"
-          x1="9.5"
-          x2="9.5"
-          y1="5.56"
-          y2="22.47"
-          gradientTransform="matrix(1 0 0 -1 0 32)"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop offset="0" stopColor="#fff" stopOpacity="0" />
-          <stop offset=".53" stopColor="#fff" stopOpacity=".01" />
-          <stop offset=".72" stopColor="#fff" stopOpacity=".03" />
-          <stop offset=".85" stopColor="#fff" stopOpacity=".08" />
-          <stop offset=".96" stopColor="#fff" stopOpacity=".15" />
-          <stop offset="1" stopColor="#fff" stopOpacity=".18" />
-        </linearGradient>
-        <linearGradient
-          id="onenote-3"
-          x1="11.2791"
-          x2="11.6191"
-          y1="2.6501"
-          y2="5.7901"
-          gradientTransform="matrix(1 0 0 -1 0 32)"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop offset="0" stopColor="#828282" stopOpacity="0" />
-          <stop offset=".86" stopColor="#303030" stopOpacity=".13" />
-          <stop offset="1" stopOpacity=".2" />
-        </linearGradient>
-        <linearGradient
-          id="onenote-4"
-          x1="22.52"
-          x2="30.44"
-          y1="21.52"
-          y2="29.44"
-          gradientTransform="matrix(1 0 0 -1 0 32)"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop offset="0" stopColor="#fff" stopOpacity="0" />
-          <stop offset=".45" stopColor="#fff" stopOpacity=".01" />
-          <stop offset=".64" stopColor="#fff" stopOpacity=".04" />
-          <stop offset=".78" stopColor="#fff" stopOpacity=".08" />
-          <stop offset=".89" stopColor="#fff" stopOpacity=".15" />
-          <stop offset=".99" stopColor="#fff" stopOpacity=".24" />
-          <stop offset="1" stopColor="#fff" stopOpacity=".25" />
-        </linearGradient>
-      </defs>
-      <g>
-        <path fill="#fff" d="M7.5 2.5h19v2h2v5h-2v20h-19z" />
-        <path fill="#a6a6a6" d="M26 3v2h2v4h-2v20H8V3h18m1-1H7v28h20V10h2V4h-2V2z" />
-        <path fill="#7719aa" d="M3 11l13-2v18L3 25z" />
-        <path
-          fill="#fff"
-          d="M13 22h-1.77L8 17c-.1415-.213-.2716-.4333-.39-.66V22H6v-8h1.89L11 18.87c.14.22.27.4367.39.65-.023-.3663-.023-.7337 0-1.1V14H13v8z"
-        />
-        <path
-          fill="#c8c8c8"
-          d="M16 11h8v1h-8zM16 13h8v1h-8zM16 15h8v1h-8zM16 17h8v1h-8zM16 19h8v1h-8zM16 21h8v1h-8zM16 23h8v1h-8zM16 25h8v1h-8zM10 5h6v1h-6z"
-        />
-        <path fill="url(#onenote-1)" d="M27 2H7v28h20V10h2V4h-2V2z" />
-        <path fill="url(#onenote-2)" d="M16 9L3 11v14l13 2z" />
-        <path fill="url(#onenote-3)" d="M16 29H7v-3.38L16 27z" />
-        <path fill="url(#onenote-4)" d="M26 3v2h2v4h-2v20H8V3h18m1-1H7v28h20V10h2V4h-2V2z" />
-      </g>
+      <path d="M26 11h-1v1h1a.96.96 0 0 1 .703.297A.928.928 0 0 1 27 13v2a.99.99 0 0 1-1 1h-1v1h1c.271 0 .505.099.703.297S27 17.729 27 18v2c0 .271-.099.505-.297.703S26.271 21 26 21h-1v1h1a.96.96 0 0 1 .703.297A.928.928 0 0 1 27 23v2a.99.99 0 0 1-1 1h-1v3.031c0 .271-.094.5-.281.688s-.417.281-.688.281H6.969c-.271 0-.5-.094-.688-.281S6 29.302 6 29.031V23H3.25c-.344 0-.635-.12-.875-.359A1.217 1.217 0 0 1 2 21.75v-11.5c0-.344.125-.635.375-.875.24-.25.531-.375.875-.375H6V2.969c0-.271.094-.5.281-.688S6.698 2 6.969 2h17.062c.271 0 .5.094.688.281s.281.417.281.688V7h1c.271 0 .505.099.703.297S27 7.729 27 8v2c0 .271-.099.505-.297.703S26.271 11 26 11M5.141 20h1.5v-4.812c0-.552-.016-.953-.047-1.203h.031c.031.073.073.156.125.25s.115.198.188.312L11.219 20h1.641v-8h-1.5v4.797c0 .26.005.484.016.672.01.177.026.312.047.406h-.031l-.141-.25a3.052 3.052 0 0 0-.203-.312L6.891 12h-1.75M7 29.031L24.031 29 24 3H6.969l.016 6h7.766c.344 0 .641.125.891.375.238.24.358.531.358.875v11.5c0 .344-.12.641-.359.891-.25.239-.547.359-.891.359H7v6.031z" />
+      <path
+        fill="#7719aa"
+        d="M26 26h-1.5v-4H26a.96.96 0 0 1 .703.297A.928.928 0 0 1 27 23v2a.99.99 0 0 1-1 1z"
+      />
+      <path
+        fill="#9332bf"
+        d="M26 21h-1.5v-4H26c.271 0 .505.099.703.297S27 17.729 27 18v2c0 .271-.099.505-.297.703S26.271 21 26 21z"
+      />
+      <path
+        fill="#ae4bd5"
+        d="M26 16h-1.5v-4H26a.96.96 0 0 1 .703.297A.928.928 0 0 1 27 13v2a.99.99 0 0 1-1 1z"
+      />
+      <path
+        fill="#ca64ea"
+        d="M26 11h-1.5V7H26c.271 0 .505.099.703.297S27 7.729 27 8v2c0 .271-.099.505-.297.703S26.271 11 26 11z"
+      />
+      <path fill="#fafafa" d="M24.5 29.5h-18v-27h18v27z" />
+      <path
+        fill="#797774"
+        d="M6.969 3L7 29.031 24.031 29 24 3m.031-1c.271 0 .5.094.688.281s.281.417.281.688v26.062c0 .271-.094.5-.281.688s-.417.281-.688.281H6.969c-.271 0-.5-.094-.688-.281S6 29.302 6 29.031V2.969c0-.271.094-.5.281-.688S6.698 2 6.969 2h17.062z"
+      />
+      <path
+        fill="#7719aa"
+        d="M14.75 23H3.25c-.344 0-.635-.12-.875-.359A1.217 1.217 0 0 1 2 21.75v-11.5c0-.344.125-.635.375-.875.24-.25.531-.375.875-.375h11.5c.344 0 .641.125.891.375.239.24.359.531.359.875v11.5c0 .344-.12.641-.359.891-.25.239-.547.359-.891.359z"
+      />
+      <path
+        fill="#fff"
+        d="M5.141 12h1.75l4.156 5.312c.083.115.151.219.203.312l.141.25h.031a2.799 2.799 0 0 1-.047-.406c-.01-.188-.016-.411-.016-.672V12h1.5v8h-1.641l-4.281-5.453c-.073-.115-.135-.219-.188-.312s-.094-.177-.125-.25h-.03c.031.25.047.651.047 1.203V20h-1.5v-8z"
+      />
     </svg>
   ),
   styles: {},
