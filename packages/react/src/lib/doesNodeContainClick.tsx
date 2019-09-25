@@ -10,7 +10,12 @@ import * as _ from 'lodash'
  * @param {Document} target A target document.
  * @returns {boolean}
  */
-const doesNodeContainClick = (node: HTMLElement, e: MouseEvent, target: Document = document) => {
+const doesNodeContainClick = (
+  node: HTMLElement,
+  e: MouseEvent,
+  // eslint-disable-next-line no-undef
+  target: Document = document,
+) => {
   if (_.some([e, node], _.isNil)) return false
 
   // if there is an e.target and it is in the document, use a simple node.contains() check

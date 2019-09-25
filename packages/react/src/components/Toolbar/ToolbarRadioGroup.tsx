@@ -100,7 +100,7 @@ class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> 
       nextItemToFocus.focus()
     }
 
-    if (document.activeElement === nextItemToFocus) {
+    if (this.context.target.activeElement === nextItemToFocus) {
       event.stopPropagation()
     }
     event.preventDefault()
