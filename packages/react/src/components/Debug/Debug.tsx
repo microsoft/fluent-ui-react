@@ -32,6 +32,7 @@ class Debug extends React.Component<DebugProps, DebugState> {
   state = INITIAL_STATE
 
   static defaultProps = {
+    // eslint-disable-next-line no-undef
     mountDocument: isBrowser() ? window.document : null,
   }
 
