@@ -132,7 +132,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
   }
 
   static defaultProps = {
-    accessibility: dialogBehavior,
+    accessibility: dialogBehavior as Accessibility,
     actions: {},
     backdrop: true,
     closeOnOutsideClick: true,

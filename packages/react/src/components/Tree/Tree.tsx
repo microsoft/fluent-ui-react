@@ -107,7 +107,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
 
   static defaultProps = {
     as: 'div',
-    accessibility: treeBehavior,
+    accessibility: treeBehavior as Accessibility,
   }
 
   static autoControlledProps = ['activeItemIds']

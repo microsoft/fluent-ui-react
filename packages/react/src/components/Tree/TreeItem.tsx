@@ -126,7 +126,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>, TreeItemState> {
 
   static defaultProps = {
     as: 'div',
-    accessibility: treeItemBehavior,
+    accessibility: treeItemBehavior as Accessibility,
   }
 
   state = {
