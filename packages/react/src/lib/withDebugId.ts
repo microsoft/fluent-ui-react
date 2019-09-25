@@ -1,17 +1,19 @@
 import { isEnabled as isDebugEnabled } from './debug'
 
 const withDebugId = <T>(data: T, debugId: string): T => {
-  if (!isDebugEnabled) {
+  if (!isDebugEnabled || debugId === undefined) {
     return data
   }
 
   if (typeof data === 'object' && data !== null) {
     if (!data.hasOwnProperty('_debugId')) {
-      Object.defineProperty(data, '_debugId', {
+      const copy = { ...data }
+      Object.defineProperty(copy, '_debugId', {
         value: debugId,
         writable: false,
         enumerable: false,
       })
+      return copy
     }
   }
 

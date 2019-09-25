@@ -186,10 +186,9 @@ export const mergeThemeStyles = (
 
   return sources.reduce<ThemeComponentStylesPrepared>((themeComponentStyles, next) => {
     _.forEach(next, (stylesByPart, displayName) => {
-      withDebugId(stylesByPart, (next as any)._debugId)
       themeComponentStyles[displayName] = mergeComponentStyles(
         themeComponentStyles[displayName],
-        stylesByPart,
+        withDebugId(stylesByPart, (next as any)._debugId),
       )
     })
 

@@ -173,7 +173,7 @@ const renderComponent = <P extends {}>(
   // Resolve variables for this component, allow props.variables to override
   const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
     theme.componentVariables[displayName],
-    props.variables && withDebugId(props.variables, 'props.variables'), // FIXME: we are mutating props.variables, is that ok?
+    props.variables && withDebugId(props.variables, 'props.variables'),
   )(theme.siteVariables)
 
   const animationCSSProp = props.animation
