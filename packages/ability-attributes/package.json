@@ -24,9 +24,7 @@
   "repository": "stardust-ui/react.git",
   "scripts": {
     "build": "npm run schema && gulp bundle:package:no-umd --package ability-attributes",
-    "schema": "allyschema -c \"process.env.NODE_ENV !== 'production'\" schema.json > ./src/schema.ts",
-    "preinstall": "npm run build",
-    "prepare": "npm run build"
+    "schema": "allyschema -c \"process.env.NODE_ENV !== 'production'\" schema.json > ./src/schema.ts"
   },
   "sideEffects": false,
   "types": "dist/es/index.d.ts"
