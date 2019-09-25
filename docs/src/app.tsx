@@ -11,7 +11,7 @@ import { PerfDataProvider } from './components/ComponentDoc/PerfChart'
 import { setup } from '@stardust-ui/ability-attributes'
 
 // Temporarily disabling the validation for Screener.
-if (process.env.NODE_ENV !== 'production' && !process.env.SCREENER_API_KEY) {
+if (process.env.NODE_ENV !== 'production' && !process.env.SCREENER) {
   setup()
 }
 
