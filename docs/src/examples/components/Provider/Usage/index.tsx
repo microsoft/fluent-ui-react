@@ -10,6 +10,7 @@ const Usage = () => (
       description="A Provider allows to define target document to apply styles."
       examplePath="components/Provider/Usage/ProviderExampleTarget"
     />
+    <ComponentExample examplePath="components/Provider/Usage/ProviderExampleTargetFrame" />
   </ExampleSection>
 )
 
