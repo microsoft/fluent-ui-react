@@ -42,7 +42,7 @@ class DebugRect extends React.Component<DebugRectProps> {
     const { fiberNav } = this.props
 
     if (!fiberNav) {
-      return <div />
+      return null
     }
 
     return (

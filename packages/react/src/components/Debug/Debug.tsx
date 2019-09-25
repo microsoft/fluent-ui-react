@@ -18,11 +18,13 @@ type DebugProps = {
 type DebugState = {
   debugPanelPosition?: 'left' | 'right'
   fiberNav: FiberNavigator
+  selectedFiberNav: FiberNavigator
   isSelecting: boolean
 }
 
 const INITIAL_STATE: DebugState = {
   fiberNav: null,
+  selectedFiberNav: null,
   isSelecting: false,
 }
 
@@ -35,43 +37,6 @@ class Debug extends React.Component<DebugProps, DebugState> {
 
   static propTypes = {
     mountDocument: PropTypes.object.isRequired,
-  }
-
-  handleKeyDown = e => {
-    const code = keyboardKey.getCode(e)
-
-    switch (code) {
-      case keyboardKey.Escape: {
-        this.setState(INITIAL_STATE)
-        break
-      }
-
-      case keyboardKey.d: {
-        if (e.altKey && e.shiftKey) {
-          const isSelecting = !this.state.isSelecting
-
-          this.setState({
-            ...(!isSelecting && INITIAL_STATE),
-            isSelecting,
-          })
-        }
-        break
-      }
-    }
-  }
-
-  handleStardustDOMNodeClick = e => {
-    // console.debug('Clicked stardustDOMNode. Prevent default and stop propagation.', this.state.fiberNav)
-
-    e.preventDefault()
-    e.stopPropagation()
-
-    this.setState({ isSelecting: false })
-  }
-
-  handleMouseMove = e => {
-    // console.log('MOUSEMOVE')
-    this.debugDOMNode(e.target)
   }
 
   debugDOMNode = domNode => {
@@ -91,9 +56,62 @@ class Debug extends React.Component<DebugProps, DebugState> {
     }
   }
 
+  handleKeyDown = e => {
+    const code = keyboardKey.getCode(e)
+
+    switch (code) {
+      case keyboardKey.Escape:
+        this.stopSelecting()
+        break
+
+      case keyboardKey.d:
+        if (e.altKey && e.shiftKey) {
+          this.startSelecting()
+        }
+        break
+    }
+  }
+
+  handleMouseMove = e => {
+    // console.log('MOUSEMOVE')
+    this.debugDOMNode(e.target)
+  }
+
+  handleStardustDOMNodeClick = e => {
+    // console.debug('Clicked stardustDOMNode. Prevent default and stop propagation.', this.state.fiberNav)
+
+    e.preventDefault()
+    e.stopPropagation()
+
+    this.setState({ isSelecting: false })
+  }
+
+  startSelecting = () => {
+    const isSelecting = !this.state.isSelecting
+
+    this.setState({
+      ...(!isSelecting && INITIAL_STATE),
+      isSelecting,
+    })
+  }
+
+  stopSelecting = () => {
+    this.setState(INITIAL_STATE)
+  }
+
+  selectFiber = selectedFiberNav => this.setState({ selectedFiberNav })
+
+  changeFiber = fiberNav => this.setState({ fiberNav })
+
+  positionRight = () => this.setState({ debugPanelPosition: 'right' })
+
+  positionLeft = () => this.setState({ debugPanelPosition: 'left' })
+
+  close = () => this.setState(INITIAL_STATE)
+
   render() {
     const { mountDocument } = this.props
-    const { fiberNav, isSelecting, debugPanelPosition } = this.state
+    const { fiberNav, selectedFiberNav, isSelecting, debugPanelPosition } = this.state
 
     return (
       <>
@@ -117,20 +135,20 @@ class Debug extends React.Component<DebugProps, DebugState> {
           />
         )}
         {isSelecting && fiberNav && <DebugRect fiberNav={fiberNav} />}
+        {selectedFiberNav && <DebugRect fiberNav={selectedFiberNav} />}
         {!isSelecting && fiberNav && fiberNav.instance && (
           <DebugPanel
             fiberNav={fiberNav}
-            onActivateDebugSelectorClick={() =>
-              this.setState({ ...INITIAL_STATE, isSelecting: true })
-            }
-            onClose={() => this.setState(INITIAL_STATE)}
+            onActivateDebugSelectorClick={this.startSelecting}
+            onClose={this.close}
             // TODO: Integrate CSS in JS Styles for Host Components (DOM nodes)
             // cssStyles={stylesForNode(stardustDOMNode)}
             debugData={fiberNav.stardustDebug}
             position={debugPanelPosition || 'right'}
-            onPositionLeft={() => this.setState({ debugPanelPosition: 'left' })}
-            onPositionRight={() => this.setState({ debugPanelPosition: 'right' })}
-            onFiberChanged={f => this.setState({ fiberNav: f })}
+            onPositionLeft={this.positionLeft}
+            onPositionRight={this.positionRight}
+            onFiberChanged={this.changeFiber}
+            onFiberSelected={this.selectFiber}
           />
         )}
       </>

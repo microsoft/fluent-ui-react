@@ -2,10 +2,8 @@ import * as React from 'react'
 import * as _ from 'lodash'
 import DebugPanelItem from './DebugPanelItem'
 import FiberNavigator from './FiberNavigator'
-import Line from './Line'
-import ScrollToBottom from './ScrollToBottom'
-import DebugRect from './DebugRect'
 import { getValues, removeNulls } from './utils'
+import DebugComponentViewer from './DebugComponentViewer'
 
 export type DebugPanelProps = {
   cssStyles?: string[]
@@ -23,7 +21,8 @@ export type DebugPanelProps = {
   onPositionLeft: (e) => void
   onPositionRight: (e) => void
   position: 'left' | 'right'
-  onFiberChanged?: (f: FiberNavigator) => void
+  onFiberChanged: (fiberNav: FiberNavigator) => void
+  onFiberSelected: (fiberNav: FiberNavigator) => void
 }
 
 const DebugPanel: React.FC<DebugPanelProps> = props => {
@@ -37,10 +36,10 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
     onPositionLeft,
     onPositionRight,
     onFiberChanged,
+    onFiberSelected,
   } = props
 
   const [slot, setSlot] = React.useState('root')
-  const [selectedFiberNav, selectFiberNav] = React.useState(null)
 
   const left = position === 'left'
 
@@ -85,21 +84,8 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
     resolved: removeNulls(val.resolved),
   }))
 
-  const ownerNav = fiberNav.owner
-
-  const parentNavs = []
-  let parentNav = fiberNav.parent
-
-  while (parentNav && !parentNav.isEqual(ownerNav)) {
-    if (parentNav.stardustDebug) parentNavs.unshift(parentNav)
-    parentNav = parentNav.parent
-  }
-
-  const component = fiberNav.name && <Line>{fiberNav.jsxString}</Line>
-
   return (
     <div>
-      {selectedFiberNav && <DebugRect fiberNav={selectedFiberNav} />}
       <div style={debugPanelRoot(left)}>
         <div style={debugPanelHeader}>
           <div tabIndex={0} onClick={onActivateDebugSelectorClick} style={debugPanelArrowIcon}>
@@ -114,57 +100,11 @@ const DebugPanel: React.FC<DebugPanelProps> = props => {
           </div>
         </div>
 
-        <ScrollToBottom style={debugPanelComponents}>
-          <Line
-            indent={0}
-            {...(ownerNav.stardustDebug && {
-              actionable: true,
-              tabIndex: 0,
-              onClick: e => {
-                e.preventDefault()
-                onFiberChanged(ownerNav)
-              },
-              onMouseEnter: e => selectFiberNav(ownerNav),
-              onMouseLeave: e => selectFiberNav(null),
-            })}
-          >
-            {ownerNav.jsxString}
-          </Line>
-          <Line indent={1} style={{ color: '#ba645e' }}>
-            render()
-          </Line>
-          {parentNavs.map((parent, i) => (
-            <Line
-              key={i}
-              indent={2 + i}
-              actionable
-              tabIndex="0"
-              onClick={e => {
-                e.preventDefault()
-                onFiberChanged(parent)
-              }}
-              onMouseEnter={e => selectFiberNav(parent)}
-              onMouseLeave={e => selectFiberNav(null)}
-            >
-              {parent.jsxString}
-            </Line>
-          ))}
-          <Line
-            indent={3 + (parentNavs.length - 1)}
-            active
-            badge="selected"
-            actionable
-            tabIndex="0"
-            onClick={e => {
-              e.preventDefault()
-              onFiberChanged(fiberNav)
-            }}
-            onMouseEnter={e => selectFiberNav(fiberNav)}
-            onMouseLeave={e => selectFiberNav(null)}
-          >
-            {component}
-          </Line>
-        </ScrollToBottom>
+        <DebugComponentViewer
+          fiberNav={fiberNav}
+          onFiberChanged={onFiberChanged}
+          onFiberSelected={onFiberSelected}
+        />
 
         <div style={debugPanelBody}>
           {/* Styles */}
@@ -337,17 +277,6 @@ const debugNoData = (): React.CSSProperties => ({
 const debugPanelSelectContainer = (): React.CSSProperties => ({
   width: 'auto',
 })
-
-const debugPanelComponents: React.CSSProperties = {
-  padding: '8px',
-  whiteSpace: 'pre',
-  lineHeight: 1.4,
-  background: '#222',
-  overflowY: 'auto',
-  color: '#CCC',
-  fontFamily: 'monospace',
-  fontWeight: 'bold',
-}
 
 const debugPanelBody: React.CSSProperties = {
   overflowWrap: 'break-word',
