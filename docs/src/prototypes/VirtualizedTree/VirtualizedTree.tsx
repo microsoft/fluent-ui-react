@@ -14,6 +14,32 @@ function TreeVirtualizer(props: TreeVirtualizerProps) {
   })
   const [scrollToIndex, setScrollToIndex] = React.useState()
 
+  const handleFocusParent = (
+    e: React.SyntheticEvent,
+    treeItemProps: TreeItemProps,
+    index: number,
+  ) => {
+    const { renderedItems } = props
+    const { parent } = treeItemProps
+
+    renderedItems[index].props.onFocusParent(e, treeItemProps)
+
+    if (!parent) {
+      return
+    }
+
+    const indexOfParent = renderedItems.findIndex(
+      (renderedItem: React.ReactElement) => renderedItem.props['id'] === parent['id'],
+    )
+
+    // If parent already visible, then it should be focused by Tree.
+    if (renderedItems[indexOfParent].props['contentRef'].current) {
+      return
+    }
+
+    setScrollToIndex(indexOfParent)
+  }
+
   const rowRenderer = ({ index, isScrolling, key, parent, style }) => {
     const { renderedItems } = props
 
@@ -22,23 +48,7 @@ function TreeVirtualizer(props: TreeVirtualizerProps) {
         {React.cloneElement(renderedItems[index], {
           style,
           onFocusParent: (e, treeItemProps: TreeItemProps) => {
-            const { parent } = treeItemProps
-
-            renderedItems[index].props.onFocusParent(e, treeItemProps)
-
-            if (!parent) {
-              return
-            }
-
-            const indexOfParent = renderedItems.findIndex(
-              (renderedItem: React.ReactElement) => renderedItem.props['id'] === parent['id'],
-            )
-
-            if (renderedItems[indexOfParent].props['contentRef'].current) {
-              return
-            }
-
-            setScrollToIndex(indexOfParent)
+            handleFocusParent(e, treeItemProps, index)
           },
         })}
       </CellMeasurer>
@@ -58,6 +68,8 @@ function TreeVirtualizer(props: TreeVirtualizerProps) {
       onRowsRendered={() => {
         if (scrollToIndex !== undefined) {
           props.renderedItems[scrollToIndex].props.contentRef.current.focus()
+          // Once scrolling is complete we remove the index to avoid scrolling to the same
+          // item at every render.
           setScrollToIndex(undefined)
         }
       }}
