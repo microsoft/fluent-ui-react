@@ -18,6 +18,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### Fixes
+- Fix setting `data-whatinput` attribute in child windows @layershifter ([#1972](https://github.com/stardust-ui/react/pull/1972))
 - Avoid usages of global `document` and `window` in components @layershifter ([#1970](https://github.com/stardust-ui/react/pull/1970))
 
 ### Performance
