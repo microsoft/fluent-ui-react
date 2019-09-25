@@ -1,4 +1,6 @@
 import { mergeSiteVariables } from '../../../../src/lib/mergeThemes'
+import * as debug from 'src/lib/debug/debugApi'
+import { withDebugId } from 'src/lib'
 
 describe('mergeSiteVariables', () => {
   test(`always returns an object`, () => {
@@ -70,6 +72,59 @@ describe('mergeSiteVariables', () => {
 
     expect(mergeSiteVariables(target, source)).toMatchObject({
       nested: { replaced: false, other: 'value', deep: { dOne: 1, dTwo: 'two' } },
+    })
+  })
+
+  describe('debug frames', () => {
+    let originalDebugEnabled
+
+    beforeEach(() => {
+      originalDebugEnabled = debug.isEnabled
+    })
+
+    afterEach(() => {
+      Object.defineProperty(debug, 'isEnabled', {
+        get: () => originalDebugEnabled,
+      })
+    })
+
+    function mockIsDebugEnabled(enabled: boolean) {
+      Object.defineProperty(debug, 'isEnabled', {
+        get: jest.fn(() => enabled),
+      })
+    }
+
+    test('are saved if debug is enabled', () => {
+      mockIsDebugEnabled(true)
+      const target = { one: 1, a: 'tA' }
+      const source = { two: 2, a: 'sA' }
+
+      const merged = mergeSiteVariables(target, source)
+
+      expect(merged).toMatchObject({
+        _debug: [{ resolved: { one: 1, a: 'tA' } }, { resolved: { two: 2, a: 'sA' } }],
+      })
+    })
+
+    test('are not saved if debug is disabled', () => {
+      mockIsDebugEnabled(false)
+      const target = { one: 1, a: 'tA' }
+      const source = { two: 2, a: 'sA' }
+
+      const merged = mergeSiteVariables(target, source)
+
+      expect(merged._debug).toBe(undefined)
+    })
+
+    test('contain debugId', () => {
+      mockIsDebugEnabled(true)
+      const target = withDebugId({ one: 1, a: 'tA', target: true }, 'target')
+      const source = withDebugId({ two: 2, a: 'sA', source: true }, 'source')
+
+      const merged = mergeSiteVariables(target, source)
+      expect(merged).toMatchObject({
+        _debug: [{ debugId: 'target' }, { debugId: 'source' }],
+      })
     })
   })
 })

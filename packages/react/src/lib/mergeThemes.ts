@@ -22,6 +22,8 @@ import callable from './callable'
 import toCompactArray from './toCompactArray'
 import deepmerge from './deepmerge'
 import objectKeyToValues from './objectKeysToValues'
+
+import { isEnabled as isDebugEnabled } from './debug'
 import withDebugId from './withDebugId'
 
 export const emptyTheme: ThemePrepared = {
@@ -56,6 +58,10 @@ export const mergeComponentStyles = (
       const originalSource = partStyle
 
       partStylesPrepared[partName] = styleParam => {
+        if (!isDebugEnabled) {
+          return _.merge(callable(originalTarget)(styleParam), callable(originalSource)(styleParam))
+        }
+
         const { _debug: targetDebug = [], ...targetStyles } =
           callable(originalTarget)(styleParam) || {}
         const { _debug: sourceDebug = undefined, ...sourceStyles } =
@@ -83,6 +89,10 @@ export const mergeComponentVariables = (
 
   return sources.reduce<ComponentVariablesPrepared>((acc, next) => {
     return siteVariables => {
+      if (!isDebugEnabled) {
+        return deepmerge(acc(siteVariables), callable(next)(siteVariables))
+      }
+
       const { _debug = [], ...accumulatedVariables } = acc(siteVariables)
       const {
         _debug: computedDebug = undefined,
@@ -121,6 +131,9 @@ export const mergeSiteVariables = (
     fontSizes: {},
   }
   return sources.reduce<SiteVariablesPrepared>((acc, next) => {
+    if (!isDebugEnabled) {
+      return deepmerge(initial, ...sources)
+    }
     const { _debug = [], ...accumulatedSiteVariables } = acc
     const {
       _debug: computedDebug = undefined,
@@ -173,13 +186,7 @@ export const mergeThemeStyles = (
 
   return sources.reduce<ThemeComponentStylesPrepared>((themeComponentStyles, next) => {
     _.forEach(next, (stylesByPart, displayName) => {
-      if (_.isObject(stylesByPart)) {
-        Object.defineProperty(stylesByPart, '_debugId', {
-          value: next._debugId,
-          writable: false,
-          enumerable: false,
-        })
-      }
+      withDebugId(stylesByPart, (next as any)._debugId)
       themeComponentStyles[displayName] = mergeComponentStyles(
         themeComponentStyles[displayName],
         stylesByPart,

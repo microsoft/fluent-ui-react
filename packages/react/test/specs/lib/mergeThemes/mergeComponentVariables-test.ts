@@ -1,6 +1,7 @@
 import { mergeComponentVariables } from '../../../../src/lib/mergeThemes'
-import objectKeyToValues from 'src/lib/objectKeysToValues'
+import * as debug from 'src/lib/debug/debugApi'
 import { withDebugId } from 'src/lib'
+import objectKeyToValues from 'src/lib/objectKeysToValues'
 
 describe('mergeComponentVariables', () => {
   test(`always returns a function that returns an object`, () => {
@@ -90,22 +91,18 @@ describe('mergeComponentVariables', () => {
     })
   })
 
-  xtest('merges more objects', () => {
+  test('merges multiple objects', () => {
     const siteVariables = {
       colors: {
         colorForC: 'c_color',
       },
     }
-    siteVariables['_invertedKeys'] = objectKeyToValues(siteVariables)
-    const target = withDebugId({ a: 1, b: 2, c: 3, d: 4, e: 5 }, 'target')
+    const target = { a: 1, b: 2, c: 3, d: 4, e: 5 }
     const source1 = { b: 'bS1', d: false, bb: 'bbS1' }
-    const source2 = withDebugId(
-      withDebugId(sv => ({ c: sv.colors.colorForC, cc: 'bbS2' }), 'source2'),
-      'source2.wrapped',
-    )
+    const source2 = sv => ({ c: sv.colors.colorForC, cc: 'bbS2' })
     const source3 = { d: 'bS3', dd: 'bbS3' }
 
-    expect(mergeComponentVariables(target, source1, source2, source3)(siteVariables)).toStrictEqual(
+    expect(mergeComponentVariables(target, source1, source2, source3)(siteVariables)).toMatchObject(
       {
         a: 1,
         b: 'bS1',
@@ -119,35 +116,108 @@ describe('mergeComponentVariables', () => {
     )
   })
 
-  xtest('multiple merges', () => {
-    const siteVariables = {
-      colors: {
-        colorForC: 'c_color',
-      },
-    }
-    siteVariables['_invertedKeys'] = objectKeyToValues(siteVariables)
-    const target = withDebugId({ a: 1, b: 2, c: 3, d: 4, e: 5 }, 'target')
-    const source1 = { b: 'bS1', d: false, bb: 'bbS1' }
-    const source2 = withDebugId(
-      withDebugId(sv => ({ c: sv.colors.colorForC, cc: 'bbS2' }), 'source2'),
-      'source2.wrapped',
-    )
-    const source3 = { d: 'bS3', dd: 'bbS3' }
+  describe('debug frames', () => {
+    let originalDebugEnabled
 
-    expect(
-      mergeComponentVariables(
-        mergeComponentVariables(mergeComponentVariables(target, source1), source2),
-        source3,
-      )(siteVariables),
-    ).toStrictEqual({
-      a: 1,
-      b: 'bS1',
-      c: 'c_color',
-      d: 'bS3',
-      e: 5,
-      bb: 'bbS1',
-      cc: 'bbS2',
-      dd: 'bbS3',
+    beforeEach(() => {
+      originalDebugEnabled = debug.isEnabled
+    })
+
+    afterEach(() => {
+      Object.defineProperty(debug, 'isEnabled', {
+        get: () => originalDebugEnabled,
+      })
+    })
+
+    function mockIsDebugEnabled(enabled: boolean) {
+      Object.defineProperty(debug, 'isEnabled', {
+        get: jest.fn(() => enabled),
+      })
+    }
+
+    test('are saved if debug is enabled', () => {
+      mockIsDebugEnabled(true)
+      const target = siteVariables => ({ one: 1, a: 'tA', target: true, ...siteVariables })
+      const source = siteVariables => ({ two: 2, a: 'sA', source: true, ...siteVariables })
+
+      const merged = mergeComponentVariables(target, source)
+
+      const siteVariables = { one: 'one', two: 'two', fontSizes: {} }
+
+      expect(merged(siteVariables)).toMatchObject({
+        _debug: [
+          { resolved: { target: true, one: 'one', a: 'tA' } },
+          { resolved: { source: true, two: 'two', a: 'sA' } },
+        ],
+      })
+    })
+
+    test('are not saved if debug is disabled', () => {
+      mockIsDebugEnabled(false)
+      const target = siteVariables => ({ one: 1, a: 'tA', target: true })
+      const source = siteVariables => ({ two: 2, a: 'sA', source: true })
+
+      const merged = mergeComponentVariables(target, source)
+      expect(merged()._debug).toBe(undefined)
+    })
+
+    test('contain debugId', () => {
+      mockIsDebugEnabled(true)
+      const target = siteVariables => withDebugId({ one: 1, a: 'tA', target: true }, 'target')
+      const source = siteVariables => withDebugId({ two: 2, a: 'sA', source: true }, 'source')
+
+      const merged = mergeComponentVariables(target, source)
+      expect(merged()).toMatchObject({
+        _debug: [{ debugId: 'target' }, { debugId: 'source' }],
+      })
+    })
+
+    test('contain `input` with unresolved site variables', () => {
+      mockIsDebugEnabled(true)
+      const target = siteVariables => ({ one: 1, a: siteVariables.varA })
+      const source = siteVariables => ({ two: 2, a: siteVariables.nested.varA })
+
+      const merged = mergeComponentVariables(target, source)
+
+      const siteVariables = { varA: 42, nested: { varA: 42 } }
+      siteVariables['_invertedKeys'] = objectKeyToValues(siteVariables, v => `siteVariables.${v}`)
+
+      expect(merged(siteVariables)).toMatchObject({
+        _debug: [
+          { input: { a: 'siteVariables.varA' } },
+          { input: { a: 'siteVariables.nested.varA' } },
+        ],
+      })
+    })
+
+    test('are flat for recursive merge', () => {
+      mockIsDebugEnabled(true)
+      const siteVariables = {
+        colors: {
+          colorForC: 'c_color',
+        },
+      }
+      const target = withDebugId({ a: 1, b: 2, c: 3, d: 4, e: 5 }, 'target')
+      const source1 = withDebugId({ b: 'bS1', d: false, bb: 'bbS1' }, 'source1')
+      const source2 = withDebugId(sv => ({ c: sv.colors.colorForC, cc: 'bbS2' }), 'source2')
+
+      const merged1 = mergeComponentVariables(target, source1, source2)(siteVariables)
+      const merged2 = mergeComponentVariables(mergeComponentVariables(target, source1), source2)(
+        siteVariables,
+      )
+      const merged3 = mergeComponentVariables(target, mergeComponentVariables(source1, source2))(
+        siteVariables,
+      )
+
+      expect(merged1).toMatchObject({
+        _debug: [{ debugId: 'target' }, { debugId: 'source1' }, { debugId: 'source2' }],
+      })
+      expect(merged2).toMatchObject({
+        _debug: [{ debugId: 'target' }, { debugId: 'source1' }, { debugId: 'source2' }],
+      })
+      expect(merged3).toMatchObject({
+        _debug: [{ debugId: 'target' }, { debugId: 'source1' }, { debugId: 'source2' }],
+      })
     })
   })
 })

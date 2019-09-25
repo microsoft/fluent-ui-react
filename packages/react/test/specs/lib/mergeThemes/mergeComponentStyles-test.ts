@@ -1,7 +1,7 @@
-import mergeThemes, { mergeComponentStyles } from '../../../../src/lib/mergeThemes'
+import { mergeComponentStyles } from '../../../../src/lib/mergeThemes'
 import { ComponentStyleFunctionParam } from 'src/themes/types'
-import { themes, callable } from 'src/index'
-import * as _ from 'lodash'
+import * as debug from 'src/lib/debug/debugApi'
+import { withDebugId } from 'src/lib'
 
 describe('mergeComponentStyles', () => {
   test(`always returns an object`, () => {
@@ -57,35 +57,7 @@ describe('mergeComponentStyles', () => {
     expect(merged.root).toBeInstanceOf(Function)
   })
 
-  xtest('perf', () => {
-    const merged = mergeThemes(..._.times(100, n => themes.teams))
-    const resolvedStyles = _.mapValues(merged.componentStyles, (componentStyle, componentName) => {
-      const compVariables = _.get(merged.componentVariables, componentName, callable({}))(
-        merged.siteVariables,
-      )
-      const styleParam: ComponentStyleFunctionParam = {
-        displayName: componentName,
-        props: {},
-        variables: compVariables,
-        theme: merged,
-        rtl: false,
-        disableAnimations: false,
-      }
-      return _.mapValues(componentStyle, (partStyle, partName) => {
-        if (partName === '_debug') {
-          // TODO: fix in code, happens only with mergeThemes(singleTheme)
-          return undefined
-        }
-        if (typeof partStyle !== 'function') {
-          console.log(componentName, partStyle, partName)
-        }
-        return partStyle(styleParam)
-      })
-    })
-    console.log(resolvedStyles.Button.root)
-  })
-
-  xtest('component part styles are deeply merged', () => {
+  test('component part styles are deeply merged', () => {
     const target = {
       root: {
         display: 'inline-block',
@@ -95,28 +67,15 @@ describe('mergeComponentStyles', () => {
         },
       },
     }
-    const source1 = {
+    const source = {
       root: {
-        color: 'source1',
+        color: 'blue',
         '::before': {
-          color: 'source1',
+          color: 'red',
         },
       },
     }
-    const source2 = {
-      root: {
-        color: 'source2',
-        '::before': {
-          background: 'source2',
-        },
-      },
-    }
-
-    // const merged = mergeComponentStyles(target, source1, source2)
-    const merged = mergeComponentStyles(mergeComponentStyles(target, source1), source2)
-    // const merged = mergeComponentStyles(target, mergeComponentStyles(source1, source2))
-    console.log(JSON.stringify(merged.root(), null, 2))
-
+    const merged = mergeComponentStyles(target, source)
     expect(merged.root()).toMatchObject({
       display: 'inline-block',
       color: 'blue',
@@ -142,6 +101,116 @@ describe('mergeComponentStyles', () => {
       source: true,
       target: true,
       ...styleParam,
+    })
+  })
+
+  describe('debug frames', () => {
+    let originalDebugEnabled
+
+    beforeEach(() => {
+      originalDebugEnabled = debug.isEnabled
+    })
+
+    afterEach(() => {
+      Object.defineProperty(debug, 'isEnabled', {
+        get: () => originalDebugEnabled,
+      })
+    })
+
+    function mockIsDebugEnabled(enabled: boolean) {
+      Object.defineProperty(debug, 'isEnabled', {
+        get: jest.fn(() => enabled),
+      })
+    }
+
+    test('are saved if debug enabled', () => {
+      mockIsDebugEnabled(true)
+      const target = { root: { a: 'tA', b: 'tB' } }
+      const source = {
+        root: ({ variables }) => ({ a: 'sA', c: { deep: variables.varC } }),
+        icon: { d: 'sD' },
+      }
+
+      const merged = mergeComponentStyles(target, source)
+
+      const resolvedRoot = merged.root({ variables: { varC: 'vC' } } as any)
+      expect(resolvedRoot).toMatchObject({
+        _debug: [{ styles: { a: 'tA', b: 'tB' } }, { styles: { a: 'sA', c: { deep: 'vC' } } }],
+      })
+
+      const resolvedIcon = merged.icon()
+      expect(resolvedIcon).toMatchObject({
+        _debug: [{ styles: { d: 'sD' } }],
+      })
+    })
+
+    test('are not saved if debug disabled', () => {
+      mockIsDebugEnabled(false)
+      const target = { root: { a: 'tA', b: 'tB' } }
+      const source = { root: { a: 'sA', c: { deep: 'c' } } }
+
+      const merged = mergeComponentStyles(target, source)
+
+      const resolvedRoot = merged.root()
+      expect(resolvedRoot._debug).toBe(undefined)
+    })
+
+    test('contain debugId', () => {
+      mockIsDebugEnabled(true)
+      const target = withDebugId({ root: { a: 'tA', b: 'tB' } }, 'target')
+      const source = withDebugId({ root: { a: 'sA', c: { deep: 'c' } } }, 'source')
+
+      const merged = mergeComponentStyles(target, source)
+      const resolvedRoot = merged.root()
+      expect(resolvedRoot).toMatchObject({
+        _debug: [{ debugId: 'target' }, { debugId: 'source' }],
+      })
+    })
+
+    test('are flat for recursive merge', () => {
+      mockIsDebugEnabled(true)
+      const target = withDebugId(
+        {
+          root: {
+            a: 'tA',
+          },
+        },
+        'target',
+      )
+      const source1 = withDebugId(
+        {
+          root: {
+            a: 'tB',
+          },
+        },
+        'source1',
+      )
+      const source2 = withDebugId(
+        {
+          root: {
+            a: 'tC',
+          },
+        },
+        'source2',
+      )
+
+      const merged1 = mergeComponentStyles(target, source1, source2)
+      const resolvedRoot1 = merged1.root()
+      expect(resolvedRoot1).toMatchObject({
+        _debug: [{ debugId: 'target' }, { debugId: 'source1' }, { debugId: 'source2' }],
+      })
+
+      const merged2 = mergeComponentStyles(mergeComponentStyles(target, source1), source2)
+      const resolvedRoot2 = merged2.root()
+      expect(resolvedRoot2).toMatchObject({
+        _debug: [{ debugId: 'target' }, { debugId: 'source1' }, { debugId: 'source2' }],
+      })
+
+      const merged3 = mergeComponentStyles(target, mergeComponentStyles(source1, source2))
+      const resolvedRoot3 = merged3.root()
+      expect(resolvedRoot3).toMatchObject({
+        _debug: [{ debugId: 'target' }, { debugId: 'source1' }, { debugId: 'source2' }],
+      })
     })
   })
 })
