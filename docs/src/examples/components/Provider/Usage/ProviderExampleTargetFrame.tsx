@@ -36,7 +36,7 @@ const ProviderExampleTargetFrame = () => (
     {externalDocument => (
       <Provider theme={themes.teams} target={externalDocument}>
         <Attachment actionable header="Document.docx" />
-        <Button content="Hello world!" />
+        <Button autoFocus content="Hello world!" />
       </Provider>
     )}
   </PortalFrame>
