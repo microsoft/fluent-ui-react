@@ -566,7 +566,9 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
         this.handleTriggerButtonKeyDown(e, rtl)
       },
       'aria-label': undefined,
-      'aria-labelledby': `${this.props['aria-labelledby']} ${triggerButtonId}`,
+      'aria-labelledby': [this.props['aria-labelledby'], triggerButtonId]
+        .filter(l => !!l)
+        .join(' '),
     })
 
     const { onClick, onFocus, onBlur, onKeyDown, ...restTriggerButtonProps } = triggerButtonProps
