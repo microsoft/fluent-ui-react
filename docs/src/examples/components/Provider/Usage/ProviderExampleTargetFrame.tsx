@@ -1,13 +1,12 @@
+import { Attachment, Button, Provider, themes } from '@stardust-ui/react'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { Attachment, Button, Provider, themes } from '@stardust-ui/react'
 
-type PortalWindowProps = {
+type PortalFrameProps = {
   children: (externalDocument: Document) => React.ReactElement
-  onClose?: () => void
 }
 
-const PortalFrame: React.FunctionComponent<PortalWindowProps> = ({ children }) => {
+const PortalFrame: React.FunctionComponent<PortalFrameProps> = ({ children }) => {
   const frameRef = React.useRef<HTMLIFrameElement>(null)
   const [mounted, setMounted] = React.useState<boolean>(false)
 
