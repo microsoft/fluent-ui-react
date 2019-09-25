@@ -166,6 +166,7 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         cursor: 'default',
         color: v.colorDisabled,
         boxShadow: 'none',
+        pointerEvents: 'none',
         ':hover': {
           color: v.colorDisabled,
         },
