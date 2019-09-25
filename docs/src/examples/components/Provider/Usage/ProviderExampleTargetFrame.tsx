@@ -1,18 +1,22 @@
-import { Attachment, Button, Provider, themes } from '@stardust-ui/react'
+import { Attachment, Button, Provider, Ref, themes } from '@stardust-ui/react'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
 type PortalFrameProps = {
   children: (externalDocument: Document) => React.ReactElement
+  onMount: () => void
 }
 
-const PortalFrame: React.FunctionComponent<PortalFrameProps> = ({ children }) => {
+const PortalFrame: React.FunctionComponent<PortalFrameProps> = ({ children, onMount }) => {
   const frameRef = React.useRef<HTMLIFrameElement>(null)
   const [mounted, setMounted] = React.useState<boolean>(false)
 
   React.useEffect(() => {
     setMounted(true)
   }, [])
+  React.useEffect(() => {
+    if (mounted) onMount()
+  }, [mounted])
 
   return (
     <>
@@ -30,15 +34,21 @@ const PortalFrame: React.FunctionComponent<PortalFrameProps> = ({ children }) =>
   )
 }
 
-const ProviderExampleTargetFrame = () => (
-  <PortalFrame>
-    {externalDocument => (
-      <Provider theme={themes.teams} target={externalDocument}>
-        <Attachment actionable header="Document.docx" />
-        <Button autoFocus content="Hello world!" />
-      </Provider>
-    )}
-  </PortalFrame>
-)
+const ProviderExampleTargetFrame = () => {
+  const buttonRef = React.useRef<HTMLButtonElement>()
+
+  return (
+    <PortalFrame onMount={() => buttonRef.current.focus()}>
+      {externalDocument => (
+        <Provider theme={themes.teams} target={externalDocument}>
+          <Attachment actionable header="Document.docx" />
+          <Ref innerRef={buttonRef}>
+            <Button content="Hello world!" />
+          </Ref>
+        </Provider>
+      )}
+    </PortalFrame>
+  )
+}
 
 export default ProviderExampleTargetFrame
