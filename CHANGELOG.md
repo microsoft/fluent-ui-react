@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixes
+- Avoid usages of global `document` and `window` in components @layershifter ([#1970](https://github.com/stardust-ui/react/pull/1970))
+
 ### Performance
 - Resolve styles once in `renderComponent()` @layershifter ([#1957](https://github.com/stardust-ui/react/pull/1957))
 

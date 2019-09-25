@@ -177,16 +177,17 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
 
   componentWillUnmount() {
     if (this.animationFrameId !== undefined) {
-      window.cancelAnimationFrame(this.animationFrameId)
+      cancelAnimationFrame(this.animationFrameId)
       this.animationFrameId = undefined
     }
   }
 
   afterComponentRendered() {
     if (this.animationFrameId !== undefined) {
-      window.cancelAnimationFrame(this.animationFrameId)
+      cancelAnimationFrame(this.animationFrameId)
     }
-    this.animationFrameId = window.requestAnimationFrame(() => {
+
+    this.animationFrameId = requestAnimationFrame(() => {
       this.animationFrameId = undefined
       const { onReduceItems } = this.props
       if (_.isNil(onReduceItems) || !this.hiddenToolbarRef.current || this.state.stable) {
