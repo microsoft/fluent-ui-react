@@ -102,7 +102,8 @@ class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
     const { delay } = this.props
 
     if (delay > 0) {
-      this.delayTimer = window.setTimeout(() => {
+      // @ts-ignore We have a collision between types from DOM and @types/node
+      this.delayTimer = setTimeout(() => {
         this.setState({ visible: true })
       }, delay)
     }
