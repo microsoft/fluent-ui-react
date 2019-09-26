@@ -6,11 +6,11 @@ import * as componentVariables from './componentVariables'
 import * as componentStyles from './componentStyles'
 import fontFaces from './fontFaces'
 import staticStyles from './staticStyles'
-import withDebugId from '../../lib/withDebugId'
 
 import { default as svgIconsAndStyles } from './components/Icon/svg'
 
 import { TeamsSvgIconSpec, SvgIconSpecWithStyles } from './components/Icon/svg/types'
+import { createTheme } from '../createTheme'
 
 const declareSvg = (svgIcon: SvgIconSpec): ThemeIconSpec => ({
   isSvg: true,
@@ -47,7 +47,7 @@ const icons: ThemeIcons = {
   'stardust-play': themeIcons['play'],
 }
 
-const teamsTheme: ThemePrepared = withDebugId(
+const teamsTheme: ThemePrepared = createTheme(
   {
     siteVariables,
     componentVariables,

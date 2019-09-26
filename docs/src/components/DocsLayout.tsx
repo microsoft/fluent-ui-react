@@ -1,4 +1,4 @@
-import { Provider, themes, pxToRem } from '@stardust-ui/react'
+import { Provider, themes, pxToRem, createTheme } from '@stardust-ui/react'
 import AnchorJS from 'anchor-js'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -7,7 +7,6 @@ import { withRouter } from 'react-router-dom'
 import Sidebar from 'docs/src/components/Sidebar/Sidebar'
 import { scrollToAnchor } from 'docs/src/utils'
 import { mergeThemes } from 'src/lib'
-import withDebugId from 'src/lib/withDebugId'
 
 const anchors = new AnchorJS({
   class: 'anchor-link',
@@ -96,7 +95,7 @@ class DocsLayout extends React.Component<any, any> {
         <Provider
           theme={mergeThemes(
             themes.teamsDark,
-            withDebugId(
+            createTheme(
               {
                 // adjust Teams' theme to Semantic UI's font size scheme
                 componentVariables: {
