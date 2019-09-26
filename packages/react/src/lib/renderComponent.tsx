@@ -30,6 +30,7 @@ import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtiliti
 import createAnimationStyles from './createAnimationStyles'
 import { isEnabled as isDebugEnabled } from './debug'
 import withDebugId from './withDebugId'
+import DebugData from './debug/debugData'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
@@ -53,7 +54,7 @@ export interface RenderConfig<P> {
   state: State
   actionHandlers: AccessibilityActionHandlers
   render: RenderComponentCallback<P>
-  saveDebug: (debug: any | null) => void
+  saveDebug: (debug: DebugData | null) => void
 }
 
 const emptyBehavior: ReactAccessibilityBehavior = {
@@ -215,7 +216,7 @@ const renderComponent = <P extends {}>(
   }
 
   const resolvedStyles: ComponentSlotStylesPrepared = {}
-  const resolvedStylesDebug: { [key: string]: { styles: ComponentSlotStylesPrepared }[] } = {}
+  const resolvedStylesDebug: { [key: string]: { styles: Object }[] } = {}
   const classes: ComponentSlotClasses = {}
 
   Object.keys(mergedStyles).forEach(slotName => {
