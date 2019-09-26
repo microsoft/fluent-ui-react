@@ -17,7 +17,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
-<!--------------------------------[ v0.38.1 ]------------------------------- -->
+<!--------------------------------[ v0.38.2 ]------------------------------- -->
 ## [v0.38.2](https://github.com/stardust-ui/react/tree/v0.38.2) (2019-09-26)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.38.1...v0.38.2)
 
