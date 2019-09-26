@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.38.1 ]------------------------------- -->
+## [v0.38.2](https://github.com/stardust-ui/react/tree/v0.38.2) (2019-09-26)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.38.1...v0.38.2)
+
 ### Fixes
 - Fix `bodyBackground` color for Teams dark theme to be the correct grey value @codepretty ([#1961](https://github.com/stardust-ui/react/pull/1961))
 - Fix comparison for `scrollParent` in `unstable_Popper` @layershifter ([#1959](https://github.com/stardust-ui/react/pull/1959))
