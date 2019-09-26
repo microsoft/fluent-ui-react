@@ -40,6 +40,37 @@ class Debug extends React.Component<DebugProps, DebugState> {
     mountDocument: PropTypes.object.isRequired,
   }
 
+  constructor(p, s) {
+    super(p, s)
+    // eslint-disable-next-line
+    ;(window as any).openDebugPanel = () => {
+      // eslint-disable-next-line
+      this.debugReactComponent((window as any).$r)
+    }
+  }
+
+  debugReactComponent = r => {
+    if (!r) {
+      console.error(
+        "No React component selected. Please select a Stardust component from the React's Component panel.",
+      )
+      return
+    }
+    if (!r._reactInternalFiber) {
+      console.error(
+        'React does not provide data for debugging for this component. Try selecting some Stardust component.',
+      )
+      return
+    }
+    if (!r.stardustDebug) {
+      console.error('Not a debuggable component. Try selecting some Stardust component.')
+      return
+    }
+
+    const fiberNav = FiberNavigator.fromFiber(r._reactInternalFiber)
+    this.setState({ fiberNav, isSelecting: false, selectedFiberNav: null })
+  }
+
   debugDOMNode = domNode => {
     // console.group('debugDOMNode')
 
