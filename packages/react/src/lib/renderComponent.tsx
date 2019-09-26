@@ -185,18 +185,33 @@ const renderComponent = <P extends {}>(
     theme.componentVariables[displayName],
     props.variables,
   )(theme.siteVariables)
+  /*
+   const animationCSSProp = props.animation
+     ? createAnimationStyles(props.animation, context.theme)
+     : {}
 
+   // Resolve styles using resolved variables, merge results, allow props.styles to override
+   const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
+     theme.componentStyles[displayName],
+     { root: props.design },
+     { root: props.styles },
+     { root: animationCSSProp },
+   )
+*/
   const animationCSSProp = props.animation
     ? createAnimationStyles(props.animation, context.theme)
-    : {}
-
-  // Resolve styles using resolved variables, merge results, allow props.styles to override
-  const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
-    theme.componentStyles[displayName],
-    { root: props.design },
-    { root: props.styles },
-    { root: animationCSSProp },
-  )
+    : null
+  const shouldMerge = props.design || props.styles || animationCSSProp
+  let mergedStyles: ComponentSlotStylesPrepared = theme.componentStyles[displayName] || {}
+  if (shouldMerge) {
+    // Resolve styles using resolved variables, merge results, allow props.styles to override
+    mergedStyles = mergeComponentStyles(
+      theme.componentStyles[displayName],
+      { root: props.design },
+      { root: props.styles },
+      { root: animationCSSProp },
+    )
+  }
 
   const accessibility: ReactAccessibilityBehavior = getAccessibility(
     displayName,
