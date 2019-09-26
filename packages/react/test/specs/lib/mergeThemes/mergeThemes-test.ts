@@ -2,7 +2,7 @@ import mergeThemes, { mergeStyles } from 'src/lib/mergeThemes'
 import { ComponentStyleFunctionParam, ICSSInJSStyle, ThemeInput } from 'src/themes/types'
 import * as _ from 'lodash'
 import { callable, themes, withDebugId } from 'src/index'
-import * as debug from 'src/lib/debug/debugApi'
+import * as debugEnabled from 'src/lib/debug/debugEnabled'
 
 describe('mergeThemes', () => {
   test(`always returns an object`, () => {
@@ -395,17 +395,17 @@ describe('mergeThemes', () => {
     let originalDebugEnabled
 
     beforeEach(() => {
-      originalDebugEnabled = debug.isEnabled
+      originalDebugEnabled = debugEnabled.isEnabled
     })
 
     afterEach(() => {
-      Object.defineProperty(debug, 'isEnabled', {
+      Object.defineProperty(debugEnabled, 'isEnabled', {
         get: () => originalDebugEnabled,
       })
     })
 
     function mockIsDebugEnabled(enabled: boolean) {
-      Object.defineProperty(debug, 'isEnabled', {
+      Object.defineProperty(debugEnabled, 'isEnabled', {
         get: jest.fn(() => enabled),
       })
     }
@@ -528,17 +528,17 @@ describe('mergeThemes', () => {
     let originalDebugEnabled
 
     beforeEach(() => {
-      originalDebugEnabled = debug.isEnabled
+      originalDebugEnabled = debugEnabled.isEnabled
     })
 
     afterEach(() => {
-      Object.defineProperty(debug, 'isEnabled', {
+      Object.defineProperty(debugEnabled, 'isEnabled', {
         get: () => originalDebugEnabled,
       })
     })
 
     function mockIsDebugEnabled(enabled: boolean) {
-      Object.defineProperty(debug, 'isEnabled', {
+      Object.defineProperty(debugEnabled, 'isEnabled', {
         get: jest.fn(() => enabled),
       })
     }

@@ -1,6 +1,6 @@
 import { mergeComponentStyles } from '../../../../src/lib/mergeThemes'
 import { ComponentStyleFunctionParam } from 'src/themes/types'
-import * as debug from 'src/lib/debug/debugApi'
+import * as debugEnabled from 'src/lib/debug/debugEnabled'
 import { withDebugId } from 'src/lib'
 
 describe('mergeComponentStyles', () => {
@@ -108,17 +108,17 @@ describe('mergeComponentStyles', () => {
     let originalDebugEnabled
 
     beforeEach(() => {
-      originalDebugEnabled = debug.isEnabled
+      originalDebugEnabled = debugEnabled.isEnabled
     })
 
     afterEach(() => {
-      Object.defineProperty(debug, 'isEnabled', {
+      Object.defineProperty(debugEnabled, 'isEnabled', {
         get: () => originalDebugEnabled,
       })
     })
 
     function mockIsDebugEnabled(enabled: boolean) {
-      Object.defineProperty(debug, 'isEnabled', {
+      Object.defineProperty(debugEnabled, 'isEnabled', {
         get: jest.fn(() => enabled),
       })
     }
