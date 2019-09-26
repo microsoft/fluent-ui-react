@@ -3,7 +3,6 @@ import * as React from 'react'
 import * as _ from 'lodash'
 
 import callable from './callable'
-import getClasses from './getClasses'
 import getElementType from './getElementType'
 import getUnhandledProps from './getUnhandledProps'
 import logProviderMissingWarning from './providerMissingHandler'
@@ -63,6 +62,7 @@ const emptyBehavior: ReactAccessibilityBehavior = {
 }
 
 const getAccessibility = (
+  displayName: string,
   props: State & PropsWithVarsAndStyles & { accessibility?: Accessibility },
   actionHandlers: AccessibilityActionHandlers,
   isRtlEnabled: boolean,
@@ -75,6 +75,20 @@ const getAccessibility = (
 
   const definition: AccessibilityDefinition = accessibility(props)
   const keyHandlers = getKeyDownHandlers(actionHandlers, definition.keyActions, isRtlEnabled)
+
+  if (process.env.NODE_ENV !== 'production') {
+    // For the non-production builds we enable the runtime accessibility attributes validator.
+    // We're adding the data-aa-class attribute which is being consumed by the validator, the
+    // schema is located in @stardust-ui/ability-attributes package.
+    if (definition.attributes) {
+      const slotNames = Object.keys(definition.attributes)
+      slotNames.forEach(slotName => {
+        definition.attributes[slotName]['data-aa-class'] = `${displayName}${
+          slotName === 'root' ? '' : `__${slotName}`
+        }`
+      })
+    }
+  }
 
   return {
     ...emptyBehavior,
@@ -185,6 +199,7 @@ const renderComponent = <P extends {}>(
   )
 
   const accessibility: ReactAccessibilityBehavior = getAccessibility(
+    displayName,
     stateAndProps,
     actionHandlers,
     rtl,
@@ -201,11 +216,25 @@ const renderComponent = <P extends {}>(
     disableAnimations,
   }
 
-  const resolvedStyles: ComponentSlotStylesPrepared = resolveStyles(mergedStyles, styleParam)
+  // Fela plugins rely on `direction` param in `theme` prop instead of RTL
+  // Our API should be aligned with it
+  // Heads Up! Keep in sync with Design.tsx render logic
+  const direction = rtl ? 'rtl' : 'ltr'
+  const felaParam = {
+    theme: { direction },
+  }
 
-  const classes: ComponentSlotClasses = renderer
-    ? getClasses(renderer, mergedStyles, styleParam)
-    : {}
+  const resolvedStyles: ComponentSlotStylesPrepared = {}
+  const classes: ComponentSlotClasses = {}
+
+  Object.keys(mergedStyles).forEach(slotName => {
+    resolvedStyles[slotName] = callable(mergedStyles[slotName])(styleParam)
+
+    if (renderer) {
+      classes[slotName] = renderer.renderRule(callable(resolvedStyles[slotName]), felaParam)
+    }
+  })
+
   classes.root = cx(className, classes.root, props.className)
 
   const resolvedConfig: RenderResultConfig<P> = {

@@ -8,6 +8,8 @@ import DropdownSelectedItem from 'src/components/Dropdown/DropdownSelectedItem'
 import { isConformant } from 'test/specs/commonTests'
 import { findIntrinsicElement, mountWithProvider } from 'test/utils'
 import { ReactWrapper, CommonWrapper } from 'enzyme'
+import { DropdownItemProps } from 'src/components/Dropdown/DropdownItem'
+import { ShorthandValue } from 'src/types'
 
 jest.dontMock('keyboard-key')
 jest.useFakeTimers()
@@ -1392,6 +1394,62 @@ describe('Dropdown', () => {
       expect(
         findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.selectedItem}`),
       ).toHaveLength(1)
+    })
+
+    it('does not contain duplicities after an item is selected', () => {
+      const wrapper = mountWithProvider(<Dropdown multiple items={items} />)
+      const triggerButton = getTriggerButtonWrapper(wrapper)
+
+      triggerButton.simulate('click')
+      const firstItem = getItemAtIndexWrapper(wrapper)
+      firstItem.simulate('click', { nativeEvent: { stopImmediatePropagation: _.noop } })
+
+      expect(getSelectedItemAtIndexWrapper(wrapper, 0).exists()).toBe(true)
+      expect(getItemAtIndexWrapper(wrapper, items.length - 1).exists()).toBe(false)
+    })
+
+    it('does not contain duplicities when value is set', () => {
+      const items = ['James Smith']
+      const value = ['James Smith']
+      const wrapper = mountWithProvider(<Dropdown multiple items={items} value={value} />)
+      const triggerButton = getTriggerButtonWrapper(wrapper)
+
+      triggerButton.simulate('click')
+
+      expect(getSelectedItemAtIndexWrapper(wrapper, 0).exists()).toBe(true)
+      expect(getItemAtIndexWrapper(wrapper, items.length - 1).exists()).toBe(false)
+    })
+
+    it('contains "duplicates" by default', () => {
+      const items = [{ key: '1', header: 'James Smith' }]
+      const value = [{ key: '1', header: 'John Locke' }]
+
+      const wrapper = mountWithProvider(<Dropdown multiple items={items} value={value} />)
+      const triggerButton = getTriggerButtonWrapper(wrapper)
+      triggerButton.simulate('click')
+
+      expect(getSelectedItemAtIndexWrapper(wrapper, 0).exists()).toBe(true)
+      expect(getItemAtIndexWrapper(wrapper, items.length - 1).exists()).toBe(true)
+    })
+
+    it('does not contain duplicates when proper itemToValue prop is used', () => {
+      const items = [{ id: '1', header: 'James Smith' }]
+      const value = [{ id: '1', header: 'John Locke' }]
+      const itemToValue = (item: ShorthandValue<DropdownItemProps>): string => {
+        if (!item || !React.isValidElement(item)) {
+          return ''
+        }
+        return (item as any).id
+      }
+
+      const wrapper = mountWithProvider(
+        <Dropdown multiple items={items} value={value} itemToValue={itemToValue} />,
+      )
+      const triggerButton = getTriggerButtonWrapper(wrapper)
+      triggerButton.simulate('click')
+
+      expect(getSelectedItemAtIndexWrapper(wrapper, 0).exists()).toBe(true)
+      expect(getItemAtIndexWrapper(wrapper, items.length - 1).exists()).toBe(false)
     })
   })
 
