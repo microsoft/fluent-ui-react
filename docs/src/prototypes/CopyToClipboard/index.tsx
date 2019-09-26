@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Flex, Provider, Text, Button, Menu, Ref, TooltipProps } from '@stardust-ui/react'
+import { Flex, Provider, Text, Button, Menu, Ref } from '@stardust-ui/react'
 import CopyToClipboard from './CopyToClipboard'
 import { PrototypeSection, ComponentPrototype } from '../Prototypes'
 import themeOverrides from './themeOverrides'
@@ -7,7 +7,8 @@ import { NotificationProvider } from './NotificationProvider'
 
 type CopyToClipboardPrototypeProps = {
   value: string
-  attach?: boolean | TooltipProps
+  target?: HTMLElement
+  attach?: boolean
 }
 
 const CopyToClipboardPrototype: React.FC<CopyToClipboardPrototypeProps> = props => {
@@ -18,6 +19,7 @@ const CopyToClipboardPrototype: React.FC<CopyToClipboardPrototypeProps> = props 
 
       <CopyToClipboard
         attach={props.attach}
+        target={props.target}
         value={props.value}
         trigger={<Button iconOnly icon="clipboard-copied-to" />}
       />
@@ -55,7 +57,7 @@ const CopyToClipboardAttached: React.FC = props => {
         render('Copy text', (Component, props) => {
           return (
             <CopyToClipboard
-              attach={{ target: targetRef.current }}
+              target={targetRef.current}
               value={'Julius Caesar'}
               trigger={<Component {...props} />}
             />

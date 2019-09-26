@@ -2,13 +2,14 @@ import { Portal, Tooltip, createComponent, TooltipProps } from '@stardust-ui/rea
 import * as React from 'react'
 
 type NotificationProps = {
-  attach: TooltipProps
   content: React.ReactNode
+  target?: HTMLElement
+  trigger?: JSX.Element
 }
 
 type NotificationContextValue = (
   content: React.ReactNode,
-  attach: boolean | TooltipProps,
+  targe: HTMLElement | null,
   timeout: number,
 ) => void
 
@@ -19,20 +20,17 @@ export const NotificationContext = React.createContext<NotificationContextValue>
 export const NotificationProvider: React.FC = props => {
   const { children } = props
   const [notification, setNotification] = React.useState<React.ReactNode>()
-  const [attach, setAttach] = React.useState<boolean | TooltipProps>()
+  const [target, setTarget] = React.useState<HTMLElement | null>()
   const timeoutId = React.useRef<number>()
 
-  const update = React.useCallback<NotificationContextValue>(
-    (notification, attachProps, timeout) => {
-      setNotification(notification)
-      setAttach(attachProps)
-      timeoutId.current = window.setTimeout(() => {
-        setNotification(null)
-        setAttach(null)
-      }, timeout)
-    },
-    [],
-  )
+  const update = React.useCallback<NotificationContextValue>((notification, target, timeout) => {
+    setNotification(notification)
+    setTarget(target)
+    timeoutId.current = window.setTimeout(() => {
+      setNotification(null)
+      setTarget(null)
+    }, timeout)
+  }, [])
 
   React.useEffect(() => {
     return () => clearTimeout(timeoutId.current)
@@ -40,7 +38,7 @@ export const NotificationProvider: React.FC = props => {
 
   return (
     <>
-      {!!notification && <Notification attach={attach} content={notification} />}
+      {!!notification && <Notification target={target} content={notification} />}
       <NotificationContext.Provider value={update}>{children}</NotificationContext.Provider>
     </>
   )
@@ -48,25 +46,27 @@ export const NotificationProvider: React.FC = props => {
 
 export const Notification = createComponent<NotificationProps>({
   displayName: 'Notification',
-  render: ({ attach, content, stardust: { classes } }) => {
-    if (attach) {
-      return Tooltip.create(attach, {
-        defaultProps: {
-          pointing: false,
-          offset: '0 10',
-        },
-        overrideProps: {
-          content,
-          open: true,
-        },
-      })
+  render: ({ target, trigger, content, stardust: { classes } }) => {
+    const tooltipProps: TooltipProps = {
+      content,
+      open: true,
+      pointing: false,
+      target,
+      trigger,
+    }
+
+    if (target || trigger) {
+      return Tooltip.create({ ...tooltipProps, offset: '0 10' })
     }
 
     return (
       <Portal open={true}>
         <div className={classes.root}>
           <div className={classes.overlay}>
-            <div className={classes.content}>{content}</div>
+            {Tooltip.create({
+              ...tooltipProps,
+              trigger: <div className={classes.content} />,
+            })}
           </div>
         </div>
       </Portal>
