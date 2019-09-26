@@ -269,8 +269,20 @@ export const colorScheme: ColorSchemeMapping = {
     backgroundActive: colors.amethyst[700],
   }),
   formatting: createColorScheme({
-    textColorRed: categoryColors.red[250],
-    backgroundColorRed: categoryColors.red[700],
+    foreground1: categoryColors.red[250],
+    background1: categoryColors.red[700],
+    foreground2: categoryColors.orangeDark[350],
+    background2: categoryColors.orange[700],
+    foreground3: categoryColors.yellow[250],
+    background3: categoryColors.yellow[800],
+    foreground4: categoryColors.green[250],
+    background4: categoryColors.green[700],
+    foreground5: categoryColors.tealLight[250],
+    background5: categoryColors.tealLight[700],
+    foreground6: categoryColors.blueDark[250],
+    background6: categoryColors.blueDark[450],
+    foreground7: categoryColors.maroon[350],
+    background7: categoryColors.maroon[800],
   }),
 }
 

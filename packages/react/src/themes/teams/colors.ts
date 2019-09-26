@@ -477,8 +477,20 @@ export const colorScheme: ColorSchemeMapping<ColorScheme, TeamsColorNames> = {
     backgroundActive: colors.amethyst[700],
   }),
   formatting: createColorScheme({
-    textColorRed: categoryColors.red[600],
-    backgroundColorRed: categoryColors.red[300],
+    foreground1: categoryColors.red[600],
+    background1: categoryColors.red[300],
+    foreground2: categoryColors.orangeDark[400],
+    background2: categoryColors.orange[300],
+    foreground3: categoryColors.yellow[400],
+    background3: categoryColors.yellow[300],
+    foreground4: categoryColors.green[600],
+    background4: categoryColors.green[300],
+    foreground5: categoryColors.tealLight[650],
+    background5: categoryColors.tealLight[300],
+    foreground6: categoryColors.blueDark[400],
+    background6: categoryColors.blueDark[200],
+    foreground7: categoryColors.maroon[500],
+    background7: categoryColors.maroon[200],
   }),
 }
 
