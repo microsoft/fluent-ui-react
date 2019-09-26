@@ -476,6 +476,25 @@ export const categoryColors: TeamsCategoryColors = {
     850: '#404243',
     900: '#292828',
   },
+  neon: {
+    100: '#FAFEDF',
+    150: '#F4FBC4',
+    200: '#E9F1AC',
+    250: '#E5F18F',
+    300: '#D9E388',
+    350: '#C8D464',
+    400: '#BDCB4C',
+    450: '#B7C640',
+    500: '#A8B63A',
+    550: '#99A43B',
+    600: '#909A45',
+    650: '#899338',
+    700: '#7A8337',
+    750: '#656C2B',
+    800: '#50571E',
+    850: '#3C4212',
+    900: '#272B0E',
+  },
 }
 
 const createCategoryColorScheme = (color: string, customValues = {}) => {
