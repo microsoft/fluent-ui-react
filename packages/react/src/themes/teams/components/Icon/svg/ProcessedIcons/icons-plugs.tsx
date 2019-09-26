@@ -8,5 +8,5 @@ export default {
     </svg>
   ),
   styles: {},
-  exportedAs: 'connector-badge',
+  exportedAs: 'plugs',
 } as TeamsProcessedSvgIconSpec

@@ -33,7 +33,7 @@ import processedIcons_teamcreate from './icons-team-create'
 import processedIcons_tabledelete from './icons-table-delete'
 import processedIcons_tableadd from './icons-table-add'
 import processedIcons_table from './icons-table'
-import processedIcons_tabbadge from './icons-tab-badge'
+import processedIcons_tabs from './icons-tabs'
 import processedIcons_strike from './icons-strike'
 import processedIcons_sticker from './icons-sticker'
 import processedIcons_statusyo from './icons-status-yo'
@@ -218,7 +218,7 @@ import processedIcons_desktop from './icons-desktop'
 import processedIcons_cortana from './icons-cortana'
 import processedIcons_copy from './icons-copy'
 import processedIcons_contactlist from './icons-contact-list'
-import processedIcons_connectorbadge from './icons-connector-badge'
+import processedIcons_plugs from './icons-plugs'
 import processedIcons_composeextmenuitem from './icons-compose-ext-menu-item'
 import processedIcons_composeextensionunpin from './icons-compose-extension-unpin'
 import processedIcons_composeextensionpin from './icons-compose-extension-pin'
@@ -284,7 +284,7 @@ import processedIcons_broadcast from './icons-broadcast'
 import processedIcons_broadcastviewright from './icons-broadcast-view-right'
 import processedIcons_broadcastviewleft from './icons-broadcast-view-left'
 import processedIcons_broadcastviewfullscreen from './icons-broadcast-view-fullscreen'
-import processedIcons_bot from './icons-bot'
+import processedIcons_robot from './icons-robot'
 import processedIcons_bookmark from './icons-bookmark'
 import processedIcons_bold from './icons-bold'
 import processedIcons_blurbackground from './icons-blur-background'
@@ -343,7 +343,7 @@ export default {
   processedIcons_tabledelete,
   processedIcons_tableadd,
   processedIcons_table,
-  processedIcons_tabbadge,
+  processedIcons_tabs,
   processedIcons_strike,
   processedIcons_sticker,
   processedIcons_statusyo,
@@ -528,7 +528,7 @@ export default {
   processedIcons_cortana,
   processedIcons_copy,
   processedIcons_contactlist,
-  processedIcons_connectorbadge,
+  processedIcons_plugs,
   processedIcons_composeextmenuitem,
   processedIcons_composeextensionunpin,
   processedIcons_composeextensionpin,
@@ -594,7 +594,7 @@ export default {
   processedIcons_broadcastviewright,
   processedIcons_broadcastviewleft,
   processedIcons_broadcastviewfullscreen,
-  processedIcons_bot,
+  processedIcons_robot,
   processedIcons_bookmark,
   processedIcons_bold,
   processedIcons_blurbackground,

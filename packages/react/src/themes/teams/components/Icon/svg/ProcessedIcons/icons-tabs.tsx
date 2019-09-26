@@ -8,5 +8,5 @@ export default {
     </svg>
   ),
   styles: {},
-  exportedAs: 'tab-badge',
+  exportedAs: 'tabs',
 } as TeamsProcessedSvgIconSpec

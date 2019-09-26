@@ -24,7 +24,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Update Office brand icons in Teams theme with latest version @notandrew ([#1954](https://github.com/stardust-ui/react/pull/1954))
 
 ### Features
-- Export `bot`, `tab-badge` and `connector-badge` icon to Teams theme @cloudtx ([#1968](https://github.com/stardust-ui/react/pull/1968))
+- Export `robot`, `tabs` and `plugs` icon to Teams theme @cloudtx ([#1968](https://github.com/stardust-ui/react/pull/1968))
 
 <!--------------------------------[ v0.39.0 ]------------------------------- -->
 ## [v0.39.0](https://github.com/stardust-ui/react/tree/v0.39.0) (2019-09-23)
