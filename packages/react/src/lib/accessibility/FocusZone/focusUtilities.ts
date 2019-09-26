@@ -427,6 +427,7 @@ export function focusAsync(element: HTMLElement | { focus: () => void } | undefi
  */
 export function getWindow(rootElement?: Element | null): Window | undefined {
   return (
+    // eslint-disable-next-line no-undef
     (rootElement && rootElement.ownerDocument && rootElement.ownerDocument.defaultView) || window
   )
 }
@@ -437,6 +438,7 @@ export function getWindow(rootElement?: Element | null): Window | undefined {
  * @public
  */
 export function getDocument(rootElement?: Element | null): Document | undefined {
+  // eslint-disable-next-line no-undef
   return (rootElement && rootElement.ownerDocument) || document
 }
 

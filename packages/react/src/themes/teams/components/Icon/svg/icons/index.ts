@@ -138,6 +138,7 @@ import star from './star'
 import stardustCircle from './stardustCircle'
 import sticker from './sticker'
 import strike from './strike'
+import sync from './sync'
 import table from './table'
 import tableAdd from './tableAdd'
 import tableDelete from './tableDelete'
@@ -286,6 +287,7 @@ export default {
   star,
   sticker,
   strike,
+  sync,
   table,
   'table-add': tableAdd,
   'table-delete': tableDelete,
