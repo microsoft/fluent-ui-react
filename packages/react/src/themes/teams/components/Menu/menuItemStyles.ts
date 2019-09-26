@@ -163,7 +163,6 @@ const menuItemStyles: ComponentSlotStylesPrepared<MenuItemPropsAndState, MenuVar
 
     return {
       color: 'inherit',
-      lineHeight: 1,
       position: 'relative',
       verticalAlign: 'middle',
       display: 'block',
