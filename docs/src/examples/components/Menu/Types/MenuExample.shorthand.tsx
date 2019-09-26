@@ -1,42 +1,10 @@
-import React from 'react'
-import { Menu, Icon } from '@stardust-ui/react'
-
-const MyComponent = p => <strong {...p} />
+import * as React from 'react'
+import { Menu } from '@stardust-ui/react'
 
 const items = [
-  {
-    key: 'editorials',
-    content: 'Editorials',
-  },
-  {
-    key: 'review',
-    content: () => <p>Reviews</p>,
-  },
-  {
-    wrapper: {
-      as: 'li',
-      design: {
-        padding: '20px',
-        background: 'red',
-      },
-    },
-    key: 'events',
-    content: resolve => {
-      return resolve('wrapped content', (C, p) => {
-        return (
-          <MyComponent>
-            <C {...p}>
-              <Icon name="user" />
-              {p.children}
-            </C>
-          </MyComponent>
-        )
-      })
-    },
-    styles: {
-      background: 'pink',
-    },
-  },
+  { key: 'editorials', content: 'Editorials' },
+  { key: 'review', content: 'Reviews' },
+  { key: 'events', content: 'Upcoming Events' },
 ]
 
 const MenuExample = () => <Menu defaultActiveIndex={0} items={items} />
