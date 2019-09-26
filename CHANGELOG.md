@@ -22,6 +22,11 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix comparison for `scrollParent` in `unstable_Popper` @layershifter ([#1959](https://github.com/stardust-ui/react/pull/1959))
 - Updating `Button` styles for Teams dark & high contrast themes to match design @notandrew ([#1933](https://github.com/stardust-ui/react/pull/1933))
 - Update Office brand icons in Teams theme with latest version @notandrew ([#1954](https://github.com/stardust-ui/react/pull/1954))
+- Fix setting `data-whatinput` attribute in child windows @layershifter ([#1972](https://github.com/stardust-ui/react/pull/1972))
+- Avoid usages of global `document` and `window` in components @layershifter ([#1970](https://github.com/stardust-ui/react/pull/1970))
+
+### Features
+- Add experimental runtime accessibility attributes validation (the initial step validates the Button component only) @mshoho ([#1911](https://github.com/stardust-ui/react/pull/1911))
 
 ### Features
 - Export `robot`, `tabs` and `plugs` icon to Teams theme @cloudtx ([#1968](https://github.com/stardust-ui/react/pull/1968))
