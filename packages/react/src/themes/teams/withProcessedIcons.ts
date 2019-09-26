@@ -33,6 +33,8 @@ const theme: ThemeInput = {
     'stardust-arrow-up': processedIcons['triangle-up'],
     'stardust-arrow-down': processedIcons['triangle-down'],
     'stardust-arrow-end': processedIcons['triangle-right'],
+    'stardust-chevron-left': processedIcons['chevron-left'],
+    'stardust-chevron-right': processedIcons['chevron-right'],
   },
 }
 
