@@ -42,10 +42,12 @@ class Debug extends React.Component<DebugProps, DebugState> {
 
   constructor(p, s) {
     super(p, s)
-    // eslint-disable-next-line
-    ;(window as any).openDebugPanel = () => {
+    if (isBrowser()) {
       // eslint-disable-next-line
-      this.debugReactComponent((window as any).$r)
+      ;(window as any).openDebugPanel = () => {
+        // eslint-disable-next-line
+        this.debugReactComponent((window as any).$r)
+      }
     }
   }
 
