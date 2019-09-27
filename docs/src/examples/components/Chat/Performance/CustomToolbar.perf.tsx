@@ -369,6 +369,7 @@ const commonLayout: CustomToolbarLayout = props =>
     {
       tooltip: props.micActive ? tooltips.micOn : tooltips.micOff,
       active: props.micActive,
+      tooltip: 'mic',
       icon: {
         name: props.micActive ? 'mic' : 'mic-off',
         size: 'large' as SizeValue,
@@ -381,6 +382,7 @@ const commonLayout: CustomToolbarLayout = props =>
     {
       tooltip: props.screenShareActive ? tooltips.shareStop : tooltips.share,
       active: props.screenShareActive,
+      tooltip: 'screen share',
       icon: {
         name: props.screenShareActive ? 'call-control-close-tray' : 'call-control-present-new',
         size: 'large' as SizeValue,
@@ -393,6 +395,7 @@ const commonLayout: CustomToolbarLayout = props =>
     {
       tooltip: tooltips.moreActions,
       key: 'more',
+      tooltip: 'more',
       icon: {
         name: 'more',
         size: 'large' as SizeValue,
