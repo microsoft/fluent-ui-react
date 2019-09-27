@@ -1,5 +1,6 @@
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
+import * as _ from 'lodash'
 import {
   UIComponentProps,
   UIComponent,
@@ -50,7 +51,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
     activeIndex: 0,
   }
 
-  renderContent(styles) {
+  renderContent = styles => {
     const { items } = this.props
     if (!items) {
       return null
@@ -68,7 +69,20 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
     )
   }
 
-  renderControls(styles) {
+  handlePrevious = (e: React.SyntheticEvent) => {
+    this.setState(state => ({
+      activeIndex: state.activeIndex > 0 ? state.activeIndex - 1 : 0,
+    }))
+  }
+
+  handleNext = (e: React.SyntheticEvent) => {
+    const { items } = this.props
+    this.setState(state => ({
+      activeIndex: state.activeIndex < items.length - 1 ? state.activeIndex + 1 : items.length - 1,
+    }))
+  }
+
+  renderControls = styles => {
     const { buttonPrevious, buttonNext } = this.props
 
     return (
@@ -79,6 +93,12 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
             icon: 'stardust-chevron-left',
             styles: styles.buttonPrevious,
           },
+          overrideProps: (predefinedProps: ButtonProps) => ({
+            onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
+              _.invoke(predefinedProps, 'onClick', e, buttonProps)
+              this.handlePrevious(e)
+            },
+          }),
         })}
         {Button.create(buttonNext || {}, {
           defaultProps: {
@@ -86,12 +106,18 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
             icon: 'stardust-chevron-right',
             styles: styles.buttonNext,
           },
+          overrideProps: (predefinedProps: ButtonProps) => ({
+            onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
+              _.invoke(predefinedProps, 'onClick', e, buttonProps)
+              this.handleNext(e)
+            },
+          }),
         })}
       </>
     )
   }
 
-  renderNavigation() {
+  renderNavigation = () => {
     return <ul />
   }
 

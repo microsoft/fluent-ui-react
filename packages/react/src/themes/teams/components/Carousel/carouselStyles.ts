@@ -1,9 +1,12 @@
 import { pxToRem } from '../../../../lib'
-import { CarouselProps } from '../../../../components/Carousel/Carousel'
+import { CarouselProps, CarouselState } from '../../../../components/Carousel/Carousel'
 import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { CarouselVariables } from './carouselVariables'
 
-const carouselStyles: ComponentSlotStylesPrepared<CarouselProps, CarouselVariables> = {
+const carouselStyles: ComponentSlotStylesPrepared<
+  CarouselProps & CarouselState,
+  CarouselVariables
+> = {
   root: ({ variables: v }): ICSSInJSStyle => ({
     display: 'block',
   }),
@@ -12,11 +15,13 @@ const carouselStyles: ComponentSlotStylesPrepared<CarouselProps, CarouselVariabl
     width: pxToRem(v.width),
     overflowX: 'hidden',
   }),
-  contentContainer: ({ variables: v }): ICSSInJSStyle => ({
+  contentContainer: ({ props: p, variables: v }): ICSSInJSStyle => ({
     padding: 0,
     margin: 0,
     display: 'flex',
     listStyle: 'none',
+    transform: `translateX(${pxToRem(-v.width * p.activeIndex)})`,
+    transitionDuration: '1s',
   }),
   itemContainer: ({ variables: v }): ICSSInJSStyle => ({
     width: pxToRem(v.width),
