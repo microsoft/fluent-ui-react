@@ -7,10 +7,10 @@ export default function DefaultSingleTemplate({children, pageContext}) {
   const {title, description} = pageContext.frontmatter
   return (
     <BaseLayout>
-      <main className="sui-article">
+      <div className="sui-article">
         <PageHeader title={title} description={description} />
         <div className="sui-article__content">{children}</div>
-      </main>
+      </div>
     </BaseLayout>
   )
 }

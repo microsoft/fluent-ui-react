@@ -10,7 +10,7 @@ export const PlaygroundPreview = observer(() => {
   const playground = usePlayground()
 
   let styles
-  let theme = playground.theme.config
+  let theme = playground.theme.value
 
   if (playground.transparent) {
     styles = {background: TRANSPARENT_BACKGROUND}

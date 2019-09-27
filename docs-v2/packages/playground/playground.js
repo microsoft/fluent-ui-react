@@ -1,22 +1,35 @@
 import "./index.css"
 import React from "react"
 import {observer} from "mobx-react"
-import {Checkbox} from "@stardust-ui/react"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faExpandArrowsAlt} from "@fortawesome/free-solid-svg-icons"
+import {
+  themes,
+  Provider as StardustProvider,
+  Checkbox
+} from "@stardust-ui/react"
 import {usePlayground} from "./context"
 import {PlaygroundExamples} from "./examples"
 import {PlaygroundPreview} from "./preview"
+import {PlaygroundProvider} from "./context"
+import {PlaygroundAPI} from "./api"
 
-export function Playground({onRequestMaximize}) {
+export function Playground({schema, onRequestMaximize}) {
+  const playground = React.useMemo(() => new PlaygroundAPI(schema), [schema])
+  const stardustTheme = themes.teams
+
   return (
-    <div className="playground">
-      <PlaygroundBanner onRequestMaximize={onRequestMaximize} />
-      <div className="playground-body">
-        <PlaygroundExamples />
-        <PlaygroundPreview />
-      </div>
-    </div>
+    <StardustProvider theme={stardustTheme} styles={{background: "none"}}>
+      <PlaygroundProvider value={playground}>
+        <div className="playground">
+          <PlaygroundBanner onRequestMaximize={onRequestMaximize} />
+          <div className="playground-body">
+            <PlaygroundExamples />
+            <PlaygroundPreview />
+          </div>
+        </div>
+      </PlaygroundProvider>
+    </StardustProvider>
   )
 }
 
@@ -102,62 +115,3 @@ const TransparencyControl = observer(() => {
     </div>
   )
 })
-
-// import "./component-playground.css"
-// import React from "react"
-// import {navigate} from "gatsby"
-// import {Provider as ThemeProvider, themes} from "@stardust-ui/react"
-// import {
-//   Playground,
-//   PlaygroundAPI,
-//   PlaygroundProvider,
-//   PlaygroundPluginHost,
-//   EditorPlugin,
-//   HTMLPlugin,
-//   StylesPlugin
-// } from "@stardust-ui/docs-playground"
-// import {useTheme} from "./theme"
-
-// export function ComponentPlayground({schema}) {
-//   const theme = useTheme()
-//   const playground = React.useMemo(() => {
-//     const playground = new PlaygroundAPI(schema)
-
-//     playground.addTheme("Teams Light", themes.teams)
-//     playground.addTheme("Teams Dark", themes.teamsDark)
-//     playground.addTheme("Teams High Contrast", themes.teamsHighContrast)
-
-//     return playground
-//   }, [schema])
-
-//   // Abuse of memo for synchronous side-effect (useLayoutEffect does not work)
-//   React.useMemo(() => {
-//     playground.selectTheme(theme === "light" ? "Teams Light" : "Teams Dark")
-//   }, [theme, playground])
-
-//   // TODO: render statically on server. Currently unable to because Stardust
-//   // expects a document to exist.
-//   if (typeof window === "undefined") {
-//     return null
-//   }
-
-//   function handleRequestMaximize() {
-//     if (window.location.href.includes("playground")) {
-//       navigate(`/components/${schema.slug}`)
-//     } else {
-//       navigate(`/components/${schema.slug}/playground`)
-//     }
-//   }
-
-//   const stardustTheme = theme === "light" ? themes.teams : themes.teamsDark
-//   return (
-//     <PlaygroundProvider value={playground}>
-//       <ThemeProvider theme={stardustTheme} styles={{background: "none"}}>
-//         <Playground onRequestMaximize={handleRequestMaximize} />
-//         <PlaygroundPluginHost
-//           plugins={[EditorPlugin, HTMLPlugin, StylesPlugin]}
-//         />
-//       </ThemeProvider>
-//     </PlaygroundProvider>
-//   )
-// }

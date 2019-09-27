@@ -1,6 +1,7 @@
 [data-theme="dark"] {
   --sui-color: #fff;
   --sui-accent-color: #aba4f7;
+  --sui-accent-color-bold: #aba4f7;
   --sui-accent-color-foreground: #fff;
   --sui-accent-color-background: rgba(178, 174, 255, 0.5);
   --sui-heading-background: rgba(178, 174, 255, 0.75);

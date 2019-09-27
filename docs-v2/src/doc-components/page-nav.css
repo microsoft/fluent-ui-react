@@ -1,0 +1,27 @@
+.sui-page-nav {
+  display: flex;
+  margin: 2rem 0 4rem;
+}
+
+.sui-page-nav__item {
+  color: var(--sui-accent-color-bold);
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.sui-page-nav__item-label {
+  display: block;
+  margin: 0 0 0.5rem 0;
+  font-weight: 300;
+  font-size: 0.85em;
+  color: var(--sui-color-muted);
+}
+
+.sui-page-nav__item.is-next {
+  margin-left: auto;
+}
+
+.sui-page-nav__item.is-next .sui-page-nav__item-label {
+  text-align: right;
+}

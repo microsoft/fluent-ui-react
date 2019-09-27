@@ -1,6 +1,6 @@
 ---
 title: Installation
-description: All you need to know to get up and running with Stardust.
+description: Follow these simple steps to get up and running with Stardust UI.
 order: 1
 ---
 
@@ -14,7 +14,7 @@ npm install --save @stardust-ui/react
 yarn add @stardust-ui/react
 ```
 
-With Stardust installed, it's time to get it into your React application. To do this, mount Stardust's [Provider](/components/provider) at the root of your application and select your preferred theme.
+With Stardust installed, it's time to get it into your React application. To do this, import Stardust's [Provider](/components/provider) and place it at the root of your application. Make sure to also pass it your preferred theme using its `theme` prop:
 
 ```jsx{3,6-8}
 import React from "react"
@@ -30,7 +30,7 @@ const App = () => (
 ReactDOM.render(<App />, document.getElementById("root"))
 ```
 
-Now that you have a Provider at the top of your React tree, you're ready to start using Stardust components. Below is an example that renders a simple [Header](/components/header) with some content.
+That's it! You're now ready to start using Stardust components in your application. Below is an example that renders a simple [Header](/components/header) with some content.
 
 ```jsx{2,6}
 import React from "react"

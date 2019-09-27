@@ -17,11 +17,15 @@ if (typeof window !== "undefined") {
 export class PlaygroundAPI {
   rtl = false
   transparent = false
-  themes = []
+  themes = [
+    {id: "Teams Light", value: Stardust.themes.teams},
+    {id: "Teams Dark", value: Stardust.themes.teamsDark},
+    {id: "Teams High Contrast", value: Stardust.themes.teamsDark}
+  ]
 
   constructor(schema) {
     this.schema = schema
-
+    this.theme = this.themes[0]
     if (schema.examples && schema.examples.length > 0) {
       this.examples = sortExamples(
         schema.examples.map(example => new Example(example))
@@ -40,10 +44,6 @@ export class PlaygroundAPI {
 
   selectControl(label) {
     this.activeControl = label
-  }
-
-  addTheme(id, config) {
-    this.themes.push({id, config})
   }
 
   selectTheme(id) {
@@ -161,7 +161,7 @@ export class Example {
         return result
       }
     } catch (e) {
-      // console.error(e)
+      console.error(e)
       return null
     }
   }

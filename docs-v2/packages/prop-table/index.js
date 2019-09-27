@@ -1,10 +1,10 @@
-import React from "react"
 import "./index.css"
+import React from "react"
 
 export function PropTable({props}) {
   return (
-    <div className="table-container">
-      <table className="prop-table table is-striped">
+    <div className="sui-prop-table-container">
+      <table className="sui-prop-table">
         <thead>
           <tr>
             <th>Name</th>
@@ -32,6 +32,9 @@ export function PropTable({props}) {
 }
 
 function renderPropTypes(types) {
+  if (!types) {
+    return null
+  }
   return types
     .map(type => {
       if (type.name === "literal") {

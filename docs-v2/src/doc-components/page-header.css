@@ -2,12 +2,15 @@
   margin: 0 0 2.5rem;
   font-size: 1.7rem;
   line-height: 2.5rem;
+  /* TODO: should this have a border? */
+  /* padding: 0 0 0.5rem; */
+  /* border-bottom: 1px solid var(--sui-divider-color); */
 }
 
 .sui-page-header__title {
   margin: 0;
   max-width: 65rem;
-  font-size: 2.5em;
+  font-size: 2.65em;
   line-height: 1.5em;
 }
 
@@ -15,6 +18,7 @@
   display: block;
   max-width: 65rem;
   margin: 0.5rem 0 2rem;
-  font-size: 1.75rem;
-  font-weight: 400;
+  font-size: 2.15rem;
+  font-weight: 300;
+  line-height: 1.35;
 }

@@ -1,6 +1,13 @@
+:root {
+  --sui-navbar-height: 5.75rem;
+}
+
 .navbar {
   position: fixed;
   top: 0;
+  display: flex;
+  align-items: center;
+  height: var(--sui-navbar-height);
   width: 100%;
   padding: 0 2rem;
   background: var(--sui-navbar-background, #fff);
@@ -9,7 +16,7 @@
 }
 
 .has-navbar {
-  padding-top: 6rem;
+  padding-top: var(--sui-navbar-height);
 }
 
 .has-navbar :target::before {
@@ -21,6 +28,8 @@
 
 .navbar-content {
   display: flex;
+  height: 100%;
+  width: 100%;
   align-items: center;
 }
 
@@ -45,13 +54,14 @@
 
 .navbar-links {
   display: flex;
+  height: 100%;
 }
 
 .navbar-link {
   position: relative;
-  display: block;
-  margin: 0 1.5rem 0 0;
-  padding: 1.5rem 0;
+  display: flex;
+  align-items: center;
+  padding: 0 1.25rem;
   font-size: 1.75rem;
   text-decoration: none;
   color: inherit;
@@ -60,6 +70,7 @@
 .navbar-link:hover,
 .navbar-link:focus {
   color: var(--sui-accent-color-bold, var(--sui-accent-color));
+  background: var(--sui-accent-color-background);
 }
 
 .navbar-link.is-active::after {
@@ -69,7 +80,7 @@
   left: 0;
   right: 0;
   height: 0.2rem;
-  background: var(--sui-accent-color);
+  background: var(--sui-accent-color-bold);
   box-shadow: 0 0 3px 0 var(--sui-accent-color);
 }
 
@@ -77,21 +88,6 @@
   margin-left: auto;
   flex: 1;
   max-width: 30rem;
-}
-
-.navbar-search__toggle {
-  display: none;
-  margin: 0 0.5rem 0 0;
-  font-size: 2.25rem;
-  color: var(--sui-color-muted);
-  border: none;
-  outline: none;
-  background: none;
-  cursor: pointer;
-}
-
-.navbar-search .sui-search {
-  max-width: 35rem;
 }
 
 @media screen and (max-width: 768px) {

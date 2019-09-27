@@ -1,67 +1,64 @@
-.prop-table {
-  border-bottom: none;
-  font-size: 1.5rem;
+.sui-prop-table-container {
+  -webkit-overflow-scrolling: touch;
+  overflow: auto;
+  overflow-y: hidden;
+  max-width: 100%;
 }
 
-.table {
+.sui-prop-table {
   width: 100%;
   color: inherit;
   background: var(--sui-table-background, #fff);
   border-collapse: collapse;
   border: 1px solid var(--sui-table-border-color, #dbdbdb);
+  border-bottom: none;
+  font-size: 1.5rem;
 }
 
-.no-wrap {
+.sui-prop-table .no-wrap {
   white-space: nowrap;
 }
 
-.table td,
-.table th {
+.sui-prop-table td,
+.sui-prop-table th {
   border: 1px solid var(--sui-table-cell-border-color, #dbdbdb);
   border-width: 0 0 1px;
   padding: 0.5em 0.75em;
   vertical-align: top;
 }
 
-.table th {
+.sui-prop-table th {
   color: var(--sui-table-header-cell-color, inherit);
 }
 
-.table th:not([align]) {
+.sui-prop-table th:not([align]) {
   text-align: left;
 }
 
-.table thead {
+.sui-prop-table thead {
   background-color: var(--sui-table-header-background, transparent);
 }
 
-.table thead td,
-.table thead th {
+.sui-prop-table thead td,
+.sui-prop-table thead th {
   border-width: 0 0 2px;
   color: var(--sui-table-color, #363636);
 }
 
-.table tbody {
+.sui-prop-table tbody {
   background-color: transparent;
 }
 
-.table tbody tr:last-child td,
-.table tbody tr:last-child th {
+.sui-prop-table tbody tr:last-child td,
+.sui-prop-table tbody tr:last-child th {
   border-bottom-width: 0;
 }
 
-.table.is-narrow td,
-.table.is-narrow th {
+.sui-prop-table.is-narrow td,
+.sui-prop-table.is-narrow th {
   padding: 0.25em 0.5em;
 }
 
-.table.is-striped tbody tr:not(.is-selected):nth-child(even) {
+.sui-prop-table tbody tr:not(.is-selected):nth-child(even) {
   background-color: var(--sui-table-striped-row-background, #fafafa);
-}
-
-.table-container {
-  -webkit-overflow-scrolling: touch;
-  overflow: auto;
-  overflow-y: hidden;
-  max-width: 100%;
 }
