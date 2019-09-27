@@ -25,6 +25,13 @@ export default {
     justifySelf: 'right',
   }),
 
+  footer: (): ICSSInJSStyle => ({
+    gridRow: 3,
+    gridColumn: '1',
+    '-ms-grid-column-align': 'start',
+    justifySelf: 'left',
+  }),
+
   content: ({ variables: v }: DialogStyleParams): ICSSInJSStyle => ({
     margin: v.contentMargin,
     gridColumn: '1 / span 2',

@@ -26,10 +26,12 @@ import Box, { BoxProps } from '../Box/Box'
 import Header, { HeaderProps } from '../Header/Header'
 import Portal, { TriggerAccessibility } from '../Portal/Portal'
 import Flex from '../Flex/Flex'
+import Text, { TextProps } from '../Text/Text'
 
 export interface DialogSlotClassNames {
   header: string
   headerAction: string
+  footer: string
   content: string
   overlay: string
 }
@@ -63,6 +65,9 @@ export interface DialogProps
 
   /** A dialog can contain a button next to the header. */
   headerAction?: ShorthandValue<ButtonProps>
+
+  /** A dialog can contain a footer. */
+  footer?: ShorthandValue<TextProps>
 
   /**
    * Called after user's click a cancel button.
@@ -130,6 +135,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
     overlay: customPropTypes.itemShorthand,
     trapFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
     trigger: PropTypes.any,
+    footer: customPropTypes.itemShorthand,
   }
 
   static defaultProps = {
@@ -247,6 +253,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       overlay,
       trapFocus,
       trigger,
+      footer,
     } = this.props
     const { open } = this.state
 
@@ -286,6 +293,12 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
             },
           })}
 
+          {Text.create(footer, {
+            defaultProps: {
+              className: Dialog.slotClassNames.footer,
+              styles: styles.footer,
+            },
+          })}
           {ButtonGroup.create(actions, {
             defaultProps: {
               styles: styles.actions,
@@ -370,6 +383,7 @@ Dialog.slotClassNames = {
   headerAction: `${Dialog.className}__headerAction`,
   content: `${Dialog.className}__content`,
   overlay: `${Dialog.className}__overlay`,
+  footer: `${Dialog.className}__footer`,
 }
 
 /**
