@@ -22,6 +22,7 @@ const carouselStyles: ComponentSlotStylesPrepared<
     listStyle: 'none',
     transform: `translateX(${pxToRem(-v.width * p.activeIndex)})`,
     transitionDuration: '1s',
+    willChange: 'transform',
   }),
   itemContainer: ({ variables: v }): ICSSInJSStyle => ({
     width: pxToRem(v.width),
@@ -30,14 +31,20 @@ const carouselStyles: ComponentSlotStylesPrepared<
     height: '100%',
     width: '100%',
   }),
-  buttonNext: ({ variables: v }): ICSSInJSStyle => ({
+  buttonNext: ({ props: p, variables: v }): ICSSInJSStyle => ({
     height: pxToRem(v.buttonNextSize),
     top: pxToRem(-v.height / 2 - v.buttonNextSize / 2),
     left: pxToRem(v.width - 2 * v.buttonNextSize),
+    ...(p.items !== undefined && {
+      visibility: p.activeIndex === p.items.length - 1 ? 'hidden' : 'visible',
+    }),
   }),
-  buttonPrevious: ({ variables: v }): ICSSInJSStyle => ({
+  buttonPrevious: ({ props: p, variables: v }): ICSSInJSStyle => ({
     height: pxToRem(v.buttonPreviousSize),
     top: pxToRem(-v.height / 2 - v.buttonPreviousSize / 2),
+    ...(p.items !== undefined && {
+      visibility: p.activeIndex === 0 ? 'hidden' : 'visible',
+    }),
   }),
 }
 
