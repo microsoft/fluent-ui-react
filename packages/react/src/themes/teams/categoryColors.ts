@@ -532,4 +532,5 @@ export const categoryColorScheme: TeamsCategoryColorSchemeMapping = {
   smokeLight: createCategoryColorScheme('smokeLight'),
   steelDark: createCategoryColorScheme('steelDark'),
   steelLight: createCategoryColorScheme('steelLight'),
+  neon: createCategoryColorScheme('neon'),
 }

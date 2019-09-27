@@ -271,6 +271,24 @@ export const colorScheme: ColorSchemeMapping = {
     backgroundHover1: accessibleYellow,
     backgroundActive: accessibleCyan,
   }),
+  formatting: createColorScheme({
+    foreground1: undefined,
+    background1: undefined,
+    foreground2: undefined,
+    background2: undefined,
+    foreground3: undefined,
+    background3: undefined,
+    foreground4: undefined,
+    background4: undefined,
+    foreground5: undefined,
+    background5: undefined,
+    foreground6: undefined,
+    background6: undefined,
+    foreground7: undefined,
+    background7: undefined,
+    foreground8: undefined,
+    background8: undefined,
+  }),
 }
 
 const createCategoryColorScheme = (customValues = {}) => {
