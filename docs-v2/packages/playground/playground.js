@@ -18,6 +18,11 @@ export function Playground({schema, onRequestMaximize}) {
   const playground = React.useMemo(() => new PlaygroundAPI(schema), [schema])
   const stardustTheme = themes.teams
 
+  // FIXME: errors thrown from Stardust during server-side rendering
+  if (typeof window === "undefined") {
+    return null
+  }
+
   return (
     <StardustProvider theme={stardustTheme} styles={{background: "none"}}>
       <PlaygroundProvider value={playground}>

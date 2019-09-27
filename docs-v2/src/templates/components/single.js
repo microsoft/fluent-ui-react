@@ -8,7 +8,7 @@ import {PageHeader} from "../../doc-components/page-header"
 import {SideNav} from "../../doc-components/side-nav"
 
 export default function ComponentSingleTemplate({pageContext}) {
-  const {schema} = pageContext
+  const {schema = {}} = pageContext
   return (
     <BaseLayout rail={<ComponentNav />}>
       <PageHeader title={schema.displayName} description={schema.description} />
