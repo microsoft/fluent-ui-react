@@ -23,7 +23,7 @@
     "release:major": "yarn prerelease && lerna publish major && yarn postrelease",
     "release:minor": "yarn prerelease && lerna publish minor && yarn postrelease",
     "release:patch": "yarn prerelease && lerna publish patch && yarn postrelease",
-    "start": "gulp --series build:docs:json serve:docs",
+    "start": "gulp serve:docs",
     "stats:build": "gulp stats",
     "stats:save": "gulp stats:save",
     "satisfied": "satisfied --skip-invalid",
