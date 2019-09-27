@@ -112,3 +112,5 @@ export { default as Video } from './components/Video/videoStyles'
 
 export { default as Tooltip } from './components/Tooltip/tooltipStyles'
 export { default as TooltipContent } from './components/Tooltip/tooltipContentStyles'
+
+export { default as Carousel } from './components/Carousel/carouselStyles'

@@ -17,8 +17,8 @@ import Button, { ButtonProps } from '../Button/Button'
 export interface CarouselProps extends UIComponentProps, ChildrenComponentProps {
   /** Shorthand array of props for ListItem. */
   items?: ShorthandCollection<BoxProps>
-  nextButton?: ShorthandValue<ButtonProps>
-  previousButton?: ShorthandValue<ButtonProps>
+  buttonNext?: ShorthandValue<ButtonProps>
+  buttonPrevious?: ShorthandValue<ButtonProps>
 }
 
 export interface CarouselState {
@@ -37,8 +37,8 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
       content: false,
     }),
     items: customPropTypes.collectionShorthand,
-    nextButton: customPropTypes.itemShorthandWithoutJSX,
-    previousButton: customPropTypes.itemShorthandWithoutJSX,
+    buttonNext: customPropTypes.itemShorthandWithoutJSX,
+    buttonPrevious: customPropTypes.itemShorthandWithoutJSX,
   }
 
   static defaultProps = {
@@ -50,38 +50,44 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
     activeIndex: 0,
   }
 
-  renderContent() {
+  renderContent(styles) {
     const { items } = this.props
     if (!items) {
       return null
     }
     return (
-      <ul>
-        {items.map(item => (
-          <li>{Box.create(item)}</li>
-        ))}
-      </ul>
+      <div style={styles.contentContainerWrapper}>
+        <ul style={styles.contentContainer}>
+          {items.map(item => (
+            <li style={styles.itemContainer}>
+              {Box.create(item, { defaultProps: { styles: styles.item } })}
+            </li>
+          ))}
+        </ul>
+      </div>
     )
   }
 
-  renderControls() {
-    const { previousButton, nextButton } = this.props
+  renderControls(styles) {
+    const { buttonPrevious, buttonNext } = this.props
 
     return (
-      <ul>
-        {Button.create(previousButton || {}, {
+      <>
+        {Button.create(buttonPrevious || {}, {
           defaultProps: {
             iconOnly: true,
             icon: 'stardust-chevron-left',
+            styles: styles.buttonPrevious,
           },
         })}
-        {Button.create(nextButton || {}, {
+        {Button.create(buttonNext || {}, {
           defaultProps: {
             iconOnly: true,
             icon: 'stardust-chevron-right',
+            styles: styles.buttonNext,
           },
         })}
-      </ul>
+      </>
     )
   }
 
@@ -89,7 +95,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
     return <ul />
   }
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
+  renderComponent({ ElementType, classes, styles, accessibility, unhandledProps }) {
     const { children } = this.props
     return (
       <ElementType
@@ -102,8 +108,8 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
           children
         ) : (
           <>
-            {this.renderContent()}
-            {this.renderControls()}
+            {this.renderContent(styles)}
+            {this.renderControls(styles)}
             {this.renderNavigation()}
           </>
         )}
