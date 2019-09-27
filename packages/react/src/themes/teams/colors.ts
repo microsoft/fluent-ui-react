@@ -13,7 +13,6 @@ import {
   TeamsNaturalColors,
   TeamsTransparentColors,
 } from './types'
-import { categoryColors } from './categoryColors'
 
 export const contextualColors: TeamsContextualColors = {
   brand: {
@@ -475,24 +474,6 @@ export const colorScheme: ColorSchemeMapping<ColorScheme, TeamsColorNames> = {
     backgroundHover: colors.amethyst[700],
     backgroundHover1: colors.amethyst[500],
     backgroundActive: colors.amethyst[700],
-  }),
-  formatting: createColorScheme({
-    foreground1: categoryColors.red[600],
-    background1: categoryColors.red[300],
-    foreground2: categoryColors.orangeDark[400],
-    background2: categoryColors.orange[300],
-    foreground3: categoryColors.yellow[400],
-    background3: categoryColors.yellow[300],
-    foreground4: categoryColors.neon[450],
-    background4: categoryColors.neon[200],
-    foreground5: categoryColors.green[600],
-    background5: categoryColors.green[300],
-    foreground6: categoryColors.tealLight[650],
-    background6: categoryColors.tealLight[300],
-    foreground7: categoryColors.blueDark[400],
-    background7: categoryColors.blueDark[200],
-    foreground8: categoryColors.maroon[500],
-    background8: categoryColors.maroon[200],
   }),
 }
 

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import DocPage from '../components/DocPage/DocPage'
 import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
-import ColorSchemes from 'docs/src/components/ColorSchemes'
+import CategoryColorSchemes from 'docs/src/components/CategoryColorSchemes'
 
 import { Dropdown, themes, Flex, Provider } from '@stardust-ui/react'
 import { faderStyles } from 'docs/src/components/Fader'
@@ -9,7 +9,7 @@ import { colorVariantsStyles } from 'docs/src/components/ColorVariants'
 import { colorBoxStyles, colorBoxVariables } from 'docs/src/components/ColorBox'
 
 export default () => {
-  const [color, setColor] = React.useState('brand')
+  const [color, setColor] = React.useState('red')
   return (
     <Provider
       theme={{
@@ -32,22 +32,24 @@ export default () => {
         <Flex column>
           <Dropdown
             items={[
-              'default',
-              'brand',
               'red',
-              'green',
-              'yellow',
+              'redDark',
+              'orangeDark',
               'orange',
-              'pink',
-              'silver',
-              'onyx',
-              'amethyst',
+              'orangeLight',
+              'yellowDark',
+              'yellow',
+              'brown',
+              'oliveDark',
+              'olive',
+              'neon',
+              'formatting',
             ]}
-            defaultValue={'brand'}
+            defaultValue={'red'}
             placeholder="Select the color"
             onSelectedChange={(e, { value }) => setColor(value as string)}
           />
-          <ColorSchemes
+          <CategoryColorSchemes
             themes={[themes.teams, themes.teamsHighContrast, themes.teamsDark]}
             headers={[
               {
