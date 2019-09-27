@@ -31,6 +31,8 @@ import { Accessibility } from '../../lib/accessibility/types'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 import PortalInner from '../Portal/PortalInner'
 
+import Box from '../Box/Box'
+
 export interface TooltipSlotClassNames {
   content: string
 }
@@ -159,7 +161,9 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     accessibility,
   }: RenderResultConfig<TooltipProps>): React.ReactNode {
     const { mountNode, children, trigger } = this.props
-    const tooltipContent = this.renderTooltipContent(classes.content, rtl, accessibility)
+    const tooltipContent = this.state.open
+      ? this.renderTooltipContent(classes.content, rtl, accessibility)
+      : this.renderHiddenTooltipContent(accessibility)
 
     const triggerElement = React.Children.only(
       childrenExist(children) ? children : trigger,
@@ -249,6 +253,17 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
         children={this.renderPopperChildren.bind(this, tooltipPositionClasses, rtl, accessibility)}
       />
     )
+  }
+
+  renderHiddenTooltipContent(accessibility: ReactAccessibilityBehavior): JSX.Element {
+    const { content } = this.props
+
+    return Box.create(content, {
+      overrideProps: {
+        styles: { opacity: 0 },
+        ...accessibility.attributes.tooltip,
+      },
+    })
   }
 
   renderPopperChildren = (

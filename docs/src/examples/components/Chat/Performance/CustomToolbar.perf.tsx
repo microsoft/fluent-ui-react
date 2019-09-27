@@ -20,9 +20,9 @@ import {
   Provider,
   themes,
   mergeThemes,
+  Tooltip,
+  tooltipAsLabelBehavior,
 } from '@stardust-ui/react'
-
-import { useBooleanKnob, useSelectKnob, KnobProvider } from '@stardust-ui/docs-components/src'
 
 export type CustomStatusVariables = {
   isRecordingIndicator?: boolean
@@ -355,7 +355,7 @@ const commonLayout: CustomToolbarLayout = props =>
     { key: 'timer-divider', kind: 'divider' as ToolbarItemShorthandKinds },
 
     {
-      title: props.cameraActive ? tooltips.videoOn : tooltips.videoOff,
+      tooltip: props.cameraActive ? tooltips.videoOn : tooltips.videoOff,
       active: props.cameraActive,
       icon: {
         name: props.cameraActive ? 'call-video' : 'call-video-off',
@@ -367,7 +367,7 @@ const commonLayout: CustomToolbarLayout = props =>
     },
 
     {
-      title: props.micActive ? tooltips.micOn : tooltips.micOff,
+      tooltip: props.micActive ? tooltips.micOn : tooltips.micOff,
       active: props.micActive,
       icon: {
         name: props.micActive ? 'mic' : 'mic-off',
@@ -379,7 +379,7 @@ const commonLayout: CustomToolbarLayout = props =>
     },
 
     {
-      title: props.screenShareActive ? tooltips.shareStop : tooltips.share,
+      tooltip: props.screenShareActive ? tooltips.shareStop : tooltips.share,
       active: props.screenShareActive,
       icon: {
         name: props.screenShareActive ? 'call-control-close-tray' : 'call-control-present-new',
@@ -391,7 +391,7 @@ const commonLayout: CustomToolbarLayout = props =>
     },
 
     {
-      title: tooltips.moreActions,
+      tooltip: tooltips.moreActions,
       key: 'more',
       icon: {
         name: 'more',
@@ -404,7 +404,7 @@ const commonLayout: CustomToolbarLayout = props =>
 
 const sidebarButtons: CustomToolbarLayout = props => [
   {
-    title: tooltips.chat,
+    tooltip: tooltips.chat,
     active: props.sidebarSelected === 'chat',
     icon: {
       name: 'chat',
@@ -417,7 +417,7 @@ const sidebarButtons: CustomToolbarLayout = props => [
     variables: { isCtItemWithNotification: props.chatHasNotification, isCtItemIconNoFill: true },
   },
   {
-    title: tooltips.addParticipants,
+    tooltip: tooltips.addParticipants,
     active: props.sidebarSelected === 'participant-add',
     icon: {
       name: 'participant-add',
@@ -437,7 +437,7 @@ const sidebarButtons: CustomToolbarLayout = props => [
 
 const layoutItems: ShorthandValue<ToolbarItemProps> = {
   endCall: props => ({
-    title: tooltips.endCall,
+    tooltip: tooltips.endCall,
     key: 'end-call',
     icon: {
       name: 'call-end',
@@ -470,7 +470,7 @@ const layouts: Record<CustomToolbarProps['layout'], CustomToolbarLayout> = {
     { key: 'divider-sidebar', kind: 'divider' },
 
     {
-      title: tooltips.shareStop,
+      tooltip: tooltips.shareStop,
       key: 'stop-sharing',
       icon: {
         name: 'call-control-stop-presenting-new',
@@ -481,7 +481,7 @@ const layouts: Record<CustomToolbarProps['layout'], CustomToolbarLayout> = {
 
     {
       'aria-label': `${props.pptSlide} ${tooltips.pptPrevious}`,
-      title: tooltips.pptPrevious,
+      tooltip: tooltips.pptPrevious,
       key: 'ppt-prev',
       icon: {
         name: 'chevron-down',
@@ -500,7 +500,7 @@ const layouts: Record<CustomToolbarProps['layout'], CustomToolbarLayout> = {
 
     {
       'aria-label': `${props.pptSlide} ${tooltips.pptNext}`,
-      title: tooltips.pptNext,
+      tooltip: tooltips.pptNext,
       key: 'ppt-next',
       icon: {
         name: 'chevron-down',
@@ -517,82 +517,48 @@ const layouts: Record<CustomToolbarProps['layout'], CustomToolbarLayout> = {
 const CustomToolbar: React.FunctionComponent<CustomToolbarProps> = props => {
   const { layout = 'standard' } = props
 
-  return <Toolbar variables={{ isCt: true }} items={layouts[layout](props)} />
+  const items = layouts[layout](props).map(item =>
+    _.isNil((item as any).tooltip)
+      ? item
+      : render =>
+          render(
+            item, // rendering Tooltip for the Toolbar Item
+            (ToolbarItem, props) => {
+              const { tooltip, key, ...rest } = props // Adding tooltipAsLabelBehavior as the ToolbarItems contains only icon
+
+              return (
+                <Tooltip
+                  key={key}
+                  trigger={<ToolbarItem {...rest} />}
+                  accessibility={tooltipAsLabelBehavior}
+                  content={tooltip}
+                />
+              )
+            },
+          ),
+  )
+
+  return <Toolbar variables={{ isCt: true }} items={items} />
 }
 
 const CustomToolbarPrototype: React.FunctionComponent = () => {
-  const [rtl] = useBooleanKnob({
-    name: 'RTL',
-    initialValue: false,
-  })
-  const [themeName] = useSelectKnob({
-    name: 'themeName',
-    values: ['teamsDark', 'teamsHighContrast'],
-    initialValue: 'teamsDark',
-  })
-
-  const availableLayouts: CustomToolbarProps['layout'][] = [
-    'standard',
-    'desktop-share',
-    'powerpoint-presenter',
-  ]
-  const [layout] = useSelectKnob({
-    name: 'layout',
-    values: availableLayouts,
-    initialValue: undefined,
-  })
-
-  const [isRecording] = useBooleanKnob({
-    name: 'isRecording',
-    initialValue: false,
-  })
-  const [cameraActive, onCameraChange] = useBooleanKnob({
-    name: 'cameraActive',
-    initialValue: true,
-  })
-  const [micActive, onMicChange] = useBooleanKnob({ name: 'micActive', initialValue: true })
-  const [screenShareActive, onScreenShareChange] = useBooleanKnob({
-    name: 'screenShareActive',
-    initialValue: false,
-  })
-  const [sidebarSelected, onSidebarChange] = useSelectKnob<'false' | 'chat' | 'participant-add'>({
-    name: 'sidebarSelected',
-    values: ['false', 'chat', 'participant-add'],
-    initialValue: 'false',
-  })
-  const [chatHasNotification] = useBooleanKnob({ name: 'chatHasNotification', initialValue: false })
-  const [currentSlide, setCurrentSlide] = React.useState(23)
-  const totalSlides = 34
-
   let theme = {}
-  if (themeName === 'teamsDark') {
-    theme = mergeThemes(themes.teamsDark, darkThemeOverrides)
-  }
+  theme = mergeThemes(themes.teamsDark, darkThemeOverrides)
 
   return (
-    <Provider theme={theme} rtl={rtl}>
+    <Provider theme={theme}>
       <CustomToolbar
-        layout={layout}
-        isRecording={isRecording}
-        cameraActive={cameraActive}
-        micActive={micActive}
-        screenShareActive={screenShareActive}
-        sidebarSelected={sidebarSelected === 'false' ? false : sidebarSelected}
-        chatHasNotification={chatHasNotification}
-        pptSlide={`${currentSlide} of ${totalSlides}`}
-        onCameraChange={onCameraChange}
-        onMicChange={onMicChange}
-        onScreenShareChange={onScreenShareChange}
-        onSidebarChange={state => onSidebarChange(state || 'false')}
-        onPptPrevClick={() => setCurrentSlide(_.max([1, currentSlide - 1]))}
-        onPptNextClick={() => setCurrentSlide(_.min([totalSlides, currentSlide + 1]))}
+        layout="standard"
+        isRecording={true}
+        cameraActive={true}
+        micActive={true}
+        screenShareActive={true}
+        sidebarSelected={false}
+        chatHasNotification={true}
+        pptSlide={`${1} of ${2}`}
       />
     </Provider>
   )
 }
 
-export default () => (
-  <KnobProvider>
-    <CustomToolbarPrototype />
-  </KnobProvider>
-)
+export default () => <CustomToolbarPrototype />
