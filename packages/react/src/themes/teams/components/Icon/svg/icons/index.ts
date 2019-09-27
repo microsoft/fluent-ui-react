@@ -75,6 +75,7 @@ import filesPowerPointBrand from './filesPowerPointBrand'
 import filesWord from './filesWord'
 import filesWordBrand from './filesWordBrand'
 import filesVisio from './filesVisio'
+import filesVisioBrand from './filesVisioBrand'
 import fontColor from './fontColor'
 import fontSize from './fontSize'
 import format from './format'
@@ -137,6 +138,7 @@ import star from './star'
 import stardustCircle from './stardustCircle'
 import sticker from './sticker'
 import strike from './strike'
+import sync from './sync'
 import table from './table'
 import tableAdd from './tableAdd'
 import tableDelete from './tableDelete'
@@ -215,7 +217,6 @@ export default {
   'files-txt': filesTxt,
   'files-upload': filesUpload,
   'files-video': filesVideo,
-  'files-visio': filesVisio,
   'files-zip': filesZip,
   flag,
   download,
@@ -255,10 +256,8 @@ export default {
   hand,
   'mic-off': micOff,
   more,
-  'microsoft-stream': microsoftStream,
   'user-phone': userPhone,
   'number-list': numberList,
-  onedrive: oneDrive,
   'open-outside': openOutside,
   outdent,
   paperclip,
@@ -280,7 +279,6 @@ export default {
   'remove-format': removeFormat,
   reply,
   retry,
-  'skype-logo': skypeLogo,
   search,
   send,
   settings,
@@ -289,6 +287,7 @@ export default {
   star,
   sticker,
   strike,
+  sync,
   table,
   'table-add': tableAdd,
   'table-delete': tableDelete,
@@ -306,19 +305,23 @@ export default {
   'user-blur': userBlur,
   'user-friends': userFriends,
   'video-camera-emphasis': videoCameraEmphasis,
-  yammer,
   'window-maximize': windowMaximize,
   'window-minimize': windowMinimize,
   'window-restore': windowRestore,
 
   // Office icons
-  word: filesWord,
   excel: filesExcel,
-  powerpoint: filesPowerPoint,
-  onenote: filesOneNote,
-
-  'word-color': filesWordBrand,
   'excel-color': filesExcelBrand,
-  'powerpoint-color': filesPowerPointBrand,
+  onedrive: oneDrive,
+  onenote: filesOneNote,
   'onenote-color': filesOneNoteBrand,
+  powerpoint: filesPowerPoint,
+  'powerpoint-color': filesPowerPointBrand,
+  'skype-logo': skypeLogo,
+  'microsoft-stream': microsoftStream,
+  word: filesWord,
+  'word-color': filesWordBrand,
+  yammer,
+  visio: filesVisio,
+  'visio-color': filesVisioBrand,
 } as { [iconName: string]: TeamsSvgIconSpec }
