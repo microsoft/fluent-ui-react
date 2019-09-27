@@ -275,7 +275,7 @@ export const colorScheme: ColorSchemeMapping = {
     background2: categoryColors.orange[700],
     foreground3: categoryColors.yellow[250],
     background3: categoryColors.yellow[800],
-    foreground4: categoryColors.red[100],
+    foreground4: categoryColors.neon[150],
     background4: categoryColors.neon[800],
     foreground5: categoryColors.green[250],
     background5: categoryColors.green[700],
