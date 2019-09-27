@@ -16,13 +16,20 @@ module.exports = {
     "gatsby-plugin-sharp",
     "gatsby-plugin-remove-trailing-slashes",
     "gatsby-source-component-schemas",
-    // {
-    //   resolve: "gatsby-source-filesystem",
-    //   options: {
-    //     name: "components",
-    //     path: `${__dirname}/src/pages/components`
-    //   }
-    // },
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: "learn",
+        path: `${__dirname}/src/pages/learn`
+      }
+    },
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: "components",
+        path: `${__dirname}/src/pages/components`
+      }
+    },
     {
       resolve: "gatsby-plugin-mdx",
       options: {
@@ -38,7 +45,8 @@ module.exports = {
         ],
         defaultLayouts: {
           default: require.resolve("./src/templates/single.js"),
-          components: require.resolve("./src/templates/components/single.js")
+          components: require.resolve("./src/templates/components/single.js"),
+          learn: require.resolve("./src/templates/learn/single.js")
         }
       }
     },
