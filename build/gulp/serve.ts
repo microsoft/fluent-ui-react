@@ -1,4 +1,4 @@
-import express from 'express'
+import * as express from 'express'
 
 import historyApiFallback from 'connect-history-api-fallback'
 import { Server } from 'http'

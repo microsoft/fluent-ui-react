@@ -1,4 +1,4 @@
-import path from 'path'
+import * as path from 'path'
 import CircularDependencyPlugin from 'circular-dependency-plugin'
 
 import config from '../../../../config'

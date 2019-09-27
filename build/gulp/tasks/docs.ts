@@ -1,5 +1,5 @@
-import cp from 'child_process'
-import path from 'path'
+import * as cp from 'child_process'
+import * as path from 'path'
 import { task } from 'gulp'
 
 const DOCS_ROOT = path.resolve(__dirname, '../../../docs-v2')

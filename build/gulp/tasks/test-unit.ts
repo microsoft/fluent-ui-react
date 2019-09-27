@@ -1,5 +1,5 @@
 import { series, task } from 'gulp'
-import yargs from 'yargs'
+import * as yargs from 'yargs'
 
 import sh from '../sh'
 import jest, { JestPluginConfig } from '../plugins/gulp-jest'

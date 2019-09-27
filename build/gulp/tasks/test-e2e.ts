@@ -1,6 +1,6 @@
 import { task, series } from 'gulp'
 import * as yargs from 'yargs'
-import rimraf from 'rimraf'
+import * as rimraf from 'rimraf'
 import config from '../../../config'
 import webpackPlugin from '../plugins/gulp-webpack'
 
