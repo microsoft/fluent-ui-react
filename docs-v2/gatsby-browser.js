@@ -5,10 +5,6 @@ import {store, wrapRootElement} from "./src/wrap-root-element"
 // Wrap the React tree in our providers
 export {wrapRootElement}
 
-// Need to set the root font size here even though it's defined in main.css
-// because Stardust reads the root font size before Gatsby loads stylesheets.
-document.documentElement.style.fontSize = "10px"
-
 // Watch for changes to the global theme; changing the theme causes the new
 // theme to be downloaded and applied to the document.
 autorun(() => loadTheme(store.theme))
