@@ -24,7 +24,7 @@ import {
   tooltipAsLabelBehavior,
 } from '@stardust-ui/react'
 
-export type CustomStatusVariables = {
+type CustomStatusVariables = {
   isRecordingIndicator?: boolean
 
   recordingIndicatorBorderColor?: string
@@ -32,7 +32,7 @@ export type CustomStatusVariables = {
   recordingIndicatorBorderWidth?: string
 }
 
-export type CustomToolbarVariables = {
+type CustomToolbarVariables = {
   isCt?: boolean
 
   isCtItemDanger?: boolean
@@ -71,7 +71,7 @@ export type CustomToolbarVariables = {
   ctItemPrimaryColorHover: string
 }
 
-export const darkThemeOverrides: ThemeInput = {
+const darkThemeOverrides: ThemeInput = {
   componentVariables: {
     Status: (siteVars): CustomStatusVariables => ({
       recordingIndicatorBorderColor: siteVars.colors.white,
@@ -302,7 +302,7 @@ const tooltips = {
   pptPrevious: 'Navigate back',
 }
 
-export interface CustomToolbarProps {
+interface CustomToolbarProps {
   layout?: 'standard' | 'desktop-share' | 'powerpoint-presenter'
 
   isRecording?: boolean
@@ -369,7 +369,6 @@ const commonLayout: CustomToolbarLayout = props =>
     {
       tooltip: props.micActive ? tooltips.micOn : tooltips.micOff,
       active: props.micActive,
-      tooltip: 'mic',
       icon: {
         name: props.micActive ? 'mic' : 'mic-off',
         size: 'large' as SizeValue,
@@ -382,7 +381,6 @@ const commonLayout: CustomToolbarLayout = props =>
     {
       tooltip: props.screenShareActive ? tooltips.shareStop : tooltips.share,
       active: props.screenShareActive,
-      tooltip: 'screen share',
       icon: {
         name: props.screenShareActive ? 'call-control-close-tray' : 'call-control-present-new',
         size: 'large' as SizeValue,
@@ -395,7 +393,6 @@ const commonLayout: CustomToolbarLayout = props =>
     {
       tooltip: tooltips.moreActions,
       key: 'more',
-      tooltip: 'more',
       icon: {
         name: 'more',
         size: 'large' as SizeValue,
