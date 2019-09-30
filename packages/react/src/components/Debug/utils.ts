@@ -1,8 +1,21 @@
 import * as _ from 'lodash'
 
-export const includes = (s: string, target: string): boolean =>
-  _.toLower(s).indexOf(_.toLower(target)) !== -1
+/**
+ * Check whether source includes target ignoring case.
+ * @param {string} source
+ * @param {string} target
+ * @returns {boolean}
+ */
+export const includes = (source: string, target: string): boolean =>
+  _.toLower(source).indexOf(_.toLower(target)) !== -1
 
+/**
+ * Checks whether the key or the value of data[key] contains the search string.
+ * @param {object} data
+ * @param {string} key
+ * @param {string} search
+ * @returns {boolean}
+ */
 export const find = (data: object, key: string, search: string): boolean => {
   const value = data[key]
   return (
@@ -12,6 +25,13 @@ export const find = (data: object, key: string, search: string): boolean => {
   )
 }
 
+/**
+ * Checks if the data[key] is primitive and override in the overrides object.
+ * @param {object} data
+ * @param {string} key
+ * @param {object} overrides
+ * @returns {boolean}
+ */
 export const isOverridden = (data: object, key: string, overrides: object): boolean => {
   return (
     typeof data[key] !== 'object' &&
@@ -21,6 +41,12 @@ export const isOverridden = (data: object, key: string, overrides: object): bool
   )
 }
 
+/**
+ * Helper recursive function for the filter method.
+ * @param {string} search
+ * @param {object} data
+ * @returns {boolean}
+ */
 const filterR = (search: string, data: object): boolean => {
   let result = false
 
@@ -40,6 +66,12 @@ const filterR = (search: string, data: object): boolean => {
   return result
 }
 
+/**
+ * Filters the data for the value string (if it appears in the key or value). Considers nested objects.
+ * @param {object} data
+ * @param {string} value
+ * @returns {any}
+ */
 export const filter = (data: object, value: string) => {
   return Object.keys(data)
     .filter(key => {
@@ -60,6 +92,12 @@ export const filter = (data: object, value: string) => {
     }, {})
 }
 
+/**
+ * Returns array of values that matches the predicate. Considers nested objects.
+ * @param value
+ * @param {(string) => boolean} predicate
+ * @returns {string[]}
+ */
 export const getValues = (value: any, predicate: (string) => boolean): string[] => {
   if (_.isNil(value)) {
     return []
@@ -82,6 +120,11 @@ export const getValues = (value: any, predicate: (string) => boolean): string[] 
   return []
 }
 
+/**
+ * Removes null values from an object. Considers nested objects.
+ * @param o
+ * @returns {any}
+ */
 export const removeNulls = (o: any): any => {
   if (typeof o !== 'object' && o !== null) {
     return o
