@@ -561,4 +561,4 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
   )
 }
 
-export default () => <CustomToolbarPrototype />
+export default CustomToolbarPrototype
