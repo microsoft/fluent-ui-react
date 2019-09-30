@@ -49,6 +49,7 @@ const icons: ThemeIcons = {
 const teamsTheme: ThemePrepared = {
   siteVariables,
   componentVariables,
+  resolvedComponentVariables: {},
   componentStyles,
   fontFaces,
   staticStyles,

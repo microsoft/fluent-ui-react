@@ -43,6 +43,7 @@ const mergeProviderContexts = (
     theme: {
       siteVariables: {},
       componentVariables: {},
+      resolvedComponentVariables: {},
       componentStyles: {},
       fontFaces: [],
       staticStyles: [],

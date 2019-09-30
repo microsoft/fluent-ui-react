@@ -25,11 +25,12 @@ import {
 } from './accessibility/types'
 import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/reactTypes'
 import getKeyDownHandlers from './getKeyDownHandlers'
-import { emptyTheme, mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
+import { emptyTheme, mergeComponentStyles } from './mergeThemes'
 import { FocusZoneProps, FocusZone } from './accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 import createAnimationStyles from './createAnimationStyles'
 import Debug, { isEnabled as isDebugEnabled } from './debug'
+import deepmerge from './deepmerge'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
@@ -181,10 +182,21 @@ const renderComponent = <P extends {}>(
   const stateAndProps = { ...state, ...props }
 
   // Resolve variables for this component, allow props.variables to override
-  const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
-    theme.componentVariables[displayName],
-    props.variables,
-  )(theme.siteVariables)
+  if (!theme.resolvedComponentVariables[displayName]) {
+    theme.resolvedComponentVariables[displayName] = callable(theme.componentVariables[displayName])(
+      theme.siteVariables,
+    )
+  }
+
+  const resolvedVariables = deepmerge(
+    theme.resolvedComponentVariables[displayName],
+    callable(props.variables)(theme.siteVariables),
+  )
+
+  // const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
+  //   theme.componentVariables[displayName],
+  //   props.variables,
+  // )(theme.siteVariables)
 
   const animationCSSProp = props.animation
     ? createAnimationStyles(props.animation, context.theme)

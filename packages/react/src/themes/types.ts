@@ -438,6 +438,9 @@ export interface ThemeInput {
 export interface ThemePrepared {
   siteVariables: SiteVariablesPrepared
   componentVariables: { [key in keyof ThemeComponentVariablesPrepared]: ComponentVariablesPrepared }
+  resolvedComponentVariables: {
+    [key in keyof ThemeComponentVariablesPrepared]: ComponentVariablesPrepared
+  }
   componentStyles: { [key in keyof ThemeComponentStylesPrepared]: ComponentSlotStylesPrepared }
   icons: ThemeIcons
   fontFaces: FontFaces

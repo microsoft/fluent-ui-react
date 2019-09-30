@@ -27,6 +27,7 @@ export const emptyTheme: ThemePrepared = {
     fontSizes: {},
   },
   componentVariables: {},
+  resolvedComponentVariables: {},
   componentStyles: {},
   fontFaces: [],
   staticStyles: [],
@@ -53,8 +54,17 @@ export const mergeComponentStyles = (
       const originalTarget = partStylesPrepared[partName]
       const originalSource = partStyle
 
-      partStylesPrepared[partName] = styleParam => {
-        return _.merge(callable(originalTarget)(styleParam), callable(originalSource)(styleParam))
+      // partStylesPrepared[partName] = styleParam => {
+      //   return _.merge(callable(originalTarget)(styleParam), callable(originalSource)(styleParam))
+      // }
+
+      if (originalTarget) {
+        // partStylesPrepared[partName] = styleParam =>_.merge(callable(originalTarget)(styleParam), callable(originalSource)(styleParam))
+        partStylesPrepared[partName] = styleParam =>
+          _.merge(callable(originalTarget)(styleParam), callable(originalSource)(styleParam))
+        // partStylesPrepared[partName] = styleParam => objectMergeDeep(callable(originalTarget)(styleParam), callable(originalSource)(styleParam))
+      } else {
+        partStylesPrepared[partName] = styleParam => callable(originalSource)(styleParam)
       }
     })
 
@@ -65,16 +75,15 @@ export const mergeComponentStyles = (
 /**
  * Merges a single component's variables with another component's variables.
  */
+const initial = () => null
+
 export const mergeComponentVariables = (
   ...sources: ComponentVariablesInput[]
 ): ComponentVariablesPrepared => {
-  const initial = () => ({})
-
   return sources.reduce<ComponentVariablesPrepared>((acc, next) => {
     return (...args) => {
       const accumulatedVariables = acc(...args)
       const computedComponentVariables = callable(next)(...args)
-
       return deepmerge(accumulatedVariables, computedComponentVariables)
     }
   }, initial)
@@ -182,6 +191,8 @@ const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
       acc.staticStyles = mergeStaticStyles(...acc.staticStyles, ...(next.staticStyles || []))
 
       acc.animations = mergeAnimations(acc.animations, next.animations)
+
+      acc.resolvedComponentVariables = {} // do not merge resoved component variables
 
       return acc
     },
