@@ -3,14 +3,20 @@ import { ToolbarItemProps } from '../../../../components/Toolbar/ToolbarItem'
 import { ToolbarVariables } from './toolbarVariables'
 import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 import { getColorScheme } from '../../colors'
+import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 const toolbarItemStyles: ComponentSlotStylesPrepared<ToolbarItemProps, ToolbarVariables> = {
-  root: ({ props: p, variables: v }): ICSSInJSStyle => {
+  root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
     const colors = getColorScheme(v.colorScheme)
+    const { borderWidth } = siteVariables
+    const borderFocusStyles = getBorderFocusStyles({
+      siteVariables,
+    })
 
     return {
+      position: 'relative',
       backgroundColor: v.background,
-      borderWidth: v.borderWidth,
+      borderWidth,
       borderStyle: 'solid',
       borderColor: 'transparent',
       borderRadius: v.borderRadius,
@@ -21,7 +27,7 @@ const toolbarItemStyles: ComponentSlotStylesPrepared<ToolbarItemProps, ToolbarVa
       cursor: 'pointer',
 
       ':focus': {
-        outline: 0,
+        ...borderFocusStyles[':focus'],
       },
 
       ...(p.active && {
@@ -37,9 +43,8 @@ const toolbarItemStyles: ComponentSlotStylesPrepared<ToolbarItemProps, ToolbarVa
       },
 
       ':focus-visible': {
+        ...borderFocusStyles[':focus-visible'],
         color: v.foregroundFocus || colors.foregroundFocus,
-        backgroundColor: v.backgroundFocus || colors.backgroundFocus,
-        borderColor: v.borderFocus || colors.borderFocus,
         ...getIconFillOrOutlineStyles({ outline: false }),
       },
 

@@ -14,8 +14,6 @@ export const toolbarColorAreas = stringLiteralsArray(
   'backgroundHover',
 
   'foregroundFocus',
-  'backgroundFocus',
-  'borderFocus',
 
   'foregroundDisabled1',
 
@@ -40,8 +38,6 @@ export interface ToolbarVariables {
   backgroundHover: string
 
   foregroundFocus: string
-  backgroundFocus: string
-  borderFocus: string
 
   foregroundActive: string
   backgroundActive: string
@@ -106,8 +102,6 @@ export default (siteVars: any): ToolbarVariables => ({
   backgroundHover: undefined,
 
   foregroundFocus: undefined,
-  backgroundFocus: undefined,
-  borderFocus: undefined,
 
   foregroundActive: undefined,
   backgroundActive: 'transparent',
