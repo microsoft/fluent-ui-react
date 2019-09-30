@@ -58,7 +58,12 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
         defaultProps: this.childClass.defaultProps,
         displayName: this.childClass.displayName,
         handledProps: this.childClass.handledProps,
-        props: { ...this.props, ...this.state },
+        props: {
+          ...this.props,
+          ...this.state,
+          autoControlledProps: undefined,
+          getAutoControlledStateFromProps: undefined,
+        },
         actionHandlers: this.actionHandlers,
         render: this.renderComponent,
         saveDebug: updatedDebug => (this.stardustDebug = updatedDebug),
