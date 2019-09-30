@@ -60,7 +60,7 @@ export const filter = (data: object, value: string) => {
     }, {})
 }
 
-export const getValues = (value: any, predicate: (string) => boolean) => {
+export const getValues = (value: any, predicate: (string) => boolean): string[] => {
   if (_.isNil(value)) {
     return []
   }
@@ -72,7 +72,7 @@ export const getValues = (value: any, predicate: (string) => boolean) => {
   }
 
   if (typeof value === 'object') {
-    let arr = []
+    let arr: string[] = []
     Object.keys(value).forEach(key => {
       arr = _.concat(arr, getValues(value[key], predicate))
     })
