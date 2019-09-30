@@ -1,7 +1,7 @@
 import * as CSSType from 'csstype'
 import { IRenderer as FelaRenderer } from 'fela'
 import * as React from 'react'
-import { Extendable, ObjectOf, ObjectOrFunc, Omit } from '../types'
+import { Extendable, ObjectOf, ObjectOrFunc, Omit, Props } from '../types'
 import { AccordionContentProps } from '../components/Accordion/AccordionContent'
 import { AccordionProps } from '../components/Accordion/Accordion'
 import { AccordionTitleProps } from '../components/Accordion/AccordionTitle'
@@ -231,21 +231,6 @@ export type ColorSchemeMappingOverrides<
 export type ItemType<T> = T extends (infer TItem)[] ? TItem : never
 
 // ========================================================
-// Props
-// ========================================================
-
-export type PropsWithVarsAndStyles = Extendable<{
-  variables?: ComponentVariablesInput
-  styles?: ComponentSlotStyle
-}>
-
-// ========================================================
-// State
-// ========================================================
-
-export type State = ObjectOf<any>
-
-// ========================================================
 // Variables
 // ========================================================
 
@@ -259,7 +244,6 @@ export type ComponentVariablesObject = any
 
 export type ComponentVariablesPrepared = (
   siteVariables?: SiteVariablesPrepared,
-  props?: any, // TODO: REMOVE THIS CRUFT
 ) => ComponentVariablesObject
 
 // TODO: Make this generic
@@ -317,11 +301,11 @@ export interface ICSSInJSStyle extends CSSProperties {
 }
 
 export interface ComponentStyleFunctionParam<
-  TProps extends PropsWithVarsAndStyles = PropsWithVarsAndStyles,
+  TProps extends Props = Props,
   TVars extends ComponentVariablesObject = ComponentVariablesObject
 > {
   displayName: string
-  props: State & TProps
+  props: Props<TProps>
   variables: TVars
   theme: ThemePrepared
   rtl: boolean

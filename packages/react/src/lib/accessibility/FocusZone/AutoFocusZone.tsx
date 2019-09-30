@@ -19,19 +19,16 @@ export default class AutoFocusZone extends React.Component<AutoFocusZoneProps> {
     firstFocusableSelector: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
   }
 
-  static handledProps = _.keys(AutoFocusZone.propTypes)
+  static handledProps = _.keys(AutoFocusZone.propTypes) as any
 
   componentDidMount(): void {
     this.findElementAndFocusAsync()
   }
 
   render(): JSX.Element {
-    const unhandledProps = getUnhandledProps(
-      { handledProps: AutoFocusZone.handledProps },
-      this.props,
-    )
+    const unhandledProps = getUnhandledProps(AutoFocusZone.handledProps, this.props)
 
-    const ElementType = getElementType({}, this.props) as React.ComponentClass<AutoFocusZoneProps>
+    const ElementType = getElementType(this.props)
 
     return (
       <Ref innerRef={this.root}>

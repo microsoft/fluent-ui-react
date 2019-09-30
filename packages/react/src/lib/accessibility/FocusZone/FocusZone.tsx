@@ -208,11 +208,8 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
   render() {
     const { className } = this.props
 
-    const ElementType = getElementType({ defaultProps: FocusZone.defaultProps }, this.props)
-    const unhandledProps = getUnhandledProps(
-      { handledProps: [..._.keys(FocusZone.propTypes)] },
-      this.props,
-    )
+    const ElementType = getElementType(this.props)
+    const unhandledProps = getUnhandledProps(_.keys(FocusZone.propTypes) as any, this.props)
 
     // Note, right before rendering/reconciling proceeds, we need to record if focus
     // was in the zone before the update. This helper will track this and, if focus

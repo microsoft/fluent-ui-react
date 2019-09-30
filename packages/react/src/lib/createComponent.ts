@@ -53,7 +53,6 @@ const createComponent = <P extends ObjectOf<any> = any>({
         displayName,
         handledProps: _.keys(propTypes).concat(handledProps),
         props,
-        state: {},
         actionHandlers,
         render: config => render(config, props),
         saveDebug: updatedDebug => (stardustDebug.current = updatedDebug),

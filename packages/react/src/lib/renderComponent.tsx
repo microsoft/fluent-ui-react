@@ -11,8 +11,6 @@ import {
   ComponentVariablesObject,
   ComponentSlotClasses,
   ComponentSlotStylesPrepared,
-  PropsWithVarsAndStyles,
-  State,
   ThemePrepared,
   ComponentSlotStylesInput,
 } from '../themes/types'
@@ -49,8 +47,7 @@ export interface RenderConfig<P> {
   defaultProps?: { [key: string]: any }
   displayName: string
   handledProps: string[]
-  props: PropsWithVarsAndStyles
-  state: State
+  props: Props
   actionHandlers: AccessibilityActionHandlers
   render: RenderComponentCallback<P>
   saveDebug: (debug: Debug | null) => void
@@ -63,7 +60,7 @@ const emptyBehavior: ReactAccessibilityBehavior = {
 
 const getAccessibility = (
   displayName: string,
-  props: State & PropsWithVarsAndStyles & { accessibility?: Accessibility },
+  props: Props & { accessibility?: Accessibility },
   actionHandlers: AccessibilityActionHandlers,
   isRtlEnabled: boolean,
 ): ReactAccessibilityBehavior => {
@@ -160,11 +157,9 @@ const renderComponent = <P extends {}>(
 ): React.ReactElement<P> => {
   const {
     className,
-    defaultProps,
     displayName,
     handledProps,
     props,
-    state,
     actionHandlers,
     render,
     saveDebug = () => {},
@@ -177,8 +172,7 @@ const renderComponent = <P extends {}>(
   const { disableAnimations = false, renderer = null, rtl = false, theme = emptyTheme } =
     context || {}
 
-  const ElementType = getElementType({ defaultProps }, props) as React.ReactType<P>
-  const stateAndProps = { ...state, ...props }
+  const ElementType = getElementType(props) as React.ElementType<P>
 
   // Resolve variables for this component, allow props.variables to override
   const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
@@ -200,16 +194,16 @@ const renderComponent = <P extends {}>(
 
   const accessibility: ReactAccessibilityBehavior = getAccessibility(
     displayName,
-    stateAndProps,
+    props,
     actionHandlers,
     rtl,
   )
 
-  const unhandledProps = getUnhandledProps({ handledProps }, props)
+  const unhandledProps = getUnhandledProps(handledProps, props)
 
   const styleParam: ComponentStyleFunctionParam = {
     displayName,
-    props: stateAndProps,
+    props,
     variables: resolvedVariables,
     theme,
     rtl,
