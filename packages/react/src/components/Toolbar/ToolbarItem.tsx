@@ -183,13 +183,14 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
       }
     },
     onItemClick: (e, itemProps: ToolbarItemProps) => {
+      const { popup, menuOpen } = itemProps
       _.invoke(predefinedProps, 'onItemClick', e, itemProps)
-      if (itemProps.popup) {
+      if (popup) {
         return
       }
       // TODO: should we pass toolbarMenuItem to the user callback so he can decide if he wants to close the menu?
-      this.trySetMenuOpen(itemProps.menuOpen, e)
-      if (!itemProps.menuOpen && this.itemRef) {
+      this.trySetMenuOpen(menuOpen, e)
+      if (!menuOpen && this.itemRef) {
         this.itemRef.current.focus()
       }
     },

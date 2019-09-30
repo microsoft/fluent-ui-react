@@ -162,7 +162,7 @@ class ToolbarMenuItem extends AutoControlledComponent<
 
   static defaultProps = {
     as: 'button',
-    accessibility: toolbarMenuItemBehavior as Accessibility, // extend
+    accessibility: toolbarMenuItemBehavior as Accessibility,
     activeIndicator: 'stardust-checkmark',
     wrapper: { as: 'li' },
   }
@@ -188,20 +188,16 @@ class ToolbarMenuItem extends AutoControlledComponent<
   }
 
   openMenu = (e: Event) => {
-    console.log('Open menu')
     const { menu } = this.props
     const { menuOpen } = this.state
     if (menu && !menuOpen) {
       this.trySetMenuOpen(true, e)
-      _.invoke(this.props, 'onActiveChanged', e, { ...this.props, active: true })
       e.stopPropagation()
       e.preventDefault()
     }
   }
 
   closeMenu = (e: Event) => {
-    console.log('Close menu')
-    console.log('isSubmenuOpen: ', this.isSubmenuOpen())
     if (!this.isSubmenuOpen()) {
       return
     }
@@ -214,7 +210,6 @@ class ToolbarMenuItem extends AutoControlledComponent<
   }
 
   closeAllMenus = (e: Event) => {
-    console.log('Close all menus')
     if (!this.isSubmenuOpen()) {
       return
     }
@@ -333,7 +328,7 @@ class ToolbarMenuItem extends AutoControlledComponent<
     const menuItemInner = hasChildren ? children : elementType
 
     const maybeSubmenu =
-      menu && menuOpen ? ( // changed
+      menu && menuOpen ? (
         <>
           <Ref innerRef={this.menuRef}>
             <Popper align="top" position={rtl ? 'before' : 'after'} targetRef={this.itemRef}>
@@ -388,7 +383,7 @@ class ToolbarMenuItem extends AutoControlledComponent<
         this.trySetMenuOpen(false, e, () => focusAsync(this.itemRef.current))
       } else {
         // the menuItem element was clicked => toggle the open/close and stop propagation
-        this.trySetMenuOpen(!this.state.menuOpen, e) // changed
+        this.trySetMenuOpen(!this.state.menuOpen, e)
         e.stopPropagation()
         e.preventDefault()
       }

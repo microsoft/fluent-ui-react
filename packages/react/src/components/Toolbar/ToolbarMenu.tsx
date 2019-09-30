@@ -75,7 +75,6 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
 
   handleItemOverrides = variables => predefinedProps => ({
     onClick: (e, itemProps) => {
-      // close menu?
       _.invoke(predefinedProps, 'onClick', e, itemProps)
       _.invoke(this.props, 'onItemClick', e, {
         ...itemProps,

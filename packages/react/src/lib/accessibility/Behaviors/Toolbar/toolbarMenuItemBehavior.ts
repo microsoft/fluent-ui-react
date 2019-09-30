@@ -1,7 +1,7 @@
 import { Accessibility, AccessibilityAttributes } from '../../types'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
 import * as keyboardKey from 'keyboard-key'
-
+// TODO: extend menuItemBehavior and ignore vertical
 /**
  * @description
  * The behavior is designed for particular structure of menu item. The item consists of root element and anchor inside the root element.
