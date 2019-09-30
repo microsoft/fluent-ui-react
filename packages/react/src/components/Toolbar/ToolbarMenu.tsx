@@ -16,12 +16,18 @@ import {
 } from '../../lib'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
-import { ComponentEventHandler, ShorthandCollection, withSafeTypeForAs } from '../../types'
+import {
+  ComponentEventHandler,
+  ShorthandCollection,
+  withSafeTypeForAs,
+  ShorthandValue,
+} from '../../types'
 import { submenuBehavior, toolbarMenuItemCheckboxBehavior } from '../../lib/accessibility'
 
 import ToolbarMenuRadioGroup, { ToolbarMenuRadioGroupProps } from './ToolbarMenuRadioGroup'
 import ToolbarMenuDivider from './ToolbarMenuDivider'
 import ToolbarMenuItem, { ToolbarMenuItemProps } from './ToolbarMenuItem'
+import { IconProps } from '../Icon/Icon'
 
 export type ToolbarMenuItemShorthandKinds = 'divider' | 'item' | 'toggle'
 
@@ -39,6 +45,12 @@ export interface ToolbarMenuProps
    * @param {object} data - All item props.
    */
   onItemClick?: ComponentEventHandler<ToolbarMenuItemProps>
+
+  /** Indicates whether the menu is submenu. */
+  submenu?: boolean
+
+  /** Shorthand for the submenu indicator. */
+  indicator?: ShorthandValue<IconProps>
 }
 
 class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
@@ -52,6 +64,8 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
     ...commonPropTypes.createCommon(),
     items: customPropTypes.collectionShorthandWithKindProp(['divider', 'item']),
     onItemClick: PropTypes.func,
+    submenu: PropTypes.bool,
+    indicator: customPropTypes.itemShorthandWithoutJSX,
   }
 
   static defaultProps = {
@@ -61,8 +75,12 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
 
   handleItemOverrides = variables => predefinedProps => ({
     onClick: (e, itemProps) => {
+      // close menu?
       _.invoke(predefinedProps, 'onClick', e, itemProps)
-      _.invoke(this.props, 'onItemClick', e, itemProps)
+      _.invoke(this.props, 'onItemClick', e, {
+        ...itemProps,
+        menuOpen: !!itemProps.menu,
+      })
     },
     variables: mergeComponentVariables(variables, predefinedProps.variables),
   })
@@ -80,6 +98,7 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
   })
 
   renderItems(items, variables) {
+    const { indicator, submenu, onItemClick } = this.props
     const itemOverridesFn = this.handleItemOverrides(variables)
     const dividerOverridesFn = this.handleDividerOverrides(variables)
     const radioGroupOverrides = this.handleRadioGroupOverrides(variables)
@@ -101,7 +120,14 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
           })
 
         default:
-          return ToolbarMenuItem.create(item, { overrideProps: itemOverridesFn })
+          return ToolbarMenuItem.create(item, {
+            defaultProps: {
+              onItemClick,
+              indicator,
+              inSubmenu: submenu,
+            },
+            overrideProps: itemOverridesFn,
+          })
       }
     })
   }

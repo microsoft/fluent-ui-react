@@ -27,6 +27,7 @@ export {
 } from './Behaviors/Toolbar/menuItemAsToolbarButtonBehavior'
 export { default as toolbarBehavior } from './Behaviors/Toolbar/toolbarBehavior'
 export { default as toolbarItemBehavior } from './Behaviors/Toolbar/toolbarItemBehavior'
+export { default as toolbarMenuItemBehavior } from './Behaviors/Toolbar/toolbarMenuItemBehavior'
 export {
   default as toolbarMenuItemCheckboxBehavior,
 } from './Behaviors/Toolbar/toolbarMenuItemCheckboxBehavior'
