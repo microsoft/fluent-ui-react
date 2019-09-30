@@ -29,7 +29,7 @@ import {
 import { Props, ProviderContextPrepared } from '../types'
 import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/reactTypes'
 import getKeyDownHandlers from './getKeyDownHandlers'
-import { emptyTheme, mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
+import { emptyTheme, mergeComponentStyles } from './mergeThemes'
 import createAnimationStyles from './createAnimationStyles'
 import { isEnabled as isDebugEnabled } from './debug/debugEnabled'
 import { DebugData } from './debug/debugData'
@@ -151,6 +151,7 @@ const renderComponent = <P extends {}>(
   config: RenderConfig<P>,
   context?: ProviderContextPrepared,
 ): React.ReactElement<P> => {
+  performance.now()
   const {
     className,
     displayName,
@@ -173,10 +174,21 @@ const renderComponent = <P extends {}>(
   const stateAndProps = { ...state, ...props }
 
   // Resolve variables for this component, allow props.variables to override
-  const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
-    theme.componentVariables[displayName],
-    props.variables && withDebugId(props.variables, 'props.variables'),
-  )(theme.siteVariables)
+  if (!theme.resolvedComponentVariables[displayName]) {
+    theme.resolvedComponentVariables[displayName] = callable(theme.componentVariables[displayName])(
+      theme.siteVariables,
+    )
+  }
+
+  const resolvedVariables = deepmerge(
+    theme.resolvedComponentVariables[displayName],
+    callable(props.variables)(theme.siteVariables),
+  )
+
+  // const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
+  //   theme.componentVariables[displayName],
+  //   props.variables && withDebugId(props.variables, 'props.variables'),
+  // )(theme.siteVariables)
 
   const animationCSSProp = props.animation
     ? createAnimationStyles(props.animation, context.theme)
@@ -284,6 +296,7 @@ const renderComponent = <P extends {}>(
   }
 
   return render(resolvedConfig)
+  performance.now()
 }
 
 export default renderComponent

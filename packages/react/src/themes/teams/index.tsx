@@ -51,6 +51,7 @@ const teamsTheme: ThemePrepared = createTheme(
   {
     siteVariables,
     componentVariables,
+    resolvedComponentVariables: {},
     componentStyles,
     fontFaces,
     staticStyles,
