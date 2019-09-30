@@ -1,5 +1,6 @@
 const inspect = require("./tools/inspect")
 
+// FIXME
 let componentSchemas
 
 // Generates all dynamic pages for the website (pages that do not have a file
@@ -18,15 +19,31 @@ exports.onCreatePage = function({page, actions}) {
   if (/\/components\/[\w-]+$/.test(page.path)) {
     const slug = page.path.replace("/components/", "")
     const schema = componentSchemas.find(schema => schema.slug === slug)
-    actions.deletePage(page)
+    if (!schema) {
+      console.error(
+        'No schema while creating page component page "%s" (looked up slug: "%s"). This page will be deleted.',
+        page.path,
+        slug
+      )
+      actions.deletePage(page)
+      return
+    }
+
+    // These pages are dynamically created, but they should
+    const frontmatter = {
+      title: schema && schema.displayName,
+      description: schema && schema.description,
+      category: "components",
+      ...page.frontmatter
+    }
     actions.createPage({
       ...page,
-      frontmatter: {
-        title: schema && schema.displayName,
-        description: schema && schema.description,
-        ...page.frontmatter
-      },
-      context: {...page.context, schema}
+      frontmatter,
+      context: {
+        ...page.context,
+        schema,
+        frontmatter
+      }
     })
   }
 }

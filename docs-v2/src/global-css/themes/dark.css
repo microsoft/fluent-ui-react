@@ -24,6 +24,8 @@
   --sui-search-background: rgb(55, 55, 55);
   --sui-search-color: #eee;
   --sui-search-placeholder-color: #ccc;
+  --sui-search-category-background: var(--sui-accent-color-bold);
+  --sui-search-category-foreground: #000;
 
   --sui-playground-banner-background: rgb(30, 30, 30);
 

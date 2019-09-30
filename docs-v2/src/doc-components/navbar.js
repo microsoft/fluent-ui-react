@@ -93,10 +93,18 @@ function useSearchIndex() {
     return result.allSitePage.edges
       .filter(edge => edge.node.context && edge.node.context.frontmatter)
       .map(({node}) => {
+        // FIXME: pages should have correct frontmatter at build time
+        const category =
+          node.context.frontmatter.category ||
+          (/\/learn/.test(node.path)
+            ? "Learn"
+            : /\/components/.test(node.path)
+            ? "Components"
+            : "Site")
         return {
           href: node.path,
+          category,
           title: node.context.frontmatter.title,
-          category: node.context.frontmatter.category,
           description: node.context.frontmatter.description
         }
       })

@@ -40,8 +40,8 @@
 
 .sui-search-result-category {
   padding: 0.75rem;
-  background: var(--sui-heading-background);
-  color: #fff;
+  background: var(--sui-search-category-background);
+  color: var(--sui-search-category-foreground, #fff);
   font-weight: bold;
   font-size: 1.5rem;
 }

@@ -6,52 +6,108 @@ const RESULT_LIMIT = 5
 
 export function Search({pages}) {
   const [search, setSearch] = React.useState("")
-  const [selectedIndex] = React.useState(0)
+  const [selectedResult, setSelectedResult] = React.useState()
+  const [showResults, setShowResults] = React.useState(true)
 
   // Enable keyboard shortcut to jump to search bar
   const inputRef = React.useRef()
   useKeyboardShortcut(inputRef)
 
   // Get search results for current input
-  const categorizedResults = React.useMemo(() => {
-    let results = findMatchingPages(search, pages)
-    results = results.slice(0, RESULT_LIMIT)
-    return categorizeResults(results)
+  const results = React.useMemo(() => {
+    const results = findMatchingPages(search, pages)
+    return results.slice(0, RESULT_LIMIT)
   }, [pages, search])
 
+  // Categorize those results for rendering
+  const categorizedResults = React.useMemo(() => {
+    return categorizeResults(results)
+  }, [results])
+
+  // If no result is currently selected, select the first one
+  React.useLayoutEffect(() => {
+    if (!results.includes(selectedResult)) {
+      setSelectedResult(results[0])
+    }
+  }, [results, selectedResult])
+
+  // Support keyboard navigation (arrow keys to navigate, enter to select)
+  function handleKeydown(e) {
+    switch (e.key) {
+      case "ArrowUp":
+      case "ArrowDown": {
+        e.preventDefault()
+        let currIdx = results.indexOf(selectedResult)
+        if (currIdx === -1) {
+          currIdx = 0
+        }
+        const nextIdx =
+          e.key === "ArrowUp"
+            ? Math.max(currIdx - 1, 0)
+            : Math.min(currIdx + 1, results.length - 1)
+        const result = results[nextIdx]
+        if (result) {
+          setSelectedResult(result)
+        }
+        break
+      }
+      case "Enter":
+        e.preventDefault()
+        if (selectedResult) {
+          const selected = document.querySelector(
+            '.sui-search [data-is-selected="true"]'
+          )
+          if (selected) {
+            selected.click()
+          }
+        }
+        break
+      default:
+      // noop
+    }
+  }
+
   return (
-    <div className="sui-search">
+    <div className="sui-search" onBlur={() => setShowResults(false)}>
       <input
         className="sui-search__input"
         placeholder="Press / to search..."
         value={search}
         onChange={e => setSearch(e.target.value)}
+        onKeyDown={handleKeydown}
+        onFocus={() => setShowResults(true)}
         ref={inputRef}
       />
-      {categorizedResults.length > 0 && (
+      {showResults && categorizedResults.length > 0 && (
         <SearchResults
           categories={categorizedResults}
-          selectedIndex={selectedIndex}
+          selectedResult={selectedResult}
         />
       )}
     </div>
   )
 }
 
-function SearchResults({categories, selectedIndex}) {
+function SearchResults({categories, selectedResult}) {
   return (
     <div className="sui-search__results">
-      {categories.map(({id, results}) => {
+      {categories.map(({id, results}, categoryIdx) => {
         return (
           <React.Fragment key={id}>
             <div className="sui-search-result-category">{id}</div>
-            {results.map((result, idx) => {
+            {results.map((result, resultIdx) => {
+              let isSelected = result === selectedResult
+              if (!selectedResult && !isSelected) {
+                if (categoryIdx === 0 && resultIdx === 0) {
+                  isSelected = true
+                }
+              }
               return (
                 <Link
                   key={result.href}
                   to={result.href}
                   className="sui-search-result"
-                  data-is-selected={idx === selectedIndex}
+                  data-is-selected={isSelected}
                 >
                   <span className="sui-search-result__title">
                     {result.title}
