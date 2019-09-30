@@ -8,7 +8,7 @@ const unlink = util.promisify(fs.unlink)
 
 const CACHE_ROOT = path.resolve(
   __dirname,
-  "../.cache/caches/gatsby-source-component-schemas"
+  "../node_modules/.component-schema-cache"
 )
 
 let checkedCacheRootExistence = false

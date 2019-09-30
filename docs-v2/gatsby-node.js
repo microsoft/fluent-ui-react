@@ -8,7 +8,8 @@ let componentSchemas
 exports.createPages = async function({actions}) {
   componentSchemas = await inspect.components()
   for (const schema of componentSchemas) {
-    actions.createPage(generateComponentPlaygroundPage(schema))
+    const page = generateComponentPlaygroundPage(schema)
+    actions.createPage(page)
   }
 }
 
@@ -29,7 +30,6 @@ exports.onCreatePage = function({page, actions}) {
       return
     }
 
-    // These pages are dynamically created, but they should
     const frontmatter = {
       title: schema && schema.displayName,
       description: schema && schema.description,
