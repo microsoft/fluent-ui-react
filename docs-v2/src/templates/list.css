@@ -1,81 +1,97 @@
 /******************************************************************************
-   List Header
+   List Container
  *****************************************************************************/
-.sui-list-header {
+.sui-list-container {
+  position: relative;
   display: flex;
   justify-content: flex-end;
   margin: 0 0 1rem 0;
-}
-
-.sui-list-header__view-as {
-  margin: 0 0.75rem 0 0;
-  font-weight: 600;
 }
 
 /******************************************************************************
    List
  *****************************************************************************/
 .sui-list {
-  margin: 0 0 5em;
+  margin: 0;
   padding: 0;
   list-style: none;
+}
+
+/******************************************************************************
+   List Controls
+ *****************************************************************************/
+.sui-list-controls {
+  position: sticky;
+  top: 5rem;
+  margin: 0 1rem 0 0;
+  min-width: 20rem;
+}
+
+.sui-list-controls__header {
+  display: block;
+  margin: 0 0.75rem 0 0;
+  padding: 0 0 0.75rem 0;
+  font-size: 1.75rem;
+  font-weight: 600;
+  border-bottom: 1px solid var(--sui-divider-color);
 }
 
 /******************************************************************************
    List Item (Default View)
  *****************************************************************************/
 .sui-list-item {
-  display: block;
-  margin: 0 0 1rem 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 0 0 1.25rem 0;
+  padding: 0.5rem;
   color: inherit;
   text-decoration: none;
   border: 1px solid transparent;
-  border-radius: 0.5rem;
   background: var(--sui-card-background);
+  border: 1px solid var(--sui-card-border-color);
+  border-radius: 0.5rem;
   box-shadow: 3px 5px 5px -5px var(--sui-shadow-color);
 }
 
-.sui-list-item__preview {
-  display: none;
+.sui-list-item::after {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: -15px;
+  right: -15px;
+  bottom: -6px;
+  background: var(--sui-accent-color-background);
+  border-radius: 0.5rem;
+  box-shadow: 0 6px 30px 0 rgba(0, 0, 0, 0.12);
+  opacity: 0;
+  transition: transform 0.1s ease;
+  transform: scale(0.95);
+  z-index: -1;
 }
 
-.sui-list-item__details {
-  padding: 1.25rem;
-  font-size: 1.6rem;
-}
-
-.sui-list-item__title {
-  margin: 0 0 0.3rem 0;
-  font-size: 1.75rem;
-  font-weight: 600;
+.sui-list-item:nth-of-type(even) {
+  background: var(--sui-card-background-alt);
 }
 
 .sui-list-item:focus,
 .sui-list-item:hover {
   cursor: pointer;
   outline: none;
-  border-color: var(--sui-accent-color) !important;
-  box-shadow: 3px 5px 5px -5px var(--sui-accent-color) !important;
-}
-
-/******************************************************************************
-   List Item (Default + Previews)
- *****************************************************************************/
-[data-enable-previews="true"] .sui-list-item {
-  display: flex;
-  border: none !important;
   box-shadow: none !important;
-  background: none;
+  background: var(--sui-accent-color-background);
+  border-color: transparent !important;
 }
 
-[data-enable-previews="true"] .sui-list-item__details {
-  border: 1px solid transparent;
-  border-radius: 0.5rem;
-  background: var(--sui-card-background);
-  box-shadow: 3px 5px 5px -5px var(--sui-shadow-color);
+.sui-list-item:focus::after,
+.sui-list-item:hover::after {
+  transform: scale(1);
+  border: 1px solid var(--sui-accent-color);
+  box-shadow: 3px 5px 5px -5px var(--sui-accent-color);
+  opacity: 1;
 }
 
-[data-enable-previews="true"] .sui-list-item__preview {
+.sui-list-item__preview {
   display: flex;
   width: 17.5rem;
   height: 8rem;
@@ -83,15 +99,18 @@
   overflow: hidden;
 }
 
-[data-enable-previews="true"] .sui-list-item__details {
+.sui-list-item__details {
   flex: 1;
   align-self: center;
+  padding: 1.25rem;
+  font-size: 1.6rem;
+  font-weight: 300;
 }
 
-[data-enable-previews="true"] .sui-list-item:focus .sui-list-item__details,
-[data-enable-previews="true"] .sui-list-item:hover .sui-list-item__details {
-  border-color: var(--sui-accent-color);
-  box-shadow: 3px 5px 5px -5px var(--sui-accent-color);
+.sui-list-item__title {
+  margin: 0 0 0.3rem 0;
+  font-size: 2rem;
+  font-weight: 600;
 }
 
 /******************************************************************************
@@ -99,13 +118,14 @@
  *****************************************************************************/
 [data-prefer-grid-view="true"] .sui-list {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 1.5rem;
 }
 
 [data-prefer-grid-view="true"] .sui-list-item {
   display: block;
   overflow: hidden;
+  padding: 0;
   border: 1px solid var(--sui-card-border-color);
   border-radius: 0.75rem;
   box-shadow: 3px 5px 5px -5px var(--sui-shadow-color);
@@ -117,6 +137,7 @@
 
 [data-prefer-grid-view="true"] .sui-list-item__preview {
   display: flex;
+  width: 100%;
   justify-content: center;
   align-content: center;
   height: 14rem;
@@ -157,7 +178,7 @@
     grid-template-columns: 1fr 1fr;
   }
 
-  [data-enable-previews="true"] .sui-list-item__preview {
+  .sui-list-item__preview {
     display: none;
   }
 }

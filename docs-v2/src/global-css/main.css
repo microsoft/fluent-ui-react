@@ -62,3 +62,8 @@ a {
 body {
   background: var(--sui-background);
 }
+
+.sui-icon-button {
+  background: none;
+  border: none;
+}

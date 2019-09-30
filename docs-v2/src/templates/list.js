@@ -1,6 +1,8 @@
 import "./list.css"
 import React from "react"
 import {Link} from "gatsby"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import {faExpandArrowsAlt} from "@fortawesome/free-solid-svg-icons"
 import {BaseLayout} from "./base-layout"
 import {PageHeader} from "../doc-components/page-header"
 
@@ -11,6 +13,7 @@ export default function DefaultListLayout({pageContext}) {
       <PageHeader title={title} description={description} />
       <List previews={false}>
         {pages.map(page => {
+          // TODO: currently rendering ol > a, should be ol > li > a
           return (
             <ListItem
               as={Link}
@@ -28,27 +31,32 @@ export default function DefaultListLayout({pageContext}) {
 
 export function List({children, previews = true}) {
   const [gridView, setGridView] = React.useState(false)
-  const [showPreviews, setShowPreviews] = React.useState(previews)
 
   return (
-    <div
-      data-prefer-grid-view={gridView}
-      data-enable-previews={!gridView && showPreviews}
-    >
-      <header className="sui-list-header">
-        <span className="sui-list-header__view-as">View as:</span>
-        <button onClick={() => setGridView(true)}>Grid</button>
-        <button
-          onClick={() => {
-            setGridView(false)
-            setShowPreviews(previews)
-          }}
-        >
-          List
-        </button>
-      </header>
+    <div className="sui-list-container" data-prefer-grid-view={gridView}>
+      <aside className="sui-list-controls" hidden>
+        <span className="sui-list-controls__header">List Controls</span>
+        <IconButton
+          icon={faExpandArrowsAlt}
+          title="Select grid view"
+          onClick={() => setGridView(true)}
+        />
+        <IconButton
+          icon={faExpandArrowsAlt}
+          title="Select list view"
+          onClick={() => setGridView(false)}
+        />
+      </aside>
       <ol className="sui-list">{children}</ol>
     </div>
+  )
+}
+
+function IconButton({icon, title, onClick}) {
+  return (
+    <button className="sui-icon-button" onClick={onClick}>
+      <FontAwesomeIcon icon={icon} />
+    </button>
   )
 }
 

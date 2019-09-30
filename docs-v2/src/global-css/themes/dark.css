@@ -1,9 +1,10 @@
 [data-theme="dark"] {
   --sui-color: #fff;
+  --sui-color-muted: #eee;
   --sui-accent-color: #aba4f7;
   --sui-accent-color-bold: #aba4f7;
   --sui-accent-color-foreground: #fff;
-  --sui-accent-color-background: rgba(178, 174, 255, 0.5);
+  --sui-accent-color-background: #5c5a80;
   --sui-heading-background: rgba(178, 174, 255, 0.75);
   --sui-background: rgb(50, 50, 50);
   --sui-shadow-color: rgb(30, 30, 30);
@@ -14,6 +15,7 @@
   --sui-navbar-background: rgb(35, 35, 35);
 
   --sui-card-background: #201f1f;
+  --sui-card-background-alt: rgb(42, 42, 42);
   --sui-card-border-color: #666;
   --sui-card-footer-background: rgb(60, 60, 60);
 

@@ -4,7 +4,7 @@
   --sui-accent-color: #aba4f7;
   --sui-accent-color-bold: #554acc;
   --sui-accent-color-foreground: #000;
-  --sui-accent-color-background: rgba(238, 237, 255, 0.5);
+  --sui-accent-color-background: #f2f2fd;
   --sui-background: #f7f8f9;
   --sui-navbar-background: #fff;
   --sui-shadow-color: rgba(50, 50, 93, 0.25);
@@ -12,7 +12,8 @@
   --sui-rail-background: #fff;
 
   --sui-card-background: #fff;
-  --sui-card-border-color: #eee;
+  --sui-card-background-alt: rgb(250, 250, 250);
+  --sui-card-border-color: #ddd;
   --sui-card-footer-background: rgb(248, 248, 248);
 
   --sui-divider-color: #ccc;
