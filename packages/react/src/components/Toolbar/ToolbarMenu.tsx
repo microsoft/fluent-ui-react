@@ -50,7 +50,7 @@ export interface ToolbarMenuProps
   submenu?: boolean
 
   /** Shorthand for the submenu indicator. */
-  indicator?: ShorthandValue<IconProps>
+  submenuIndicator?: ShorthandValue<IconProps>
 }
 
 class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
@@ -65,7 +65,7 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
     items: customPropTypes.collectionShorthandWithKindProp(['divider', 'item']),
     onItemClick: PropTypes.func,
     submenu: PropTypes.bool,
-    indicator: customPropTypes.itemShorthandWithoutJSX,
+    submenuIndicator: customPropTypes.itemShorthandWithoutJSX,
   }
 
   static defaultProps = {
@@ -97,7 +97,7 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
   })
 
   renderItems(items, variables) {
-    const { indicator, submenu, onItemClick } = this.props
+    const { submenuIndicator, submenu, onItemClick } = this.props
     const itemOverridesFn = this.handleItemOverrides(variables)
     const dividerOverridesFn = this.handleDividerOverrides(variables)
     const radioGroupOverrides = this.handleRadioGroupOverrides(variables)
@@ -122,7 +122,7 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
           return ToolbarMenuItem.create(item, {
             defaultProps: {
               onItemClick,
-              indicator,
+              submenuIndicator,
               inSubmenu: submenu,
             },
             overrideProps: itemOverridesFn,

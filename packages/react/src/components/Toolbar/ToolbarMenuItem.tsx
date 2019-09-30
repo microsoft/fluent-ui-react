@@ -74,7 +74,7 @@ export interface ToolbarMenuItemProps
   index?: number
 
   /** Shorthand for the submenu indicator. */
-  indicator?: ShorthandValue<IconProps>
+  submenuIndicator?: ShorthandValue<IconProps>
 
   /** Indicates whether the menu item is part of submenu. */
   inSubmenu?: boolean
@@ -139,12 +139,12 @@ class ToolbarMenuItem extends AutoControlledComponent<
   static propTypes = {
     ...commonPropTypes.createCommon(),
     active: PropTypes.bool,
-    activeIndicator: customPropTypes.itemShorthand,
+    activeIndicator: customPropTypes.itemShorthandWithoutJSX,
     defaultMenuOpen: PropTypes.bool,
     disabled: PropTypes.bool,
     icon: customPropTypes.itemShorthand,
     index: PropTypes.number,
-    indicator: customPropTypes.itemShorthandWithoutJSX,
+    submenuIndicator: customPropTypes.itemShorthandWithoutJSX,
     inSubmenu: PropTypes.bool,
     menu: PropTypes.oneOfType([customPropTypes.itemShorthand, customPropTypes.collectionShorthand]),
     menuOpen: PropTypes.bool,
@@ -263,7 +263,7 @@ class ToolbarMenuItem extends AutoControlledComponent<
       children,
       content,
       disabled,
-      indicator,
+      submenuIndicator,
       icon,
       menu,
       popup,
@@ -272,7 +272,8 @@ class ToolbarMenuItem extends AutoControlledComponent<
     } = this.props
     const { menuOpen } = this.state
 
-    const indicatorWithDefaults = indicator === undefined ? 'stardust-menu-arrow-end' : indicator
+    const submenuIndicatorWithDefaults =
+      submenuIndicator === undefined ? 'stardust-menu-arrow-end' : submenuIndicator
     const targetRef = toRefObject(this.context.target)
 
     const elementType = (
@@ -299,10 +300,10 @@ class ToolbarMenuItem extends AutoControlledComponent<
                   },
                 })}
               {menu &&
-                Icon.create(indicatorWithDefaults, {
+                Icon.create(submenuIndicatorWithDefaults, {
                   defaultProps: {
                     name: 'stardust-menu-arrow-end',
-                    styles: styles.indicator,
+                    styles: styles.submenuIndicator,
                   },
                 })}
             </>
@@ -339,7 +340,7 @@ class ToolbarMenuItem extends AutoControlledComponent<
                   onItemClick,
                   styles: styles.menu,
                   submenu: true,
-                  indicator,
+                  submenuIndicator,
                 },
               })}
             </Popper>
