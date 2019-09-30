@@ -62,30 +62,3 @@ a {
 body {
   background: var(--sui-background);
 }
-
-.is-selected,
-.is-selectable:hover,
-.is-selectable:focus {
-  cursor: pointer;
-  color: var(--sui-accent-color-foreground);
-  background: var(--sui-accent-color-background);
-  border-color: var(--sui-accent-color);
-}
-
-.is-selectable,
-.is-selected {
-  position: relative;
-}
-
-.is-selectable:hover::before,
-.is-selectable:focus::before,
-.is-selected::before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0.2rem;
-  height: 100%;
-  background: var(--sui-accent-color);
-  box-shadow: 0 0 3px 0 var(--sui-accent-color);
-}
