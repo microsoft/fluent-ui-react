@@ -1,8 +1,9 @@
 import * as _ from 'lodash'
 
-export const includes = (s, target) => _.toLower(s).indexOf(_.toLower(target)) !== -1
+export const includes = (s: string, target: string): boolean =>
+  _.toLower(s).indexOf(_.toLower(target)) !== -1
 
-export const find = (data, key, search) => {
+export const find = (data: object, key: string, search: string): boolean => {
   const value = data[key]
   return (
     search !== '' &&
@@ -11,7 +12,7 @@ export const find = (data, key, search) => {
   )
 }
 
-export const isOverridden = (data, key, overrides) => {
+export const isOverridden = (data: object, key: string, overrides: object): boolean => {
   return (
     typeof data[key] !== 'object' &&
     !!overrides &&
@@ -20,7 +21,7 @@ export const isOverridden = (data, key, overrides) => {
   )
 }
 
-const filterR = (search, data) => {
+const filterR = (search: string, data: object): boolean => {
   let result = false
 
   Object.keys(data).forEach(key => {
@@ -39,7 +40,7 @@ const filterR = (search, data) => {
   return result
 }
 
-export const filter = (data, value) => {
+export const filter = (data: object, value: string) => {
   return Object.keys(data)
     .filter(key => {
       if (find(data, key, value)) {
@@ -59,7 +60,7 @@ export const filter = (data, value) => {
     }, {})
 }
 
-export const getValues = (value, predicate) => {
+export const getValues = (value: any, predicate: (string) => boolean) => {
   if (_.isNil(value)) {
     return []
   }
@@ -81,7 +82,7 @@ export const getValues = (value, predicate) => {
   return []
 }
 
-export const removeNulls = o => {
+export const removeNulls = (o: any): any => {
   if (typeof o !== 'object' && o !== null) {
     return o
   }
