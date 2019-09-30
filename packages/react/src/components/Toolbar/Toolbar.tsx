@@ -5,23 +5,24 @@ import cx from 'classnames'
 import * as PropTypes from 'prop-types'
 import ReactResizeDetector from 'react-resize-detector'
 import { Ref } from '@stardust-ui/react-component-ref'
+import { windowRef, EventListener } from '@stardust-ui/react-component-event-listener'
 
 import {
+  applyAccessibilityKeyHandlers,
+  ChildrenComponentProps,
   childrenExist,
+  ColorComponentProps,
+  commonPropTypes,
+  ContentComponentProps,
   createShorthandFactory,
+  ShorthandFactory,
   UIComponent,
   UIComponentProps,
-  ContentComponentProps,
-  ChildrenComponentProps,
-  commonPropTypes,
-  ColorComponentProps,
-  applyAccessibilityKeyHandlers,
-  ShorthandFactory,
 } from '../../lib'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
 import { Accessibility } from '../../lib/accessibility/types'
-import { toolbarBehavior, toggleButtonBehavior } from '../../lib/accessibility'
+import { toggleButtonBehavior, toolbarBehavior } from '../../lib/accessibility'
 import { ShorthandCollection, ShorthandValue, WithAsProp, withSafeTypeForAs } from '../../types'
 
 import ToolbarCustomItem from './ToolbarCustomItem'
@@ -64,6 +65,8 @@ export interface ToolbarProps
 
   /** Shorthand for the wrapper component.  Only used if onReduceItems is defined. */
   wrapper?: ShorthandValue<BoxProps>
+
+  overflow?: boolean
 }
 
 export interface ToolbarState {
@@ -102,6 +105,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
     onReduceItems: PropTypes.func,
     measurement: customPropTypes.itemShorthand,
     wrapper: customPropTypes.itemShorthand,
+    overflow: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -169,8 +173,60 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
     }
   }
 
+  hackyDOMOverflow = () => {
+    console.log('hackyDOMOverflow')
+    const $wrapper = this.wrapperRef.current
+
+    // console.log($wrapper)
+    // another assumption, children are valid items
+    const $items = Array.from($wrapper.children)
+
+    // setup and position overflow item
+    const $overflowItem = $items.pop()
+    $overflowItem.style.position = 'absolute'
+
+    let hasSetHeight
+    let isOverflowing
+    let lastItemIndex
+
+    $items.forEach(($item, i) => {
+      if (!hasSetHeight) {
+        hasSetHeight = true
+        $wrapper.style.height = $item.clientHeight + 'px'
+      }
+
+      if (isOverflowing || $item.getBoundingClientRect().top > $wrapper.clientTop) {
+        isOverflowing = true
+        // TODO: bug, this index is off by one
+        lastItemIndex = typeof lastItemIndex === 'undefined' ? i - 1 : lastItemIndex
+      } else {
+      }
+    })
+
+    if (isOverflowing) {
+      $wrapper.style.paddingRight = $overflowItem.clientWidth + 'px'
+      $overflowItem.style.pointerEvents = 'all'
+      $overflowItem.style.visibility = 'visible'
+
+      // render the ellipsis menu item with these sub menu items:
+      // store starting overflow index to class property
+      // on overflow click, slice the items to the overflown items only :D [vomit]
+      // $items.slice(overflowingIndices[0])
+
+      // TODO: you can also literally append ellipsis child after the last fitting item... or other strategy
+      const lastItemRect = $items[lastItemIndex].getBoundingClientRect()
+      $overflowItem.style.left = lastItemRect.right + 'px'
+    } else {
+      $wrapper.style.paddingRight = ''
+      $overflowItem.style.pointerEvents = 'none'
+      $overflowItem.style.visibility = 'hidden'
+      $overflowItem.style.left = ''
+    }
+  }
+
   componentDidMount() {
     this.afterComponentRendered()
+    this.hackyDOMOverflow()
   }
 
   componentDidUpdate() {
@@ -299,9 +355,18 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
     }
 
     return (
-      <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
-        {childrenExist(children) ? children : this.renderItems(items, variables)}
-      </ElementType>
+      <>
+        <EventListener listener={this.hackyDOMOverflow} targetRef={windowRef} type="resize" />
+        <Ref innerRef={this.wrapperRef}>
+          <ElementType
+            className={classes.root}
+            {...accessibility.attributes.root}
+            {...unhandledProps}
+          >
+            {childrenExist(children) ? children : this.renderItems(items, variables)}
+          </ElementType>
+        </Ref>
+      </>
     )
   }
 }
