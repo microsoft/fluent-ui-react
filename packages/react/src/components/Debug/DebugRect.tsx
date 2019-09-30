@@ -13,7 +13,6 @@ class DebugRect extends React.Component<DebugRectProps> {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    // console.debug('DEBUG componentDidUpdate', { state: this.state, prevState })
     this.setDebugSelectorPosition()
   }
 

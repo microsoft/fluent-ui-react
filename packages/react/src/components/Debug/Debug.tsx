@@ -43,9 +43,9 @@ class Debug extends React.Component<DebugProps, DebugState> {
   constructor(p, s) {
     super(p, s)
     if (isBrowser()) {
-      // eslint-disable-next-line
+      // eslint-disable-next-line no-undef
       ;(window as any).openDebugPanel = () => {
-        // eslint-disable-next-line
+        // eslint-disable-next-line no-undef
         this.debugReactComponent((window as any).$r)
       }
     }
@@ -74,8 +74,6 @@ class Debug extends React.Component<DebugProps, DebugState> {
   }
 
   debugDOMNode = domNode => {
-    // console.group('debugDOMNode')
-
     let fiberNav = FiberNavigator.fromDOMNode(domNode)
 
     if (!fiberNav) {
@@ -107,13 +105,10 @@ class Debug extends React.Component<DebugProps, DebugState> {
   }
 
   handleMouseMove = e => {
-    // console.log('MOUSEMOVE')
     this.debugDOMNode(e.target)
   }
 
   handleStardustDOMNodeClick = e => {
-    // console.debug('Clicked stardustDOMNode. Prevent default and stop propagation.', this.state.fiberNav)
-
     e.preventDefault()
     e.stopPropagation()
 

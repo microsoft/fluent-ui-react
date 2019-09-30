@@ -1,12 +1,11 @@
 import * as React from 'react'
 import { hot } from 'react-hot-loader/root'
-import { Provider, themes } from '@stardust-ui/react'
+import { Provider, Debug, themes } from '@stardust-ui/react'
 
 import { mergeThemes } from 'src/lib'
 import { ThemeContext, ThemeContextData, themeContextDefaults } from './context/ThemeContext'
 import Routes from './routes'
 import { PerfDataProvider } from './components/ComponentDoc/PerfChart'
-import Debug from '../../packages/react/src/components/Debug/Debug'
 
 // Experimental dev-time accessibility attributes integrity validation.
 import { setup } from '@stardust-ui/ability-attributes'
