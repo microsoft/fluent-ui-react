@@ -38,7 +38,6 @@ import MentionsPrototype from './prototypes/mentions'
 import DropdownsPrototype from './prototypes/dropdowns'
 import PopupsPrototype from './prototypes/popups'
 import IconViewerPrototype from './prototypes/IconViewer'
-import MenuButtonPrototype from './prototypes/MenuButton'
 import AlertsPrototype from './prototypes/alerts'
 import NestedPopupsAndDialogsPrototype from './prototypes/NestedPopupsAndDialogs'
 import VirtualizedTreePrototype from './prototypes/VirtualizedTree'
@@ -72,7 +71,6 @@ const Routes = () => (
           <Route exact path="/prototype-dropdowns" component={DropdownsPrototype} />
           <Route exact path="/prototype-popups" component={PopupsPrototype} />
           <Route exact path="/icon-viewer" component={IconViewerPrototype} />
-          <Route exact path="/menu-button" component={MenuButtonPrototype} />
           <Route exact path="/prototype-alerts" component={AlertsPrototype} />
           <Route
             exact
