@@ -164,6 +164,7 @@ class ToolbarMenuItem extends AutoControlledComponent<
     as: 'button',
     accessibility: toolbarMenuItemBehavior as Accessibility,
     activeIndicator: 'stardust-checkmark',
+    submenuIndicator: 'stardust-menu-arrow-end',
     wrapper: { as: 'li' },
   }
 
@@ -272,8 +273,6 @@ class ToolbarMenuItem extends AutoControlledComponent<
     } = this.props
     const { menuOpen } = this.state
 
-    const submenuIndicatorWithDefaults =
-      submenuIndicator === undefined ? 'stardust-menu-arrow-end' : submenuIndicator
     const targetRef = toRefObject(this.context.target)
 
     const elementType = (
@@ -300,7 +299,7 @@ class ToolbarMenuItem extends AutoControlledComponent<
                   },
                 })}
               {menu &&
-                Icon.create(submenuIndicatorWithDefaults, {
+                Icon.create(submenuIndicator, {
                   defaultProps: {
                     name: 'stardust-menu-arrow-end',
                     styles: styles.submenuIndicator,
