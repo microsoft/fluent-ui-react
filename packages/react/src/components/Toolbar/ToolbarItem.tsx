@@ -172,7 +172,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
 
   itemRef = React.createRef<HTMLElement>()
 
-  handleMenuOverrides = (getRefs: GetRefs, variables) => (predefinedProps: ToolbarItemProps) => ({
+  handleMenuOverrides = (getRefs: GetRefs, variables) => (predefinedProps: ToolbarMenuProps) => ({
     onBlur: (e: React.FocusEvent) => {
       const isInside = _.some(getRefs(), (childRef: NodeRef) => {
         return childRef.current.contains(e.relatedTarget as HTMLElement)
@@ -182,7 +182,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
         this.trySetMenuOpen(false, e)
       }
     },
-    onItemClick: (e, itemProps: ToolbarItemProps) => {
+    onItemClick: (e, itemProps: ToolbarMenuItemProps) => {
       const { popup, menuOpen } = itemProps
       _.invoke(predefinedProps, 'onItemClick', e, itemProps)
       if (popup) {

@@ -38,6 +38,11 @@ const Content = () => (
       examplePath="components/Toolbar/Content/ToolbarExampleMenuRadioGroup"
     />
     <ComponentExample
+      title="Toolbar can contain a submenu in a menu"
+      description="Toolbar item can open a menu with submenu."
+      examplePath="components/Toolbar/Content/ToolbarExampleMenuWithSubmenu"
+    />
+    <ComponentExample
       title="Toolbar can contain custom content"
       description="Toolbar item can contain custom content."
       examplePath="components/Toolbar/Content/ToolbarExampleCustomContent"
