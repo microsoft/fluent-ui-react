@@ -6,7 +6,7 @@ import * as React from 'react'
 const ToolbarExampleMenuShorthand = () => {
   const [menuOpen, setMenuOpen] = React.useState(false)
 
-  const onItemClick = useLogKnob('onItemClick', null, createCallbackLogFormatter(['content']))
+  // const onItemClick = useLogKnob('onItemClick', null, createCallbackLogFormatter(['content']))
   const onMenuOpenChange = useLogKnob(
     'onMenuOpenChange',
     (e, { menuOpen }) => setMenuOpen(menuOpen),
@@ -22,12 +22,22 @@ const ToolbarExampleMenuShorthand = () => {
           active: menuOpen,
           menu: {
             items: [
-              { key: 'play', content: 'Play', icon: 'play' },
+              {
+                key: 'play',
+                content: 'Play',
+                icon: 'play',
+                menu: {
+                  items: [
+                    'Play with audio',
+                    { content: 'Play with video', menu: ['HD', 'Full HD'] },
+                  ],
+                },
+              },
               { key: 'pause', content: 'Pause', icon: 'pause' },
               { key: 'divider', kind: 'divider' },
               'Without icon',
             ],
-            onItemClick,
+            // onItemClick,
           },
           menuOpen,
           onMenuOpenChange,

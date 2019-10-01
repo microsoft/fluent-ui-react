@@ -357,7 +357,7 @@ class ToolbarMenuItem extends AutoControlledComponent<
       defaultProps: {
         className: cx(ToolbarMenuItem.slotClassNames.wrapper, classes.wrapper),
         ...accessibility.attributes.wrapper,
-        ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, unhandledProps),
+        ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, wrapper),
       },
       overrideProps: () => ({
         children: (
