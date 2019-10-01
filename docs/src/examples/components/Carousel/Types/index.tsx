@@ -10,6 +10,11 @@ const Types = () => (
       description="A carousel can display images."
       examplePath="components/Carousel/Types/CarouselExample"
     />
+    <ComponentExample
+      title="Carousel with Pagination"
+      description="A carousel can have pagination instead of navigation."
+      examplePath="components/Carousel/Types/CarouselPaginationExample"
+    />
   </ExampleSection>
 )
 
