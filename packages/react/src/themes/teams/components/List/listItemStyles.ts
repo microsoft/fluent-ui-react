@@ -2,6 +2,7 @@ import { pxToRem } from '../../../../lib'
 import { screenReaderContainerStyles } from '../../../../lib/accessibility/Styles/accessibilityStyles'
 import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { default as ListItem, ListItemProps } from '../../../../components/List/ListItem'
+import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 const truncateStyle: ICSSInJSStyle = {
   overflow: 'hidden',
@@ -28,39 +29,42 @@ const selectableHoverStyle = (p: ListItemProps, v): ICSSInJSStyle => ({
   [`& .${ListItem.slotClassNames.endMedia}`]: { display: 'block', color: 'inherit' },
 })
 
-const selectableFocusStyle = (p: ListItemProps, v): ICSSInJSStyle => ({
-  ...selectableHoverStyle(p, v),
-  outline: 0,
-
-  ':focus-visible': {
-    outline: `.2rem solid ${v.selectedFocusOutlineColor}`,
-    zIndex: 1,
-  },
-})
-
 const selectedStyle = variables => ({
   background: variables.selectedBackgroundColor,
   color: variables.selectedColor,
 })
 
 const listItemStyles: ComponentSlotStylesPrepared<ListItemProps, any> = {
-  root: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    minHeight: v.minHeight,
-    padding: v.rootPadding,
-    ...((p.selectable || p.navigable) && {
-      position: 'relative',
+  root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
+    const borderFocusStyles = getBorderFocusStyles({
+      siteVariables,
+    })
 
-      // hide the end media by default
-      [`& .${ListItem.slotClassNames.endMedia}`]: { display: 'none' },
+    return {
+      minHeight: v.minHeight,
+      padding: v.rootPadding,
+      ...((p.selectable || p.navigable) && {
+        position: 'relative',
 
-      '&:hover': selectableHoverStyle(p, v),
-      '&:focus': selectableFocusStyle(p, v),
-      ...(p.selected && selectedStyle(v)),
-    }),
-    ...(p.important && {
-      fontWeight: 'bold',
-    }),
-  }),
+        // hide the end media by default
+        [`& .${ListItem.slotClassNames.endMedia}`]: { display: 'none' },
+
+        '&:hover': selectableHoverStyle(p, v),
+        ':focus': {
+          ...borderFocusStyles[':focus'],
+        },
+        ':focus-visible': {
+          ...borderFocusStyles[':focus-visible'],
+          zIndex: 1,
+        },
+
+        ...(p.selected && selectedStyle(v)),
+      }),
+      ...(p.important && {
+        fontWeight: 'bold',
+      }),
+    }
+  },
   media: ({ props: p }): ICSSInJSStyle => ({
     ...(p.important && {
       '::before': {
