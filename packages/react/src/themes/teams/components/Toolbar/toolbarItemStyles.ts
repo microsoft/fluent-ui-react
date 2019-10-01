@@ -44,8 +44,6 @@ const toolbarItemStyles: ComponentSlotStylesPrepared<ToolbarItemProps, ToolbarVa
 
       ':focus-visible': {
         ...borderFocusStyles[':focus-visible'],
-        color: v.foregroundFocus || colors.foregroundFocus,
-        ...getIconFillOrOutlineStyles({ outline: false }),
       },
 
       ...(p.disabled && {

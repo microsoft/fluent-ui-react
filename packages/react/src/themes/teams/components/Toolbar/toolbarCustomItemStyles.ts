@@ -43,7 +43,6 @@ const toolbarCustomItemStyles: ComponentSlotStylesPrepared<
 
       ':focus-visible': {
         ...borderFocusStyles[':focus-visible'],
-        color: v.foregroundFocus || colors.foregroundFocus,
       },
     }
   },

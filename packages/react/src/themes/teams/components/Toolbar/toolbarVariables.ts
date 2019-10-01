@@ -13,8 +13,6 @@ export const toolbarColorAreas = stringLiteralsArray(
   'foregroundHover',
   'backgroundHover',
 
-  'foregroundFocus',
-
   'foregroundDisabled1',
 
   // custom
@@ -36,8 +34,6 @@ export interface ToolbarVariables {
 
   foregroundHover: string
   backgroundHover: string
-
-  foregroundFocus: string
 
   foregroundActive: string
   backgroundActive: string
@@ -82,7 +78,6 @@ export default (siteVars: any): ToolbarVariables => ({
         borderFocus: siteVars.colorScheme.brand.borderFocus1,
         foregroundHover: siteVars.colorScheme.brand.foregroundHover,
         backgroundHover: 'transparent',
-        foregroundFocus: siteVars.colorScheme.brand.foregroundFocus,
         backgroundFocus: 'transparent',
         foregroundActive: siteVars.colorScheme.brand.foregroundActive,
 
@@ -100,8 +95,6 @@ export default (siteVars: any): ToolbarVariables => ({
 
   foregroundHover: undefined,
   backgroundHover: undefined,
-
-  foregroundFocus: undefined,
 
   foregroundActive: undefined,
   backgroundActive: 'transparent',

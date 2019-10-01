@@ -14,8 +14,7 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
     const borderFocusStyles = getBorderFocusStyles({
       siteVariables,
       ...(p.circular && {
-        borderRadius: v.circularBorderRadius,
-        focusOuterBorderColor: v.circularBorderColorFocus,
+        borderPadding: pxToRem(4),
       }),
     })
 
@@ -61,8 +60,6 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         },
         ':focus-visible': {
           ...borderFocusStyles[':focus-visible'],
-          color: v.colorFocus,
-          backgroundColor: v.backgroundColorFocus,
         },
       }),
 
@@ -93,8 +90,7 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
           },
           ':focus-visible': {
             ...borderFocusStyles[':focus-visible'],
-            color: v.circularColorActive,
-            backgroundColor: v.circularBackgroundColorFocus,
+            borderColor: v.circularBorderColor,
           },
         }),
 
@@ -146,8 +142,6 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
           },
           ':focus-visible': {
             ...borderFocusStyles[':focus-visible'],
-            color: v.primaryColorFocus,
-            backgroundColor: v.primaryBackgroundColorFocus,
           },
         }),
 
