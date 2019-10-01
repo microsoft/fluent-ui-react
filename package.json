@@ -54,7 +54,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/standalone": "^7.3.2",
+    "@babel/standalone": "^7.6.2",
     "@types/babel__traverse": "^7.0.4",
     "@types/color": "^3.0.0",
     "@types/enzyme": "^3.9.3",

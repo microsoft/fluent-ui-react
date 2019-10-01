@@ -4,7 +4,9 @@
   "repository": "git@github.com:davezuko/stardust-ui-docs",
   "author": "David Zukowski <dazukows@microsoft.com>",
   "license": "MIT",
-  "sideEffects": ["*.css"],
+  "sideEffects": [
+    "*.css"
+  ],
   "scripts": {
     "build": "gatsby build",
     "start": "gatsby develop --port 3000",
@@ -50,7 +52,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.23",
     "@fortawesome/free-regular-svg-icons": "^5.11.0",
     "@fortawesome/free-solid-svg-icons": "^5.11.0",
-    "@fortawesome/react-fontawesome": "^0.1.4",
+    "@fortawesome/react-fontawesome": "^0.1.5",
     "normalize.css": "^8.0.1",
     "prismjs": "^1.17.1",
     "react": "^16.9.0",
