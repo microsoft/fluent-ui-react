@@ -7,7 +7,8 @@ let _documentRemSize: number | null = null
 
 const getDocumentRemSize = (): number => {
   return isBrowser()
-    ? getFontSizeValue(getComputedStyle(document.documentElement).fontSize) ||
+    ? // eslint-disable-next-line no-undef
+      getFontSizeValue(getComputedStyle(document.documentElement).fontSize) ||
         DEFAULT_REM_SIZE_IN_PX
     : DEFAULT_REM_SIZE_IN_PX
 }

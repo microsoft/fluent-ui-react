@@ -56,11 +56,15 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         ':focus': {
           ...borderFocusStyles[':focus'],
           boxShadow: 'none',
-          ':active': { backgroundColor: v.backgroundColorActive },
+          // ':active': { backgroundColor: v.backgroundColorActive },
         },
         ':focus-visible': {
           ...borderFocusStyles[':focus-visible'],
         },
+
+        ...(p.size === 'small' && {
+          boxShadow: 'none',
+        }),
       }),
 
       // circular button defaults
@@ -129,6 +133,7 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
           color: v.primaryColor,
           backgroundColor: v.primaryBackgroundColor,
           borderColor: v.primaryBorderColor,
+          boxShadow: siteVariables.shadowLevel1Dark,
 
           ':hover': {
             color: v.primaryColorHover,

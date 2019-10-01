@@ -8,3 +8,5 @@ dist/
 stats/
 
 package.json
+
+packages/ability-attributes/src/schema.ts

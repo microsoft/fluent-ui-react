@@ -10,9 +10,10 @@ export default (siteVars: any): Partial<ButtonVariables> => {
     borderColor: siteVars.colors.white,
     borderColorHover: 'transparent',
 
-    primaryColor: siteVars.colors.white,
+    primaryColor: siteVars.colors.black,
     primaryColorHover: siteVars.colors.black,
-    primaryBackgroundColor: siteVars.colors.black,
+
+    primaryBackgroundColor: siteVars.colors.white,
     primaryBackgroundColorActive: siteVars.accessibleYellow,
     primaryBackgroundColorHover: siteVars.accessibleYellow,
     primaryBorderColor: siteVars.colors.white,
