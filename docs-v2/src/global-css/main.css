@@ -1,6 +1,6 @@
 @import "../../node_modules/normalize.css";
-@import "./_syntax-highlighting.css";
 
+/* -------------------- Typography ---------------------- */
 @font-face {
   font-family: "Segoe UI";
   font-weight: 300;
@@ -33,6 +33,7 @@
     format("woff2");
 }
 
+/* -------------------- Global Styles ---------------------- */
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -66,4 +67,27 @@ body {
 .sui-icon-button {
   background: none;
   border: none;
+}
+
+/* -------------------- Syntax Highlighting ---------------------- */
+.gatsby-highlight {
+  border: 1px solid var(--sui-card-border-color);
+  border-radius: 0.5rem;
+  box-shadow: 3px 5px 5px -5px var(--sui-shadow-color);
+  overflow: hidden;
+  font-size: 0.85em !important;
+}
+
+.gatsby-highlight > pre {
+  margin: 0 !important;
+  padding: 0 1.5rem;
+  overflow-x: scroll;
+}
+
+.gatsby-highlight-code-line {
+  display: block;
+  margin-left: -1em;
+  margin-right: -1em;
+  padding-left: 1em;
+  background-color: rgba(223, 134, 247, 0.21);
 }
