@@ -37,7 +37,7 @@ export interface AccordionProps extends UIComponentProps, ChildrenComponentProps
   /** Initial activeIndex value. */
   defaultActiveIndex?: number[] | number
 
-  /** Only allow one panel open at a time. */
+  /** Only allow one panel to be expanded at a time. */
   exclusive?: boolean
 
   /** At least one panel should be expanded at any time. */
