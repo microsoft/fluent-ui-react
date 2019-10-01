@@ -12,12 +12,12 @@ import {
   ChildrenComponentProps,
 } from '../../lib'
 import { WithAsProp, withSafeTypeForAs, ShorthandCollection, ShorthandValue } from '../../types'
-import Box, { BoxProps } from '../Box/Box'
 import Button, { ButtonProps } from '../Button/Button'
+import CarouselItem, { CarouselItemProps } from './CarouselItem'
 
 export interface CarouselProps extends UIComponentProps, ChildrenComponentProps {
   /** Shorthand array of props for ListItem. */
-  items?: ShorthandCollection<BoxProps>
+  items?: ShorthandCollection<CarouselItemProps>
   buttonNext?: ShorthandValue<ButtonProps>
   buttonPrevious?: ShorthandValue<ButtonProps>
 }
@@ -38,8 +38,8 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
       content: false,
     }),
     items: customPropTypes.collectionShorthand,
-    buttonNext: customPropTypes.itemShorthandWithoutJSX,
-    buttonPrevious: customPropTypes.itemShorthandWithoutJSX,
+    buttonNext: customPropTypes.itemShorthand,
+    buttonPrevious: customPropTypes.itemShorthand,
   }
 
   static defaultProps = {
@@ -58,13 +58,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
     }
     return (
       <div style={styles.contentContainerWrapper}>
-        <ul style={styles.contentContainer}>
-          {items.map(item => (
-            <li style={styles.itemContainer}>
-              {Box.create(item, { defaultProps: { styles: styles.item } })}
-            </li>
-          ))}
-        </ul>
+        <ul style={styles.contentContainer}>{items.map(item => CarouselItem.create(item))}</ul>
       </div>
     )
   }

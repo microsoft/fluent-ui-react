@@ -7,7 +7,7 @@ const carouselStyles: ComponentSlotStylesPrepared<
   CarouselProps & CarouselState,
   CarouselVariables
 > = {
-  root: ({ variables: v }): ICSSInJSStyle => ({
+  root: (): ICSSInJSStyle => ({
     display: 'block',
   }),
   contentContainerWrapper: ({ variables: v }): ICSSInJSStyle => ({
@@ -23,13 +23,6 @@ const carouselStyles: ComponentSlotStylesPrepared<
     transform: `translateX(${pxToRem(-v.width * p.activeIndex)})`,
     transitionDuration: '1s',
     willChange: 'transform',
-  }),
-  itemContainer: ({ variables: v }): ICSSInJSStyle => ({
-    width: pxToRem(v.width),
-  }),
-  item: ({ variables: v }): ICSSInJSStyle => ({
-    height: '100%',
-    width: '100%',
   }),
   buttonNext: ({ props: p, variables: v }): ICSSInJSStyle => ({
     height: pxToRem(v.buttonNextSize),

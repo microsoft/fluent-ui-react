@@ -213,6 +213,10 @@ export { default as TooltipContent } from './components/Tooltip/TooltipContent'
 
 export * from './components/Carousel/Carousel'
 export { default as Carousel } from './components/Carousel/Carousel'
+export * from './components/Carousel/CarouselItem'
+export { default as CarouselItem } from './components/Carousel/CarouselItem'
+export * from './components/Carousel/CarouselContent'
+export { default as CarouselContent } from './components/Carousel/CarouselContent'
 
 //
 // Utilities

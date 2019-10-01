@@ -101,3 +101,4 @@ export { default as TooltipContent } from './components/Tooltip/tooltipContentVa
 export { default as SplitButton } from './components/SplitButton/splitButtonVariables'
 
 export { default as Carousel } from './components/Carousel/carouselVariables'
+export { default as CarouselItem } from './components/Carousel/carouselItemVariables'
