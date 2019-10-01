@@ -1,14 +1,11 @@
 .sui-page-header {
-  margin: 0 0 2.5rem;
+  margin: 2.25rem 0 2.25rem;
   font-size: 1.7rem;
   line-height: 2.5rem;
-  /* TODO: should this have a border? */
-  /* padding: 0 0 0.5rem; */
-  /* border-bottom: 1px solid var(--sui-divider-color); */
 }
 
 .sui-page-header__title {
-  margin: 0 0 1.5rem 0;
+  margin: 0 0 1rem 0;
   max-width: 65rem;
   font-size: 2.65em;
   line-height: 1.15em;
@@ -17,8 +14,14 @@
 .sui-page-header__description {
   display: block;
   max-width: 65rem;
-  margin: 0 0 2.5rem;
+  margin: 0;
   font-size: 2.15rem;
   font-weight: 300;
   line-height: 1.35;
+}
+
+@media screen and (max-width: 568px) {
+  .sui-page-header__title {
+    margin-bottom: 1.5rem;
+  }
 }
