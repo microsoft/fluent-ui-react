@@ -1,6 +1,9 @@
 const inspect = require("./tools/inspect")
 
-// FIXME
+// FIXME: this gets initialized in createPages(), and is later used to inject
+// additional context into component detail pages in onCreatePage(). I don't
+// believe onCreatePage supports async actions, which is why this exists.
+// Investigate whether or not that's actually true.
 let componentSchemas
 
 // Generates all dynamic pages for the website (pages that do not have a file
@@ -13,38 +16,12 @@ exports.createPages = async function({actions}) {
   }
 }
 
-// FIXME: Remove when possible. Component detail pages need access to the
-// component schema, but I'm not sure how to supply this information over
-// a static graphql query in gatsby.
 exports.onCreatePage = function({page, actions}) {
   if (/\/components\/[\w-]+$/.test(page.path)) {
-    const slug = page.path.replace("/components/", "")
-    const schema = componentSchemas.find(schema => schema.slug === slug)
-    if (!schema) {
-      console.error(
-        'No schema while creating page component page "%s" (looked up slug: "%s"). This page will be deleted.',
-        page.path,
-        slug
-      )
-      actions.deletePage(page)
-      return
-    }
-
-    const frontmatter = {
-      title: schema && schema.displayName,
-      description: schema && schema.description,
-      category: "components",
-      ...page.frontmatter
-    }
-    actions.createPage({
-      ...page,
-      frontmatter,
-      context: {
-        ...page.context,
-        schema,
-        frontmatter
-      }
-    })
+    // FIXME: Remove when possible. Component detail pages need access to the
+    // component schema, but I'm not sure how to supply this information over
+    // a static graphql query in gatsby.
+    injectComponentSchema(page, actions)
   }
 }
 
@@ -69,4 +46,34 @@ function generateComponentPlaygroundPage(component) {
       schema: component
     }
   }
+}
+
+function injectComponentSchema(page, actions) {
+  const slug = page.path.replace("/components/", "")
+  const schema = componentSchemas.find(schema => schema.slug === slug)
+  if (!schema) {
+    console.error(
+      'No schema found for page "%s" (looked up slug: "%s").',
+      page.path,
+      slug
+    )
+    return
+  }
+
+  const frontmatter = {
+    title: schema && schema.displayName,
+    description: schema && schema.description,
+    category: "components",
+    ...page.frontmatter
+  }
+  actions.deletePage(page)
+  actions.createPage({
+    ...page,
+    frontmatter,
+    context: {
+      ...page.context,
+      schema,
+      frontmatter
+    }
+  })
 }

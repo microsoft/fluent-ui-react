@@ -1,22 +1,8 @@
-/* TODO: get rid of these overrides; this layout should not inherit from Article */
-.sui-component-list {
-  max-width: 110rem !important;
-}
-
-.sui-component-list .ui-provider__box {
-  background: none !important;
-}
-
-/* TODO: get rid of these overrides; this layout should not inherit from Article */
-.sui-component-list .sui-article__content {
-  font-size: 1.4rem !important;
-  line-height: 1.4286 !important;
-}
-
 .sui-component-preview {
   display: flex;
   width: 100%;
   height: 100%;
+  padding: 1rem !important;
   justify-content: center;
   align-items: center;
   animation: fade-in 0.5s forwards;
@@ -33,6 +19,11 @@
 }
 
 /* Fix styling issues in certain component previews */
+.sui-component-list .ui-provider__box {
+  width: 100%;
+  background: none !important;
+}
+
 .sui-component-preview .ui-alert {
   width: 100%;
 }
@@ -50,4 +41,20 @@
 .sui-component-preview .ui-chat__message {
   margin: 0 0 0 1rem !important;
   max-width: 100% !important;
+}
+
+.sui-component-preview .ui-form {
+  height: auto !important;
+  width: auto !important;
+}
+
+/* Disable padding for components that should fill the entire preview */
+.sui-component-list [href="/components/image"] .sui-component-preview,
+.sui-component-list [href="/components/video"] .sui-component-preview {
+  padding: 0 !important;
+  align-items: flex-end;
+}
+
+.sui-component-list [href="/components/image"] img {
+  height: 90%;
 }

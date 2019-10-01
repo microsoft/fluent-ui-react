@@ -20,6 +20,7 @@ async function clean() {
 }
 
 async function read(sourcePath) {
+  return
   const cachePath = sourceToCachePath(sourcePath)
   if (await exists(cachePath)) {
     let raw = await readFile(cachePath, "utf8")

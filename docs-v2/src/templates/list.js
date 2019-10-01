@@ -2,16 +2,18 @@ import "./list.css"
 import React from "react"
 import {Link} from "gatsby"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
-import {faExpandArrowsAlt} from "@fortawesome/free-solid-svg-icons"
+// import {faExpandArrowsAlt} from "@fortawesome/free-solid-svg-icons"
 import {BaseLayout} from "./base-layout"
 import {PageHeader} from "../doc-components/page-header"
 
 export default function DefaultListLayout({pageContext}) {
   const {title, description, pages} = pageContext
+  const [gridView, setGridView] = React.useState(true)
+
   return (
     <BaseLayout>
       <PageHeader title={title} description={description} />
-      <List previews={false}>
+      <List grid={gridView}>
         {pages.map(page => {
           // TODO: currently rendering ol > a, should be ol > li > a
           return (
@@ -29,26 +31,11 @@ export default function DefaultListLayout({pageContext}) {
   )
 }
 
-export function List({children, previews = true}) {
-  const [gridView, setGridView] = React.useState(false)
-
+export function List({children, grid = true}) {
   return (
-    <div className="sui-list-container" data-prefer-grid-view={gridView}>
-      <aside className="sui-list-controls" hidden>
-        <span className="sui-list-controls__header">List Controls</span>
-        <IconButton
-          icon={faExpandArrowsAlt}
-          title="Select grid view"
-          onClick={() => setGridView(true)}
-        />
-        <IconButton
-          icon={faExpandArrowsAlt}
-          title="Select list view"
-          onClick={() => setGridView(false)}
-        />
-      </aside>
-      <ol className="sui-list">{children}</ol>
-    </div>
+    <ol className="sui-list" data-prefer-grid-view={grid}>
+      {children}
+    </ol>
   )
 }
 
@@ -60,15 +47,16 @@ function IconButton({icon, title, onClick}) {
   )
 }
 
-export function ListItem({as, title, description, preview, ...rest}) {
-  const Elem = as || "div"
+export function ListItem({as, title, to, description, preview}) {
   return (
-    <Elem className="sui-list-item" {...rest}>
-      <div className="sui-list-item__preview">{preview}</div>
-      <div className="sui-list-item__details">
-        <div className="sui-list-item__title">{title}</div>
-        <div className="sui-list-item__description">{description}</div>
-      </div>
-    </Elem>
+    <li className="sui-list-item">
+      <Link to={to} title={title} className="sui-list-item__body">
+        <div className="sui-list-item__details">
+          <div className="sui-list-item__title">{title}</div>
+          <div className="sui-list-item__description">{description}</div>
+        </div>
+        <div className="sui-list-item__preview">{preview}</div>
+      </Link>
+    </li>
   )
 }

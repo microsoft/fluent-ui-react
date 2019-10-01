@@ -10,7 +10,7 @@ const workers = workerFarm(require.resolve("./component-schema-worker.js"))
 // returns JSON schemas for all parent components.
 exports.components = async function() {
   console.info(
-    "Generating component schemas... Results will be cached to speed up subsequent runs."
+    "Generating JSON schemas for all components in this repository. Schemas are cached in docs-v2/node_modules/.component-schema-cache to speed up subsequent builds."
   )
 
   const sourceFiles = await getComponentSourceFiles()

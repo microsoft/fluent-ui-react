@@ -2,6 +2,53 @@ const path = require("path")
 const doctrine = require("doctrine")
 const docgen = require("./react-docgen-fork")
 
+// TODO: assign these categories as tags in component sources
+const CATEGORY_MAPPINGS = {
+  Accordion: "Surfaces",
+  Alert: "Notifications",
+  Animation: "Motion",
+  Attachment: "Items & Lists",
+  Avatar: "Media",
+  Box: "Layout",
+  Button: "Inputs",
+  Chat: null,
+  Checkbox: "Inputs",
+  Design: "Utilities",
+  Dialog: "Surfaces",
+  Divider: "Layout",
+  Dropdown: "Inputs",
+  Embed: "Media",
+  Flex: "Layout",
+  Form: "Inputs",
+  Grid: "Layout",
+  Header: "Typography",
+  HierarchicalTree: "Layout",
+  Icon: "Media",
+  Image: "Media",
+  Input: "Inputs",
+  Label: "Utilities",
+  Layout: "Layout",
+  List: "Items & Lists",
+  Loader: "Motion",
+  Menu: "Menus",
+  MenuButton: "Menus",
+  Popup: "Utilities",
+  Portal: "Utilities",
+  Provider: "Utilities",
+  RadioGroup: "Inputs",
+  Reaction: "Inputs",
+  Segment: "Surfaces",
+  Slider: "Inputs",
+  SplitButton: "Inputs",
+  Status: "Utilities",
+  Text: "Typography",
+  TextArea: "Inputs",
+  Toolbar: "Menus",
+  Tooltip: "Utilities",
+  Tree: "Utilities",
+  Video: "Media"
+}
+
 // The schema generator needs to extract some information directly off of
 // React component classes, so we must register this script with ts-node
 // in order to import those classes from source.
@@ -38,6 +85,7 @@ exports.generateComponentSchema = function(sourcePath) {
   // Build schema object. Properties are added incrementally because some
   // values are computed based on a partial schema.
   const schema = {}
+  schema.category = CATEGORY_MAPPINGS[info.displayName]
   schema.displayName = info.displayName
   schema.description = description
   schema.tags = tags

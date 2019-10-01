@@ -1,1 +1,1 @@
-export default <Button primary>Primary Button</Button>
+export default <Button primary>Button</Button>

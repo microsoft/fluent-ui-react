@@ -1,14 +1,4 @@
 /******************************************************************************
-   List Container
- *****************************************************************************/
-.sui-list-container {
-  position: relative;
-  display: flex;
-  justify-content: flex-end;
-  margin: 0 0 1rem 0;
-}
-
-/******************************************************************************
    List
  *****************************************************************************/
 .sui-list {
@@ -19,173 +9,185 @@
 }
 
 /******************************************************************************
-   List Controls
+   List Section
  *****************************************************************************/
-.sui-list-controls {
-  position: sticky;
-  top: 5rem;
-  margin: 0 1rem 0 0;
-  min-width: 20rem;
+.sui-list-section {
 }
 
-.sui-list-controls__header {
-  display: block;
-  margin: 0 0.75rem 0 0;
-  padding: 0 0 0.75rem 0;
-  font-size: 1.75rem;
-  font-weight: 600;
-  border-bottom: 1px solid var(--sui-divider-color);
+.sui-list-section__title {
+  font-weight: 500;
+  font-size: 2.5rem;
+}
+
+/******************************************************************************
+   List Item Defaults (Shared Between List and Grid Views)
+ *****************************************************************************/
+.sui-list-item__body {
+  display: flex;
+  color: inherit;
+  background: var(--sui-card-background);
+  text-decoration: none;
+}
+
+.sui-list-item__preview {
+  overflow: hidden;
+}
+
+.sui-list-item__title {
+  font-size: 1.5rem;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.sui-list-item__description {
+  color: var(--sui-color-muted);
 }
 
 /******************************************************************************
    List Item (Default View)
  *****************************************************************************/
-.sui-list-item {
-  position: relative;
+[data-prefer-grid-view="false"] {
+  max-width: 95rem;
+  border: 1px solid var(--sui-card-border-color);
+}
+
+[data-prefer-grid-view="false"] .sui-list-item {
+  border-bottom: 1px solid var(--sui-card-border-color);
+}
+
+[data-prefer-grid-view="false"] .sui-list-item__body {
   display: flex;
+  flex-direction: row-reverse;
   align-items: center;
-  margin: 0 0 1.25rem 0;
-  padding: 0.5rem;
+  padding: 1rem;
   color: inherit;
   text-decoration: none;
-  border: 1px solid transparent;
   background: var(--sui-card-background);
-  border: 1px solid var(--sui-card-border-color);
-  border-radius: 0.5rem;
-  box-shadow: 3px 5px 5px -5px var(--sui-shadow-color);
 }
 
-.sui-list-item::after {
-  content: "";
-  position: absolute;
-  top: -6px;
-  left: -15px;
-  right: -15px;
-  bottom: -6px;
-  background: var(--sui-accent-color-background);
-  border-radius: 0.5rem;
-  box-shadow: 0 6px 30px 0 rgba(0, 0, 0, 0.12);
-  opacity: 0;
-  transition: transform 0.1s ease;
-  transform: scale(0.95);
-  z-index: -1;
-}
-
-.sui-list-item:nth-of-type(even) {
-  background: var(--sui-card-background-alt);
-}
-
-.sui-list-item:focus,
-.sui-list-item:hover {
-  cursor: pointer;
-  outline: none;
-  box-shadow: none !important;
-  background: var(--sui-accent-color-background);
-  border-color: transparent !important;
-}
-
-.sui-list-item:focus::after,
-.sui-list-item:hover::after {
-  transform: scale(1);
-  border: 1px solid var(--sui-accent-color);
-  box-shadow: 3px 5px 5px -5px var(--sui-accent-color);
-  opacity: 1;
-}
-
-.sui-list-item__preview {
+[data-prefer-grid-view="false"] .sui-list-item__preview {
   display: flex;
   width: 17.5rem;
   height: 8rem;
   margin: 0 1.5rem 0 0;
-  overflow: hidden;
 }
 
-.sui-list-item__details {
+[data-prefer-grid-view="false"] .sui-list-item__details {
   flex: 1;
-  align-self: center;
-  padding: 1.25rem;
-  font-size: 1.6rem;
-  font-weight: 300;
 }
 
-.sui-list-item__title {
-  margin: 0 0 0.3rem 0;
-  font-size: 2rem;
-  font-weight: 600;
+[data-prefer-grid-view="false"] .sui-list-item__title {
+  margin: 0 0 0.25rem 0;
+}
+
+[data-prefer-grid-view="false"] .sui-list-item__description {
+  max-width: 50rem;
 }
 
 /******************************************************************************
    List Item (Grid View)
  *****************************************************************************/
-[data-prefer-grid-view="true"] .sui-list {
+[data-prefer-grid-view="true"] {
+  display: flex;
+  flex-wrap: wrap;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 1.5rem;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
 [data-prefer-grid-view="true"] .sui-list-item {
-  display: block;
-  overflow: hidden;
-  padding: 0;
+  display: flex;
+  height: 20rem;
+  margin: 0;
   border: 1px solid var(--sui-card-border-color);
-  border-radius: 0.75rem;
-  box-shadow: 3px 5px 5px -5px var(--sui-shadow-color);
-  transition: transform 0.1s;
-  transform: translateZ(0);
-  transition-property: transform border;
-  will-change: transform border;
+  overflow: hidden;
+}
+
+[data-prefer-grid-view="true"] .sui-list-item__body {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
 }
 
 [data-prefer-grid-view="true"] .sui-list-item__preview {
+  flex: 1;
   display: flex;
+  height: auto;
   width: 100%;
+  margin: 0;
+  overflow: hidden;
   justify-content: center;
   align-content: center;
-  height: 14rem;
-  background: var(--sui-card-background);
-  background-size: contain;
   pointer-events: none;
-  opacity: 0.9;
   transition: 0.15s opacity;
   will-change: opacity;
 }
 
 [data-prefer-grid-view="true"] .sui-list-item__details {
+  flex: 0;
   padding: 1rem;
+  width: 100%;
   color: inherit;
-  font-size: 1.65rem;
+  text-align: left;
   text-decoration: none;
-  background: var(--sui-card-footer-background);
-  border-top: 1px solid var(--sui-card-border-color);
+}
+
+[data-prefer-grid-view="true"] .sui-list-item__title {
+  font-size: 1.5rem;
+  font-weight: 300;
+  text-transform: uppercase;
 }
 
 [data-prefer-grid-view="true"] .sui-list-item__description {
-  display: none;
+  position: absolute;
+  padding: 1rem;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 80%;
+  color: var(--sui-card-description-foreground);
+  background: var(--sui-card-description-background);
+  transform: translateY(105%);
+  transition: 0.085s transform;
+  transition-timing-function: ease-in;
+  will-change: transform;
+  z-index: 1;
 }
 
-[data-prefer-grid-view="true"] .sui-list-item:focus .sui-list-item__preview,
-[data-prefer-grid-view="true"] .sui-list-item:hover .sui-list-item__preview {
-  opacity: 1;
+[data-prefer-grid-view="true"] .sui-list-item__body:focus,
+[data-prefer-grid-view="true"] .sui-list-item__body:hover {
+  outline: 1px solid var(--sui-accent-color);
+  outline-offset: -1px;
+  z-index: 1;
+}
+
+[data-prefer-grid-view="true"]
+  .sui-list-item__body:focus
+  .sui-list-item__description,
+[data-prefer-grid-view="true"]
+  .sui-list-item__body:hover
+  .sui-list-item__description {
+  transition: transform 0.2s;
+  transition-timing-function: ease-out;
+  transition-property: transform;
+  transform: translateY(0);
 }
 
 @media screen and (max-width: 768px) {
-  [data-prefer-grid-view="true"] .sui-list {
+  [data-prefer-grid-view="true"] {
     grid-template-columns: 1fr 1fr 1fr;
   }
 }
 
 @media screen and (max-width: 568px) {
-  [data-prefer-grid-view="true"] .sui-list {
+  [data-prefer-grid-view="true"] {
     grid-template-columns: 1fr 1fr;
-  }
-
-  .sui-list-item__preview {
-    display: none;
   }
 }
 
 @media screen and (max-width: 420px) {
-  [data-prefer-grid-view="true"] .sui-list {
+  [data-prefer-grid-view="true"] {
     grid-template-columns: 1fr;
   }
 }

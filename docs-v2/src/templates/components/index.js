@@ -12,6 +12,7 @@ export const query = graphql`
   query {
     allComponentSchema(filter: {isParent: {eq: true}, preview: {ne: null}}) {
       nodes {
+        category
         displayName
         description
         slug
@@ -23,35 +24,91 @@ export const query = graphql`
 
 export default function ComponentsIndexTemplate({data, pageContext}) {
   const {title, description} = pageContext.frontmatter
-  const schemas = useStaticQuery(query).allComponentSchema.nodes
+  const components = useStaticQuery(query).allComponentSchema.nodes
+
   return (
     <>
-      <BaseLayout className="sui-component-list">
+      <BaseLayout>
         <PageHeader title={title} description={description} />
-        <ComponentList schemas={schemas} />
+        <ComponentList components={components} />
       </BaseLayout>
     </>
   )
 }
 
-function ComponentList({schemas}) {
+function ComponentList({components}) {
   useSmartTabBehavior()
+
+  const [grid, setGrid] = React.useState(true)
+
+  // FIXME: make this more resilient
+  const categories = React.useMemo(() => {
+    let delay = 0
+
+    return [
+      {title: "Inputs", description: ""},
+      {title: "Items & Lists", description: ""},
+      {title: "Media", description: ""},
+      {title: "Menus", description: ""},
+      {title: "Typography", description: ""},
+      {title: "Motion", description: ""},
+      {title: "Surfaces", description: ""},
+      {title: "Notifications", description: ""},
+      {title: "Other", description: ""}
+    ].map(category => {
+      category.components = []
+      for (const c of components) {
+        if (
+          c.category === category.title ||
+          (!c.category && category.title === "Other")
+        ) {
+          c.delay = delay
+          delay += 25 // ms
+          category.components.push(c)
+        }
+      }
+      return category
+    })
+  }, [components])
+
+  const sections = categories.map(category => {
+    return (
+      <section key={category.title} className="sui-list-section">
+        <h2 className="sui-list-section__title">{category.title}</h2>
+        <List grid={grid}>
+          {category.components.map(component => {
+            const {displayName, description, preview, slug} = component
+
+            // MenuButton -> Menu Button
+            const title = displayName.replace(/(\w)([A-Z])/g, "$1 $2")
+
+            return (
+              <ListItem
+                key={displayName}
+                as={Link}
+                to={"/components/" + slug}
+                title={title}
+                description={description}
+                preview={
+                  <ComponentPreview source={preview} delay={component.delay} />
+                }
+              />
+            )
+          })}
+        </List>
+      </section>
+    )
+  })
   return (
-    <List>
-      {schemas.map((schema, idx) => {
-        const {displayName, description, preview, slug} = schema
-        return (
-          <ListItem
-            key={displayName}
-            as={Link}
-            to={"/components/" + slug}
-            title={displayName}
-            description={description}
-            preview={<ComponentPreview source={preview} delay={idx * 25} />}
-          />
-        )
-      })}
-    </List>
+    <div className="sui-component-list" style={{position: "relative"}}>
+      <button
+        onClick={() => setGrid(!grid)}
+        style={{position: "absolute", top: "1rem", left: "-17rem"}}
+      >
+        DEBUG: Toggle Grid
+      </button>
+      {sections}
+    </div>
   )
 }
 
@@ -78,14 +135,9 @@ const ComponentPreview = observer(({source, delay}) => {
 
   const stardustTheme =
     theme === "light" ? Stardust.themes.teams : Stardust.themes.teamsDark
-  const styles = {
-    width: "100%",
-    padding: "1rem",
-    background: "transparent"
-  }
 
   return (
-    <Stardust.Provider theme={stardustTheme} styles={styles}>
+    <Stardust.Provider theme={stardustTheme}>
       <div className="sui-component-preview">{elem.current}</div>
     </Stardust.Provider>
   )
@@ -95,7 +147,7 @@ const ComponentPreview = observer(({source, delay}) => {
 // able to tab through all previews without tabbing into the components themselves.
 function useSmartTabBehavior() {
   React.useEffect(() => {
-    const previewCards = [...document.querySelectorAll(".sui-list-item")]
+    const previewCards = [...document.querySelectorAll(".sui-list-item__body")]
 
     let hijack = false
 

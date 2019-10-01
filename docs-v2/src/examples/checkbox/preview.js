@@ -1,1 +1,1 @@
-export default <Checkbox label="I'm a checkbox" />
+export default <Checkbox label="Select this option" />
