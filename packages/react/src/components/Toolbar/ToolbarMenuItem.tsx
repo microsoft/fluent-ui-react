@@ -253,7 +253,7 @@ class ToolbarMenuItem extends AutoControlledComponent<
     onClick: (e, menuProps) => {
       const { popup } = this.props
       _.invoke(predefinedProps, 'onClick', e, menuProps)
-      if (!popup && doesNodeContainClick(this.itemRef.current, e, this.context.target)) {
+      if (!popup) {
         this.trySetMenuOpen(false, e)
       }
     },
@@ -369,7 +369,7 @@ class ToolbarMenuItem extends AutoControlledComponent<
   }
 
   handleClick = (e: MouseEvent) => {
-    const { disabled, menu } = this.props
+    const { disabled, menu, popup } = this.props
 
     if (disabled) {
       e.preventDefault()
@@ -386,6 +386,11 @@ class ToolbarMenuItem extends AutoControlledComponent<
         e.stopPropagation()
         e.preventDefault()
       }
+    }
+
+    if (popup) {
+      e.stopPropagation()
+      e.preventDefault()
     }
 
     _.invoke(this.props, 'onClick', e, this.props)
