@@ -59,14 +59,6 @@ export interface ToolbarMenuItemProps
   /** A toolbar item can show it is currently unable to be interacted with. */
   disabled?: boolean
 
-  /**
-   * Called on item click.
-   *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All item props.
-   */
-  onItemClick?: ComponentEventHandler<ToolbarMenuItemProps>
-
   /** Name or shorthand for Toolbar Item Icon */
   icon?: ShorthandValue<IconProps>
 
@@ -257,6 +249,13 @@ class ToolbarMenuItem extends AutoControlledComponent<
     }
   }
 
+  handleMenuOverrides = predefinedProps => ({
+    onClick: (e, menuProps) => {
+      _.invoke(predefinedProps, 'onClick', e, menuProps)
+      this.trySetMenuOpen(false, e)
+    },
+  })
+
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, rtl }) {
     const {
       active,
@@ -269,7 +268,6 @@ class ToolbarMenuItem extends AutoControlledComponent<
       menu,
       popup,
       wrapper,
-      onItemClick,
     } = this.props
     const { menuOpen } = this.state
 
@@ -336,11 +334,11 @@ class ToolbarMenuItem extends AutoControlledComponent<
                 defaultProps: {
                   accessibility: submenuBehavior,
                   className: ToolbarMenuItem.slotClassNames.submenu,
-                  onItemClick,
                   styles: styles.menu,
                   submenu: true,
                   submenuIndicator,
                 },
+                overrideProps: this.handleMenuOverrides,
               })}
             </Popper>
           </Ref>

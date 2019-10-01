@@ -97,7 +97,7 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
   })
 
   renderItems(items, variables) {
-    const { submenuIndicator, submenu, onItemClick } = this.props
+    const { submenuIndicator, submenu } = this.props
     const itemOverridesFn = this.handleItemOverrides(variables)
     const dividerOverridesFn = this.handleDividerOverrides(variables)
     const radioGroupOverrides = this.handleRadioGroupOverrides(variables)
@@ -121,7 +121,6 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
         default:
           return ToolbarMenuItem.create(item, {
             defaultProps: {
-              onItemClick,
               submenuIndicator,
               inSubmenu: submenu,
             },
