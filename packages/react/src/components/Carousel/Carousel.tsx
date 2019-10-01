@@ -1,6 +1,7 @@
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as _ from 'lodash'
+import * as PropTypes from 'prop-types'
 import {
   UIComponentProps,
   UIComponent,
@@ -11,9 +12,20 @@ import {
   childrenExist,
   ChildrenComponentProps,
 } from '../../lib'
-import { WithAsProp, withSafeTypeForAs, ShorthandCollection, ShorthandValue } from '../../types'
+import {
+  WithAsProp,
+  withSafeTypeForAs,
+  ShorthandCollection,
+  ShorthandValue,
+  ShorthandRenderFunction,
+} from '../../types'
 import Button, { ButtonProps } from '../Button/Button'
 import CarouselItem, { CarouselItemProps } from './CarouselItem'
+import { CarouselSlideProps } from './CarouselSlide'
+import Menu, { MenuProps } from '../Menu/Menu'
+import Text from '../Text/Text'
+import { MenuItemProps } from '../Menu/MenuItem'
+import { tabListBehavior } from '../../lib/accessibility'
 
 export interface CarouselProps extends UIComponentProps, ChildrenComponentProps {
   /** Shorthand array of props for CarouselItem. */
@@ -24,6 +36,19 @@ export interface CarouselProps extends UIComponentProps, ChildrenComponentProps 
 
   /** Shorthand for the button that navigates to the previous item. */
   buttonPrevious?: ShorthandValue<ButtonProps>
+
+  /**
+   * A custom render iterator for rendering each carousel slide.
+   * The default component, props, and children are available for each carousel slide.
+   *
+   * @param {React.ReactType} Component - The computed component for this slot.
+   * @param {object} props - The computed props for this slot.
+   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   */
+  renderItemSlide?: ShorthandRenderFunction<CarouselSlideProps>
+
+  /** Shorthand array of props for the buttons of the tabs navigation. */
+  tabList?: ShorthandValue<MenuProps> | ShorthandCollection<MenuItemProps>
 }
 
 export interface CarouselState {
@@ -44,11 +69,15 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
     items: customPropTypes.collectionShorthand,
     buttonNext: customPropTypes.itemShorthand,
     buttonPrevious: customPropTypes.itemShorthand,
+    tabList: PropTypes.oneOfType([
+      customPropTypes.collectionShorthand,
+      customPropTypes.itemShorthand,
+    ]),
   }
 
   static defaultProps = {
     as: 'div',
-    // accessibility: treeBehavior,
+    tabList: {},
   }
 
   state = {
@@ -56,13 +85,15 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
   }
 
   renderContent = styles => {
-    const { items } = this.props
+    const { items, renderItemSlide } = this.props
     if (!items) {
       return null
     }
     return (
       <div style={styles.contentContainerWrapper}>
-        <ul style={styles.contentContainer}>{items.map(item => CarouselItem.create(item))}</ul>
+        <ul style={styles.contentContainer}>
+          {items.map(item => CarouselItem.create(item, { defaultProps: { renderItemSlide } }))}
+        </ul>
       </div>
     )
   }
@@ -115,8 +146,40 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
     )
   }
 
-  renderNavigation = () => {
-    return <ul />
+  renderNavigation = styles => {
+    const { tabList, items } = this.props
+
+    if (!items || !items.length) {
+      return null
+    }
+
+    const { activeIndex } = this.state
+    return tabList ? (
+      Menu.create(tabList, {
+        defaultProps: {
+          accessibility: tabListBehavior,
+          iconOnly: true,
+          activeIndex,
+          styles: styles.navigationContainer,
+          items: _.times(items.length, index => ({
+            key: index,
+            icon: { name: 'stardust-circle', size: 'smallest' },
+          })),
+        },
+        overrideProps: (predefinedProps: MenuItemProps) => ({
+          onItemClick: (e: React.SyntheticEvent, itemProps: MenuItemProps) => {
+            const { index } = itemProps
+            this.setState({
+              activeIndex: index,
+            })
+
+            _.invoke(predefinedProps, 'onClick', e, itemProps)
+          },
+        }),
+      })
+    ) : (
+      <Text content={`${activeIndex + 1} of ${items.length}`} />
+    )
   }
 
   renderComponent({ ElementType, classes, styles, accessibility, unhandledProps }) {
@@ -134,7 +197,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
           <>
             {this.renderContent(styles)}
             {this.renderControls(styles)}
-            {this.renderNavigation()}
+            {this.renderNavigation(styles)}
           </>
         )}
       </ElementType>

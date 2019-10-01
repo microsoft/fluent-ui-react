@@ -8,7 +8,7 @@ const carouselStyles: ComponentSlotStylesPrepared<
   CarouselVariables
 > = {
   root: (): ICSSInJSStyle => ({
-    display: 'block',
+    display: 'inline-block',
   }),
   contentContainerWrapper: ({ variables: v }): ICSSInJSStyle => ({
     display: 'flex',
@@ -38,6 +38,10 @@ const carouselStyles: ComponentSlotStylesPrepared<
     ...(p.items !== undefined && {
       visibility: p.activeIndex === 0 ? 'hidden' : 'visible',
     }),
+  }),
+  navigationContainer: (): ICSSInJSStyle => ({
+    display: 'flex',
+    justifyContent: 'center',
   }),
 }
 
