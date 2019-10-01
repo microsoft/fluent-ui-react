@@ -277,39 +277,37 @@ class ToolbarMenuItem extends AutoControlledComponent<
     const targetRef = toRefObject(this.context.target)
 
     const elementType = (
-      <Ref innerRef={this.itemRef}>
-        <ElementType
-          {...accessibility.attributes.root}
-          {...unhandledProps}
-          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
-          disabled={disabled}
-          className={classes.root}
-          onClick={this.handleClick}
-        >
-          {childrenExist(children) ? (
-            children
-          ) : (
-            <>
-              {Icon.create(icon, { defaultProps: { xSpacing: !!content ? 'after' : 'none' } })}
-              {content}
-              {active &&
-                Icon.create(activeIndicator, {
-                  defaultProps: {
-                    className: ToolbarMenuItem.slotClassNames.activeIndicator,
-                    styles: styles.activeIndicator,
-                  },
-                })}
-              {menu &&
-                Icon.create(submenuIndicator, {
-                  defaultProps: {
-                    name: 'stardust-menu-arrow-end',
-                    styles: styles.submenuIndicator,
-                  },
-                })}
-            </>
-          )}
-        </ElementType>
-      </Ref>
+      <ElementType
+        {...accessibility.attributes.root}
+        {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
+        disabled={disabled}
+        className={classes.root}
+        onClick={this.handleClick}
+      >
+        {childrenExist(children) ? (
+          children
+        ) : (
+          <>
+            {Icon.create(icon, { defaultProps: { xSpacing: !!content ? 'after' : 'none' } })}
+            {content}
+            {active &&
+              Icon.create(activeIndicator, {
+                defaultProps: {
+                  className: ToolbarMenuItem.slotClassNames.activeIndicator,
+                  styles: styles.activeIndicator,
+                },
+              })}
+            {menu &&
+              Icon.create(submenuIndicator, {
+                defaultProps: {
+                  name: 'stardust-menu-arrow-end',
+                  styles: styles.submenuIndicator,
+                },
+              })}
+          </>
+        )}
+      </ElementType>
     )
 
     const hasChildren = childrenExist(children)
@@ -326,7 +324,7 @@ class ToolbarMenuItem extends AutoControlledComponent<
       })
     }
 
-    const menuItemInner = hasChildren ? children : elementType
+    const menuItemInner = hasChildren ? children : <Ref innerRef={this.itemRef}>{elementType}</Ref>
 
     const maybeSubmenu =
       menu && menuOpen ? (
