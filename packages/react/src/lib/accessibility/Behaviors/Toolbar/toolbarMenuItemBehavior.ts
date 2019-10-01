@@ -1,7 +1,6 @@
 import { Accessibility, AccessibilityAttributes } from '../../types'
-import { IS_FOCUSABLE_ATTRIBUTE } from '../../FocusZone/focusUtilities'
-import * as keyboardKey from 'keyboard-key'
-// TODO: extend menuItemBehavior and ignore vertical
+import menuItemBehavior from '../Menu/menuItemBehavior'
+
 /**
  * @description
  * The behavior is designed for particular structure of menu item. The item consists of root element and anchor inside the root element.
@@ -23,49 +22,9 @@ import * as keyboardKey from 'keyboard-key'
  * Triggers 'closeMenu' action with 'ArrowLeft' on 'wrapper'.
  * Triggers 'openMenu' action with 'ArrowRight' on 'wrapper'.
  */
-const toolbarMenuItemBehavior: Accessibility<ToolbarMenuItemBehaviorProps> = props => ({
-  attributes: {
-    wrapper: {
-      role: 'presentation',
-    },
-    root: {
-      role: 'menuitem',
-      tabIndex: 0,
-      'aria-expanded': props.menu ? props.menuOpen || false : undefined,
-      'aria-haspopup': props.menu ? 'true' : undefined,
-      'aria-label': props['aria-label'],
-      'aria-labelledby': props['aria-labelledby'],
-      'aria-describedby': props['aria-describedby'],
-      'aria-disabled': props.disabled,
-      [IS_FOCUSABLE_ATTRIBUTE]: !props.disabled,
-    },
-  },
-
-  keyActions: {
-    root: {
-      performClick: {
-        keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
-      },
-    },
-    wrapper: {
-      closeAllMenus: {
-        keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
-      },
-      closeAllMenusAndFocusNextParentItem: {
-        keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
-      },
-      closeMenuAndFocusTrigger: {
-        keyCombinations: [{ keyCode: keyboardKey.Escape }],
-      },
-      closeMenu: {
-        keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
-      },
-      openMenu: {
-        keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
-      },
-    },
-  },
-})
+const toolbarMenuItemBehavior: Accessibility<ToolbarMenuItemBehaviorProps> = props => {
+  return menuItemBehavior({ ...props, vertical: true })
+}
 
 export default toolbarMenuItemBehavior
 
