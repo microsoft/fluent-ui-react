@@ -252,10 +252,10 @@ class ToolbarMenuItem extends AutoControlledComponent<
   handleMenuOverrides = predefinedProps => ({
     onClick: (e, menuProps) => {
       const { popup } = this.props
+
+      if (!popup) this.trySetMenuOpen(false, e)
+
       _.invoke(predefinedProps, 'onClick', e, menuProps)
-      if (!popup) {
-        this.trySetMenuOpen(false, e)
-      }
     },
   })
 
