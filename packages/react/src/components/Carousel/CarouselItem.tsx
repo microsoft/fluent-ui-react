@@ -14,7 +14,7 @@ import {
   ChildrenComponentProps,
 } from '../../lib'
 import { WithAsProp, withSafeTypeForAs, ShorthandValue, ShorthandRenderFunction } from '../../types'
-import CarouselContent, { CarouselContentProps } from './CarouselContent'
+import CarouselSlide, { CarouselSlideProps } from './CarouselSlide'
 
 export interface CarouselItemProps
   extends UIComponentProps,
@@ -31,10 +31,10 @@ export interface CarouselItemProps
    * @param {object} props - The computed props for this slot.
    * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
    */
-  renderItemSlide?: ShorthandRenderFunction<CarouselContentProps>
+  renderItemSlide?: ShorthandRenderFunction<CarouselSlideProps>
 
   /** Properties for CarouselSlide. */
-  slide?: ShorthandValue<CarouselContentProps>
+  slide?: ShorthandValue<CarouselSlideProps>
 }
 
 class CarouselItem extends UIComponent<WithAsProp<CarouselItemProps>> {
@@ -61,7 +61,7 @@ class CarouselItem extends UIComponent<WithAsProp<CarouselItemProps>> {
   renderContent() {
     const { renderItemSlide, slide } = this.props
 
-    return CarouselContent.create(slide, { render: renderItemSlide })
+    return CarouselSlide.create(slide, { render: renderItemSlide })
   }
 
   renderComponent({ ElementType, classes, styles, accessibility, unhandledProps }) {

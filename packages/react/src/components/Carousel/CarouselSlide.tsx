@@ -13,17 +13,17 @@ import {
 } from '../../lib'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
-export interface CarouselContentProps
+export interface CarouselSlideProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps {}
 
-class CarouselContent extends UIComponent<WithAsProp<CarouselContentProps>> {
-  static create: ShorthandFactory<CarouselContentProps>
+class CarouselSlide extends UIComponent<WithAsProp<CarouselSlideProps>> {
+  static create: ShorthandFactory<CarouselSlideProps>
 
-  static displayName = 'CarouselContent'
+  static displayName = 'CarouselSlide'
 
-  static className = 'ui-carousel__content'
+  static className = 'ui-carousel__slide'
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
@@ -49,8 +49,8 @@ class CarouselContent extends UIComponent<WithAsProp<CarouselContentProps>> {
   }
 }
 
-CarouselContent.create = createShorthandFactory({
-  Component: CarouselContent,
+CarouselSlide.create = createShorthandFactory({
+  Component: CarouselSlide,
   mappedProp: 'content',
 })
 
@@ -60,6 +60,4 @@ CarouselContent.create = createShorthandFactory({
  * @accessibility
  * Implements [ARIA Carousel](https://www.w3.org/WAI/tutorials/carousels/structure/) design pattern.
  */
-export default withSafeTypeForAs<typeof CarouselContent, CarouselContentProps, 'div'>(
-  CarouselContent,
-)
+export default withSafeTypeForAs<typeof CarouselSlide, CarouselSlideProps, 'div'>(CarouselSlide)
