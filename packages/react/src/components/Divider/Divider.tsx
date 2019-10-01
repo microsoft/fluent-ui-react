@@ -30,7 +30,7 @@ export interface DividerProps
   /** A divider can be fitted, without any space above or below it. */
   fitted?: boolean
 
-  /** Size multiplier (default: 0) */
+  /** A divider can be resized using this multiplier. (default: 0) */
   size?: number
 
   /** A divider can be emphasized to draw a user's attention. */
