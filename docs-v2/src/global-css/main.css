@@ -71,11 +71,12 @@ body {
 
 /* -------------------- Syntax Highlighting ---------------------- */
 .gatsby-highlight {
+  font-size: 0.85em !important;
+  background: var(--sui-code-background);
   border: 1px solid var(--sui-card-border-color);
-  border-radius: 0.5rem;
+  border-radius: 0.75rem;
   box-shadow: 3px 5px 5px -5px var(--sui-shadow-color);
   overflow: hidden;
-  font-size: 0.85em !important;
 }
 
 .gatsby-highlight > pre {
@@ -89,5 +90,5 @@ body {
   margin-left: -1em;
   margin-right: -1em;
   padding-left: 1em;
-  background-color: rgba(223, 134, 247, 0.21);
+  background-color: var(--sui-code-highlight-background);
 }
