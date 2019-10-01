@@ -261,6 +261,7 @@ export const colorScheme: ColorSchemeMapping = {
     background2: colors.onyx[500],
     border: colors.onyx[800],
     border1: 'transparent',
+    border2: colors.silver[400],
   }),
   amethyst: createColorScheme({
     background: colors.onyx[200],

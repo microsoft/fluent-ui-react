@@ -264,6 +264,7 @@ export const colorScheme: ColorSchemeMapping = {
     background2: colors.white,
     border: colors.white,
     border1: colors.white,
+    border2: colors.white,
   }),
   amethyst: createEmptyColorScheme({
     background: colors.silver[900],
