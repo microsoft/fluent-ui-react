@@ -16,9 +16,13 @@ import Button, { ButtonProps } from '../Button/Button'
 import CarouselItem, { CarouselItemProps } from './CarouselItem'
 
 export interface CarouselProps extends UIComponentProps, ChildrenComponentProps {
-  /** Shorthand array of props for ListItem. */
+  /** Shorthand array of props for CarouselItem. */
   items?: ShorthandCollection<CarouselItemProps>
+
+  /** Shorthand for the button that navigates to the next item. */
   buttonNext?: ShorthandValue<ButtonProps>
+
+  /** Shorthand for the button that navigates to the previous item. */
   buttonPrevious?: ShorthandValue<ButtonProps>
 }
 
