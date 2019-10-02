@@ -202,7 +202,12 @@ task('deploy:docs', cb => {
 // ----------------------------------------
 
 let server: Server
+
 task('serve:docs', async () => {
+  server = await serve(paths.docsDist(), config.server_host, config.server_port)
+})
+
+task('serve:docs:hot', async () => {
   const webpackConfig = require('../../webpack.config').default
   const compiler = webpack(webpackConfig)
 
@@ -276,4 +281,4 @@ task('watch:docs', cb => {
 // Default
 // ----------------------------------------
 
-task('docs', series('build:docs:assets', 'serve:docs', 'watch:docs'))
+task('docs', series('build:docs:assets', 'serve:docs:hot', 'watch:docs'))

@@ -809,11 +809,13 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     state: DownshiftState<ShorthandValue<DropdownItemProps>>,
     changes: StateChangeOptions<ShorthandValue<DropdownItemProps>>,
   ) => {
+    const activeElement: Element = this.context.target.activeElement
+
     switch (changes.type) {
       case Downshift.stateChangeTypes.blurButton:
         // Downshift closes the list by default on trigger blur. It does not support the case when dropdown is
         // single selection and focuses list on trigger click/up/down/space/enter. Treating that here.
-        if (state.isOpen && document.activeElement === this.listRef.current) {
+        if (state.isOpen && activeElement === this.listRef.current) {
           return {} // won't change state in this case.
         }
       default:

@@ -25,4 +25,22 @@ describe('Popup of menu item', () => {
     expect(await e2e.count(popupContent)).toBe(1)
     expect(await e2e.exists(itemPopup(2))).toBe(true)
   })
+
+  it('open/close and navigate in menu by keyboard', async () => {
+    await e2e.focusOn(menuItem(3))
+    await e2e.pressKey('Enter')
+    expect(await e2e.isFocused(itemPopup(3))).toBe(true)
+
+    await e2e.pressKey('Escape') // close the popup
+    expect(await e2e.isFocused(menuItem(3))).toBe(true)
+
+    await e2e.pressKey('ArrowLeft') // moves to previous menu item
+    expect(await e2e.isFocused(menuItem(2))).toBe(true)
+
+    await e2e.pressKey('ArrowLeft') // moves to previous menu item
+    expect(await e2e.isFocused(menuItem(1))).toBe(true)
+
+    await e2e.pressKey('ArrowRight') // moves to next menu item
+    expect(await e2e.isFocused(menuItem(2))).toBe(true)
+  })
 })
