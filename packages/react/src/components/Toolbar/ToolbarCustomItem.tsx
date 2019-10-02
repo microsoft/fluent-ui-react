@@ -1,3 +1,5 @@
+import { Accessibility, IS_FOCUSABLE_ATTRIBUTE } from '@stardust-ui/accessibility'
+import * as _ from 'lodash'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
@@ -13,10 +15,6 @@ import {
 } from '../../lib'
 
 import { ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
-import { Accessibility } from '../../lib/accessibility/types'
-
-import { IS_FOCUSABLE_ATTRIBUTE } from '../../lib/accessibility/FocusZone'
-import * as _ from 'lodash'
 
 export interface ToolbarCustomItemProps
   extends UIComponentProps,

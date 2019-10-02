@@ -1,3 +1,4 @@
+import { Accessibility } from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
@@ -16,7 +17,6 @@ import {
   ShorthandFactory,
 } from '../../lib'
 import Box, { BoxProps } from '../Box/Box'
-import { Accessibility } from '../../lib/accessibility/types'
 
 import { ComponentSlotStylesPrepared } from '../../themes/types'
 import ChatMessage from './ChatMessage'
