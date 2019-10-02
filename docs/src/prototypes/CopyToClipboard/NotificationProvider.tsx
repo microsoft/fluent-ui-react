@@ -9,7 +9,7 @@ type NotificationProps = {
 
 type NotificationContextValue = (
   content: React.ReactNode,
-  targe: HTMLElement | null,
+  target: HTMLElement | null,
   timeout: number,
 ) => void
 

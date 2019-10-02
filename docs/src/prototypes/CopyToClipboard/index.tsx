@@ -45,7 +45,7 @@ const CopyToClipboardInMenu: React.FC = props => {
 }
 
 const CopyToClipboardAttached: React.FC = props => {
-  const targetRef = React.useRef<HTMLElement>(null)
+  const [target, setTarget] = React.useState<HTMLElement>(null)
 
   const item = {
     key: 'edit',
@@ -57,8 +57,8 @@ const CopyToClipboardAttached: React.FC = props => {
         render('Copy text', (Component, props) => {
           return (
             <CopyToClipboard
-              target={targetRef.current}
-              value={'Julius Caesar'}
+              target={target}
+              value="Julius Caesar"
               trigger={<Component {...props} />}
             />
           )
@@ -69,7 +69,7 @@ const CopyToClipboardAttached: React.FC = props => {
   const items = [
     render =>
       render(item, (Component, props) => (
-        <Ref innerRef={targetRef}>
+        <Ref innerRef={setTarget}>
           <Component {...props} />
         </Ref>
       )),
