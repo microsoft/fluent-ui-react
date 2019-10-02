@@ -33,51 +33,51 @@ export interface ButtonProps
   /** A button can appear circular. */
   circular?: boolean
 
-  /** A button can show it is currently unable to be interacted with. */
+  /** A button can show that it cannot be interacted with. */
   disabled?: boolean
 
-  /** A button can take the width of its container. */
+  /** A button can fill the width of its container. */
   fluid?: boolean
 
-  /** Button can have an icon. */
+  /** A button can have an icon. */
   icon?: ShorthandValue<IconProps>
 
-  /** A button may indicate that it has only icon. */
+  /** A button can contain only an icon. */
   iconOnly?: boolean
 
-  /** An icon button can format an Icon to appear before or after the button */
+  /** An icon button can format its Icon to appear before or after its content */
   iconPosition?: 'before' | 'after'
 
-  /** A button in loading state, can show a loader. */
+  /** Shorthand to customize a button's loader. */
   loader?: ShorthandValue<LoaderProps>
 
   /** A button can show a loading indicator. */
   loading?: boolean
 
   /**
-   * Called after user's click.
+   * Called after a user clicks the button.
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props.
    */
   onClick?: ComponentEventHandler<ButtonProps>
 
   /**
-   * Called after user's focus.
+   * Called after a user focuses the button.
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props.
    */
   onFocus?: ComponentEventHandler<ButtonProps>
 
-  /** A button can be formatted to show different levels of emphasis. */
+  /** A button can emphasize that it represents the primary action. */
   primary?: boolean
 
-  /** A button can be formatted to show only text in order to indicate some less-pronounced actions. */
+  /** A button can be formatted to show only text in order to indicate a less-pronounced action. */
   text?: boolean
 
-  /** A button can be formatted to show different levels of emphasis. */
+  /** A button can emphasize that it represents an alternative action. */
   secondary?: boolean
 
-  /** A size of the button. */
+  /** A button can be sized. */
   size?: SizeValue
 }
 
@@ -198,7 +198,7 @@ class Button extends UIComponent<WithAsProp<ButtonProps>> {
 Button.create = createShorthandFactory({ Component: Button, mappedProp: 'content' })
 
 /**
- * A Button enables users to trigger an event or take an action, such as submitting a form, opening a dialog, etc.
+ * A Button enables users to take an action, such as submitting a form, opening a dialog, etc.
  *
  * @accessibility
  * Implements [ARIA Button](https://www.w3.org/TR/wai-aria-practices-1.1/#button) design pattern.
