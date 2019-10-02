@@ -64,6 +64,8 @@ import {
   treeAsListBehavior,
   treeItemAsListItemBehavior,
   treeTitleAsListItemTitleBehavior,
+  carouselItemBehavior,
+  carouselBehavior,
 } from '@stardust-ui/accessibility'
 import { TestHelper } from './testHelper'
 import definitions from './testDefinitions'
@@ -132,5 +134,7 @@ testHelper.addBehavior('textAreaBehavior', textAreaBehavior)
 testHelper.addBehavior('treeAsListBehavior', treeAsListBehavior)
 testHelper.addBehavior('treeItemAsListItemBehavior', treeItemAsListItemBehavior)
 testHelper.addBehavior('treeTitleAsListItemTitleBehavior', treeTitleAsListItemTitleBehavior)
+testHelper.addBehavior('carouselItemBehavior', carouselItemBehavior)
+testHelper.addBehavior('carouselBehavior', carouselBehavior)
 
 testHelper.run(behaviorMenuItems)

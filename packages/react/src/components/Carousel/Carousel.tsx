@@ -26,7 +26,7 @@ import { CarouselSlideProps } from './CarouselSlide'
 import Menu, { MenuProps } from '../Menu/Menu'
 import Text from '../Text/Text'
 import { MenuItemProps } from '../Menu/MenuItem'
-import { tabListBehavior } from '../../lib/accessibility'
+import { tabListBehavior, carouselBehavior } from '../../lib/accessibility'
 
 export interface CarouselProps extends UIComponentProps, ChildrenComponentProps {
   /** Shorthand array of props for CarouselItem. */
@@ -77,23 +77,53 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
   }
 
   static defaultProps = {
+    accessibility: carouselBehavior,
     as: 'div',
     tabList: {},
+  }
+
+  actionHandlers = {
+    moveNext: e => {
+      e.preventDefault()
+      this.handleNext(e)
+    },
+    movePrevious: e => {
+      e.preventDefault()
+      this.handlePrevious(e)
+    },
   }
 
   state = {
     activeIndex: 0,
   }
 
-  renderContent = styles => {
+  itemRefs: React.RefObject<HTMLElement>[] = []
+
+  renderContent = (styles, accessibility, unhandledProps) => {
     const { items, renderItemSlide } = this.props
+    const { activeIndex } = this.state
+
     if (!items) {
       return null
     }
+
     return (
-      <div style={styles.contentContainerWrapper}>
-        <ul style={styles.contentContainer}>
-          {items.map(item => CarouselItem.create(item, { defaultProps: { renderItemSlide } }))}
+      <div style={styles.itemsContainerWrapper}>
+        <ul
+          style={styles.itemsContainer}
+          {...applyAccessibilityKeyHandlers(
+            accessibility.keyHandlers.itemsContainer,
+            unhandledProps,
+          )}
+        >
+          {items.map((item, index) => {
+            const contentRef = React.createRef<HTMLElement>()
+            this.itemRefs[index] = contentRef
+
+            return CarouselItem.create(item, {
+              defaultProps: { renderItemSlide, active: activeIndex === index, contentRef },
+            })
+          })}
         </ul>
       </div>
     )
@@ -174,6 +204,11 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
               activeIndex: index,
             })
 
+            // ToDo: should probably be a debounce.
+            setTimeout(() => {
+              this.itemRefs[index].current.focus()
+            }, 1000)
+
             _.invoke(predefinedProps, 'onClick', e, itemProps)
           },
         }),
@@ -196,7 +231,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
           children
         ) : (
           <>
-            {this.renderContent(styles)}
+            {this.renderContent(styles, accessibility, unhandledProps)}
             {this.renderControls(styles)}
             {this.renderNavigation(styles)}
           </>

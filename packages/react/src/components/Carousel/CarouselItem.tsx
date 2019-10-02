@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 
+import { Ref } from '@stardust-ui/react-component-ref'
 import {
   UIComponent,
   commonPropTypes,
@@ -15,6 +16,7 @@ import {
 } from '../../lib'
 import { WithAsProp, withSafeTypeForAs, ShorthandValue, ShorthandRenderFunction } from '../../types'
 import CarouselSlide, { CarouselSlideProps } from './CarouselSlide'
+import { carouselItemBehavior } from 'src/lib/accessibility'
 
 export interface CarouselItemProps
   extends UIComponentProps,
@@ -22,6 +24,9 @@ export interface CarouselItemProps
     ContentComponentProps {
   /** Whether or not the item is in view or not. */
   active?: boolean
+
+  /** Ref for the item DOM element. */
+  contentRef?: React.Ref<HTMLElement>
 
   /**
    * A custom render iterator for rendering each carousel slide.
@@ -49,13 +54,14 @@ class CarouselItem extends UIComponent<WithAsProp<CarouselItemProps>> {
       content: false,
     }),
     active: PropTypes.bool,
+    contentRef: customPropTypes.ref,
     renderItemSlide: PropTypes.func,
     slide: customPropTypes.itemShorthand,
   }
 
   static defaultProps = {
     as: 'li',
-    // accessibility: treeBehavior,
+    accessibility: carouselItemBehavior,
   }
 
   renderContent() {
@@ -65,16 +71,18 @@ class CarouselItem extends UIComponent<WithAsProp<CarouselItemProps>> {
   }
 
   renderComponent({ ElementType, classes, styles, accessibility, unhandledProps }) {
-    const { children } = this.props
+    const { children, contentRef } = this.props
     return (
-      <ElementType
-        className={classes.root}
-        {...accessibility.attributes.root}
-        {...unhandledProps}
-        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
-      >
-        {childrenExist(children) ? children : this.renderContent()}
-      </ElementType>
+      <Ref innerRef={contentRef}>
+        <ElementType
+          className={classes.root}
+          {...accessibility.attributes.root}
+          {...unhandledProps}
+          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
+        >
+          {childrenExist(children) ? children : this.renderContent()}
+        </ElementType>
+      </Ref>
     )
   }
 }

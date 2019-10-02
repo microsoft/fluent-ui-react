@@ -10,12 +10,12 @@ const carouselStyles: ComponentSlotStylesPrepared<
   root: (): ICSSInJSStyle => ({
     display: 'inline-block',
   }),
-  contentContainerWrapper: ({ variables: v }): ICSSInJSStyle => ({
+  itemsContainerWrapper: ({ variables: v }): ICSSInJSStyle => ({
     display: 'flex',
     width: pxToRem(v.width),
     overflowX: 'hidden',
   }),
-  contentContainer: ({ props: p, variables: v }): ICSSInJSStyle => ({
+  itemsContainer: ({ props: p, variables: v }): ICSSInJSStyle => ({
     padding: 0,
     margin: 0,
     display: 'flex',
