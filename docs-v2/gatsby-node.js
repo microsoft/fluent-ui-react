@@ -20,10 +20,12 @@ exports.createPages = async function({actions}) {
 // Injects dynamic content into generated pages. This function should be used
 // sparingly to avoid diverging too far from Gatsby core.
 exports.onCreatePage = function({page, actions}) {
+  const originalPage = page
+
   // We avoid adding `category` to many pages' frontmatter because they are
   // already categorized by their location in /pages. Add it at build time.
   // TODO: should probably just add it to frontmatter for clarity...
-  page = injectPageCategory(page, actions)
+  page = injectPageCategory(page)
 
   // FIXME: Remove when possible. Component detail pages need access to the
   // component JSON schema, but I'm not sure how to supply this information
@@ -34,7 +36,11 @@ exports.onCreatePage = function({page, actions}) {
     page.path !== "/components" &&
     !/playground/.test(page.path)
   ) {
-    page = injectComponentSchema(page, actions)
+    page = injectComponentSchema(page)
+  }
+  if (page !== originalPage) {
+    actions.deletePage(originalPage)
+    actions.createPage(page)
   }
 }
 
@@ -61,7 +67,7 @@ function makeComponentPlaygroundPage(component) {
   }
 }
 
-function injectPageCategory(page, actions) {
+function injectPageCategory(page) {
   // Page already has a category.
   if (page.context.frontmatter && page.context.frontmatter.category) {
     return page
@@ -78,22 +84,19 @@ function injectPageCategory(page, actions) {
     default:
       category = "Site"
   }
-  actions.deletePage(page)
-  page = {
+  return {
     ...page,
     context: {
       ...page.context,
       frontmatter: {
-        category,
-        ...page.context.frontmatter
+        ...page.context.frontmatter,
+        category
       }
     }
   }
-  actions.createPage(page)
-  return page
 }
 
-function injectComponentSchema(page, actions) {
+function injectComponentSchema(page) {
   const slug = page.path.replace("/components/", "")
   const schema = componentSchemas.find(schema => schema.slug === slug)
   if (!schema) {
@@ -102,11 +105,10 @@ function injectComponentSchema(page, actions) {
       page.path,
       slug
     )
-    return
+    return page
   }
 
-  actions.deletePage(page)
-  page = {
+  return {
     ...page,
     context: {
       ...page.context,
@@ -114,10 +116,8 @@ function injectComponentSchema(page, actions) {
       frontmatter: {
         title: schema.displayName,
         description: schema.description,
-        ...page.frontmatter
+        ...page.context.frontmatter
       }
     }
   }
-  actions.createPage(page)
-  return page
 }
