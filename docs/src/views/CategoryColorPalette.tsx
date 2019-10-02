@@ -27,7 +27,7 @@ const ColorPalette = () => (
       render={({ siteVariables: { categoryColors } }) => (
         <DocPage title="Category color palette">
           <p>
-            This page displays all category colors in Teams theme. These colors are used for
+            This page displays all category colors in the Teams theme. These colors are used for
             features like calendar, announcement posts, and text formatting.
           </p>
 
