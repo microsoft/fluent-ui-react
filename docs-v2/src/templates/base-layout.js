@@ -1,6 +1,6 @@
+import "./base-layout.css"
 import React from "react"
 import {Navbar} from "../doc-components/navbar"
-import "./base-layout.css"
 
 export function BaseLayout({children, rail}) {
   return (

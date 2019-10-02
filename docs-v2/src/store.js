@@ -5,9 +5,11 @@ export class Store {
   theme = this.getInitialTheme()
 
   setTheme(theme) {
-    if (theme !== this.theme) {
-      this.theme = theme
-    }
+    this.theme = theme
+  }
+
+  toggleTheme() {
+    this.setTheme(this.theme === "light" ? "dark" : "light")
   }
 
   getInitialTheme() {
@@ -22,7 +24,8 @@ export class Store {
 }
 decorate(Store, {
   theme: observable,
-  setTheme: action
+  setTheme: action.bound,
+  toggleTheme: action.bound
 })
 
 export const StoreContext = React.createContext()

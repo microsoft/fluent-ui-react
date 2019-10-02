@@ -17,7 +17,8 @@
   --sui-card-background: #201f1f;
   --sui-card-background-alt: rgb(42, 42, 42);
   --sui-card-border-color: #666;
-  --sui-card-footer-background: rgb(60, 60, 60);
+  --sui-card-description-background: var(--sui-accent-color-background);
+  --sui-card-description-foreground: #fff;
 
   --sui-divider-color: #555;
 
@@ -46,8 +47,8 @@
  *
  * Ported for PrismJS by Marc Backes [@themarcba]
  */
-[data-theme="dark"] code[class*=language-],
-[data-theme="dark"] pre[class*=language-] {
+[data-theme="dark"] code[class*="language-"],
+[data-theme="dark"] pre[class*="language-"] {
   color: #f92aad;
   text-shadow: 0 0 2px #100c0f, 0 0 5px #dc078e33, 0 0 10px #fff3;
   background: none;
@@ -67,17 +68,17 @@
   -ms-hyphens: none;
   hyphens: none;
 }
-[data-theme="dark"] pre[class*=language-] {
+[data-theme="dark"] pre[class*="language-"] {
   padding: 1em;
   margin: 0.5em 0;
   overflow: auto;
 }
-[data-theme="dark"] :not(pre) > code[class*=language-],
-[data-theme="dark"] pre[class*=language-] {
+[data-theme="dark"] :not(pre) > code[class*="language-"],
+[data-theme="dark"] pre[class*="language-"] {
   background-color: transparent !important;
   background-image: linear-gradient(to bottom, #2a2139 75%, #34294f);
 }
-[data-theme="dark"] :not(pre) > code[class*=language-] {
+[data-theme="dark"] :not(pre) > code[class*="language-"] {
   padding: 0.1em;
   border-radius: 0.3em;
   white-space: normal;
@@ -113,11 +114,13 @@
 [data-theme="dark"] .token.selector .token.id,
 [data-theme="dark"] .token.function {
   color: #fdfdfd;
-  text-shadow: 0 0 2px #001716, 0 0 3px #03edf975, 0 0 5px #03edf975, 0 0 8px #03edf975;
+  text-shadow: 0 0 2px #001716, 0 0 3px #03edf975, 0 0 5px #03edf975,
+    0 0 8px #03edf975;
 }
 [data-theme="dark"] .token.class-name {
   color: #fff5f6;
-  text-shadow: 0 0 2px #000, 0 0 10px #fc1f2c75, 0 0 5px #fc1f2c75, 0 0 25px #fc1f2c75;
+  text-shadow: 0 0 2px #000, 0 0 10px #fc1f2c75, 0 0 5px #fc1f2c75,
+    0 0 25px #fc1f2c75;
 }
 [data-theme="dark"] .token.constant,
 [data-theme="dark"] .token.symbol {

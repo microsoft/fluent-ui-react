@@ -2,6 +2,10 @@ import "./navbar.css"
 import React from "react"
 import {Link, useStaticQuery, graphql} from "gatsby"
 import {Search} from "@standard-ui-docs/search"
+import {observer} from "mobx-react"
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
+import {faSun, faMoon} from "@fortawesome/free-solid-svg-icons"
+import {useStore} from "../store"
 
 export function Navbar() {
   return (
@@ -11,6 +15,7 @@ export function Navbar() {
           <Brand />
           <Links />
           <SiteSearch />
+          <ThemePicker />
         </div>
       </header>
     </>
@@ -110,3 +115,17 @@ function useSearchIndex() {
       })
   }, [result])
 }
+
+const ThemePicker = observer(() => {
+  const store = useStore()
+  const icon = store.theme === "light" ? faMoon : faSun
+  return (
+    <button
+      className="sui-theme-picker"
+      title="Toggle light/dark mode"
+      onClick={store.toggleTheme}
+    >
+      <FontAwesomeIcon icon={icon} />
+    </button>
+  )
+})

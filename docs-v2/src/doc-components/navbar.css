@@ -90,6 +90,28 @@
   max-width: 30rem;
 }
 
+.sui-theme-picker {
+  --accent: var(--sui-accent-color-bold);
+
+  margin: 0 0 0 1rem;
+  padding: 0.75rem;
+  font-size: 1.25rem;
+  cursor: pointer;
+  outline: none;
+  background: none;
+  border: 1px solid var(--accent);
+  border-radius: 100%;
+  box-shadow: 0 0 1rem -0.25rem var(--accent),
+    inset 0 0 1rem -0.75rem var(--accent);
+  color: var(--accent);
+  transition: 0.2s;
+}
+
+.sui-theme-picker:hover {
+  box-shadow: 0 0 1rem -0.25rem var(--accent),
+    inset 0 0 1rem -0.25rem var(--accent);
+}
+
 @media screen and (max-width: 768px) {
   .navbar-content {
     padding: 0.9rem 0;
