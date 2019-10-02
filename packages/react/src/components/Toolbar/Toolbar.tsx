@@ -8,21 +8,21 @@ import { Ref } from '@stardust-ui/react-component-ref'
 import { windowRef, EventListener } from '@stardust-ui/react-component-event-listener'
 
 import {
-  applyAccessibilityKeyHandlers,
-  ChildrenComponentProps,
   childrenExist,
-  ColorComponentProps,
-  commonPropTypes,
-  ContentComponentProps,
   createShorthandFactory,
-  ShorthandFactory,
   UIComponent,
   UIComponentProps,
+  ContentComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
+  ColorComponentProps,
+  applyAccessibilityKeyHandlers,
+  ShorthandFactory,
 } from '../../lib'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
 import { Accessibility } from '../../lib/accessibility/types'
-import { toggleButtonBehavior, toolbarBehavior } from '../../lib/accessibility'
+import { toolbarBehavior, toggleButtonBehavior } from '../../lib/accessibility'
 import { ShorthandCollection, ShorthandValue, WithAsProp, withSafeTypeForAs } from '../../types'
 
 import ToolbarCustomItem from './ToolbarCustomItem'
@@ -34,6 +34,7 @@ import ToolbarMenuItem from './ToolbarMenuItem'
 import ToolbarMenuRadioGroup from './ToolbarMenuRadioGroup'
 import ToolbarRadioGroup from './ToolbarRadioGroup'
 import Box, { BoxProps } from '../Box/Box'
+import ToolbarOverflowMenu from './ToolbarOverflowMenu'
 
 export type ToolbarItemShorthandKinds = 'divider' | 'item' | 'group' | 'toggle' | 'custom'
 
@@ -74,6 +75,7 @@ export interface ToolbarState {
   currentItems: ToolbarProps['items']
   stableItems?: ToolbarProps['items']
   stable: boolean
+  perfTime: number
 }
 
 export interface ToolbarSlotClassNames {
@@ -105,7 +107,6 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
     onReduceItems: PropTypes.func,
     measurement: customPropTypes.itemShorthand,
     wrapper: customPropTypes.itemShorthand,
-    overflow: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -130,6 +131,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
   }
 
   wrapperRef = React.createRef<HTMLElement>()
+  overflowMenuRef = React.createRef<HTMLElement>()
   hiddenToolbarRef = React.createRef<HTMLElement>()
   animationFrameId: number
 
@@ -165,72 +167,140 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
       return null
     }
 
+    console.log('getDerivedStateFromProps -> unstable')
+
     return {
+      perfTime: performance.now(),
       initialItems: props.items,
       currentItems: props.items,
-      stableItems: state.stableItems,
+      stableItems: state.stableItems /* || props.items */,
       stable: false,
     }
   }
 
-  hackyDOMOverflow = () => {
-    console.log('hackyDOMOverflow')
-    const $wrapper = this.wrapperRef.current
+  debug(el, color) {
+    // el.style.borderColor = color
+    // el.style.borderRadius = '0'
+  }
 
-    // console.log($wrapper)
-    // another assumption, children are valid items
-    const $items = Array.from($wrapper.children)
+  undebug(el) {
+    // el.style.borderColor = 'transparent'
+    // el.style.borderRadius = '50%'
+  }
 
-    // setup and position overflow item
-    const $overflowItem = $items.pop()
-    $overflowItem.style.position = 'absolute'
+  hide(el) {
+    if (el.style.visibility === 'hidden') {
+      return
+    }
 
-    let hasSetHeight
-    let isOverflowing
-    let lastItemIndex
+    el.style.visibility = 'hidden'
+    const wasFocusable = el.getAttribute('data-is-focusable')
+    if (wasFocusable) {
+      el.setAttribute('data-sd-was-focusable', wasFocusable)
+    }
+    el.setAttribute('data-is-focusable', 'false')
+  }
 
-    $items.forEach(($item, i) => {
-      if (!hasSetHeight) {
-        hasSetHeight = true
-        $wrapper.style.height = $item.clientHeight + 'px'
-      }
+  show(el) {
+    if (el.style.visibility !== 'hidden') {
+      return
+    }
 
-      if (isOverflowing || $item.getBoundingClientRect().top > $wrapper.clientTop) {
-        isOverflowing = true
-        // TODO: bug, this index is off by one
-        lastItemIndex = typeof lastItemIndex === 'undefined' ? i - 1 : lastItemIndex
-      } else {
-      }
-    })
-
-    if (isOverflowing) {
-      $wrapper.style.paddingRight = $overflowItem.clientWidth + 'px'
-      $overflowItem.style.pointerEvents = 'all'
-      $overflowItem.style.visibility = 'visible'
-
-      // render the ellipsis menu item with these sub menu items:
-      // store starting overflow index to class property
-      // on overflow click, slice the items to the overflown items only :D [vomit]
-      // $items.slice(overflowingIndices[0])
-
-      // TODO: you can also literally append ellipsis child after the last fitting item... or other strategy
-      const lastItemRect = $items[lastItemIndex].getBoundingClientRect()
-      $overflowItem.style.left = lastItemRect.right + 'px'
+    el.style.visibility = 'initial'
+    const wasFocusable = el.getAttribute('data-sd-was-focusable')
+    if (wasFocusable) {
+      el.setAttribute('data-is-focusable', wasFocusable)
+      el.removeAttribute('data-sd-was-focusable')
     } else {
-      $wrapper.style.paddingRight = ''
-      $overflowItem.style.pointerEvents = 'none'
-      $overflowItem.style.visibility = 'hidden'
-      $overflowItem.style.left = ''
+      el.removeAttribute('data-is-focusable')
     }
   }
 
+  lastVisibleItemIndex: number
+
+  hackyDOMOverflow = () => {
+    // console.log('hackyDOMOverflow')
+
+    const $wrapper = this.wrapperRef.current
+    const $overflowItem = this.overflowMenuRef.current
+
+    const $items = $wrapper.children
+
+    const wrapperBoundingRect = $wrapper.getBoundingClientRect()
+    const overflowItemBoundingRect = $overflowItem.getBoundingClientRect()
+    let isOverflowing = false
+    let $lastVisibleItem
+    let lastVisibleItemRect
+    _.forEachRight($items, ($item, i) => {
+      if ($item === $overflowItem) {
+        return
+      }
+      const itemBoundingRect = $item.getBoundingClientRect()
+      if ($item.getBoundingClientRect().top > wrapperBoundingRect.top) {
+        // needs improvement
+        isOverflowing = true
+        // console.log(
+        //   'Overflow',
+        //   i,
+        //   $item.getBoundingClientRect().top,
+        //   $wrapper.getBoundingClientRect().top,
+        // )
+        this.debug($item, 'red')
+        this.hide($item)
+        return
+      }
+
+      if (isOverflowing) {
+        if (itemBoundingRect.right + overflowItemBoundingRect.width > wrapperBoundingRect.right) {
+          // test RTL
+          this.debug($item, 'magenta')
+          this.hide($item)
+          return
+        }
+      }
+      if (!$lastVisibleItem) {
+        $lastVisibleItem = $item
+        lastVisibleItemRect = itemBoundingRect
+        this.lastVisibleItemIndex = i
+      }
+
+      this.undebug($item)
+      this.show($item) // stop when first visible item is found
+    })
+
+    if (isOverflowing) {
+      this.debug($overflowItem, 'green')
+
+      $overflowItem.style.position = 'absolute'
+      if ($lastVisibleItem) {
+        this.debug($lastVisibleItem, 'lime')
+
+        $overflowItem.style.left = `${lastVisibleItemRect.right - wrapperBoundingRect.left}px`
+        $overflowItem.style.top = `${lastVisibleItemRect.top - wrapperBoundingRect.top}px`
+      } else {
+        this.lastVisibleItemIndex = -1
+        $overflowItem.style.left = '0px'
+        $overflowItem.style.top = '0px'
+      }
+      this.show($overflowItem)
+    } else {
+      this.undebug($overflowItem)
+      this.hide($overflowItem)
+    }
+  }
+
+  getOverflowItems = () => {
+    return this.props.items.slice(this.lastVisibleItemIndex + 1)
+  }
+
   componentDidMount() {
-    this.afterComponentRendered()
     this.hackyDOMOverflow()
+    // this.afterComponentRendered()
   }
 
   componentDidUpdate() {
-    this.afterComponentRendered()
+    this.hackyDOMOverflow()
+    // this.afterComponentRendered()
   }
 
   componentWillUnmount() {
@@ -249,24 +319,28 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
       this.animationFrameId = undefined
       const { onReduceItems } = this.props
       if (_.isNil(onReduceItems) || !this.hiddenToolbarRef.current || this.state.stable) {
+        const t = performance.now() - this.state.perfTime
+        console.log(`stable after ${t} ms`)
         return
       }
-      const { fits, measures } = this.measureOverflow()
-      this.setState(({ stable, currentItems }) => {
+      const { fits, measures, forWidth } = this.measureOverflow()
+      this.setState(({ stable, currentItems, perfTime }) => {
         if (fits) {
-          return { stable: true, stableItems: currentItems, currentItems }
+          console.log('fits', forWidth)
+
+          return { stable: true, forWidth, stableItems: currentItems, currentItems }
         }
 
         const reducedItems = onReduceItems(currentItems, measures)
         if (reducedItems === null) {
-          return { stable: true, stableItems: currentItems, currentItems }
+          return { stable: true, forWidth, stableItems: currentItems, currentItems }
         }
         return { stable, currentItems: reducedItems }
       })
     })
   }
 
-  measureOverflow(): { fits: boolean; measures: OverflowMeasures[] } {
+  measureOverflow(): { fits: boolean; measures: OverflowMeasures[]; forWidth: number } {
     const wrapperRect = this.wrapperRef.current.getBoundingClientRect()
     const hiddenToolbarElement = this.hiddenToolbarRef.current
 
@@ -281,14 +355,24 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
     })
 
     const fits = !_.some(measures, c => !c.leftFits || !c.rightFits)
-    return { fits, measures }
+    return { fits, measures, forWidth: wrapperRect.width }
   }
 
   onResize = (newWidth, newHeight) => {
-    this.setState(({ initialItems }) => ({
-      currentItems: initialItems,
-      stable: false,
-    }))
+    console.log('onResize -> unstable', { newWidth })
+    this.setState(({ initialItems, forWidth, stable, perfTime }) => {
+      if (stable && newWidth !== forWidth) {
+        console.log('resetting perf time')
+      }
+      if (forWidth !== newWidth) {
+        return {
+          currentItems: initialItems,
+          stable: false,
+          perfTime: stable && newWidth !== forWidth ? performance.now() : perfTime,
+        }
+      }
+      console.log('No state change')
+    })
   }
 
   renderComponent({
@@ -345,7 +429,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
                       {this.renderItems(this.state.stableItems, variables)}
                     </ElementType>
                   )}
-                  <ReactResizeDetector xskipOnMount handleWidth onResize={this.onResize} />
+                  <ReactResizeDetector skipOnMount handleWidth onResize={this.onResize} />
                 </>
               ),
             }),
@@ -364,6 +448,9 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
             {...unhandledProps}
           >
             {childrenExist(children) ? children : this.renderItems(items, variables)}
+            <Ref innerRef={this.overflowMenuRef}>
+              <ToolbarOverflowMenu icon="more" getOverflowItems={this.getOverflowItems} />
+            </Ref>
           </ElementType>
         </Ref>
       </>

@@ -219,7 +219,16 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
         {(getRefs, nestingRef) => (
           <>
             <Ref innerRef={nestingRef}>
-              <Popper align="start" position="above" targetRef={this.itemRef}>
+              <Popper
+                align="start"
+                position="above"
+                modifiers={{
+                  preventOverflow: {
+                    escapeWithReference: false,
+                  },
+                }}
+                targetRef={this.itemRef}
+              >
                 {ToolbarMenu.create(menu, {
                   overrideProps: this.handleMenuOverrides(getRefs, variables),
                 })}

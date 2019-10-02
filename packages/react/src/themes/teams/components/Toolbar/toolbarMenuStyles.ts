@@ -6,6 +6,7 @@ const toolbarMenuStyles = {
     const colors = getColorScheme(v.colorScheme)
 
     return {
+      position: 'absolute',
       display: 'flex',
       zIndex: 1000,
       flexDirection: 'column',

@@ -1,11 +1,13 @@
 import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 
 const toolbarStyles: ComponentSlotStylesPrepared = {
-  root: ({ props: { overflow } }): ICSSInJSStyle => ({
+  root: ({ props: { overflow }, variables: v }): ICSSInJSStyle => ({
     display: 'flex',
     alignItems: 'center',
+    position: 'relative',
     ...(overflow && {
-      overflowY: 'hidden',
+      // overflowY: 'hidden', // FIXME: commented out for debug purposes
+      height: v.itemHeight,
       flexWrap: 'wrap',
     }),
   }),
