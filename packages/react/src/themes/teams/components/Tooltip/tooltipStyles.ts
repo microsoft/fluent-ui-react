@@ -12,7 +12,7 @@ const tooltipStyles: ComponentSlotStylesPrepared<TooltipProps, TooltipVariables>
           position: 'absolute',
           textAlign: 'left',
         }
-      : {},
+      : { opacity: 0 },
 }
 
 export default tooltipStyles
