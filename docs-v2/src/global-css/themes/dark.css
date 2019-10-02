@@ -16,6 +16,7 @@
 
   --sui-card-background: #201f1f;
   --sui-card-background-alt: rgb(42, 42, 42);
+  --sui-card-banner-background: rgb(42, 42, 42);
   --sui-card-border-color: #666;
   --sui-card-description-background: var(--sui-accent-color-background);
   --sui-card-description-foreground: #fff;

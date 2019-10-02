@@ -99,17 +99,7 @@ function ComponentList({components}) {
       </section>
     )
   })
-  return (
-    <div className="sui-component-list" style={{position: "relative"}}>
-      <button
-        onClick={() => setGrid(!grid)}
-        style={{position: "absolute", top: "1rem", left: "-17rem"}}
-      >
-        DEBUG: Toggle Grid
-      </button>
-      {sections}
-    </div>
-  )
+  return <div className="sui-component-list">{sections}</div>
 }
 
 const ComponentPreview = observer(({source, delay}) => {

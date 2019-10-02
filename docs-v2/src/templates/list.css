@@ -126,7 +126,6 @@
 
 [data-prefer-grid-view="true"] .sui-list-item__details {
   flex: 0;
-  padding: 1rem;
   width: 100%;
   color: inherit;
   text-align: left;
@@ -136,7 +135,9 @@
 [data-prefer-grid-view="true"] .sui-list-item__title {
   font-size: 1.5rem;
   font-weight: 300;
+  padding: 1rem;
   text-transform: uppercase;
+  background: var(--sui-card-banner-background);
 }
 
 [data-prefer-grid-view="true"] .sui-list-item__description {

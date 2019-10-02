@@ -64,11 +64,6 @@ body {
   background: var(--sui-background);
 }
 
-.sui-icon-button {
-  background: none;
-  border: none;
-}
-
 /* -------------------- Syntax Highlighting ---------------------- */
 .gatsby-highlight {
   font-size: 0.85em !important;
