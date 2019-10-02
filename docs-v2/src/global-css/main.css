@@ -1,5 +1,8 @@
 @import "../../node_modules/normalize.css";
 
+/* Navbar is imported here rather than in navbar.js to avoid FOUC */
+@import "./_navbar.css";
+
 /* -------------------- Typography ---------------------- */
 @font-face {
   font-family: "Segoe UI";

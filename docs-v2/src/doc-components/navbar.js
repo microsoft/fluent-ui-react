@@ -1,4 +1,3 @@
-import "./navbar.css"
 import React from "react"
 import {Link, useStaticQuery, graphql} from "gatsby"
 import {Search} from "@standard-ui-docs/search"
