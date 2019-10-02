@@ -81,6 +81,10 @@ module.exports = {
             __dirname,
             "../packages/react/src"
           ),
+          "@stardust-ui/accessibility": path.resolve(
+            __dirname,
+            "../packages/accessibility/src"
+          ),
           "@stardust-ui/react-component-event-listener": path.resolve(
             __dirname,
             "../packages/react-component-event-listener/src"
