@@ -11,6 +11,7 @@ import {
   applyAccessibilityKeyHandlers,
   childrenExist,
   ChildrenComponentProps,
+  SizeValue,
 } from '../../lib'
 import {
   WithAsProp,
@@ -163,7 +164,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
           styles: styles.navigationContainer,
           items: _.times(items.length, index => ({
             key: index,
-            icon: { name: 'stardust-circle', size: 'smallest' },
+            icon: { name: 'stardust-circle', size: 'smallest' as SizeValue },
           })),
         },
         overrideProps: (predefinedProps: MenuItemProps) => ({
