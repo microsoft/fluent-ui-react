@@ -7,7 +7,6 @@ import felaPluginRtl from 'fela-plugin-rtl'
 
 import { Renderer } from '../themes/types'
 import felaDisableAnimationsPlugin from './felaDisableAnimationsPlugin'
-import felaExpandCssShorthandsPlugin from './felaExpandCssShorthandsPlugin'
 import felaFocusVisibleEnhancer from './felaFocusVisibleEnhancer'
 import felaInvokeKeyframesPlugin from './felaInvokeKeyframesPlugin'
 import felaSanitizeCss from './felaSanitizeCssPlugin'
@@ -70,8 +69,6 @@ const rendererConfig = {
     // Heads up!
     // This is required after fela-plugin-prefixer to resolve the array of fallback values prefixer produces.
     felaPluginFallbackValue(),
-
-    felaExpandCssShorthandsPlugin(),
 
     felaPluginRtl(),
   ],
