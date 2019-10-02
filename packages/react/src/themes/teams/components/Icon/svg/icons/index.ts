@@ -9,6 +9,7 @@ import arrowLeft from './arrowLeft'
 import arrowRight from './arrowRight'
 import audioOff from './audioOff'
 import ban from './ban'
+import bell from './bell'
 import bellMute from './bellMute'
 import bold from './bold'
 import bookmark from './bookmark'
@@ -171,7 +172,9 @@ export default {
   'arrow-right': arrowRight,
   'audio-off': audioOff,
   ban,
+  bell,
   'bell-slash': bellMute,
+  'bell-snooze': snooze,
   bold,
   bookmark,
   broadcast,
@@ -283,7 +286,6 @@ export default {
   send,
   settings,
   'share-alt': shareAlt,
-  'bell-snooze': snooze,
   star,
   sticker,
   strike,
