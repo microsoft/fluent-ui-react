@@ -2394,17 +2394,7 @@ ajv@^5.1.0:
     fast-json-stable-stringify "^2.0.0"
     json-schema-traverse "^0.3.0"
 
-ajv@^6.1.0, ajv@^6.5.5, ajv@^6.9.1:
-  version "6.10.0"
-  resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.10.0.tgz#90d0d54439da587cd7e843bfb7045f50bd22bdf1"
-  integrity sha512-nffhOpkymDECQyR0mnsUtoCE8RlX38G0rYP+wgLWFyZuUyuuojSSvi/+euOiQBIn63whYwYVIIH1TvE3tu4OEg==
-  dependencies:
-    fast-deep-equal "^2.0.1"
-    fast-json-stable-stringify "^2.0.0"
-    json-schema-traverse "^0.4.1"
-    uri-js "^4.2.2"
-
-ajv@^6.10.0:
+ajv@^6.1.0, ajv@^6.10.0, ajv@^6.5.5, ajv@^6.9.1:
   version "6.10.2"
   resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.10.2.tgz#d3cea04d6b017b2894ad69040fec8b623eb4bd52"
   integrity sha512-TXtUUEYHuaTEbLZWIKUr5pmBuhDLy+8KYtPYdcV8qC+pOZL+NKqYwvWSRrVXHn+ZmRRAu8vJTAznH7Oag6RVRw==
@@ -9545,7 +9535,7 @@ lodash@4.17.14:
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.14.tgz#9ce487ae66c96254fe20b599f21b6816028078ba"
   integrity sha512-mmKYbW3GLuJeX+iGP+Y7Gp1AiGHGbXHCOh/jZmrawMmsE7MS4znI3RL2FsjbqOyMayHInjOeykW7PEajUk1/xw==
 
-lodash@^4.11.1, lodash@^4.13.1, lodash@^4.15.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.1, lodash@^4.7.14, lodash@~4.17.11:
+lodash@^4.11.1, lodash@^4.13.1, lodash@^4.15.0, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.4, lodash@^4.17.5, lodash@^4.2.1, lodash@^4.7.14, lodash@~4.17.13:
   version "4.17.15"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.15.tgz#b447f6670a0455bbfeedd11392eff330ea097548"
   integrity sha512-8xOcRHvCjnocdS5cpwXQXVzmmh5e5+saE2QGoeQmbKmRS6J3VQppPOIt0MnmE+4xlZoumy0GPG0D0MVIQbNA1A==
@@ -12984,10 +12974,10 @@ screener-ngrok@2.2.28:
     request "^2.55.0"
     uuid "^3.0.0"
 
-screener-runner@^0.10.30:
-  version "0.10.31"
-  resolved "https://registry.yarnpkg.com/screener-runner/-/screener-runner-0.10.31.tgz#5110122cbd47ad87aeb5d8a8b677782d5c32c939"
-  integrity sha512-Ghur/kFfiROaM/FjJcmXaDWE6n2xAzhlw8Ui0uq64qygx2/5BgZZzF5Xh0g5TvPV586pmZBEd22o1Z5SGAS8WA==
+screener-runner@^0.10.43:
+  version "0.10.43"
+  resolved "https://registry.yarnpkg.com/screener-runner/-/screener-runner-0.10.43.tgz#0f924d4f0c5f2d55da6451adb5ddfbc06554ebc6"
+  integrity sha512-E+17Cww7TeHee10WnuOmjUqM1udVCw7KoIfdCrJIlptr+cGAnRV3PEpg3ewXsqoiXKIf6IzT/DrTIWXtjZnf0A==
   dependencies:
     bluebird "~3.4.6"
     colors "~1.1.2"
@@ -12996,7 +12986,8 @@ screener-runner@^0.10.30:
     connect "~3.6.0"
     http-proxy "~1.16.2"
     joi "~9.2.0"
-    lodash "~4.17.11"
+    js-yaml "^3.13.1"
+    lodash "~4.17.13"
     portfinder "~1.0.10"
     request "~2.87.0"
     requestretry "~2.0.2"
