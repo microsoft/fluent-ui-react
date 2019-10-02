@@ -98,7 +98,10 @@ function useSearchIndex() {
   return React.useMemo(() => {
     return result.allSitePage.nodes
       .filter(
-        node => node.context.frontmatter && node.context.frontmatter.category
+        node =>
+          node.context &&
+          node.context.frontmatter &&
+          node.context.frontmatter.category
       )
       .map(node => {
         const {title, description, category} = node.context.frontmatter
