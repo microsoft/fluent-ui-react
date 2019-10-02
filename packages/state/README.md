@@ -28,21 +28,20 @@ yarn add @stardust-ui/state
 # Usage
 
 ```tsx
-import { useStateManager } from '@stardust-ui/react-bindings'
-import { createManager, ManagerFactory } from '@stardust-ui/state'
+import { createManager, ManagerFactory } from "@stardust-ui/state";
 
-type InputState = { value: string }
-type InputActions = { change: (value: string) => void }
+type InputState = { value: string };
+type InputActions = { change: (value: string) => void };
 
 const createInputManager: ManagerFactory<InputState, InputActions> = config =>
   createManager<InputState, InputActions>({
     ...config,
     actions: {
-      change: (value: string) => () => ({ value }),
+      change: (value: string) => () => ({ value })
     },
-    state: { value: '', ...config.state, },
-  })
-const manager = createInputManager()
+    state: { value: "", ...config.state }
+  });
+const manager = createInputManager({ state: { value: "Hello world!" } });
 ```
 
 # Usage with React
