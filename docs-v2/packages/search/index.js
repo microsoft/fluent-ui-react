@@ -2,9 +2,7 @@ import React from "react"
 import {Link} from "gatsby"
 import "./index.css"
 
-const RESULT_LIMIT = 5
-
-export function Search({pages}) {
+export function Search({pages, limit = 5}) {
   const [search, setSearch] = React.useState("")
   const [selectedResult, setSelectedResult] = React.useState()
   const [showResults, setShowResults] = React.useState(true)
@@ -16,8 +14,8 @@ export function Search({pages}) {
   // Get search results for current input
   const results = React.useMemo(() => {
     const results = findMatchingPages(search, pages)
-    return results.slice(0, RESULT_LIMIT)
-  }, [pages, search])
+    return results.slice(0, limit)
+  }, [pages, search, limit])
 
   // Categorize those results for rendering
   const categorizedResults = React.useMemo(() => {
