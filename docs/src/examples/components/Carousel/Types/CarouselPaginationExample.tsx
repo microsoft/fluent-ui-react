@@ -2,10 +2,22 @@ import * as React from 'react'
 import { Carousel, Image } from '@stardust-ui/react'
 
 const carouselItems = [
-  { key: 'ade', slide: { as: Image, src: 'public/images/avatar/large/ade.jpg' } },
-  { key: 'elliot', slide: { as: Image, src: 'public/images/avatar/large/elliot.jpg' } },
-  { key: 'kristy', slide: { as: Image, src: 'public/images/avatar/large/kristy.png' } },
-  { key: 'nan', slide: { as: Image, src: 'public/images/avatar/large/nan.jpg' } },
+  {
+    key: 'ade',
+    slide: { as: Image, src: 'public/images/avatar/large/ade.jpg', alt: 'Portrait of Ade' },
+  },
+  {
+    key: 'elliot',
+    slide: { as: Image, src: 'public/images/avatar/large/elliot.jpg', alt: 'Portrait of Elliot' },
+  },
+  {
+    key: 'kristy',
+    slide: { as: Image, src: 'public/images/avatar/large/kristy.png', alt: 'Portrait of Kristy' },
+  },
+  {
+    key: 'nan',
+    slide: { as: Image, src: 'public/images/avatar/large/nan.jpg', alt: 'Portrait of Nan' },
+  },
 ]
 
 const CarouselExample = () => (
