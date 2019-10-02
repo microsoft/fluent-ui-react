@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Menu, Popup } from '@stardust-ui/react'
+import { Menu, Popup, Button } from '@stardust-ui/react'
 
 export const selectors = {
   menuId: 'menu',
@@ -12,6 +12,7 @@ const items = [
   { key: 'editorials', content: 'Editorials' },
   { key: 'review', content: 'Reviews' },
   { key: 'events', content: 'Upcoming Events' },
+  { key: 'focus-trap', content: 'Focus trap' },
 ]
 
 const PopupInMenuExample = () => (
@@ -25,6 +26,16 @@ const PopupInMenuExample = () => (
 )
 
 const renderItem = (MenuItem, props, index) => {
+  if (props.key === 'focus-trap') {
+    return (
+      <Popup
+        key={index}
+        trigger={<MenuItem id={selectors.menuItemId(index)} {...props} />}
+        trapFocus
+        content={<Button content="Test Content" id={selectors.popupContentId(index)} />}
+      />
+    )
+  }
   return (
     <Popup
       key={index}

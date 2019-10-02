@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Tree } from '@stardust-ui/react'
+import { Tree, TreeItemProps } from '@stardust-ui/react'
 import { CellMeasurer, CellMeasurerCache, List as ReactVirtualizedList } from 'react-virtualized'
 import getItems from './itemsGenerator'
 
@@ -12,13 +12,45 @@ function TreeVirtualizer(props: TreeVirtualizerProps) {
     defaultHeight: 20,
     fixedWidth: true,
   })
+  const [scrollToIndex, setScrollToIndex] = React.useState()
+
+  const handleFocusParent = (
+    e: React.SyntheticEvent,
+    treeItemProps: TreeItemProps,
+    index: number,
+  ) => {
+    const { renderedItems } = props
+    const { parent } = treeItemProps
+
+    renderedItems[index].props.onFocusParent(e, treeItemProps)
+
+    if (!parent) {
+      return
+    }
+
+    const indexOfParent = renderedItems.findIndex(
+      (renderedItem: React.ReactElement) => renderedItem.props['id'] === parent['id'],
+    )
+
+    // If parent already visible, then it should be focused by Tree.
+    if (renderedItems[indexOfParent].props['contentRef'].current) {
+      return
+    }
+
+    setScrollToIndex(indexOfParent)
+  }
 
   const rowRenderer = ({ index, isScrolling, key, parent, style }) => {
     const { renderedItems } = props
 
     return (
       <CellMeasurer cache={cache} columnIndex={0} key={key} parent={parent} rowIndex={index}>
-        {React.cloneElement(renderedItems[index], { style })}
+        {React.cloneElement(renderedItems[index], {
+          style,
+          onFocusParent: (e, treeItemProps: TreeItemProps) => {
+            handleFocusParent(e, treeItemProps, index)
+          },
+        })}
       </CellMeasurer>
     )
   }
@@ -32,6 +64,15 @@ function TreeVirtualizer(props: TreeVirtualizerProps) {
       height={300}
       rowCount={props.renderedItems.length}
       width={600}
+      scrollToIndex={scrollToIndex}
+      onRowsRendered={() => {
+        if (scrollToIndex !== undefined) {
+          props.renderedItems[scrollToIndex].props.contentRef.current.focus()
+          // Once scrolling is complete we remove the index to avoid scrolling to the same
+          // item at every render.
+          setScrollToIndex(undefined)
+        }
+      }}
     />
   )
 }
