@@ -85,11 +85,11 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
   actionHandlers = {
     moveNext: e => {
       e.preventDefault()
-      this.handleNext(e)
+      this.handleNext(e, true)
     },
     movePrevious: e => {
       e.preventDefault()
-      this.handlePrevious(e)
+      this.handlePrevious(e, true)
     },
   }
 
@@ -98,6 +98,29 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
   }
 
   itemRefs: React.RefObject<HTMLElement>[] = []
+
+  focusItemAtIndex = _.debounce(index => {
+    this.itemRefs[index].current.focus()
+  }, 1000)
+
+  setActiveIndex(index: number, setFocus = false): void {
+    const { items } = this.props
+
+    if (index < 0 || index >= items.length) {
+      return
+    }
+
+    this.setState(
+      {
+        activeIndex: index,
+      },
+      () => {
+        if (setFocus) {
+          this.focusItemAtIndex(index)
+        }
+      },
+    )
+  }
 
   renderContent = (styles, accessibility, unhandledProps) => {
     const { items, renderItemSlide } = this.props
@@ -129,17 +152,12 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
     )
   }
 
-  handlePrevious = (e: React.SyntheticEvent) => {
-    this.setState(state => ({
-      activeIndex: state.activeIndex > 0 ? state.activeIndex - 1 : 0,
-    }))
+  handlePrevious = (e: React.SyntheticEvent, setFocus?: boolean) => {
+    this.setActiveIndex(this.state.activeIndex - 1, setFocus)
   }
 
-  handleNext = (e: React.SyntheticEvent) => {
-    const { items } = this.props
-    this.setState(state => ({
-      activeIndex: state.activeIndex < items.length - 1 ? state.activeIndex + 1 : items.length - 1,
-    }))
+  handleNext = (e: React.SyntheticEvent, setFocus?: boolean) => {
+    this.setActiveIndex(this.state.activeIndex + 1, setFocus)
   }
 
   renderControls = styles => {
@@ -200,14 +218,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
         overrideProps: (predefinedProps: MenuItemProps) => ({
           onItemClick: (e: React.SyntheticEvent, itemProps: MenuItemProps) => {
             const { index } = itemProps
-            this.setState({
-              activeIndex: index,
-            })
-
-            // ToDo: should probably be a debounce.
-            setTimeout(() => {
-              this.itemRefs[index].current.focus()
-            }, 1000)
+            this.setActiveIndex(index, true)
 
             _.invoke(predefinedProps, 'onClick', e, itemProps)
           },
