@@ -31,6 +31,7 @@ exports.onCreatePage = function({page, actions}) {
   if (
     page.context.frontmatter &&
     page.context.frontmatter.category === "Components" &&
+    page.path !== "/components" &&
     !/playground/.test(page.path)
   ) {
     page = injectComponentSchema(page, actions)
