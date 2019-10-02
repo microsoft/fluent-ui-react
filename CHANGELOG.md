@@ -21,7 +21,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix `bodyBackground` color for Teams dark theme to be the correct grey value @codepretty ([#1961](https://github.com/stardust-ui/react/pull/1961))
 - Updating `Button` styles for Teams dark & high contrast themes to match design @notandrew ([#1933](https://github.com/stardust-ui/react/pull/1933))
 - Update Office brand icons in Teams theme with latest version @notandrew ([#1954](https://github.com/stardust-ui/react/pull/1954))
-- Improve documentation for Accordion, Alert, Animation, Attachment, Avatar, Button, Chat, Checkbox, Dialog, Divider, Dropdown ([#1992](https://github.com/stardust-ui/react/pull/1992))
+- Fix documentation for Accordion, Alert, Animation, Attachment, Avatar, Button, Chat, Checkbox, Dialog, Divider, and Dropdown @davezuko ([#1992](https://github.com/stardust-ui/react/pull/1992))
 
 ### Features
 - Add experimental runtime accessibility attributes validation (the initial step validates the Button component only) @mshoho ([#1911](https://github.com/stardust-ui/react/pull/1911))
