@@ -61,6 +61,7 @@
 
 @media screen and (max-width: 568px) {
   .home-wrapper {
+    min-height: auto;
     align-items: start;
     margin: 3rem 0 0;
   }
