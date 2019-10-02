@@ -36,7 +36,7 @@ export interface AvatarProps extends UIComponentProps {
   /** Shorthand for the status of the user. */
   status?: ShorthandValue<StatusProps>
 
-  /** Custom method for generating the initials from the name property, shown in the avatar if there is no image provided. */
+  /** Custom method for generating the initials from the name property, which is shown if no image is provided. */
   getInitials?: (name: string) => string
 }
 
@@ -125,6 +125,6 @@ class Avatar extends UIComponent<WithAsProp<AvatarProps>, any> {
 Avatar.create = createShorthandFactory({ Component: Avatar, mappedProp: 'name' })
 
 /**
- * An Avatar is a graphic representation of a user.
+ * An Avatar is a graphical representation of a user.
  */
 export default withSafeTypeForAs<typeof Avatar, AvatarProps>(Avatar)

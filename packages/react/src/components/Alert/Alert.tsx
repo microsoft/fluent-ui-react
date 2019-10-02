@@ -45,7 +45,7 @@ export interface AlertProps
    */
   accessibility?: Accessibility
 
-  /** An Alert can contain action buttons. */
+  /** An alert can contain action buttons. */
   actions?: ShorthandValue<ButtonGroupProps> | ShorthandCollection<ButtonProps>
 
   /** An alert may contain an icon. */
@@ -54,7 +54,7 @@ export interface AlertProps
   /** An alert may contain a header. */
   header?: ShorthandValue<TextProps>
 
-  /** Controls Alert's relation to neighboring items. */
+  /** An alert's position relative to neighboring items. */
   attached?: boolean | 'top' | 'bottom'
 
   /** An alert can only take up the width of its content. */
@@ -86,22 +86,22 @@ export interface AlertProps
   onDismiss?: ComponentEventHandler<AlertProps>
 
   /**
-   * Called after user's focus.
+   * Called after the alert is focused.
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props.
    */
   onFocus?: ComponentEventHandler<AlertProps>
 
-  /** An alert may be formatted to display a successful message. */
+  /** An alert can be formatted to display a successful message. */
   success?: boolean
 
   /** An alert can be set to visible to force itself to be shown. */
   visible?: boolean
 
-  /** An alert may be formatted to display a warning message. */
+  /** An alert can be formatted to display a warning message. */
   warning?: boolean
 
-  /** Body contains header and content elements. */
+  /** An alert can have a body that contains header and content elements. */
   body?: ShorthandValue<BoxProps>
 }
 
@@ -256,7 +256,7 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
 }
 
 /**
- * An Alert displays a brief, important message to attract the user's attention without interrupting the user's task.
+ * An Alert displays a brief, important message to attract a user's attention without interrupting their current task.
  *
  * @accessibility
  * Implements [ARIA Alert](https://www.w3.org/TR/wai-aria-practices-1.1/#alert) design pattern.
