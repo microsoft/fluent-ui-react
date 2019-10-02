@@ -5,6 +5,8 @@ import {Search} from "@standard-ui-docs/search"
 import {observer} from "mobx-react"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome"
 import {faSun, faMoon} from "@fortawesome/free-solid-svg-icons"
+import {faFile} from "@fortawesome/free-regular-svg-icons"
+import {faGithub} from "@fortawesome/free-brands-svg-icons"
 import {useStore} from "../store"
 
 export function Navbar() {
@@ -14,6 +16,7 @@ export function Navbar() {
         <Brand />
         <Links />
         <SiteSearch />
+        <MetaLinks />
         <ThemePicker />
       </div>
     </header>
@@ -28,6 +31,7 @@ function Brand() {
         alt="Stardust UI logo"
         title="Stardust UI logo"
         src="/favicon.png"
+        hidden
       />
       <span className="navbar-title">Stardust UI</span>
     </Link>
@@ -106,6 +110,29 @@ function useSearchIndex() {
         }
       })
   }, [result])
+}
+
+function MetaLinks() {
+  return (
+    <div className="navbar-meta-links">
+      <a
+        href="https://github.com/stardust-ui/react"
+        title="Github"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <FontAwesomeIcon icon={faGithub} />
+      </a>
+      <a
+        href="https://github.com/stardust-ui/react/blob/master/CHANGELOG.md"
+        title="Changelog"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <FontAwesomeIcon icon={faFile} />
+      </a>
+    </div>
+  )
 }
 
 const ThemePicker = observer(() => {

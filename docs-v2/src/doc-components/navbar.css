@@ -40,8 +40,28 @@
   font-size: 2.5rem;
   text-decoration: none;
   font-weight: 900;
-  color: inherit;
   white-space: nowrap;
+  line-height: 1em;
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    from(#cc3721),
+    color-stop(#f69570),
+    color-stop(#b024d6),
+    color-stop(#c42974),
+    to(#cf2e3e)
+  );
+  background: linear-gradient(
+    to right,
+    #cc3721,
+    #f69570,
+    #b024d6,
+    #c42974,
+    #cf2e3e
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .navbar-logo {
@@ -95,9 +115,8 @@
 .sui-theme-picker {
   --accent: var(--sui-accent-color-bold);
 
-  margin: 0 0 0 1rem;
   padding: 0.75rem;
-  font-size: 1.25rem;
+  font-size: 1rem;
   cursor: pointer;
   outline: none;
   background: none;
@@ -113,6 +132,22 @@
 .sui-theme-picker:hover {
   box-shadow: 0 0 1rem -0.25rem var(--accent),
     inset 0 0 1rem -0.25rem var(--accent);
+}
+
+.navbar-meta-links {
+  margin-left: 1.5rem;
+}
+
+.navbar-meta-links a {
+  margin: 0 1.5rem 0 0;
+  color: var(--sui-color-muted);
+  text-decoration: none;
+  font-size: 2.25rem;
+}
+
+.navbar-meta-links a:hover,
+.navbar-meta-links a:focus {
+  color: var(--sui-accent-color-bold, var(--sui-accent-color));
 }
 
 @media screen and (max-width: 768px) {
