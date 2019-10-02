@@ -1,3 +1,4 @@
+import { Accessibility, checkboxBehavior } from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -15,8 +16,6 @@ import {
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Icon, { IconProps } from '../Icon/Icon'
 import Text, { TextProps } from '../Text/Text'
-import { Accessibility } from '../../lib/accessibility/types'
-import { checkboxBehavior } from '../../lib/accessibility'
 import { SupportedIntrinsicInputProps } from '../../lib/htmlPropsUtils'
 
 export interface CheckboxSlotClassNames {

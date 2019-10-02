@@ -10,7 +10,7 @@ import {
   rtlTextContainer,
   ColorComponentProps,
 } from '../../lib'
-import { Accessibility } from '../../lib/accessibility/types'
+import { Accessibility } from '@stardust-ui/accessibility'
 
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Box, { BoxProps } from '../Box/Box'

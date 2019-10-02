@@ -12,7 +12,7 @@ import {
   ContentComponentProps,
   ShorthandFactory,
 } from '../../lib'
-import { Accessibility } from '../../lib/accessibility/types'
+import { Accessibility } from '@stardust-ui/accessibility'
 
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Icon, { IconProps } from '../Icon/Icon'
