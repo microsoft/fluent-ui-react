@@ -9,6 +9,7 @@ export {wrapRootElement}
 // theme to be downloaded and applied to the document.
 autorun(() => loadTheme(store.theme))
 async function loadTheme(theme) {
+  localStorage.setItem("theme", theme)
   switch (theme) {
     case "light":
       await import("./src/global-css/themes/light.css")
@@ -20,9 +21,4 @@ async function loadTheme(theme) {
       throw new Error("Unknown theme: " + theme)
   }
   document.body.setAttribute("data-theme", theme)
-}
-
-// Expose debug tools when in development
-if (process.env.NODE_ENV === "development") {
-  window.store = store
 }

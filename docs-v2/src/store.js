@@ -16,7 +16,7 @@ export class Store {
     if (typeof window !== "undefined") {
       const savedTheme = localStorage.getItem("theme")
       if (savedTheme) {
-        this.setTheme(savedTheme)
+        return savedTheme
       }
     }
     return "light"
