@@ -1,11 +1,11 @@
 import { pxToRem } from '../../../../lib'
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { ButtonGroupProps } from '../../../../components/Button/ButtonGroup'
 
 const commonButtonsStyles = (circular: boolean) =>
   circular ? { marginRight: pxToRem(8) } : { borderRadius: 0 }
 
-const buttonGroupStyles: ComponentSlotStylesInput<ButtonGroupProps, any> = {
+const buttonGroupStyles: ComponentSlotStylesPrepared<ButtonGroupProps, any> = {
   root: (): ICSSInJSStyle => ({}),
   middleButton: ({ props: p }) => ({
     ...commonButtonsStyles(p.circular),

@@ -9,6 +9,7 @@ import arrowLeft from './arrowLeft'
 import arrowRight from './arrowRight'
 import audioOff from './audioOff'
 import ban from './ban'
+import bellMute from './bellMute'
 import bold from './bold'
 import bookmark from './bookmark'
 import broadcast from './broadcast'
@@ -99,6 +100,7 @@ import messageSeen from './messageSeen'
 import mic from './mic'
 import micOff from './micOff'
 import more from './more'
+import notes from './notes'
 import oneDrive from './oneDrive'
 import microsoftStream from './microsoftStream'
 import userPhone from './userPhone'
@@ -126,6 +128,7 @@ import reply from './reply'
 import retry from './retry'
 import shareAlt from './shareAlt'
 import skypeLogo from './skypeLogo'
+import snooze from './snooze'
 import search from './search'
 import send from './send'
 import settings from './settings'
@@ -166,6 +169,7 @@ export default {
   'arrow-right': arrowRight,
   'audio-off': audioOff,
   ban,
+  'bell-slash': bellMute,
   bold,
   bookmark,
   broadcast,
@@ -246,6 +250,7 @@ export default {
   menu,
   'message-seen': messageSeen,
   mic,
+  notes,
   'speaker-mute': speakerMute,
   hand,
   'mic-off': micOff,
@@ -280,6 +285,7 @@ export default {
   send,
   settings,
   'share-alt': shareAlt,
+  'bell-snooze': snooze,
   star,
   sticker,
   strike,

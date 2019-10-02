@@ -1,15 +1,18 @@
-import { Portal, Tooltip, createComponent } from '@stardust-ui/react'
+import { Portal, Tooltip, createComponent, TooltipProps } from '@stardust-ui/react'
 import * as React from 'react'
 
 type NotificationProps = {
-  children?: React.ReactNode
+  content: React.ReactNode
+  target?: HTMLElement
+  trigger?: JSX.Element
 }
 
 type NotificationContextValue = (
-  value: React.ReactNode,
-  targetRef: React.MutableRefObject<HTMLElement>,
+  content: React.ReactNode,
+  targe: HTMLElement | null,
   timeout: number,
 ) => void
+
 export const NotificationContext = React.createContext<NotificationContextValue>(() => {
   throw new Error('No matching NotificationContext.Provider')
 })
@@ -17,15 +20,15 @@ export const NotificationContext = React.createContext<NotificationContextValue>
 export const NotificationProvider: React.FC = props => {
   const { children } = props
   const [notification, setNotification] = React.useState<React.ReactNode>()
-  const [targetRef, setTargetRef] = React.useState<React.MutableRefObject<HTMLElement>>()
+  const [target, setTarget] = React.useState<HTMLElement | null>()
   const timeoutId = React.useRef<number>()
 
-  const update = React.useCallback<NotificationContextValue>((value, targetRef, timeout) => {
-    setNotification(value)
-    setTargetRef(targetRef)
+  const update = React.useCallback<NotificationContextValue>((notification, target, timeout) => {
+    setNotification(notification)
+    setTarget(target)
     timeoutId.current = window.setTimeout(() => {
       setNotification(null)
-      setTargetRef(null)
+      setTarget(null)
     }, timeout)
   }, [])
 
@@ -35,21 +38,7 @@ export const NotificationProvider: React.FC = props => {
 
   return (
     <>
-      {!!targetRef ? (
-        !!notification && (
-          <Tooltip
-            content={notification}
-            pointing={true}
-            open={!!notification}
-            target={targetRef.current}
-            variables={{ primary: true }}
-          />
-        )
-      ) : (
-        <Portal open={!!notification}>
-          (<Notification>{notification}</Notification>)
-        </Portal>
-      )}
+      {!!notification && <Notification target={target} content={notification} />}
       <NotificationContext.Provider value={update}>{children}</NotificationContext.Provider>
     </>
   )
@@ -57,13 +46,30 @@ export const NotificationProvider: React.FC = props => {
 
 export const Notification = createComponent<NotificationProps>({
   displayName: 'Notification',
-  render: ({ children, stardust: { classes } }) => {
+  render: ({ target, trigger, content, stardust: { classes } }) => {
+    const tooltipProps: TooltipProps = {
+      content,
+      open: true,
+      pointing: false,
+      target,
+      trigger,
+    }
+
+    if (target || trigger) {
+      return Tooltip.create({ ...tooltipProps, offset: '0 10' })
+    }
+
     return (
-      <div className={classes.root}>
-        <div className={classes.overlay}>
-          <div className={classes.content}>{children}</div>
+      <Portal open={true}>
+        <div className={classes.root}>
+          <div className={classes.overlay}>
+            {Tooltip.create({
+              ...tooltipProps,
+              trigger: <div className={classes.content} />,
+            })}
+          </div>
         </div>
-      </div>
+      </Portal>
     )
   },
 })

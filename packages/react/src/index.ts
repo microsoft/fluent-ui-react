@@ -174,6 +174,8 @@ export * from './components/Toolbar/ToolbarMenuDivider'
 export { default as ToolbarMenuDivider } from './components/Toolbar/ToolbarMenuDivider'
 export * from './components/Toolbar/ToolbarMenuItem'
 export { default as ToolbarMenuItem } from './components/Toolbar/ToolbarMenuItem'
+export * from './components/Toolbar/ToolbarMenuRadioGroup'
+export { default as ToolbarMenuRadioGroup } from './components/Toolbar/ToolbarMenuRadioGroup'
 export * from './components/Toolbar/ToolbarRadioGroup'
 export { default as ToolbarRadioGroup } from './components/Toolbar/ToolbarRadioGroup'
 
@@ -197,6 +199,9 @@ export * from './components/Reaction/Reaction'
 export { default as Reaction } from './components/Reaction/Reaction'
 export * from './components/Reaction/ReactionGroup'
 export { default as ReactionGroup } from './components/Reaction/ReactionGroup'
+
+export * from './components/SplitButton/SplitButton'
+export { default as SplitButton } from './components/SplitButton/SplitButton'
 
 export * from './components/Video/Video'
 export { default as Video } from './components/Video/Video'

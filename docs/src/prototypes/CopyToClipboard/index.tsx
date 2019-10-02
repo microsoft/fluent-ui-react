@@ -7,7 +7,8 @@ import { NotificationProvider } from './NotificationProvider'
 
 type CopyToClipboardPrototypeProps = {
   value: string
-  attached?: boolean
+  target?: HTMLElement
+  attach?: boolean
 }
 
 const CopyToClipboardPrototype: React.FC<CopyToClipboardPrototypeProps> = props => {
@@ -17,8 +18,8 @@ const CopyToClipboardPrototype: React.FC<CopyToClipboardPrototypeProps> = props 
       <Text content={props.value} color="brand" />
 
       <CopyToClipboard
-        attached={props.attached}
-        pointing
+        attach={props.attach}
+        target={props.target}
         value={props.value}
         trigger={<Button iconOnly icon="clipboard-copied-to" />}
       />
@@ -27,6 +28,23 @@ const CopyToClipboardPrototype: React.FC<CopyToClipboardPrototypeProps> = props 
 }
 
 const CopyToClipboardInMenu: React.FC = props => {
+  const item = {
+    key: 'edit',
+    content: 'Edit',
+    menu: [
+      'Open File...',
+      'Save File...',
+      render =>
+        render('Copy text', (Component, props) => {
+          return <CopyToClipboard value={'Julius Caesar'} trigger={<Component {...props} />} />
+        }),
+    ],
+  }
+
+  return <Menu items={[item]} />
+}
+
+const CopyToClipboardAttached: React.FC = props => {
   const targetRef = React.useRef<HTMLElement>(null)
 
   const item = {
@@ -39,10 +57,7 @@ const CopyToClipboardInMenu: React.FC = props => {
         render('Copy text', (Component, props) => {
           return (
             <CopyToClipboard
-              targetRef={targetRef}
-              position="after"
-              align="bottom"
-              pointing
+              target={targetRef.current}
               value={'Julius Caesar'}
               trigger={<Component {...props} />}
             />
@@ -76,7 +91,7 @@ const CopyToClipboardPrototypes: React.FC = () => {
             title="Attached"
             description="Attached version of Copy to Clipboard prototype"
           >
-            <CopyToClipboardPrototype attached value={commitID} />
+            <CopyToClipboardPrototype attach={true} value={commitID} />
           </ComponentPrototype>
           <ComponentPrototype
             title="Not Attached"
@@ -89,6 +104,12 @@ const CopyToClipboardPrototypes: React.FC = () => {
             description="Copy to Clipboard can reside within a menu"
           >
             <CopyToClipboardInMenu />
+          </ComponentPrototype>
+          <ComponentPrototype
+            title="In Menu Attached"
+            description="Copy to Clipboard can be attached to a different element"
+          >
+            <CopyToClipboardAttached />
           </ComponentPrototype>
         </NotificationProvider>
       </Provider>
