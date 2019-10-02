@@ -52,7 +52,7 @@ const CATEGORY_MAPPINGS = {
 // The schema generator needs to extract some information directly off of
 // React component classes, so we must register this script with ts-node
 // in order to import those classes from source.
-require("ts-node").register()
+require("ts-node-alias-to-fix-gulp-conflict").register()
 require("tsconfig-paths").register({
   baseUrl: path.resolve(__dirname, "../../"),
   paths: {

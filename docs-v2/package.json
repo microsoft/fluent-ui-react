@@ -46,7 +46,7 @@
     "gatsby-transformer-remark": "^2.6.26",
     "gatsby-transformer-sharp": "^2.2.19",
     "prettier": "^1.18.2",
-    "ts-node": "^8.4.1",
+    "ts-node-alias-to-fix-gulp-conflict": "npm:ts-node@^8.4.1",
     "worker-farm": "^1.7.0"
   },
   "dependencies": {

@@ -1,6 +1,6 @@
 import { task, series, parallel, src, dest } from 'gulp'
 import babel from 'gulp-babel'
-import * as rimraf from 'rimraf'
+import rimraf from 'rimraf'
 import webpack from 'webpack'
 import { argv } from 'yargs'
 
