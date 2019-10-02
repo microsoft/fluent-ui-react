@@ -62,6 +62,14 @@ module.exports = {
         icon: "static/favicon.png"
       }
     },
+    {
+      resolve: "gatsby-plugin-google-analytics",
+      options: {
+        trackingId: "UA-48163724-5",
+        head: false,
+        respectDNT: true
+      }
+    },
     // Alias all @stardust-ui imports so that they are imported from the
     // monorepo. This allows developers to make changes to the Stardust library
     // and see them in the doc site without any additional build step.
