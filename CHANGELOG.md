@@ -26,6 +26,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add experimental runtime accessibility attributes validation (the initial step validates the Button component only) @mshoho ([#1911](https://github.com/stardust-ui/react/pull/1911))
 - Add `sync` icon to Teams theme @codepretty ([#1973](https://github.com/stardust-ui/react/pull/1973))
 - Add `bell` icon to Teams theme @codepretty ([#1993](https://github.com/stardust-ui/react/pull/1993))
+- Add `thumbtack`, `thumbtack-slash` and `question-circle` icons to Teams theme @codepretty ([#2000](https://github.com/stardust-ui/react/pull/2000))
 
 <!--------------------------------[ v0.39.0 ]------------------------------- -->
 ## [v0.39.0](https://github.com/stardust-ui/react/tree/v0.39.0) (2019-09-23)
