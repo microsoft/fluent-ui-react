@@ -28,7 +28,7 @@ export default () => {
         },
       }}
     >
-      <DocPage title="Color schemes">
+      <DocPage title="Category color schemes">
         <Flex column>
           <Dropdown
             items={[

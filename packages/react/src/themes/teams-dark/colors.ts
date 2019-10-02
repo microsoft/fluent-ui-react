@@ -310,7 +310,7 @@ export const categoryColorScheme: TeamsCategoryColorSchemeMapping = {
   steelLight: createCategoryColorScheme('steelLight'),
   neon: createCategoryColorScheme('neon'),
   formatting: {
-    foreground1: categoryColors.yellow[250],
+    foreground1: categoryColors.red[250],
     background1: categoryColors.red[700],
     foreground2: categoryColors.orangeDark[350],
     background2: categoryColors.orange[700],
