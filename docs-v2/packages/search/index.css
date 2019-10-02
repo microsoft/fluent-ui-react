@@ -13,7 +13,6 @@
   border: none;
   border-radius: 0.5rem;
   background: var(--sui-search-background);
-  transition: 0.2s width;
 }
 
 .sui-search__input::-webkit-input-placeholder {
@@ -27,6 +26,10 @@
 }
 .sui-search__input:-moz-placeholder {
   color: var(--sui-search-placeholder-color);
+}
+
+.sui-search__input.is-mobile {
+  display: none;
 }
 
 .sui-search__results {
@@ -67,4 +70,14 @@
 .sui-search-result__description {
   display: block;
   margin: 0;
+}
+
+@media screen and (max-width: 568px) {
+  .sui-search__input {
+    display: none;
+  }
+
+  .sui-search__input.is-mobile {
+    display: block;
+  }
 }

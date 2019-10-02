@@ -6,10 +6,27 @@ export function Search({pages, limit = 5}) {
   const [search, setSearch] = React.useState("")
   const [selectedResult, setSelectedResult] = React.useState()
   const [showResults, setShowResults] = React.useState(true)
+  const ref = React.useRef()
 
   // Enable keyboard shortcut to jump to search bar
-  const inputRef = React.useRef()
-  useKeyboardShortcut(inputRef)
+  useKeyboardShortcut()
+
+  React.useEffect(() => {
+    if (!showResults) {
+      return
+    }
+
+    function handleClick(e) {
+      if (!ref.current.contains(e.target)) {
+        setShowResults(false)
+      }
+    }
+
+    document.addEventListener("click", handleClick)
+    return () => {
+      document.removeEventListener("click", handleClick)
+    }
+  }, [showResults, ref])
 
   // Get search results for current input
   const results = React.useMemo(() => {
@@ -19,7 +36,18 @@ export function Search({pages, limit = 5}) {
 
   // Categorize those results for rendering
   const categorizedResults = React.useMemo(() => {
-    return categorizeResults(results)
+    const categories = categorizeResults(results)
+
+    // FIXME: hack for ordering results for keyboard navigation once they've
+    // been grouped by category.
+    let idx = 0
+    for (const c of categories) {
+      for (const r of c.results) {
+        r.index = idx++
+      }
+    }
+
+    return categories
   }, [results])
 
   // If no result is currently selected, select the first one
@@ -35,15 +63,13 @@ export function Search({pages, limit = 5}) {
       case "ArrowUp":
       case "ArrowDown": {
         e.preventDefault()
-        let currIdx = results.indexOf(selectedResult)
-        if (currIdx === -1) {
-          currIdx = 0
-        }
+        let currIdx = selectedResult.index || 0
         const nextIdx =
           e.key === "ArrowUp"
             ? Math.max(currIdx - 1, 0)
             : Math.min(currIdx + 1, results.length - 1)
-        const result = results[nextIdx]
+
+        const result = results.find(r => r.index === nextIdx)
         if (result) {
           setSelectedResult(result)
         }
@@ -65,17 +91,24 @@ export function Search({pages, limit = 5}) {
     }
   }
 
+  const input = (
+    <input
+      className="sui-search__input"
+      placeholder="Press / to search"
+      value={search}
+      onChange={e => setSearch(e.target.value)}
+      onKeyDown={handleKeydown}
+      onFocus={() => setShowResults(true)}
+    />
+  )
+
   return (
-    <div className="sui-search" onBlur={() => setShowResults(false)}>
-      <input
-        className="sui-search__input"
-        placeholder="Press / to search..."
-        value={search}
-        onChange={e => setSearch(e.target.value)}
-        onKeyDown={handleKeydown}
-        onFocus={() => setShowResults(true)}
-        ref={inputRef}
-      />
+    <div className="sui-search" ref={ref}>
+      {input}
+      {React.cloneElement(input, {
+        className: "sui-search__input is-mobile",
+        placeholder: "Search the docs"
+      })}
       {showResults && categorizedResults.length > 0 && (
         <SearchResults
           categories={categorizedResults}
@@ -154,22 +187,32 @@ function categorizeResults(results) {
     }
     map.get(result.category).push(result)
   }
+
   return [...map.entries()].map(([category, results]) => {
     return {id: category, results}
   })
 }
 
-function useKeyboardShortcut(inputRef) {
+function useKeyboardShortcut() {
   React.useEffect(() => {
     function handleKeydown(e) {
-      if (e.key === "/" && inputRef.current) {
-        e.preventDefault()
-        inputRef.current.focus()
+      if (e.key === "/") {
+        const input = [...document.querySelectorAll(".sui-search__input")].find(
+          isVisible
+        )
+        if (input) {
+          e.preventDefault()
+          input.focus()
+        }
       }
     }
     document.addEventListener("keydown", handleKeydown)
     return () => {
       document.removeEventListener("keydown", handleKeydown)
     }
-  }, [inputRef])
+  }, [])
+}
+
+function isVisible(node) {
+  return node.offsetParent !== null
 }
