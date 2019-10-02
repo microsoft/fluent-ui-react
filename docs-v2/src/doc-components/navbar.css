@@ -71,6 +71,8 @@
 .navbar-link:focus {
   color: var(--sui-accent-color-bold, var(--sui-accent-color));
   background: var(--sui-accent-color-background);
+  outline-size: 1px;
+  outline-offset: -2px;
 }
 
 .navbar-link.is-active::after {
@@ -107,6 +109,7 @@
   transition: 0.2s;
 }
 
+.sui-theme-picker:focus,
 .sui-theme-picker:hover {
   box-shadow: 0 0 1rem -0.25rem var(--accent),
     inset 0 0 1rem -0.25rem var(--accent);
