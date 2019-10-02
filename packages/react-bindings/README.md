@@ -35,16 +35,13 @@ A React hook that provides bindings for state managers.
 
 ### Usage 
 
-The examples below assume a component called `<Counter>` will be used this way:
+The examples below assume a component called `<Input>` will be used this way:
 
 ```tsx
-import { useStateManager } from "@stardust-ui/react-bindings";
-import { createManager, ManagerFactory } from "@stardust-ui/state";
-
 type InputProps = {
   defaultValue?: string;
   value?: string;
-  onChange: (value: string) => void;
+  onChange?: (value: string) => void;
 };
 type InputState = { value: string };
 type InputActions = { change: (value: string) => void };
@@ -58,17 +55,17 @@ const createInputManager: ManagerFactory<InputState, InputActions> = config =>
     state: { value: "", ...config.state }
   });
 
-const Input: React.FC<InputProps> = () => {
-  const [state, actions] = useStateManager(createToggleManager, {
-    mapPropsToInitialState = () => ({ value: props.defaultValue }),
-    mapPropsToState = () => ({ value: props.value })
+const Input: React.FC<InputProps> = props => {
+  const [state, actions] = useStateManager(createInputManager, {
+    mapPropsToInitialState: () => ({ value: props.defaultValue }),
+    mapPropsToState: () => ({ value: props.value })
   });
 
   return (
     <input
       onChange={e => {
         actions.change(e.target.value);
-        if (props.onChange) onChange(e.target.value);
+        if (props.onChange) props.onChange(e.target.value);
       }}
       value={state.value}
     />
@@ -79,7 +76,7 @@ const Input: React.FC<InputProps> = () => {
 ### Reference
 
 ```tsx
-const [state, actions] = useStateManager(createToggleManager)
+const [state, actions] = useStateManager(createInputManager)
 const [state, actions] = useStateManager(
   managerFactory: ManagerFactory<State, Actions>, 
   options: UseStateManagerOptions<Props>,
