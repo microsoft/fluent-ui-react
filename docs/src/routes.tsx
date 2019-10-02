@@ -12,7 +12,9 @@ import * as Layout from './pages/Layout.mdx'
 import Accessibility from './views/Accessibility'
 import Colors from './views/Colors'
 import ColorPalette from './views/ColorPalette'
+import CategoryColorPalette from './views/CategoryColorPalette'
 import ColorSchemes from './views/ColorSchemes'
+import CategoryColorSchemes from './views/CategoryColorSchemes'
 
 import FAQ from './views/FAQ'
 import * as ShorthandProps from './pages/ShorthandProps.mdx'
@@ -98,7 +100,9 @@ const Routes = () => (
           </Route>
           <Route exact path="/colors" component={Colors} />
           <Route exact path="/color-palette" component={ColorPalette} />
+          <Route exact path="/color-palette-category" component={CategoryColorPalette} />
           <Route exact path="/color-schemes" component={ColorSchemes} />
+          <Route exact path="/color-schemes-category" component={CategoryColorSchemes} />
           <Route exact path="/*" component={PageNotFound} />
         </Switch>
       </DocsLayout>
