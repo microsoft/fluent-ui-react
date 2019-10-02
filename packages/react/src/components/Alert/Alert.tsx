@@ -1,3 +1,4 @@
+import { Accessibility, alertBehavior } from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -12,8 +13,6 @@ import {
   rtlTextContainer,
 } from '../../lib'
 import { RenderResultConfig } from '../../lib/renderComponent'
-import { alertBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
 import {
   ComponentEventHandler,
   WithAsProp,

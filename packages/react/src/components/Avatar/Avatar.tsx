@@ -1,10 +1,10 @@
+import { Accessibility } from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import Image, { ImageProps } from '../Image/Image'
 import Label, { LabelProps } from '../Label/Label'
 import Status, { StatusProps } from '../Status/Status'
-import { Accessibility } from '../../lib/accessibility/types'
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import {
   createShorthandFactory,

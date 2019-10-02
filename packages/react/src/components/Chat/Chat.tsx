@@ -1,3 +1,4 @@
+import { Accessibility, chatBehavior } from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -13,8 +14,6 @@ import {
 import ChatItem, { ChatItemProps } from './ChatItem'
 import ChatMessage from './ChatMessage'
 import { WithAsProp, withSafeTypeForAs, ShorthandCollection } from '../../types'
-import { Accessibility } from '../../lib/accessibility/types'
-import { chatBehavior } from '../../lib/accessibility'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
 
 export interface ChatSlotClassNames {

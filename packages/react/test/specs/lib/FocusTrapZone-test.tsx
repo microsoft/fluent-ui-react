@@ -1,3 +1,4 @@
+import { FocusZoneDirection } from '@stardust-ui/accessibility'
 import * as React from 'react'
 import * as ReactTestUtils from 'react-dom/test-utils'
 import * as keyboardKey from 'keyboard-key'
@@ -5,7 +6,6 @@ import * as keyboardKey from 'keyboard-key'
 import {
   FocusTrapZone,
   FocusZone,
-  FocusZoneDirection,
   FocusTrapZoneProps,
 } from '../../../src/lib/accessibility/FocusZone'
 

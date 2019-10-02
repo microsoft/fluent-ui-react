@@ -1,3 +1,4 @@
+import { Accessibility } from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -15,7 +16,6 @@ import {
   createShorthandFactory,
   ShorthandFactory,
 } from '../../lib'
-import { Accessibility } from '../../lib/accessibility/types'
 import Button, { ButtonProps } from './Button'
 
 export interface ButtonGroupProps
