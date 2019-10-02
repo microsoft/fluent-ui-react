@@ -81,6 +81,7 @@
 
   .home-body ul {
     display: block;
+    margin: 3rem 0;
   }
 
   .home-body li a {
