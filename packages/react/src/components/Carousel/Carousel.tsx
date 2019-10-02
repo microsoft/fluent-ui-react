@@ -99,6 +99,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
 
   itemRefs: React.RefObject<HTMLElement>[] = []
 
+  // focus after animation ends.
   focusItemAtIndex = _.debounce(index => {
     this.itemRefs[index].current.focus()
   }, 1000)
@@ -218,6 +219,9 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
         overrideProps: (predefinedProps: MenuItemProps) => ({
           onItemClick: (e: React.SyntheticEvent, itemProps: MenuItemProps) => {
             const { index } = itemProps
+            // remove focus from tablist while animation.
+            const activeElement: Element = this.context.target.activeElement
+            if (activeElement instanceof HTMLElement) activeElement.blur()
             this.setActiveIndex(index, true)
 
             _.invoke(predefinedProps, 'onClick', e, itemProps)
