@@ -9,19 +9,31 @@ let componentSchemas
 // Generates all dynamic pages for the website (pages that do not have a file
 // in ./src/pages). Always prefer creating a page in src/pages.
 exports.createPages = async function({actions}) {
+  // Generate /components/:name/playground for each component
   componentSchemas = await inspect.components()
   for (const schema of componentSchemas) {
-    const page = generateComponentPlaygroundPage(schema)
+    const page = makeComponentPlaygroundPage(schema)
     actions.createPage(page)
   }
 }
 
+// Injects dynamic content into generated pages. This function should be used
+// sparingly to avoid diverging too far from Gatsby core.
 exports.onCreatePage = function({page, actions}) {
-  if (/\/components\/[\w-]+$/.test(page.path)) {
-    // FIXME: Remove when possible. Component detail pages need access to the
-    // component schema, but I'm not sure how to supply this information over
-    // a static graphql query in gatsby.
-    injectComponentSchema(page, actions)
+  // We avoid adding `category` to many pages' frontmatter because they are
+  // already categorized by their location in /pages. Add it at build time.
+  // TODO: should probably just add it to frontmatter for clarity...
+  page = injectPageCategory(page, actions)
+
+  // FIXME: Remove when possible. Component detail pages need access to the
+  // component JSON schema, but I'm not sure how to supply this information
+  // over a static graphql query in gatsby.
+  if (
+    page.context.frontmatter &&
+    page.context.frontmatter.category === "Components" &&
+    !/playground/.test(page.path)
+  ) {
+    page = injectComponentSchema(page, actions)
   }
 }
 
@@ -36,7 +48,7 @@ exports.onCreateWebpackConfig = function({getConfig, stage}) {
   }
 }
 
-function generateComponentPlaygroundPage(component) {
+function makeComponentPlaygroundPage(component) {
   return {
     path: `/components/${component.slug}/playground`,
     component: require.resolve(
@@ -46,6 +58,38 @@ function generateComponentPlaygroundPage(component) {
       schema: component
     }
   }
+}
+
+function injectPageCategory(page, actions) {
+  // Page already has a category.
+  if (page.context.frontmatter && page.context.frontmatter.category) {
+    return page
+  }
+
+  let category
+  switch (true) {
+    case /\/learn/.test(page.path):
+      category = "Learn"
+      break
+    case /\/components/.test(page.path):
+      category = "Components"
+      break
+    default:
+      category = "Site"
+  }
+  actions.deletePage(page)
+  page = {
+    ...page,
+    context: {
+      ...page.context,
+      frontmatter: {
+        category,
+        ...page.context.frontmatter
+      }
+    }
+  }
+  actions.createPage(page)
+  return page
 }
 
 function injectComponentSchema(page, actions) {
@@ -60,20 +104,19 @@ function injectComponentSchema(page, actions) {
     return
   }
 
-  const frontmatter = {
-    title: schema && schema.displayName,
-    description: schema && schema.description,
-    category: "components",
-    ...page.frontmatter
-  }
   actions.deletePage(page)
-  actions.createPage({
+  page = {
     ...page,
-    frontmatter,
     context: {
       ...page.context,
       schema,
-      frontmatter
+      frontmatter: {
+        title: schema.displayName,
+        description: schema.description,
+        ...page.frontmatter
+      }
     }
-  })
+  }
+  actions.createPage(page)
+  return page
 }

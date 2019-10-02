@@ -9,16 +9,14 @@ import {useStore} from "../store"
 
 export function Navbar() {
   return (
-    <>
-      <header className="navbar">
-        <div className="navbar-content">
-          <Brand />
-          <Links />
-          <SiteSearch />
-          <ThemePicker />
-        </div>
-      </header>
-    </>
+    <header className="navbar">
+      <div className="navbar-content">
+        <Brand />
+        <Links />
+        <SiteSearch />
+        <ThemePicker />
+      </div>
+    </header>
   )
 }
 
@@ -80,14 +78,13 @@ function useSearchIndex() {
   const result = useStaticQuery(graphql`
     query {
       allSitePage {
-        edges {
-          node {
-            path
-            context {
-              frontmatter {
-                title
-                description
-              }
+        nodes {
+          path
+          context {
+            frontmatter {
+              title
+              description
+              category
             }
           }
         }
@@ -95,22 +92,17 @@ function useSearchIndex() {
     }
   `)
   return React.useMemo(() => {
-    return result.allSitePage.edges
-      .filter(edge => edge.node.context && edge.node.context.frontmatter)
-      .map(({node}) => {
-        // FIXME: pages should have correct frontmatter at build time
-        const category =
-          node.context.frontmatter.category ||
-          (/\/learn/.test(node.path)
-            ? "Learn"
-            : /\/components/.test(node.path)
-            ? "Components"
-            : "Site")
+    return result.allSitePage.nodes
+      .filter(
+        node => node.context.frontmatter && node.context.frontmatter.category
+      )
+      .map(node => {
+        const {title, description, category} = node.context.frontmatter
         return {
-          href: node.path,
+          path: node.path,
           category,
-          title: node.context.frontmatter.title,
-          description: node.context.frontmatter.description
+          title,
+          description
         }
       })
   }, [result])

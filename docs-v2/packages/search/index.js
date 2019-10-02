@@ -104,8 +104,8 @@ function SearchResults({categories, selectedResult}) {
               }
               return (
                 <Link
-                  key={result.href}
-                  to={result.href}
+                  key={result.path}
+                  to={result.path}
                   className="sui-search-result"
                   data-is-selected={isSelected}
                 >
