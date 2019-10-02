@@ -9,6 +9,7 @@ export type FocusZoneDefinition = {
   props?: FocusZoneProperties
 }
 
+// Heads up! Keep in sync with FocusZone.types.ts
 export interface FocusZoneProperties {
   /**
    * Defines which arrows to react to.
