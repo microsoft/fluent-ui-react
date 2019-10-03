@@ -1,3 +1,4 @@
+import { Accessibility, inputBehavior } from '@stardust-ui/accessibility'
 import { handleRef, Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
@@ -14,8 +15,6 @@ import {
   commonPropTypes,
   applyAccessibilityKeyHandlers,
 } from '../../lib'
-import { Accessibility } from '../../lib/accessibility/types'
-import { inputBehavior } from '../../lib/accessibility'
 import { SupportedIntrinsicInputProps } from '../../lib/htmlPropsUtils'
 import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Icon, { IconProps } from '../Icon/Icon'

@@ -1,6 +1,6 @@
 import { colors } from '../teams/siteVariables'
 
-export { colorScheme } from './colors'
+export { colorScheme, categoryColorScheme } from './colors'
 
 //
 // BORDER STYLES
