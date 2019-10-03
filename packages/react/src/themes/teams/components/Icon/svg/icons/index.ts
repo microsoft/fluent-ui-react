@@ -103,6 +103,7 @@ import mic from './mic'
 import micOff from './micOff'
 import more from './more'
 import notes from './notes'
+import notificationsMuted from './notificationsMuted'
 import oneDrive from './oneDrive'
 import microsoftStream from './microsoftStream'
 import userPhone from './userPhone'
@@ -263,6 +264,7 @@ export default {
   'mic-off': micOff,
   more,
   'user-phone': userPhone,
+  'notifications-muted': notificationsMuted,
   'number-list': numberList,
   'open-outside': openOutside,
   outdent,
