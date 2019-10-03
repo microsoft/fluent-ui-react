@@ -1,4 +1,6 @@
+import { expandWithMerge } from 'inline-style-expand-shorthand'
 import * as _ from 'lodash'
+
 import {
   ComponentVariablesInput,
   ComponentVariablesPrepared,
@@ -21,7 +23,6 @@ import {
 import callable from './callable'
 import toCompactArray from './toCompactArray'
 import deepmerge from './deepmerge'
-import { expandWithMerge } from 'inline-style-expand-shorthand'
 
 export const emptyTheme: ThemePrepared = {
   siteVariables: {
@@ -53,17 +54,6 @@ export const mergeComponentStyles = (
       // We are replacing functions with a new ones that calls the originals.
       const originalTarget = partStylesPrepared[partName]
       const originalSource = partStyle
-
-      if (originalTarget === undefined) {
-        // @ts-ignore
-        partStylesPrepared[partName] = originalSource
-        return
-      }
-
-      if (originalSource === undefined) {
-        partStylesPrepared[partName] = originalTarget
-        return
-      }
 
       partStylesPrepared[partName] = styleParam => {
         return _.merge(
