@@ -1,3 +1,9 @@
+import {
+  Accessibility,
+  IS_FOCUSABLE_ATTRIBUTE,
+  chatMessageBehavior,
+  menuAsToolbarBehavior,
+} from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import { Ref } from '@stardust-ui/react-component-ref'
 import * as React from 'react'
@@ -26,17 +32,14 @@ import {
   withSafeTypeForAs,
   ShorthandCollection,
 } from '../../types'
-import { chatMessageBehavior, menuAsToolbarBehavior } from '../../lib/accessibility'
-import { IS_FOCUSABLE_ATTRIBUTE } from '../../lib/accessibility/FocusZone'
-import { Accessibility } from '../../lib/accessibility/types'
 
 import Box, { BoxProps } from '../Box/Box'
 import Label, { LabelProps } from '../Label/Label'
 import Menu, { MenuProps } from '../Menu/Menu'
+import { MenuItemProps } from '../Menu/MenuItem'
 import Text, { TextProps } from '../Text/Text'
 import Reaction, { ReactionProps } from '../Reaction/Reaction'
 import { ReactionGroupProps } from '../Reaction/ReactionGroup'
-import { MenuItemProps } from '@stardust-ui/react'
 import { ComponentSlotStylesPrepared } from '../../themes/types'
 
 export interface ChatMessageSlotClassNames {

@@ -1,4 +1,10 @@
+import {
+  FocusZoneDirection,
+  FocusZoneProperties,
+  FocusZoneTabbableElements,
+} from '@stardust-ui/accessibility'
 import * as React from 'react'
+
 import FocusZone from './FocusZone'
 
 /**
@@ -28,11 +34,14 @@ export interface IFocusZone {
   focusElement(childElement?: HTMLElement): boolean
 }
 
+// Heads up! Keep in sync with packages/accessibility/src/focusZone/types.ts
 /**
  * FocusZone component props.
  */
-export interface FocusZoneProps extends React.HTMLAttributes<HTMLElement | FocusZone> {
-  /** Element type the root element will use. */
+export interface FocusZoneProps
+  extends FocusZoneProperties,
+    React.HTMLAttributes<HTMLElement | FocusZone> {
+  /** @docSiteIgnore */
   as?: React.ReactType
   /**
    * Additional class name to provide on the root element, in addition to the ms-FocusZone class.
@@ -148,29 +157,4 @@ export interface FocusZoneProps extends React.HTMLAttributes<HTMLElement | Focus
    * If focus is on root element after componentDidUpdate, will attempt to restore the focus to inner element
    */
   restoreFocusFromRoot?: boolean
-}
-
-export enum FocusZoneTabbableElements {
-  /** Tabbing is not allowed */
-  none = 0,
-
-  /** All tabbing action is allowed */
-  all = 1,
-
-  /** Tabbing is allowed only on input elements */
-  inputOnly = 2,
-}
-
-export enum FocusZoneDirection {
-  /** Only react to up/down arrows. */
-  vertical = 0,
-
-  /** Only react to left/right arrows. */
-  horizontal = 1,
-
-  /** React to all arrows. */
-  bidirectional = 2,
-
-  /** React to all arrows. Navigate next item on right/down arrow keys and previous - left/up arrow keys. Vice versa in RTL mode. */
-  bidirectionalDomOrder = 3,
 }

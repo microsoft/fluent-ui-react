@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
-
+import { submenuBehavior, toolbarMenuItemCheckboxBehavior } from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 
 import {
@@ -17,7 +17,6 @@ import {
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
 import { ComponentEventHandler, ShorthandCollection, withSafeTypeForAs } from '../../types'
-import { submenuBehavior, toolbarMenuItemCheckboxBehavior } from '../../lib/accessibility'
 
 import ToolbarMenuRadioGroup, { ToolbarMenuRadioGroupProps } from './ToolbarMenuRadioGroup'
 import ToolbarMenuDivider from './ToolbarMenuDivider'

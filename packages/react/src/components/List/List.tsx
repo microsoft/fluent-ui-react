@@ -1,3 +1,4 @@
+import { Accessibility, listBehavior } from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -13,8 +14,6 @@ import {
   applyAccessibilityKeyHandlers,
 } from '../../lib'
 import ListItem, { ListItemProps } from './ListItem'
-import { listBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
 import {
   WithAsProp,
   ComponentEventHandler,

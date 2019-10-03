@@ -1,3 +1,4 @@
+import { AccessibilityAttributes } from '@stardust-ui/accessibility'
 import { EventListener } from '@stardust-ui/react-component-event-listener'
 import { handleRef, Ref, toRefObject } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
@@ -16,7 +17,6 @@ import {
 } from '../../lib'
 import PortalInner from './PortalInner'
 import { FocusTrapZone, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
-import { AccessibilityAttributes } from '../../lib/accessibility/types'
 import { AccessibilityHandlerProps } from '../../lib/accessibility/reactTypes'
 
 export type TriggerAccessibility = {

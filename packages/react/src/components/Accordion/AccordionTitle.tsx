@@ -1,3 +1,4 @@
+import { accordionTitleBehavior } from '@stardust-ui/accessibility'
 import { Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
@@ -19,7 +20,6 @@ import {
 import { WithAsProp, ComponentEventHandler, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Icon, { IconProps } from '../Icon/Icon'
 import Layout from '../Layout/Layout'
-import { accordionTitleBehavior } from '../../lib/accessibility'
 
 export interface AccordionTitleSlotClassNames {
   content: string

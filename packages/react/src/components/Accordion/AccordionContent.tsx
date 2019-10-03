@@ -1,3 +1,4 @@
+import { accordionContentBehavior } from '@stardust-ui/accessibility'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
@@ -14,7 +15,6 @@ import {
   ShorthandFactory,
 } from '../../lib'
 import { WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
-import { accordionContentBehavior } from '../../lib/accessibility'
 
 export interface AccordionContentProps
   extends UIComponentProps,
