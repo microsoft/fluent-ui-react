@@ -1,3 +1,4 @@
+import { Accessibility, popupBehavior } from '@stardust-ui/accessibility'
 import { EventListener } from '@stardust-ui/react-component-event-listener'
 import { NodeRef, Unstable_NestingAuto } from '@stardust-ui/react-component-nesting-registry'
 import { handleRef, toRefObject, Ref } from '@stardust-ui/react-component-ref'
@@ -29,10 +30,8 @@ import {
   PopperChildrenProps,
 } from '../../lib/positioner'
 import PopupContent, { PopupContentProps } from './PopupContent'
-import { popupBehavior } from '../../lib/accessibility'
 import { AutoFocusZoneProps, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 
-import { Accessibility } from '../../lib/accessibility/types'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 import { createShorthandFactory, ShorthandFactory } from '../../lib/factories'
 import createReferenceFromContextClick from './createReferenceFromContextClick'

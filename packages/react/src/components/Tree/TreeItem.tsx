@@ -5,8 +5,7 @@ import * as React from 'react'
 
 import { Ref } from '@stardust-ui/react-component-ref'
 import TreeTitle, { TreeTitleProps } from './TreeTitle'
-import { treeItemBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
+import { Accessibility, treeItemBehavior } from '@stardust-ui/accessibility'
 import {
   UIComponent,
   childrenExist,
@@ -127,7 +126,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>, TreeItemState> {
 
   static defaultProps = {
     as: 'div',
-    accessibility: treeItemBehavior,
+    accessibility: treeItemBehavior as Accessibility,
   }
 
   state = {

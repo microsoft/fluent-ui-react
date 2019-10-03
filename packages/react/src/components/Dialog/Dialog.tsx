@@ -1,3 +1,4 @@
+import { Accessibility, dialogBehavior } from '@stardust-ui/accessibility'
 import { Unstable_NestingAuto } from '@stardust-ui/react-component-nesting-registry'
 import { EventListener } from '@stardust-ui/react-component-event-listener'
 import { Ref, toRefObject } from '@stardust-ui/react-component-ref'
@@ -16,9 +17,7 @@ import {
   applyAccessibilityKeyHandlers,
   getOrGenerateIdFromShorthand,
 } from '../../lib'
-import { dialogBehavior } from '../../lib/accessibility'
 import { FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
-import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Button, { ButtonProps } from '../Button/Button'
 import ButtonGroup from '../Button/ButtonGroup'
@@ -50,13 +49,13 @@ export interface DialogProps
   /** A dialog can contain a cancel button. */
   cancelButton?: ShorthandValue<ButtonProps>
 
-  /** Controls whether or not a dialog should close when a click outside is happened. */
+  /** A dialog can be closed when a user clicks outside of it. */
   closeOnOutsideClick?: boolean
 
   /** A dialog can contain a confirm button. */
   confirmButton?: ShorthandValue<ButtonProps>
 
-  /** Initial value for 'open'. */
+  /** A dialog can be open by default. */
   defaultOpen?: boolean
 
   /** A dialog can contain a header. */
@@ -69,27 +68,27 @@ export interface DialogProps
   footer?: ShorthandValue<any>
 
   /**
-   * Called after user's click a cancel button.
+   * Called after a user clicks the cancel button.
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props.
    */
   onCancel?: ComponentEventHandler<DialogProps>
 
   /**
-   * Called after user's click a confirm button.
+   * Called after a user clicks the confirm button.
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props.
    */
   onConfirm?: ComponentEventHandler<DialogProps>
 
   /**
-   * Called after user's opened a dialog.
+   * Called after a user opens the dialog.
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props.
    */
   onOpen?: ComponentEventHandler<DialogProps>
 
-  /** Defines whether a dialog is displayed. */
+  /** A dialog's open state can be controlled. */
   open?: boolean
 
   /** A dialog can contain a overlay. */
@@ -137,7 +136,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
   }
 
   static defaultProps = {
-    accessibility: dialogBehavior,
+    accessibility: dialogBehavior as Accessibility,
     actions: {},
     backdrop: true,
     closeOnOutsideClick: true,
@@ -409,7 +408,7 @@ Dialog.slotClassNames = {
 }
 
 /**
- * A Dialog displays important information on top of a page which usually requires user's attention, confirmation or interaction.
+ * A Dialog displays important information on top of a page which requires a user's attention, confirmation, or interaction.
  * Dialogs are purposefully interruptive, so they should be used sparingly.
  *
  * @accessibility
