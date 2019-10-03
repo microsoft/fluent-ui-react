@@ -21,6 +21,7 @@ import {
 import callable from './callable'
 import toCompactArray from './toCompactArray'
 import deepmerge from './deepmerge'
+import { expandWithMerge } from 'inline-style-expand-shorthand'
 
 export const emptyTheme: ThemePrepared = {
   siteVariables: {
@@ -53,8 +54,22 @@ export const mergeComponentStyles = (
       const originalTarget = partStylesPrepared[partName]
       const originalSource = partStyle
 
+      if (originalTarget === undefined) {
+        // @ts-ignore
+        partStylesPrepared[partName] = originalSource
+        return
+      }
+
+      if (originalSource === undefined) {
+        partStylesPrepared[partName] = originalTarget
+        return
+      }
+
       partStylesPrepared[partName] = styleParam => {
-        return _.merge(callable(originalTarget)(styleParam), callable(originalSource)(styleParam))
+        return _.merge(
+          expandWithMerge(Object.assign({}, callable(originalTarget)(styleParam))),
+          expandWithMerge(Object.assign({}, callable(originalSource)(styleParam))),
+        )
       }
     })
 
