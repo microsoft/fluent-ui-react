@@ -26,6 +26,7 @@ import Box, { BoxProps } from '../Box/Box'
 import Header, { HeaderProps } from '../Header/Header'
 import Portal, { TriggerAccessibility } from '../Portal/Portal'
 import Flex from '../Flex/Flex'
+import DialogFooter from './DialogFooter'
 
 export interface DialogSlotClassNames {
   header: string
@@ -63,6 +64,9 @@ export interface DialogProps
 
   /** A dialog can contain a button next to the header. */
   headerAction?: ShorthandValue<ButtonProps>
+
+  /** A dialog can contain a footer. */
+  footer?: ShorthandValue<any>
 
   /**
    * Called after user's click a cancel button.
@@ -138,6 +142,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
     backdrop: true,
     closeOnOutsideClick: true,
     overlay: {},
+    footer: {},
     trapFocus: true,
   }
 
@@ -247,8 +252,30 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       overlay,
       trapFocus,
       trigger,
+      footer,
     } = this.props
     const { open } = this.state
+
+    const dialogActions = ButtonGroup.create(actions, {
+      defaultProps: {
+        styles: styles.actions,
+      },
+      overrideProps: {
+        content: (
+          <Flex gap="gap.smaller">
+            {Button.create(cancelButton, {
+              overrideProps: this.handleCancelButtonOverrides,
+            })}
+            {Button.create(confirmButton, {
+              defaultProps: {
+                primary: true,
+              },
+              overrideProps: this.handleConfirmButtonOverrides,
+            })}
+          </Flex>
+        ),
+      },
+    })
 
     const dialogContent = (
       <Ref innerRef={this.contentRef}>
@@ -286,7 +313,16 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
             },
           })}
 
-          {ButtonGroup.create(actions, {
+          {/* <div style={styles.footer}> */}
+          {DialogFooter.create(footer, {
+            overrideProps: {
+              actions: dialogActions,
+              styles: styles.footer,
+            },
+          })}
+          {/* </div> */}
+
+          {/* {ButtonGroup.create(actions, {
             defaultProps: {
               styles: styles.actions,
             },
@@ -305,7 +341,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
                 </Flex>
               ),
             },
-          })}
+          })} */}
         </ElementType>
       </Ref>
     )
