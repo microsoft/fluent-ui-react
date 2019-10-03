@@ -49,7 +49,6 @@ const createComponent = <P extends ObjectOf<any> = any>({
     return renderComponent(
       {
         className,
-        defaultProps,
         displayName,
         handledProps: _.keys(propTypes).concat(handledProps),
         props,

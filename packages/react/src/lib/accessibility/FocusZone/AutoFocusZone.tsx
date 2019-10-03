@@ -1,3 +1,4 @@
+import { getElementType, getUnhandledProps } from '@stardust-ui/react-bindings'
 import { Ref } from '@stardust-ui/react-component-ref'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
@@ -6,8 +7,6 @@ import * as _ from 'lodash'
 import { getNextElement, focusAsync } from './focusUtilities'
 
 import { AutoFocusZoneProps } from './AutoFocusZone.types'
-import getUnhandledProps from '../../getUnhandledProps'
-import getElementType from '../../getElementType'
 import callable from '../../callable'
 
 /** AutoFocusZone is used to focus inner element on mount. */
@@ -19,19 +18,16 @@ export default class AutoFocusZone extends React.Component<AutoFocusZoneProps> {
     firstFocusableSelector: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
   }
 
-  static handledProps = _.keys(AutoFocusZone.propTypes)
+  static handledProps = _.keys(AutoFocusZone.propTypes) as any
 
   componentDidMount(): void {
     this.findElementAndFocusAsync()
   }
 
   render(): JSX.Element {
-    const unhandledProps = getUnhandledProps(
-      { handledProps: AutoFocusZone.handledProps },
-      this.props,
-    )
+    const unhandledProps = getUnhandledProps(AutoFocusZone.handledProps, this.props)
 
-    const ElementType = getElementType({}, this.props) as React.ComponentClass<AutoFocusZoneProps>
+    const ElementType = getElementType(this.props)
 
     return (
       <Ref innerRef={this.root}>
