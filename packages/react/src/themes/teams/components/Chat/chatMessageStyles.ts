@@ -85,7 +85,7 @@ const chatMessageStyles: ComponentSlotStylesPrepared<
   actionMenu: ({ props: p, variables: v }): ICSSInJSStyle => ({
     backgroundColor: v.backgroundColor,
     border: '1px solid',
-    borderColor: v.reactionGroupBorder,
+    borderColor: v.reactionGroupBorderColor,
     borderRadius: v.borderRadius,
     boxShadow: v.actionMenuBoxShadow,
     // we need higher zIndex for the action menu in order to be displayed above the focus border of the chat message
