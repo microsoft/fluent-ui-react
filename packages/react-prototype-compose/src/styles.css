@@ -1,0 +1,13 @@
+.App {
+  font-family: sans-serif;
+  text-align: left;
+}
+
+.control-examples {
+  display: flex;
+}
+
+.control-example {
+  flex: 1;
+  padding: 1rem;
+}

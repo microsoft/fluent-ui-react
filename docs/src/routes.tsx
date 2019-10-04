@@ -44,6 +44,7 @@ import NestedPopupsAndDialogsPrototype from './prototypes/NestedPopupsAndDialogs
 import VirtualizedTreePrototype from './prototypes/VirtualizedTree'
 import CopyToClipboardPrototype from './prototypes/CopyToClipboard'
 import ParticipantsListPrototype from './prototypes/ParticipantsList'
+import ReactComposePrototype from './prototypes/ReactCompose'
 
 const Routes = () => (
   <BrowserRouter basename={__BASENAME__}>
@@ -80,6 +81,7 @@ const Routes = () => (
           />
           <Route exact path="/virtualized-tree" component={VirtualizedTreePrototype} />
           <Route exact path="/prototype-copy-to-clipboard" component={CopyToClipboardPrototype} />
+          <Route exact path="/prototype-react-compose" component={ReactComposePrototype} />
           <Route exact path="/faq" component={FAQ} />
           <Route exact path="/accessibility" component={Accessibility} />
           <Route exact path="/accessibility-behaviors" component={AccessibilityBehaviors} />

@@ -1,0 +1,48 @@
+{
+  "name": "@stardust-ui/react-prototype-compose",
+  "version": "0.0.1",
+  "bugs": "https://github.com/stardust-ui/react/issues",
+  "dependencies": {
+    "@stardust-ui/react": "^0.39.0",
+    "@babel/runtime": "^7.1.2",
+    "classnames": "^2.2.5",
+    "downshift": "~3.2.10",
+    "fast-memoize": "^2.5.1",
+    "fela": "^10.6.1",
+    "fela-plugin-embedded": "^10.6.1",
+    "fela-plugin-fallback-value": "^10.6.1",
+    "fela-plugin-placeholder-prefixer": "^10.6.1",
+    "fela-plugin-prefixer": "^10.6.1",
+    "fela-plugin-rtl": "^10.6.1",
+    "keyboard-key": "^1.0.1",
+    "lodash": "^4.17.15",
+    "popper.js": "^1.15.0",
+    "prop-types": "^15.7.2",
+    "react-fela": "^10.6.1",
+    "react-is": "^16.6.3",
+    "react-resize-detector": "^4.2.0"
+  },
+  "devDependencies": {
+    "@stardust-ui/internal-tooling": "^0.39.0",
+    "lerna-alias": "^3.0.3-0",
+    "qs": "^6.8.0"
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/stardust-ui/react#readme",
+  "jsnext:main": "dist/es/index.js",
+  "license": "MIT",
+  "main": "dist/commonjs/index.js",
+  "module": "dist/es/index.js",
+  "peerDependencies": {
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  },
+  "repository": "stardust-ui/react.git",
+  "scripts": {
+    "build": "gulp bundle:package --package react-prototype-compose"
+  },
+  "sideEffects": false,
+  "types": "dist/es/index.d.ts"
+}
