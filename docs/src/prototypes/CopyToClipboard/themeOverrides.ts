@@ -1,25 +1,11 @@
 import {
   ComponentSlotStylesInput,
-  ComponentVariablesInput,
-  pxToRem,
   ThemeInput,
 } from '@stardust-ui/react'
 
-type NotificationVariables = {
-  contentBackgroundColor: string
-  contentColor: string
-  contentBorderRadius: string
-  contentFontSize: string
-  contentFontWeight: number
-  contentPadding: string
-}
-
 type ThemeOverrides = ThemeInput & {
   componentStyles: {
-    Notification: ComponentSlotStylesInput<{}, NotificationVariables>
-  }
-  componentVariables: {
-    Notification: ComponentVariablesInput
+    Notification: ComponentSlotStylesInput
   }
 }
 
@@ -52,16 +38,6 @@ const themeOverrides: ThemeOverrides = {
         top: 0,
       }),
     },
-  },
-  componentVariables: {
-    Notification: (siteVariables): NotificationVariables => ({
-      contentBackgroundColor: siteVariables.colorScheme.default.foreground,
-      contentColor: siteVariables.colorScheme.default.background,
-      contentBorderRadius: pxToRem(3),
-      contentPadding: pxToRem(10),
-      contentFontSize: siteVariables.fontSizes.larger,
-      contentFontWeight: siteVariables.fontWeightSemibold,
-    }),
   },
 }
 

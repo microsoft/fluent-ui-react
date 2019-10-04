@@ -60,7 +60,7 @@ export const Notification = createComponent<NotificationProps>({
     }
 
     return (
-      <Portal open={true}>
+      <Portal open>
         <div className={classes.root}>
           <div className={classes.overlay}>
             {Tooltip.create({

@@ -7,7 +7,7 @@ import { Notification, NotificationContext } from './NotificationProvider'
 
 export type CopyToClipboardProps = {
   tooltip?: ShorthandValue<TooltipProps>
-  attach?: boolean
+  attached?: boolean
   target?: HTMLElement
   notification?: React.ReactNode
   timeout?: number
@@ -16,7 +16,7 @@ export type CopyToClipboardProps = {
 }
 
 const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
-  const { value, trigger, tooltip, attach, notification, timeout, target } = props
+  const { value, trigger, tooltip, attached, notification, timeout, target } = props
 
   const setNotification = React.useContext(NotificationContext)
   const [copied, setCopied] = React.useState<boolean>(false)
@@ -33,7 +33,7 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
   const handleTriggerClick = React.useCallback(
     (e: React.MouseEvent, ...args) => {
       setCopied(true)
-      if (!attach) {
+      if (!attached) {
         setNotification(notification, target, timeout)
       }
 
@@ -45,7 +45,7 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
 
   const renderedTrigger = React.cloneElement(trigger, { onClick: handleTriggerClick })
 
-  if (copied && attach) {
+  if (copied && attached) {
     return <Notification trigger={renderedTrigger} content={notification} />
   }
 
