@@ -8,13 +8,12 @@ import {
   Button,
   Popup,
   Dialog,
-  ShorthandValue,
-  MenuProps,
+  MenuItemProps,
 } from '@stardust-ui/react'
 import { PrototypeSection, ComponentPrototype } from '../Prototypes'
 
 const submenuWithScrollbars = (menu: MenuItemProps['menu'], height: string) => {
-  return render => render(shorthand, (Component, props) => <Component {...props} as={Scrollbars} style={{ height }} />)
+  return render => render(menu, (Component, props) => <Component {...props} as={Scrollbars} style={{ height }} />)
 }
 
 const ScrollbarMenuPrototype = () => {
