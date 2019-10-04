@@ -1,17 +1,13 @@
 import * as React from 'react'
-// import * as PropTypes from 'prop-types'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 
 import {
-  // childrenExist,
   createShorthandFactory,
   UIComponent,
-  // RenderResultConfig,
   UIComponentProps,
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
-  // rtlTextContainer,
   ShorthandFactory,
   childrenExist,
 } from '../../lib'
@@ -42,7 +38,7 @@ class DialogFooter extends UIComponent<WithAsProp<DialogFooterProps>> {
     const { children, actions, styles } = this.props
 
     return (
-      <ElementType styles={styles} className={classes.root} {...unhandledProps}>
+      <ElementType style={{ styles }} className={classes.root} {...unhandledProps}>
         {childrenExist(children) ? children : actions}
       </ElementType>
     )
