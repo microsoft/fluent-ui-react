@@ -10,6 +10,7 @@ import {
   Dialog,
   ShorthandValue,
   MenuProps,
+  Dropdown,
 } from '@stardust-ui/react'
 import { PrototypeSection, ComponentPrototype } from '../Prototypes'
 
@@ -108,15 +109,29 @@ const ScrollbarListPrototype = () => {
   )
 }
 
-// const ScrollbarDropdownPrototype = () => {
-//   const items = _.range(50).map((i: number) => ({
-//     header: `Header ${i}`,
-//     content: `Content ${i}`,
-//     key: `item-${i}`,
-//   }))
+const ScrollbarDropdownPrototype = () => {
+  const items = _.range(50).map((i: number) => ({
+    header: `Header ${i}`,
+    content: `Content ${i}`,
+    key: `item-${i}`,
+  }))
 
-//   return <Dropdown open items={items} />
-// }
+  const dropdownListWithScroll = render =>
+    render({}, (C, p) =>
+      p.items && p.items.length ? (
+        <C
+          {...p}
+          as={Scrollbars}
+          styles={{ ...p.styles, overflowX: undefined }}
+          style={{ height: '20rem', zIndex: 10000 }}
+        />
+      ) : (
+        <C {...p} />
+      ),
+    )
+
+  return <Dropdown items={items} list={dropdownListWithScroll} /> // , styles: { overflowX: unset }
+}
 
 const CustomScrollbarPrototypes: React.FC = () => {
   return (
@@ -125,9 +140,9 @@ const CustomScrollbarPrototypes: React.FC = () => {
         Note: Stardust does not provide custom scrollbars. It is possible to integrate Stardust
         components with any custom scrollbars framework.
       </Text>
-      {/* <ComponentPrototype title="Dropdown" description="Scrollbar can be integrated in a Dropdown">
+      <ComponentPrototype title="Dropdown" description="Scrollbar can be integrated in a Dropdown">
         <ScrollbarDropdownPrototype />
-      </ComponentPrototype> */}
+      </ComponentPrototype>
       <ComponentPrototype title="Menu" description="Scrollbar can be integrated in Menu">
         <ScrollbarMenuPrototype />
       </ComponentPrototype>

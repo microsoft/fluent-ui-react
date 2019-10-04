@@ -12,6 +12,8 @@ import {
   commonPropTypes,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
+  createShorthandFactory,
+  ShorthandFactory,
 } from '../../lib'
 import ListItem, { ListItemProps } from './ListItem'
 import {
@@ -116,6 +118,8 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
     'variables',
   ]
 
+  static create: ShorthandFactory<ListProps>
+
   handleItemOverrides = (predefinedProps: ListItemProps) => {
     const { selectable } = this.props
 
@@ -175,6 +179,8 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
     })
   }
 }
+
+List.create = createShorthandFactory({ Component: List, mappedArrayProp: 'items' })
 
 /**
  * A List displays a group of related sequential items.
