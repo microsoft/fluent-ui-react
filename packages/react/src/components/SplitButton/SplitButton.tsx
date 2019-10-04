@@ -1,3 +1,4 @@
+import { Accessibility, splitButtonBehavior } from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -20,10 +21,8 @@ import {
   RenderResultConfig,
   ShorthandFactory,
 } from '../../lib'
-import { Accessibility } from '../../lib/accessibility/types'
 import Button, { ButtonProps } from '../Button/Button'
 import MenuButton, { MenuButtonProps } from '../MenuButton/MenuButton'
-import { splitButtonBehavior } from '../../lib/accessibility'
 import { MenuProps } from '../Menu/Menu'
 import { MenuItemProps } from '../Menu/MenuItem'
 import { PopupProps } from '../Popup/Popup'

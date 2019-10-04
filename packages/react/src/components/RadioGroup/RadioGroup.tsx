@@ -1,5 +1,6 @@
 // TODO:
 // vertical - padding variable?
+import { Accessibility, radioGroupBehavior } from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -16,8 +17,6 @@ import {
   ShorthandFactory,
 } from '../../lib'
 import RadioGroupItem, { RadioGroupItemProps } from './RadioGroupItem'
-import { radioGroupBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
 import {
   WithAsProp,
   ComponentEventHandler,

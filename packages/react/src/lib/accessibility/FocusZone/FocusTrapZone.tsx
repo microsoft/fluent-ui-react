@@ -1,3 +1,4 @@
+import { getElementType, getUnhandledProps } from '@stardust-ui/react-bindings'
 import { EventListener } from '@stardust-ui/react-component-event-listener'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
@@ -15,8 +16,6 @@ import {
 } from './focusUtilities'
 
 import { FocusTrapZoneProps } from './FocusTrapZone.types'
-import getUnhandledProps from '../../getUnhandledProps'
-import getElementType from '../../getElementType'
 
 /** FocusTrapZone is used to trap the focus in any html element placed in body
  *  and hide other elements outside of Focus Trap Zone from accessibility tree.
@@ -130,11 +129,8 @@ export default class FocusTrapZone extends React.Component<FocusTrapZoneProps, {
       ariaLabelledBy,
       disabled = false,
     } = this.props
-    const unhandledProps = getUnhandledProps(
-      { handledProps: [..._.keys(FocusTrapZone.propTypes)] },
-      this.props,
-    )
-    const ElementType = getElementType({ defaultProps: FocusTrapZone.defaultProps }, this.props)
+    const unhandledProps = getUnhandledProps(_.keys(FocusTrapZone.propTypes) as any, this.props)
+    const ElementType = getElementType(this.props)
 
     const bumperProps = {
       style: {

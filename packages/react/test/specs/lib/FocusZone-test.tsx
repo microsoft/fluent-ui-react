@@ -1,15 +1,14 @@
+import {
+  FocusZoneDirection,
+  FocusZoneTabbableElements,
+  IS_FOCUSABLE_ATTRIBUTE,
+} from '@stardust-ui/accessibility'
 import * as React from 'react'
-
 import * as ReactDOM from 'react-dom'
 import * as ReactTestUtils from 'react-dom/test-utils'
 import * as keyboardKey from 'keyboard-key'
 
-import {
-  FocusZone,
-  FocusZoneDirection,
-  FocusZoneTabbableElements,
-} from '../../../src/lib/accessibility/FocusZone'
-import { IS_FOCUSABLE_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusUtilities'
+import { FocusZone } from '../../../src/lib/accessibility/FocusZone'
 
 describe('FocusZone', () => {
   let lastFocusedElement: HTMLElement | undefined

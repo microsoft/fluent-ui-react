@@ -15,7 +15,7 @@ import {
   rtlTextContainer,
   ShorthandFactory,
 } from '../../lib'
-import { Accessibility } from '../../lib/accessibility/types'
+import { Accessibility } from '@stardust-ui/accessibility'
 
 import { PopperChildrenProps } from '../../lib/positioner'
 import { WithAsProp, withSafeTypeForAs } from '../../types'

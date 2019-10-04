@@ -26,8 +26,7 @@ import {
   PopperChildrenProps,
 } from '../../lib/positioner'
 import TooltipContent, { TooltipContentProps } from './TooltipContent'
-import { tooltipBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
+import { Accessibility, tooltipBehavior } from '@stardust-ui/accessibility'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 import PortalInner from '../Portal/PortalInner'
 
