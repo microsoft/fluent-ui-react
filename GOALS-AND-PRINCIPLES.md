@@ -1,4 +1,4 @@
-This document outlines goals and principles which drive architecture decisions within Fluent.
+This document outlines goals and principles which will help drive architecture decisions.
 
 This is a work in progress; as goals and principles evolve, we should document them and adhere to them.
 
