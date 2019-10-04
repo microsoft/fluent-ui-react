@@ -8,7 +8,7 @@ import { NotificationProvider } from './NotificationProvider'
 type CopyToClipboardPrototypeProps = {
   value: string
   target?: HTMLElement
-  attach?: boolean
+  attached?: boolean
 }
 
 const CopyToClipboardPrototype: React.FC<CopyToClipboardPrototypeProps> = props => {
@@ -18,7 +18,7 @@ const CopyToClipboardPrototype: React.FC<CopyToClipboardPrototypeProps> = props 
       <Text content={props.value} color="brand" />
 
       <CopyToClipboard
-        attach={props.attach}
+        attached={props.attached}
         target={props.target}
         value={props.value}
         trigger={<Button iconOnly icon="clipboard-copied-to" />}
@@ -91,7 +91,7 @@ const CopyToClipboardPrototypes: React.FC = () => {
             title="Attached"
             description="Attached version of Copy to Clipboard prototype"
           >
-            <CopyToClipboardPrototype attach={true} value={commitID} />
+            <CopyToClipboardPrototype attached={true} value={commitID} />
           </ComponentPrototype>
           <ComponentPrototype
             title="Not Attached"
