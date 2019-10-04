@@ -63,7 +63,7 @@ const ScrollbarMenuPrototype = () => {
 // }
 
 const ScrollbarPopupPrototype = () => {
-  const lines = _.range(50).map((i: number) => <p key={i}>Long long text line {i}</p>)
+  const lines = _.times(50, i => <p key={i}>Long long text line {i}</p>)
 
   return (
     <Popup
