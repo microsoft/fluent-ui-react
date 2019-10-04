@@ -18,10 +18,10 @@ export default {
     color: v.foregroundColor,
   }),
 
-  footer: {
+  footer: (): ICSSInJSStyle => ({
     gridColumn: '1 / -1',
     gridRow: 3,
-  },
+  }),
 
   actions: (): ICSSInJSStyle => ({
     display: 'inline-block',

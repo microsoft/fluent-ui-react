@@ -1,5 +1,7 @@
+import { ICSSInJSStyle } from '../../../types'
+
 export default {
-  root: {
+  root: (): ICSSInJSStyle => ({
     textAlign: 'right',
-  },
+  }),
 }
