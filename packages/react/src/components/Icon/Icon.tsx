@@ -1,9 +1,9 @@
 import { Accessibility, iconBehavior } from '@stardust-ui/accessibility'
+import { callable } from '@stardust-ui/react-bindings'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import {
-  callable,
   UIComponent,
   createShorthandFactory,
   UIComponentProps,

@@ -3,6 +3,7 @@ import {
   hierarchicalTreeItemBehavior,
   hierarchicalSubtreeBehavior,
 } from '@stardust-ui/accessibility'
+import { getFirstFocusable } from '@stardust-ui/react-bindings'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import { Ref } from '@stardust-ui/react-component-ref'
 import * as _ from 'lodash'
@@ -30,7 +31,6 @@ import {
   withSafeTypeForAs,
   ShorthandCollection,
 } from '../../types'
-import { getFirstFocusable } from '../../lib/accessibility/FocusZone/focusUtilities'
 
 export interface HierarchicalTreeItemSlotClassNames {
   title: string
