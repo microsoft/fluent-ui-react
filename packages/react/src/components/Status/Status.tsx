@@ -1,9 +1,8 @@
+import { Accessibility, statusBehavior } from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import Icon, { IconProps } from '../Icon/Icon'
-import { statusBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
 
 import {
   UIComponent,

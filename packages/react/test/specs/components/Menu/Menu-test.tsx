@@ -6,12 +6,12 @@ import { mountWithProvider, mountWithProviderAndGetComponent } from 'test/utils'
 import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
 import MenuItem from 'src/components/Menu/MenuItem'
 import {
+  AccessibilityDefinition,
   menuBehavior,
   menuAsToolbarBehavior,
   tabListBehavior,
   tabBehavior,
-} from 'src/lib/accessibility'
-import { AccessibilityDefinition } from 'src/lib/accessibility/types'
+} from '@stardust-ui/accessibility'
 import { ReactWrapper } from 'enzyme'
 import * as keyboardKey from 'keyboard-key'
 

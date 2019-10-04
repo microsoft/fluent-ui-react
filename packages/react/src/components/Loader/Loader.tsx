@@ -1,3 +1,4 @@
+import { Accessibility, loaderBehavior } from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -10,8 +11,6 @@ import {
   SizeValue,
   ShorthandFactory,
 } from '../../lib'
-import { loaderBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Box, { BoxProps } from '../Box/Box'
 import Text, { TextProps } from '../Text/Text'
@@ -102,7 +101,8 @@ class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
     const { delay } = this.props
 
     if (delay > 0) {
-      this.delayTimer = window.setTimeout(() => {
+      // @ts-ignore We have a collision between types from DOM and @types/node
+      this.delayTimer = setTimeout(() => {
         this.setState({ visible: true })
       }, delay)
     }

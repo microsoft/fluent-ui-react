@@ -1,3 +1,4 @@
+import { Accessibility, checkboxBehavior } from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -15,8 +16,6 @@ import {
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Icon, { IconProps } from '../Icon/Icon'
 import Text, { TextProps } from '../Text/Text'
-import { Accessibility } from '../../lib/accessibility/types'
-import { checkboxBehavior } from '../../lib/accessibility'
 import { SupportedIntrinsicInputProps } from '../../lib/htmlPropsUtils'
 
 export interface CheckboxSlotClassNames {
@@ -28,39 +27,39 @@ export interface CheckboxProps extends UIComponentProps, ChildrenComponentProps 
   /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
-  /** Initial checked value. */
+  /** A checkbox can be checked by default. */
   defaultChecked?: SupportedIntrinsicInputProps['defaultChecked']
 
-  /** Whether or not item is checked. */
+  /** A checkbox's checked state can be controlled. */
   checked?: SupportedIntrinsicInputProps['checked']
 
-  /** An item can appear disabled and be unable to change states. */
+  /** A checkbox can appear disabled and be unable to change states. */
   disabled?: SupportedIntrinsicInputProps['disabled']
 
-  /** The item indicator can be user-defined icon. */
+  /** A checkbox's indicator icon can be customized. */
   icon?: ShorthandValue<IconProps>
 
-  /** The label of the item. */
+  /** A checkbox can render a label next to its indicator. */
   label?: ShorthandValue<TextProps>
 
-  /** A label in the loader can have different positions. */
+  /** A checkbox's label can be rendered in different positions. */
   labelPosition?: 'start' | 'end'
 
   /**
-   * Called after item checked state is changed.
+   * Called after a checkbox's checked state is changed.
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props.
    */
   onChange?: ComponentEventHandler<CheckboxProps>
 
   /**
-   * Called after click.
+   * Called after a checkbox is clicked.
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props.
    */
   onClick?: ComponentEventHandler<CheckboxProps>
 
-  /** A checkbox can be formatted to show an on or off choice. */
+  /** A checkbox can be formatted to show an "on or off" choice. */
   toggle?: boolean
 }
 
@@ -186,7 +185,7 @@ Checkbox.create = createShorthandFactory({
 })
 
 /**
- * A Checkbox allows to toggle between two choices -- checked and not checked.
+ * A Checkbox allows a user to make a choice between two mutually exclusive options.
  *
  * @accessibility
  * Implements [ARIA Checkbox](https://www.w3.org/TR/wai-aria-practices-1.1/#checkbox) design pattern.

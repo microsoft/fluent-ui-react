@@ -1,3 +1,4 @@
+import { Accessibility, AriaRole, IS_FOCUSABLE_ATTRIBUTE } from '@stardust-ui/accessibility'
 import { Ref, RefFindNode } from '@stardust-ui/react-component-ref'
 import * as faker from 'faker'
 import * as _ from 'lodash'
@@ -17,8 +18,7 @@ import helpers from './commonHelpers'
 
 import * as stardust from 'src/index'
 
-import { Accessibility, AriaRole } from 'src/lib/accessibility/types'
-import { FocusZone, IS_FOCUSABLE_ATTRIBUTE } from 'src/lib/accessibility/FocusZone'
+import { FocusZone } from 'src/lib/accessibility/FocusZone'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusUtilities'
 import { getEventTargetComponent, EVENT_TARGET_ATTRIBUTE } from './eventTarget'
 
@@ -142,7 +142,7 @@ export default (Component, options: Conformant = {}) => {
     const minWords = 5
     const maxWords = 25
     test(`docblock description is long enough to be meaningful (>${minWords} words)`, () => {
-      expect(_.words(info.docblock.description).length).toBeGreaterThan(minWords)
+      expect(_.words(info.docblock.description).length).toBeGreaterThanOrEqual(minWords)
     })
 
     test(`docblock description is short enough to be quickly understood (<${maxWords} words)`, () => {

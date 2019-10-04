@@ -1,3 +1,4 @@
+import { Accessibility, toolbarBehavior, toggleButtonBehavior } from '@stardust-ui/accessibility'
 import * as React from 'react'
 import * as _ from 'lodash'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
@@ -20,8 +21,6 @@ import {
 } from '../../lib'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
-import { Accessibility } from '../../lib/accessibility/types'
-import { toolbarBehavior, toggleButtonBehavior } from '../../lib/accessibility'
 import { ShorthandCollection, ShorthandValue, WithAsProp, withSafeTypeForAs } from '../../types'
 
 import ToolbarCustomItem from './ToolbarCustomItem'
@@ -179,16 +178,17 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
 
   componentWillUnmount() {
     if (this.animationFrameId !== undefined) {
-      window.cancelAnimationFrame(this.animationFrameId)
+      cancelAnimationFrame(this.animationFrameId)
       this.animationFrameId = undefined
     }
   }
 
   afterComponentRendered() {
     if (this.animationFrameId !== undefined) {
-      window.cancelAnimationFrame(this.animationFrameId)
+      cancelAnimationFrame(this.animationFrameId)
     }
-    this.animationFrameId = window.requestAnimationFrame(() => {
+
+    this.animationFrameId = requestAnimationFrame(() => {
       this.animationFrameId = undefined
       const { onReduceItems } = this.props
       if (_.isNil(onReduceItems) || !this.hiddenToolbarRef.current || this.state.stable) {

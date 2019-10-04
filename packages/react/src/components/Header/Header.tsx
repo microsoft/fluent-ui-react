@@ -1,3 +1,4 @@
+import { Accessibility } from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -16,7 +17,6 @@ import {
   ShorthandFactory,
 } from '../../lib'
 import HeaderDescription, { HeaderDescriptionProps } from './HeaderDescription'
-import { Accessibility } from '../../lib/accessibility/types'
 
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 

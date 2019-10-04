@@ -5,6 +5,7 @@ import remember from 'gulp-remember'
 import fs from 'fs'
 import path from 'path'
 import rimraf from 'rimraf'
+import through2 from 'through2'
 import webpack from 'webpack'
 import WebpackDevMiddleware from 'webpack-dev-middleware'
 import WebpackHotMiddleware from 'webpack-hot-middleware'
@@ -42,6 +43,10 @@ const handleWatchUnlink = (group, filePath) => {
 
 task('clean:cache', () => cache.clearAll())
 
+task('clean:docs:schema', cb => {
+  rimraf(paths.packages('ability-attributes', 'src/schema.ts'), cb)
+})
+
 task('clean:docs:component-menu', cb => {
   rimraf(paths.docsSrc('componentMenu.json'), cb)
 })
@@ -68,6 +73,7 @@ task(
     'clean:docs:component-menu',
     'clean:docs:component-menu-behaviors',
     'clean:docs:dist',
+    'clean:docs:schema',
     'clean:docs:example-menus',
     'clean:docs:example-sources',
   ),
@@ -82,9 +88,7 @@ const componentsSrc = [
   `${paths.posix.packageSrc('react-component-ref')}/[A-Z]*.tsx`,
   `${paths.posix.packageSrc('react')}/lib/accessibility/FocusZone/[A-Z]!(*.types).tsx`,
 ]
-const behaviorSrc = [
-  `${paths.posix.packageSrc('react')}/lib/accessibility/Behaviors/*/[a-z]*Behavior.ts`,
-]
+const behaviorSrc = [`${paths.posix.packageSrc('accessibility')}/behaviors/*/[a-z]*Behavior.ts`]
 const examplesIndexSrc = `${paths.posix.docsSrc()}/examples/*/*/*/index.tsx`
 const examplesSrc = `${paths.posix.docsSrc()}/examples/*/*/*/!(*index|.knobs).tsx`
 const markdownSrc = [
@@ -95,6 +99,7 @@ const markdownSrc = [
   '.github/test-a-feature.md',
   'specifications/*.md',
 ]
+const schemaSrc = `${paths.posix.packages('ability-attributes')}/schema.json`
 
 task('build:docs:component-info', () =>
   src(componentsSrc, { since: lastRun('build:docs:component-info') })
@@ -156,6 +161,16 @@ task('build:docs:toc', () =>
   ),
 )
 
+task('build:docs:schema', () =>
+  src(schemaSrc, { since: lastRun('build:docs:schema') }).pipe(
+    through2.obj((file, enc, done) => {
+      sh(`cd packages/ability-attributes && npm run schema`)
+        .then(() => done(null, file))
+        .catch(done)
+    }),
+  ),
+)
+
 task('build:docs:webpack', cb => {
   webpackPlugin(require('../../webpack.config').default, cb)
 })
@@ -164,6 +179,7 @@ task(
   'build:docs:assets',
   parallel(
     'build:docs:toc',
+    'build:docs:schema',
     series('clean:docs', parallel('build:docs:json', 'build:docs:html', 'build:docs:images')),
   ),
 )
@@ -184,7 +200,12 @@ task('deploy:docs', cb => {
 // ----------------------------------------
 
 let server: Server
+
 task('serve:docs', async () => {
+  server = await serve(paths.docsDist(), config.server_host, config.server_port)
+})
+
+task('serve:docs:hot', async () => {
   const webpackConfig = require('../../webpack.config').default
   const compiler = webpack(webpackConfig)
 
@@ -217,6 +238,8 @@ task('watch:docs', cb => {
     .on('add', logWatchAdd)
     .on('change', logWatchChange)
     .on('unlink', logWatchUnlink)
+
+  watch(schemaSrc, series('build:docs:schema')).on('change', logWatchChange)
 
   // rebuild example menus
   watch(examplesIndexSrc, series('build:docs:example-menu'))
@@ -256,4 +279,4 @@ task('watch:docs', cb => {
 // Default
 // ----------------------------------------
 
-task('docs', series('build:docs:assets', 'serve:docs', 'watch:docs'))
+task('docs', series('build:docs:assets', 'serve:docs:hot', 'watch:docs'))

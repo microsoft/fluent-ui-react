@@ -12,7 +12,9 @@ import * as Layout from './pages/Layout.mdx'
 import Accessibility from './views/Accessibility'
 import Colors from './views/Colors'
 import ColorPalette from './views/ColorPalette'
+import CategoryColorPalette from './views/CategoryColorPalette'
 import ColorSchemes from './views/ColorSchemes'
+import CategoryColorSchemes from './views/CategoryColorSchemes'
 
 import FAQ from './views/FAQ'
 import * as ShorthandProps from './pages/ShorthandProps.mdx'
@@ -37,7 +39,6 @@ import MentionsPrototype from './prototypes/mentions'
 import DropdownsPrototype from './prototypes/dropdowns'
 import PopupsPrototype from './prototypes/popups'
 import IconViewerPrototype from './prototypes/IconViewer'
-import MenuButtonPrototype from './prototypes/MenuButton'
 import AlertsPrototype from './prototypes/alerts'
 import NestedPopupsAndDialogsPrototype from './prototypes/NestedPopupsAndDialogs'
 import VirtualizedTreePrototype from './prototypes/VirtualizedTree'
@@ -73,7 +74,6 @@ const Routes = () => (
           <Route exact path="/prototype-dropdowns" component={DropdownsPrototype} />
           <Route exact path="/prototype-popups" component={PopupsPrototype} />
           <Route exact path="/icon-viewer" component={IconViewerPrototype} />
-          <Route exact path="/menu-button" component={MenuButtonPrototype} />
           <Route exact path="/prototype-alerts" component={AlertsPrototype} />
           <Route
             exact
@@ -102,7 +102,9 @@ const Routes = () => (
           </Route>
           <Route exact path="/colors" component={Colors} />
           <Route exact path="/color-palette" component={ColorPalette} />
+          <Route exact path="/color-palette-category" component={CategoryColorPalette} />
           <Route exact path="/color-schemes" component={ColorSchemes} />
+          <Route exact path="/color-schemes-category" component={CategoryColorSchemes} />
           <Route exact path="/*" component={PageNotFound} />
         </Switch>
       </DocsLayout>
