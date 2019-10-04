@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, toolbarItemBehavior } from '@stardust-ui/accessibility'
 import cx from 'classnames'
 import { Ref, toRefObject } from '@stardust-ui/react-component-ref'
 import { EventListener } from '@stardust-ui/react-component-event-listener'
@@ -27,8 +28,6 @@ import {
   ShorthandCollection,
 } from '../../types'
 import { Popper } from '../../lib/positioner'
-import { Accessibility } from '../../lib/accessibility/types'
-import { toolbarItemBehavior } from '../../lib/accessibility'
 
 import ToolbarMenu, { ToolbarMenuProps } from './ToolbarMenu'
 import Icon, { IconProps } from '../Icon/Icon'

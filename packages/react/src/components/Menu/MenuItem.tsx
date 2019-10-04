@@ -1,3 +1,4 @@
+import { Accessibility, menuItemBehavior, submenuBehavior } from '@stardust-ui/accessibility'
 import { EventListener } from '@stardust-ui/react-component-event-listener'
 import { Ref, toRefObject } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
@@ -22,8 +23,6 @@ import {
 import Icon, { IconProps } from '../Icon/Icon'
 import Menu, { MenuProps, MenuShorthandKinds } from './Menu'
 import Box, { BoxProps } from '../Box/Box'
-import { menuItemBehavior, submenuBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
 import {
   ComponentEventHandler,
   WithAsProp,

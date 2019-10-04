@@ -88,9 +88,7 @@ const componentsSrc = [
   `${paths.posix.packageSrc('react-component-ref')}/[A-Z]*.tsx`,
   `${paths.posix.packageSrc('react')}/lib/accessibility/FocusZone/[A-Z]!(*.types).tsx`,
 ]
-const behaviorSrc = [
-  `${paths.posix.packageSrc('react')}/lib/accessibility/Behaviors/*/[a-z]*Behavior.ts`,
-]
+const behaviorSrc = [`${paths.posix.packageSrc('accessibility')}/behaviors/*/[a-z]*Behavior.ts`]
 const examplesIndexSrc = `${paths.posix.docsSrc()}/examples/*/*/*/index.tsx`
 const examplesSrc = `${paths.posix.docsSrc()}/examples/*/*/*/!(*index|.knobs).tsx`
 const markdownSrc = [
@@ -202,7 +200,12 @@ task('deploy:docs', cb => {
 // ----------------------------------------
 
 let server: Server
+
 task('serve:docs', async () => {
+  server = await serve(paths.docsDist(), config.server_host, config.server_port)
+})
+
+task('serve:docs:hot', async () => {
   const webpackConfig = require('../../webpack.config').default
   const compiler = webpack(webpackConfig)
 
@@ -276,4 +279,4 @@ task('watch:docs', cb => {
 // Default
 // ----------------------------------------
 
-task('docs', series('build:docs:assets', 'serve:docs', 'watch:docs'))
+task('docs', series('build:docs:assets', 'serve:docs:hot', 'watch:docs'))

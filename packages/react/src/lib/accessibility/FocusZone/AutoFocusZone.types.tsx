@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 export interface AutoFocusZoneProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** Element type the root element will use. */
+  /** @docSiteIgnore */
   as?: React.ReactType
 
   /**
