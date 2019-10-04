@@ -1,7 +1,7 @@
 import { Reaction, ChatMessage } from '@stardust-ui/react'
 
 const selectors = {
-  chatMessageContent: `.${ChatMessage.slotClassNames.content}`,
+  chatMessageContent: `.${ChatMessage.slotClassNames.content}:nth-child(2)`,
   reaction: `.${Reaction.className}`,
 }
 
