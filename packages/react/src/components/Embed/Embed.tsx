@@ -1,3 +1,4 @@
+import { Accessibility, embedBehavior } from '@stardust-ui/accessibility'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -11,8 +12,6 @@ import {
   AutoControlledComponent,
   ShorthandFactory,
 } from '../../lib'
-import { embedBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
 import Icon, { IconProps } from '../Icon/Icon'
 import Image from '../Image/Image'
 import Video, { VideoProps } from '../Video/Video'

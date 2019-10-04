@@ -28,8 +28,7 @@ import {
   PopperChildrenProps,
 } from '../../lib/positioner'
 import TooltipContent, { TooltipContentProps } from './TooltipContent'
-import { tooltipBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
+import { Accessibility, tooltipBehavior } from '@stardust-ui/accessibility'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 import PortalInner from '../Portal/PortalInner'
 
@@ -286,6 +285,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     const tooltipContent = Tooltip.Content.create(content, {
       defaultProps: {
         ...tooltipContentAttributes,
+        open: this.state.open,
         placement,
         pointing,
         pointerRef: this.pointerTargetRef,

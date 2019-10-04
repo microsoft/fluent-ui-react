@@ -153,8 +153,8 @@ export const transparentColors: TeamsTransparentColors = {
   onyx: {
     100: 'rgba(59,58,57,0.9)',
     200: 'rgba(45,44,44,0.4)',
-    300: undefined,
-    400: undefined,
+    300: 'rgba(37,36,35,0.2)',
+    400: 'rgba(37,36,35,0.65)',
     500: 'rgba(41,40,40,0.9)',
     600: undefined,
     700: 'rgba(0,0,0,0.5)',
@@ -468,6 +468,7 @@ export const colorScheme: ColorSchemeMapping<ColorScheme, TeamsColorNames> = {
     background2: colors.onyx[500],
     border: colors.onyx[800],
     border1: 'transparent',
+    border2: colors.onyx[300],
   }),
   amethyst: createColorScheme({
     background: colors.amethyst[600],

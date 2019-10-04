@@ -20,14 +20,14 @@ import {
   WithAsProp,
   withSafeTypeForAs,
 } from '../../types'
-import { Accessibility } from '../../lib/accessibility/types'
+import {
+  Accessibility,
+  toolbarMenuRadioGroupBehavior,
+  toolbarMenuItemRadioBehavior,
+} from '@stardust-ui/accessibility'
 import ToolbarMenuItem, { ToolbarMenuItemProps } from './ToolbarMenuItem'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 import Box, { BoxProps } from '../Box/Box'
-import {
-  toolbarMenuRadioGroupBehavior,
-  toolbarMenuItemRadioBehavior,
-} from '../../lib/accessibility'
 
 export interface ToolbarMenuRadioGroupProps
   extends UIComponentProps,
