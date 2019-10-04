@@ -1,3 +1,4 @@
+import { Accessibility } from '@stardust-ui/accessibility'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
@@ -13,7 +14,6 @@ import {
   rtlTextContainer,
   ShorthandFactory,
 } from '../../lib'
-import { Accessibility } from '../../lib/accessibility/types'
 
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
@@ -27,13 +27,13 @@ export interface DividerProps
    */
   accessibility?: Accessibility
 
-  /** A divider can be fitted, without any space above or below it.  */
+  /** A divider can be fitted, without any space above or below it. */
   fitted?: boolean
 
-  /** Size multiplier (default 0) * */
+  /** A divider can be resized using this multiplier. (default: 0) */
   size?: number
 
-  /** A divider can appear more important and draw the user's attention. */
+  /** A divider can be emphasized to draw a user's attention. */
   important?: boolean
 }
 
@@ -74,6 +74,6 @@ class Divider extends UIComponent<WithAsProp<DividerProps>, any> {
 Divider.create = createShorthandFactory({ Component: Divider, mappedProp: 'content' })
 
 /**
- * A Divider visually segments content into groups.
+ * A Divider visually segments content.
  */
 export default withSafeTypeForAs<typeof Divider, DividerProps>(Divider)

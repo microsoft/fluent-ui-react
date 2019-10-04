@@ -6,6 +6,7 @@ import {
   ProviderContextPrepared,
   ThemeComponentVariablesPrepared,
 } from '@stardust-ui/react'
+import { callable } from '@stardust-ui/react-bindings'
 import * as _ from 'lodash'
 import * as React from 'react'
 // @ts-ignore
@@ -13,7 +14,6 @@ import { ThemeContext } from 'react-fela'
 
 import ComponentExampleVariable, { ComponentExampleVariableProps } from './ComponentExampleVariable'
 import { mergeThemeVariables } from 'src/lib/mergeThemes'
-import callable from 'src/lib/callable'
 
 type ComponentExampleVariablesProps = {
   onChange: ComponentExampleVariableProps['onChange']

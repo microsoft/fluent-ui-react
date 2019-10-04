@@ -53,6 +53,7 @@ export type TeamsCategoryColors = {
   smokeLight: ColorVariants
   steelDark: ColorVariants
   steelLight: ColorVariants
+  neon: ColorVariants
 }
 
 export type TeamsCategoryColorNames = keyof TeamsCategoryColors

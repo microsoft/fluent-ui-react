@@ -1,6 +1,8 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
+import { Accessibility, menuButtonBehavior } from '@stardust-ui/accessibility'
+import { Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 
 import {
@@ -13,13 +15,10 @@ import {
 } from '../../lib'
 import { ShorthandValue, ComponentEventHandler, ShorthandCollection } from '../../types'
 
-import { Accessibility } from '../../lib/accessibility/types'
 import { createShorthandFactory, ShorthandFactory } from '../../lib/factories'
 import Popup, { PopupProps, PopupEvents, PopupEventsArray } from '../Popup/Popup'
 import Menu, { MenuProps } from '../Menu/Menu'
 import { MenuItemProps } from '../Menu/MenuItem'
-import { Ref } from '@stardust-ui/react-component-ref'
-import { menuButtonBehavior } from '../../lib/accessibility'
 import { focusMenuItem } from './focusUtils'
 import { ALIGNMENTS, POSITIONS, PositioningProps } from '../../lib/positioner'
 
