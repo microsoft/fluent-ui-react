@@ -74,6 +74,6 @@ class Chat extends UIComponent<WithAsProp<ChatProps>, any> {
 }
 
 /**
- * A Chat displays conversation messages between users.
+ * A Chat displays messages from a conversation between multiple users.
  */
 export default withSafeTypeForAs<typeof Chat, ChatProps, 'ul'>(Chat)

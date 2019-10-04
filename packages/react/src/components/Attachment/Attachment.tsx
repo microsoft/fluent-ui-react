@@ -30,7 +30,7 @@ export interface AttachmentProps extends UIComponentProps, ChildrenComponentProp
   /** A string describing the attachment. */
   description?: ShorthandValue<TextProps>
 
-  /** An attachment can show it is currently unable to be interacted with. */
+  /** An attachment can show that it cannot be interacted with. */
   disabled?: boolean
 
   /** The name of the attachment. */
