@@ -13,9 +13,7 @@ type UseStateManagerOptions<State> = {
   sideEffects?: SideEffect<State>[]
 }
 
-export const getDefinedProps = <Props extends Record<string, any>>(
-  props: Props,
-): Partial<Props> => {
+const getDefinedProps = <Props extends Record<string, any>>(props: Props): Partial<Props> => {
   const definedProps: Partial<Props> = {}
 
   Object.keys(props).forEach(propName => {
