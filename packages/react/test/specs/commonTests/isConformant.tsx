@@ -1,4 +1,5 @@
 import { Accessibility, AriaRole, IS_FOCUSABLE_ATTRIBUTE } from '@stardust-ui/accessibility'
+import { FocusZone, FOCUSZONE_WRAP_ATTRIBUTE } from '@stardust-ui/react-bindings'
 import { Ref, RefFindNode } from '@stardust-ui/react-component-ref'
 import * as faker from 'faker'
 import * as _ from 'lodash'
@@ -17,9 +18,6 @@ import {
 import helpers from './commonHelpers'
 
 import * as stardust from 'src/index'
-
-import { FocusZone } from 'src/lib/accessibility/FocusZone'
-import { FOCUSZONE_WRAP_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusUtilities'
 import { getEventTargetComponent, EVENT_TARGET_ATTRIBUTE } from './eventTarget'
 
 export interface Conformant {

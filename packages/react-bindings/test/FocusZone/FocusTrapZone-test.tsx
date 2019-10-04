@@ -1,13 +1,8 @@
 import { FocusZoneDirection } from '@stardust-ui/accessibility'
+import { FocusTrapZone, FocusZone, FocusTrapZoneProps } from '@stardust-ui/react-bindings'
 import * as React from 'react'
 import * as ReactTestUtils from 'react-dom/test-utils'
 import * as keyboardKey from 'keyboard-key'
-
-import {
-  FocusTrapZone,
-  FocusZone,
-  FocusTrapZoneProps,
-} from '../../../src/lib/accessibility/FocusZone'
 
 // rAF does not exist in node - let's mock it
 window.requestAnimationFrame = (callback: FrameRequestCallback) => {
