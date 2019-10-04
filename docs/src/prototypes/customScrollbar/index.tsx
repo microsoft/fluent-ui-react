@@ -1,19 +1,12 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import Scrollbars from 'react-custom-scrollbars'
-import {
-  Text,
-  Menu,
-  List,
-  Button,
-  Popup,
-  Dialog,
-  MenuItemProps,
-} from '@stardust-ui/react'
+import { Text, Menu, List, Button, Popup, Dialog, MenuItemProps } from '@stardust-ui/react'
 import { PrototypeSection, ComponentPrototype } from '../Prototypes'
 
 const submenuWithScrollbars = (menu: MenuItemProps['menu'], height: string) => {
-  return render => render(menu, (Component, props) => <Component {...props} as={Scrollbars} style={{ height }} />)
+  return render =>
+    render(menu, (Component, props) => <Component {...props} as={Scrollbars} style={{ height }} />)
 }
 
 const ScrollbarMenuPrototype = () => {
@@ -53,7 +46,7 @@ const ScrollbarPopupPrototype = () => {
 }
 
 const ScrollbarDialogPrototype = () => {
-  const lines = _.times(50, i =><p key={i}>Long long text line {i}</p>)
+  const lines = _.times(50, i => <p key={i}>Long long text line {i}</p>)
 
   return (
     <Dialog
