@@ -1,7 +1,4 @@
-import {
-  ComponentSlotStylesInput,
-  ThemeInput,
-} from '@stardust-ui/react'
+import { ComponentSlotStylesInput, ThemeInput } from '@stardust-ui/react'
 
 type ThemeOverrides = ThemeInput & {
   componentStyles: {
