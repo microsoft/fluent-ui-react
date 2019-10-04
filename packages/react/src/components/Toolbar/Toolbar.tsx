@@ -105,6 +105,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
     onReduceItems: PropTypes.func,
     measurement: customPropTypes.itemShorthand,
     wrapper: customPropTypes.itemShorthand,
+    overflow: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -216,8 +217,6 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
   offsetMeasureRef = React.createRef<HTMLElement>()
 
   hackyDOMOverflow = () => {
-    // console.log('hackyDOMOverflow')
-
     const $wrapper = this.wrapperRef.current
     const $overflowItem = this.overflowMenuRef.current
     const $offsetMeasure = this.offsetMeasureRef.current
@@ -225,9 +224,9 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
       return
     }
 
-    const $items = $wrapper.children[0].children // FIXME
+    const $items = $wrapper.children
 
-    const wrapperBoundingRect = $wrapper.children[0].getBoundingClientRect()
+    const wrapperBoundingRect = $wrapper.getBoundingClientRect()
     const overflowItemBoundingRect = $overflowItem.getBoundingClientRect()
     const offsetMeasureBoundingRect = $offsetMeasure.getBoundingClientRect()
     // Absolute positioning offset
@@ -385,7 +384,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
     variables,
     unhandledProps,
   }): React.ReactNode {
-    const { children, items, onReduceItems, measurement, wrapper } = this.props
+    const { children, items, onReduceItems, measurement, wrapper, overflow } = this.props
 
     if (!_.isNil(onReduceItems)) {
       return (
@@ -442,30 +441,52 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
     }
 
     const offsetMeasure = {}
+    const overflowCrop = {}
+
+    if (!overflow) {
+      return (
+        <ElementType
+          className={classes.root}
+          {...accessibility.attributes.root}
+          {...unhandledProps}
+        >
+          {childrenExist(children) ? children : this.renderItems(items, variables)}
+        </ElementType>
+      )
+    }
 
     return (
       <>
-        <Ref innerRef={this.wrapperRef}>
-          <ElementType
-            className={classes.root}
-            {...accessibility.attributes.root}
-            {...unhandledProps}
-          >
-            <div className={classes.wrapper2}>
-              {childrenExist(children) ? children : this.renderItems(items, variables)}
-            </div>
-            <Ref innerRef={this.offsetMeasureRef}>
-              {Box.create(offsetMeasure, {
-                defaultProps: {
-                  styles: styles.offsetMeasure,
-                },
-              })}
-            </Ref>
-            <Ref innerRef={this.overflowMenuRef}>
-              <ToolbarOverflowMenu getOverflowItems={this.getOverflowItems} />
-            </Ref>
-          </ElementType>
-        </Ref>
+        <ElementType
+          className={classes.root}
+          {...accessibility.attributes.root}
+          {...unhandledProps}
+        >
+          <Ref innerRef={this.wrapperRef}>
+            {Box.create(overflowCrop, {
+              defaultProps: {
+                styles: styles.overflowCrop,
+              },
+              overrideProps: {
+                children: (
+                  <>
+                    {childrenExist(children) ? children : this.renderItems(items, variables)}
+                    <Ref innerRef={this.overflowMenuRef}>
+                      <ToolbarOverflowMenu getOverflowItems={this.getOverflowItems} />
+                    </Ref>
+                  </>
+                ),
+              },
+            })}
+          </Ref>
+          <Ref innerRef={this.offsetMeasureRef}>
+            {Box.create(offsetMeasure, {
+              defaultProps: {
+                styles: styles.offsetMeasure,
+              },
+            })}
+          </Ref>
+        </ElementType>
         <EventListener
           listener={_.debounce(this.hackyDOMOverflow, 16)}
           targetRef={windowRef}

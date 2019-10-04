@@ -25,12 +25,9 @@ const toolbarStyles: ComponentSlotStylesPrepared<ToolbarProps, ToolbarVariables>
     top: 0,
   }),
 
-  wrapper2: ({ variables: v }) => ({
+  overflowCrop: ({ variables: v }) => ({
     display: 'flex',
-    // flexWrap: 'wrap',
-    // overflowY: 'hidden',
     overflow: 'hidden',
-    height: v.itemHeight,
   }),
 }
 
