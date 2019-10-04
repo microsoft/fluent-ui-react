@@ -1,9 +1,9 @@
-import { Slider as MyBrandSlider } from './mybrand/components/slider/slider'
+import { Slider as MyBrandSlider } from './mybrand/components/Slider/Slider'
 import { ThemeContext } from './lib/theme-context'
 import {
   MostlyRedSlider,
   ThumbOverridenSlider,
   TrackUpdateSlider,
-} from './myapp/tokened-components/sliders'
+} from './myapp/components/Sliders'
 
 export { MyBrandSlider, ThemeContext, MostlyRedSlider, ThumbOverridenSlider, TrackUpdateSlider }

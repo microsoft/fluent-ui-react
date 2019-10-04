@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState } from 'react'
 
-import { useControlledState } from '../../hooks/use-controlled-state'
-import { useWindowEvent } from '../../hooks/use-window-event'
+import { useControlledState } from '../../hooks/useControlledState'
+import { useWindowEvent } from '../../hooks/useWindowEvent'
 import { SliderProps } from './props'
 
 export interface SliderState {
