@@ -14,7 +14,7 @@ import {
 import { PrototypeSection, ComponentPrototype } from '../Prototypes'
 
 const submenuWithScrollbars = (shorthand: ShorthandValue<MenuProps>, height: string) => {
-  return render => render(shorthand, (C, p) => <C {...p} as={Scrollbars} style={{ height }} />)
+  return render => render(shorthand, (Component, props) => <Component {...props} as={Scrollbars} style={{ height }} />)
 }
 
 const ScrollbarMenuPrototype = () => {
