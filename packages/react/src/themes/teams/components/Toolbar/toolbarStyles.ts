@@ -1,15 +1,12 @@
 import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { ToolbarVariables } from './toolbarVariables'
+import { ToolbarProps } from '../../../../components/Toolbar/Toolbar'
 
-const toolbarStyles: ComponentSlotStylesPrepared = {
+const toolbarStyles: ComponentSlotStylesPrepared<ToolbarProps, ToolbarVariables> = {
   root: ({ props: { overflow }, variables: v }): ICSSInJSStyle => ({
     display: 'flex',
     alignItems: 'center',
     position: 'relative',
-    ...(overflow && {
-      // overflowY: 'hidden', // FIXME: commented out for debug purposes
-      height: v.itemHeight,
-      flexWrap: 'wrap',
-    }),
   }),
 
   wrapper: (): ICSSInJSStyle => ({
@@ -19,6 +16,13 @@ const toolbarStyles: ComponentSlotStylesPrepared = {
   measurement: (): ICSSInJSStyle => ({
     position: 'fixed',
     visibility: 'hidden',
+  }),
+
+  wrapper2: ({ variables: v }) => ({
+    display: 'flex',
+    flexWrap: 'wrap',
+    overflowY: 'hidden',
+    height: v.itemHeight,
   }),
 }
 

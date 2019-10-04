@@ -1,6 +1,13 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Toolbar, Checkbox, Text } from '@stardust-ui/react'
+import {
+  Toolbar,
+  Checkbox,
+  Text,
+  ShorthandCollection,
+  ToolbarItemProps,
+  ToolbarItemShorthandKinds,
+} from '@stardust-ui/react'
 
 const CustomCallItem = props => {
   const [checked, setChecked] = React.useState(false)
@@ -19,7 +26,7 @@ const CustomCallItem = props => {
 const ToolbarExampleOverflow = () => {
   const icons = ['bold', 'italic', 'underline']
 
-  const itemData = [
+  const itemData: ShorthandCollection<ToolbarItemProps, ToolbarItemShorthandKinds> = [
     ..._.times(8, i => ({
       key: `a${i}`,
       content: `${icons[i % icons.length]} #${i}`,
@@ -47,10 +54,8 @@ const ToolbarExampleOverflow = () => {
       return item
     }
 
-    return {
-      ...item,
-      content: item.kind === 'custom' ? item.content : undefined,
-    }
+    // @ts-ignore
+    return { ...item, content: item.kind === 'custom' ? item.content : undefined }
   })
   // const overflowItems = itemData
   //
@@ -68,7 +73,6 @@ const ToolbarExampleOverflow = () => {
         checked={visible}
         onChange={(e, { checked }) => {
           setVisible(checked)
-          visibleTime = performance.now()
         }}
       />
       <Checkbox
@@ -82,42 +86,7 @@ const ToolbarExampleOverflow = () => {
       {visible && (
         <Toolbar
           overflow
-          items={bold ? toolbarItems : toolbarItems.filter(i => i.icon !== 'bold')}
-          // onReduceItems={(renderedItems, measures) => {
-          //   let numberOfFits = measures.findIndex(
-          //     measure => !measure.leftFits || !measure.rightFits,
-          //   )
-          //
-          //   // if the first item which does not fit is the overflow menu, we need to remove one more regular item
-          //   if (numberOfFits < renderedItems.length) {
-          //     const firstCutItem = renderedItems[numberOfFits]
-          //     const firstCutItemIsOverflowMenu =
-          //       _.isObject(firstCutItem) && firstCutItem['key'] === overflowMenuKey
-          //     if (firstCutItemIsOverflowMenu) {
-          //       --numberOfFits
-          //     }
-          //   }
-          //
-          //   // if there is nothing more to hide, stop the reduce
-          //   if (numberOfFits < 0) {
-          //     return null
-          //   }
-          //
-          //   // console.log(`${numberOfFits}/${toolbarItems.length} fit`)
-          //
-          //   return [
-          //     ...toolbarItems.slice(0, numberOfFits),
-          //     {
-          //       key: overflowMenuKey,
-          //       icon: 'more',
-          //       menu: overflowItems.slice(numberOfFits),
-          //       menuOpen: overflowMenuOpen,
-          //       onMenuOpenChange: (_, { menuOpen }) => {
-          //         setOverflowMenuOpen(menuOpen)
-          //       },
-          //     },
-          //   ]
-          // }}
+          items={bold ? toolbarItems : toolbarItems.filter(i => i['icon'] !== 'bold')}
         />
       )}
     </>

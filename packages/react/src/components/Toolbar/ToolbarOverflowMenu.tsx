@@ -4,13 +4,11 @@ import { UIComponent } from '../../lib'
 import { withSafeTypeForAs } from '../../types'
 import ToolbarItem from './ToolbarItem'
 
-export interface ToolbarOverflowMenuProps {}
+export interface ToolbarOverflowMenuProps {
+  getOverflowItems: any
+}
 
 class ToolbarOverflowMenu extends UIComponent<ToolbarOverflowMenuProps, any> {
-  defaultProps: {
-    as: ToolbarItem
-  }
-
   state = {
     menuItems: [],
     menuOpen: false,
@@ -32,7 +30,8 @@ class ToolbarOverflowMenu extends UIComponent<ToolbarOverflowMenuProps, any> {
     // design={{position: 'absolute', top: 0, right: 0}} menu={this.state.menuItems} menuOpen={this.state.menuOpen}
     return (
       <ToolbarItem
-        {...unhandledProps}
+        wrapper={{ styles: { position: 'absolute' } }}
+        icon="more"
         onMenuOpenChange={this.onMenuOpenChange}
         menu={this.state.menuItems}
         menuOpen={this.state.menuOpen}

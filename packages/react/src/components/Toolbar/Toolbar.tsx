@@ -75,7 +75,6 @@ export interface ToolbarState {
   currentItems: ToolbarProps['items']
   stableItems?: ToolbarProps['items']
   stable: boolean
-  perfTime: number
 }
 
 export interface ToolbarSlotClassNames {
@@ -167,13 +166,10 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
       return null
     }
 
-    console.log('getDerivedStateFromProps -> unstable')
-
     return {
-      perfTime: performance.now(),
       initialItems: props.items,
       currentItems: props.items,
-      stableItems: state.stableItems /* || props.items */,
+      stableItems: state.stableItems,
       stable: false,
     }
   }
@@ -223,6 +219,9 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
 
     const $wrapper = this.wrapperRef.current
     const $overflowItem = this.overflowMenuRef.current
+    if (!$wrapper || !$overflowItem) {
+      return
+    }
 
     const $items = $wrapper.children
 
@@ -319,28 +318,24 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
       this.animationFrameId = undefined
       const { onReduceItems } = this.props
       if (_.isNil(onReduceItems) || !this.hiddenToolbarRef.current || this.state.stable) {
-        const t = performance.now() - this.state.perfTime
-        console.log(`stable after ${t} ms`)
         return
       }
-      const { fits, measures, forWidth } = this.measureOverflow()
-      this.setState(({ stable, currentItems, perfTime }) => {
+      const { fits, measures } = this.measureOverflow()
+      this.setState(({ stable, currentItems }) => {
         if (fits) {
-          console.log('fits', forWidth)
-
-          return { stable: true, forWidth, stableItems: currentItems, currentItems }
+          return { stable: true, stableItems: currentItems, currentItems }
         }
 
         const reducedItems = onReduceItems(currentItems, measures)
         if (reducedItems === null) {
-          return { stable: true, forWidth, stableItems: currentItems, currentItems }
+          return { stable: true, stableItems: currentItems, currentItems }
         }
         return { stable, currentItems: reducedItems }
       })
     })
   }
 
-  measureOverflow(): { fits: boolean; measures: OverflowMeasures[]; forWidth: number } {
+  measureOverflow(): { fits: boolean; measures: OverflowMeasures[] } {
     const wrapperRect = this.wrapperRef.current.getBoundingClientRect()
     const hiddenToolbarElement = this.hiddenToolbarRef.current
 
@@ -355,24 +350,14 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
     })
 
     const fits = !_.some(measures, c => !c.leftFits || !c.rightFits)
-    return { fits, measures, forWidth: wrapperRect.width }
+    return { fits, measures }
   }
 
   onResize = (newWidth, newHeight) => {
-    console.log('onResize -> unstable', { newWidth })
-    this.setState(({ initialItems, forWidth, stable, perfTime }) => {
-      if (stable && newWidth !== forWidth) {
-        console.log('resetting perf time')
-      }
-      if (forWidth !== newWidth) {
-        return {
-          currentItems: initialItems,
-          stable: false,
-          perfTime: stable && newWidth !== forWidth ? performance.now() : perfTime,
-        }
-      }
-      console.log('No state change')
-    })
+    this.setState(({ initialItems }) => ({
+      currentItems: initialItems,
+      stable: false,
+    }))
   }
 
   renderComponent({
@@ -440,19 +425,25 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
 
     return (
       <>
-        <EventListener listener={this.hackyDOMOverflow} targetRef={windowRef} type="resize" />
-        <Ref innerRef={this.wrapperRef}>
-          <ElementType
-            className={classes.root}
-            {...accessibility.attributes.root}
-            {...unhandledProps}
-          >
-            {childrenExist(children) ? children : this.renderItems(items, variables)}
-            <Ref innerRef={this.overflowMenuRef}>
-              <ToolbarOverflowMenu icon="more" getOverflowItems={this.getOverflowItems} />
-            </Ref>
-          </ElementType>
-        </Ref>
+        <ElementType
+          className={classes.root}
+          {...accessibility.attributes.root}
+          {...unhandledProps}
+        >
+          <Ref innerRef={this.wrapperRef}>
+            <div className={classes.wrapper2}>
+              {childrenExist(children) ? children : this.renderItems(items, variables)}
+            </div>
+          </Ref>
+          <Ref innerRef={this.overflowMenuRef}>
+            <ToolbarOverflowMenu getOverflowItems={this.getOverflowItems} />
+          </Ref>
+        </ElementType>
+        <EventListener
+          listener={_.debounce(this.hackyDOMOverflow, 16)}
+          targetRef={windowRef}
+          type="resize"
+        />
       </>
     )
   }
