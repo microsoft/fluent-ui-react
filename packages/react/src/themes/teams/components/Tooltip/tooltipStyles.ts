@@ -5,17 +5,14 @@ import { TooltipVariables } from './tooltipVariables'
 const tooltipStyles: ComponentSlotStylesPrepared<TooltipProps, TooltipVariables> = {
   root: (): ICSSInJSStyle => ({}),
 
-  content: ({ variables: v, props: p }): ICSSInJSStyle =>
-    p.open
-      ? {
-          zIndex: v.zIndex,
-          position: 'absolute',
-          textAlign: 'left',
-        }
-      : {
-          opacity: 0,
-          position: 'absolute',
-        },
+  content: ({ variables: v, props: p }): ICSSInJSStyle => ({
+    ...(!p.open && {
+      opacity: 0,
+    }),
+    zIndex: v.zIndex,
+    position: 'absolute',
+    textAlign: 'left',
+  }),
 }
 
 export default tooltipStyles
