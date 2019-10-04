@@ -3,7 +3,6 @@ import {
   FocusZoneTabbableElements,
   IS_FOCUSABLE_ATTRIBUTE,
 } from '@stardust-ui/accessibility'
-import { getElementType, getUnhandledProps } from '@stardust-ui/react-bindings'
 import * as React from 'react'
 import cx from 'classnames'
 import * as _ from 'lodash'
@@ -11,6 +10,8 @@ import * as keyboardKey from 'keyboard-key'
 import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 
+import getElementType from '../utils/getElementType'
+import getUnhandledProps from '../utils/getUnhandledProps'
 import { FocusZoneProps, IFocusZone } from './FocusZone.types'
 import {
   getNextElement,
@@ -50,7 +51,7 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
     shouldResetActiveElementWhenTabFromZone: PropTypes.bool,
     shouldFocusInnerElementWhenReceivedFocus: PropTypes.bool,
     disabled: PropTypes.bool,
-    as: PropTypes.elementType,
+    as: PropTypes.elementType as PropTypes.Requireable<React.ElementType>,
     isCircularNavigation: PropTypes.bool,
     shouldEnterInnerZone: PropTypes.func,
     onActiveElementChanged: PropTypes.func,

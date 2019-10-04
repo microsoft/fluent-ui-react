@@ -5,7 +5,9 @@
   "author": "Oleksandr Fediashov <a@fedyashov.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
-    "@babel/runtime": "^7.1.2"
+    "@babel/runtime": "^7.1.2",
+    "@stardust-ui/accessibility": "^0.39.0",
+    "@stardust-ui/state": "^0.39.0"
   },
   "devDependencies": {
     "@stardust-ui/internal-tooling": "^0.39.0",

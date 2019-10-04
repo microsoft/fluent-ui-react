@@ -1,3 +1,5 @@
+import { Accessibility, treeBehavior } from '@stardust-ui/accessibility'
+import { getNextElement } from '@stardust-ui/react-bindings'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -23,8 +25,6 @@ import {
   ShorthandCollection,
   ShorthandValue,
 } from '../../types'
-import { Accessibility, treeBehavior } from '@stardust-ui/accessibility'
-import { getNextElement } from '../../lib/accessibility/FocusZone/focusUtilities'
 import { hasSubtree, removeItemAtIndex } from './lib'
 import { TreeTitleProps } from './TreeTitle'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
