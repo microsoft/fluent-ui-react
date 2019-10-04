@@ -1,10 +1,10 @@
+import { callable } from '@stardust-ui/react-bindings'
 import * as React from 'react'
 import * as _ from 'lodash'
 import { shallow } from 'enzyme'
 import { createShorthand, createShorthandFactory } from 'src/lib'
 import { Props, ShorthandValue, ObjectOf, ShorthandRenderFunction } from 'src/types'
 import { consoleUtil } from 'test/utils'
-import callable from '../../../src/lib/callable'
 
 // ----------------------------------------
 // Utils

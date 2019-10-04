@@ -1,3 +1,9 @@
+import {
+  FocusTrapZone,
+  FocusTrapZoneProps,
+  AutoFocusZoneProps,
+  AutoFocusZone,
+} from '@stardust-ui/react-bindings'
 import { Ref } from '@stardust-ui/react-component-ref'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
@@ -17,12 +23,6 @@ import {
   ShorthandFactory,
 } from '../../lib'
 import { Accessibility } from '@stardust-ui/accessibility'
-import {
-  FocusTrapZone,
-  FocusTrapZoneProps,
-  AutoFocusZoneProps,
-  AutoFocusZone,
-} from '../../lib/accessibility/FocusZone'
 import { PopperChildrenProps } from '../../lib/positioner'
 import { WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Box from '../Box/Box'
