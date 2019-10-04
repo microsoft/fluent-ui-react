@@ -1,4 +1,5 @@
 import * as React from 'react'
+import * as _ from 'lodash'
 import { Toolbar, Input, Button, Form } from '@stardust-ui/react'
 import { useBooleanKnob } from '@stardust-ui/docs-components'
 
@@ -73,7 +74,12 @@ const ToolbarExampleShorthand = () => {
   return (
     <>
       <Toolbar
+        styles={{ margin: '50px', padding: '20px', border: '10px solid gray' }}
         items={[
+          ..._.times(10, i => ({
+            key: `generated${i}`,
+            icon: 'bold',
+          })),
           {
             key: 'bold',
             kind: 'toggle',

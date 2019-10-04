@@ -197,11 +197,12 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
   }
 
   show(el) {
-    if (el.style.visibility !== 'hidden') {
-      return
-    }
+    // if (el.style.visibility !== 'hidden') {
+    //   return
+    // }
 
-    el.style.visibility = 'initial'
+    el.style.visibility = null
+    // delete el.style.visibility
     const wasFocusable = el.getAttribute('data-sd-was-focusable')
     if (wasFocusable) {
       el.setAttribute('data-is-focusable', wasFocusable)
@@ -212,20 +213,34 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
   }
 
   lastVisibleItemIndex: number
+  offsetMeasureRef = React.createRef<HTMLElement>()
 
   hackyDOMOverflow = () => {
     // console.log('hackyDOMOverflow')
 
     const $wrapper = this.wrapperRef.current
     const $overflowItem = this.overflowMenuRef.current
-    if (!$wrapper || !$overflowItem) {
+    const $offsetMeasure = this.offsetMeasureRef.current
+    if (!$wrapper || !$overflowItem || !$offsetMeasure) {
       return
     }
 
-    const $items = $wrapper.children
+    const $items = $wrapper.children[0].children // FIXME
 
-    const wrapperBoundingRect = $wrapper.getBoundingClientRect()
+    const wrapperBoundingRect = $wrapper.children[0].getBoundingClientRect()
     const overflowItemBoundingRect = $overflowItem.getBoundingClientRect()
+    const offsetMeasureBoundingRect = $offsetMeasure.getBoundingClientRect()
+    // Absolute positioning offset
+    // Overflow menu is absolutely positioned relative to root slot
+    // If there is padding set on the root slot boundingClientRect computations use inner content box,
+    // but absolute position is relative to root slot's PADDING box.
+    // As there is no easy way how to compute padding, we compute absolute positioning offset
+    // By measuring position of an offsetMeasure element absolutely positioned to 0,0.
+    const absolutePositioningOffset = {
+      vertical: wrapperBoundingRect.left - offsetMeasureBoundingRect.left,
+      horizontal: wrapperBoundingRect.top - offsetMeasureBoundingRect.top,
+    }
+
     let isOverflowing = false
     let $lastVisibleItem
     let lastVisibleItemRect
@@ -234,14 +249,14 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
         return
       }
       const itemBoundingRect = $item.getBoundingClientRect()
-      if ($item.getBoundingClientRect().top > wrapperBoundingRect.top) {
+      if ($item.getBoundingClientRect().right > wrapperBoundingRect.right) {
         // needs improvement
         isOverflowing = true
         // console.log(
         //   'Overflow',
         //   i,
-        //   $item.getBoundingClientRect().top,
-        //   $wrapper.getBoundingClientRect().top,
+        //   $item.getBoundingClientRect().right,
+        //   $wrapper.getBoundingClientRect().right,
         // )
         this.debug($item, 'red')
         this.hide($item)
@@ -269,16 +284,19 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
     if (isOverflowing) {
       this.debug($overflowItem, 'green')
 
-      $overflowItem.style.position = 'absolute'
+      $overflowItem.style.visibility = 'absolute'
+
       if ($lastVisibleItem) {
         this.debug($lastVisibleItem, 'lime')
 
-        $overflowItem.style.left = `${lastVisibleItemRect.right - wrapperBoundingRect.left}px`
-        $overflowItem.style.top = `${lastVisibleItemRect.top - wrapperBoundingRect.top}px`
+        $overflowItem.style.left = `${lastVisibleItemRect.right -
+          wrapperBoundingRect.left +
+          absolutePositioningOffset.vertical}px`
+        // $overflowItem.style.top = `${lastVisibleItemRect.top - wrapperBoundingRect.top + absolutePositioningOffset.horizontal}px`
       } else {
         this.lastVisibleItemIndex = -1
-        $overflowItem.style.left = '0px'
-        $overflowItem.style.top = '0px'
+        $overflowItem.style.left = `${absolutePositioningOffset.vertical}px`
+        // $overflowItem.style.top = `${absolutePositioningOffset.horizontal}px`
       }
       this.show($overflowItem)
     } else {
@@ -363,6 +381,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
     accessibility,
     ElementType,
     classes,
+    styles,
     variables,
     unhandledProps,
   }): React.ReactNode {
@@ -422,22 +441,31 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
       )
     }
 
+    const offsetMeasure = {}
+
     return (
       <>
-        <ElementType
-          className={classes.root}
-          {...accessibility.attributes.root}
-          {...unhandledProps}
-        >
-          <Ref innerRef={this.wrapperRef}>
+        <Ref innerRef={this.wrapperRef}>
+          <ElementType
+            className={classes.root}
+            {...accessibility.attributes.root}
+            {...unhandledProps}
+          >
             <div className={classes.wrapper2}>
               {childrenExist(children) ? children : this.renderItems(items, variables)}
             </div>
-          </Ref>
-          <Ref innerRef={this.overflowMenuRef}>
-            <ToolbarOverflowMenu getOverflowItems={this.getOverflowItems} />
-          </Ref>
-        </ElementType>
+            <Ref innerRef={this.offsetMeasureRef}>
+              {Box.create(offsetMeasure, {
+                defaultProps: {
+                  styles: styles.offsetMeasure,
+                },
+              })}
+            </Ref>
+            <Ref innerRef={this.overflowMenuRef}>
+              <ToolbarOverflowMenu getOverflowItems={this.getOverflowItems} />
+            </Ref>
+          </ElementType>
+        </Ref>
         <EventListener
           listener={_.debounce(this.hackyDOMOverflow, 16)}
           targetRef={windowRef}

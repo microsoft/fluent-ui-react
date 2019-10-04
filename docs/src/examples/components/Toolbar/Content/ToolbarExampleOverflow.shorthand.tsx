@@ -7,6 +7,8 @@ import {
   ShorthandCollection,
   ToolbarItemProps,
   ToolbarItemShorthandKinds,
+  Input,
+  Tooltip,
 } from '@stardust-ui/react'
 
 const CustomCallItem = props => {
@@ -25,6 +27,7 @@ const CustomCallItem = props => {
 
 const ToolbarExampleOverflow = () => {
   const icons = ['bold', 'italic', 'underline']
+  const [menuOpen, setMenuOpen] = React.useState(false)
 
   const itemData: ShorthandCollection<ToolbarItemProps, ToolbarItemShorthandKinds> = [
     ..._.times(8, i => ({
@@ -42,6 +45,26 @@ const ToolbarExampleOverflow = () => {
     render =>
       render({ key: 'special', icon: 'call' }, (Component, props) => <CustomCallItem {...props} />),
 
+    {
+      key: 'with-popup',
+      icon: 'open-outside',
+      popup: { content: <Input icon="search" placeholder="Search..." /> },
+    },
+    {
+      key: 'with-menu',
+      icon: 'menu',
+      menu: ['one', 'two', 'three'],
+      menuOpen,
+      onMenuOpenChange: (e, { menuOpen }) => {
+        setMenuOpen(menuOpen)
+      },
+    },
+    render =>
+      render({ key: 'with-tooltip', icon: 'info' }, (Component, props) => (
+        <Tooltip key={props.key} content="This is tooltip">
+          <Component {...props} />
+        </Tooltip>
+      )),
     ..._.times(30, i => ({
       key: `b${i}`,
       content: `${icons[i % icons.length]} #${i}`,

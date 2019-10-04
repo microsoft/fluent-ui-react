@@ -18,10 +18,18 @@ const toolbarStyles: ComponentSlotStylesPrepared<ToolbarProps, ToolbarVariables>
     visibility: 'hidden',
   }),
 
+  offsetMeasure: (): ICSSInJSStyle => ({
+    position: 'absolute',
+    visibility: 'hidden',
+    left: 0,
+    top: 0,
+  }),
+
   wrapper2: ({ variables: v }) => ({
     display: 'flex',
-    flexWrap: 'wrap',
-    overflowY: 'hidden',
+    // flexWrap: 'wrap',
+    // overflowY: 'hidden',
+    overflow: 'hidden',
     height: v.itemHeight,
   }),
 }

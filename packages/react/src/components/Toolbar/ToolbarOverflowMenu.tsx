@@ -30,7 +30,7 @@ class ToolbarOverflowMenu extends UIComponent<ToolbarOverflowMenuProps, any> {
     // design={{position: 'absolute', top: 0, right: 0}} menu={this.state.menuItems} menuOpen={this.state.menuOpen}
     return (
       <ToolbarItem
-        wrapper={{ styles: { position: 'absolute' } }}
+        wrapper={{ styles: { position: 'absolute' /* , visibility: 'hidden' */ } }}
         icon="more"
         onMenuOpenChange={this.onMenuOpenChange}
         menu={this.state.menuItems}
