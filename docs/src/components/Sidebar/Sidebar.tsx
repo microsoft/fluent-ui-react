@@ -277,7 +277,7 @@ class Sidebar extends React.Component<any, any> {
       {
         key: 'chatpaneactions',
         title: { content: 'Chat Pane Actions', as: NavLink, to: '/prototype-chat-pane-actions' },
-        public: false,
+        public: true,
       },
       {
         key: 'chatMssages',
