@@ -1,10 +1,15 @@
+import {
+  AccessibilityDefinition,
+  FocusZoneMode,
+  FocusZoneDefinition,
+  Accessibility,
+} from '@stardust-ui/accessibility'
+import { getElementType, getUnhandledProps } from '@stardust-ui/react-bindings'
 import cx from 'classnames'
 import * as React from 'react'
 import * as _ from 'lodash'
 
 import callable from './callable'
-import getElementType from './getElementType'
-import getUnhandledProps from './getUnhandledProps'
 import logProviderMissingWarning from './providerMissingHandler'
 import {
   ComponentStyleFunctionParam,
@@ -17,12 +22,6 @@ import {
   ComponentSlotStylesInput,
 } from '../themes/types'
 import { Props, ProviderContextPrepared } from '../types'
-import {
-  AccessibilityDefinition,
-  FocusZoneMode,
-  FocusZoneDefinition,
-  Accessibility,
-} from './accessibility/types'
 import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/reactTypes'
 import getKeyDownHandlers from './getKeyDownHandlers'
 import { emptyTheme, mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
@@ -46,7 +45,6 @@ export type RenderComponentCallback<P> = (config: RenderResultConfig<P>) => any
 
 export interface RenderConfig<P> {
   className?: string
-  defaultProps?: { [key: string]: any }
   displayName: string
   handledProps: string[]
   props: PropsWithVarsAndStyles
@@ -160,7 +158,6 @@ const renderComponent = <P extends {}>(
 ): React.ReactElement<P> => {
   const {
     className,
-    defaultProps,
     displayName,
     handledProps,
     props,
@@ -177,7 +174,7 @@ const renderComponent = <P extends {}>(
   const { disableAnimations = false, renderer = null, rtl = false, theme = emptyTheme } =
     context || {}
 
-  const ElementType = getElementType({ defaultProps }, props) as React.ReactType<P>
+  const ElementType = getElementType(props) as React.ReactType<P>
   const stateAndProps = { ...state, ...props }
 
   // Resolve variables for this component, allow props.variables to override
@@ -205,7 +202,7 @@ const renderComponent = <P extends {}>(
     rtl,
   )
 
-  const unhandledProps = getUnhandledProps({ handledProps }, props)
+  const unhandledProps = getUnhandledProps(handledProps, props)
 
   const styleParam: ComponentStyleFunctionParam = {
     displayName,
