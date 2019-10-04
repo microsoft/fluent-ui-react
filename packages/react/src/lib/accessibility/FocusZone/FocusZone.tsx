@@ -1,15 +1,17 @@
-import * as React from 'react'
-import * as ReactDOM from 'react-dom'
-import * as PropTypes from 'prop-types'
 import {
   FocusZoneDirection,
   FocusZoneTabbableElements,
-  IFocusZone,
-  FocusZoneProps,
-} from './FocusZone.types'
-import * as keyboardKey from 'keyboard-key'
+  IS_FOCUSABLE_ATTRIBUTE,
+} from '@stardust-ui/accessibility'
+import { getElementType, getUnhandledProps } from '@stardust-ui/react-bindings'
+import * as React from 'react'
 import cx from 'classnames'
 import * as _ from 'lodash'
+import * as keyboardKey from 'keyboard-key'
+import * as ReactDOM from 'react-dom'
+import * as PropTypes from 'prop-types'
+
+import { FocusZoneProps, IFocusZone } from './FocusZone.types'
 import {
   getNextElement,
   getPreviousElement,
@@ -21,11 +23,8 @@ import {
   getElementIndexPath,
   getFocusableByIndexPath,
   getParent,
-  IS_FOCUSABLE_ATTRIBUTE,
   FOCUSZONE_ID_ATTRIBUTE,
 } from './focusUtilities'
-import getUnhandledProps from '../../getUnhandledProps'
-import getElementType from '../../getElementType'
 
 const TABINDEX = 'tabindex'
 const LARGE_DISTANCE_FROM_CENTER = 999999999
@@ -208,11 +207,8 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
   render() {
     const { className } = this.props
 
-    const ElementType = getElementType({ defaultProps: FocusZone.defaultProps }, this.props)
-    const unhandledProps = getUnhandledProps(
-      { handledProps: [..._.keys(FocusZone.propTypes)] },
-      this.props,
-    )
+    const ElementType = getElementType(this.props)
+    const unhandledProps = getUnhandledProps(_.keys(FocusZone.propTypes) as any, this.props)
 
     // Note, right before rendering/reconciling proceeds, we need to record if focus
     // was in the zone before the update. This helper will track this and, if focus

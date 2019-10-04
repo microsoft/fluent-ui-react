@@ -1,3 +1,4 @@
+import { Accessibility, listItemBehavior } from '@stardust-ui/accessibility'
 import * as React from 'react'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -11,8 +12,6 @@ import {
   ShorthandFactory,
 } from '../../lib'
 import Flex from '../Flex/Flex'
-import { listItemBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
 import { ShorthandValue, WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Box, { BoxProps } from '../Box/Box'
 

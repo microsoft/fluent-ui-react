@@ -28,6 +28,7 @@ const getStyleComputedProperty = (node: Node): Partial<CSSStyleDeclaration> => {
 const getScrollParent = (node: Node): Node => {
   // Return body, `getScroll` will take care to get the correct `scrollTop` from it
   const parentNode = node && getParentNode(node)
+  // eslint-disable-next-line
   if (!parentNode) return document.body
 
   switch (parentNode.nodeName) {

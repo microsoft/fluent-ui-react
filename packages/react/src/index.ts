@@ -212,11 +212,6 @@ export * from './components/Tooltip/TooltipContent'
 export { default as TooltipContent } from './components/Tooltip/TooltipContent'
 
 //
-// Accessibility behaviors
-//
-export * from './lib/accessibility'
-
-//
 // Utilities
 //
 export { default as mergeThemes } from './lib/mergeThemes'
@@ -251,7 +246,7 @@ export const FocusZoneUtilities = {
 export * from './lib/accessibility/FocusZone/FocusZone.types'
 export * from './lib/accessibility/FocusZone/FocusTrapZone.types'
 export * from './lib/accessibility/FocusZone/AutoFocusZone.types'
-export * from './lib/accessibility/types'
 export * from './lib/accessibility/reactTypes'
 
+export * from '@stardust-ui/accessibility'
 export * from '@stardust-ui/react-component-ref'

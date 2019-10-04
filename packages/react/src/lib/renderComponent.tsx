@@ -1,10 +1,15 @@
+import {
+  AccessibilityDefinition,
+  FocusZoneMode,
+  FocusZoneDefinition,
+  Accessibility,
+} from '@stardust-ui/accessibility'
+import { getElementType, getUnhandledProps } from '@stardust-ui/react-bindings'
 import cx from 'classnames'
 import * as React from 'react'
 import * as _ from 'lodash'
 
 import callable from './callable'
-import getElementType from './getElementType'
-import getUnhandledProps from './getUnhandledProps'
 import logProviderMissingWarning from './providerMissingHandler'
 import {
   ComponentStyleFunctionParam,
@@ -17,12 +22,6 @@ import {
   ComponentSlotStylesInput,
 } from '../themes/types'
 import { Props, ProviderContextPrepared } from '../types'
-import {
-  AccessibilityDefinition,
-  FocusZoneMode,
-  FocusZoneDefinition,
-  Accessibility,
-} from './accessibility/types'
 import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/reactTypes'
 import getKeyDownHandlers from './getKeyDownHandlers'
 import { emptyTheme, mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
@@ -46,7 +45,6 @@ export type RenderComponentCallback<P> = (config: RenderResultConfig<P>) => any
 
 export interface RenderConfig<P> {
   className?: string
-  defaultProps?: { [key: string]: any }
   displayName: string
   handledProps: string[]
   props: PropsWithVarsAndStyles
@@ -62,6 +60,7 @@ const emptyBehavior: ReactAccessibilityBehavior = {
 }
 
 const getAccessibility = (
+  displayName: string,
   props: State & PropsWithVarsAndStyles & { accessibility?: Accessibility },
   actionHandlers: AccessibilityActionHandlers,
   isRtlEnabled: boolean,
@@ -74,6 +73,20 @@ const getAccessibility = (
 
   const definition: AccessibilityDefinition = accessibility(props)
   const keyHandlers = getKeyDownHandlers(actionHandlers, definition.keyActions, isRtlEnabled)
+
+  if (process.env.NODE_ENV !== 'production') {
+    // For the non-production builds we enable the runtime accessibility attributes validator.
+    // We're adding the data-aa-class attribute which is being consumed by the validator, the
+    // schema is located in @stardust-ui/ability-attributes package.
+    if (definition.attributes) {
+      const slotNames = Object.keys(definition.attributes)
+      slotNames.forEach(slotName => {
+        definition.attributes[slotName]['data-aa-class'] = `${displayName}${
+          slotName === 'root' ? '' : `__${slotName}`
+        }`
+      })
+    }
+  }
 
   return {
     ...emptyBehavior,
@@ -145,7 +158,6 @@ const renderComponent = <P extends {}>(
 ): React.ReactElement<P> => {
   const {
     className,
-    defaultProps,
     displayName,
     handledProps,
     props,
@@ -162,7 +174,7 @@ const renderComponent = <P extends {}>(
   const { disableAnimations = false, renderer = null, rtl = false, theme = emptyTheme } =
     context || {}
 
-  const ElementType = getElementType({ defaultProps }, props) as React.ReactType<P>
+  const ElementType = getElementType(props) as React.ReactType<P>
   const stateAndProps = { ...state, ...props }
 
   // Resolve variables for this component, allow props.variables to override
@@ -184,12 +196,13 @@ const renderComponent = <P extends {}>(
   )
 
   const accessibility: ReactAccessibilityBehavior = getAccessibility(
+    displayName,
     stateAndProps,
     actionHandlers,
     rtl,
   )
 
-  const unhandledProps = getUnhandledProps({ handledProps }, props)
+  const unhandledProps = getUnhandledProps(handledProps, props)
 
   const styleParam: ComponentStyleFunctionParam = {
     displayName,
