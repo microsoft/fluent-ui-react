@@ -4,12 +4,18 @@ import {
   FocusZoneDefinition,
   Accessibility,
 } from '@stardust-ui/accessibility'
-import { getElementType, getUnhandledProps } from '@stardust-ui/react-bindings'
+import {
+  callable,
+  FocusZone,
+  FocusZoneProps,
+  FOCUSZONE_WRAP_ATTRIBUTE,
+  getElementType,
+  getUnhandledProps,
+} from '@stardust-ui/react-bindings'
 import cx from 'classnames'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import callable from './callable'
 import logProviderMissingWarning from './providerMissingHandler'
 import {
   ComponentStyleFunctionParam,
@@ -25,8 +31,6 @@ import { Props, ProviderContextPrepared } from '../types'
 import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/reactTypes'
 import getKeyDownHandlers from './getKeyDownHandlers'
 import { emptyTheme, mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
-import { FocusZoneProps, FocusZone } from './accessibility/FocusZone'
-import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 import createAnimationStyles from './createAnimationStyles'
 import Debug, { isEnabled as isDebugEnabled } from './debug'
 
