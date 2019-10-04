@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { carouselItemBehavior } from '@stardust-ui/accessibility'
 
 import { Ref } from '@stardust-ui/react-component-ref'
 import {
@@ -16,7 +17,6 @@ import {
 } from '../../lib'
 import { WithAsProp, withSafeTypeForAs, ShorthandValue, ShorthandRenderFunction } from '../../types'
 import CarouselSlide, { CarouselSlideProps } from './CarouselSlide'
-import { carouselItemBehavior } from 'src/lib/accessibility'
 
 export interface CarouselItemProps
   extends UIComponentProps,

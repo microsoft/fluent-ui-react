@@ -72,3 +72,5 @@ export { default as treeItemAsListItemBehavior } from './Tree/treeItemAsListItem
 export {
   default as treeTitleAsListItemTitleBehavior,
 } from './Tree/treeTitleAsListItemTitleBehavior'
+export { default as carouselBehavior } from './Carousel/carouselBehavior'
+export { default as carouselItemBehavior } from './Carousel/carouselItemBehavior'

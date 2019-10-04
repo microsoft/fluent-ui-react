@@ -1,4 +1,5 @@
 import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { tabListBehavior, carouselBehavior } from '@stardust-ui/accessibility'
 import * as React from 'react'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -26,7 +27,6 @@ import { CarouselSlideProps } from './CarouselSlide'
 import Menu, { MenuProps } from '../Menu/Menu'
 import Text from '../Text/Text'
 import { MenuItemProps } from '../Menu/MenuItem'
-import { tabListBehavior, carouselBehavior } from '../../lib/accessibility'
 
 export interface CarouselProps extends UIComponentProps, ChildrenComponentProps {
   /** Shorthand array of props for CarouselItem. */
