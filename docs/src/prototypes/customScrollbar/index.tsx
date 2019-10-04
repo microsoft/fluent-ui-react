@@ -13,7 +13,7 @@ import {
 } from '@stardust-ui/react'
 import { PrototypeSection, ComponentPrototype } from '../Prototypes'
 
-const submenuWithScrollbars = (shorthand: ShorthandValue<MenuProps>, height: string) => {
+const submenuWithScrollbars = (menu: MenuItemProps['menu'], height: string) => {
   return render => render(shorthand, (Component, props) => <Component {...props} as={Scrollbars} style={{ height }} />)
 }
 
