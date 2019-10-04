@@ -1,7 +1,7 @@
-import { Reaction, ChatMessage } from '@stardust-ui/react'
+import { Reaction, Chat, ChatItem } from '@stardust-ui/react'
 
 const selectors = {
-  chatMessageContent: `.${ChatMessage.slotClassNames.content}:nth-child(2)`,
+  chatMessageContent: `.${Chat.slotClassNames}:nth-child(2) .${ChatItem.slotClassNames.message}`,
   reaction: `.${Reaction.className}`,
 }
 
