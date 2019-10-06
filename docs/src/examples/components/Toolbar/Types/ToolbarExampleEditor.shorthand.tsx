@@ -74,6 +74,7 @@ const ToolbarExampleShorthand = () => {
   return (
     <>
       <Toolbar
+        overflow
         styles={{ margin: '50px', padding: '20px', border: '10px solid gray' }}
         items={[
           ..._.times(10, i => ({

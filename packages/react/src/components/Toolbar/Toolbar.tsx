@@ -249,7 +249,6 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
       }
       const itemBoundingRect = $item.getBoundingClientRect()
       if ($item.getBoundingClientRect().right > wrapperBoundingRect.right) {
-        // needs improvement
         isOverflowing = true
         // console.log(
         //   'Overflow',
@@ -263,8 +262,20 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
       }
 
       if (isOverflowing) {
-        if (itemBoundingRect.right + overflowItemBoundingRect.width > wrapperBoundingRect.right) {
+        // eslint-disable-next-line no-undef
+        const itemRightMargin = parseFloat(window.getComputedStyle($item).marginRight) || 0
+        if (
+          itemBoundingRect.right + overflowItemBoundingRect.width + itemRightMargin >
+          wrapperBoundingRect.right
+        ) {
           // test RTL
+          // console.log('Collision', {
+          //   'itemBoundingRect.right': itemBoundingRect.right,
+          //   'overflowItemBoundingRect.width': overflowItemBoundingRect.width,
+          //   'itemRightMargin': itemRightMargin,
+          //   sum: itemBoundingRect.right + overflowItemBoundingRect.width + itemRightMargin,
+          //   'wrapperBoundingRect.right': wrapperBoundingRect.right,
+          // })
           this.debug($item, 'magenta')
           this.hide($item)
           return
@@ -288,8 +299,13 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
       if ($lastVisibleItem) {
         this.debug($lastVisibleItem, 'lime')
 
+        const lastVisibleItemRightMargin =
+          // eslint-disable-next-line no-undef
+          parseFloat(window.getComputedStyle($lastVisibleItem).marginRight) || 0
+
         $overflowItem.style.left = `${lastVisibleItemRect.right -
           wrapperBoundingRect.left +
+          lastVisibleItemRightMargin +
           absolutePositioningOffset.vertical}px`
         // $overflowItem.style.top = `${lastVisibleItemRect.top - wrapperBoundingRect.top + absolutePositioningOffset.horizontal}px`
       } else {
@@ -309,7 +325,10 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
   }
 
   componentDidMount() {
+    const dm = performance.now()
     this.hackyDOMOverflow()
+    const done = performance.now()
+    console.log(`rendered ${this.rtl ? ' (in rtl)' : ''}`, done - this.renderStartTime, done - dm)
     // this.afterComponentRendered()
   }
 
@@ -376,6 +395,9 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
     }))
   }
 
+  renderStartTime
+  rtl = false
+
   renderComponent({
     accessibility,
     ElementType,
@@ -383,7 +405,10 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
     styles,
     variables,
     unhandledProps,
+    rtl,
   }): React.ReactNode {
+    this.renderStartTime = performance.now()
+    this.rtl = rtl
     const { children, items, onReduceItems, measurement, wrapper, overflow } = this.props
 
     if (!_.isNil(onReduceItems)) {
