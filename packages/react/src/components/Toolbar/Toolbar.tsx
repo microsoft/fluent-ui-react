@@ -192,10 +192,10 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
     // By measuring position of an offsetMeasure element absolutely positioned to 0,0.
     // TODO: replace by getComputedStyle('padding')
     const absolutePositioningOffset = {
-      vertical: this.rtl
+      horizontal: this.rtl
         ? offsetMeasureBoundingRect.right - overflowCropBoundingRect.right
         : overflowCropBoundingRect.left - offsetMeasureBoundingRect.left,
-      horizontal: overflowCropBoundingRect.top - offsetMeasureBoundingRect.top,
+      vertical: overflowCropBoundingRect.top - offsetMeasureBoundingRect.top,
     }
 
     let isOverflowing = false
@@ -303,7 +303,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
           $overflowItem.style.right = `${overflowCropBoundingRect.right -
             lastVisibleItemRect.left -
             lastVisibleItemMarginLeft +
-            absolutePositioningOffset.vertical}px`
+            absolutePositioningOffset.horizontal}px`
         } else {
           const lastVisibleItemRightMargin =
             // eslint-disable-next-line no-undef
@@ -312,14 +312,14 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
           $overflowItem.style.left = `${lastVisibleItemRect.right -
             overflowCropBoundingRect.left +
             lastVisibleItemRightMargin +
-            absolutePositioningOffset.vertical}px`
+            absolutePositioningOffset.horizontal}px`
         }
       } else {
         this.lastVisibleItemIndex = -1
         if (this.rtl) {
-          $overflowItem.style.right = `${absolutePositioningOffset.vertical}px`
+          $overflowItem.style.right = `${absolutePositioningOffset.horizontal}px`
         } else {
-          $overflowItem.style.left = `${absolutePositioningOffset.vertical}px`
+          $overflowItem.style.left = `${absolutePositioningOffset.horizontal}px`
         }
       }
       this.show($overflowItem)
