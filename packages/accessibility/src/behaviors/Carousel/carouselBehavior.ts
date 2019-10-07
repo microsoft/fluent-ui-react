@@ -24,9 +24,6 @@ const carouselBehavior: Accessibility = props => ({
     buttonPrevious: {
       tabIndex: -1,
     },
-    statusContainer: {
-      role: 'status',
-    },
   },
 
   keyActions: {

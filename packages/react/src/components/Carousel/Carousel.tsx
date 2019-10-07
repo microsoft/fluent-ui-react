@@ -142,9 +142,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
             )}
           </div>
         </Ref>
-        <div {...accessibility.attributes.statusContainer} style={screenReaderContainerStyles}>
-          {`${activeIndex + 1} of ${items.length}`}
-        </div>
+        <div style={screenReaderContainerStyles}>{`${activeIndex + 1} of ${items.length}`}</div>
       </div>
     )
   }
