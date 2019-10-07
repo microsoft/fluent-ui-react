@@ -52,7 +52,6 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
     shouldFocusInnerElementWhenReceivedFocus: PropTypes.bool,
     disabled: PropTypes.bool,
     as: PropTypes.elementType as PropTypes.Requireable<React.ElementType>,
-    forwardedAs: PropTypes.elementType as PropTypes.Requireable<React.ElementType>,
     isCircularNavigation: PropTypes.bool,
     shouldEnterInnerZone: PropTypes.func,
     onActiveElementChanged: PropTypes.func,
@@ -207,7 +206,7 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
   }
 
   render() {
-    const { className, forwardedAs } = this.props
+    const { className } = this.props
 
     const ElementType = getElementType(this.props)
     const unhandledProps = getUnhandledProps(_.keys(FocusZone.propTypes) as any, this.props)
@@ -222,7 +221,6 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
     return (
       <ElementType
         {...unhandledProps}
-        as={forwardedAs}
         className={cx(FocusZone.className, className)}
         data-focuszone-id={this._id}
         onKeyDown={this._onKeyDown}

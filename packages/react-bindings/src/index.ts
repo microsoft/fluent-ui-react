@@ -8,7 +8,6 @@ export * from './FocusZone/FocusTrapZone.types'
 export { default as FocusZone } from './FocusZone/FocusZone'
 export * from './FocusZone/FocusZone.types'
 export * from './FocusZone/focusUtilities'
-export { default as unstable_wrapInFocusZone } from './FocusZone/wrapInFocusZone'
 
 export { default as useAccessibility } from './hooks/useAccessibility'
 export { default as unstable_useDispatchEffect } from './hooks/useDispatchEffect'

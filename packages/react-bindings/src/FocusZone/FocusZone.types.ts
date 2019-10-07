@@ -48,9 +48,6 @@ export interface FocusZoneProps
    */
   className?: string
 
-  /** An element type to render as (string or component) that will be passed to component. */
-  forwardedAs?: React.ElementType
-
   /**
    * Defines which arrows to react to.
    * It has next options: horizontal, vertical, bidirectional, bidirectionalDomOrder.

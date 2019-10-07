@@ -1,11 +1,13 @@
 import {
-  ReactAccessibilityBehavior,
   AccessibilityActionHandlers,
   callable,
+  FocusZone,
+  FocusZoneProps,
+  FOCUSZONE_WRAP_ATTRIBUTE,
   getElementType,
   getUnhandledProps,
+  ReactAccessibilityBehavior,
   unstable_getAccessibility as getAccessibility,
-  unstable_wrapInFocusZone as wrapInFocusZone,
 } from '@stardust-ui/react-bindings'
 import cx from 'classnames'
 import * as React from 'react'
@@ -26,6 +28,7 @@ import { Props, ProviderContextPrepared } from '../types'
 import { emptyTheme, mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import createAnimationStyles from './createAnimationStyles'
 import Debug, { isEnabled as isDebugEnabled } from './debug'
+import { FocusZoneMode } from '@stardust-ui/accessibility'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
@@ -154,6 +157,7 @@ const renderComponent = <P extends {}>(
     rtl,
     theme,
   }
+  let wrapInFocusZone: (element: React.ReactElement) => React.ReactElement = element => element
 
   // conditionally add sources for evaluating debug information to component
   if (isDebugEnabled) {
@@ -169,7 +173,32 @@ const renderComponent = <P extends {}>(
     )
   }
 
-  return wrapInFocusZone(render(resolvedConfig), accessibility, rtl)
+  if (accessibility.focusZone && accessibility.focusZone.mode === FocusZoneMode.Wrap) {
+    wrapInFocusZone = element =>
+      React.createElement(
+        FocusZone,
+        {
+          [FOCUSZONE_WRAP_ATTRIBUTE]: true,
+          ...accessibility.focusZone.props,
+          isRtl: rtl,
+        } as FocusZoneProps & { [FOCUSZONE_WRAP_ATTRIBUTE]: boolean },
+        element,
+      )
+  }
+
+  if (accessibility.focusZone && accessibility.focusZone.mode === FocusZoneMode.Embed) {
+    const originalElementType = resolvedConfig.ElementType
+
+    resolvedConfig.ElementType = FocusZone as any
+    resolvedConfig.unhandledProps = {
+      ...resolvedConfig.unhandledProps,
+      ...accessibility.focusZone.props,
+    }
+    resolvedConfig.unhandledProps.as = originalElementType
+    resolvedConfig.unhandledProps.isRtl = resolvedConfig.rtl
+  }
+
+  return wrapInFocusZone(render(resolvedConfig))
 }
 
 export default renderComponent
