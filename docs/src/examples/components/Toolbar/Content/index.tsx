@@ -56,6 +56,11 @@ const Content = () => (
       description="Toolbar can rearrange its items based on its wrapping container width."
       examplePath="components/Toolbar/Content/ToolbarExampleOverflow"
     />
+    <ComponentExample
+      title="Overflow in portal window"
+      description="Overflow in portal window."
+      examplePath="components/Toolbar/Content/ToolbarExamplePortal"
+    />
   </ExampleSection>
 )
 

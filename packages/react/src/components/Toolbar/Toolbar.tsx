@@ -3,8 +3,8 @@ import * as React from 'react'
 import * as _ from 'lodash'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
-import { Ref } from '@stardust-ui/react-component-ref'
-import { windowRef, EventListener } from '@stardust-ui/react-component-event-listener'
+import { Ref, toRefObject } from '@stardust-ui/react-component-ref'
+import { EventListener } from '@stardust-ui/react-component-event-listener'
 
 import {
   childrenExist,
@@ -104,7 +104,9 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
   // index of the last visible item in Toolbar, the rest goes to overflow menu
   lastVisibleItemIndex: number
 
-  renderStartTime: number // TODO: remove before merge
+  animationFrameId: number
+  // renderStartTime: number // TODO: remove before merge
+  // didMountTime: number
   rtl: boolean
 
   handleItemOverrides = variables => predefinedProps => ({
@@ -189,8 +191,8 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
   ) {
     let wouldCollide
     if (this.rtl) {
-      // eslint-disable-next-line no-undef
-      const itemLeftMargin = parseFloat(window.getComputedStyle($item).marginLeft) || 0
+      const itemLeftMargin =
+        parseFloat(this.context.target.defaultView.getComputedStyle($item).marginLeft) || 0
       wouldCollide =
         itemBoundingRect.left - overflowItemBoundingRect.width - itemLeftMargin <
         containerBoundingRect.left
@@ -204,8 +206,8 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
       //   'overflowContainerBoundingRect.left': containerBoundingRect.left,
       // })
     } else {
-      // eslint-disable-next-line no-undef
-      const itemRightMargin = parseFloat(window.getComputedStyle($item).marginRight) || 0
+      const itemRightMargin =
+        parseFloat(this.context.target.defaultView.getComputedStyle($item).marginRight) || 0
       wouldCollide =
         itemBoundingRect.right + overflowItemBoundingRect.width + itemRightMargin >
         containerBoundingRect.right
@@ -363,14 +365,32 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
   }
 
   componentDidMount() {
-    // const dm = performance.now()
-    this.hideOverflowItems()
-    // const done = performance.now()
-    // console.log(`rendered ${this.rtl ? ' (in rtl)' : ''}`, done - this.renderStartTime, done - dm)
+    // this.didMountTime = performance.now()
+    this.afterComponentRendered()
   }
 
   componentDidUpdate() {
-    this.hideOverflowItems()
+    this.afterComponentRendered()
+  }
+
+  componentWillUnmount() {
+    if (this.animationFrameId !== undefined) {
+      this.context.target.defaultView.cancelAnimationFrame(this.animationFrameId)
+      this.animationFrameId = undefined
+    }
+  }
+
+  afterComponentRendered() {
+    if (this.animationFrameId !== undefined) {
+      this.context.target.defaultView.cancelAnimationFrame(this.animationFrameId)
+    }
+
+    // there are cases (like opening a portal and rendering the Toolbar there immediately) when rAF is necessary
+    this.animationFrameId = this.context.target.defaultView.requestAnimationFrame(() => {
+      this.hideOverflowItems()
+      // const done = performance.now()
+      // console.log(`rendered ${this.rtl ? ' (in rtl)' : ''}`, done - this.renderStartTime, done - this.didMountTime)
+    })
   }
 
   renderComponent({
@@ -382,7 +402,9 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
     unhandledProps,
     rtl,
   }): React.ReactNode {
-    this.renderStartTime = performance.now()
+    const windowRef = toRefObject(this.context.target.defaultView)
+
+    // this.renderStartTime = performance.now()
     this.rtl = rtl
     const { children, items, overflow } = this.props
 
