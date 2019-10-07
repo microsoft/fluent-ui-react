@@ -43,18 +43,20 @@ const getKeyDownHandlers = (
           handledActions.forEach(actionName => {
             let keyCombinations = behaviorSlotActions[actionName].keyCombinations
 
-            if (isRtlEnabled) {
-              keyCombinations = keyCombinations.map(keyCombination => {
-                const keyToRtlKey = rtlKeyMap[keyCombination.keyCode]
-                if (keyToRtlKey) {
-                  keyCombination.keyCode = keyToRtlKey
-                }
-                return keyCombination
-              })
-            }
+            if (keyCombinations) {
+              if (isRtlEnabled) {
+                keyCombinations = keyCombinations.map(keyCombination => {
+                  const keyToRtlKey = rtlKeyMap[keyCombination.keyCode]
+                  if (keyToRtlKey) {
+                    keyCombination.keyCode = keyToRtlKey
+                  }
+                  return keyCombination
+                })
+              }
 
-            if (shouldHandleOnKeys(event, keyCombinations)) {
-              componentActionHandlers[actionName](event)
+              if (shouldHandleOnKeys(event, keyCombinations)) {
+                componentActionHandlers[actionName](event)
+              }
             }
           })
         },
