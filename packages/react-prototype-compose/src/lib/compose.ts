@@ -3,28 +3,6 @@ import { useTheme } from './theme-context'
 import { Theme } from './theme'
 import { felaRenderer } from '@stardust-ui/react'
 
-const _getClasses = (theme: Theme, name: string, optionsSet: any[]) => {
-  let tokens: any = {}
-  optionsSet.forEach((options: any) => {
-    if (options && options.tokens && typeof options.tokens === 'function') {
-      tokens = { ...tokens, ...options.tokens(theme) }
-    }
-  })
-
-  let styles: any = {}
-  optionsSet.forEach((options: any) => {
-    if (options && options.styles && typeof options.styles === 'function') {
-      styles = { ...styles, ...options.styles(theme, tokens) }
-    }
-  })
-
-  const classes = {}
-  Object.keys(styles).forEach(k => {
-    classes[k] = felaRenderer.renderRule(() => styles[k], { theme: { direction: 'ltr' } })
-  })
-  return classes
-}
-
 /**
  * Composed allows you to create composed components, which
  * have configurable, themable state, view, and slots.
@@ -43,30 +21,18 @@ export const compose = <TProps = {}>(baseComponent?: React.SFC, options?: any) =
     mergedOptions = { ...mergedOptions, ...o }
   })
 
-  const Component = (userProps: TProps) => {
+  const Component = (props: TProps) => {
     const theme: Theme = (useTheme() || (mergedOptions as any).defaultTheme)!
     if (!theme) {
       console.warn('No theme specified, behavior undefined.') // eslint-disable-line no-console
     }
 
-    const { slots, state, slotProps, view, name } = mergedOptions as any
-    const resolvedSlotProps = _getSlotProps(
-      userProps,
-      slots,
-      state,
-      slotProps,
-      theme,
-      classNamesCache,
-      optionsSet,
-      name,
-    )
-
-    return view({
-      userProps,
-      Slots: slots,
+    const resolvedSlotProps = _getSlotProps(props, theme, classNamesCache, optionsSet)
+    return baseComponent({
+      ...props,
       slotProps: resolvedSlotProps,
       theme,
-    })
+    } as any)
   }
 
   for (const slotName in options.slots) {
@@ -80,25 +46,15 @@ export const compose = <TProps = {}>(baseComponent?: React.SFC, options?: any) =
 }
 
 function _getSlotProps(
-  userProps: any,
-  slots: any,
-  state: any,
-  slotProps: any,
+  props: any,
   theme: Theme,
   classNamesCache: WeakMap<any, any>,
   optionsSet: any[],
-  name: string,
 ) {
-  const resolvedState = state ? state(userProps, slots) : {}
-
-  const resolvedSlotProps = slotProps
-    ? typeof slotProps === 'function'
-      ? slotProps(userProps, resolvedState)
-      : slotProps
-    : {}
+  const resolvedSlotProps = props && props.slotProps ? { ...props.slotProps } : {}
   if (theme) {
     if (!classNamesCache.has(theme)) {
-      classNamesCache.set(theme, _getClasses(theme, name, optionsSet))
+      classNamesCache.set(theme, _getClasses(theme, optionsSet))
     }
     const classNames = classNamesCache.get(theme)
     Object.keys(classNames).forEach(k => {
@@ -106,10 +62,31 @@ function _getSlotProps(
       if (!resolvedSlotProps[k]) {
         resolvedSlotProps[k] = { className: '' }
       } else if (!resolvedSlotProps[k].className) {
-        resolvedSlotProps[k].className = []
+        resolvedSlotProps[k].className = ''
       }
-      resolvedSlotProps[k].className = `${resolvedSlotProps[k].className} ${className}`
+      resolvedSlotProps[k].className = `${resolvedSlotProps[k].className} ${className}`.trim()
     })
   }
   return resolvedSlotProps
+}
+
+const _getClasses = (theme: Theme, optionsSet: any[]) => {
+  let tokens: any = {}
+  optionsSet.forEach((options: any) => {
+    if (options && options.tokens && typeof options.tokens === 'function') {
+      tokens = { ...tokens, ...options.tokens(theme) }
+    }
+  })
+
+  let styles: any = {}
+  optionsSet.forEach((options: any) => {
+    if (options && options.styles && typeof options.styles === 'function') {
+      styles = { ...styles, ...options.styles(theme, tokens) }
+    }
+  })
+  const classes = {}
+  Object.keys(styles).forEach(k => {
+    classes[k] = felaRenderer.renderRule(() => styles[k], { theme: { direction: 'ltr' } })
+  })
+  return classes
 }

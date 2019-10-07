@@ -40,14 +40,14 @@ const styles = (theme: Theme, tokens: Tokens) => {
         transform: 'translateY(-50%)',
       },
     },
-    track: {
+    rail: {
       position: 'absolute',
       left: '8px',
       right: '8px',
       height: '100%',
     },
 
-    selectedTrack: {
+    track: {
       position: 'absolute',
       left: 0,
       top: '50%',
