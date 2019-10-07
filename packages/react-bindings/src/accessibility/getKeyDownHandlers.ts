@@ -14,52 +14,54 @@ const rtlKeyMap = {
 /**
  * Assigns onKeyDown handler to the slot element, based on Component's actions
  * and keys mappings defined in Accessibility behavior
- * @param {AccessibilityActionHandlers} actionHandlers Actions handlers defined in a component.
+ * @param {AccessibilityActionHandlers} componentActionHandlers Actions handlers defined in a component.
  * @param {KeyActions} behaviorActions Mappings of actions and keys defined in Accessibility behavior.
  * @param {boolean} isRtlEnabled Indicates if Left and Right arrow keys should be swapped in RTL mode.
  */
 const getKeyDownHandlers = (
-  actionHandlers: AccessibilityActionHandlers,
+  componentActionHandlers: AccessibilityActionHandlers,
   behaviorActions: KeyActions,
   isRtlEnabled?: boolean,
 ): AccessibilityKeyHandlers => {
-  const componentHandlerNames = Object.keys(actionHandlers)
-  const keyHandlers = {}
+  const componentHandlerNames = Object.keys(componentActionHandlers)
+  const slotKeyHandlers: AccessibilityKeyHandlers = {}
 
-  if (!actionHandlers || !behaviorActions) return keyHandlers
+  if (!componentActionHandlers || !behaviorActions) {
+    return slotKeyHandlers
+  }
 
-  for (const slotName in behaviorActions) {
-    const behaviorSlotAction = behaviorActions[slotName]
-    const handledActions = Object.keys(behaviorSlotAction).filter(
+  Object.keys(behaviorActions).forEach(slotName => {
+    const behaviorSlotActions = behaviorActions[slotName]
+    const handledActions = Object.keys(behaviorSlotActions).filter(
       actionName => componentHandlerNames.indexOf(actionName) !== -1,
     )
 
-    if (!handledActions.length) continue
+    if (handledActions.length > 0) {
+      slotKeyHandlers[slotName] = {
+        onKeyDown: (event: React.KeyboardEvent) => {
+          handledActions.forEach(actionName => {
+            let keyCombinations = behaviorSlotActions[actionName].keyCombinations
 
-    keyHandlers[slotName] = {
-      onKeyDown: (event: React.KeyboardEvent) => {
-        handledActions.forEach(actionName => {
-          let keyCombinations = behaviorSlotAction[actionName].keyCombinations
+            if (isRtlEnabled) {
+              keyCombinations = keyCombinations.map(keyCombination => {
+                const keyToRtlKey = rtlKeyMap[keyCombination.keyCode]
+                if (keyToRtlKey) {
+                  keyCombination.keyCode = keyToRtlKey
+                }
+                return keyCombination
+              })
+            }
 
-          if (isRtlEnabled) {
-            keyCombinations = keyCombinations.map(keyCombination => {
-              const keyToRtlKey = rtlKeyMap[keyCombination.keyCode]
-              if (keyToRtlKey) {
-                keyCombination.keyCode = keyToRtlKey
-              }
-              return keyCombination
-            })
-          }
-
-          if (shouldHandleOnKeys(event, keyCombinations)) {
-            actionHandlers[actionName](event)
-          }
-        })
-      },
+            if (shouldHandleOnKeys(event, keyCombinations)) {
+              componentActionHandlers[actionName](event)
+            }
+          })
+        },
+      }
     }
-  }
+  })
 
-  return keyHandlers
+  return slotKeyHandlers
 }
 
 export default getKeyDownHandlers
