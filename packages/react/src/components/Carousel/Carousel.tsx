@@ -3,6 +3,8 @@ import { tabListBehavior, carouselBehavior } from '@stardust-ui/accessibility'
 import * as React from 'react'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
+import { Ref } from '@stardust-ui/react-component-ref'
+
 import {
   UIComponentProps,
   UIComponent,
@@ -100,6 +102,8 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
     activeIndex: 0,
   }
 
+  itemsContainerRef = React.createRef<HTMLElement>()
+
   setActiveIndex(index: number): void {
     const { items } = this.props
 
@@ -122,20 +126,22 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
 
     return (
       <div style={styles.itemsContainerWrapper} {...accessibility.attributes.itemsContainerWrapper}>
-        <div
-          style={styles.itemsContainer}
-          {...accessibility.attributes.itemsContainer}
-          {...applyAccessibilityKeyHandlers(
-            accessibility.keyHandlers.itemsContainer,
-            unhandledProps,
-          )}
-        >
-          {items.map((item, index) =>
-            CarouselItem.create(item, {
-              defaultProps: { renderItemSlide, active: activeIndex === index },
-            }),
-          )}
-        </div>
+        <Ref innerRef={this.itemsContainerRef}>
+          <div
+            style={styles.itemsContainer}
+            {...accessibility.attributes.itemsContainer}
+            {...applyAccessibilityKeyHandlers(
+              accessibility.keyHandlers.itemsContainer,
+              unhandledProps,
+            )}
+          >
+            {items.map((item, index) =>
+              CarouselItem.create(item, {
+                defaultProps: { renderItemSlide, active: activeIndex === index },
+              }),
+            )}
+          </div>
+        </Ref>
         <div {...accessibility.attributes.statusContainer} style={screenReaderContainerStyles}>
           {`${activeIndex + 1} of ${items.length}`}
         </div>
@@ -211,10 +217,9 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
         overrideProps: (predefinedProps: MenuItemProps) => ({
           onItemClick: (e: React.SyntheticEvent, itemProps: MenuItemProps) => {
             const { index } = itemProps
-            // remove focus from tablist while animation.
-            const activeElement: Element = this.context.target.activeElement
-            if (activeElement instanceof HTMLElement) activeElement.blur()
+
             this.setActiveIndex(index)
+            this.itemsContainerRef.current.focus()
 
             _.invoke(predefinedProps, 'onClick', e, itemProps)
           },
