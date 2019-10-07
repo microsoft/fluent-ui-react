@@ -9,6 +9,7 @@ import {
   ToolbarItemShorthandKinds,
   Input,
   Tooltip,
+  Flex,
 } from '@stardust-ui/react'
 
 const CustomCallItem = props => {
@@ -107,10 +108,14 @@ const ToolbarExampleOverflow = () => {
         }}
       />
       {visible && (
-        <Toolbar
-          overflow
-          items={bold ? toolbarItems : toolbarItems.filter(i => i['icon'] !== 'bold')}
-        />
+        <Flex>
+          <Toolbar
+            overflow
+            styles={{ minWidth: 0, flexGrow: 1 }}
+            items={bold ? toolbarItems : toolbarItems.filter(i => i['icon'] !== 'bold')}
+          />
+          <Toolbar items={[{ key: 'trash', icon: 'trash-can' }]} />
+        </Flex>
       )}
     </>
   )

@@ -2,9 +2,7 @@ import { Accessibility, toolbarBehavior, toggleButtonBehavior } from '@stardust-
 import * as React from 'react'
 import * as _ from 'lodash'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
-import cx from 'classnames'
 import * as PropTypes from 'prop-types'
-import ReactResizeDetector from 'react-resize-detector'
 import { Ref } from '@stardust-ui/react-component-ref'
 import { windowRef, EventListener } from '@stardust-ui/react-component-event-listener'
 
@@ -17,12 +15,11 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   ColorComponentProps,
-  applyAccessibilityKeyHandlers,
   ShorthandFactory,
 } from '../../lib'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
-import { ShorthandCollection, ShorthandValue, WithAsProp, withSafeTypeForAs } from '../../types'
+import { ShorthandCollection, WithAsProp, withSafeTypeForAs } from '../../types'
 
 import ToolbarCustomItem from './ToolbarCustomItem'
 import ToolbarDivider from './ToolbarDivider'
@@ -32,17 +29,10 @@ import ToolbarMenuDivider from './ToolbarMenuDivider'
 import ToolbarMenuItem from './ToolbarMenuItem'
 import ToolbarMenuRadioGroup from './ToolbarMenuRadioGroup'
 import ToolbarRadioGroup from './ToolbarRadioGroup'
-import Box, { BoxProps } from '../Box/Box'
+import Box from '../Box/Box'
 import ToolbarOverflowMenu from './ToolbarOverflowMenu'
 
 export type ToolbarItemShorthandKinds = 'divider' | 'item' | 'group' | 'toggle' | 'custom'
-
-export interface OverflowMeasures {
-  left: number
-  leftFits: boolean
-  right: number
-  rightFits: boolean
-}
 
 export interface ToolbarProps
   extends UIComponentProps,
@@ -55,17 +45,11 @@ export interface ToolbarProps
   /** Shorthand array of props for Toolbar. */
   items?: ShorthandCollection<ToolbarItemProps, ToolbarItemShorthandKinds>
 
-  onReduceItems?: (
-    currentItems: ShorthandCollection<ToolbarItemProps, ToolbarItemShorthandKinds>,
-    measures: OverflowMeasures[],
-  ) => ShorthandCollection<ToolbarItemProps, ToolbarItemShorthandKinds> | null // FIXME: does not work with children
-
-  /** Shorthand for the hidden measurement container. Only used if onReduceItems is defined. */
-  measurement?: ShorthandValue<BoxProps>
-
-  /** Shorthand for the wrapper component.  Only used if onReduceItems is defined. */
-  wrapper?: ShorthandValue<BoxProps>
-
+  /**
+   *  Automatically move overflow items to overflow menu.
+   *  For automatic overflow to work correctly, toolbar items including overflowMenuItem
+   *  must NOT change their size! If you need to change item's size, rerender the Toolbar.
+   */
   overflow?: boolean
 }
 
@@ -86,11 +70,6 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
 
   static className = 'ui-toolbar'
 
-  static slotClassNames: ToolbarSlotClassNames = {
-    wrapper: `${Toolbar.className}__wrapper`,
-    measurement: `${Toolbar.className}__measurement`,
-  }
-
   static displayName = 'Toolbar'
 
   static propTypes = {
@@ -102,16 +81,11 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
       'toggle',
       'custom',
     ]),
-    onReduceItems: PropTypes.func,
-    measurement: customPropTypes.itemShorthand,
-    wrapper: customPropTypes.itemShorthand,
     overflow: PropTypes.bool,
   }
 
   static defaultProps = {
     accessibility: toolbarBehavior,
-    measurement: {},
-    wrapper: {},
   }
 
   static CustomItem = ToolbarCustomItem
@@ -123,16 +97,8 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
   static MenuRadioGroup = ToolbarMenuRadioGroup
   static RadioGroup = ToolbarRadioGroup
 
-  state: ToolbarState = {
-    initialItems: [],
-    currentItems: [],
-    stable: false,
-  }
-
   wrapperRef = React.createRef<HTMLElement>()
   overflowMenuRef = React.createRef<HTMLElement>()
-  hiddenToolbarRef = React.createRef<HTMLElement>()
-  animationFrameId: number
 
   handleItemOverrides = variables => predefinedProps => ({
     variables: mergeComponentVariables(variables, predefinedProps.variables),
@@ -159,19 +125,6 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
           return ToolbarItem.create(item, { overrideProps: itemOverridesFn })
       }
     })
-  }
-
-  static getDerivedStateFromProps(props: ToolbarProps, state: ToolbarState) {
-    if (props.items === state.initialItems) {
-      return null
-    }
-
-    return {
-      initialItems: props.items,
-      currentItems: props.items,
-      stableItems: state.stableItems,
-      stable: false,
-    }
   }
 
   debug(el, color) {
@@ -334,65 +287,6 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
 
   componentDidUpdate() {
     this.hackyDOMOverflow()
-    // this.afterComponentRendered()
-  }
-
-  componentWillUnmount() {
-    if (this.animationFrameId !== undefined) {
-      cancelAnimationFrame(this.animationFrameId)
-      this.animationFrameId = undefined
-    }
-  }
-
-  afterComponentRendered() {
-    if (this.animationFrameId !== undefined) {
-      cancelAnimationFrame(this.animationFrameId)
-    }
-
-    this.animationFrameId = requestAnimationFrame(() => {
-      this.animationFrameId = undefined
-      const { onReduceItems } = this.props
-      if (_.isNil(onReduceItems) || !this.hiddenToolbarRef.current || this.state.stable) {
-        return
-      }
-      const { fits, measures } = this.measureOverflow()
-      this.setState(({ stable, currentItems }) => {
-        if (fits) {
-          return { stable: true, stableItems: currentItems, currentItems }
-        }
-
-        const reducedItems = onReduceItems(currentItems, measures)
-        if (reducedItems === null) {
-          return { stable: true, stableItems: currentItems, currentItems }
-        }
-        return { stable, currentItems: reducedItems }
-      })
-    })
-  }
-
-  measureOverflow(): { fits: boolean; measures: OverflowMeasures[] } {
-    const wrapperRect = this.wrapperRef.current.getBoundingClientRect()
-    const hiddenToolbarElement = this.hiddenToolbarRef.current
-
-    const measures: OverflowMeasures[] = _.map(hiddenToolbarElement.children, child => {
-      const rect = child.getBoundingClientRect()
-      return {
-        left: rect.left,
-        leftFits: rect.left >= wrapperRect.left,
-        right: rect.right,
-        rightFits: rect.right <= wrapperRect.right,
-      }
-    })
-
-    const fits = !_.some(measures, c => !c.leftFits || !c.rightFits)
-    return { fits, measures }
-  }
-
-  onResize = (newWidth, newHeight) => {
-    this.setState(({ initialItems }) => ({
-      currentItems: initialItems,
-      stable: false,
-    }))
   }
 
   renderStartTime
@@ -409,61 +303,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
   }): React.ReactNode {
     this.renderStartTime = performance.now()
     this.rtl = rtl
-    const { children, items, onReduceItems, measurement, wrapper, overflow } = this.props
-
-    if (!_.isNil(onReduceItems)) {
-      return (
-        <Ref innerRef={this.wrapperRef}>
-          {Box.create(wrapper, {
-            defaultProps: {
-              className: cx(Toolbar.slotClassNames.wrapper, classes.wrapper),
-              ...accessibility.attributes.wrapper,
-              ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, wrapper),
-            },
-            overrideProps: () => ({
-              children: (
-                <>
-                  {!this.state.stable &&
-                    Box.create(measurement, {
-                      defaultProps: {
-                        className: cx(Toolbar.slotClassNames.measurement, classes.measurement),
-                        ...accessibility.attributes.measurement,
-                        ...applyAccessibilityKeyHandlers(
-                          accessibility.keyHandlers.measurement,
-                          wrapper,
-                        ),
-                      },
-                      overrideProps: () => ({
-                        children: (
-                          <Ref innerRef={this.hiddenToolbarRef}>
-                            <ElementType
-                              className={classes.root}
-                              {...accessibility.attributes.root}
-                              {...unhandledProps}
-                            >
-                              {this.renderItems(this.state.currentItems, variables)}
-                            </ElementType>
-                          </Ref>
-                        ),
-                      }),
-                    })}
-                  {this.state.stableItems && (
-                    <ElementType
-                      className={classes.root}
-                      {...accessibility.attributes.root}
-                      {...unhandledProps}
-                    >
-                      {this.renderItems(this.state.stableItems, variables)}
-                    </ElementType>
-                  )}
-                  <ReactResizeDetector skipOnMount handleWidth onResize={this.onResize} />
-                </>
-              ),
-            }),
-          })}
-        </Ref>
-      )
-    }
+    const { children, items, overflow } = this.props
 
     const offsetMeasure = {}
     const overflowCrop = {}
