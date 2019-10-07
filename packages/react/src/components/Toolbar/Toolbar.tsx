@@ -97,7 +97,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
   static MenuRadioGroup = ToolbarMenuRadioGroup
   static RadioGroup = ToolbarRadioGroup
 
-  wrapperRef = React.createRef<HTMLElement>()
+  overflowCropRef = React.createRef<HTMLElement>()
   overflowMenuRef = React.createRef<HTMLElement>()
 
   handleItemOverrides = variables => predefinedProps => ({
@@ -151,12 +151,11 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
   }
 
   show(el) {
-    // if (el.style.visibility !== 'hidden') {
-    //   return
-    // }
+    if (el.style.visibility !== 'hidden') {
+      return false
+    }
 
     el.style.visibility = null
-    // delete el.style.visibility
     const wasFocusable = el.getAttribute('data-sd-was-focusable')
     if (wasFocusable) {
       el.setAttribute('data-is-focusable', wasFocusable)
@@ -164,76 +163,114 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
     } else {
       el.removeAttribute('data-is-focusable')
     }
+
+    return true
   }
 
   lastVisibleItemIndex: number
   offsetMeasureRef = React.createRef<HTMLElement>()
 
-  hackyDOMOverflow = () => {
-    const $wrapper = this.wrapperRef.current
+  hideOverflowItems = () => {
+    const $overflowCrop = this.overflowCropRef.current
     const $overflowItem = this.overflowMenuRef.current
     const $offsetMeasure = this.offsetMeasureRef.current
-    if (!$wrapper || !$overflowItem || !$offsetMeasure) {
+    if (!$overflowCrop || !$overflowItem || !$offsetMeasure) {
       return
     }
 
-    const $items = $wrapper.children
+    const $items = $overflowCrop.children
 
-    const wrapperBoundingRect = $wrapper.getBoundingClientRect()
+    const overflowCropBoundingRect = $overflowCrop.getBoundingClientRect()
     const overflowItemBoundingRect = $overflowItem.getBoundingClientRect()
     const offsetMeasureBoundingRect = $offsetMeasure.getBoundingClientRect()
+
     // Absolute positioning offset
     // Overflow menu is absolutely positioned relative to root slot
     // If there is padding set on the root slot boundingClientRect computations use inner content box,
     // but absolute position is relative to root slot's PADDING box.
-    // As there is no easy way how to compute padding, we compute absolute positioning offset
+    // We compute absolute positioning offset
     // By measuring position of an offsetMeasure element absolutely positioned to 0,0.
+    // TODO: replace by getComputedStyle('padding')
     const absolutePositioningOffset = {
-      vertical: wrapperBoundingRect.left - offsetMeasureBoundingRect.left,
-      horizontal: wrapperBoundingRect.top - offsetMeasureBoundingRect.top,
+      vertical: this.rtl
+        ? offsetMeasureBoundingRect.right - overflowCropBoundingRect.right
+        : overflowCropBoundingRect.left - offsetMeasureBoundingRect.left,
+      horizontal: overflowCropBoundingRect.top - offsetMeasureBoundingRect.top,
     }
 
     let isOverflowing = false
     let $lastVisibleItem
     let lastVisibleItemRect
+
+    // check all items from the last one back
     _.forEachRight($items, ($item, i) => {
       if ($item === $overflowItem) {
-        return
-      }
-      const itemBoundingRect = $item.getBoundingClientRect()
-      if ($item.getBoundingClientRect().right > wrapperBoundingRect.right) {
-        isOverflowing = true
-        // console.log(
-        //   'Overflow',
-        //   i,
-        //   $item.getBoundingClientRect().right,
-        //   $wrapper.getBoundingClientRect().right,
-        // )
-        this.debug($item, 'red')
-        this.hide($item)
-        return
+        return true
       }
 
+      const itemBoundingRect = $item.getBoundingClientRect()
+
+      // if the item is out of the crop rectangle, hide it
+      // TODO: check and fix all margin combination
+      if (
+        itemBoundingRect.right > overflowCropBoundingRect.right ||
+        itemBoundingRect.left < overflowCropBoundingRect.left
+      ) {
+        isOverflowing = true
+        console.log('Overflow', i, {
+          item: [itemBoundingRect.left, itemBoundingRect.right],
+          crop: [overflowCropBoundingRect.left, overflowCropBoundingRect.right],
+        })
+        this.debug($item, 'red')
+        this.hide($item)
+        return true
+      }
+
+      // and for the rest of the items
       if (isOverflowing) {
-        // eslint-disable-next-line no-undef
-        const itemRightMargin = parseFloat(window.getComputedStyle($item).marginRight) || 0
-        if (
-          itemBoundingRect.right + overflowItemBoundingRect.width + itemRightMargin >
-          wrapperBoundingRect.right
-        ) {
-          // test RTL
-          // console.log('Collision', {
-          //   'itemBoundingRect.right': itemBoundingRect.right,
-          //   'overflowItemBoundingRect.width': overflowItemBoundingRect.width,
-          //   'itemRightMargin': itemRightMargin,
-          //   sum: itemBoundingRect.right + overflowItemBoundingRect.width + itemRightMargin,
-          //   'wrapperBoundingRect.right': wrapperBoundingRect.right,
-          // })
+        let itemIsCollidingWithFutureOverflowItemPosition: boolean
+
+        if (!$lastVisibleItem) {
+          // if we already found item which is visible, all the others will be visible as well
+          if (this.rtl) {
+            // eslint-disable-next-line no-undef
+            const itemLeftMargin = parseFloat(window.getComputedStyle($item).marginLeft) || 0
+            itemIsCollidingWithFutureOverflowItemPosition =
+              itemBoundingRect.left - overflowItemBoundingRect.width - itemLeftMargin <
+              overflowCropBoundingRect.left
+
+            console.log('Collision [RTL]', {
+              'itemBoundingRect.left': itemBoundingRect.left,
+              'overflowItemBoundingRect.width': overflowItemBoundingRect.width,
+              itemRightMargin: itemLeftMargin,
+              sum: itemBoundingRect.left - overflowItemBoundingRect.width - itemLeftMargin,
+              'overflowCropBoundingRect.left': overflowCropBoundingRect.left,
+            })
+          } else {
+            // eslint-disable-next-line no-undef
+            const itemRightMargin = parseFloat(window.getComputedStyle($item).marginRight) || 0
+            itemIsCollidingWithFutureOverflowItemPosition =
+              itemBoundingRect.right + overflowItemBoundingRect.width + itemRightMargin >
+              overflowCropBoundingRect.right
+
+            console.log('Collision', {
+              'itemBoundingRect.right': itemBoundingRect.right,
+              'overflowItemBoundingRect.width': overflowItemBoundingRect.width,
+              itemRightMargin,
+              sum: itemBoundingRect.right + overflowItemBoundingRect.width + itemRightMargin,
+              'overflowCropBoundingRect.right': overflowCropBoundingRect.right,
+            })
+          }
+        }
+
+        if (itemIsCollidingWithFutureOverflowItemPosition) {
           this.debug($item, 'magenta')
           this.hide($item)
-          return
+          return true
         }
       }
+
+      // Remember the last visible item
       if (!$lastVisibleItem) {
         $lastVisibleItem = $item
         lastVisibleItemRect = itemBoundingRect
@@ -241,30 +278,49 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
       }
 
       this.undebug($item)
-      this.show($item) // stop when first visible item is found
+      if (!this.show($item)) {
+        console.log('Shortcircuit', i)
+        return false // stop when first visible item is found
+      }
+
+      return true
     })
 
     if (isOverflowing) {
+      // there is an overflow, show and position overflow item
       this.debug($overflowItem, 'green')
 
-      $overflowItem.style.visibility = 'absolute'
+      $overflowItem.style.position = 'absolute'
 
       if ($lastVisibleItem) {
         this.debug($lastVisibleItem, 'lime')
 
-        const lastVisibleItemRightMargin =
-          // eslint-disable-next-line no-undef
-          parseFloat(window.getComputedStyle($lastVisibleItem).marginRight) || 0
+        if (this.rtl) {
+          const lastVisibleItemMarginLeft =
+            // eslint-disable-next-line no-undef
+            parseFloat(window.getComputedStyle($lastVisibleItem).marginLeft) || 0
 
-        $overflowItem.style.left = `${lastVisibleItemRect.right -
-          wrapperBoundingRect.left +
-          lastVisibleItemRightMargin +
-          absolutePositioningOffset.vertical}px`
-        // $overflowItem.style.top = `${lastVisibleItemRect.top - wrapperBoundingRect.top + absolutePositioningOffset.horizontal}px`
+          $overflowItem.style.right = `${overflowCropBoundingRect.right -
+            lastVisibleItemRect.left -
+            lastVisibleItemMarginLeft +
+            absolutePositioningOffset.vertical}px`
+        } else {
+          const lastVisibleItemRightMargin =
+            // eslint-disable-next-line no-undef
+            parseFloat(window.getComputedStyle($lastVisibleItem).marginRight) || 0
+
+          $overflowItem.style.left = `${lastVisibleItemRect.right -
+            overflowCropBoundingRect.left +
+            lastVisibleItemRightMargin +
+            absolutePositioningOffset.vertical}px`
+        }
       } else {
         this.lastVisibleItemIndex = -1
-        $overflowItem.style.left = `${absolutePositioningOffset.vertical}px`
-        // $overflowItem.style.top = `${absolutePositioningOffset.horizontal}px`
+        if (this.rtl) {
+          $overflowItem.style.right = `${absolutePositioningOffset.vertical}px`
+        } else {
+          $overflowItem.style.left = `${absolutePositioningOffset.vertical}px`
+        }
       }
       this.show($overflowItem)
     } else {
@@ -279,14 +335,13 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
 
   componentDidMount() {
     const dm = performance.now()
-    this.hackyDOMOverflow()
+    this.hideOverflowItems()
     const done = performance.now()
     console.log(`rendered ${this.rtl ? ' (in rtl)' : ''}`, done - this.renderStartTime, done - dm)
-    // this.afterComponentRendered()
   }
 
   componentDidUpdate() {
-    this.hackyDOMOverflow()
+    this.hideOverflowItems()
   }
 
   renderStartTime
@@ -327,7 +382,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
           {...accessibility.attributes.root}
           {...unhandledProps}
         >
-          <Ref innerRef={this.wrapperRef}>
+          <Ref innerRef={this.overflowCropRef}>
             {Box.create(overflowCrop, {
               defaultProps: {
                 styles: styles.overflowCrop,
@@ -353,7 +408,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
           </Ref>
         </ElementType>
         <EventListener
-          listener={_.debounce(this.hackyDOMOverflow, 16)}
+          listener={_.debounce(this.hideOverflowItems, 16)}
           targetRef={windowRef}
           type="resize"
         />
