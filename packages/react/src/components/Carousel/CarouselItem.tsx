@@ -3,7 +3,6 @@ import * as PropTypes from 'prop-types'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import { carouselItemBehavior } from '@stardust-ui/accessibility'
 
-import { Ref } from '@stardust-ui/react-component-ref'
 import {
   UIComponent,
   commonPropTypes,
@@ -24,9 +23,6 @@ export interface CarouselItemProps
     ContentComponentProps {
   /** Whether or not the item is in view or not. */
   active?: boolean
-
-  /** Ref for the item DOM element. */
-  contentRef?: React.Ref<HTMLElement>
 
   /**
    * A custom render iterator for rendering each carousel slide.
@@ -54,7 +50,6 @@ class CarouselItem extends UIComponent<WithAsProp<CarouselItemProps>> {
       content: false,
     }),
     active: PropTypes.bool,
-    contentRef: customPropTypes.ref,
     renderItemSlide: PropTypes.func,
     slide: customPropTypes.itemShorthand,
   }
@@ -71,18 +66,16 @@ class CarouselItem extends UIComponent<WithAsProp<CarouselItemProps>> {
   }
 
   renderComponent({ ElementType, classes, styles, accessibility, unhandledProps }) {
-    const { children, contentRef } = this.props
+    const { children } = this.props
     return (
-      <Ref innerRef={contentRef}>
-        <ElementType
-          className={classes.root}
-          {...accessibility.attributes.root}
-          {...unhandledProps}
-          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
-        >
-          {childrenExist(children) ? children : this.renderContent()}
-        </ElementType>
-      </Ref>
+      <ElementType
+        className={classes.root}
+        {...accessibility.attributes.root}
+        {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
+      >
+        {childrenExist(children) ? children : this.renderContent()}
+      </ElementType>
     )
   }
 }

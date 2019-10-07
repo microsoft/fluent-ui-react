@@ -27,6 +27,7 @@ import { CarouselSlideProps } from './CarouselSlide'
 import Menu, { MenuProps } from '../Menu/Menu'
 import Text from '../Text/Text'
 import { MenuItemProps } from '../Menu/MenuItem'
+import { screenReaderContainerStyles } from '../../lib/accessibility/Styles/accessibilityStyles'
 
 export interface CarouselProps extends UIComponentProps, ChildrenComponentProps {
   /** Shorthand array of props for CarouselItem. */
@@ -87,11 +88,11 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
   actionHandlers = {
     moveNext: e => {
       e.preventDefault()
-      this.handleNext(e, true)
+      this.handleNext(e)
     },
     movePrevious: e => {
       e.preventDefault()
-      this.handlePrevious(e, true)
+      this.handlePrevious(e)
     },
   }
 
@@ -99,30 +100,16 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
     activeIndex: 0,
   }
 
-  itemRefs: React.RefObject<HTMLElement>[] = []
-
-  // focus after animation ends.
-  focusItemAtIndex = _.debounce(index => {
-    this.itemRefs[index].current.focus()
-  }, 1000)
-
-  setActiveIndex(index: number, setFocus = false): void {
+  setActiveIndex(index: number): void {
     const { items } = this.props
 
     if (index < 0 || index >= items.length) {
       return
     }
 
-    this.setState(
-      {
-        activeIndex: index,
-      },
-      () => {
-        if (setFocus) {
-          this.focusItemAtIndex(index)
-        }
-      },
-    )
+    this.setState({
+      activeIndex: index,
+    })
   }
 
   renderContent = (accessibility, styles, unhandledProps) => {
@@ -134,7 +121,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
     }
 
     return (
-      <div style={styles.itemsContainerWrapper}>
+      <div style={styles.itemsContainerWrapper} {...accessibility.attributes.itemsContainerWrapper}>
         <div
           style={styles.itemsContainer}
           {...accessibility.attributes.itemsContainer}
@@ -143,25 +130,25 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
             unhandledProps,
           )}
         >
-          {items.map((item, index) => {
-            const contentRef = React.createRef<HTMLElement>()
-            this.itemRefs[index] = contentRef
-
-            return CarouselItem.create(item, {
-              defaultProps: { renderItemSlide, active: activeIndex === index, contentRef },
-            })
-          })}
+          {items.map((item, index) =>
+            CarouselItem.create(item, {
+              defaultProps: { renderItemSlide, active: activeIndex === index },
+            }),
+          )}
+        </div>
+        <div {...accessibility.attributes.statusContainer} style={screenReaderContainerStyles}>
+          {`${activeIndex + 1} of ${items.length}`}
         </div>
       </div>
     )
   }
 
-  handlePrevious = (e: React.SyntheticEvent, setFocus?: boolean) => {
-    this.setActiveIndex(this.state.activeIndex - 1, setFocus)
+  handlePrevious = (e: React.SyntheticEvent) => {
+    this.setActiveIndex(this.state.activeIndex - 1)
   }
 
-  handleNext = (e: React.SyntheticEvent, setFocus?: boolean) => {
-    this.setActiveIndex(this.state.activeIndex + 1, setFocus)
+  handleNext = (e: React.SyntheticEvent) => {
+    this.setActiveIndex(this.state.activeIndex + 1)
   }
 
   renderControls = (accessibility, styles) => {
@@ -227,7 +214,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
             // remove focus from tablist while animation.
             const activeElement: Element = this.context.target.activeElement
             if (activeElement instanceof HTMLElement) activeElement.blur()
-            this.setActiveIndex(index, true)
+            this.setActiveIndex(index)
 
             _.invoke(predefinedProps, 'onClick', e, itemProps)
           },
