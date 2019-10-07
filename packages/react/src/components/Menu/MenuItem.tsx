@@ -1,4 +1,5 @@
 import { Accessibility, menuItemBehavior, submenuBehavior } from '@stardust-ui/accessibility'
+import { focusAsync } from '@stardust-ui/react-bindings'
 import { EventListener } from '@stardust-ui/react-component-event-listener'
 import { Ref, toRefObject } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
@@ -30,7 +31,6 @@ import {
   ShorthandCollection,
   withSafeTypeForAs,
 } from '../../types'
-import { focusAsync } from '../../lib/accessibility/FocusZone'
 import { Popper } from '../../lib/positioner'
 
 export interface MenuItemSlotClassNames {

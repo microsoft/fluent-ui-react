@@ -1,9 +1,8 @@
+import { callable } from '@stardust-ui/react-bindings'
 import { ComponentSlotStylesPrepared, Renderer } from '@stardust-ui/react'
 import flat from 'flat'
 import * as _ from 'lodash'
 import * as React from 'react'
-
-import { callable } from 'src/lib'
 
 export type UsedVariables = Record<string, Record<string, null>>
 

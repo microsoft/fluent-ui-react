@@ -1,10 +1,11 @@
-import { getElementType, getUnhandledProps } from '@stardust-ui/react-bindings'
 import { EventListener } from '@stardust-ui/react-component-event-listener'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
+import getElementType from '../utils/getElementType'
+import getUnhandledProps from '../utils/getUnhandledProps'
 import {
   getNextElement,
   getFirstTabbable,
@@ -14,7 +15,6 @@ import {
   focusAsync,
   HIDDEN_FROM_ACC_TREE,
 } from './focusUtilities'
-
 import { FocusTrapZoneProps } from './FocusTrapZone.types'
 
 /** FocusTrapZone is used to trap the focus in any html element placed in body
