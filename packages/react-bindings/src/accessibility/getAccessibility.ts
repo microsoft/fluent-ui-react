@@ -1,4 +1,8 @@
-import { Accessibility, AccessibilityDefinition } from '@stardust-ui/accessibility'
+import {
+  Accessibility,
+  AccessibilityAttributesBySlot,
+  AccessibilityDefinition,
+} from '@stardust-ui/accessibility'
 
 import getKeyDownHandlers from './getKeyDownHandlers'
 import { AccessibilityActionHandlers, ReactAccessibilityBehavior } from './types'
@@ -20,20 +24,21 @@ const getAccessibility = <Props extends Record<string, any>>(
   }
 
   const definition: AccessibilityDefinition = behavior(behaviorProps)
-  const keyHandlers = definition.keyActions
-    ? getKeyDownHandlers(actionHandlers, definition.keyActions, isRtlEnabled)
-    : {}
+  const keyHandlers =
+    actionHandlers && definition.keyActions
+      ? getKeyDownHandlers(actionHandlers, definition.keyActions, isRtlEnabled)
+      : {}
 
   if (process.env.NODE_ENV !== 'production') {
     // For the non-production builds we enable the runtime accessibility attributes validator.
     // We're adding the data-aa-class attribute which is being consumed by the validator, the
     // schema is located in @stardust-ui/ability-attributes package.
     if (definition.attributes) {
-      const slotNames = Object.keys(definition.attributes)
-      slotNames.forEach(slotName => {
-        definition.attributes[slotName]['data-aa-class'] = `${displayName}${
-          slotName === 'root' ? '' : `__${slotName}`
-        }`
+      Object.keys(definition.attributes).forEach(slotName => {
+        const validatorName = `${displayName}${slotName === 'root' ? '' : `__${slotName}`}`
+        ;(definition.attributes as AccessibilityAttributesBySlot)[slotName][
+          'data-aa-class'
+        ] = validatorName
       })
     }
   }
