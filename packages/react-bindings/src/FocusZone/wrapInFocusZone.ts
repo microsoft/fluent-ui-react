@@ -26,6 +26,7 @@ const wrapInFocusZone = (
     return React.createElement(FocusZone, {
       ...element.props,
       ...accessibility.focusZone.props,
+      as: element.type,
       isRtl: rtl,
     })
   }
