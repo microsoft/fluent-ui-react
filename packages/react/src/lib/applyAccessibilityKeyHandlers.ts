@@ -1,7 +1,4 @@
-import {
-  AccessibilityHandlerProps,
-  AccessibilityKeyboardHandler,
-} from '@stardust-ui/react-bindings'
+import { AccessibilityHandlerProps, KeyboardEventHandler } from '@stardust-ui/react-bindings'
 import * as _ from 'lodash'
 import * as React from 'react'
 
@@ -23,7 +20,7 @@ const applyAccessibilityKeyHandlers = (
 
   return _.mapValues(
     keyHandlers,
-    (accessibilityHandler: AccessibilityKeyboardHandler, handleName: string) => (
+    (accessibilityHandler: KeyboardEventHandler, handleName: string) => (
       e: React.KeyboardEvent,
       ...args: any[]
     ) => {

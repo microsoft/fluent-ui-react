@@ -1,9 +1,9 @@
 import { Accessibility, AccessibilityDefinition } from '@stardust-ui/accessibility'
 
 import getKeyDownHandlers from './getKeyDownHandlers'
-import { AccessibilityActionHandlers, AccessibilityBehavior } from './types'
+import { AccessibilityActionHandlers, ReactAccessibilityBehavior } from './types'
 
-const emptyBehavior: AccessibilityBehavior = {
+const emptyBehavior: ReactAccessibilityBehavior = {
   attributes: {},
   keyHandlers: {},
 }
@@ -14,7 +14,7 @@ const getAccessibility = <Props extends Record<string, any>>(
   behaviorProps: Props,
   isRtlEnabled: boolean,
   actionHandlers?: AccessibilityActionHandlers,
-): AccessibilityBehavior => {
+): ReactAccessibilityBehavior => {
   if (behavior === null || behavior === undefined) {
     return emptyBehavior
   }

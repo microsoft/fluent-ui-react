@@ -2,7 +2,7 @@ import { Accessibility, AccessibilityAttributesBySlot } from '@stardust-ui/acces
 import * as React from 'react'
 
 import getAccessibility from '../accessibility/getAccessibility'
-import { AccessibilityBehavior, AccessibilityActionHandlers } from '../accessibility/types'
+import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from '../accessibility/types'
 
 type UseAccessibilityOptions<Props> = {
   actionHandlers?: AccessibilityActionHandlers
@@ -14,7 +14,7 @@ type UseAccessibilityOptions<Props> = {
 const mergeProps = <SlotProps extends Record<string, any>>(
   slotName: string,
   slotProps: SlotProps,
-  definition: AccessibilityBehavior,
+  definition: ReactAccessibilityBehavior,
 ): SlotProps & Partial<AccessibilityAttributesBySlot> => {
   const finalProps = {
     ...definition.attributes[slotName],
@@ -54,7 +54,7 @@ const useAccessibility = <Props>(
     actionHandlers,
   )
 
-  const latestDefinition = React.useRef<AccessibilityBehavior>(definition)
+  const latestDefinition = React.useRef<ReactAccessibilityBehavior>(definition)
   latestDefinition.current = definition
 
   return React.useCallback(

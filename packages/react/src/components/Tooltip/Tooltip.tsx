@@ -1,5 +1,5 @@
 import { Accessibility, tooltipBehavior } from '@stardust-ui/accessibility'
-import { AccessibilityBehavior } from '@stardust-ui/react-bindings'
+import { ReactAccessibilityBehavior } from '@stardust-ui/react-bindings'
 import { toRefObject, Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
@@ -232,7 +232,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
   renderTooltipContent(
     tooltipPositionClasses: string,
     rtl: boolean,
-    accessibility: AccessibilityBehavior,
+    accessibility: ReactAccessibilityBehavior,
   ): JSX.Element {
     const { align, position, target } = this.props
     const { open } = this.state
@@ -253,7 +253,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
   renderPopperChildren = (
     tooltipPositionClasses: string,
     rtl: boolean,
-    accessibility: AccessibilityBehavior,
+    accessibility: ReactAccessibilityBehavior,
     { placement }: PopperChildrenProps,
   ) => {
     const { content, pointing } = this.props

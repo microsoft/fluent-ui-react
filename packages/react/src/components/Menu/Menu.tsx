@@ -1,5 +1,5 @@
 import { Accessibility, menuBehavior } from '@stardust-ui/accessibility'
-import { AccessibilityBehavior } from '@stardust-ui/react-bindings'
+import { ReactAccessibilityBehavior } from '@stardust-ui/react-bindings'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -169,7 +169,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
   renderItems = (
     styles: ComponentSlotStylesPrepared,
     variables: ComponentVariablesObject,
-    accessibility: AccessibilityBehavior,
+    accessibility: ReactAccessibilityBehavior,
   ) => {
     const {
       iconOnly,

@@ -1,5 +1,5 @@
 import { Accessibility, treeBehavior } from '@stardust-ui/accessibility'
-import { AccessibilityBehavior, getNextElement } from '@stardust-ui/react-bindings'
+import { ReactAccessibilityBehavior, getNextElement } from '@stardust-ui/react-bindings'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -260,7 +260,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     },
   })
 
-  renderContent(accessibility: AccessibilityBehavior): React.ReactElement[] {
+  renderContent(accessibility: ReactAccessibilityBehavior): React.ReactElement[] {
     const { itemsForRender } = this.state
     const { items, renderItemTitle } = this.props
 

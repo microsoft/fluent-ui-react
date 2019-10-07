@@ -1,6 +1,6 @@
 import { Accessibility, popupBehavior } from '@stardust-ui/accessibility'
 import {
-  AccessibilityBehavior,
+  ReactAccessibilityBehavior,
   AutoFocusZoneProps,
   FocusTrapZoneProps,
 } from '@stardust-ui/react-bindings'
@@ -457,7 +457,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   renderPopupContent(
     popupPositionClasses: string,
     rtl: boolean,
-    accessibility: AccessibilityBehavior,
+    accessibility: ReactAccessibilityBehavior,
   ): JSX.Element {
     const { align, position, offset, target, unstable_pinned } = this.props
 
@@ -480,7 +480,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   renderPopperChildren = (
     popupPositionClasses: string,
     rtl: boolean,
-    accessibility: AccessibilityBehavior,
+    accessibility: ReactAccessibilityBehavior,
     { placement, scheduleUpdate }: PopperChildrenProps,
   ) => {
     const {

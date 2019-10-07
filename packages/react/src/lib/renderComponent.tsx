@@ -1,5 +1,5 @@
 import {
-  AccessibilityBehavior,
+  ReactAccessibilityBehavior,
   AccessibilityActionHandlers,
   callable,
   getElementType,
@@ -33,7 +33,7 @@ export interface RenderResultConfig<P> {
   unhandledProps: Props
   variables: ComponentVariablesObject
   styles: ComponentSlotStylesPrepared
-  accessibility: AccessibilityBehavior
+  accessibility: ReactAccessibilityBehavior
   rtl: boolean
   theme: ThemePrepared
 }
@@ -104,7 +104,7 @@ const renderComponent = <P extends {}>(
     { root: animationCSSProp },
   )
 
-  const accessibility: AccessibilityBehavior = getAccessibility(
+  const accessibility: ReactAccessibilityBehavior = getAccessibility(
     displayName,
     props.accessibility,
     stateAndProps,
