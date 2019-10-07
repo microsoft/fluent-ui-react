@@ -133,8 +133,9 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
 
     return (
       <div style={styles.itemsContainerWrapper}>
-        <ul
+        <div
           style={styles.itemsContainer}
+          {...accessibility.attributes.itemsContainer}
           {...applyAccessibilityKeyHandlers(
             accessibility.keyHandlers.itemsContainer,
             unhandledProps,
@@ -148,7 +149,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
               defaultProps: { renderItemSlide, active: activeIndex === index, contentRef },
             })
           })}
-        </ul>
+        </div>
       </div>
     )
   }

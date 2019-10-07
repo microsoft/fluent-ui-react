@@ -8,7 +8,12 @@ import * as keyboardKey from 'keyboard-key'
  */
 const carouselBehavior: Accessibility = props => ({
   attributes: {
-    root: {},
+    root: {
+      role: 'region',
+    },
+    itemsContainer: {
+      'aria-live': 'polite',
+    },
   },
 
   keyActions: {

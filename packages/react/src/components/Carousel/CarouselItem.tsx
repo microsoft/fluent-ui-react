@@ -60,7 +60,7 @@ class CarouselItem extends UIComponent<WithAsProp<CarouselItemProps>> {
   }
 
   static defaultProps = {
-    as: 'li',
+    as: 'div',
     accessibility: carouselItemBehavior,
   }
 
