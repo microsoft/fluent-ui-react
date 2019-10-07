@@ -36,7 +36,6 @@ const getKeyDownHandlers = (
 
     if (!handledActions.length) continue
 
-    // @ts-ignore FIX ME
     keyHandlers[slotName] = {
       onKeyDown: (event: React.KeyboardEvent) => {
         handledActions.forEach(actionName => {

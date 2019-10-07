@@ -21,8 +21,7 @@ const getAccessibility = <Props extends Record<string, any>>(
 
   const definition: AccessibilityDefinition = behavior(behaviorProps)
   const keyHandlers = definition.keyActions
-    ? // @ts-ignore FIX ME
-      getKeyDownHandlers(actionHandlers, definition.keyActions, isRtlEnabled)
+    ? getKeyDownHandlers(actionHandlers, definition.keyActions, isRtlEnabled)
     : {}
 
   if (process.env.NODE_ENV !== 'production') {
@@ -32,7 +31,6 @@ const getAccessibility = <Props extends Record<string, any>>(
     if (definition.attributes) {
       const slotNames = Object.keys(definition.attributes)
       slotNames.forEach(slotName => {
-        // @ts-ignore FIX ME
         definition.attributes[slotName]['data-aa-class'] = `${displayName}${
           slotName === 'root' ? '' : `__${slotName}`
         }`
