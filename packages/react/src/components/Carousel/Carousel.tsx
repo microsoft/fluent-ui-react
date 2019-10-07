@@ -79,6 +79,8 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
   static defaultProps = {
     accessibility: carouselBehavior,
     as: 'div',
+    buttonPrevious: {},
+    buttonNext: {},
     tabList: {},
   }
 
@@ -123,7 +125,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
     )
   }
 
-  renderContent = (styles, accessibility, unhandledProps) => {
+  renderContent = (accessibility, styles, unhandledProps) => {
     const { items, renderItemSlide } = this.props
     const { activeIndex } = this.state
 
@@ -162,13 +164,14 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
     this.setActiveIndex(this.state.activeIndex + 1, setFocus)
   }
 
-  renderControls = styles => {
+  renderControls = (accessibility, styles) => {
     const { buttonPrevious, buttonNext } = this.props
 
     return (
       <>
-        {Button.create(buttonPrevious || {}, {
+        {Button.create(buttonPrevious, {
           defaultProps: {
+            ...accessibility.attributes.buttonPrevious,
             iconOnly: true,
             icon: 'stardust-chevron-left',
             styles: styles.buttonPrevious,
@@ -180,8 +183,9 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
             },
           }),
         })}
-        {Button.create(buttonNext || {}, {
+        {Button.create(buttonNext, {
           defaultProps: {
+            ...accessibility.attributes.buttonNext,
             iconOnly: true,
             icon: 'stardust-chevron-right',
             styles: styles.buttonNext,
@@ -247,8 +251,8 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
           children
         ) : (
           <>
-            {this.renderContent(styles, accessibility, unhandledProps)}
-            {this.renderControls(styles)}
+            {this.renderContent(accessibility, styles, unhandledProps)}
+            {this.renderControls(accessibility, styles)}
             {this.renderNavigation(styles)}
           </>
         )}

@@ -14,6 +14,12 @@ const carouselBehavior: Accessibility = props => ({
     itemsContainer: {
       'aria-live': 'polite',
     },
+    buttonNext: {
+      tabIndex: -1,
+    },
+    buttonPrevious: {
+      tabIndex: -1,
+    },
   },
 
   keyActions: {
