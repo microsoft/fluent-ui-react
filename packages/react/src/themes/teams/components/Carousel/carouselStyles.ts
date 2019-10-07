@@ -21,7 +21,7 @@ const carouselStyles: ComponentSlotStylesPrepared<
     display: 'flex',
     listStyle: 'none',
     transform: `translateX(${pxToRem(-v.width * p.activeIndex)})`,
-    transitionDuration: '1s',
+    transitionDuration: '.4s',
     willChange: 'transform',
   }),
   buttonNext: ({ props: p, variables: v }): ICSSInJSStyle => ({

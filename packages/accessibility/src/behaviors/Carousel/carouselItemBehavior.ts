@@ -7,7 +7,7 @@ import { Accessibility } from '../../types'
 const carouselItemBehavior: Accessibility<CarouselItemProps> = props => ({
   attributes: {
     root: {
-      role: 'group',
+      role: 'tabpanel',
       'aria-hidden': props.active ? 'false' : 'true',
     },
   },
