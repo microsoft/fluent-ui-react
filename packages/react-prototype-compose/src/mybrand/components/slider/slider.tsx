@@ -1,8 +1,8 @@
-import { composed } from '../../../lib/composed'
+import { compose } from '../../../lib/compose'
 import { SliderProps } from '../../../base/components/slider/props'
 import { Slider as BaseSlider } from '../../../base/components/slider/slider'
-import { Theme } from './../../../lib/theme'
-import { theme as myBrandTheme } from './../../theme'
+import { Theme } from '../../../lib/theme'
+import { theme as myBrandTheme } from '../../theme'
 
 export interface Tokens {
   trackAfterColor: any
@@ -69,9 +69,12 @@ const styles = (theme: Theme, tokens: Tokens) => {
   }
 }
 
-export const Slider = composed<SliderProps>(BaseSlider as any, {
-  name: 'Slider',
-  styles,
-  tokens,
-  defaultTheme: myBrandTheme,
-})
+export const Slider = compose<SliderProps>(
+  BaseSlider as any,
+  {
+    name: 'Slider',
+    styles,
+    tokens,
+    defaultTheme: myBrandTheme,
+  },
+)
