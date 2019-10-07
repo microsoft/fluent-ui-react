@@ -65,11 +65,6 @@ export interface ToolbarState {
   stable: boolean
 }
 
-export interface ToolbarSlotClassNames {
-  wrapper: string
-  measurement: string
-}
-
 class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
   static create: ShorthandFactory<ToolbarProps>
 

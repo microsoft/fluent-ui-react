@@ -9,15 +9,6 @@ const toolbarStyles: ComponentSlotStylesPrepared<ToolbarProps, ToolbarVariables>
     position: 'relative',
   }),
 
-  wrapper: (): ICSSInJSStyle => ({
-    position: 'relative',
-  }),
-
-  measurement: (): ICSSInJSStyle => ({
-    position: 'fixed',
-    visibility: 'hidden',
-  }),
-
   offsetMeasure: (): ICSSInJSStyle => ({
     position: 'absolute',
     visibility: 'hidden',
@@ -25,7 +16,7 @@ const toolbarStyles: ComponentSlotStylesPrepared<ToolbarProps, ToolbarVariables>
     top: 0,
   }),
 
-  overflowCrop: ({ variables: v }) => ({
+  overflowContainer: ({ variables: v }) => ({
     display: 'flex',
     overflow: 'hidden',
   }),
