@@ -22,6 +22,7 @@ const carouselItems = [
 
 const CarouselExample = () => (
   <Carousel
+    tabList={{ 'aria-label': 'choose slide to display' }}
     items={carouselItems}
     buttonNext={{ 'aria-label': 'go to next slide' }}
     buttonPrevious={{ 'aria-label': 'go to previous slide' }}
