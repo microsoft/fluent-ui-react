@@ -1,13 +1,14 @@
-import { AccessibilityDefinition, FocusZoneMode } from '@stardust-ui/accessibility'
+import { FocusZoneMode } from '@stardust-ui/accessibility'
 import * as React from 'react'
 
+import { ReactAccessibilityBehavior } from '../accessibility/types'
 import FocusZone from './FocusZone'
 import { FocusZoneProps } from './FocusZone.types'
 import { FOCUSZONE_WRAP_ATTRIBUTE } from './focusUtilities'
 
 const wrapInFocusZone = (
   element: React.ReactElement,
-  accessibility: AccessibilityDefinition,
+  accessibility: ReactAccessibilityBehavior,
   rtl: boolean,
 ) => {
   if (accessibility.focusZone && accessibility.focusZone.mode === FocusZoneMode.Wrap) {
@@ -27,6 +28,7 @@ const wrapInFocusZone = (
       ...element.props,
       ...accessibility.focusZone.props,
       as: element.type,
+      forwardedAs: element.props.as,
       isRtl: rtl,
     })
   }

@@ -37,7 +37,7 @@ type TestComponentProps = {
 
 const TestComponent: React.FunctionComponent<TestComponentProps> = props => {
   const { disabled, onClick, onKeyDown, ...rest } = props
-  const getProps = useAccessibility(testBehavior, {
+  const getA11Props = useAccessibility(testBehavior, {
     mapPropsToBehavior: () => ({
       disabled,
     }),
@@ -49,9 +49,9 @@ const TestComponent: React.FunctionComponent<TestComponentProps> = props => {
   })
 
   return (
-    <div {...getProps('root', { onKeyDown, ...rest })}>
+    <div {...getA11Props('root', { onKeyDown, ...rest })}>
       <img
-        {...getProps('img', {
+        {...getA11Props('img', {
           src: 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==',
         })}
       />

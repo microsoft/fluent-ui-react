@@ -23,12 +23,13 @@ const getKeyDownHandlers = (
   behaviorActions: KeyActions,
   isRtlEnabled?: boolean,
 ): AccessibilityKeyHandlers => {
-  const componentHandlerNames = Object.keys(componentActionHandlers)
   const slotKeyHandlers: AccessibilityKeyHandlers = {}
 
   if (!componentActionHandlers || !behaviorActions) {
     return slotKeyHandlers
   }
+
+  const componentHandlerNames = Object.keys(componentActionHandlers)
 
   Object.keys(behaviorActions).forEach(slotName => {
     const behaviorSlotActions = behaviorActions[slotName]
