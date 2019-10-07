@@ -19,7 +19,7 @@ import {
 } from '../../lib'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
-import { ShorthandCollection, WithAsProp, withSafeTypeForAs } from '../../types'
+import { ShorthandCollection, ShorthandValue, WithAsProp, withSafeTypeForAs } from '../../types'
 
 import ToolbarCustomItem from './ToolbarCustomItem'
 import ToolbarDivider from './ToolbarDivider'
@@ -33,6 +33,11 @@ import Box from '../Box/Box'
 import ToolbarOverflowMenu from './ToolbarOverflowMenu'
 
 export type ToolbarItemShorthandKinds = 'divider' | 'item' | 'group' | 'toggle' | 'custom'
+
+type PositionOffset = {
+  vertical: number
+  horizontal: number
+}
 
 export interface ToolbarProps
   extends UIComponentProps,
@@ -97,47 +102,47 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
   static MenuRadioGroup = ToolbarMenuRadioGroup
   static RadioGroup = ToolbarRadioGroup
 
-  overflowCropRef = React.createRef<HTMLElement>()
-  overflowMenuRef = React.createRef<HTMLElement>()
+  overflowContainerRef = React.createRef<HTMLElement>()
+  overflowItemRef = React.createRef<HTMLElement>()
+  offsetMeasureRef = React.createRef<HTMLElement>()
+
+  // index of the last visible item in Toolbar, the rest goes to overflow menu
+  lastVisibleItemIndex: number
+
+  renderStartTime: number // TODO: remove before merge
+  rtl: boolean
 
   handleItemOverrides = variables => predefinedProps => ({
     variables: mergeComponentVariables(variables, predefinedProps.variables),
   })
 
-  renderItems(items, variables) {
+  renderItems(items: ShorthandCollection<ToolbarItemProps, ToolbarItemShorthandKinds>, variables) {
     const itemOverridesFn = this.handleItemOverrides(variables)
-    return _.map(items, item => {
-      const kind = _.get(item, 'kind', 'item')
+    return _.map(
+      items,
+      (item: ShorthandValue<ToolbarItemProps & { kind?: ToolbarItemShorthandKinds }>) => {
+        const kind = _.get(item, 'kind', 'item')
 
-      switch (kind) {
-        case 'divider':
-          return ToolbarDivider.create(item, { overrideProps: itemOverridesFn })
-        case 'group':
-          return ToolbarRadioGroup.create(item, { overrideProps: itemOverridesFn })
-        case 'toggle':
-          return ToolbarItem.create(item, {
-            defaultProps: { accessibility: toggleButtonBehavior },
-            overrideProps: itemOverridesFn,
-          })
-        case 'custom':
-          return ToolbarCustomItem.create(item, { overrideProps: itemOverridesFn })
-        default:
-          return ToolbarItem.create(item, { overrideProps: itemOverridesFn })
-      }
-    })
+        switch (kind) {
+          case 'divider':
+            return ToolbarDivider.create(item, { overrideProps: itemOverridesFn })
+          case 'group':
+            return ToolbarRadioGroup.create(item, { overrideProps: itemOverridesFn })
+          case 'toggle':
+            return ToolbarItem.create(item, {
+              defaultProps: { accessibility: toggleButtonBehavior },
+              overrideProps: itemOverridesFn,
+            })
+          case 'custom':
+            return ToolbarCustomItem.create(item, { overrideProps: itemOverridesFn })
+          default:
+            return ToolbarItem.create(item, { overrideProps: itemOverridesFn })
+        }
+      },
+    )
   }
 
-  debug(el, color) {
-    // el.style.borderColor = color
-    // el.style.borderRadius = '0'
-  }
-
-  undebug(el) {
-    // el.style.borderColor = 'transparent'
-    // el.style.borderRadius = '50%'
-  }
-
-  hide(el) {
+  hide(el: HTMLElement) {
     if (el.style.visibility === 'hidden') {
       return
     }
@@ -150,7 +155,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
     el.setAttribute('data-is-focusable', 'false')
   }
 
-  show(el) {
+  show(el: HTMLElement) {
     if (el.style.visibility !== 'hidden') {
       return false
     }
@@ -167,20 +172,115 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
     return true
   }
 
-  lastVisibleItemIndex: number
-  offsetMeasureRef = React.createRef<HTMLElement>()
+  /**
+   * Checks if `item` overflows a `container`.
+   * TODO: check and fix all margin combination
+   */
+  isItemOverflowing(itemBoundingRect: ClientRect, containerBoundingRect: ClientRect) {
+    return (
+      itemBoundingRect.right > containerBoundingRect.right ||
+      itemBoundingRect.left < containerBoundingRect.left
+    )
+  }
+
+  /**
+   * Checks if `item` would collide with eventual position of `overflowItem`.
+   */
+  wouldItemCollide(
+    $item: Element,
+    itemBoundingRect: ClientRect,
+    overflowItemBoundingRect: ClientRect,
+    containerBoundingRect: ClientRect,
+  ) {
+    let wouldCollide
+    if (this.rtl) {
+      // eslint-disable-next-line no-undef
+      const itemLeftMargin = parseFloat(window.getComputedStyle($item).marginLeft) || 0
+      wouldCollide =
+        itemBoundingRect.left - overflowItemBoundingRect.width - itemLeftMargin <
+        containerBoundingRect.left
+
+      // console.log('Collision [RTL]', {
+      //   wouldCollide,
+      //   'itemBoundingRect.left': itemBoundingRect.left,
+      //   'overflowItemBoundingRect.width': overflowItemBoundingRect.width,
+      //   itemRightMargin: itemLeftMargin,
+      //   sum: itemBoundingRect.left - overflowItemBoundingRect.width - itemLeftMargin,
+      //   'overflowContainerBoundingRect.left': containerBoundingRect.left,
+      // })
+    } else {
+      // eslint-disable-next-line no-undef
+      const itemRightMargin = parseFloat(window.getComputedStyle($item).marginRight) || 0
+      wouldCollide =
+        itemBoundingRect.right + overflowItemBoundingRect.width + itemRightMargin >
+        containerBoundingRect.right
+
+      // console.log('Collision', {
+      //   wouldCollide,
+      //   'itemBoundingRect.right': itemBoundingRect.right,
+      //   'overflowItemBoundingRect.width': overflowItemBoundingRect.width,
+      //   itemRightMargin,
+      //   sum: itemBoundingRect.right + overflowItemBoundingRect.width + itemRightMargin,
+      //   'overflowContainerBoundingRect.right': containerBoundingRect.right,
+      // })
+    }
+
+    return wouldCollide
+  }
+
+  /**
+   * Positions overflowItem next to lastVisible item
+   * TODO: consider overflowItem margin
+   */
+  setOverflowPosition(
+    $overflowItem: HTMLElement,
+    $lastVisibleItem: HTMLElement | undefined,
+    lastVisibleItemRect: ClientRect | undefined,
+    containerBoundingRect: ClientRect,
+    absolutePositioningOffset: PositionOffset,
+  ) {
+    if ($lastVisibleItem) {
+      if (this.rtl) {
+        const lastVisibleItemMarginLeft =
+          // eslint-disable-next-line no-undef
+          parseFloat(window.getComputedStyle($lastVisibleItem).marginLeft) || 0
+
+        $overflowItem.style.right = `${containerBoundingRect.right -
+          lastVisibleItemRect.left +
+          lastVisibleItemMarginLeft +
+          absolutePositioningOffset.horizontal}px`
+      } else {
+        const lastVisibleItemRightMargin =
+          // eslint-disable-next-line no-undef
+          parseFloat(window.getComputedStyle($lastVisibleItem).marginRight) || 0
+
+        $overflowItem.style.left = `${lastVisibleItemRect.right -
+          containerBoundingRect.left +
+          lastVisibleItemRightMargin +
+          absolutePositioningOffset.horizontal}px`
+      }
+    } else {
+      // there is no last visible item -> position the overflow as the first item
+      this.lastVisibleItemIndex = -1
+      if (this.rtl) {
+        $overflowItem.style.right = `${absolutePositioningOffset.horizontal}px`
+      } else {
+        $overflowItem.style.left = `${absolutePositioningOffset.horizontal}px`
+      }
+    }
+  }
 
   hideOverflowItems = () => {
-    const $overflowCrop = this.overflowCropRef.current
-    const $overflowItem = this.overflowMenuRef.current
+    const $overflowContainer = this.overflowContainerRef.current
+    const $overflowItem = this.overflowItemRef.current
     const $offsetMeasure = this.offsetMeasureRef.current
-    if (!$overflowCrop || !$overflowItem || !$offsetMeasure) {
+    if (!$overflowContainer || !$overflowItem || !$offsetMeasure) {
       return
     }
 
-    const $items = $overflowCrop.children
+    const $items = $overflowContainer.children
 
-    const overflowCropBoundingRect = $overflowCrop.getBoundingClientRect()
+    const overflowContainerBoundingRect = $overflowContainer.getBoundingClientRect()
     const overflowItemBoundingRect = $overflowItem.getBoundingClientRect()
     const offsetMeasureBoundingRect = $offsetMeasure.getBoundingClientRect()
 
@@ -191,11 +291,11 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
     // We compute absolute positioning offset
     // By measuring position of an offsetMeasure element absolutely positioned to 0,0.
     // TODO: replace by getComputedStyle('padding')
-    const absolutePositioningOffset = {
+    const absolutePositioningOffset: PositionOffset = {
       horizontal: this.rtl
-        ? offsetMeasureBoundingRect.right - overflowCropBoundingRect.right
-        : overflowCropBoundingRect.left - offsetMeasureBoundingRect.left,
-      vertical: overflowCropBoundingRect.top - offsetMeasureBoundingRect.top,
+        ? offsetMeasureBoundingRect.right - overflowContainerBoundingRect.right
+        : overflowContainerBoundingRect.left - offsetMeasureBoundingRect.left,
+      vertical: overflowContainerBoundingRect.top - offsetMeasureBoundingRect.top,
     }
 
     let isOverflowing = false
@@ -203,7 +303,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
     let lastVisibleItemRect
 
     // check all items from the last one back
-    _.forEachRight($items, ($item, i) => {
+    _.forEachRight($items, ($item: HTMLElement, i: number) => {
       if ($item === $overflowItem) {
         return true
       }
@@ -211,63 +311,29 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
       const itemBoundingRect = $item.getBoundingClientRect()
 
       // if the item is out of the crop rectangle, hide it
-      // TODO: check and fix all margin combination
-      if (
-        itemBoundingRect.right > overflowCropBoundingRect.right ||
-        itemBoundingRect.left < overflowCropBoundingRect.left
-      ) {
+      if (this.isItemOverflowing(itemBoundingRect, overflowContainerBoundingRect)) {
         isOverflowing = true
-        console.log('Overflow', i, {
-          item: [itemBoundingRect.left, itemBoundingRect.right],
-          crop: [overflowCropBoundingRect.left, overflowCropBoundingRect.right],
-        })
-        this.debug($item, 'red')
+        // console.log('Overflow', i, {
+        //   item: [itemBoundingRect.left, itemBoundingRect.right],
+        //   crop: [overflowContainerBoundingRect.left, overflowContainerBoundingRect.right],
+        // })
         this.hide($item)
         return true
       }
 
-      // and for the rest of the items
-      if (isOverflowing) {
-        let itemIsCollidingWithFutureOverflowItemPosition: boolean
-
-        if (!$lastVisibleItem) {
-          // if we already found item which is visible, all the others will be visible as well
-          if (this.rtl) {
-            // eslint-disable-next-line no-undef
-            const itemLeftMargin = parseFloat(window.getComputedStyle($item).marginLeft) || 0
-            itemIsCollidingWithFutureOverflowItemPosition =
-              itemBoundingRect.left - overflowItemBoundingRect.width - itemLeftMargin <
-              overflowCropBoundingRect.left
-
-            console.log('Collision [RTL]', {
-              'itemBoundingRect.left': itemBoundingRect.left,
-              'overflowItemBoundingRect.width': overflowItemBoundingRect.width,
-              itemRightMargin: itemLeftMargin,
-              sum: itemBoundingRect.left - overflowItemBoundingRect.width - itemLeftMargin,
-              'overflowCropBoundingRect.left': overflowCropBoundingRect.left,
-            })
-          } else {
-            // eslint-disable-next-line no-undef
-            const itemRightMargin = parseFloat(window.getComputedStyle($item).marginRight) || 0
-            itemIsCollidingWithFutureOverflowItemPosition =
-              itemBoundingRect.right + overflowItemBoundingRect.width + itemRightMargin >
-              overflowCropBoundingRect.right
-
-            console.log('Collision', {
-              'itemBoundingRect.right': itemBoundingRect.right,
-              'overflowItemBoundingRect.width': overflowItemBoundingRect.width,
-              itemRightMargin,
-              sum: itemBoundingRect.right + overflowItemBoundingRect.width + itemRightMargin,
-              'overflowCropBoundingRect.right': overflowCropBoundingRect.right,
-            })
-          }
-        }
-
-        if (itemIsCollidingWithFutureOverflowItemPosition) {
-          this.debug($item, 'magenta')
-          this.hide($item)
-          return true
-        }
+      // if there is an overflow, check collision of remaining items with eventual overflow position
+      if (
+        isOverflowing &&
+        !$lastVisibleItem &&
+        this.wouldItemCollide(
+          $item,
+          itemBoundingRect,
+          overflowItemBoundingRect,
+          overflowContainerBoundingRect,
+        )
+      ) {
+        this.hide($item)
+        return true
       }
 
       // Remember the last visible item
@@ -277,75 +343,40 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
         this.lastVisibleItemIndex = i
       }
 
-      this.undebug($item)
-      if (!this.show($item)) {
-        console.log('Shortcircuit', i)
-        return false // stop when first visible item is found
-      }
-
-      return true
+      return this.show($item) // exit the loop when first visible item is found
     })
 
+    // if there is an overflow,  position and show overflow item, otherwise hide it
     if (isOverflowing) {
-      // there is an overflow, show and position overflow item
-      this.debug($overflowItem, 'green')
-
       $overflowItem.style.position = 'absolute'
-
-      if ($lastVisibleItem) {
-        this.debug($lastVisibleItem, 'lime')
-
-        if (this.rtl) {
-          const lastVisibleItemMarginLeft =
-            // eslint-disable-next-line no-undef
-            parseFloat(window.getComputedStyle($lastVisibleItem).marginLeft) || 0
-
-          $overflowItem.style.right = `${overflowCropBoundingRect.right -
-            lastVisibleItemRect.left -
-            lastVisibleItemMarginLeft +
-            absolutePositioningOffset.horizontal}px`
-        } else {
-          const lastVisibleItemRightMargin =
-            // eslint-disable-next-line no-undef
-            parseFloat(window.getComputedStyle($lastVisibleItem).marginRight) || 0
-
-          $overflowItem.style.left = `${lastVisibleItemRect.right -
-            overflowCropBoundingRect.left +
-            lastVisibleItemRightMargin +
-            absolutePositioningOffset.horizontal}px`
-        }
-      } else {
-        this.lastVisibleItemIndex = -1
-        if (this.rtl) {
-          $overflowItem.style.right = `${absolutePositioningOffset.horizontal}px`
-        } else {
-          $overflowItem.style.left = `${absolutePositioningOffset.horizontal}px`
-        }
-      }
+      this.setOverflowPosition(
+        $overflowItem,
+        $lastVisibleItem,
+        lastVisibleItemRect,
+        overflowContainerBoundingRect,
+        absolutePositioningOffset,
+      )
       this.show($overflowItem)
     } else {
-      this.undebug($overflowItem)
       this.hide($overflowItem)
     }
   }
 
   getOverflowItems = () => {
+    // TODO: (before merge) call this back to parent so it can modify items for overflow
     return this.props.items.slice(this.lastVisibleItemIndex + 1)
   }
 
   componentDidMount() {
-    const dm = performance.now()
+    // const dm = performance.now()
     this.hideOverflowItems()
-    const done = performance.now()
-    console.log(`rendered ${this.rtl ? ' (in rtl)' : ''}`, done - this.renderStartTime, done - dm)
+    // const done = performance.now()
+    // console.log(`rendered ${this.rtl ? ' (in rtl)' : ''}`, done - this.renderStartTime, done - dm)
   }
 
   componentDidUpdate() {
     this.hideOverflowItems()
   }
-
-  renderStartTime
-  rtl = false
 
   renderComponent({
     accessibility,
@@ -360,8 +391,8 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
     this.rtl = rtl
     const { children, items, overflow } = this.props
 
-    const offsetMeasure = {}
-    const overflowCrop = {}
+    const offsetMeasure = {} // TODO: remove, see absolutePositioningOffset for details
+    const overflowContainer = {} // TODO: create valid slot?
 
     if (!overflow) {
       return (
@@ -382,16 +413,16 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
           {...accessibility.attributes.root}
           {...unhandledProps}
         >
-          <Ref innerRef={this.overflowCropRef}>
-            {Box.create(overflowCrop, {
+          <Ref innerRef={this.overflowContainerRef}>
+            {Box.create(overflowContainer, {
               defaultProps: {
-                styles: styles.overflowCrop,
+                styles: styles.overflowContainer,
               },
               overrideProps: {
                 children: (
                   <>
                     {childrenExist(children) ? children : this.renderItems(items, variables)}
-                    <Ref innerRef={this.overflowMenuRef}>
+                    <Ref innerRef={this.overflowItemRef}>
                       <ToolbarOverflowMenu getOverflowItems={this.getOverflowItems} />
                     </Ref>
                   </>
