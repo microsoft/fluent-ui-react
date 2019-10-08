@@ -35,6 +35,16 @@ const carouselBehavior: Accessibility<CarouselBehaviorProps> = props => ({
         keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
       },
     },
+    buttonNext: {
+      moveNextAndFocusContainerIfLast: {
+        keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
+      },
+    },
+    buttonPrevious: {
+      movePreviousAndFocusContainerIfFirst: {
+        keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
+      },
+    },
   },
 })
 

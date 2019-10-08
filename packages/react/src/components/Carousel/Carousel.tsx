@@ -100,6 +100,26 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
       e.preventDefault()
       this.handlePrevious(e)
     },
+    moveNextAndFocusContainerIfLast: e => {
+      e.preventDefault()
+      const { activeIndex } = this.state
+      const { cyclical, items, tabList } = this.props
+      this.handleNext(e)
+
+      if (activeIndex >= items.length - 2 && !cyclical && !tabList) {
+        this.itemsContainerRef.current.focus()
+      }
+    },
+    movePreviousAndFocusContainerIfFirst: e => {
+      e.preventDefault()
+      const { activeIndex } = this.state
+      const { cyclical, tabList } = this.props
+      this.handlePrevious(e)
+
+      if (activeIndex <= 1 && !cyclical && !tabList) {
+        this.itemsContainerRef.current.focus()
+      }
+    },
   }
 
   state = {
@@ -175,6 +195,10 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
             iconOnly: true,
             icon: 'stardust-chevron-left',
             styles: styles.buttonPrevious,
+            ...applyAccessibilityKeyHandlers(
+              accessibility.keyHandlers.buttonPrevious,
+              buttonPrevious,
+            ),
           },
           overrideProps: (predefinedProps: ButtonProps) => ({
             onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
@@ -189,6 +213,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
             iconOnly: true,
             icon: 'stardust-chevron-right',
             styles: styles.buttonNext,
+            ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.buttonNext, buttonNext),
           },
           overrideProps: (predefinedProps: ButtonProps) => ({
             onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
