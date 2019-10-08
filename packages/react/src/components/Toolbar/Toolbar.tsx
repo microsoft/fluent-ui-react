@@ -1,4 +1,9 @@
-import { Accessibility, toolbarBehavior, toggleButtonBehavior } from '@stardust-ui/accessibility'
+import {
+  Accessibility,
+  toolbarBehavior,
+  toggleButtonBehavior,
+  IS_FOCUSABLE_ATTRIBUTE,
+} from '@stardust-ui/accessibility'
 import * as React from 'react'
 import * as _ from 'lodash'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
@@ -39,6 +44,8 @@ type PositionOffset = {
   horizontal: number
 }
 
+const WAS_FOCUSABLE_ATTRIBUTE = 'data-was-focusable'
+
 export interface ToolbarProps
   extends UIComponentProps,
     ContentComponentProps,
@@ -59,11 +66,6 @@ export interface ToolbarProps
 }
 
 export interface ToolbarState {
-  initialItems: ToolbarProps['items']
-  currentItems: ToolbarProps['items']
-  stableItems?: ToolbarProps['items']
-  stable: boolean
-
   overflowOpen: boolean
 }
 
@@ -154,11 +156,11 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
     }
 
     el.style.visibility = 'hidden'
-    const wasFocusable = el.getAttribute('data-is-focusable')
+    const wasFocusable = el.getAttribute(IS_FOCUSABLE_ATTRIBUTE)
     if (wasFocusable) {
-      el.setAttribute('data-sd-was-focusable', wasFocusable)
+      el.setAttribute(WAS_FOCUSABLE_ATTRIBUTE, wasFocusable)
     }
-    el.setAttribute('data-is-focusable', 'false')
+    el.setAttribute(IS_FOCUSABLE_ATTRIBUTE, 'false')
   }
 
   show(el: HTMLElement) {
@@ -167,12 +169,12 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
     }
 
     el.style.visibility = null
-    const wasFocusable = el.getAttribute('data-sd-was-focusable')
+    const wasFocusable = el.getAttribute(WAS_FOCUSABLE_ATTRIBUTE)
     if (wasFocusable) {
-      el.setAttribute('data-is-focusable', wasFocusable)
-      el.removeAttribute('data-sd-was-focusable')
+      el.setAttribute(IS_FOCUSABLE_ATTRIBUTE, wasFocusable)
+      el.removeAttribute(WAS_FOCUSABLE_ATTRIBUTE)
     } else {
-      el.removeAttribute('data-is-focusable')
+      el.removeAttribute(IS_FOCUSABLE_ATTRIBUTE)
     }
 
     return true
@@ -248,8 +250,9 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
     if ($lastVisibleItem) {
       if (this.rtl) {
         const lastVisibleItemMarginLeft =
-          // eslint-disable-next-line no-undef
-          parseFloat(window.getComputedStyle($lastVisibleItem).marginLeft) || 0
+          parseFloat(
+            this.context.target.defaultView.getComputedStyle($lastVisibleItem).marginLeft,
+          ) || 0
 
         $overflowItem.style.right = `${containerBoundingRect.right -
           lastVisibleItemRect.left +
@@ -257,8 +260,9 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
           absolutePositioningOffset.horizontal}px`
       } else {
         const lastVisibleItemRightMargin =
-          // eslint-disable-next-line no-undef
-          parseFloat(window.getComputedStyle($lastVisibleItem).marginRight) || 0
+          parseFloat(
+            this.context.target.defaultView.getComputedStyle($lastVisibleItem).marginRight,
+          ) || 0
 
         $overflowItem.style.left = `${lastVisibleItemRect.right -
           containerBoundingRect.left +
