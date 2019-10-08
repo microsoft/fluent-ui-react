@@ -29,14 +29,14 @@ const carouselStyles: ComponentSlotStylesPrepared<
     top: pxToRem(-v.height / 2 - v.buttonNextSize / 2),
     left: pxToRem(v.width - 2 * v.buttonNextSize),
     ...(p.items !== undefined && {
-      visibility: p.activeIndex === p.items.length - 1 ? 'hidden' : 'visible',
+      visibility: !p.cyclical && p.activeIndex === p.items.length - 1 ? 'hidden' : 'visible',
     }),
   }),
   buttonPrevious: ({ props: p, variables: v }): ICSSInJSStyle => ({
     height: pxToRem(v.buttonPreviousSize),
     top: pxToRem(-v.height / 2 - v.buttonPreviousSize / 2),
     ...(p.items !== undefined && {
-      visibility: p.activeIndex === 0 ? 'hidden' : 'visible',
+      visibility: !p.cyclical && p.activeIndex === 0 ? 'hidden' : 'visible',
     }),
   }),
   navigationContainer: (): ICSSInJSStyle => ({

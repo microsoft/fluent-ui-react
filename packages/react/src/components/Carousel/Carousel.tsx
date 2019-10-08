@@ -41,6 +41,9 @@ export interface CarouselProps extends UIComponentProps, ChildrenComponentProps 
   /** Shorthand for the button that navigates to the previous item. */
   buttonPrevious?: ShorthandValue<ButtonProps>
 
+  /** Specifies if the process of switching slides is cyclical. */
+  cyclical?: boolean
+
   /**
    * A custom render iterator for rendering each carousel slide.
    * The default component, props, and children are available for each carousel slide.
@@ -70,9 +73,10 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
     ...commonPropTypes.createCommon({
       content: false,
     }),
-    items: customPropTypes.collectionShorthand,
     buttonNext: customPropTypes.itemShorthand,
     buttonPrevious: customPropTypes.itemShorthand,
+    cyclical: PropTypes.bool,
+    items: customPropTypes.collectionShorthand,
     tabList: PropTypes.oneOfType([
       customPropTypes.collectionShorthand,
       customPropTypes.itemShorthand,
@@ -105,14 +109,19 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
   itemsContainerRef = React.createRef<HTMLElement>()
 
   setActiveIndex(index: number): void {
-    const { items } = this.props
+    const { cyclical, items } = this.props
+    let activeIndex = index
 
-    if (index < 0 || index >= items.length) {
-      return
+    if (index < 0) {
+      activeIndex = cyclical ? items.length - 1 : 0
+    }
+
+    if (index >= items.length) {
+      activeIndex = cyclical ? 0 : items.length
     }
 
     this.setState({
-      activeIndex: index,
+      activeIndex,
     })
   }
 
