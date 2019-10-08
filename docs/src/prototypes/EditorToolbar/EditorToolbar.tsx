@@ -3,7 +3,7 @@ import {
   Divider,
   Flex,
   Form,
-  Grid,
+  Icon,
   Popup,
   Ref,
   ShorthandValue,
@@ -14,18 +14,20 @@ import {
   ToolbarMenuItemProps,
   ToolbarMenuItemShorthandKinds,
 } from '@stardust-ui/react'
-import * as React from 'react'
-import * as _ from 'lodash'
-import * as keyboardKey from 'keyboard-key'
 import { documentRef, useEventListener } from '@stardust-ui/react-component-event-listener'
-import {
-  EditorToolbarAction,
-  EditorToolbarState,
-} from 'docs/src/prototypes/EditorToolbar/editorToolbarReducer'
+import * as keyboardKey from 'keyboard-key'
+import * as _ from 'lodash'
+import * as React from 'react'
+
+import { EditorToolbarAction, EditorToolbarState, FontFormatting } from './editorToolbarReducer'
+import EditorToolbarTable from './EditorToolbarTable'
 
 type EditorToolbarProps = EditorToolbarState & {
   dispatch: React.Dispatch<EditorToolbarAction>
 }
+
+type ToolbarItem = ShorthandValue<ToolbarItemProps & { kind?: ToolbarItemShorthandKinds }>
+type OverflowItem = ShorthandValue<ToolbarMenuItemProps & { kind?: ToolbarMenuItemShorthandKinds }>
 
 const EditorToolbar: React.FC<EditorToolbarProps> = props => {
   const overflowIndex = React.useRef<number>()
@@ -34,8 +36,8 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
   const toolbarRef = React.useRef<HTMLElement>(null)
 
   const betterItems: {
-    toolbarItem: ShorthandValue<ToolbarItemProps & { kind?: ToolbarItemShorthandKinds }>
-    overflowItem?: ShorthandValue<ToolbarMenuItemProps & { kind?: ToolbarMenuItemShorthandKinds }>
+    toolbarItem: ToolbarItem
+    overflowItem?: OverflowItem
   }[] = [
     {
       toolbarItem: {
@@ -67,13 +69,75 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
     { toolbarItem: { key: 'highlight', icon: 'highlight', active: props.fontHighlight } },
     { toolbarItem: { key: 'font-color', icon: 'font-color', active: props.fontColor } },
     { toolbarItem: { key: '', icon: 'font-size', active: props.fontSize } },
-    // TODO: Font format
 
-    { toolbarItem: { key: 'remove-format', icon: 'remove-format' } },
+    {
+      toolbarItem: {
+        menu: [
+          {
+            key: 'heading1',
+            content: FontFormatting.Heading1,
+            active: props.fontFormatting === FontFormatting.Heading1,
+            onClick: () =>
+              props.dispatch({ type: 'FONT_FORMATTING', value: FontFormatting.Heading1 }),
+          },
+          {
+            key: 'heading2',
+            content: FontFormatting.Heading2,
+            active: props.fontFormatting === FontFormatting.Heading2,
+            onClick: () =>
+              props.dispatch({ type: 'FONT_FORMATTING', value: FontFormatting.Heading2 }),
+          },
+          {
+            key: 'heading3',
+            content: FontFormatting.Heading3,
+            active: props.fontFormatting === FontFormatting.Heading3,
+            onClick: () =>
+              props.dispatch({ type: 'FONT_FORMATTING', value: FontFormatting.Heading3 }),
+          },
+          {
+            key: 'paragraph',
+            content: FontFormatting.Paragraph,
+            active: props.fontFormatting === FontFormatting.Paragraph,
+            onClick: () =>
+              props.dispatch({ type: 'FONT_FORMATTING', value: FontFormatting.Paragraph }),
+          },
+        ],
+        menuOpen: props.fontFormattingOpen,
+        onMenuOpenChange: (e, { menuOpen }) =>
+          props.dispatch({ type: 'FONT_FORMATTING_OPEN', value: menuOpen }),
+        children: (
+          <Flex gap="gap.smaller">
+            <Text content={props.fontFormatting} />
+            <Icon name="chevron-down" />
+          </Flex>
+        ),
+      },
+    },
+
+    {
+      toolbarItem: { key: 'remove-format', icon: 'remove-format' },
+      overflowItem: { key: 'remove-format', icon: 'remove-format', content: 'Clear formatting' },
+    },
     { toolbarItem: { key: 'divider-2', kind: 'divider' } },
 
-    { toolbarItem: { key: 'bullets', icon: 'bullets', active: props.itemList } },
-    { toolbarItem: { key: 'number-list', icon: 'number-list', active: props.numberList } },
+    {
+      toolbarItem: { key: 'bullets', icon: 'bullets', active: props.itemList },
+      overflowItem: {
+        key: 'bullets',
+        icon: 'bullets',
+        active: props.itemList,
+        content: 'Bulleted list',
+      },
+    },
+    {
+      toolbarItem: { key: 'number-list', icon: 'number-list', active: props.numberList },
+      overflowItem: {
+        key: 'number-list',
+        icon: 'number-list',
+        active: props.numberList,
+        content: 'Number list',
+      },
+    },
 
     { toolbarItem: { key: 'divider-3', kind: 'divider' } },
 
@@ -103,13 +167,12 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
       toolbarItem: {
         key: 'code',
         icon: 'code-snippet',
-        // content: 'Insert code snippet',
         active: props.code,
       },
       overflowItem: {
         key: 'code',
         icon: 'code-snippet',
-        content: 'Insert code snippet',
+        content: 'Code snippet',
         active: props.code,
       },
     },
@@ -124,26 +187,12 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
           content: (
             <>
               <Text>Insert your table</Text>
-              <Grid columns={3}>
-                {_.times(9, i => (
-                  <button
-                    key={i}
-                    onClick={() => {
-                      props.dispatch({ type: 'TABLE', value: false })
-                      props.dispatch({ type: 'MORE', value: false })
-                    }}
-                    style={{
-                      background: 'aliceblue',
-                      display: 'block',
-                      height: '9px',
-                      width: '9px',
-                      margin: '0 3px',
-                    }}
-                  >
-                    {' '}
-                  </button>
-                ))}
-              </Grid>
+              <EditorToolbarTable
+                onClick={() => {
+                  props.dispatch({ type: 'TABLE', value: false })
+                  props.dispatch({ type: 'MORE', value: false })
+                }}
+              />
             </>
           ),
           onOpenChange: (e, { open }) => props.dispatch({ type: 'TABLE', value: open }),
@@ -167,7 +216,9 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
     targetRef: documentRef,
   })
 
-  const linkItemIndex = 12
+  const linkItemIndex = betterItems.findIndex(
+    item => item.overflowItem && item.overflowItem.key === 'link',
+  )
   const linkInOverflowMenu = overflowIndex.current <= linkItemIndex
   const linkTarget = linkInOverflowMenu ? toolbarRef : linkItemRef
   console.log('RENDER', linkInOverflowMenu)
@@ -180,7 +231,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
             <Form
               fields={[
                 {
-                  label: 'Address',
+                  label: 'URL',
                   name: 'address',
                   id: 'link-address',
                   key: 'address',
@@ -190,20 +241,17 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
               ]}
             />
             <Divider hidden />
-            <Button.Group
-              buttons={[
-                {
-                  key: 'cancel',
-                  content: 'Cancel',
-                  onClick: () => props.dispatch({ type: 'LINK', value: false }),
-                },
-                {
-                  key: 'insert',
-                  content: 'Insert',
-                  onClick: () => props.dispatch({ type: 'LINK', value: false }),
-                },
-              ]}
-            />
+            <Flex gap="gap.small" hAlign="end">
+              <Button
+                content="Cancel"
+                onClick={() => props.dispatch({ type: 'LINK', value: false })}
+              />
+              <Button
+                content="Insert"
+                onClick={() => props.dispatch({ type: 'LINK', value: false })}
+                primary
+              />
+            </Flex>
           </>
         }
         open={props.link}
@@ -222,13 +270,22 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
               console.log('onOverflow', itemsVisible)
               overflowIndex.current = itemsVisible - 1
             }}
-            onOverflowOpenChange={(e, { overflowOpen }) => {
+            onOverflowOpenChange={(e, { overflowOpen }) =>
               props.dispatch({ type: 'MORE', value: overflowOpen })
-            }}
+            }
             getOverflowItems={startIndex => {
-              return _.map(betterItems.slice(startIndex), item =>
-                _.get(item, 'overflowItem', item.toolbarItem),
-              )
+              const firstToolbarItem = betterItems[startIndex].toolbarItem
+              let actualIndex = startIndex
+
+              // We want to remove first item if it's a divider
+              // @ts-ignore
+              if (firstToolbarItem.kind === 'divider') {
+                actualIndex += 1
+              }
+
+              return betterItems
+                .slice(actualIndex)
+                .map(item => item.overflowItem || item.toolbarItem)
             }}
           />
         </Ref>

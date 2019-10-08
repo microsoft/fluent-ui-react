@@ -475,7 +475,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
                       : this.renderItems(this.getVisibleItems(), variables)}
                     <Ref innerRef={this.overflowItemRef}>
                       <ToolbarOverflowMenu
-                        items={this.getOverflowItems()}
+                        items={this.props.overflowOpen ? this.getOverflowItems() : []}
                         menuOpen={this.props.overflowOpen}
                         onOpen={({ open }) => {
                           console.log('OPEN', open)

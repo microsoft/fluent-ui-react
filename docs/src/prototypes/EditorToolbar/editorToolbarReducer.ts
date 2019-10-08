@@ -1,8 +1,8 @@
-enum FontFormatting {
-  Paragraph,
-  Heading1 = 1,
-  Heading2 = 2,
-  Heading3 = 3,
+export enum FontFormatting {
+  Paragraph = 'Paragraph',
+  Heading1 = 'Heading 1',
+  Heading2 = 'Heading 2',
+  Heading3 = 'Heading 3',
 }
 
 export type EditorToolbarState = {
@@ -14,6 +14,7 @@ export type EditorToolbarState = {
   fontColor: boolean
   fontSize: boolean
   fontFormatting: FontFormatting
+  fontFormattingOpen: FontFormatting
   //
   itemList: boolean
   numberList: boolean
@@ -32,8 +33,13 @@ export type EditorToolbarAction =
   | { type: 'BOLD'; value: boolean }
   | { type: 'ITALIC'; value: boolean }
   | { type: 'UNDERLINE'; value: boolean }
+  //
+  | { type: 'FONT_FORMATTING'; value: FontFormatting }
+  | { type: 'FONT_FORMATTING_OPEN'; value: boolean }
+  //
   | { type: 'LINK'; value: boolean }
   | { type: 'TABLE'; value: boolean }
+  //
   | { type: 'MORE'; value: boolean }
 
 export const initialState: EditorToolbarState = {
@@ -45,6 +51,7 @@ export const initialState: EditorToolbarState = {
   fontColor: false,
   fontSize: false,
   fontFormatting: FontFormatting.Paragraph,
+  fontFormattingOpen: false,
   //
   itemList: false,
   numberList: false,
@@ -70,6 +77,11 @@ export function editorToolbarReducer(
       return { ...state, italic: action.value }
     case 'UNDERLINE':
       return { ...state, underline: action.value }
+    //
+    case 'FONT_FORMATTING':
+      return { ...state, fontFormatting: action.value }
+    case 'FONT_FORMATTING_OPEN':
+      return { ...state, fontFormattingOpen: action.value }
     //
     case 'LINK':
       return { ...state, link: action.value }
