@@ -31,7 +31,7 @@ import ToolbarDivider from './ToolbarDivider'
 import ToolbarItem, { ToolbarItemProps } from './ToolbarItem'
 import ToolbarMenu from './ToolbarMenu'
 import ToolbarMenuDivider from './ToolbarMenuDivider'
-import ToolbarMenuItem from './ToolbarMenuItem'
+import ToolbarMenuItem, { ToolbarMenuItemProps } from './ToolbarMenuItem'
 import ToolbarMenuRadioGroup from './ToolbarMenuRadioGroup'
 import ToolbarRadioGroup from './ToolbarRadioGroup'
 import Box from '../Box/Box'
@@ -63,10 +63,12 @@ export interface ToolbarProps
    *  must NOT change their size! If you need to change item's size, rerender the Toolbar.
    */
   overflow?: boolean
-}
 
-export interface ToolbarState {
-  overflowOpen: boolean
+  onOverflow?: (itemsVisible: number) => void
+
+  getOverflowItems?: (
+    startIndex: number,
+  ) => ShorthandCollection<ToolbarMenuItemProps, ToolbarItemShorthandKinds> // FIXME: use correct kind
 }
 
 class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
@@ -112,13 +114,6 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
   // renderStartTime: number // TODO: remove before merge
   // didMountTime: number
   rtl: boolean
-
-  constructor(props) {
-    super(props)
-
-    this.state = { overflowOpen: false }
-    // this.lastVisibleItemIndex = this.props.items.length - 1
-  }
 
   handleItemOverrides = variables => predefinedProps => ({
     variables: mergeComponentVariables(variables, predefinedProps.variables),
@@ -288,6 +283,9 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
       return
     }
 
+    // workaround: when resizing window with popup opened the container contents scroll for some reason
+    $overflowContainer.scrollTo(0, 0)
+
     const $items = $overflowContainer.children
 
     const overflowContainerBoundingRect = $overflowContainer.getBoundingClientRect()
@@ -373,16 +371,18 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
       )
       this.show($overflowItem)
     } else {
+      this.lastVisibleItemIndex = this.props.items.length - 1
       this.hide($overflowItem)
     }
 
-    this.props.onOverflow(this.lastVisibleItemIndex)
+    _.invoke(this.props, 'onOverflow', this.lastVisibleItemIndex + 1)
   }
 
   getOverflowItems = () => {
     console.log('getOverflowItems()', this.props.items.slice(this.lastVisibleItemIndex + 1))
-    // TODO: (before merge) call this back to parent so it can modify items for overflow
-    return this.props.items.slice(this.lastVisibleItemIndex + 1)
+    return this.props.getOverflowItems
+      ? this.props.getOverflowItems(this.lastVisibleItemIndex + 1)
+      : this.props.items.slice(this.lastVisibleItemIndex + 1)
   }
 
   getVisibleItems = () => {
@@ -481,7 +481,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
                           console.log('OPEN', open)
                           // if (open) {
                           //   this.setState({ overflowOpen: open })
-                          this.props.onOverflowChange(null, { overflowOpen: open })
+                          this.props.onOverflowOpenChange(null, { overflowOpen: open })
                           // } else {
                           //   this.setState({ overflowOpen: false })
                           // }
