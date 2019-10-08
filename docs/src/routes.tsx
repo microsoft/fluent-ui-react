@@ -44,7 +44,7 @@ import NestedPopupsAndDialogsPrototype from './prototypes/NestedPopupsAndDialogs
 import VirtualizedTreePrototype from './prototypes/VirtualizedTree'
 import CopyToClipboardPrototype from './prototypes/CopyToClipboard'
 import ParticipantsListPrototype from './prototypes/ParticipantsList'
-import EditorToolbarPrototype from './prototypes/EditorToolbar/EditorToolbar'
+import EditorToolbarPrototype from './prototypes/EditorToolbar'
 
 const Routes = () => (
   <BrowserRouter basename={__BASENAME__}>

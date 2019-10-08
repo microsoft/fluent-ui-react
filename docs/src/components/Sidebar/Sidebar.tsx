@@ -353,6 +353,11 @@ class Sidebar extends React.Component<any, any> {
         title: { content: 'Copy to Clipboard', as: NavLink, to: '/prototype-copy-to-clipboard' },
         public: true,
       },
+      {
+        key: 'editor-toolbar',
+        title: { content: 'Editor Toolbar', as: NavLink, to: '/prototype-editor-toolbar' },
+        public: true,
+      },
     ]
 
     const componentTreeSection = {

@@ -18,93 +18,16 @@ import * as React from 'react'
 import * as _ from 'lodash'
 import * as keyboardKey from 'keyboard-key'
 import { documentRef, useEventListener } from '@stardust-ui/react-component-event-listener'
-import { CodeSnippet } from '@stardust-ui/docs-components'
+import {
+  EditorToolbarAction,
+  EditorToolbarState,
+} from 'docs/src/prototypes/EditorToolbar/editorToolbarReducer'
 
-enum FontFormatting {
-  Paragraph,
-  Heading1 = 1,
-  Heading2 = 2,
-  Heading3 = 3,
+type EditorToolbarProps = EditorToolbarState & {
+  dispatch: React.Dispatch<EditorToolbarAction>
 }
 
-type EditorState = {
-  bold: boolean
-  italic: boolean
-  underline: boolean
-  //
-  fontHighlight: boolean
-  fontColor: boolean
-  fontSize: boolean
-  fontFormatting: FontFormatting
-  //
-  itemList: boolean
-  numberList: boolean
-  //
-  quote: boolean
-  link: boolean
-  code: boolean
-  table: boolean
-  //
-  important: boolean
-  //
-  more: boolean
-}
-
-type EditorAction =
-  | { type: 'BOLD'; value: boolean }
-  | { type: 'ITALIC'; value: boolean }
-  | { type: 'UNDERLINE'; value: boolean }
-  | { type: 'LINK'; value: boolean }
-  | { type: 'TABLE'; value: boolean }
-  | { type: 'MORE'; value: boolean }
-
-const initialState: EditorState = {
-  bold: false,
-  italic: false,
-  underline: false,
-  //
-  fontHighlight: false,
-  fontColor: false,
-  fontSize: false,
-  fontFormatting: FontFormatting.Paragraph,
-  //
-  itemList: false,
-  numberList: false,
-  //
-  quote: false,
-  link: false,
-  code: false,
-  table: false,
-  //
-  important: false,
-  //
-  more: false,
-}
-
-function editorReducer(state: EditorState, action: EditorAction): EditorState {
-  switch (action.type) {
-    case 'BOLD':
-      return { ...state, bold: action.value }
-    case 'ITALIC':
-      return { ...state, italic: action.value }
-    case 'UNDERLINE':
-      return { ...state, underline: action.value }
-    //
-    case 'LINK':
-      return { ...state, link: action.value }
-    case 'TABLE':
-      return { ...state, table: action.value }
-    //
-    case 'MORE':
-      return { ...state, more: action.value }
-  }
-
-  return state
-}
-
-const EditorToolbar = () => {
-  const [state, dispatch] = React.useReducer(editorReducer, initialState)
-
+const EditorToolbar: React.FC<EditorToolbarProps> = props => {
   const overflowIndex = React.useRef<number>()
 
   const linkItemRef = React.useRef<HTMLElement>(null)
@@ -118,39 +41,39 @@ const EditorToolbar = () => {
       toolbarItem: {
         key: 'bold',
         icon: 'bold',
-        active: state.bold,
-        onClick: () => dispatch({ type: 'BOLD', value: !state.bold }),
+        active: props.bold,
+        onClick: () => props.dispatch({ type: 'BOLD', value: !props.bold }),
       },
     },
     {
       toolbarItem: {
         key: 'italic',
         icon: 'italic',
-        active: state.italic,
-        onClick: () => dispatch({ type: 'ITALIC', value: !state.italic }),
+        active: props.italic,
+        onClick: () => props.dispatch({ type: 'ITALIC', value: !props.italic }),
       },
     },
     {
       toolbarItem: {
         key: 'underline',
         icon: 'underline',
-        active: state.underline,
-        onClick: () => dispatch({ type: 'UNDERLINE', value: !state.underline }),
+        active: props.underline,
+        onClick: () => props.dispatch({ type: 'UNDERLINE', value: !props.underline }),
       },
     },
 
     { toolbarItem: { key: 'divider-1', kind: 'divider' } },
 
-    { toolbarItem: { key: 'highlight', icon: 'highlight', active: state.fontHighlight } },
-    { toolbarItem: { key: 'font-color', icon: 'font-color', active: state.fontColor } },
-    { toolbarItem: { key: '', icon: 'font-size', active: state.fontSize } },
+    { toolbarItem: { key: 'highlight', icon: 'highlight', active: props.fontHighlight } },
+    { toolbarItem: { key: 'font-color', icon: 'font-color', active: props.fontColor } },
+    { toolbarItem: { key: '', icon: 'font-size', active: props.fontSize } },
     // TODO: Font format
 
     { toolbarItem: { key: 'remove-format', icon: 'remove-format' } },
     { toolbarItem: { key: 'divider-2', kind: 'divider' } },
 
-    { toolbarItem: { key: 'bullets', icon: 'bullets', active: state.itemList } },
-    { toolbarItem: { key: 'number-list', icon: 'number-list', active: state.numberList } },
+    { toolbarItem: { key: 'bullets', icon: 'bullets', active: props.itemList } },
+    { toolbarItem: { key: 'number-list', icon: 'number-list', active: props.numberList } },
 
     { toolbarItem: { key: 'divider-3', kind: 'divider' } },
 
@@ -160,8 +83,8 @@ const EditorToolbar = () => {
           {
             key: 'link',
             icon: 'link',
-            active: state.link,
-            onClick: () => dispatch({ type: 'LINK', value: true }),
+            active: props.link,
+            onClick: () => props.dispatch({ type: 'LINK', value: true }),
           },
           (Component, props) => (
             <Ref innerRef={linkItemRef}>
@@ -173,7 +96,7 @@ const EditorToolbar = () => {
         key: 'link',
         icon: 'link',
         content: 'Insert link',
-        onClick: () => dispatch({ type: 'LINK', value: true }),
+        onClick: () => props.dispatch({ type: 'LINK', value: true }),
       },
     },
     {
@@ -181,13 +104,13 @@ const EditorToolbar = () => {
         key: 'code',
         icon: 'code-snippet',
         // content: 'Insert code snippet',
-        active: state.code,
+        active: props.code,
       },
       overflowItem: {
         key: 'code',
         icon: 'code-snippet',
         content: 'Insert code snippet',
-        active: state.code,
+        active: props.code,
       },
     },
     {
@@ -195,7 +118,7 @@ const EditorToolbar = () => {
         key: 'table',
         icon: 'table',
         content: 'Insert table',
-        active: state.table,
+        active: props.table,
 
         popup: {
           content: (
@@ -206,8 +129,8 @@ const EditorToolbar = () => {
                   <button
                     key={i}
                     onClick={() => {
-                      dispatch({ type: 'TABLE', value: false })
-                      dispatch({ type: 'MORE', value: false })
+                      props.dispatch({ type: 'TABLE', value: false })
+                      props.dispatch({ type: 'MORE', value: false })
                     }}
                     style={{
                       background: 'aliceblue',
@@ -223,8 +146,8 @@ const EditorToolbar = () => {
               </Grid>
             </>
           ),
-          onOpenChange: (e, { open }) => dispatch({ type: 'TABLE', value: open }),
-          open: state.table,
+          onOpenChange: (e, { open }) => props.dispatch({ type: 'TABLE', value: open }),
+          open: props.table,
         },
       },
     },
@@ -237,7 +160,7 @@ const EditorToolbar = () => {
       if (code === keyboardKey.K && e.ctrlKey) {
         // Ctrl+K is a browser hotkey, it's required to prevent defaults
         e.preventDefault()
-        dispatch({ type: 'LINK', value: true })
+        props.dispatch({ type: 'LINK', value: true })
       }
     },
     type: 'keydown',
@@ -272,18 +195,18 @@ const EditorToolbar = () => {
                 {
                   key: 'cancel',
                   content: 'Cancel',
-                  onClick: () => dispatch({ type: 'LINK', value: false }),
+                  onClick: () => props.dispatch({ type: 'LINK', value: false }),
                 },
                 {
                   key: 'insert',
                   content: 'Insert',
-                  onClick: () => dispatch({ type: 'LINK', value: false }),
+                  onClick: () => props.dispatch({ type: 'LINK', value: false }),
                 },
               ]}
             />
           </>
         }
-        open={state.link}
+        open={props.link}
         pointing
         target={linkTarget.current}
       />
@@ -294,13 +217,13 @@ const EditorToolbar = () => {
             styles={{ minWidth: 0, flexGrow: 1 }} // necessary for Toolbar with overflow inside a flex container
             items={_.map(betterItems, 'toolbarItem')}
             overflow
-            overflowOpen={state.more}
+            overflowOpen={props.more}
             onOverflow={itemsVisible => {
               console.log('onOverflow', itemsVisible)
               overflowIndex.current = itemsVisible - 1
             }}
             onOverflowOpenChange={(e, { overflowOpen }) => {
-              dispatch({ type: 'MORE', value: overflowOpen })
+              props.dispatch({ type: 'MORE', value: overflowOpen })
             }}
             getOverflowItems={startIndex => {
               return _.map(betterItems.slice(startIndex), item =>
@@ -311,8 +234,6 @@ const EditorToolbar = () => {
         </Ref>
         <Toolbar items={[{ icon: { name: 'trash-can', outline: true } }]} />
       </Flex>
-
-      <CodeSnippet mode="json" value={state} />
     </>
   )
 }
