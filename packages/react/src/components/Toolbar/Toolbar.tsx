@@ -63,6 +63,8 @@ export interface ToolbarState {
   currentItems: ToolbarProps['items']
   stableItems?: ToolbarProps['items']
   stable: boolean
+
+  overflowOpen: boolean
 }
 
 class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
@@ -108,6 +110,13 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
   // renderStartTime: number // TODO: remove before merge
   // didMountTime: number
   rtl: boolean
+
+  constructor(props) {
+    super(props)
+
+    this.state = { overflowOpen: false }
+    // this.lastVisibleItemIndex = this.props.items.length - 1
+  }
 
   handleItemOverrides = variables => predefinedProps => ({
     variables: mergeComponentVariables(variables, predefinedProps.variables),
@@ -310,10 +319,15 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
       // if the item is out of the crop rectangle, hide it
       if (this.isItemOverflowing(itemBoundingRect, overflowContainerBoundingRect)) {
         isOverflowing = true
-        // console.log('Overflow', i, {
-        //   item: [itemBoundingRect.left, itemBoundingRect.right],
-        //   crop: [overflowContainerBoundingRect.left, overflowContainerBoundingRect.right],
-        // })
+        console.log('Overflow', i, {
+          item: [itemBoundingRect.left, itemBoundingRect.right],
+          crop: [
+            overflowContainerBoundingRect.left,
+            overflowContainerBoundingRect.right,
+            overflowContainerBoundingRect.width,
+          ],
+          container: $overflowContainer,
+        })
         this.hide($item)
         return true
       }
@@ -344,7 +358,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
     })
 
     // if there is an overflow,  position and show overflow item, otherwise hide it
-    if (isOverflowing) {
+    if (isOverflowing || this.props.overflowOpen) {
       $overflowItem.style.position = 'absolute'
       this.setOverflowPosition(
         $overflowItem,
@@ -357,11 +371,23 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
     } else {
       this.hide($overflowItem)
     }
+
+    this.props.onOverflow(this.lastVisibleItemIndex)
   }
 
   getOverflowItems = () => {
+    console.log('getOverflowItems()', this.props.items.slice(this.lastVisibleItemIndex + 1))
     // TODO: (before merge) call this back to parent so it can modify items for overflow
     return this.props.items.slice(this.lastVisibleItemIndex + 1)
+  }
+
+  getVisibleItems = () => {
+    console.log('allItems()', this.props.items)
+    const end = this.props.overflowOpen ? this.lastVisibleItemIndex + 1 : this.props.items.length
+    console.log('getVisibleItems()', this.props.items.slice(0, end))
+    // TODO: (before merge) call this back to parent so it can modify items for overflow
+    // return this.props.items
+    return this.props.items.slice(0, end)
   }
 
   componentDidMount() {
@@ -370,7 +396,9 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
   }
 
   componentDidUpdate() {
+    // if (!this.state.overflowOpen) {
     this.afterComponentRendered()
+    // }
   }
 
   componentWillUnmount() {
@@ -438,9 +466,23 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
               overrideProps: {
                 children: (
                   <>
-                    {childrenExist(children) ? children : this.renderItems(items, variables)}
+                    {childrenExist(children)
+                      ? children
+                      : this.renderItems(this.getVisibleItems(), variables)}
                     <Ref innerRef={this.overflowItemRef}>
-                      <ToolbarOverflowMenu getOverflowItems={this.getOverflowItems} />
+                      <ToolbarOverflowMenu
+                        items={this.getOverflowItems()}
+                        menuOpen={this.props.overflowOpen}
+                        onOpen={({ open }) => {
+                          console.log('OPEN', open)
+                          // if (open) {
+                          //   this.setState({ overflowOpen: open })
+                          this.props.onOverflowChange(null, { overflowOpen: open })
+                          // } else {
+                          //   this.setState({ overflowOpen: false })
+                          // }
+                        }}
+                      />
                     </Ref>
                   </>
                 ),

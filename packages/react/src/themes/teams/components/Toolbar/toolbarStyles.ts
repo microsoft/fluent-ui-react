@@ -19,6 +19,7 @@ const toolbarStyles: ComponentSlotStylesPrepared<ToolbarProps, ToolbarVariables>
   overflowContainer: ({ variables: v }) => ({
     display: 'flex',
     overflow: 'hidden',
+    flexGrow: 1,
   }),
 }
 

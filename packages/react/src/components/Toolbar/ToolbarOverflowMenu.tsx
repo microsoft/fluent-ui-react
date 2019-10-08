@@ -5,7 +5,10 @@ import { withSafeTypeForAs } from '../../types'
 import ToolbarItem from './ToolbarItem'
 
 export interface ToolbarOverflowMenuProps {
-  getOverflowItems: any
+  // getOverflowItems: any
+  items: any
+  onOpen: any
+  menuOpen: boolean
 }
 
 class ToolbarOverflowMenu extends UIComponent<ToolbarOverflowMenuProps, any> {
@@ -17,10 +20,11 @@ class ToolbarOverflowMenu extends UIComponent<ToolbarOverflowMenuProps, any> {
   componentDidMount() {}
 
   onMenuOpenChange = (e, { menuOpen }) => {
-    this.setState({
-      menuOpen,
-      menuItems: menuOpen ? this.props.getOverflowItems() : [],
-    })
+    // this.setState({
+    //   menuOpen,
+    //   menuItems: menuOpen ? this.props.getOverflowItems() : [],
+    // })
+    this.props.onOpen({ open: menuOpen })
   }
 
   renderComponent({ ElementType, unhandledProps }) {
@@ -33,8 +37,8 @@ class ToolbarOverflowMenu extends UIComponent<ToolbarOverflowMenuProps, any> {
         wrapper={{ styles: { position: 'absolute' /* , visibility: 'hidden' */ } }}
         icon="more"
         onMenuOpenChange={this.onMenuOpenChange}
-        menu={this.state.menuItems}
-        menuOpen={this.state.menuOpen}
+        menu={this.props.items}
+        menuOpen={this.props.menuOpen}
       />
     )
   }
