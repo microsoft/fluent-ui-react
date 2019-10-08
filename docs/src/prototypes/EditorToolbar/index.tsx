@@ -1,6 +1,7 @@
 import {
   Button,
   Divider,
+  Flex,
   Form,
   Grid,
   Popup,
@@ -312,30 +313,33 @@ const EditorToolbar = () => {
         pointing
         target={linkTarget.current}
       />
-
-      <Ref innerRef={toolbarRef}>
-        <Toolbar
-          items={_.map(betterItems, 'toolbarItem')}
-          overflow
-          overflowOpen={state.more}
-          onOverflow={itemsVisible => {
-            console.log('onOverflow', itemsVisible)
-            overflowIndex.current = itemsVisible - 1
-          }}
-          onOverflowOpenChange={(e, { overflowOpen }) => {
-            if (overflowOpen) {
-              dispatch({ type: 'MORE_OPEN' })
-            } else {
-              dispatch({ type: 'MORE_CLOSE' })
-            }
-          }}
-          getOverflowItems={startIndex => {
-            return _.map(betterItems.slice(startIndex), item =>
-              _.get(item, 'overflowItem', item.toolbarItem),
-            )
-          }}
-        />
-      </Ref>
+      <Flex>
+        <Ref innerRef={toolbarRef}>
+          <Toolbar
+            styles={{ minWidth: 0, flexGrow: 1 }} // necessary for Toolbar with overflow inside a flex container
+            items={_.map(betterItems, 'toolbarItem')}
+            overflow
+            overflowOpen={state.more}
+            onOverflow={itemsVisible => {
+              console.log('onOverflow', itemsVisible)
+              overflowIndex.current = itemsVisible - 1
+            }}
+            onOverflowOpenChange={(e, { overflowOpen }) => {
+              if (overflowOpen) {
+                dispatch({ type: 'MORE_OPEN' })
+              } else {
+                dispatch({ type: 'MORE_CLOSE' })
+              }
+            }}
+            getOverflowItems={startIndex => {
+              return _.map(betterItems.slice(startIndex), item =>
+                _.get(item, 'overflowItem', item.toolbarItem),
+              )
+            }}
+          />
+        </Ref>
+        <Toolbar items={[{ icon: { name: 'trash-can', outline: true } }]} />
+      </Flex>
     </div>
   )
 }
