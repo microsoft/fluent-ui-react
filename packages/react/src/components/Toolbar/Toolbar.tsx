@@ -35,7 +35,6 @@ import ToolbarMenuItem, { ToolbarMenuItemProps } from './ToolbarMenuItem'
 import ToolbarMenuRadioGroup from './ToolbarMenuRadioGroup'
 import ToolbarRadioGroup from './ToolbarRadioGroup'
 import Box from '../Box/Box'
-import ToolbarOverflowMenu from './ToolbarOverflowMenu'
 
 export type ToolbarItemShorthandKinds = 'divider' | 'item' | 'group' | 'toggle' | 'custom'
 
@@ -64,6 +63,19 @@ export interface ToolbarProps
    */
   overflow?: boolean
 
+  /** Indicates if the overflow menu is open. Only valid if `overflow` is enabled and regular items do not fit. */
+  overflowOpen?: boolean
+
+  /**
+   * Shorthand for the overflow item which is displayed when `overflow` is enabled and regular toolbar items do not fit.
+   * Do not set any menu on this item, Toolbar overrides it.
+   */
+  overflowItem?: ShorthandValue<ToolbarItemProps>
+
+  /**
+   * Called when overflow is recomputed (after render, update or window resize). Even if all items fit.
+   * @param itemsVisible - number of items visible
+   */
   onOverflow?: (itemsVisible: number) => void
 
   getOverflowItems?: (
@@ -88,10 +100,14 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
       'custom',
     ]),
     overflow: PropTypes.bool,
+    overflowItem: customPropTypes.shorthandAllowingChildren,
   }
 
   static defaultProps = {
     accessibility: toolbarBehavior,
+    overflowItem: {
+      icon: { name: 'more', outline: true },
+    },
   }
 
   static CustomItem = ToolbarCustomItem
@@ -425,6 +441,22 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
     })
   }
 
+  renderOverflowItem(overflowItem) {
+    return (
+      <Ref innerRef={this.overflowItemRef}>
+        {ToolbarItem.create(overflowItem, {
+          overrideProps: {
+            menu: this.props.overflowOpen ? this.getOverflowItems() : [],
+            menuOpen: this.props.overflowOpen,
+            onMenuOpenChange: (e, { menuOpen }) => {
+              _.invoke(this.props, 'onOverflowOpenChange', e, { overflowOpen: menuOpen })
+            },
+          },
+        })}
+      </Ref>
+    )
+  }
+
   renderComponent({
     accessibility,
     ElementType,
@@ -438,7 +470,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
 
     // this.renderStartTime = performance.now()
     this.rtl = rtl
-    const { children, items, overflow } = this.props
+    const { children, items, overflow, overflowItem } = this.props
 
     const offsetMeasure = {} // TODO: remove, see absolutePositioningOffset for details
     const overflowContainer = {} // TODO: create valid slot?
@@ -473,21 +505,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
                     {childrenExist(children)
                       ? children
                       : this.renderItems(this.getVisibleItems(), variables)}
-                    <Ref innerRef={this.overflowItemRef}>
-                      <ToolbarOverflowMenu
-                        items={this.props.overflowOpen ? this.getOverflowItems() : []}
-                        menuOpen={this.props.overflowOpen}
-                        onOpen={({ open }) => {
-                          console.log('OPEN', open)
-                          // if (open) {
-                          //   this.setState({ overflowOpen: open })
-                          this.props.onOverflowOpenChange(null, { overflowOpen: open })
-                          // } else {
-                          //   this.setState({ overflowOpen: false })
-                          // }
-                        }}
-                      />
-                    </Ref>
+                    {this.renderOverflowItem(overflowItem)}
                   </>
                 ),
               },
