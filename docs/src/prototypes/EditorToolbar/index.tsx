@@ -17,6 +17,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 import * as keyboardKey from 'keyboard-key'
 import { documentRef, useEventListener } from '@stardust-ui/react-component-event-listener'
+import { CodeSnippet } from '@stardust-ui/docs-components'
 
 enum FontFormatting {
   Paragraph,
@@ -49,16 +50,12 @@ type EditorState = {
 }
 
 type EditorAction =
-  | { type: 'BOLD' }
-  | { type: 'ITALIC' }
-  | { type: 'UNDERLINE' }
-  | { type: 'LINK_OPEN' }
-  | { type: 'LINK_CLOSE' }
-  | { type: 'LINK_INSERT'; href: string }
-  | { type: 'TABLE_OPEN' }
-  | { type: 'TABLE_CLOSE' }
-  | { type: 'MORE_OPEN' }
-  | { type: 'MORE_CLOSE' }
+  | { type: 'BOLD'; value: boolean }
+  | { type: 'ITALIC'; value: boolean }
+  | { type: 'UNDERLINE'; value: boolean }
+  | { type: 'LINK'; value: boolean }
+  | { type: 'TABLE'; value: boolean }
+  | { type: 'MORE'; value: boolean }
 
 const initialState: EditorState = {
   bold: false,
@@ -84,44 +81,21 @@ const initialState: EditorState = {
 }
 
 function editorReducer(state: EditorState, action: EditorAction): EditorState {
-  if (action.type === 'BOLD') {
-    return { ...state, bold: !state.bold }
-  }
-
-  if (action.type === 'ITALIC') {
-    return { ...state, italic: !state.italic }
-  }
-
-  if (action.type === 'UNDERLINE') {
-    return { ...state, underline: !state.underline }
-  }
-
-  if (action.type === 'LINK_OPEN') {
-    return { ...state, link: true }
-  }
-
-  if (action.type === 'LINK_CLOSE') {
-    return { ...state, link: false }
-  }
-
-  if (action.type === 'LINK_INSERT') {
-    return { ...state, link: false }
-  }
-
-  if (action.type === 'TABLE_OPEN') {
-    return { ...state, table: true }
-  }
-
-  if (action.type === 'TABLE_CLOSE') {
-    return { ...state, table: false }
-  }
-
-  if (action.type === 'MORE_OPEN') {
-    return { ...state, more: true }
-  }
-
-  if (action.type === 'MORE_CLOSE') {
-    return { ...state, more: false }
+  switch (action.type) {
+    case 'BOLD':
+      return { ...state, bold: action.value }
+    case 'ITALIC':
+      return { ...state, italic: action.value }
+    case 'UNDERLINE':
+      return { ...state, underline: action.value }
+    //
+    case 'LINK':
+      return { ...state, link: action.value }
+    case 'TABLE':
+      return { ...state, table: action.value }
+    //
+    case 'MORE':
+      return { ...state, more: action.value }
   }
 
   return state
@@ -144,7 +118,7 @@ const EditorToolbar = () => {
         key: 'bold',
         icon: 'bold',
         active: state.bold,
-        onClick: () => dispatch({ type: 'BOLD' }),
+        onClick: () => dispatch({ type: 'BOLD', value: !state.bold }),
       },
     },
     {
@@ -152,7 +126,7 @@ const EditorToolbar = () => {
         key: 'italic',
         icon: 'italic',
         active: state.italic,
-        onClick: () => dispatch({ type: 'ITALIC' }),
+        onClick: () => dispatch({ type: 'ITALIC', value: !state.italic }),
       },
     },
     {
@@ -160,7 +134,7 @@ const EditorToolbar = () => {
         key: 'underline',
         icon: 'underline',
         active: state.underline,
-        onClick: () => dispatch({ type: 'UNDERLINE' }),
+        onClick: () => dispatch({ type: 'UNDERLINE', value: !state.underline }),
       },
     },
 
@@ -186,7 +160,7 @@ const EditorToolbar = () => {
             key: 'link',
             icon: 'link',
             active: state.link,
-            onClick: () => dispatch({ type: 'LINK_OPEN' }),
+            onClick: () => dispatch({ type: 'LINK', value: true }),
           },
           (Component, props) => (
             <Ref innerRef={linkItemRef}>
@@ -198,7 +172,7 @@ const EditorToolbar = () => {
         key: 'link',
         icon: 'link',
         content: 'Insert link',
-        onClick: () => dispatch({ type: 'LINK_OPEN' }),
+        onClick: () => dispatch({ type: 'LINK', value: true }),
       },
     },
     {
@@ -219,7 +193,7 @@ const EditorToolbar = () => {
       toolbarItem: {
         key: 'table',
         icon: 'table',
-        content: 'Insert TABLE XXX FIX ME XXX',
+        content: 'Insert table',
         active: state.table,
 
         popup: {
@@ -231,8 +205,8 @@ const EditorToolbar = () => {
                   <button
                     key={i}
                     onClick={() => {
-                      dispatch({ type: 'TABLE_CLOSE' })
-                      dispatch({ type: 'MORE_CLOSE' })
+                      dispatch({ type: 'TABLE', value: false })
+                      dispatch({ type: 'MORE', value: false })
                     }}
                     style={{
                       background: 'aliceblue',
@@ -248,13 +222,7 @@ const EditorToolbar = () => {
               </Grid>
             </>
           ),
-          onOpenChange: (e, { open }) => {
-            if (open) {
-              dispatch({ type: 'TABLE_OPEN' })
-            } else {
-              dispatch({ type: 'TABLE_CLOSE' })
-            }
-          },
+          onOpenChange: (e, { open }) => dispatch({ type: 'TABLE', value: open }),
           open: state.table,
         },
       },
@@ -266,8 +234,9 @@ const EditorToolbar = () => {
       const code = keyboardKey.getCode(e)
 
       if (code === keyboardKey.K && e.ctrlKey) {
+        // Ctrl+K is a browser hotkey, it's required to prevent defaults
         e.preventDefault()
-        dispatch({ type: 'LINK_OPEN' })
+        dispatch({ type: 'LINK', value: true })
       }
     },
     type: 'keydown',
@@ -280,7 +249,7 @@ const EditorToolbar = () => {
   console.log('RENDER', linkInOverflowMenu)
 
   return (
-    <div style={{ margin: '10rem', border: '2px solid green' }}>
+    <>
       <Popup
         content={
           <>
@@ -299,10 +268,15 @@ const EditorToolbar = () => {
             <Divider hidden />
             <Button.Group
               buttons={[
-                { content: 'Cancel', onClick: () => dispatch({ type: 'LINK_CLOSE' }) },
                 {
+                  key: 'cancel',
+                  content: 'Cancel',
+                  onClick: () => dispatch({ type: 'LINK', value: false }),
+                },
+                {
+                  key: 'insert',
                   content: 'Insert',
-                  onClick: () => dispatch({ type: 'LINK_INSERT', href: 'FOO' }),
+                  onClick: () => dispatch({ type: 'LINK', value: false }),
                 },
               ]}
             />
@@ -322,13 +296,9 @@ const EditorToolbar = () => {
             console.log('onOverflow', itemsVisible)
             overflowIndex.current = itemsVisible - 1
           }}
-          onOverflowOpenChange={(e, { overflowOpen }) => {
-            if (overflowOpen) {
-              dispatch({ type: 'MORE_OPEN' })
-            } else {
-              dispatch({ type: 'MORE_CLOSE' })
-            }
-          }}
+          onOverflowOpenChange={(e, { overflowOpen }) =>
+            dispatch({ type: 'MORE', value: overflowOpen })
+          }
           getOverflowItems={startIndex => {
             return _.map(betterItems.slice(startIndex), item =>
               _.get(item, 'overflowItem', item.toolbarItem),
@@ -336,7 +306,9 @@ const EditorToolbar = () => {
           }}
         />
       </Ref>
-    </div>
+
+      <CodeSnippet mode="json" value={state} />
+    </>
   )
 }
 
