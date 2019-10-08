@@ -6,7 +6,7 @@ import * as keyboardKey from 'keyboard-key'
  * Triggers 'moveNext' action with 'ArrowRight' on 'itemsContainer'.
  * Triggers 'movePrevious' action with 'ArrowLeft' on 'itemsContainer'.
  */
-const carouselBehavior: Accessibility = props => ({
+const carouselBehavior: Accessibility<CarouselBehaviorProps> = props => ({
   attributes: {
     root: {
       role: 'region',
@@ -19,10 +19,10 @@ const carouselBehavior: Accessibility = props => ({
       tabIndex: 0,
     },
     buttonNext: {
-      tabIndex: -1,
+      tabIndex: props.tabList ? -1 : undefined,
     },
     buttonPrevious: {
-      tabIndex: -1,
+      tabIndex: props.tabList ? -1 : undefined,
     },
   },
 
@@ -37,5 +37,10 @@ const carouselBehavior: Accessibility = props => ({
     },
   },
 })
+
+export type CarouselBehaviorProps = {
+  /** Element type. */
+  tabList: Object | Object[]
+}
 
 export default carouselBehavior
