@@ -287,6 +287,7 @@ const EditorToolbar = () => {
         pointing
         target={linkTarget.current}
       />
+
       <Flex>
         <Ref innerRef={toolbarRef}>
           <Toolbar
@@ -299,11 +300,7 @@ const EditorToolbar = () => {
               overflowIndex.current = itemsVisible - 1
             }}
             onOverflowOpenChange={(e, { overflowOpen }) => {
-              if (overflowOpen) {
-                dispatch({ type: 'MORE_OPEN' })
-              } else {
-                dispatch({ type: 'MORE_CLOSE' })
-              }
+              dispatch({ type: 'MORE', value: overflowOpen })
             }}
             getOverflowItems={startIndex => {
               return _.map(betterItems.slice(startIndex), item =>
