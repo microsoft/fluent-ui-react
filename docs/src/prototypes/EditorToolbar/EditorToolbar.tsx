@@ -14,7 +14,11 @@ import {
   ToolbarMenuItemProps,
   ToolbarMenuItemShorthandKinds,
 } from '@stardust-ui/react'
-import { documentRef, useEventListener } from '@stardust-ui/react-component-event-listener'
+import {
+  documentRef,
+  useEventListener,
+  windowRef,
+} from '@stardust-ui/react-component-event-listener'
 import * as keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -202,6 +206,12 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
     },
   ]
 
+  const linkItemIndex = betterItems.findIndex(
+    item => item.overflowItem && item.overflowItem.key === 'link',
+  )
+  const linkInOverflowMenu = overflowIndex.current <= linkItemIndex
+  const linkTarget = linkInOverflowMenu ? toolbarRef : linkItemRef
+
   useEventListener({
     listener: (e: KeyboardEvent) => {
       const code = keyboardKey.getCode(e)
@@ -215,12 +225,22 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
     type: 'keydown',
     targetRef: documentRef,
   })
+  useEventListener({
+    listener: () => {
+      // All controlled popups should be closed on resize
 
-  const linkItemIndex = betterItems.findIndex(
-    item => item.overflowItem && item.overflowItem.key === 'link',
-  )
-  const linkInOverflowMenu = overflowIndex.current <= linkItemIndex
-  const linkTarget = linkInOverflowMenu ? toolbarRef : linkItemRef
+      if (props.table) {
+        props.dispatch({ type: 'TABLE', value: false })
+      }
+
+      if (props.link) {
+        props.dispatch({ type: 'LINK', value: false })
+      }
+    },
+    type: 'resize',
+    targetRef: windowRef,
+  })
+
   console.log('RENDER', linkInOverflowMenu)
 
   return (
