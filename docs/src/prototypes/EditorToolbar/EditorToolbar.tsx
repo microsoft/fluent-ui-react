@@ -39,7 +39,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
   const linkItemRef = React.useRef<HTMLElement>(null)
   const toolbarRef = React.useRef<HTMLElement>(null)
 
-  const betterItems: {
+  const combinedItems: {
     toolbarItem: ToolbarItem
     overflowItem?: OverflowItem
   }[] = [
@@ -206,11 +206,14 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
     },
   ]
 
-  const linkItemIndex = betterItems.findIndex(
+  const linkItemIndex = combinedItems.findIndex(
+    // @ts-ignore
     item => item.overflowItem && item.overflowItem.key === 'link',
   )
   const linkInOverflowMenu = overflowIndex.current <= linkItemIndex
-  const linkTarget = linkInOverflowMenu ? toolbarRef : linkItemRef
+  // Based on position of link item we choose target element for Popup. It's safe to access
+  // ".current" in this case because Popup will be opened after item will be rendered
+  const linkTarget = linkInOverflowMenu ? toolbarRef.current : linkItemRef.current
 
   useEventListener({
     listener: (e: KeyboardEvent) => {
@@ -276,14 +279,14 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
         }
         open={props.link}
         pointing
-        target={linkTarget.current}
+        target={linkTarget}
       />
 
       <Flex>
         <Ref innerRef={toolbarRef}>
           <Toolbar
             styles={{ minWidth: 0, flexGrow: 1 }} // necessary for Toolbar with overflow inside a flex container
-            items={_.map(betterItems, 'toolbarItem')}
+            items={_.map(combinedItems, 'toolbarItem')}
             overflow
             overflowOpen={props.more}
             onOverflow={itemsVisible => {
@@ -294,7 +297,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
               props.dispatch({ type: 'MORE', value: overflowOpen })
             }
             getOverflowItems={startIndex => {
-              const firstToolbarItem = betterItems[startIndex].toolbarItem
+              const firstToolbarItem = combinedItems[startIndex].toolbarItem
               let actualIndex = startIndex
 
               // We want to remove first item if it's a divider
@@ -303,7 +306,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
                 actualIndex += 1
               }
 
-              return betterItems
+              return combinedItems
                 .slice(actualIndex)
                 .map(item => item.overflowItem || item.toolbarItem)
             }}

@@ -24,7 +24,13 @@ import {
 } from '../../lib'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
-import { ShorthandCollection, ShorthandValue, WithAsProp, withSafeTypeForAs } from '../../types'
+import {
+  ComponentEventHandler,
+  ShorthandCollection,
+  ShorthandValue,
+  WithAsProp,
+  withSafeTypeForAs,
+} from '../../types'
 
 import ToolbarCustomItem from './ToolbarCustomItem'
 import ToolbarDivider from './ToolbarDivider'
@@ -77,6 +83,9 @@ export interface ToolbarProps
    * @param itemsVisible - number of items visible
    */
   onOverflow?: (itemsVisible: number) => void
+
+  /* TODO: add description */
+  onOverflowOpenChange?: ComponentEventHandler<ToolbarProps>
 
   getOverflowItems?: (
     startIndex: number,
@@ -449,7 +458,10 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
             menu: this.props.overflowOpen ? this.getOverflowItems() : [],
             menuOpen: this.props.overflowOpen,
             onMenuOpenChange: (e, { menuOpen }) => {
-              _.invoke(this.props, 'onOverflowOpenChange', e, { overflowOpen: menuOpen })
+              _.invoke(this.props, 'onOverflowOpenChange', e, {
+                ...this.props,
+                overflowOpen: menuOpen,
+              })
             },
           },
         })}
