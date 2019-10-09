@@ -29,6 +29,7 @@ export type AriaWidgetRole =
   | 'none'
 
 export type AriaCompositeRole =
+  | 'cell'
   | 'combobox'
   | 'grid'
   | 'row'
@@ -41,8 +42,10 @@ export type AriaCompositeRole =
   | 'menubar'
   | 'radiogroup'
   | 'radio'
+  | 'rowgroup'
   | 'tablist'
   | 'tab'
+  | 'table'
   | 'tabpanel'
   | 'tree'
   | 'treegrid'

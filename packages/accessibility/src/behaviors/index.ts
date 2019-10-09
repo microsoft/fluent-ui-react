@@ -72,3 +72,20 @@ export { default as treeItemAsListItemBehavior } from './Tree/treeItemAsListItem
 export {
   default as treeTitleAsListItemTitleBehavior,
 } from './Tree/treeTitleAsListItemTitleBehavior'
+
+export { default as tableBehavior } from './Table/tableBehavior'
+export { default as tableCellBehavior } from './Table/tableCellBehavior'
+export { default as tableColumnHeaderBehavior } from './Table/tableColumnHeaderBehavior'
+export { default as tableRowBehavior } from './Table/TableRowBehavior'
+export { default as tableRowFocusableBehavior } from './Table/tableRowFocusableBehavior'
+export { default as tableRowHeaderBehavior } from './Table/tableRowHeaderBehavior'
+export {
+  default as tableRowNestedNavigationBehavior,
+} from './Table/tableRowNestedNavigationBehavior'
+export {
+  default as tableHeaderRowNestedNavigationBehavior,
+} from './Table/tableHeaderRowNestedNavigationBehavior'
+export { default as tableNestedNavigationBehavior } from './Table/tableNestedNavigationBehavior'
+export { default as tableVerticalNavigationBehavior } from './Table/tableVerticalNavigationBehavior'
+export { default as gridTableBehavior } from './Table/gridTableBehavior'
+export { default as gridCellBehavior } from './Table/gridCellBehavior'

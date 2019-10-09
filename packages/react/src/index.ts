@@ -211,6 +211,9 @@ export { default as Tooltip } from './components/Tooltip/Tooltip'
 export * from './components/Tooltip/TooltipContent'
 export { default as TooltipContent } from './components/Tooltip/TooltipContent'
 
+export * from './components/Table/Table'
+export { default as Table } from './components/Table/Table'
+
 //
 // Utilities
 //
