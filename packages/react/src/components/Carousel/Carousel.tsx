@@ -130,14 +130,15 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
 
   setActiveIndex(index: number): void {
     const { cyclical, items } = this.props
+    const lastItemIndex = items.length - 1
     let activeIndex = index
 
     if (index < 0) {
-      activeIndex = cyclical ? items.length - 1 : 0
+      activeIndex = cyclical ? lastItemIndex : 0
     }
 
-    if (index >= items.length) {
-      activeIndex = cyclical ? 0 : items.length
+    if (index >= lastItemIndex) {
+      activeIndex = cyclical ? 0 : lastItemIndex
     }
 
     this.setState({
