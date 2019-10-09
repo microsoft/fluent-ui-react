@@ -128,9 +128,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
   static defaultProps = {
     accessibility: toolbarBehavior,
     items: [],
-    overflowItem: {
-      icon: { name: 'more', outline: true },
-    },
+    overflowItem: {},
   }
 
   static CustomItem = ToolbarCustomItem
@@ -474,6 +472,9 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
     return (
       <Ref innerRef={this.overflowItemRef}>
         {ToolbarItem.create(overflowItem, {
+          defaultProps: {
+            icon: { name: 'more', outline: true },
+          },
           overrideProps: {
             menu: this.props.overflowOpen ? this.getOverflowItems() : [],
             menuOpen: this.props.overflowOpen,

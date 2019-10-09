@@ -3,7 +3,7 @@ import { ToolbarVariables } from './toolbarVariables'
 import { ToolbarProps } from '../../../../components/Toolbar/Toolbar'
 
 const toolbarStyles: ComponentSlotStylesPrepared<ToolbarProps, ToolbarVariables> = {
-  root: ({ props: { overflow }, variables: v }): ICSSInJSStyle => ({
+  root: (): ICSSInJSStyle => ({
     display: 'flex',
     alignItems: 'center',
     position: 'relative',
@@ -16,7 +16,7 @@ const toolbarStyles: ComponentSlotStylesPrepared<ToolbarProps, ToolbarVariables>
     top: 0,
   }),
 
-  overflowContainer: ({ variables: v }) => ({
+  overflowContainer: () => ({
     display: 'flex',
     overflow: 'hidden',
     flexGrow: 1,

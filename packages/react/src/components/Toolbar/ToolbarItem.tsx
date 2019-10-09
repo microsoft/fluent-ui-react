@@ -223,7 +223,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
                 position="above"
                 modifiers={{
                   preventOverflow: {
-                    escapeWithReference: false,
+                    escapeWithReference: false, // escapeWithReference breaks positioning of ToolbarMenu in overflow mode because Popper components sets modifiers on scrollable container
                   },
                 }}
                 targetRef={this.itemRef}
