@@ -130,7 +130,10 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
     active: PropTypes.bool,
     disabled: PropTypes.bool,
     icon: customPropTypes.itemShorthandWithoutJSX,
-    menu: PropTypes.oneOfType([customPropTypes.itemShorthand, customPropTypes.collectionShorthand]),
+    menu: PropTypes.oneOfType([
+      customPropTypes.shorthandAllowingChildren,
+      PropTypes.arrayOf(customPropTypes.shorthandAllowingChildren),
+    ]),
     menuOpen: PropTypes.bool,
     onMenuOpenChange: PropTypes.func,
     onClick: PropTypes.func,
@@ -144,7 +147,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
       }),
       PropTypes.string,
     ]),
-    wrapper: customPropTypes.itemShorthand,
+    wrapper: customPropTypes.shorthandAllowingChildren,
   }
 
   static defaultProps = {

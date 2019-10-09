@@ -40,7 +40,6 @@ import ToolbarMenuDivider from './ToolbarMenuDivider'
 import ToolbarMenuItem, { ToolbarMenuItemProps } from './ToolbarMenuItem'
 import ToolbarMenuRadioGroup from './ToolbarMenuRadioGroup'
 import ToolbarRadioGroup from './ToolbarRadioGroup'
-import Box from '../Box/Box'
 
 export type ToolbarItemShorthandKinds = 'divider' | 'item' | 'group' | 'toggle' | 'custom'
 
@@ -140,9 +139,9 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
   static MenuRadioGroup = ToolbarMenuRadioGroup
   static RadioGroup = ToolbarRadioGroup
 
-  overflowContainerRef = React.createRef<HTMLElement>()
+  overflowContainerRef = React.createRef<HTMLDivElement>()
   overflowItemRef = React.createRef<HTMLElement>()
-  offsetMeasureRef = React.createRef<HTMLElement>()
+  offsetMeasureRef = React.createRef<HTMLDivElement>()
 
   // index of the last visible item in Toolbar, the rest goes to overflow menu
   lastVisibleItemIndex: number
@@ -504,9 +503,6 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
     this.rtl = rtl
     const { children, items, overflow, overflowItem } = this.props
 
-    const offsetMeasure = {} // TODO: remove, see absolutePositioningOffset for details
-    const overflowContainer = {} // TODO: create valid slot?
-
     if (!overflow) {
       return (
         <ElementType
@@ -526,30 +522,13 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
           {...accessibility.attributes.root}
           {...unhandledProps}
         >
-          <Ref innerRef={this.overflowContainerRef}>
-            {Box.create(overflowContainer, {
-              defaultProps: {
-                styles: styles.overflowContainer,
-              },
-              overrideProps: {
-                children: (
-                  <>
-                    {childrenExist(children)
-                      ? children
-                      : this.renderItems(this.getVisibleItems(), variables)}
-                    {this.renderOverflowItem(overflowItem)}
-                  </>
-                ),
-              },
-            })}
-          </Ref>
-          <Ref innerRef={this.offsetMeasureRef}>
-            {Box.create(offsetMeasure, {
-              defaultProps: {
-                styles: styles.offsetMeasure,
-              },
-            })}
-          </Ref>
+          <div className={classes.overflowContainer} ref={this.overflowContainerRef}>
+            {childrenExist(children)
+              ? children
+              : this.renderItems(this.getVisibleItems(), variables)}
+            {this.renderOverflowItem(overflowItem)}
+          </div>
+          <div className={classes.offsetMeasure} ref={this.offsetMeasureRef} />
         </ElementType>
         <EventListener listener={this.handleWindowResize} targetRef={windowRef} type="resize" />
       </>

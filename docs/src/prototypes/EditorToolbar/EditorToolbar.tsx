@@ -98,7 +98,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
 
     { toolbarItem: { key: 'highlight', icon: 'highlight', active: props.fontHighlight } },
     { toolbarItem: { key: 'font-color', icon: 'font-color', active: props.fontColor } },
-    { toolbarItem: { key: '', icon: 'font-size', active: props.fontSize } },
+    { toolbarItem: { key: 'font-size', icon: 'font-size', active: props.fontSize } },
 
     {
       toolbarItem: {
@@ -328,7 +328,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
             }}
           />
         </Ref>
-        <Toolbar items={[{ icon: { name: 'trash-can', outline: true } }]} />
+        <Toolbar items={[{ key: 'trash', icon: { name: 'trash-can', outline: true } }]} />
       </Flex>
     </>
   )
