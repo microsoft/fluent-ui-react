@@ -2,7 +2,6 @@ import { Accessibility } from '../../types'
 
 /**
  * @specification
- * Adds attribute 'tabIndex=0' based on the property 'active'.
  */
 const carouselItemBehavior: Accessibility<CarouselItemProps> = props => ({
   attributes: {
