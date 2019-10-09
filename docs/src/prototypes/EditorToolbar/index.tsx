@@ -11,6 +11,7 @@ const EditorToolbarPrototype: React.FC = () => {
   const [state, dispatch] = React.useReducer(editorToolbarReducer, initialState)
   const [statePortal, dispatchPortal] = React.useReducer(editorToolbarReducer, initialState)
   const [popupOpen, setPortalOpen] = React.useState(false)
+  const [rtl, setRtl] = React.useState(false)
 
   return (
     <PrototypeSection title="Editor Toolbar">
@@ -30,10 +31,11 @@ const EditorToolbarPrototype: React.FC = () => {
         <Button onClick={() => setPortalOpen(true)} disabled={popupOpen}>
           Open window!
         </Button>
+        <input type="checkbox" checked={rtl} onChange={e => setRtl(e.target.checked)} />
         {popupOpen && (
           <PortalWindow onClose={() => setPortalOpen(false)}>
             {externalDocument => (
-              <Provider rtl theme={themes.teams} target={externalDocument}>
+              <Provider rtl={rtl} theme={themes.teams} target={externalDocument}>
                 <EditorToolbar
                   {...statePortal}
                   dispatch={dispatchPortal}

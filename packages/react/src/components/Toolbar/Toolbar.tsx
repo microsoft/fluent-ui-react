@@ -454,6 +454,17 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
     })
   }
 
+  handleWindowResize = _.debounce((e: UIEvent) => {
+    this.hideOverflowItems()
+
+    if (this.props.overflowOpen) {
+      _.invoke(this.props, 'onOverflowOpenChange', e, {
+        ...this.props,
+        overflowOpen: false,
+      })
+    }
+  }, 16)
+
   renderOverflowItem(overflowItem) {
     return (
       <Ref innerRef={this.overflowItemRef}>
@@ -535,11 +546,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
             })}
           </Ref>
         </ElementType>
-        <EventListener
-          listener={_.debounce(this.hideOverflowItems, 16)}
-          targetRef={windowRef}
-          type="resize"
-        />
+        <EventListener listener={this.handleWindowResize} targetRef={windowRef} type="resize" />
       </>
     )
   }
