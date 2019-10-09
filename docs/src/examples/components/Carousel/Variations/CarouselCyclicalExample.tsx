@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Carousel, Image } from '@stardust-ui/react'
+import { Carousel, Image, SizeValue } from '@stardust-ui/react'
 
 const carouselItems = [
   {
@@ -23,7 +23,15 @@ const carouselItems = [
 const CarouselExample = () => (
   <Carousel
     cyclical
-    tabList={{ 'aria-label': 'choose slide to display' }}
+    aria-roledescription="carousel"
+    tabList={{
+      'aria-label': 'people portraits',
+      items: carouselItems.map((item, index) => ({
+        key: index,
+        'aria-label': item.slide.alt,
+        icon: { name: 'stardust-circle', size: 'smallest' as SizeValue },
+      })),
+    }}
     items={carouselItems}
     buttonNext={{ 'aria-label': 'go to next slide' }}
     buttonPrevious={{ 'aria-label': 'go to previous slide' }}
