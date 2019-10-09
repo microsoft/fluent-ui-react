@@ -15,9 +15,9 @@ import {
   ToolbarMenuItemShorthandKinds,
 } from '@stardust-ui/react'
 import {
-  documentRef,
+  documentRef as globalDocumentRef,
   useEventListener,
-  windowRef,
+  windowRef as globalWindowRef,
 } from '@stardust-ui/react-component-event-listener'
 import * as keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
@@ -25,15 +25,20 @@ import * as React from 'react'
 
 import { EditorToolbarAction, EditorToolbarState, FontFormatting } from './editorToolbarReducer'
 import EditorToolbarTable from './EditorToolbarTable'
+import { toRefObject } from '@stardust-ui/react-component-ref'
 
 type EditorToolbarProps = EditorToolbarState & {
   dispatch: React.Dispatch<EditorToolbarAction>
+  target?: Document
 }
 
 type ToolbarItem = ShorthandValue<ToolbarItemProps & { kind?: ToolbarItemShorthandKinds }>
 type OverflowItem = ShorthandValue<ToolbarMenuItemProps & { kind?: ToolbarMenuItemShorthandKinds }>
 
 const EditorToolbar: React.FC<EditorToolbarProps> = props => {
+  const [documentRef, windowRef] = props.target
+    ? [toRefObject(props.target), toRefObject(props.target.defaultView)]
+    : [globalDocumentRef, globalWindowRef]
   const overflowIndex = React.useRef<number>()
 
   const linkItemRef = React.useRef<HTMLElement>(null)
@@ -111,7 +116,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
           props.dispatch({ type: 'FONT_FORMATTING_OPEN', value: menuOpen }),
         children: (
           <Flex gap="gap.smaller">
-            <Text content={props.fontFormatting} />
+            <Text styles={{ whiteSpace: 'nowrap' }} content={props.fontFormatting} />
             <Icon name="chevron-down" />
           </Flex>
         ),

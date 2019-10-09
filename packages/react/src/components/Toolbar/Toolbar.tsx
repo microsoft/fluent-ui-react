@@ -309,7 +309,11 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
     }
 
     // workaround: when resizing window with popup opened the container contents scroll for some reason
-    $overflowContainer.scrollTo(0, 0)
+    if (this.rtl) {
+      $overflowContainer.scrollTo(Number.MAX_SAFE_INTEGER, 0)
+    } else {
+      $overflowContainer.scrollTo(0, 0)
+    }
 
     const $items = $overflowContainer.children
 
