@@ -137,7 +137,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
       activeIndex = cyclical ? lastItemIndex : 0
     }
 
-    if (index >= lastItemIndex) {
+    if (index > lastItemIndex) {
       activeIndex = cyclical ? 0 : lastItemIndex
     }
 
