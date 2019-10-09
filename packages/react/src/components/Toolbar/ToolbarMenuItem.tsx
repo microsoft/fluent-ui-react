@@ -1,3 +1,4 @@
+import { Accessibility, menuItemBehavior } from '@stardust-ui/accessibility'
 import * as React from 'react'
 import * as _ from 'lodash'
 import cx from 'classnames'
@@ -23,8 +24,6 @@ import {
   withSafeTypeForAs,
   Omit,
 } from '../../types'
-import { Accessibility } from '../../lib/accessibility/types'
-import { menuItemBehavior } from '../../lib/accessibility'
 
 import Box, { BoxProps } from '../Box/Box'
 import Icon, { IconProps } from '../Icon/Icon'

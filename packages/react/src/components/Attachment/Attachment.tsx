@@ -1,3 +1,4 @@
+import { Accessibility, attachmentBehavior } from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -15,8 +16,6 @@ import Button, { ButtonProps } from '../Button/Button'
 import Text, { TextProps } from '../Text/Text'
 import Box from '../Box/Box'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
-import { Accessibility } from '../../lib/accessibility/types'
-import { attachmentBehavior } from '../../lib/accessibility'
 
 export interface AttachmentProps extends UIComponentProps, ChildrenComponentProps {
   /** Accessibility behavior if overridden by the user. */
@@ -31,7 +30,7 @@ export interface AttachmentProps extends UIComponentProps, ChildrenComponentProp
   /** A string describing the attachment. */
   description?: ShorthandValue<TextProps>
 
-  /** An attachment can show it is currently unable to be interacted with. */
+  /** An attachment can show that it cannot be interacted with. */
   disabled?: boolean
 
   /** The name of the attachment. */

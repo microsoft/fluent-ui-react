@@ -1,3 +1,4 @@
+import { callable } from '@stardust-ui/react-bindings'
 import * as _ from 'lodash'
 import {
   ComponentVariablesInput,
@@ -18,7 +19,6 @@ import {
   ComponentSlotStyle,
   ThemeAnimation,
 } from '../themes/types'
-import callable from './callable'
 import toCompactArray from './toCompactArray'
 import deepmerge from './deepmerge'
 import objectKeyToValues from './objectKeysToValues'

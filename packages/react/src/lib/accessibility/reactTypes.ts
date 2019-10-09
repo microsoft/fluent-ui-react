@@ -1,5 +1,5 @@
+import { AccessibilityAttributesBySlot, AccessibilityDefinition } from '@stardust-ui/accessibility'
 import * as React from 'react'
-import { AccessibilityAttributesBySlot, AccessibilityDefinition } from './types'
 
 /*
  * Accessibility types for React implementation.

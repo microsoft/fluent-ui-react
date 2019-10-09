@@ -1,6 +1,16 @@
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
-import { Flex, Header, Icon, Dropdown, Text, Grid, Menu, Box } from '@stardust-ui/react'
+import {
+  tabListBehavior,
+  Flex,
+  Header,
+  Icon,
+  Dropdown,
+  Text,
+  Grid,
+  Menu,
+  Box,
+} from '@stardust-ui/react'
 
 import { getFormattedHash } from 'docs/src/utils'
 import ComponentDocLinks from './ComponentDocLinks'
@@ -13,7 +23,6 @@ import ExampleContext from 'docs/src/context/ExampleContext'
 import ComponentPlayground from 'docs/src/components/ComponentPlayground/ComponentPlayground'
 import { ComponentInfo } from 'docs/src/types'
 import ComponentBestPractices from './ComponentBestPractices'
-import { tabListBehavior } from 'src/lib/accessibility'
 import * as _ from 'lodash'
 
 const exampleEndStyle: React.CSSProperties = {
