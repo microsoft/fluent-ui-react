@@ -285,7 +285,7 @@ class Sidebar extends React.Component<any, any> {
         public: true,
       },
       {
-        key: 'editor',
+        key: 'editor-toolbar',
         title: { content: 'Editor Toolbar', as: NavLink, to: '/prototype-editor-toolbar' },
         public: true,
       },
@@ -356,11 +356,6 @@ class Sidebar extends React.Component<any, any> {
       {
         key: 'copy-to-clipboard',
         title: { content: 'Copy to Clipboard', as: NavLink, to: '/prototype-copy-to-clipboard' },
-        public: true,
-      },
-      {
-        key: 'editor-toolbar',
-        title: { content: 'Editor Toolbar', as: NavLink, to: '/prototype-editor-toolbar' },
         public: true,
       },
     ]
