@@ -4,6 +4,7 @@ import {
   Flex,
   Form,
   Icon,
+  Menu,
   Popup,
   Ref,
   ShorthandValue,
@@ -14,11 +15,7 @@ import {
   ToolbarMenuItemProps,
   ToolbarMenuItemShorthandKinds,
 } from '@stardust-ui/react'
-import {
-  documentRef as globalDocumentRef,
-  useEventListener,
-  windowRef as globalWindowRef,
-} from '@stardust-ui/react-component-event-listener'
+import { useEventListener } from '@stardust-ui/react-component-event-listener'
 import * as keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -36,13 +33,37 @@ type ToolbarItem = ShorthandValue<ToolbarItemProps & { kind?: ToolbarItemShortha
 type OverflowItem = ShorthandValue<ToolbarMenuItemProps & { kind?: ToolbarMenuItemShorthandKinds }>
 
 const EditorToolbar: React.FC<EditorToolbarProps> = props => {
-  const [documentRef, windowRef] = props.target
-    ? [toRefObject(props.target), toRefObject(props.target.defaultView)]
-    : [globalDocumentRef, globalWindowRef]
   const overflowIndex = React.useRef<number>()
 
   const linkItemRef = React.useRef<HTMLElement>(null)
   const toolbarRef = React.useRef<HTMLElement>(null)
+
+  const fontFormattingItems = [
+    {
+      key: 'heading1',
+      content: FontFormatting.Heading1,
+      active: props.fontFormatting === FontFormatting.Heading1,
+      onClick: () => props.dispatch({ type: 'FONT_FORMATTING', value: FontFormatting.Heading1 }),
+    },
+    {
+      key: 'heading2',
+      content: FontFormatting.Heading2,
+      active: props.fontFormatting === FontFormatting.Heading2,
+      onClick: () => props.dispatch({ type: 'FONT_FORMATTING', value: FontFormatting.Heading2 }),
+    },
+    {
+      key: 'heading3',
+      content: FontFormatting.Heading3,
+      active: props.fontFormatting === FontFormatting.Heading3,
+      onClick: () => props.dispatch({ type: 'FONT_FORMATTING', value: FontFormatting.Heading3 }),
+    },
+    {
+      key: 'paragraph',
+      content: FontFormatting.Paragraph,
+      active: props.fontFormatting === FontFormatting.Paragraph,
+      onClick: () => props.dispatch({ type: 'FONT_FORMATTING', value: FontFormatting.Paragraph }),
+    },
+  ]
 
   const combinedItems: {
     toolbarItem: ToolbarItem
@@ -81,36 +102,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
 
     {
       toolbarItem: {
-        menu: [
-          {
-            key: 'heading1',
-            content: FontFormatting.Heading1,
-            active: props.fontFormatting === FontFormatting.Heading1,
-            onClick: () =>
-              props.dispatch({ type: 'FONT_FORMATTING', value: FontFormatting.Heading1 }),
-          },
-          {
-            key: 'heading2',
-            content: FontFormatting.Heading2,
-            active: props.fontFormatting === FontFormatting.Heading2,
-            onClick: () =>
-              props.dispatch({ type: 'FONT_FORMATTING', value: FontFormatting.Heading2 }),
-          },
-          {
-            key: 'heading3',
-            content: FontFormatting.Heading3,
-            active: props.fontFormatting === FontFormatting.Heading3,
-            onClick: () =>
-              props.dispatch({ type: 'FONT_FORMATTING', value: FontFormatting.Heading3 }),
-          },
-          {
-            key: 'paragraph',
-            content: FontFormatting.Paragraph,
-            active: props.fontFormatting === FontFormatting.Paragraph,
-            onClick: () =>
-              props.dispatch({ type: 'FONT_FORMATTING', value: FontFormatting.Paragraph }),
-          },
-        ],
+        menu: fontFormattingItems,
         menuOpen: props.fontFormattingOpen,
         onMenuOpenChange: (e, { menuOpen }) =>
           props.dispatch({ type: 'FONT_FORMATTING_OPEN', value: menuOpen }),
@@ -120,6 +112,28 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
             <Icon name="chevron-down" />
           </Flex>
         ),
+      },
+      overflowItem: {
+        popup: {
+          align: 'center',
+          position: 'before',
+          content: render =>
+            render(null, () => (
+              <Menu
+                items={fontFormattingItems}
+                onItemClick={() => {
+                  props.dispatch({ type: 'MORE', value: false })
+                }}
+                vertical
+              />
+            )),
+          onOpenChange: (e, { open }) => {
+            props.dispatch({ type: 'FONT_FORMATTING_OPEN', value: open })
+          },
+          open: props.fontFormattingOpen,
+        },
+        icon: 'question',
+        content: props.fontFormatting,
       },
     },
 
@@ -231,7 +245,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
       }
     },
     type: 'keydown',
-    targetRef: documentRef,
+    targetRef: toRefObject(props.target),
   })
   useEventListener({
     listener: () => {
@@ -246,10 +260,8 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
       }
     },
     type: 'resize',
-    targetRef: windowRef,
+    targetRef: toRefObject(props.target.defaultView),
   })
-
-  console.log('RENDER', linkInOverflowMenu)
 
   return (
     <>
@@ -295,7 +307,6 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
             overflow
             overflowOpen={props.more}
             onOverflow={itemsVisible => {
-              console.log('onOverflow', itemsVisible)
               overflowIndex.current = itemsVisible - 1
             }}
             onOverflowOpenChange={(e, { overflowOpen }) =>
@@ -321,6 +332,10 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
       </Flex>
     </>
   )
+}
+
+EditorToolbar.defaultProps = {
+  target: document,
 }
 
 export default EditorToolbar
