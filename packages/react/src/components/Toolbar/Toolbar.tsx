@@ -84,9 +84,18 @@ export interface ToolbarProps
    */
   onOverflow?: (itemsVisible: number) => void
 
-  /* TODO: add description */
+  /**
+   * Event for request to change 'overflowOpen' value.
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All props and proposed value.
+   */
   onOverflowOpenChange?: ComponentEventHandler<ToolbarProps>
 
+  /**
+   * Callback to get items to be rendered in overflow menu.
+   * Called when overflow menu is rendered opened.
+   * @param startIndex - Index of the first item to be displayed in the overflow menu (the first item which does not fit the toolbar).
+   */
   getOverflowItems?: (
     startIndex: number,
   ) => ShorthandCollection<ToolbarMenuItemProps, ToolbarItemShorthandKinds> // FIXME: use correct kind
@@ -109,7 +118,11 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
       'custom',
     ]),
     overflow: PropTypes.bool,
+    overflowOpen: PropTypes.bool,
     overflowItem: customPropTypes.shorthandAllowingChildren,
+    onOverflow: PropTypes.func,
+    onOverflowOpenChange: PropTypes.func,
+    getOverflowItems: PropTypes.func,
   }
 
   static defaultProps = {
@@ -136,8 +149,6 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
   lastVisibleItemIndex: number
 
   animationFrameId: number
-  // renderStartTime: number // TODO: remove before merge
-  // didMountTime: number
   rtl: boolean
 
   handleItemOverrides = variables => predefinedProps => ({
@@ -408,30 +419,25 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
   }
 
   getOverflowItems = () => {
-    console.log('getOverflowItems()', this.props.items.slice(this.lastVisibleItemIndex + 1))
+    // console.log('getOverflowItems()', this.props.items.slice(this.lastVisibleItemIndex + 1))
     return this.props.getOverflowItems
       ? this.props.getOverflowItems(this.lastVisibleItemIndex + 1)
       : this.props.items.slice(this.lastVisibleItemIndex + 1)
   }
 
   getVisibleItems = () => {
-    console.log('allItems()', this.props.items)
+    // console.log('allItems()', this.props.items)
     const end = this.props.overflowOpen ? this.lastVisibleItemIndex + 1 : this.props.items.length
-    console.log('getVisibleItems()', this.props.items.slice(0, end))
-    // TODO: (before merge) call this back to parent so it can modify items for overflow
-    // return this.props.items
+    // console.log('getVisibleItems()', this.props.items.slice(0, end))
     return this.props.items.slice(0, end)
   }
 
   componentDidMount() {
-    // this.didMountTime = performance.now()
     this.afterComponentRendered()
   }
 
   componentDidUpdate() {
-    // if (!this.state.overflowOpen) {
     this.afterComponentRendered()
-    // }
   }
 
   componentWillUnmount() {
@@ -446,11 +452,9 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
       this.context.target.defaultView.cancelAnimationFrame(this.animationFrameId)
     }
 
-    // there are cases (like opening a portal and rendering the Toolbar there immediately) when rAF is necessary
+    // Heads up! There are cases (like opening a portal and rendering the Toolbar there immediately) when rAF is necessary
     this.animationFrameId = this.context.target.defaultView.requestAnimationFrame(() => {
       this.hideOverflowItems()
-      // const done = performance.now()
-      // console.log(`rendered ${this.rtl ? ' (in rtl)' : ''}`, done - this.renderStartTime, done - this.didMountTime)
     })
   }
 
@@ -495,7 +499,6 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
   }): React.ReactNode {
     const windowRef = toRefObject(this.context.target.defaultView)
 
-    // this.renderStartTime = performance.now()
     this.rtl = rtl
     const { children, items, overflow, overflowItem } = this.props
 
