@@ -13,7 +13,6 @@ const carouselBehavior: Accessibility<CarouselBehaviorProps> = props => ({
     },
     itemsContainerWrapper: {
       'aria-live': 'polite',
-      'aria-atomic': 'true',
     },
     itemsContainer: {
       tabIndex: 0,
