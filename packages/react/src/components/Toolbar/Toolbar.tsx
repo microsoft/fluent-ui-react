@@ -127,6 +127,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
 
   static defaultProps = {
     accessibility: toolbarBehavior,
+    items: [],
     overflowItem: {
       icon: { name: 'more', outline: true },
     },
