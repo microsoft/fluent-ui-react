@@ -83,7 +83,7 @@ export interface ToolbarProps
   ) => ShorthandCollection<ToolbarMenuItemProps, ToolbarItemShorthandKinds> // FIXME: use correct kind
 }
 
-class Toolbar extends UIComponent<WithAsProp<ToolbarProps>, ToolbarState> {
+class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
   static create: ShorthandFactory<ToolbarProps>
 
   static className = 'ui-toolbar'
