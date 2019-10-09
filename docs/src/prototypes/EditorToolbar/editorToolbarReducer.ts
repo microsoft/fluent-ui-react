@@ -14,7 +14,7 @@ export type EditorToolbarState = {
   fontColor: boolean
   fontSize: boolean
   fontFormatting: FontFormatting
-  fontFormattingOpen: FontFormatting
+  fontFormattingOpen: boolean
   //
   itemList: boolean
   numberList: boolean
