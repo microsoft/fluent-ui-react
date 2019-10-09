@@ -230,10 +230,11 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
     overflowItemBoundingRect: ClientRect,
     containerBoundingRect: ClientRect,
   ) {
+    const actualWindow: Window = this.context.target.defaultView
     let wouldCollide
+
     if (this.rtl) {
-      const itemLeftMargin =
-        parseFloat(this.context.target.defaultView.getComputedStyle($item).marginLeft) || 0
+      const itemLeftMargin = parseFloat(actualWindow.getComputedStyle($item).marginLeft) || 0
       wouldCollide =
         itemBoundingRect.left - overflowItemBoundingRect.width - itemLeftMargin <
         containerBoundingRect.left
@@ -247,8 +248,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
       //   'overflowContainerBoundingRect.left': containerBoundingRect.left,
       // })
     } else {
-      const itemRightMargin =
-        parseFloat(this.context.target.defaultView.getComputedStyle($item).marginRight) || 0
+      const itemRightMargin = parseFloat(actualWindow.getComputedStyle($item).marginRight) || 0
       wouldCollide =
         itemBoundingRect.right + overflowItemBoundingRect.width + itemRightMargin >
         containerBoundingRect.right
@@ -277,12 +277,12 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
     containerBoundingRect: ClientRect,
     absolutePositioningOffset: PositionOffset,
   ) {
+    const actualWindow: Window = this.context.target.defaultView
+
     if ($lastVisibleItem) {
       if (this.rtl) {
         const lastVisibleItemMarginLeft =
-          parseFloat(
-            this.context.target.defaultView.getComputedStyle($lastVisibleItem).marginLeft,
-          ) || 0
+          parseFloat(actualWindow.getComputedStyle($lastVisibleItem).marginLeft) || 0
 
         $overflowItem.style.right = `${containerBoundingRect.right -
           lastVisibleItemRect.left +
@@ -290,9 +290,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
           absolutePositioningOffset.horizontal}px`
       } else {
         const lastVisibleItemRightMargin =
-          parseFloat(
-            this.context.target.defaultView.getComputedStyle($lastVisibleItem).marginRight,
-          ) || 0
+          parseFloat(actualWindow.getComputedStyle($lastVisibleItem).marginRight) || 0
 
         $overflowItem.style.left = `${lastVisibleItemRect.right -
           containerBoundingRect.left +
@@ -447,12 +445,14 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
   }
 
   afterComponentRendered() {
+    const actualWindow: Window = this.context.target.defaultView
+
     if (this.animationFrameId !== undefined) {
-      this.context.target.defaultView.cancelAnimationFrame(this.animationFrameId)
+      actualWindow.cancelAnimationFrame(this.animationFrameId)
     }
 
     // Heads up! There are cases (like opening a portal and rendering the Toolbar there immediately) when rAF is necessary
-    this.animationFrameId = this.context.target.defaultView.requestAnimationFrame(() => {
+    this.animationFrameId = actualWindow.requestAnimationFrame(() => {
       this.hideOverflowItems()
     })
   }

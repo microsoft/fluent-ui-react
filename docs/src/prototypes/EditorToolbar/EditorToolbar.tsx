@@ -16,13 +16,13 @@ import {
   ToolbarMenuItemShorthandKinds,
 } from '@stardust-ui/react'
 import { useEventListener } from '@stardust-ui/react-component-event-listener'
+import { toRefObject } from '@stardust-ui/react-component-ref'
 import * as keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
 import * as React from 'react'
 
 import { EditorToolbarAction, EditorToolbarState, FontFormatting } from './editorToolbarReducer'
 import EditorToolbarTable from './EditorToolbarTable'
-import { toRefObject } from '@stardust-ui/react-component-ref'
 
 type EditorToolbarProps = EditorToolbarState & {
   dispatch: React.Dispatch<EditorToolbarAction>
