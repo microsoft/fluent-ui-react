@@ -362,15 +362,15 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
       // if the item is out of the crop rectangle, hide it
       if (this.isItemOverflowing(itemBoundingRect, overflowContainerBoundingRect)) {
         isOverflowing = true
-        console.log('Overflow', i, {
-          item: [itemBoundingRect.left, itemBoundingRect.right],
-          crop: [
-            overflowContainerBoundingRect.left,
-            overflowContainerBoundingRect.right,
-            overflowContainerBoundingRect.width,
-          ],
-          container: $overflowContainer,
-        })
+        // console.log('Overflow', i, {
+        //   item: [itemBoundingRect.left, itemBoundingRect.right],
+        //   crop: [
+        //     overflowContainerBoundingRect.left,
+        //     overflowContainerBoundingRect.right,
+        //     overflowContainerBoundingRect.width,
+        //   ],
+        //   container: $overflowContainer,
+        // })
         this.hide($item)
         return true
       }
