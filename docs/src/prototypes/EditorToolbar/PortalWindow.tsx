@@ -14,6 +14,10 @@ const PortalWindow: React.FunctionComponent<PortalWindowProps> = ({ children, on
   React.useEffect(() => {
     externalWindow.current = window.open('', '', 'width=600,height=400,left=200,top=200')
 
+    // Doc site hack, as we set special fontSize
+    externalWindow.current.document.documentElement.style.fontSize = getComputedStyle(
+      document.documentElement,
+    ).fontSize
     externalContainer.current = externalWindow.current.document.createElement('div')
 
     externalWindow.current.document.body.appendChild(externalContainer.current)
