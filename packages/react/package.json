@@ -26,8 +26,7 @@
     "popper.js": "^1.15.0",
     "prop-types": "^15.7.2",
     "react-fela": "^10.6.1",
-    "react-is": "^16.6.3",
-    "react-resize-detector": "^4.2.0"
+    "react-is": "^16.6.3"
   },
   "devDependencies": {
     "@stardust-ui/internal-tooling": "^0.39.0",
