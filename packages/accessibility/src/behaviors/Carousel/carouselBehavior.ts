@@ -18,12 +18,16 @@ const carouselBehavior: Accessibility<CarouselBehaviorProps> = props => ({
     itemsContainer: {
       tabIndex: 0,
     },
-    buttonNext: {
-      tabIndex: props.tabList ? -1 : undefined,
-    },
-    buttonPrevious: {
-      tabIndex: props.tabList ? -1 : undefined,
-    },
+    ...(props.tabList && {
+      buttonNext: {
+        tabIndex: -1,
+        'aria-hidden': 'true',
+      },
+      buttonPrevious: {
+        tabIndex: -1,
+        'aria-hidden': 'true',
+      },
+    }),
   },
 
   keyActions: {

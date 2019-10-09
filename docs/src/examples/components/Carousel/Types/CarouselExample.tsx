@@ -32,8 +32,6 @@ const CarouselExample = () => (
       })),
     }}
     items={carouselItems}
-    buttonNext={{ 'aria-label': 'go to next slide' }}
-    buttonPrevious={{ 'aria-label': 'go to previous slide' }}
   />
 )
 
