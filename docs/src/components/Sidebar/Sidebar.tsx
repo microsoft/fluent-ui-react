@@ -285,6 +285,11 @@ class Sidebar extends React.Component<any, any> {
         public: true,
       },
       {
+        key: 'editor',
+        title: { content: 'Editor Toolbar', as: NavLink, to: '/prototype-editor-toolbar' },
+        public: true,
+      },
+      {
         key: 'dropdowns',
         title: { content: 'Dropdowns', as: NavLink, to: '/prototype-dropdowns' },
         public: false,
