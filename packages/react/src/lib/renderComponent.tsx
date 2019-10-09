@@ -223,6 +223,7 @@ const renderComponent = <P extends {}>(
   const direction = rtl ? 'rtl' : 'ltr'
   const felaParam = {
     theme: { direction },
+    displayName, // does not affect styles, only used by useEnhancedRenderer
   }
 
   const resolvedStyles: ComponentSlotStylesPrepared = {}
