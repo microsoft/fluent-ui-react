@@ -1,13 +1,13 @@
-import { getElementType, getUnhandledProps } from '@stardust-ui/react-bindings'
 import { Ref } from '@stardust-ui/react-component-ref'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
-import { getNextElement, focusAsync } from './focusUtilities'
-
+import getElementType from '../utils/getElementType'
+import getUnhandledProps from '../utils/getUnhandledProps'
+import callable from '../utils/callable'
 import { AutoFocusZoneProps } from './AutoFocusZone.types'
-import callable from '../../callable'
+import { getNextElement, focusAsync } from './focusUtilities'
 
 /** AutoFocusZone is used to focus inner element on mount. */
 export default class AutoFocusZone extends React.Component<AutoFocusZoneProps> {
@@ -26,7 +26,6 @@ export default class AutoFocusZone extends React.Component<AutoFocusZoneProps> {
 
   render(): JSX.Element {
     const unhandledProps = getUnhandledProps(AutoFocusZone.handledProps, this.props)
-
     const ElementType = getElementType(this.props)
 
     return (

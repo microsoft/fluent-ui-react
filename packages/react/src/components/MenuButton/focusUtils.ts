@@ -1,8 +1,4 @@
-import {
-  getFirstFocusable,
-  getLastFocusable,
-  focusAsync,
-} from '../../lib/accessibility/FocusZone/focusUtilities'
+import { getFirstFocusable, getLastFocusable, focusAsync } from '@stardust-ui/react-bindings'
 
 export const focusMenuItem = (menuRef: HTMLElement, order: 'first' | 'last') => {
   const element =

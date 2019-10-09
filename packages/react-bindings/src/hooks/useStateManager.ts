@@ -1,10 +1,4 @@
-import {
-  AnyActions,
-  EnhancedActions,
-  Manager,
-  ManagerFactory,
-  SideEffect,
-} from '@stardust-ui/state'
+import { AnyAction, EnhancedActions, Manager, ManagerFactory, SideEffect } from '@stardust-ui/state'
 import * as React from 'react'
 
 type UseStateManagerOptions<State> = {
@@ -13,9 +7,7 @@ type UseStateManagerOptions<State> = {
   sideEffects?: SideEffect<State>[]
 }
 
-export const getDefinedProps = <Props extends Record<string, any>>(
-  props: Props,
-): Partial<Props> => {
+const getDefinedProps = <Props extends Record<string, any>>(props: Props): Partial<Props> => {
   const definedProps: Partial<Props> = {}
 
   Object.keys(props).forEach(propName => {
@@ -27,7 +19,10 @@ export const getDefinedProps = <Props extends Record<string, any>>(
   return definedProps
 }
 
-const useStateManager = <State extends Record<string, any>, Actions extends AnyActions>(
+const useStateManager = <
+  State extends Record<string, any>,
+  Actions extends Record<string, AnyAction>
+>(
   managerFactory: ManagerFactory<State, Actions>,
   options: UseStateManagerOptions<State> = {},
 ): [Readonly<State>, Readonly<Actions>] => {
