@@ -1,10 +1,19 @@
 import * as React from 'react'
+import cx from 'classnames'
 import { TeamsProcessedSvgIconSpec } from '../types'
+import { teamsIconClassNames } from '../teamsIconClassNames'
 
 export default {
   icon: ({ classes }) => (
     <svg role="presentation" focusable="false" viewBox="8 8 16 16" className={classes.svg}>
-      <path d="M21.5 10h-3c-.651 0-1.201.419-1.408 1H9.5c-.827 0-1.5.673-1.5 1.5v9c0 .827.673 1.5 1.5 1.5h12c.827 0 1.5-.673 1.5-1.5v-10c0-.827-.673-1.5-1.5-1.5zM17 12v2h-2v-2h2zm-3 0v2h-2v-2h2zm-5 .5a.5.5 0 0 1 .5-.5H11v2H9v-1.5zm13 9a.5.5 0 0 1-.5.5h-12a.5.5 0 0 1-.5-.5V15h9v-3.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v10z" />
+      <path
+        className={cx(teamsIconClassNames.outline, classes.outlinePart)}
+        d="M21.5 10a1.51 1.51 0 011.5 1.5v10a1.51 1.51 0 01-1.5 1.5h-12A1.51 1.51 0 018 21.5v-9A1.5 1.5 0 019.5 11h7.59a1.5 1.5 0 011.41-1zm-12 2a.51.51 0 00-.5.5V14h2v-2zm9-1a.51.51 0 00-.5.5V15H9v6.5a.51.51 0 00.5.5h12a.51.51 0 00.5-.5v-10a.51.51 0 00-.5-.5zM12 12v2h2v-2zm3 0v2h2v-2z"
+      />
+      <path
+        className={cx(teamsIconClassNames.filled, classes.filledPart)}
+        d="M21.5 10a1.51 1.51 0 011.5 1.5v10a1.51 1.51 0 01-1.5 1.5h-12A1.51 1.51 0 018 21.5v-9A1.5 1.5 0 019.5 11h7.59a1.5 1.5 0 011.41-1zm-12 2a.51.51 0 00-.5.5V14h2v-2zm2.5 0v2h2v-2zm3 0v2h2v-2z"
+      />
     </svg>
   ),
   styles: {},
