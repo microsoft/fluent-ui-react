@@ -55,7 +55,6 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
     return renderComponent(
       {
         className: this.childClass.className,
-        defaultProps: this.childClass.defaultProps,
         displayName: this.childClass.displayName,
         handledProps: this.childClass.handledProps,
         props: this.props,

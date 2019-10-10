@@ -2,7 +2,7 @@ coverage:
   ignore:
     - docs/*
     - packages/ability-attributes/src/*
-    - packges/react/src/lib/*
-    - packges/react/src/themes/*
-    - packges/react/src/styles/*
-    - packges/react/test/*
+    - packages/accessibility/src/behaviors/*
+    - packages/react/src/themes/*
+    - packages/react/src/styles/*
+    - packages/react/test/*

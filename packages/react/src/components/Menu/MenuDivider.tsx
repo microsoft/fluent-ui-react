@@ -1,7 +1,6 @@
+import { Accessibility, menuDividerBehavior } from '@stardust-ui/accessibility'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import { Accessibility } from '../../lib/accessibility/types'
-import { menuDividerBehavior } from '../../lib/accessibility'
 
 import {
   createShorthandFactory,

@@ -23,4 +23,5 @@ export default {
     </svg>
   ),
   styles: {},
+  exportedAs: 'questionCircle',
 } as TeamsProcessedSvgIconSpec

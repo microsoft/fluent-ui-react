@@ -285,6 +285,11 @@ class Sidebar extends React.Component<any, any> {
         public: true,
       },
       {
+        key: 'editor-toolbar',
+        title: { content: 'Editor Toolbar', as: NavLink, to: '/prototype-editor-toolbar' },
+        public: true,
+      },
+      {
         key: 'dropdowns',
         title: { content: 'Dropdowns', as: NavLink, to: '/prototype-dropdowns' },
         public: false,
@@ -341,11 +346,6 @@ class Sidebar extends React.Component<any, any> {
       {
         key: 'iconviewer',
         title: { content: 'Processed Icons', as: NavLink, to: '/icon-viewer' },
-        public: false,
-      },
-      {
-        key: 'menu-button',
-        title: { content: 'MenuButton', as: NavLink, to: '/menu-button' },
         public: false,
       },
       {
