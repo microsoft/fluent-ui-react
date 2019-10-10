@@ -1,10 +1,9 @@
+import { Accessibility, AriaRole, FocusZoneMode } from '@stardust-ui/accessibility'
+import { FocusZone, FOCUSZONE_WRAP_ATTRIBUTE } from '@stardust-ui/react-bindings'
 import * as React from 'react'
 import * as keyboardKey from 'keyboard-key'
 
 import { mountWithProviderAndGetComponent, mountWithProvider } from 'test/utils'
-import { Accessibility, AriaRole, FocusZoneMode } from 'src/lib/accessibility/types'
-import { FocusZone } from 'src/lib/accessibility/FocusZone'
-import { FOCUSZONE_WRAP_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusUtilities'
 import { UIComponent } from 'src/lib'
 import { EVENT_TARGET_ATTRIBUTE, getEventTargetComponent } from './eventTarget'
 

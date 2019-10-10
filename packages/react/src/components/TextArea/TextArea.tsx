@@ -1,4 +1,4 @@
-import { Accessibility } from '../../lib/accessibility/types'
+import { Accessibility, textAreaBehavior } from '@stardust-ui/accessibility'
 import { ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -11,7 +11,6 @@ import {
   AutoControlledComponent,
   applyAccessibilityKeyHandlers,
 } from '../../lib'
-import { textAreaBehavior } from '../../lib/accessibility'
 
 export interface TextAreaProps extends UIComponentProps, ChildrenComponentProps {
   /** Accessibility behavior if overridden by the user. */
@@ -33,6 +32,15 @@ export interface TextAreaProps extends UIComponentProps, ChildrenComponentProps 
 
   /** The text area becomes read-only. */
   disabled?: boolean
+
+  /** An input can have inverted colors. */
+  inverted?: boolean
+
+  /** A textarea can be resized. */
+  resize?: 'none' | 'both' | 'horizontal' | 'vertical'
+
+  /** A textarea can take the width of its container. */
+  fluid?: boolean
 }
 
 export interface TextAreaState {

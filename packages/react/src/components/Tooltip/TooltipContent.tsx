@@ -15,7 +15,7 @@ import {
   rtlTextContainer,
   ShorthandFactory,
 } from '../../lib'
-import { Accessibility } from '../../lib/accessibility/types'
+import { Accessibility } from '@stardust-ui/accessibility'
 
 import { PopperChildrenProps } from '../../lib/positioner'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
@@ -32,6 +32,9 @@ export interface TooltipContentProps
 
   /** An actual placement value from Popper. */
   placement?: PopperChildrenProps['placement']
+
+  /** Defines whether tooltip is displayed. */
+  open?: boolean
 
   /** A tooltip can show a pointer to trigger. */
   pointing?: boolean
@@ -60,7 +63,7 @@ class TooltipContent extends UIComponent<WithAsProp<TooltipContentProps>> {
     unhandledProps,
     styles,
   }: RenderResultConfig<TooltipContentProps>): React.ReactNode {
-    const { children, content, pointing, pointerRef } = this.props
+    const { children, content, open, pointing, pointerRef } = this.props
 
     return (
       <ElementType
@@ -69,21 +72,13 @@ class TooltipContent extends UIComponent<WithAsProp<TooltipContentProps>> {
         {...accessibility.attributes.root}
         {...unhandledProps}
       >
-        {pointing && (
+        {open && pointing && (
           <Ref innerRef={pointerRef}>
             {Box.create({}, { defaultProps: { styles: styles.pointer } })}
           </Ref>
         )}
 
-        {Box.create(
-          {},
-          {
-            defaultProps: {
-              children: childrenExist(children) ? children : content,
-              styles: styles.content,
-            },
-          },
-        )}
+        <div className={classes.content}>{childrenExist(children) ? children : content}</div>
       </ElementType>
     )
   }

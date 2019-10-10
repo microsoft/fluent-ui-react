@@ -1,3 +1,5 @@
+import { Accessibility, popupBehavior } from '@stardust-ui/accessibility'
+import { AutoFocusZoneProps, FocusTrapZoneProps } from '@stardust-ui/react-bindings'
 import { EventListener } from '@stardust-ui/react-component-event-listener'
 import { NodeRef, Unstable_NestingAuto } from '@stardust-ui/react-component-nesting-registry'
 import { handleRef, toRefObject, Ref } from '@stardust-ui/react-component-ref'
@@ -29,10 +31,7 @@ import {
   PopperChildrenProps,
 } from '../../lib/positioner'
 import PopupContent, { PopupContentProps } from './PopupContent'
-import { popupBehavior } from '../../lib/accessibility'
-import { AutoFocusZoneProps, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 
-import { Accessibility } from '../../lib/accessibility/types'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 import { createShorthandFactory, ShorthandFactory } from '../../lib/factories'
 import createReferenceFromContextClick from './createReferenceFromContextClick'
@@ -273,7 +272,9 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     const lastContentRef = getRefs().pop()
     const isLastOpenedPopup: boolean =
       lastContentRef && lastContentRef.current === this.popupDomElement
-    const bodyHasFocus: boolean = document.activeElement === document.body
+
+    const activeDocument = this.props.mountDocument || this.context.target
+    const bodyHasFocus: boolean = activeDocument.activeElement === activeDocument.body
 
     if (keyCode === keyboardKey.Escape && bodyHasFocus && isLastOpenedPopup) {
       this.close(e, () => _.invoke(this.triggerFocusableDomElement, 'focus'))

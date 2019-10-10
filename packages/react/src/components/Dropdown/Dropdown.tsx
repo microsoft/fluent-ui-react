@@ -58,37 +58,37 @@ export interface DropdownSlotClassNames {
 export interface DropdownProps
   extends UIComponentProps<DropdownProps, DropdownState>,
     PositioningProps {
-  /** The index of the currently active selected item, if dropdown has a multiple selection. */
+  /** The index of the currently selected item, if the dropdown supports multiple selection. */
   activeSelectedIndex?: number
 
-  /** Item can show check indicator if selected. */
+  /** A dropdown item can show a check indicator if it is selected. */
   checkable?: boolean
 
   /** A slot for a selected indicator in the dropdown list. */
   checkableIndicator?: ShorthandValue<IconProps>
 
-  /** A dropdown can be clearable and let users remove their selection. */
+  /** A dropdown can be clearable to let users remove their selection. */
   clearable?: boolean
 
-  /** A slot for a clearing indicator. */
+  /** A slot for the clearing indicator. */
   clearIndicator?: ShorthandValue<IconProps>
 
-  /** The initial value for the index of the currently active selected item, in a multiple selection. */
+  /** The initial value for the index of the currently selected item in a multiple selection. */
   defaultActiveSelectedIndex?: number
 
-  /** Initial value for 'open' in uncontrolled mode */
+  /** The initial value for 'open' in uncontrolled mode. */
   defaultOpen?: boolean
 
-  /** The initial value for the index of the list item to be highlighted. */
+  /** The initial list item index to highlight. */
   defaultHighlightedIndex?: number
 
-  /** The initial value for the search query, if the dropdown is also a search. */
+  /** The initial value for the search query if the dropdown has `search` enabled. */
   defaultSearchQuery?: string
 
-  /** The initial value or value array, if the array has multiple selection. */
+  /** The initial value (or value array if the array has multiple selection). */
   defaultValue?: ShorthandValue<DropdownItemProps> | ShorthandCollection<DropdownItemProps>
 
-  /** A dropdown can take the width of its container. */
+  /** A dropdown can fill the width of its container. */
   fluid?: boolean
 
   /** Object with callbacks for generating announcements for item selection and removal. */
@@ -113,70 +113,73 @@ export interface DropdownProps
     options: DownshiftA11yStatusMessageOptions<ShorthandValue<DropdownItemProps>>,
   ) => string
 
-  /** A dropdown can open with the first option already highlighted. */
+  /** A dropdown can highlight the first option when it opens. */
   highlightFirstItemOnOpen?: boolean
 
-  /** The index of the list item to be highlighted. */
+  /** The index of the list item to highlight. */
   highlightedIndex?: number
 
-  /** A dropdown can be formatted to appear inline in the content of other components. */
+  /** A dropdown can be formatted to appear inline next to other elements. */
   inline?: boolean
 
-  /** Array of props for generating list options (Dropdown.Item[]) and selected item labels(Dropdown.SelectedItem[]), if it's a multiple selection. */
+  /** Array of props for generating list options (Dropdown.Item[]) and selected item labels (Dropdown.SelectedItem[]), if it's a multiple selection. */
   items?: ShorthandCollection<DropdownItemProps>
 
   /**
-   * Function that converts an item to string. Used when dropdown has the `search` boolean prop set to true.
+   * A function that converts an item to string. Used when dropdown has `search` enabled.
    * By default, it:
-   * - returns the `header` property (if it exists on an item)
-   * - converts an item to string (if the item is a primitive)
+   * - returns the `header` property if it exists on an item
+   * - stringifies the item if it is a primitive type
    */
   itemToString?: (item: ShorthandValue<DropdownItemProps>) => string
+
+  /** Used when comparing two items in multiple selection. Default comparison is by the header prop. */
+  itemToValue?: (item: ShorthandValue<DropdownItemProps>) => any
 
   /** A dropdown can show that it is currently loading data. */
   loading?: boolean
 
-  /** A message to be displayed in the list when dropdown is loading. */
+  /** A message to be displayed in the list when the dropdown is loading. */
   loadingMessage?: ShorthandValue<ListItemProps>
 
   /** When selecting an element with Tab, focus stays on the dropdown by default. If true, the focus will jump to next/previous element in DOM. Only available to multiple selection dropdowns. */
   moveFocusOnTab?: boolean
 
-  /** A dropdown can perform a multiple selection. */
+  /** A dropdown can allow a user to select multiple items. */
   multiple?: boolean
 
-  /** A message to be displayed in the list when dropdown has no available items to show. */
+  /** A message to be displayed in the list when the dropdown has no items. */
   noResultsMessage?: ShorthandValue<ListItemProps>
 
   /**
-   * Callback for change in dropdown open value.
+   * Called when the dropdown opens or closes.
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {Object} data - All props and the new open flag value in the edit text.
+   * @param {Object} data - All props, with `open` reflecting the new open state.
    */
   onOpenChange?: ComponentEventHandler<DropdownProps>
 
   /**
-   * Callback for change in dropdown search query value.
+   * Called when the dropdown's search query changes.
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {Object} data - All props and the new search query value in the edit text.
+   * @param {Object} data - All props, with `searchQuery` reflecting its new value.
    */
   onSearchQueryChange?: ComponentEventHandler<DropdownProps>
 
   /**
-   * Callback for change in dropdown active value(s).
+   * Called when the dropdown's selected item(s) change.
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {Object} data - All props and the new active value(s).
+   * @param {Object} data - All props and the new selected value(s).
    */
   onSelectedChange?: ComponentEventHandler<DropdownProps>
 
-  /** Defines whether dropdown is displayed. */
+  /** A dropdown's open state can be controlled. */
   open?: boolean
 
   /** A placeholder message for the input field. */
   placeholder?: string
 
   /**
-   * A custom render function for the item.
+   * A render function to customize how items are rendered in the dropdown.
    *
    * @param {React.ReactType} Component - The computed component for this slot.
    * @param {object} props - The computed props for this slot.
@@ -201,19 +204,19 @@ export interface DropdownProps
         searchQuery: string,
       ) => ShorthandCollection<DropdownItemProps>)
 
-  /** Component for the search input query. */
+  /** A search dropdown's input can be customized. */
   searchInput?: ShorthandValue<DropdownSearchInputProps>
 
   /** Sets search query value (controlled mode). */
   searchQuery?: string
 
-  /** Controls appearance of toggle indicator that shows/hides items list. */
+  /** Controls the appearance of the indicator that shows/hides the list of items. */
   toggleIndicator?: ShorthandValue<IconProps>
 
-  /** Controls appearance of the trigger button if it's a selection dropdown and not a search. */
+  /** Controls the appearance of the trigger button if it's a selection dropdown (not a search). */
   triggerButton?: ShorthandValue<ButtonProps>
 
-  /** Sets currently selected value(s) (controlled mode). */
+  /** Sets the dropdown's currently selected value(s) in controlled mode. */
   value?: ShorthandValue<DropdownItemProps> | ShorthandCollection<DropdownItemProps>
 }
 
@@ -276,6 +279,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     inline: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     itemToString: PropTypes.func,
+    itemToValue: PropTypes.func,
     loading: PropTypes.bool,
     loadingMessage: customPropTypes.itemShorthand,
     moveFocusOnTab: PropTypes.bool,
@@ -308,6 +312,14 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     checkableIndicator: 'stardust-checkmark',
     clearIndicator: 'stardust-close',
     itemToString: item => {
+      if (!item || React.isValidElement(item)) {
+        return ''
+      }
+
+      // targets DropdownItem shorthand objects
+      return (item as any).header || String(item)
+    },
+    itemToValue: item => {
       if (!item || React.isValidElement(item)) {
         return ''
       }
@@ -363,14 +375,14 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
    * their string equivalents, in order to be used throughout the component.
    */
   static getAutoControlledStateFromProps(props: DropdownProps, state: DropdownState) {
-    const { items, itemToString, multiple, search } = props
+    const { items, itemToString, itemToValue, multiple, search } = props
     const { searchQuery, value: rawValue } = state
 
     // `normalizedValue` should be normilized always as it can be received from props
     const normalizedValue = _.isArray(rawValue) ? rawValue : [rawValue]
     const value = multiple ? normalizedValue : normalizedValue.slice(0, 1)
 
-    const filteredItemsByValue = multiple ? _.difference(items, value) : items
+    const filteredItemsByValue = multiple ? _.differenceBy(items, value, itemToValue) : items
     const filteredItemStrings = _.map(filteredItemsByValue, filteredItem =>
       itemToString(filteredItem).toLowerCase(),
     )
@@ -431,6 +443,11 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
           onStateChange={this.handleStateChange}
           labelId={this.props['aria-labelledby']}
           environment={this.context.target.defaultView}
+          inputId={
+            this.props.searchInput && this.props.searchInput['id']
+              ? this.props.searchInput['id']
+              : undefined
+          }
         >
           {({
             getInputProps,
@@ -549,7 +566,9 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
         this.handleTriggerButtonKeyDown(e, rtl)
       },
       'aria-label': undefined,
-      'aria-labelledby': `${this.props['aria-labelledby']} ${triggerButtonId}`,
+      'aria-labelledby': [this.props['aria-labelledby'], triggerButtonId]
+        .filter(l => !!l)
+        .join(' '),
     })
 
     const { onClick, onFocus, onBlur, onKeyDown, ...restTriggerButtonProps } = triggerButtonProps
@@ -790,11 +809,13 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     state: DownshiftState<ShorthandValue<DropdownItemProps>>,
     changes: StateChangeOptions<ShorthandValue<DropdownItemProps>>,
   ) => {
+    const activeElement: Element = this.context.target.activeElement
+
     switch (changes.type) {
       case Downshift.stateChangeTypes.blurButton:
         // Downshift closes the list by default on trigger blur. It does not support the case when dropdown is
         // single selection and focuses list on trigger click/up/down/space/enter. Treating that here.
-        if (state.isOpen && document.activeElement === this.listRef.current) {
+        if (state.isOpen && activeElement === this.listRef.current) {
           return {} // won't change state in this case.
         }
       default:

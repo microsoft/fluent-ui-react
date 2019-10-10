@@ -25,6 +25,7 @@ const getFunctionComponentDebugData = component => {
 }
 
 const debugApi = (inputComponent?) => {
+  // eslint-disable-next-line no-undef
   const component = inputComponent || (window as any).$r
 
   if (!component) {
@@ -64,6 +65,7 @@ const isDebugEnabled = () => {
   let enabled = false
   try {
     const isProduction = process.env.NODE_ENV === 'production'
+    // eslint-disable-next-line no-undef
     const isEnabledBrowserOverride = !!window.localStorage.stardustDebug
 
     if (isEnabledBrowserOverride) {

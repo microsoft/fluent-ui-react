@@ -18,8 +18,11 @@ import {
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
 import { ShorthandCollection, WithAsProp, withSafeTypeForAs } from '../../types'
-import { Accessibility } from '../../lib/accessibility/types'
-import { toolbarRadioGroupBehavior, toolbarRadioGroupItemBehavior } from '../../lib/accessibility'
+import {
+  Accessibility,
+  toolbarRadioGroupBehavior,
+  toolbarRadioGroupItemBehavior,
+} from '@stardust-ui/accessibility'
 
 import ToolbarDivider from './ToolbarDivider'
 import ToolbarItem, { ToolbarItemProps } from './ToolbarItem'
@@ -100,7 +103,7 @@ class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> 
       nextItemToFocus.focus()
     }
 
-    if (document.activeElement === nextItemToFocus) {
+    if (this.context.target.activeElement === nextItemToFocus) {
       event.stopPropagation()
     }
     event.preventDefault()

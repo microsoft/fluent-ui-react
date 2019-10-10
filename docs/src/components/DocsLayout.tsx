@@ -59,7 +59,10 @@ class DocsLayout extends React.Component<any, any> {
     // Anchor links has issues with <base>
     // https://stackoverflow.com/questions/8108836/make-anchor-links-refer-to-the-current-page-when-using-base
     document.querySelectorAll('a.anchor-link').forEach(link => {
-      link.setAttribute('href', `${document.location.href}${link.getAttribute('href')}`)
+      const value = `${document.location.origin}${document.location.pathname}${link.getAttribute(
+        'href',
+      )}`
+      link.setAttribute('href', value)
     })
   }
 
