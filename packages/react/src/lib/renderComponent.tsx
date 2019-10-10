@@ -221,9 +221,9 @@ const renderComponent = <P extends {}>(
   // Our API should be aligned with it
   // Heads Up! Keep in sync with Design.tsx render logic
   const direction = rtl ? 'rtl' : 'ltr'
-  const felaParam = {
-    theme: { direction },
-  }
+  //const felaParam = {
+    //theme: { direction },
+  //}
 
   const resolvedStyles: ComponentSlotStylesPrepared = {}
   const classes: ComponentSlotClasses = {}
@@ -232,8 +232,8 @@ const renderComponent = <P extends {}>(
     resolvedStyles[slotName] = callable(mergedStyles[slotName])(styleParam)
 
     if (renderer) {
-      classes[slotName] = renderer.renderRule(callable(resolvedStyles[slotName]), felaParam)
-      // classes[slotName] = renderer.blazingRenderRule(resolvedStyles[slotName], direction)
+      // classes[slotName] = renderer.renderRule(callable(resolvedStyles[slotName]), felaParam)
+      classes[slotName] = renderer.blazingRenderRule(resolvedStyles[slotName], direction)
     }
   })
 
