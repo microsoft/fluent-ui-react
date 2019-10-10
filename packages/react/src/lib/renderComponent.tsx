@@ -233,6 +233,7 @@ const renderComponent = <P extends {}>(
 
     if (renderer) {
       classes[slotName] = renderer.renderRule(callable(resolvedStyles[slotName]), felaParam)
+      // classes[slotName] = renderer.blazingRenderRule(resolvedStyles[slotName], direction)
     }
   })
 

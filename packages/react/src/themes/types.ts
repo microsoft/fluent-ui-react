@@ -523,7 +523,9 @@ export type ThemeComponentStylesPrepared = {
 } &
   Record<string, ComponentSlotStylesPrepared | undefined>
 
-export interface Renderer extends FelaRenderer {}
+export interface Renderer extends FelaRenderer {
+  blazingRenderRule: (styles: Record<string, any>, direction: string) => string
+}
 
 // ========================================================
 // Fonts

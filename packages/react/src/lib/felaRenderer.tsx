@@ -1,3 +1,4 @@
+import memoize from 'fast-memoize'
 import { createRenderer as createFelaRenderer } from 'fela'
 import felaPluginEmbedded from 'fela-plugin-embedded'
 import felaPluginFallbackValue from 'fela-plugin-fallback-value'
@@ -11,6 +12,7 @@ import felaExpandCssShorthandsPlugin from './felaExpandCssShorthandsPlugin'
 import felaFocusVisibleEnhancer from './felaFocusVisibleEnhancer'
 import felaInvokeKeyframesPlugin from './felaInvokeKeyframesPlugin'
 import felaSanitizeCss from './felaSanitizeCssPlugin'
+import { callable } from '@stardust-ui/react-bindings'
 
 let felaDevMode = false
 
@@ -77,6 +79,16 @@ const rendererConfig = {
   ],
 }
 
-export const createRenderer = (): Renderer => createFelaRenderer(rendererConfig)
+export const createRenderer = (): Renderer => {
+  const renderer = createFelaRenderer(rendererConfig) as Renderer
+
+  renderer.blazingRenderRule = memoize((styles, direction) => {
+    return renderer.renderRule(callable(styles), {
+      theme: { direction },
+    })
+  })
+
+  return renderer
+}
 
 export const felaRenderer = createRenderer()
