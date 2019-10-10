@@ -142,6 +142,7 @@ class DropdownSelectedItem extends UIComponent<WithAsProp<DropdownSelectedItemPr
     const iconProps = _.isNil(icon)
       ? icon
       : {
+          name: undefined,
           children: (ComponentType, props) =>
             Icon.create(icon, {
               defaultProps: {
@@ -152,17 +153,19 @@ class DropdownSelectedItem extends UIComponent<WithAsProp<DropdownSelectedItemPr
               overrideProps: this.handleIconOverrides(props),
             }),
         }
-    const imageProps = {
-      children: (ComponentType, props) =>
-        Image.create(image, {
-          defaultProps: {
-            avatar: true,
-            className: DropdownSelectedItem.slotClassNames.image,
-            styles: styles.image,
-          },
-          overrideProps: props,
-        }),
-    }
+    const imageProps = _.isNil(image)
+      ? image
+      : {
+          children: (ComponentType, props) =>
+            Image.create(image, {
+              defaultProps: {
+                avatar: true,
+                className: DropdownSelectedItem.slotClassNames.image,
+                styles: styles.image,
+              },
+              overrideProps: props,
+            }),
+        }
 
     return (
       <Ref innerRef={this.itemRef}>
