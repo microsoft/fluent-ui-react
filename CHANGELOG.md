@@ -16,6 +16,8 @@
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+### Features
 - Export `robot`, `tabs` and `plugs` icon to Teams theme @cloudtx ([#1968](https://github.com/stardust-ui/react/pull/1968))
 
 ### Fixes
