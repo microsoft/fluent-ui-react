@@ -1,3 +1,4 @@
+import { Accessibility, radioGroupItemBehavior } from '@stardust-ui/accessibility'
 import { Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
@@ -16,8 +17,6 @@ import {
 import Box, { BoxProps } from '../Box/Box'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Icon, { IconProps } from '../Icon/Icon'
-import { Accessibility } from '../../lib/accessibility/types'
-import { radioGroupItemBehavior } from '../../lib/accessibility'
 
 export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponentProps {
   /** Accessibility behavior if overridden by the user. */

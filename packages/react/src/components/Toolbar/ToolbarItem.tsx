@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, toolbarItemBehavior } from '@stardust-ui/accessibility'
 import cx from 'classnames'
 import { Ref, toRefObject } from '@stardust-ui/react-component-ref'
 import { EventListener } from '@stardust-ui/react-component-event-listener'
@@ -27,8 +28,6 @@ import {
   ShorthandCollection,
 } from '../../types'
 import { Popper } from '../../lib/positioner'
-import { Accessibility } from '../../lib/accessibility/types'
-import { toolbarItemBehavior } from '../../lib/accessibility'
 
 import ToolbarMenu, { ToolbarMenuProps } from './ToolbarMenu'
 import Icon, { IconProps } from '../Icon/Icon'
@@ -131,7 +130,10 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
     active: PropTypes.bool,
     disabled: PropTypes.bool,
     icon: customPropTypes.itemShorthandWithoutJSX,
-    menu: PropTypes.oneOfType([customPropTypes.itemShorthand, customPropTypes.collectionShorthand]),
+    menu: PropTypes.oneOfType([
+      customPropTypes.shorthandAllowingChildren,
+      PropTypes.arrayOf(customPropTypes.shorthandAllowingChildren),
+    ]),
     menuOpen: PropTypes.bool,
     onMenuOpenChange: PropTypes.func,
     onClick: PropTypes.func,
@@ -145,7 +147,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
       }),
       PropTypes.string,
     ]),
-    wrapper: customPropTypes.itemShorthand,
+    wrapper: customPropTypes.shorthandAllowingChildren,
   }
 
   static defaultProps = {
@@ -219,7 +221,16 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
         {(getRefs, nestingRef) => (
           <>
             <Ref innerRef={nestingRef}>
-              <Popper align="start" position="above" targetRef={this.itemRef}>
+              <Popper
+                align="start"
+                position="above"
+                modifiers={{
+                  preventOverflow: {
+                    escapeWithReference: false, // escapeWithReference breaks positioning of ToolbarMenu in overflow mode because Popper components sets modifiers on scrollable container
+                  },
+                }}
+                targetRef={this.itemRef}
+              >
                 {ToolbarMenu.create(menu, {
                   overrideProps: this.handleMenuOverrides(getRefs, variables),
                 })}
