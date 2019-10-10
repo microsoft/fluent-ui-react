@@ -117,16 +117,15 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
         popup: {
           align: 'center',
           position: 'before',
-          content: render =>
-            render(null, () => (
-              <Menu
-                items={fontFormattingItems}
-                onItemClick={() => {
-                  props.dispatch({ type: 'MORE', value: false })
-                }}
-                vertical
-              />
-            )),
+          children: () => (
+            <Menu
+              items={fontFormattingItems}
+              onItemClick={() => {
+                props.dispatch({ type: 'MORE', value: false })
+              }}
+              vertical
+            />
+          ),
           onOpenChange: (e, { open }) => {
             props.dispatch({ type: 'FONT_FORMATTING_OPEN', value: open })
           },
@@ -165,20 +164,17 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
     { toolbarItem: { key: 'divider-3', kind: 'divider' } },
 
     {
-      toolbarItem: render =>
-        render(
-          {
-            key: 'link',
-            icon: 'link',
-            active: props.link,
-            onClick: () => props.dispatch({ type: 'LINK', value: true }),
-          },
-          (Component, props) => (
-            <Ref innerRef={linkItemRef}>
-              <Component {...props} />
-            </Ref>
-          ),
+      toolbarItem: {
+        key: 'link',
+        icon: 'link',
+        active: props.link,
+        children: (Component, props) => (
+          <Ref innerRef={linkItemRef}>
+            <Component {...props} />
+          </Ref>
         ),
+        onClick: () => props.dispatch({ type: 'LINK', value: true }),
+      },
       overflowItem: {
         key: 'link',
         icon: 'link',

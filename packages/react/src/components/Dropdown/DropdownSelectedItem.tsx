@@ -139,10 +139,10 @@ class DropdownSelectedItem extends UIComponent<WithAsProp<DropdownSelectedItemPr
         styles: styles.header,
       },
     })
-    const renderIcon = _.isNil(icon)
+    const iconProps = _.isNil(icon)
       ? icon
-      : render =>
-          render(icon, (ComponentType, props) =>
+      : {
+          children: (ComponentType, props) =>
             Icon.create(icon, {
               defaultProps: {
                 'aria-label': `Remove ${header} from selection.`, // TODO: Extract this in a behaviour.
@@ -151,20 +151,18 @@ class DropdownSelectedItem extends UIComponent<WithAsProp<DropdownSelectedItemPr
               },
               overrideProps: this.handleIconOverrides(props),
             }),
-          )
-    const renderImage = _.isNil(image)
-      ? image
-      : render =>
-          render(image, (ComponentType, props) =>
-            Image.create(image, {
-              defaultProps: {
-                avatar: true,
-                className: DropdownSelectedItem.slotClassNames.image,
-                styles: styles.image,
-              },
-              overrideProps: props,
-            }),
-          )
+        }
+    const imageProps = {
+      children: (ComponentType, props) =>
+        Image.create(image, {
+          defaultProps: {
+            avatar: true,
+            className: DropdownSelectedItem.slotClassNames.image,
+            styles: styles.image,
+          },
+          overrideProps: props,
+        }),
+    }
 
     return (
       <Ref innerRef={this.itemRef}>
@@ -176,8 +174,8 @@ class DropdownSelectedItem extends UIComponent<WithAsProp<DropdownSelectedItemPr
           onClick={this.handleClick}
           onKeyDown={this.handleKeyDown}
           content={contentElement}
-          icon={renderIcon}
-          image={renderImage}
+          icon={iconProps}
+          image={imageProps}
           {...unhandledProps}
         />
       </Ref>

@@ -14,25 +14,27 @@ const ActiveBarItem = props => (
   </Flex>
 )
 
-const addContextMenu = item => render =>
-  render(item, (Component, props) => {
-    return <MenuButton contextMenu trigger={<Component {...props} />} menu={menu} />
-  })
+const itemRenderer = (Component, props) => (
+  <MenuButton contextMenu trigger={<Component {...props} />} menu={menu} />
+)
 
 const items3 = [
   {
     key: 'irving',
     content: <ActiveBarItem name="Irving Kuhic" />,
+    children: itemRenderer,
   },
   {
     key: 'skyler',
     content: <ActiveBarItem name="Skyler Parks" />,
+    children: itemRenderer,
   },
   {
     key: 'dante',
     content: <ActiveBarItem name="Dante Schneider" />,
+    children: itemRenderer,
   },
-].map(addContextMenu)
+]
 
 const ParticipantsList = () => (
   <>

@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as _ from 'lodash'
 import {
   Toolbar,
   Tooltip,
@@ -57,27 +56,24 @@ const ToolbarExampleShorthand = () => {
           menuOpen: moreMenuOpen,
           onMenuOpenChange: (e, { menuOpen }) => setMoreMenuOpen(menuOpen),
         },
-      ].map(item =>
-        _.isNil(item.tooltip)
-          ? item
-          : render =>
-              render(
-                item,
-                // rendering Tooltip for the Toolbar Item
-                (ToolbarItem, props) => {
-                  const { tooltip, key, ...rest } = props
-                  // Adding tooltipAsLabelBehavior as the ToolbarItems contains only icon
-                  return (
-                    <Tooltip
-                      key={key}
-                      trigger={<ToolbarItem {...rest} />}
-                      accessibility={tooltipAsLabelBehavior}
-                      content={tooltip}
-                    />
-                  )
-                },
-              ),
-      )}
+      ].map(item => ({
+        ...item,
+        // rendering Tooltip for the Toolbar Item
+        children: item.tooltip
+          ? (ToolbarItem, props) => {
+              const { tooltip, key, ...rest } = props
+              // Adding tooltipAsLabelBehavior as the ToolbarItems contains only icon
+              return (
+                <Tooltip
+                  key={key}
+                  trigger={<ToolbarItem {...rest} />}
+                  accessibility={tooltipAsLabelBehavior}
+                  content={tooltip}
+                />
+              )
+            }
+          : undefined,
+      }))}
     />
   )
 }

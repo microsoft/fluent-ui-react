@@ -517,26 +517,23 @@ const layouts: Record<CustomToolbarProps['layout'], CustomToolbarLayout> = {
 const CustomToolbar: React.FunctionComponent<CustomToolbarProps> = props => {
   const { layout = 'standard' } = props
 
-  const items = layouts[layout](props).map(item =>
-    _.isNil((item as any).tooltip)
-      ? item
-      : render =>
-          render(
-            item, // rendering Tooltip for the Toolbar Item
-            (ToolbarItem, props) => {
-              const { tooltip, key, ...rest } = props // Adding tooltipAsLabelBehavior as the ToolbarItems contains only icon
+  const items = layouts[layout](props).map((item: ToolbarItemProps) => ({
+    ...item,
+    children: (item as any).tooltip
+      ? (ToolbarItem, props) => {
+          const { tooltip, key, ...rest } = props // Adding tooltipAsLabelBehavior as the ToolbarItems contains only icon
 
-              return (
-                <Tooltip
-                  key={key}
-                  trigger={<ToolbarItem {...rest} />}
-                  accessibility={tooltipAsLabelBehavior}
-                  content={tooltip}
-                />
-              )
-            },
-          ),
-  )
+          return (
+            <Tooltip
+              key={key}
+              trigger={<ToolbarItem {...rest} />}
+              accessibility={tooltipAsLabelBehavior}
+              content={tooltip}
+            />
+          )
+        }
+      : null,
+  }))
 
   return <Toolbar variables={{ isCt: true }} items={items} />
 }
