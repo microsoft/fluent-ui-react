@@ -16,6 +16,7 @@
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- Export `robot`, `tabs` and `plugs` icon to Teams theme @cloudtx ([#1968](https://github.com/stardust-ui/react/pull/1968))
 
 ### Fixes
 - Correctly handle RTL in `Alert` component @miroslavstastny ([#2018](https://github.com/stardust-ui/react/pull/2018))
@@ -49,10 +50,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Documentation
 - Copy to clipboard prototype - attached confirmation @jurokapsiar ([#1900](https://github.com/stardust-ui/react/pull/1900))
 - Add `EditorToolbar` prototype @layershifter ([#2010](https://github.com/stardust-ui/react/pull/2010))
-
-
-### Features
-- Export `robot`, `tabs` and `plugs` icon to Teams theme @cloudtx ([#1968](https://github.com/stardust-ui/react/pull/1968))
 
 <!--------------------------------[ v0.39.0 ]------------------------------- -->
 ## [v0.39.0](https://github.com/stardust-ui/react/tree/v0.39.0) (2019-09-23)
