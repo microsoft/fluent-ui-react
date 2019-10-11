@@ -235,6 +235,9 @@ describe('factories', () => {
 
         const shorthandValue = { dataFoo: 'bar' }
 
+        // render callback is deprecated an throws deprecation warnings
+        consoleUtil.disableOnce()
+
         const elementFromShorthandValue = createShorthandElement(shorthandValue)
         const elementFromRenderCallback = createShorthandElement(render => render(shorthandValue))
 
@@ -244,6 +247,9 @@ describe('factories', () => {
 
       describe('custom tree renderer', () => {
         test('passes evaluated Component type as the first argument', () => {
+          // render callback is deprecated an throws deprecation warnings
+          consoleUtil.disableOnce()
+
           getShorthand({
             valueOrRenderCallback: render =>
               render({}, (Component, props) => {
@@ -256,6 +262,9 @@ describe('factories', () => {
         test('passes evaluated props as the second argument', () => {
           const shorthandProps = { bar: 'foo' }
 
+          // render callback is deprecated an throws deprecation warnings
+          consoleUtil.disableOnce()
+
           getShorthand({
             valueOrRenderCallback: render =>
               render(shorthandProps, (Component, props) => {
@@ -266,6 +275,9 @@ describe('factories', () => {
 
         test('overrides render prop from shorthand options', () => {
           const CustomComponent = 'overriden-div' as any
+
+          // render callback is deprecated an throws deprecation warnings
+          consoleUtil.disableOnce()
 
           const shorthandElement = getShorthand({
             valueOrRenderCallback: render => render({}, (Component, props) => <CustomComponent />),
@@ -290,6 +302,9 @@ describe('factories', () => {
         const props = {
           styles: { color: 'black' },
         }
+
+        // render callback is deprecated an throws deprecation warnings
+        consoleUtil.disableOnce()
 
         getShorthand({
           valueOrRenderCallback: render =>
@@ -326,6 +341,9 @@ describe('factories', () => {
           },
         }
 
+        // render callback is deprecated an throws deprecation warnings
+        consoleUtil.disableOnce()
+
         getShorthand({
           valueOrRenderCallback: render =>
             render(props, (Component, props) => {
@@ -355,6 +373,9 @@ describe('factories', () => {
         const props = {
           styles: { color: 'black' },
         }
+
+        // render callback is deprecated an throws deprecation warnings
+        consoleUtil.disableOnce()
 
         getShorthand({
           valueOrRenderCallback: render =>
@@ -390,6 +411,9 @@ describe('factories', () => {
             },
           },
         }
+
+        // render callback is deprecated an throws deprecation warnings
+        consoleUtil.disableOnce()
 
         getShorthand({
           valueOrRenderCallback: render =>
