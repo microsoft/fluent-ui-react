@@ -3,7 +3,7 @@ import * as React from 'react'
 
 const App = () => (
   <Stardust.Provider theme={Stardust.themes.teams}>
-    <Stardust.Button content="Click me" />
+    <Stardust.Button accessibility={Stardust.buttonBehavior} content="Click me" />
   </Stardust.Provider>
 )
 

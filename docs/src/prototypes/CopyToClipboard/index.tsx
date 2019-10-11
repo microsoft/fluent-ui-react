@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Flex, Provider, Text, Button, Menu } from '@stardust-ui/react'
+import { Flex, Provider, Text, Button, Menu, Ref } from '@stardust-ui/react'
 import CopyToClipboard from './CopyToClipboard'
 import { PrototypeSection, ComponentPrototype } from '../Prototypes'
 import themeOverrides from './themeOverrides'
@@ -7,6 +7,7 @@ import { NotificationProvider } from './NotificationProvider'
 
 type CopyToClipboardPrototypeProps = {
   value: string
+  target?: HTMLElement
   attached?: boolean
 }
 
@@ -18,7 +19,7 @@ const CopyToClipboardPrototype: React.FC<CopyToClipboardPrototypeProps> = props 
 
       <CopyToClipboard
         attached={props.attached}
-        pointing
+        target={props.target}
         value={props.value}
         trigger={<Button iconOnly icon="clipboard-copied-to" />}
       />
@@ -27,27 +28,51 @@ const CopyToClipboardPrototype: React.FC<CopyToClipboardPrototypeProps> = props 
 }
 
 const CopyToClipboardInMenu: React.FC = props => {
+  const item = {
+    key: 'edit',
+    content: 'Edit',
+    menu: [
+      'Open File...',
+      'Save File...',
+      render =>
+        render('Copy text', (Component, props) => {
+          return <CopyToClipboard value={'Julius Caesar'} trigger={<Component {...props} />} />
+        }),
+    ],
+  }
+
+  return <Menu items={[item]} />
+}
+
+const CopyToClipboardAttached: React.FC = props => {
+  const [target, setTarget] = React.useState<HTMLElement>(null)
+
+  const item = {
+    key: 'edit',
+    content: 'Edit',
+    menu: [
+      'Open File...',
+      'Save File...',
+      render =>
+        render('Copy text', (Component, props) => {
+          return (
+            <CopyToClipboard
+              target={target}
+              value="Julius Caesar"
+              trigger={<Component {...props} />}
+            />
+          )
+        }),
+    ],
+  }
+
   const items = [
-    {
-      key: 'edit',
-      content: 'Edit',
-      menu: [
-        'Open File...',
-        'Save File...',
-        render =>
-          render('Copy text', (Component, props) => {
-            return (
-              <CopyToClipboard
-                position="after"
-                align="bottom"
-                pointing
-                value={'Julius Caesar'}
-                trigger={<Component {...props} />}
-              />
-            )
-          }),
-      ],
-    },
+    render =>
+      render(item, (Component, props) => (
+        <Ref innerRef={setTarget}>
+          <Component {...props} />
+        </Ref>
+      )),
   ]
   return <Menu items={items} />
 }
@@ -66,7 +91,7 @@ const CopyToClipboardPrototypes: React.FC = () => {
             title="Attached"
             description="Attached version of Copy to Clipboard prototype"
           >
-            <CopyToClipboardPrototype attached value={commitID} />
+            <CopyToClipboardPrototype attached={true} value={commitID} />
           </ComponentPrototype>
           <ComponentPrototype
             title="Not Attached"
@@ -79,6 +104,12 @@ const CopyToClipboardPrototypes: React.FC = () => {
             description="Copy to Clipboard can reside within a menu"
           >
             <CopyToClipboardInMenu />
+          </ComponentPrototype>
+          <ComponentPrototype
+            title="In Menu Attached"
+            description="Copy to Clipboard can be attached to a different element"
+          >
+            <CopyToClipboardAttached />
           </ComponentPrototype>
         </NotificationProvider>
       </Provider>

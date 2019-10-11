@@ -239,14 +239,14 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
 
   renderComponent(config: RenderResultConfig<AlertProps>) {
     const { accessibility, classes, ElementType, unhandledProps } = config
-    const { children, content } = this.props
+    const { children } = this.props
 
     return (
       <ElementType
         className={classes.root}
         onFocus={this.handleFocus}
         {...accessibility.attributes.root}
-        {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
       >
         {childrenExist(children) ? children : this.renderContent(config)}

@@ -1,16 +1,16 @@
 {
   "name": "@stardust-ui/accessibility",
   "description": "A set of reusable framework accessibility behaviours.",
-  "version": "0.39.0",
+  "version": "0.40.0",
   "author": "Oleksandr Fediashov <olfedias@microsoft.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "lodash": "^4.17.15",
-    "keyboard-key": "^1.0.1"
+    "keyboard-key": "^1.0.1",
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
-    "@stardust-ui/internal-tooling": "^0.39.0",
+    "@stardust-ui/internal-tooling": "^0.40.0",
     "lerna-alias": "^3.0.3-0"
   },
   "files": [
