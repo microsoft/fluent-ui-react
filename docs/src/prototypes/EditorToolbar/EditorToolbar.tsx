@@ -117,15 +117,17 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
         popup: {
           align: 'center',
           position: 'before',
-          children: () => (
-            <Menu
-              items={fontFormattingItems}
-              onItemClick={() => {
-                props.dispatch({ type: 'MORE', value: false })
-              }}
-              vertical
-            />
-          ),
+          content: {
+            children: () => (
+              <Menu
+                items={fontFormattingItems}
+                onItemClick={() => {
+                  props.dispatch({ type: 'MORE', value: false })
+                }}
+                vertical
+              />
+            ),
+          },
           onOpenChange: (e, { open }) => {
             props.dispatch({ type: 'FONT_FORMATTING_OPEN', value: open })
           },
