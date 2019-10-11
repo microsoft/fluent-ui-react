@@ -562,7 +562,11 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                   className={`rendered-example ${this.getKebabExamplePath()}`}
                   styles={exampleStyles}
                 >
-                  {React.createElement(component)}
+                  <Provider theme={newTheme} rtl={showRtl}>
+                    <VariableResolver onResolve={this.handleVariableResolve}>
+                      {React.createElement(component)}
+                    </VariableResolver>
+                  </Provider>
                 </Segment>
                 <LogInspector silent />
               </>
