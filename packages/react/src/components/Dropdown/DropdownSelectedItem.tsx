@@ -142,7 +142,7 @@ class DropdownSelectedItem extends UIComponent<WithAsProp<DropdownSelectedItemPr
     const iconProps = _.isNil(icon)
       ? icon
       : {
-          name: undefined,
+          name: null,
           children: (ComponentType, props) =>
             Icon.create(icon, {
               defaultProps: {
