@@ -60,6 +60,7 @@ export interface CarouselProps extends UIComponentProps, ChildrenComponentProps 
 
 export interface CarouselState {
   activeIndex: number
+  ariaLiveText: string
 }
 
 class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
@@ -122,8 +123,15 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
     },
   }
 
+  clearAriaLiveText = _.debounce(() => {
+    this.setState({
+      ariaLiveText: '',
+    })
+  }, 500)
+
   state = {
     activeIndex: 0,
+    ariaLiveText: '',
   }
 
   itemsContainerRef = React.createRef<HTMLElement>()
@@ -143,12 +151,14 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
 
     this.setState({
       activeIndex,
+      ariaLiveText: `${activeIndex + 1} of ${items.length}`,
     })
+    this.clearAriaLiveText()
   }
 
   renderContent = (accessibility, styles, unhandledProps) => {
     const { items, renderItemSlide } = this.props
-    const { activeIndex } = this.state
+    const { activeIndex, ariaLiveText } = this.state
 
     if (!items) {
       return null
@@ -172,7 +182,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
             )}
           </div>
         </Ref>
-        <div style={screenReaderContainerStyles}>{`${activeIndex + 1} of ${items.length}`}</div>
+        <div style={screenReaderContainerStyles}>{ariaLiveText}</div>
       </div>
     )
   }
