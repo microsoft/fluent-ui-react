@@ -58,10 +58,12 @@ export const mergeComponentStyles = (
       const originalSource = partStyle
 
       partStylesPrepared[partName] = styleParam => {
-        if (!isDebugEnabled) {
+        // PROD - keep in sync with DEV
+        if (process.env.NODE_ENV === 'production' || !isDebugEnabled) {
           return _.merge(callable(originalTarget)(styleParam), callable(originalSource)(styleParam))
         }
 
+        // DEV - keep in sync with PROD
         const { _debug: targetDebug = [], ...targetStyles } =
           callable(originalTarget)(styleParam) || {}
         const { _debug: sourceDebug = undefined, ...sourceStyles } =
@@ -72,6 +74,7 @@ export const mergeComponentStyles = (
           sourceDebug || { styles: sourceStyles, debugId: stylesByPart._debugId },
         )
         return merged
+        // PROD/DEV END
       }
     })
 
@@ -89,10 +92,12 @@ export const mergeComponentVariables = (
 
   return sources.reduce<ComponentVariablesPrepared>((acc, next) => {
     return siteVariables => {
-      if (!isDebugEnabled) {
+      // PROD - keep in sync with DEV
+      if (process.env.NODE_ENV === 'production' || !isDebugEnabled) {
         return deepmerge(acc(siteVariables), callable(next)(siteVariables))
       }
 
+      // DEV - keep in sync with PROD
       const { _debug = [], ...accumulatedVariables } = acc(siteVariables)
       const {
         _debug: computedDebug = undefined,
@@ -112,6 +117,7 @@ export const mergeComponentVariables = (
         },
       )
       return merged
+      // PROD/DEV END
     }
   }, initial)
 }
@@ -131,9 +137,12 @@ export const mergeSiteVariables = (
     fontSizes: {},
   }
   return sources.reduce<SiteVariablesPrepared>((acc, next) => {
-    if (!isDebugEnabled) {
+    // PROD - keep in sync with DEV
+    if (process.env.NODE_ENV === 'production' || !isDebugEnabled) {
       return deepmerge(initial, ...sources)
     }
+
+    // DEV - keep in sync with PROD
     const { _debug = [], ...accumulatedSiteVariables } = acc
     const {
       _debug: computedDebug = undefined,
@@ -151,6 +160,7 @@ export const mergeSiteVariables = (
     )
     merged._invertedKeys = _invertedKeys || objectKeyToValues(merged, key => `siteVariables.${key}`)
     return merged
+    // PROD/DEV END
   }, initial)
 }
 
@@ -167,10 +177,17 @@ export const mergeThemeVariables = (
 ): ThemeComponentVariablesPrepared => {
   const displayNames = _.union(..._.map(sources, _.keys))
   return displayNames.reduce((componentVariables, displayName) => {
+    // PROD - keep in sync with DEV
+    if (process.env.NODE_ENV === 'production' || !isDebugEnabled) {
+      componentVariables[displayName] = mergeComponentVariables(..._.map(sources, displayName))
+      return componentVariables
+    }
+    // DEV - keep in sync with PROD
     componentVariables[displayName] = mergeComponentVariables(
       ..._.map(sources, source => source && withDebugId(source[displayName], source._debugId)),
     )
     return componentVariables
+    // PROD/DEV END
   }, {})
 }
 
@@ -188,7 +205,10 @@ export const mergeThemeStyles = (
     _.forEach(next, (stylesByPart, displayName) => {
       themeComponentStyles[displayName] = mergeComponentStyles(
         themeComponentStyles[displayName],
-        withDebugId(stylesByPart, (next as any)._debugId),
+        withDebugId(
+          stylesByPart,
+          (next as ThemeComponentStylesPrepared & { _debugId: string })._debugId,
+        ),
       )
     })
 

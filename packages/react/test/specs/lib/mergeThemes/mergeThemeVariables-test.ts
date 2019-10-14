@@ -23,7 +23,7 @@ describe('mergeThemeVariables', () => {
     expect(merged.Button).toBeInstanceOf(Function)
   })
 
-  xtest('component variable objects are deeply merged', () => {
+  test('component variable objects are deeply merged', () => {
     const target = { Button: { a: 'a', b: 'b', c: 'c', d: 'd', e: 'e' } }
     const source1 = withDebugId(
       {
@@ -43,6 +43,6 @@ describe('mergeThemeVariables', () => {
     }
     const merged = mergeThemeVariables(target, mergeThemeVariables(source1, source2), source3)
     const resolved = _.mapValues(merged, cv => cv(siteVariables))
-    console.log(JSON.stringify(resolved, null, 2))
+    expect(resolved).toMatchObject({ Button: { a: 'a', b: 'b_color', c: 'cS2', d: 'dS3', e: 'e' } })
   })
 })

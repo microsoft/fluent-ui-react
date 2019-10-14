@@ -567,13 +567,14 @@ describe('mergeThemes', () => {
               return undefined
             }
             if (typeof partStyle !== 'function') {
-              console.log(componentName, partStyle, partName)
+              fail(`Part style is not a function??? ${componentName} ${partStyle} ${partName}`)
             }
             return partStyle(styleParam)
           })
         },
       )
-      console.log(resolvedStyles.Button.root)
+      expect(resolvedStyles.Button.root).toMatchObject({})
+      // console.log(resolvedStyles.Button.root)
     })
   })
 })
