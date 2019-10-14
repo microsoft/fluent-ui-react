@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Features
+- Export `robot`, `tabs` and `plugs` icon to Teams theme @codepretty ([#2026](https://github.com/stardust-ui/react/pull/2026))
+
 ### Fixes
 - Correctly handle RTL in `Alert` component @miroslavstastny ([#2018](https://github.com/stardust-ui/react/pull/2018))
 
