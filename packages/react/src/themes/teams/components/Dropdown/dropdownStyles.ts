@@ -113,6 +113,7 @@ const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, Dropdow
     return {
       boxShadow: 'none',
       margin: '0',
+      background: 'green',
       justifyContent: 'left',
       padding: v.comboboxPaddingButton,
       height: pxToRem(32),
@@ -120,6 +121,7 @@ const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, Dropdow
       ...transparentColorStyleObj,
       ':focus': {
         color: v.color,
+        background: 'blue',
       },
       ':focus-visible': {
         color: v.color,
