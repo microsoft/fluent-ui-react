@@ -22,6 +22,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixes
 - Correctly handle RTL in `Alert` component @miroslavstastny ([#2018](https://github.com/stardust-ui/react/pull/2018))
+- Fix line-height issue with `Input` cutting off text decenders in Teams theme @codepretty ([#2027](https://github.com/stardust-ui/react/pull/2027))
 
 ### Documentation
 - Fix 'RTL' and 'Theme it' in examples @miroslavstastny ([#2020](https://github.com/stardust-ui/react/pull/2020))
