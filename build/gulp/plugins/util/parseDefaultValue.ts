@@ -20,7 +20,7 @@ const parseDefaultValue = (
       return defaultValue
     }
 
-    if (_.isPlainObject(defaultValue)) {
+    if (_.isPlainObject(defaultValue) || _.isArray(defaultValue)) {
       return defaultValue
     }
 
