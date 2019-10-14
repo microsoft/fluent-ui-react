@@ -20,6 +20,12 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixes
 - Correctly handle RTL in `Alert` component @miroslavstastny ([#2018](https://github.com/stardust-ui/react/pull/2018))
 
+### Documentation
+- Fix 'RTL' and 'Theme it' in examples @miroslavstastny ([#2020](https://github.com/stardust-ui/react/pull/2020))
+
+### Performance
+- Remove redundant usages of `Box` component in `Attachment`, `Popup` and `Tooltip` @layershifter ([#2023](https://github.com/stardust-ui/react/pull/2023))
+
 <!--------------------------------[ v0.40.0 ]------------------------------- -->
 ## [v0.40.0](https://github.com/stardust-ui/react/tree/v0.40.0) (2019-10-09)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.39.0...v0.40.0)
