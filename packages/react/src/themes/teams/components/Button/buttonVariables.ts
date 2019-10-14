@@ -15,10 +15,12 @@ export interface ButtonVariables {
 
   color: string
   colorHover: string
+  colorFocus: string
   colorDisabled: string
   backgroundColor: string
   backgroundColorActive: string
   backgroundColorHover: string
+  backgroundColorFocus: string
   backgroundColorDisabled: string
   borderColor: string
   borderColorHover: string
@@ -26,9 +28,11 @@ export interface ButtonVariables {
 
   primaryColor: string
   primaryColorHover: string
+  primaryColorFocus: string
   primaryBackgroundColor: string
   primaryBackgroundColorActive: string
   primaryBackgroundColorHover: string
+  primaryBackgroundColorFocus: string
   primaryBorderColor: string
 
   circularBorderRadius: string
@@ -37,8 +41,10 @@ export interface ButtonVariables {
   circularBackgroundColor: string
   circularBackgroundColorActive: string
   circularBackgroundColorHover: string
+  circularBackgroundColorFocus: string
   circularBorderColor: string
   circularBorderColorHover: string
+  circularBorderColorFocus: string
 
   textColor: string
   textColorHover: string
@@ -78,10 +84,12 @@ export default (siteVars: any): ButtonVariables => ({
 
   color: siteVars.colors.grey[750],
   colorHover: siteVars.colors.grey[750],
+  colorFocus: siteVars.colors.grey[750],
   colorDisabled: siteVars.colorScheme.brand.foregroundDisabled,
   backgroundColor: siteVars.colors.white,
   backgroundColorActive: siteVars.colors.grey[200],
   backgroundColorHover: siteVars.colors.grey[50],
+  backgroundColorFocus: siteVars.colors.white,
   backgroundColorDisabled: siteVars.colors.grey[150],
   borderColor: siteVars.colors.grey[200],
   borderColorHover: siteVars.colors.grey[250],
@@ -89,19 +97,23 @@ export default (siteVars: any): ButtonVariables => ({
 
   primaryColor: siteVars.colors.white,
   primaryColorHover: siteVars.colors.white,
+  primaryColorFocus: siteVars.colors.white,
   primaryBackgroundColor: siteVars.colors.brand[600],
   primaryBackgroundColorActive: siteVars.colors.brand[900],
   primaryBackgroundColorHover: siteVars.colors.brand[800],
+  primaryBackgroundColorFocus: siteVars.colors.brand[600],
   primaryBorderColor: 'transparent',
 
   circularBorderRadius: pxToRem(999),
   circularColor: siteVars.colors.grey[500],
   circularColorActive: siteVars.colors.white,
-  circularBackgroundColor: 'transparent',
+  circularBackgroundColor: siteVars.colors.white,
   circularBackgroundColorActive: siteVars.colors.grey[500],
   circularBackgroundColorHover: siteVars.colors.grey[450],
+  circularBackgroundColorFocus: siteVars.colors.white,
   circularBorderColor: siteVars.colors.grey[500],
   circularBorderColorHover: 'transparent',
+  circularBorderColorFocus: siteVars.colors.grey[500],
 
   textColor: siteVars.colorScheme.default.foreground1,
   textColorHover: siteVars.colorScheme.brand.foreground1,

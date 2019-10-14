@@ -47,19 +47,28 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         borderColor: v.borderColor,
         boxShadow: v.boxShadow,
 
+        ':focus': {
+          ...borderFocusStyles[':focus'],
+          boxShadow: 'none',
+          // ':active': { backgroundColor: v.backgroundColorActive },  //need to get rid of this in buttonVariables
+        },
+
+        ':focus-visible': {
+          ...borderFocusStyles[':focus-visible'],
+          color: v.colorFocus,
+          backgroundColor: v.backgroundColorFocus,
+
+          '&:hover': {
+            color: v.colorHover,
+            backgroundColor: v.backgroundColorHover,
+            borderColor: v.borderColorHover,
+          },
+        },
+
         ':hover': {
           color: v.colorHover,
           backgroundColor: v.backgroundColorHover,
           borderColor: v.borderColorHover,
-        },
-
-        ':focus': {
-          ...borderFocusStyles[':focus'],
-          boxShadow: 'none',
-          // ':active': { backgroundColor: v.backgroundColorActive },
-        },
-        ':focus-visible': {
-          ...borderFocusStyles[':focus-visible'],
         },
 
         ...(p.size === 'small' && {
@@ -81,20 +90,29 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
             minWidth: v.sizeSmallHeight,
           }),
 
-          ':hover': {
-            color: v.circularColorActive,
-            backgroundColor: v.circularBackgroundColorHover,
-            borderColor: v.circularBorderColorHover,
-          },
-
           ':focus': {
             ...borderFocusStyles[':focus'],
             boxShadow: 'none',
             ':active': { backgroundColor: v.circularBackgroundColorActive },
           },
+
           ':focus-visible': {
             ...borderFocusStyles[':focus-visible'],
-            borderColor: v.circularBorderColor,
+            color: v.circularColorActive,
+            borderColor: v.circularBorderColorFocus,
+            backgroundColor: v.circularBackgroundColorFocus,
+
+            '&:hover': {
+              color: v.circularColorActive,
+              backgroundColor: v.circularBackgroundColorHover,
+              borderColor: v.circularBorderColorHover,
+            },
+          },
+
+          ':hover': {
+            color: v.circularColorActive,
+            backgroundColor: v.circularBackgroundColorHover,
+            borderColor: v.circularBorderColorHover,
           },
         }),
 
@@ -108,17 +126,18 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         // by default icons should always be outline, but filled on hover/focus
         ...getIconFillOrOutlineStyles({ outline: true }),
 
-        ':hover': {
-          color: v.textColorHover,
-          ...getIconFillOrOutlineStyles({ outline: false }),
-        },
-
         ':focus': {
           boxShadow: 'none',
           ...borderFocusStyles[':focus'],
         },
+
         ':focus-visible': {
           ...borderFocusStyles[':focus-visible'],
+          ...getIconFillOrOutlineStyles({ outline: false }),
+        },
+
+        ':hover': {
+          color: v.textColorHover,
           ...getIconFillOrOutlineStyles({ outline: false }),
         },
 
@@ -135,18 +154,26 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
           borderColor: v.primaryBorderColor,
           boxShadow: siteVariables.shadowLevel1Dark,
 
-          ':hover': {
-            color: v.primaryColorHover,
-            backgroundColor: v.primaryBackgroundColorHover,
-          },
-
           ':focus': {
             ...borderFocusStyles[':focus'],
             boxShadow: 'none',
             ':active': { backgroundColor: v.primaryBackgroundColorActive },
           },
+
           ':focus-visible': {
             ...borderFocusStyles[':focus-visible'],
+            color: v.primaryColorFocus,
+            backgroundColor: v.primaryBackgroundColorFocus,
+
+            '&:hover': {
+              color: v.primaryColorHover,
+              backgroundColor: v.primaryBackgroundColorHover,
+            },
+          },
+
+          ':hover': {
+            color: v.primaryColorHover,
+            backgroundColor: v.primaryBackgroundColorHover,
           },
         }),
 
