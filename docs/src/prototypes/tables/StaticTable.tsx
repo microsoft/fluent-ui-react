@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { Table, ItemLayout, Image } from '@stardust-ui/react'
 import avatar from './avatar'
+import { tableCellBehavior } from '@stardust-ui/accessibility'
 
 const itemLayout = (
   <ItemLayout
@@ -18,21 +19,32 @@ const header = {
 const rows = [
   {
     items: [
-      { content: '1' },
+      { content: '1', accessibility: tableCellBehavior },
       {
         content: 'Roman',
+        accessibility: tableCellBehavior,
       },
-      { content: avatar },
-      { content: itemLayout },
+      { content: avatar, accessibility: tableCellBehavior },
+      { content: itemLayout, accessibility: tableCellBehavior },
     ],
     headerIndex: 2,
   },
   {
-    items: [{ content: '2' }, { content: 'Alex' }, { content: avatar }, { content: 'Some text' }],
+    items: [
+      { content: '2', accessibility: tableCellBehavior },
+      { content: 'Alex', accessibility: tableCellBehavior },
+      { content: avatar, accessibility: tableCellBehavior },
+      { content: 'Some text', accessibility: tableCellBehavior },
+    ],
     headerIndex: 2,
   },
   {
-    items: [{ content: '3' }, { content: 'Ali' }, { content: avatar }, { content: 'Some text' }],
+    items: [
+      { content: '3', accessibility: tableCellBehavior },
+      { content: 'Ali', accessibility: tableCellBehavior },
+      { content: avatar, accessibility: tableCellBehavior },
+      { content: 'Some text', accessibility: tableCellBehavior },
+    ],
     headerIndex: 2,
   },
 ]

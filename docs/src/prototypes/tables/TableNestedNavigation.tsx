@@ -10,6 +10,7 @@ import {
   Popup,
   Header,
   Input,
+  gridCellBehavior,
 } from '@stardust-ui/react'
 
 const renderPopup = () => (
@@ -35,7 +36,7 @@ const header = {
 const rows = [
   {
     items: [
-      { content: '1' },
+      { content: '1', accessibility: gridCellBehavior },
       {
         content: (
           <span>
@@ -43,29 +44,30 @@ const rows = [
             <button>Button</button>
           </span>
         ),
+        accessibility: gridCellBehavior,
       },
-      { content: avatar },
-      { content: renderPopup() },
+      { content: avatar, accessibility: gridCellBehavior },
+      { content: renderPopup(), accessibility: gridCellBehavior },
     ],
     headerIndex: 2,
     accessibility: tableRowNestedNavigationBehavior,
   },
   {
     items: [
-      { content: '2' },
-      { content: 'Alex' },
-      { content: avatar },
-      { content: <Button>Click</Button> },
+      { content: '2', accessibility: gridCellBehavior },
+      { content: 'Alex', accessibility: gridCellBehavior },
+      { content: avatar, accessibility: gridCellBehavior },
+      { content: <Button>Click</Button>, accessibility: gridCellBehavior },
     ],
     headerIndex: 2,
     accessibility: tableRowNestedNavigationBehavior,
   },
   {
     items: [
-      { content: '3' },
-      { content: 'Ali' },
-      { content: avatar },
-      { content: <Button>Click</Button> },
+      { content: '3', accessibility: gridCellBehavior },
+      { content: 'Ali', accessibility: gridCellBehavior },
+      { content: avatar, accessibility: gridCellBehavior },
+      { content: <Button>Click</Button>, accessibility: gridCellBehavior },
     ],
     headerIndex: 2,
     accessibility: tableRowNestedNavigationBehavior,

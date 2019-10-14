@@ -6,6 +6,7 @@ import {
   tableRowFocusableBehavior,
   tableHeaderRowNestedNavigationBehavior,
   tableVerticalNavigationBehavior,
+  gridCellBehavior,
 } from '@stardust-ui/react'
 
 // TODO: FIX shift + TAB for headings
@@ -30,9 +31,10 @@ class AttachmentsTable extends React.Component {
       items: [
         {
           content: <Icon aria-label="word" name="word-color" />,
+          accessibility: gridCellBehavior,
         },
-        { content: <span>Accessibility stardust patterns</span> },
-        { content: <span>7/17/18</span> },
+        { content: <span>Accessibility stardust patterns</span>, accessibility: gridCellBehavior },
+        { content: <span>7/17/18</span>, accessibility: gridCellBehavior },
       ],
       accessibility: tableRowFocusableBehavior,
       onClick: () => this.handleRowClick(1),
@@ -41,9 +43,10 @@ class AttachmentsTable extends React.Component {
       items: [
         {
           content: <Icon aria-label="excel" name="excel-color" />,
+          accessibility: gridCellBehavior,
         },
-        { content: <span>Budget</span> },
-        { content: <span>9/25/18</span> },
+        { content: <span>Budget</span>, accessibility: gridCellBehavior },
+        { content: <span>9/25/18</span>, accessibility: gridCellBehavior },
       ],
       accessibility: tableRowFocusableBehavior,
       onClick: () => this.handleRowClick(2),
@@ -52,9 +55,10 @@ class AttachmentsTable extends React.Component {
       items: [
         {
           content: <Icon aria-label="powerpoint" name="powerpoint-color" />,
+          accessibility: gridCellBehavior,
         },
-        { content: <span>Accessibility for everyone</span> },
-        { content: <span>1/17/19</span> },
+        { content: <span>Accessibility for everyone</span>, accessibility: gridCellBehavior },
+        { content: <span>1/17/19</span>, accessibility: gridCellBehavior },
       ],
       accessibility: tableRowFocusableBehavior,
       onClick: () => this.handleRowClick(3),

@@ -52,6 +52,7 @@ const rows = [
       { content: renderPopup(), accessibility: gridCellBehavior },
     ],
     headerIndex: 2,
+    // rowHeaderName: "choose any suitable"
   },
   {
     items: [

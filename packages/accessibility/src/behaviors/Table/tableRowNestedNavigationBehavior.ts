@@ -12,6 +12,7 @@ const tableRowNestedNavigationBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       [IS_FOCUSABLE_ATTRIBUTE]: true,
+      role: 'row',
     },
   },
   focusZone: {

@@ -4,7 +4,7 @@ const tableRowHeaderBehavior: Accessibility = (props: any) => ({
   attributes: {
     root: {
       role: props.as !== 'th' ? 'rowheader' : undefined,
-      scope: 'row',
+      // scope: 'row',
     },
   },
 })

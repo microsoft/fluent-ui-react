@@ -5,7 +5,8 @@ import * as React from 'react'
 import TableCell, { TableCellProps } from './TableCell'
 import { UIComponent, RenderResultConfig, UIComponentProps, commonPropTypes } from '../../lib'
 import { ShorthandValue, WithAsProp } from '../../types'
-import { Accessibility, tableRowBehavior, tableRowHeaderBehavior } from '@stardust-ui/accessibility'
+// import { Accessibility, tableRowBehavior, tableRowHeaderBehavior } from '@stardust-ui/accessibility'
+import { Accessibility, tableRowBehavior } from '@stardust-ui/accessibility'
 
 export interface TableRowProps extends UIComponentProps {
   /**
@@ -24,6 +25,7 @@ export interface TableRowProps extends UIComponentProps {
   focusable?: boolean
   rowIndex?: number
   onClick?: (e, props) => void
+  rowHeaderName?: string
 }
 
 /**
@@ -53,11 +55,14 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
     focusable: PropTypes.bool,
     onClick: PropTypes.func,
     rowIndex: PropTypes.number,
+    rowHeaderName: PropTypes.string,
   }
 
   static defaultProps = {
-    as: 'tr',
+    // as: 'tr',
+    as: 'div',
     accessibility: tableRowBehavior as Accessibility,
+    styles: { display: 'table-row' },
   }
 
   actionHandlers = {
@@ -78,7 +83,8 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
   }
 
   renderCells() {
-    const { items, headerIndex, focusedIndex } = this.props
+    // const { items, headerIndex, focusedIndex } = this.props
+    const { items, focusedIndex } = this.props
 
     return _.map(items, (item: TableCellProps, index: number) => {
       const cellProps = {
@@ -88,15 +94,15 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
         onClick: this.handleClick,
         cellIndex: index,
       }
-      const headerProps = {
-        ...cellProps,
-        // as: 'th',
-        accessibility: tableRowHeaderBehavior,
-      } as TableCellProps
+      // const headerProps = {
+      //   ...cellProps,
+      //   // as: 'th',
+      //   accessibility: tableRowHeaderBehavior,
+      // } as TableCellProps
 
-      if (headerIndex && index === headerIndex) {
-        return <TableCell {...headerProps} />
-      }
+      // if (headerIndex && index === headerIndex) {
+      //   return <TableCell {...headerProps} />
+      // }
       return <TableCell {...cellProps} />
     })
   }

@@ -64,7 +64,10 @@ class TableCell extends UIComponent<WithAsProp<any>, any> {
   }
 
   static defaultProps = {
-    as: 'td',
+    // as: 'td',
+    as: 'div',
+    // role: 'cell',
+    styles: { display: 'table-cell', width: '10em', padding: '0.5em 0.5em' },
   }
 
   tryFocusCell() {
@@ -116,7 +119,7 @@ class TableCell extends UIComponent<WithAsProp<any>, any> {
         {...accessibility.attributes.root}
         {...unhandledProps}
         ref={this.setRef}
-        onClick={this.handleClick}
+        onClick={this.props.onClick ? this.handleClick : null}
       >
         {childrenExist(children) ? children : content}
       </ElementType>

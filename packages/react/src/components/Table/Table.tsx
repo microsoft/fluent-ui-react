@@ -119,11 +119,12 @@ class Table extends AutoControlledComponent<WithAsProp<TableProps>, TableState> 
 
   static defaultProps: TableProps = {
     // as: 'table',
+    styles: { display: 'table' },
     accessibility: tableBehavior,
   }
 
-  constructor(p, c) {
-    super(p, c)
+  constructor(props, context) {
+    super(props, context)
 
     const { rows, header } = this.props
     this.rowsCount = rows.length + (header ? 1 : 0)
@@ -153,7 +154,17 @@ class Table extends AutoControlledComponent<WithAsProp<TableProps>, TableState> 
           _.invoke(row, 'onClick', e, props)
         },
       } as TableRowProps
-      return <TableRow {...props} />
+      return (
+        // when using rowheader then NVDA doesn't navigate to the row at all...
+        props.rowHeaderName ? (
+          <div role="rowheader" aria-label={props.rowHeaderName}>
+            {' '}
+            <TableRow {...props} />{' '}
+          </div>
+        ) : (
+          <TableRow {...props} />
+        )
+      )
     })
   }
 
@@ -163,9 +174,17 @@ class Table extends AutoControlledComponent<WithAsProp<TableProps>, TableState> 
 
     const headers = _.map(items, (item: TableCellProps) => {
       return {
-        as: 'th',
+        // as: 'th',
+        as: 'div',
+        role: 'columnheader',
         accessibility: tableColumnHeaderBehavior,
         ...item,
+        styles: {
+          display: 'table-cell',
+          width: '10em',
+          // padding: "0.25em 0.25em",
+          fontWeight: 'bold',
+        },
       }
     })
 
@@ -194,11 +213,15 @@ class Table extends AutoControlledComponent<WithAsProp<TableProps>, TableState> 
         {...accessibility.keyHandlers.root}
         {...unhandledProps}
       >
-        <thead>
+        {/* <thead> */}
+        <div role="rowgroup">
           {/* <TableRow {...this.getHeaderProps()} />  */}
           {this.renderHeader()}
-        </thead>
-        <tbody>{this.renderRows()}</tbody>
+          {/* </thead> */}
+        </div>
+        {/* <tbody> */}
+        <div role="rowgroup">{this.renderRows()}</div>
+        {/* </tbody> */}
       </ElementType>
     )
   }
