@@ -14,6 +14,7 @@ import {
   applyAccessibilityKeyHandlers,
   childrenExist,
   ChildrenComponentProps,
+  getOrGenerateIdFromShorthand,
   SizeValue,
 } from '../../lib'
 import {
@@ -32,14 +33,14 @@ import { MenuItemProps } from '../Menu/MenuItem'
 import { screenReaderContainerStyles } from '../../lib/accessibility/Styles/accessibilityStyles'
 
 export interface CarouselProps extends UIComponentProps, ChildrenComponentProps {
-  /** Shorthand array of props for CarouselItem. */
-  items?: ShorthandCollection<CarouselItemProps>
-
   /** Shorthand for the button that navigates to the next item. */
   buttonNext?: ShorthandValue<ButtonProps>
 
   /** Shorthand for the button that navigates to the previous item. */
   buttonPrevious?: ShorthandValue<ButtonProps>
+
+  /** Shorthand array of props for CarouselItem. */
+  items?: ShorthandCollection<CarouselItemProps>
 
   /** Specifies if the process of switching slides is cyclical. */
   cyclical?: boolean
@@ -61,6 +62,7 @@ export interface CarouselProps extends UIComponentProps, ChildrenComponentProps 
 export interface CarouselState {
   activeIndex: number
   ariaLiveText: string
+  itemIds: string[]
 }
 
 class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
@@ -132,6 +134,18 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
   state = {
     activeIndex: 0,
     ariaLiveText: '',
+    itemIds: [] as string[],
+  }
+
+  static getDerivedStateFromProps(props: CarouselProps, state: CarouselState) {
+    const { items } = props
+    const { itemIds } = state
+
+    return {
+      itemIds: items.map((item, index) =>
+        getOrGenerateIdFromShorthand('carousel-slide-', item, itemIds[index]),
+      ),
+    }
   }
 
   itemsContainerRef = React.createRef<HTMLElement>()
@@ -158,7 +172,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
 
   renderContent = (accessibility, styles, unhandledProps) => {
     const { items, renderItemSlide } = this.props
-    const { activeIndex, ariaLiveText } = this.state
+    const { activeIndex, ariaLiveText, itemIds } = this.state
 
     if (!items) {
       return null
@@ -177,7 +191,11 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
           >
             {items.map((item, index) =>
               CarouselItem.create(item, {
-                defaultProps: { renderItemSlide, active: activeIndex === index },
+                defaultProps: {
+                  renderItemSlide,
+                  active: activeIndex === index,
+                  id: itemIds[index],
+                },
               }),
             )}
           </div>
@@ -244,7 +262,8 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
       return null
     }
 
-    const { activeIndex } = this.state
+    const { activeIndex, itemIds } = this.state
+
     return tabList ? (
       Menu.create(tabList, {
         defaultProps: {
@@ -255,6 +274,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
           items: _.times(items.length, index => ({
             key: index,
             icon: { name: 'stardust-circle', size: 'smallest' as SizeValue },
+            'aria-controls': itemIds[index],
           })),
         },
         overrideProps: (predefinedProps: MenuItemProps) => ({
