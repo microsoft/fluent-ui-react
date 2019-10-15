@@ -28,6 +28,7 @@ export default (siteVars: any): Partial<ButtonVariables> => {
     circularBackgroundColorFocus: siteVars.accessibleCyan,
     circularBorderColor: siteVars.colors.white,
     circularBorderColorHover: siteVars.colors.white,
+    circularBorderColorFocus: siteVars.colors.white,
 
     boxShadow: 'none',
   }
