@@ -1,4 +1,4 @@
-import { Provider, themes, pxToRem } from '@stardust-ui/react'
+import { Provider, themes, pxToRem, createTheme } from '@stardust-ui/react'
 import AnchorJS from 'anchor-js'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -93,36 +93,42 @@ class DocsLayout extends React.Component<any, any> {
     return (
       <>
         <Provider
-          theme={mergeThemes(themes.teamsDark, {
-            // adjust Teams' theme to Semantic UI's font size scheme
-            componentVariables: {
-              HierarchicalTreeItem: {
-                padding: `${pxToRem(7)} ${pxToRem(16)}`,
-                textDecoration: 'none',
-                fontSize: pxToRem(12),
-                fontWeight: 400,
-                color: '#ffffff80',
+          theme={mergeThemes(
+            themes.teamsDark,
+            createTheme(
+              {
+                // adjust Teams' theme to Semantic UI's font size scheme
+                componentVariables: {
+                  HierarchicalTreeItem: {
+                    padding: `${pxToRem(7)} ${pxToRem(16)}`,
+                    textDecoration: 'none',
+                    fontSize: pxToRem(12),
+                    fontWeight: 400,
+                    color: '#ffffff80',
 
-                '& .active': {
-                  fontWeight: 'bold',
+                    '& .active': {
+                      fontWeight: 'bold',
+                    },
+                  },
+                },
+                componentStyles: {
+                  HierarchicalTreeItem: {
+                    root: ({ variables: v, props: p }) => ({
+                      ...(!p.items && treeItemStyle),
+                      ...(p.items && treeSectionStyle),
+                    }),
+                  },
+                  HierarchicalTreeTitle: {
+                    root: {
+                      display: 'block',
+                      width: '100%',
+                    },
+                  },
                 },
               },
-            },
-            componentStyles: {
-              HierarchicalTreeItem: {
-                root: ({ variables: v, props: p }) => ({
-                  ...(!p.items && treeItemStyle),
-                  ...(p.items && treeSectionStyle),
-                }),
-              },
-              HierarchicalTreeTitle: {
-                root: {
-                  display: 'block',
-                  width: '100%',
-                },
-              },
-            },
-          })}
+              'DocsLayout',
+            ),
+          )}
         >
           <Sidebar width={sidebarWidth} treeItemStyle={treeItemStyle} />
         </Provider>
