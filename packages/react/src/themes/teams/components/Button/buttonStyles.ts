@@ -13,6 +13,8 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
 
     const borderFocusStyles = getBorderFocusStyles({
       siteVariables,
+      // borderWidth: '2px',
+      borderPadding: '1px',
       ...(p.circular && {
         borderPadding: pxToRem(4),
       }),
@@ -50,19 +52,11 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         ':focus': {
           ...borderFocusStyles[':focus'],
           boxShadow: 'none',
-          // ':active': { backgroundColor: v.backgroundColorActive },  //need to get rid of this in buttonVariables
+          ':active': { backgroundColor: v.backgroundColorActive },
         },
 
         ':focus-visible': {
           ...borderFocusStyles[':focus-visible'],
-          color: v.colorFocus,
-          backgroundColor: v.backgroundColorFocus,
-
-          '&:hover': {
-            color: v.colorHover,
-            backgroundColor: v.backgroundColorHover,
-            borderColor: v.borderColorHover,
-          },
         },
 
         ':hover': {
@@ -98,15 +92,7 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
 
           ':focus-visible': {
             ...borderFocusStyles[':focus-visible'],
-            color: v.circularColorActive,
             borderColor: v.circularBorderColorFocus,
-            backgroundColor: v.circularBackgroundColorFocus,
-
-            '&:hover': {
-              color: v.circularColorActive,
-              backgroundColor: v.circularBackgroundColorHover,
-              borderColor: v.circularBorderColorHover,
-            },
           },
 
           ':hover': {
@@ -162,13 +148,6 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
 
           ':focus-visible': {
             ...borderFocusStyles[':focus-visible'],
-            color: v.primaryColorFocus,
-            backgroundColor: v.primaryBackgroundColorFocus,
-
-            '&:hover': {
-              color: v.primaryColorHover,
-              backgroundColor: v.primaryBackgroundColorHover,
-            },
           },
 
           ':hover': {
