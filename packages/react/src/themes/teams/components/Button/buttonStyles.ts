@@ -48,6 +48,12 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         borderColor: v.borderColor,
         boxShadow: v.boxShadow,
 
+        ':hover': {
+          color: v.colorHover,
+          backgroundColor: v.backgroundColorHover,
+          borderColor: v.borderColorHover,
+        },
+
         ':focus': {
           ...borderFocusStyles[':focus'],
           boxShadow: 'none',
@@ -56,12 +62,6 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
 
         ':focus-visible': {
           ...borderFocusStyles[':focus-visible'],
-        },
-
-        ':hover': {
-          color: v.colorHover,
-          backgroundColor: v.backgroundColorHover,
-          borderColor: v.borderColorHover,
         },
 
         ...(p.size === 'small' && {
@@ -83,6 +83,12 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
             minWidth: v.sizeSmallHeight,
           }),
 
+          ':hover': {
+            color: v.circularColorActive,
+            backgroundColor: v.circularBackgroundColorHover,
+            borderColor: v.circularBorderColorHover,
+          },
+
           ':focus': {
             ...borderFocusStyles[':focus'],
             boxShadow: 'none',
@@ -92,12 +98,6 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
           ':focus-visible': {
             ...borderFocusStyles[':focus-visible'],
             borderColor: v.circularBorderColorFocus,
-          },
-
-          ':hover': {
-            color: v.circularColorActive,
-            backgroundColor: v.circularBackgroundColorHover,
-            borderColor: v.circularBorderColorHover,
           },
         }),
 
@@ -111,6 +111,11 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         // by default icons should always be outline, but filled on hover/focus
         ...getIconFillOrOutlineStyles({ outline: true }),
 
+        ':hover': {
+          color: v.textColorHover,
+          ...getIconFillOrOutlineStyles({ outline: false }),
+        },
+
         ':focus': {
           boxShadow: 'none',
           ...borderFocusStyles[':focus'],
@@ -118,11 +123,6 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
 
         ':focus-visible': {
           ...borderFocusStyles[':focus-visible'],
-          ...getIconFillOrOutlineStyles({ outline: false }),
-        },
-
-        ':hover': {
-          color: v.textColorHover,
           ...getIconFillOrOutlineStyles({ outline: false }),
         },
 

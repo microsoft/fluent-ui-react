@@ -19,8 +19,8 @@ export default (siteVars: any): Partial<ButtonVariables> => {
     circularColorActive: siteVars.colors.grey[800],
     circularBackgroundColor: siteVars.colors.grey[800],
     circularBackgroundColorActive: siteVars.colors.grey[250],
+    circularBorderColorFocus: siteVars.colors.grey[250],
     circularBackgroundColorHover: siteVars.colors.grey[300],
     circularBorderColor: siteVars.colors.grey[250],
-    circularBorderColorFocus: siteVars.colors.grey[250],
   }
 }
