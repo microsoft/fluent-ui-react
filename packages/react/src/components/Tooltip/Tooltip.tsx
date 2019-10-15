@@ -142,7 +142,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
 
   static create: ShorthandFactory<TooltipProps>
 
-  pointerTargetRef = React.createRef<HTMLElement>()
+  pointerTargetRef = React.createRef<HTMLDivElement>()
   triggerRef = React.createRef<HTMLElement>()
   contentRef = React.createRef<HTMLElement>()
   closeTimeoutId

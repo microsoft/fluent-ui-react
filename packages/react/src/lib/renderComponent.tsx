@@ -1,3 +1,4 @@
+import { FocusZoneMode } from '@stardust-ui/accessibility'
 import {
   AccessibilityActionHandlers,
   callable,
@@ -22,13 +23,13 @@ import {
   PropsWithVarsAndStyles,
   State,
   ThemePrepared,
-  ComponentSlotStylesInput,
 } from '../themes/types'
 import { Props, ProviderContextPrepared } from '../types'
 import { emptyTheme, mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import createAnimationStyles from './createAnimationStyles'
-import Debug, { isEnabled as isDebugEnabled } from './debug'
-import { FocusZoneMode } from '@stardust-ui/accessibility'
+import { isEnabled as isDebugEnabled } from './debug/debugEnabled'
+import { DebugData } from './debug/debugData'
+import withDebugId from './withDebugId'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
@@ -51,17 +52,7 @@ export interface RenderConfig<P> {
   state: State
   actionHandlers: AccessibilityActionHandlers
   render: RenderComponentCallback<P>
-  saveDebug: (debug: Debug | null) => void
-}
-
-const resolveStyles = (
-  styles: ComponentSlotStylesInput,
-  styleParam: ComponentStyleFunctionParam,
-): ComponentSlotStylesPrepared => {
-  return Object.keys(styles).reduce(
-    (acc, next) => ({ ...acc, [next]: callable(styles[next])(styleParam) }),
-    {},
-  )
+  saveDebug: (debug: DebugData | null) => void
 }
 
 const renderComponent = <P extends {}>(
@@ -92,7 +83,7 @@ const renderComponent = <P extends {}>(
   // Resolve variables for this component, allow props.variables to override
   const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
     theme.componentVariables[displayName],
-    props.variables,
+    props.variables && withDebugId(props.variables, 'props.variables'),
   )(theme.siteVariables)
 
   const animationCSSProp = props.animation
@@ -102,9 +93,9 @@ const renderComponent = <P extends {}>(
   // Resolve styles using resolved variables, merge results, allow props.styles to override
   const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
     theme.componentStyles[displayName],
-    { root: props.design },
-    { root: props.styles },
-    { root: animationCSSProp },
+    withDebugId({ root: props.design }, 'props.design'),
+    withDebugId({ root: props.styles }, 'props.styles'),
+    withDebugId({ root: animationCSSProp }, 'props.animation'),
   )
 
   const accessibility: ReactAccessibilityBehavior = getAccessibility(
@@ -132,13 +123,20 @@ const renderComponent = <P extends {}>(
   const direction = rtl ? 'rtl' : 'ltr'
   const felaParam = {
     theme: { direction },
+    displayName, // does not affect styles, only used by useEnhancedRenderer in docs
   }
 
   const resolvedStyles: ComponentSlotStylesPrepared = {}
+  const resolvedStylesDebug: { [key: string]: { styles: Object }[] } = {}
   const classes: ComponentSlotClasses = {}
 
   Object.keys(mergedStyles).forEach(slotName => {
     resolvedStyles[slotName] = callable(mergedStyles[slotName])(styleParam)
+
+    if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
+      resolvedStylesDebug[slotName] = resolvedStyles[slotName]['_debug']
+      delete resolvedStyles[slotName]['_debug']
+    }
 
     if (renderer) {
       classes[slotName] = renderer.renderRule(callable(resolvedStyles[slotName]), felaParam)
@@ -160,17 +158,35 @@ const renderComponent = <P extends {}>(
   let wrapInFocusZone: (element: React.ReactElement) => React.ReactElement = element => element
 
   // conditionally add sources for evaluating debug information to component
-  if (isDebugEnabled) {
-    saveDebug(
-      new Debug({
-        componentName: displayName,
-        themes: context ? context.originalThemes : [],
-        instanceStylesOverrides: props.styles,
-        instanceVariablesOverrides: props.variables,
-        resolveStyles: styles => resolveStyles(styles, styleParam),
-        resolveVariables: variables => callable(variables)(theme.siteVariables),
+  if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
+    saveDebug({
+      componentName: displayName,
+      componentVariables: _.filter(
+        resolvedVariables._debug,
+        variables => !_.isEmpty(variables.resolved),
+      ),
+      componentStyles: _.mapValues(resolvedStylesDebug, v =>
+        _.filter(v, v => {
+          return !_.isEmpty(v.styles)
+        }),
+      ),
+      siteVariables: _.filter(theme.siteVariables._debug, siteVars => {
+        if (_.isEmpty(siteVars) || _.isEmpty(siteVars.resolved)) {
+          return false
+        }
+
+        const keys = Object.keys(siteVars.resolved)
+        if (
+          keys.length === 1 &&
+          keys.pop() === 'fontSizes' &&
+          _.isEmpty(siteVars.resolved['fontSizes'])
+        ) {
+          return false
+        }
+
+        return true
       }),
-    )
+    })
   }
 
   if (accessibility.focusZone && accessibility.focusZone.mode === FocusZoneMode.Wrap) {
