@@ -2,6 +2,9 @@ import * as React from 'react'
 import { mergeThemes, callable, ComponentStyleFunctionParam, themes } from '@stardust-ui/react'
 import * as _ from 'lodash'
 
+/**
+ * Not a real performance test, just a temporary POC
+ */
 const providerMergeThemesPerf = () => {
   const merged = mergeThemes(..._.times(100, n => themes.teams))
   const resolvedStyles = _.mapValues(merged.componentStyles, (componentStyle, componentName) => {

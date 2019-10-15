@@ -31,9 +31,9 @@ import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from './acces
 import getKeyDownHandlers from './getKeyDownHandlers'
 import { emptyTheme, mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import createAnimationStyles from './createAnimationStyles'
-import { isEnabled as isDebugEnabled } from './debug'
+import { isEnabled as isDebugEnabled } from './debug/debugEnabled'
+import { DebugData } from './debug/debugData'
 import withDebugId from './withDebugId'
-import DebugData from './debug/debugData'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
@@ -222,9 +222,12 @@ const renderComponent = <P extends {}>(
   const classes: ComponentSlotClasses = {}
 
   Object.keys(mergedStyles).forEach(slotName => {
-    const { _debug, ...resolvedSlotStyles } = callable(mergedStyles[slotName])(styleParam)
-    resolvedStyles[slotName] = resolvedSlotStyles
-    resolvedStylesDebug[slotName] = _debug
+    resolvedStyles[slotName] = callable(mergedStyles[slotName])(styleParam)
+
+    if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
+      resolvedStylesDebug[slotName] = resolvedStyles[slotName]['_debug']
+      delete resolvedStyles[slotName]['_debug']
+    }
 
     if (renderer) {
       classes[slotName] = renderer.renderRule(callable(resolvedStyles[slotName]), felaParam)
@@ -245,7 +248,7 @@ const renderComponent = <P extends {}>(
   }
 
   // conditionally add sources for evaluating debug information to component
-  if (isDebugEnabled) {
+  if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
     saveDebug({
       componentName: displayName,
       componentVariables: _.filter(

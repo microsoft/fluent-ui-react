@@ -5,6 +5,7 @@ import { toRefObject } from '@stardust-ui/react-component-ref'
 import { EventListener } from '@stardust-ui/react-component-event-listener'
 
 import { isBrowser } from '../../lib'
+import { isEnabled as isDebugEnabled } from '../../lib/debug/debugEnabled'
 
 import DebugPanel from './DebugPanel'
 import FiberNavigator from './FiberNavigator'
@@ -42,7 +43,7 @@ class Debug extends React.Component<DebugProps, DebugState> {
 
   constructor(p, s) {
     super(p, s)
-    if (isBrowser()) {
+    if (process.env.NODE_ENV !== 'production' && isDebugEnabled && isBrowser()) {
       // eslint-disable-next-line no-undef
       ;(window as any).openDebugPanel = () => {
         // eslint-disable-next-line no-undef
@@ -142,46 +143,50 @@ class Debug extends React.Component<DebugProps, DebugState> {
     const { mountDocument } = this.props
     const { fiberNav, selectedFiberNav, isSelecting, debugPanelPosition } = this.state
 
-    return (
-      <>
-        <EventListener
-          targetRef={toRefObject(mountDocument.body)}
-          listener={this.handleKeyDown}
-          type="keydown"
-        />
-        {isSelecting && (
+    if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
+      return (
+        <>
           <EventListener
             targetRef={toRefObject(mountDocument.body)}
-            listener={this.handleMouseMove}
-            type="mousemove"
+            listener={this.handleKeyDown}
+            type="keydown"
           />
-        )}
-        {isSelecting && fiberNav && fiberNav.domNode && (
-          <EventListener
-            targetRef={toRefObject(fiberNav.domNode)}
-            listener={this.handleStardustDOMNodeClick}
-            type="click"
-          />
-        )}
-        {isSelecting && fiberNav && <DebugRect fiberNav={fiberNav} />}
-        {selectedFiberNav && <DebugRect fiberNav={selectedFiberNav} />}
-        {!isSelecting && fiberNav && fiberNav.instance && (
-          <DebugPanel
-            fiberNav={fiberNav}
-            onActivateDebugSelectorClick={this.startSelecting}
-            onClose={this.close}
-            // TODO: Integrate CSS in JS Styles for Host Components (DOM nodes)
-            // cssStyles={stylesForNode(stardustDOMNode)}
-            debugData={fiberNav.stardustDebug}
-            position={debugPanelPosition || 'right'}
-            onPositionLeft={this.positionLeft}
-            onPositionRight={this.positionRight}
-            onFiberChanged={this.changeFiber}
-            onFiberSelected={this.selectFiber}
-          />
-        )}
-      </>
-    )
+          {isSelecting && (
+            <EventListener
+              targetRef={toRefObject(mountDocument.body)}
+              listener={this.handleMouseMove}
+              type="mousemove"
+            />
+          )}
+          {isSelecting && fiberNav && fiberNav.domNode && (
+            <EventListener
+              targetRef={toRefObject(fiberNav.domNode)}
+              listener={this.handleStardustDOMNodeClick}
+              type="click"
+            />
+          )}
+          {isSelecting && fiberNav && <DebugRect fiberNav={fiberNav} />}
+          {selectedFiberNav && <DebugRect fiberNav={selectedFiberNav} />}
+          {!isSelecting && fiberNav && fiberNav.instance && (
+            <DebugPanel
+              fiberNav={fiberNav}
+              onActivateDebugSelectorClick={this.startSelecting}
+              onClose={this.close}
+              // TODO: Integrate CSS in JS Styles for Host Components (DOM nodes)
+              // cssStyles={stylesForNode(stardustDOMNode)}
+              debugData={fiberNav.stardustDebug}
+              position={debugPanelPosition || 'right'}
+              onPositionLeft={this.positionLeft}
+              onPositionRight={this.positionRight}
+              onFiberChanged={this.changeFiber}
+              onFiberSelected={this.selectFiber}
+            />
+          )}
+        </>
+      )
+    }
+
+    return null
   }
 }
 

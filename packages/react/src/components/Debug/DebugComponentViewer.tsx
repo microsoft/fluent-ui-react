@@ -1,6 +1,6 @@
 import * as React from 'react'
 import FiberNavigator from './FiberNavigator'
-import Line from './Line'
+import DebugLine from './DebugLine'
 import ScrollToBottom from './ScrollToBottom'
 
 export type DebugComponentViewerProps = {
@@ -33,11 +33,11 @@ const DebugComponentViewer: React.FC<DebugComponentViewerProps> = props => {
     parentNav = parentNav.parent
   }
 
-  const component = fiberNav.name && <Line>{fiberNav.jsxString}</Line>
+  const component = fiberNav.name && <DebugLine>{fiberNav.jsxString}</DebugLine>
 
   return (
     <ScrollToBottom style={style}>
-      <Line
+      <DebugLine
         indent={0}
         {...(ownerNav.stardustDebug && {
           actionable: true,
@@ -51,12 +51,12 @@ const DebugComponentViewer: React.FC<DebugComponentViewerProps> = props => {
         })}
       >
         {ownerNav.jsxString}
-      </Line>
-      <Line indent={1} style={{ color: '#ba645e' }}>
+      </DebugLine>
+      <DebugLine indent={1} style={{ color: '#ba645e' }}>
         render()
-      </Line>
+      </DebugLine>
       {parentNavs.map((parent, i) => (
-        <Line
+        <DebugLine
           key={i}
           indent={2 + i}
           actionable
@@ -69,9 +69,9 @@ const DebugComponentViewer: React.FC<DebugComponentViewerProps> = props => {
           onMouseLeave={e => onFiberSelected(null)}
         >
           {parent.jsxString}
-        </Line>
+        </DebugLine>
       ))}
-      <Line
+      <DebugLine
         indent={3 + (parentNavs.length - 1)}
         active
         badge="selected"
@@ -85,7 +85,7 @@ const DebugComponentViewer: React.FC<DebugComponentViewerProps> = props => {
         onMouseLeave={e => onFiberSelected(null)}
       >
         {component}
-      </Line>
+      </DebugLine>
     </ScrollToBottom>
   )
 }

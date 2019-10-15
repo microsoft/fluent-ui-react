@@ -1,22 +1,35 @@
 const isDebugEnabled = () => {
   let enabled = false
-  try {
-    const isProduction = process.env.NODE_ENV === 'production'
-    // eslint-disable-next-line no-undef
-    const isEnabledBrowserOverride = !!window.localStorage.stardustDebug
+  if (process.env.NODE_ENV !== 'production') {
+    try {
+      // eslint-disable-next-line no-undef
+      const stardustDebugEnabled = !!window.localStorage.stardustDebug
 
-    if (isEnabledBrowserOverride) {
-      console.warn(
-        [
-          '@stardust-ui/react:',
-          `Debug data collection is overriden to be enabled.`,
-          'To remove this override paste `delete window.localStorage.stardustDebug` to your browser console and reload the page.',
-        ].join(' '),
-      )
-    }
+      if (process.env.NODE_ENV !== 'test') {
+        if (stardustDebugEnabled) {
+          /* eslint-disable-next-line no-console */
+          console.warn(
+            [
+              '@stardust-ui/react:',
+              `CSSinJS Debug data collection is enabled.`,
+              'To remove this override paste `delete window.localStorage.stardustDebug` to your browser console and reload the page.',
+            ].join(' '),
+          )
+        } else {
+          /* eslint-disable-next-line no-console */
+          console.warn(
+            [
+              '@stardust-ui/react:',
+              `CSSinJS Debug data collection is disabled.`,
+              'To enable data collection paste `window.localStorage.stardustDebug = true` to your browser console and reload the page.',
+            ].join(' '),
+          )
+        }
+      }
 
-    enabled = isEnabledBrowserOverride || !isProduction
-  } catch {}
+      enabled = stardustDebugEnabled
+    } catch {}
+  }
 
   return enabled
 }

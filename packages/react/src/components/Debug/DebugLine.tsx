@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-const Line: React.FC<{
+const DebugLine: React.FC<{
   [key: string]: any
   children: React.ReactNode
   active?: boolean
@@ -32,4 +32,4 @@ const Line: React.FC<{
   </a>
 )
 
-export default Line
+export default DebugLine

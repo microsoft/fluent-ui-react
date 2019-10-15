@@ -1,4 +1,4 @@
-import { isEnabled as isDebugEnabled } from './debug'
+import { isEnabled as isDebugEnabled } from './debug/debugEnabled'
 
 const withDebugId =
   process.env.NODE_ENV === 'production'
@@ -9,7 +9,7 @@ const withDebugId =
         }
 
         if (typeof data === 'object' && data !== null) {
-          if (!data.hasOwnProperty('_debugId')) {
+          if (!Object.prototype.hasOwnProperty.call(data, '_debugId')) {
             const copy = { ...data }
             Object.defineProperty(copy, '_debugId', {
               value: debugId,

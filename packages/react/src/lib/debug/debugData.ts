@@ -1,8 +1,6 @@
-export default class DebugData {
-  constructor(
-    public readonly componentName: string,
-    public readonly siteVariables: Object[],
-    public readonly componentVariables: Object[],
-    public readonly componentStyles: Record<string, Object[]>,
-  ) {}
+export type DebugData = {
+  componentName: string
+  siteVariables: Object[]
+  componentVariables: Object[]
+  componentStyles: Record<string, Object[]>
 }

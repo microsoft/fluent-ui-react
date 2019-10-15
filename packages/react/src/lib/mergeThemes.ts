@@ -23,7 +23,7 @@ import toCompactArray from './toCompactArray'
 import deepmerge from './deepmerge'
 import objectKeyToValues from './objectKeysToValues'
 
-import { isEnabled as isDebugEnabled } from './debug'
+import { isEnabled as isDebugEnabled } from './debug/debugEnabled'
 import withDebugId from './withDebugId'
 
 export const emptyTheme: ThemePrepared = {
