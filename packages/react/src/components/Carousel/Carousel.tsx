@@ -33,6 +33,11 @@ import { MenuItemProps } from '../Menu/MenuItem'
 import { screenReaderContainerStyles } from '../../lib/accessibility/Styles/accessibilityStyles'
 
 export interface CarouselProps extends UIComponentProps, ChildrenComponentProps {
+  /**
+   * Sets the aria-roledescription attribute.
+   */
+  ariaRoleDescription?: string
+
   /** Shorthand for the button that navigates to the next item. */
   buttonNext?: ShorthandValue<ButtonProps>
 
@@ -76,6 +81,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
     ...commonPropTypes.createCommon({
       content: false,
     }),
+    ariaRoleDescription: PropTypes.string,
     buttonNext: customPropTypes.itemShorthand,
     buttonPrevious: customPropTypes.itemShorthand,
     cyclical: PropTypes.bool,
@@ -171,7 +177,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
   }
 
   renderContent = (accessibility, styles, unhandledProps) => {
-    const { items, renderItemSlide } = this.props
+    const { ariaRoleDescription, items, renderItemSlide } = this.props
     const { activeIndex, ariaLiveText, itemIds } = this.state
 
     if (!items) {
@@ -182,6 +188,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
       <div style={styles.itemsContainerWrapper} {...accessibility.attributes.itemsContainerWrapper}>
         <Ref innerRef={this.itemsContainerRef}>
           <div
+            aria-roledescription={ariaRoleDescription}
             style={styles.itemsContainer}
             {...accessibility.attributes.itemsContainer}
             {...applyAccessibilityKeyHandlers(

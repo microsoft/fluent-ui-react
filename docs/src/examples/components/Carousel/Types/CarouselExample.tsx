@@ -26,7 +26,7 @@ const carouselItems = [
 
 const CarouselExample = () => (
   <Carousel
-    aria-roledescription="carousel"
+    ariaRoleDescription="carousel"
     tabList={{
       'aria-label': 'people portraits',
       items: carouselItems.map((item, index) => ({
