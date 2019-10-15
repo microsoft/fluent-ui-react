@@ -6,6 +6,7 @@ import * as themes from './themes'
 export { themes }
 export * from './themes/types'
 export * from './themes/colorUtils'
+export * from './themes/createTheme'
 
 //
 // Teams theme
@@ -48,6 +49,9 @@ export { default as ChatMessage } from './components/Chat/ChatMessage'
 
 export * from './components/Checkbox/Checkbox'
 export { default as Checkbox } from './components/Checkbox/Checkbox'
+
+export * from './components/Debug/Debug'
+export { default as Debug } from './components/Debug/Debug'
 
 export * from './components/Design/Design'
 export { default as Design } from './components/Design/Design'
