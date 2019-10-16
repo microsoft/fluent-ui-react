@@ -20,7 +20,6 @@ export interface DialogFooterProps
     ChildrenComponentProps,
     ContentComponentProps {
   /** Dialog actions */
-  actions: ShorthandValue<BoxProps>
 }
 
 class DialogFooter extends UIComponent<WithAsProp<DialogFooterProps>> {
@@ -31,21 +30,20 @@ class DialogFooter extends UIComponent<WithAsProp<DialogFooterProps>> {
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
-    actions: customPropTypes.itemShorthand,
   }
 
   renderComponent({ ElementType, classes, unhandledProps }): React.ReactNode {
     const { children, actions, styles } = this.props
 
     return (
-      <ElementType style={{ styles }} className={classes.root} {...unhandledProps}>
-        {childrenExist(children) ? children : actions}
+      <ElementType className={classes.root} {...unhandledProps}>
+        {childrenExist(children) ? children : content}
       </ElementType>
     )
   }
 }
 
-DialogFooter.create = createShorthandFactory({ Component: DialogFooter })
+DialogFooter.create = createShorthandFactory({ Component: DialogFooter, mappedContent: 'content' })
 
 /**
  * A TooltipContent contains the content of a Tooltip component.

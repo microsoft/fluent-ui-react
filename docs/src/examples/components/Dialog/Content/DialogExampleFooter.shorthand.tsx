@@ -30,4 +30,4 @@ const DialogExampleContent: React.FC = () => (
   />
 )
 
-export default DialogExampleContent
+export default DialogExampleFooter

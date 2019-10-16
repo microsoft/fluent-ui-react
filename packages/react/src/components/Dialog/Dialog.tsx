@@ -65,7 +65,7 @@ export interface DialogProps
   headerAction?: ShorthandValue<ButtonProps>
 
   /** A dialog can contain a footer. */
-  footer?: ShorthandValue<any>
+  footer?: ShorthandValue<DialogFooterProps>
 
   /**
    * Called after a user clicks the cancel button.
@@ -315,7 +315,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
           {/* <div style={styles.footer}> */}
           {DialogFooter.create(footer, {
             overrideProps: {
-              actions: dialogActions,
+              children: dialogActions,
               styles: styles.footer,
             },
           })}
