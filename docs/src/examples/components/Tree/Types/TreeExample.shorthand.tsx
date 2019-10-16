@@ -70,6 +70,6 @@ const items = [
   },
 ]
 
-const TreeExampleShorthand = () => <Tree items={items} />
+const TreeExampleShorthand = () => <Tree aria-labelledby="default" items={items} />
 
 export default TreeExampleShorthand

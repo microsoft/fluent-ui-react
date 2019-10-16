@@ -37,6 +37,8 @@ const titleRenderer = (Component, { content, open, hasSubtree, ...restProps }) =
   </Component>
 )
 
-const TreeTitleCustomizationExample = () => <Tree items={items} renderItemTitle={titleRenderer} />
+const TreeTitleCustomizationExample = () => (
+  <Tree aria-labelledby="custom-title" items={items} renderItemTitle={titleRenderer} />
+)
 
 export default TreeTitleCustomizationExample

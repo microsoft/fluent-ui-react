@@ -71,7 +71,7 @@ const items = [
 ]
 
 const TreeInitiallyOpenExampleShorthand = () => (
-  <Tree items={items} defaultActiveItemIds={['1', '12', '2']} />
+  <Tree items={items} aria-labelledby="initially-open" defaultActiveItemIds={['1', '12', '2']} />
 )
 
 export default TreeInitiallyOpenExampleShorthand

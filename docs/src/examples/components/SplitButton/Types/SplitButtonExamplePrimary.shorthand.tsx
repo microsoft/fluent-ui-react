@@ -2,14 +2,25 @@ import * as React from 'react'
 import { SplitButton } from '@stardust-ui/react'
 
 const SplitButtonExamplePrimaryShorthand = () => (
-  <SplitButton
-    menu={[
-      { key: 'group', content: 'New group message' },
-      { key: 'channel', content: 'New channel message' },
-    ]}
-    button="New conversation"
-    primary
-  />
+  <div>
+    <SplitButton
+      menu={[
+        { key: 'group', content: 'New group message' },
+        { key: 'channel', content: 'New channel message' },
+      ]}
+      button={{
+        content: 'New conversation',
+        'aria-roledescription': 'splitbutton',
+        'aria-describedby': 'instruction-message-primary-button',
+      }}
+      primary
+      toggleButton={{ 'aria-label': 'more options' }}
+    />
+    <span aria-hidden="true" id="instruction-message-primary-button" style={{ opacity: 0 }}>
+      {' '}
+      to open menu, press Alt + Arrrow Down{' '}
+    </span>
+  </div>
 )
 
 export default SplitButtonExamplePrimaryShorthand
