@@ -17,7 +17,7 @@ const DialogContentExamples = () => (
     />
     <ComponentExample
       title="Footer"
-      description="A dialog can contain a custom footer."
+      description="A dialog can contain a footer."
       examplePath="components/Dialog/Content/DialogExampleFooter"
     />
   </ExampleSection>
