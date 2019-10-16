@@ -147,6 +147,7 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
             ...borderFocusStyles[':focus'],
             ':active': {
               backgroundColor: v.primaryBackgroundColorActive,
+              boxShadow: 'none',
             },
           },
 
