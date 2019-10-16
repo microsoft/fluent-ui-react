@@ -14,9 +14,9 @@ const SplitButtonExampleShorthand = () => (
         'aria-describedby': 'instruction-message',
       }}
       toggleButton={{ 'aria-label': 'more options' }}
+      onMainButtonClick={() => alert('button was clicked')}
     />
     <span aria-hidden="true" id="instruction-message" style={{ opacity: 0 }}>
-      {' '}
       to open menu, press Alt + Arrrow Down
     </span>
   </div>

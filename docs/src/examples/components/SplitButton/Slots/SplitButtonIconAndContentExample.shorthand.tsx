@@ -30,14 +30,16 @@ const SplitButtonIconAndContentExampleShorthand = () => (
     <SplitButton
       menu={items}
       button={{
-        content: items[0],
+        content: items[0].content,
+        key: items[0].key,
+        icon: items[0].icon,
         'aria-roledescription': 'splitbutton',
         'aria-describedby': 'instruction-message-icon-content',
       }}
+      onMainButtonClick={() => alert('button was clicked')}
       toggleButton={{ 'aria-label': 'more options' }}
     />
     <span aria-hidden="true" id="instruction-message-icon-content" style={{ opacity: 0 }}>
-      {' '}
       to open menu, press Alt + Arrrow Down{' '}
     </span>
   </div>
