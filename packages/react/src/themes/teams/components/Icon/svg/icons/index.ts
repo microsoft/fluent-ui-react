@@ -120,6 +120,7 @@ import participantRemove from './participantRemove'
 import phoneClock from './phoneClock'
 import phoneArrow from './phoneArrow'
 import play from './play'
+import plugs from './plugs'
 import poll from './poll'
 import presenceAvailable from './presenceAvailable'
 import presenceStroke from './presenceStroke'
@@ -132,6 +133,7 @@ import redo from './redo'
 import removeFormat from './removeFormat'
 import reply from './reply'
 import retry from './retry'
+import robot from './robot'
 import shareAlt from './shareAlt'
 import skypeLogo from './skypeLogo'
 import snooze from './snooze'
@@ -144,6 +146,7 @@ import stardustCircle from './stardustCircle'
 import sticker from './sticker'
 import strike from './strike'
 import sync from './sync'
+import tabs from './tabs'
 import table from './table'
 import tableAdd from './tableAdd'
 import tableDelete from './tableDelete'
@@ -280,6 +283,7 @@ export default {
   'phone-clock': phoneClock,
   'phone-arrow': phoneArrow,
   play,
+  plugs,
   poll,
   'presence-available': presenceAvailable,
   'presence-stroke': presenceStroke,
@@ -292,6 +296,7 @@ export default {
   'remove-format': removeFormat,
   reply,
   retry,
+  robot,
   search,
   send,
   settings,
@@ -300,6 +305,7 @@ export default {
   sticker,
   strike,
   sync,
+  tabs,
   table,
   'table-add': tableAdd,
   'table-delete': tableDelete,
