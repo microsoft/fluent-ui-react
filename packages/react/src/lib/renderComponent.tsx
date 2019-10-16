@@ -86,6 +86,10 @@ const getAccessibility = (
     if (definition.attributes) {
       const slotNames = Object.keys(definition.attributes)
       slotNames.forEach(slotName => {
+        if (!definition.attributes[slotName]) {
+          definition.attributes[slotName] = {}
+        }
+
         definition.attributes[slotName]['data-aa-class'] = `${displayName}${
           slotName === 'root' ? '' : `__${slotName}`
         }`
