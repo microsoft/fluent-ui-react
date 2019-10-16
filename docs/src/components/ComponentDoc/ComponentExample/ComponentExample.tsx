@@ -33,6 +33,8 @@ export interface ComponentExampleProps
   extends RouteComponentProps<any, any>,
     ComponentSourceManagerRenderProps,
     ExampleContextValue {
+  error: Error | null
+  onError: (error: Error | null) => void
   title: React.ReactNode
   description?: React.ReactNode
   examplePath: string
@@ -40,7 +42,6 @@ export interface ComponentExampleProps
 
 interface ComponentExampleState {
   anchorName: string
-  error: Error | null
   componentVariables: Object
   isActive: boolean
   isActiveHash: boolean
@@ -423,8 +424,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     this.setState({ usedVariables: variables })
   }
 
-  handleRender = (error: Error | null) => this.setState({ error })
-
   render() {
     const {
       component,
@@ -432,14 +431,15 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       currentCode,
       currentCodeLanguage,
       currentCodePath,
+      error,
       description,
+      onError,
       title,
       wasCodeChanged,
     } = this.props
     const {
       anchorName,
       componentVariables,
-      error,
       usedVariables,
       showCode,
       showRtl,
@@ -508,10 +508,10 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                   {showCode || wasCodeChanged ? (
                     <SourceRender
                       babelConfig={babelConfig}
-                      onRender={this.handleRender}
+                      hot
+                      onRender={onError}
                       source={currentCode}
                       resolver={importResolver}
-                      unstable_hot
                     />
                   ) : (
                     React.createElement(component)
@@ -560,14 +560,26 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   }
 }
 
-const ComponentExampleWithTheme = props => (
-  <ExampleContext.Consumer>
-    {exampleProps => (
-      <ComponentSourceManager examplePath={props.examplePath}>
-        {codeProps => <ComponentExample {...props} {...exampleProps} {...codeProps} />}
-      </ComponentSourceManager>
-    )}
-  </ExampleContext.Consumer>
-)
+const ComponentExampleWithTheme = props => {
+  const exampleProps = React.useContext(ExampleContext)
+
+  // This must be under ComponentExample:
+  // React handles setState() in hooks and classes differently: it performs strict equal check in hooks
+  const [error, setError] = React.useState<Error | null>(null)
+
+  return (
+    <ComponentSourceManager examplePath={props.examplePath}>
+      {codeProps => (
+        <ComponentExample
+          {...props}
+          {...exampleProps}
+          {...codeProps}
+          onError={setError}
+          error={error}
+        />
+      )}
+    </ComponentSourceManager>
+  )
+}
 
 export default withRouter(ComponentExampleWithTheme)
