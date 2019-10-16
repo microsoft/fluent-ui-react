@@ -40,6 +40,7 @@ export interface ComponentExampleProps
 
 interface ComponentExampleState {
   anchorName: string
+  error: Error | null
   componentVariables: Object
   isActive: boolean
   isActiveHash: boolean
@@ -216,8 +217,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
     return this.kebabExamplePath
   }
-
-  getDisplayName = () => this.props.examplePath.split('/')[1]
 
   handleCodeApiChange = apiType => () => {
     this.props.handleCodeAPIChange(apiType)
@@ -424,6 +423,8 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     this.setState({ usedVariables: variables })
   }
 
+  handleRender = (error: Error | null) => this.setState({ error })
+
   render() {
     const {
       component,
@@ -438,6 +439,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     const {
       anchorName,
       componentVariables,
+      error,
       usedVariables,
       showCode,
       showRtl,
@@ -497,77 +499,51 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
             {children && <Segment styles={childrenStyle}>{children}</Segment>}
 
-            {showCode || wasCodeChanged ? (
-              <SourceRender
-                babelConfig={babelConfig}
-                source={currentCode}
-                // Temporary workaround for:
-                // https://github.com/stardust-ui/react/issues/1952
-                // renderHtml={false}
-                renderHtml={showCode}
-                resolver={importResolver}
-                unstable_hot
-              >
-                {({ element, error }) => (
-                  <>
-                    <Segment
-                      className={`rendered-example ${this.getKebabExamplePath()}`}
-                      styles={exampleStyles}
-                    >
-                      <Provider theme={newTheme} rtl={showRtl}>
-                        <VariableResolver onResolve={this.handleVariableResolve}>
-                          {element}
-                        </VariableResolver>
-                      </Provider>
-                    </Segment>
+            <Segment
+              className={`rendered-example ${this.getKebabExamplePath()}`}
+              styles={exampleStyles}
+            >
+              <Provider theme={newTheme} rtl={showRtl}>
+                <VariableResolver onResolve={this.handleVariableResolve}>
+                  {showCode || wasCodeChanged ? (
+                    <SourceRender
+                      babelConfig={babelConfig}
+                      onRender={this.handleRender}
+                      source={currentCode}
+                      resolver={importResolver}
+                      unstable_hot
+                    />
+                  ) : (
+                    React.createElement(component)
+                  )}
+                </VariableResolver>
+              </Provider>
+            </Segment>
+            <LogInspector silent />
 
-                    <LogInspector silent />
-
-                    {showCode && (
-                      <div
-                        style={{
-                          boxShadow: `0 0 0 0.5em ${error ? ERROR_COLOR : 'transparent'}`,
-                        }}
-                      >
-                        {this.renderSourceCode()}
-                        {error && (
-                          <pre
-                            style={{
-                              position: 'sticky',
-                              bottom: 0,
-                              padding: '1em',
-                              // don't block viewport
-                              maxHeight: '50vh',
-                              overflowY: 'auto',
-                              color: '#fff',
-                              background: ERROR_COLOR,
-                              whiteSpace: 'pre-wrap',
-                              // above code editor text :/
-                              zIndex: 4,
-                            }}
-                          >
-                            {error.toString()}
-                          </pre>
-                        )}
-                      </div>
-                    )}
-                  </>
+            {showCode && (
+              <div style={{ boxShadow: `0 0 0 0.5em ${error ? ERROR_COLOR : 'transparent'}` }}>
+                {this.renderSourceCode()}
+                {error && (
+                  <pre
+                    style={{
+                      position: 'sticky',
+                      bottom: 0,
+                      padding: '1em',
+                      // don't block viewport
+                      maxHeight: '50vh',
+                      overflowY: 'auto',
+                      color: '#fff',
+                      background: ERROR_COLOR,
+                      whiteSpace: 'pre-wrap',
+                      // above code editor text :/
+                      zIndex: 4,
+                    }}
+                  >
+                    {error.toString()}
+                  </pre>
                 )}
-              </SourceRender>
-            ) : (
-              <>
-                <Segment
-                  className={`rendered-example ${this.getKebabExamplePath()}`}
-                  styles={exampleStyles}
-                >
-                  <Provider theme={newTheme} rtl={showRtl}>
-                    <VariableResolver onResolve={this.handleVariableResolve}>
-                      {React.createElement(component)}
-                    </VariableResolver>
-                  </Provider>
-                </Segment>
-                <LogInspector silent />
-              </>
+              </div>
             )}
 
             {showVariables && (
