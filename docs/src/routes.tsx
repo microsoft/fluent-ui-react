@@ -44,6 +44,7 @@ import NestedPopupsAndDialogsPrototype from './prototypes/NestedPopupsAndDialogs
 import VirtualizedTreePrototype from './prototypes/VirtualizedTree'
 import CopyToClipboardPrototype from './prototypes/CopyToClipboard'
 import ParticipantsListPrototype from './prototypes/ParticipantsList'
+import EditorToolbarPrototype from './prototypes/EditorToolbar'
 
 const Routes = () => (
   <BrowserRouter basename={__BASENAME__}>
@@ -73,6 +74,7 @@ const Routes = () => (
           <Route exact path="/prototype-popups" component={PopupsPrototype} />
           <Route exact path="/icon-viewer" component={IconViewerPrototype} />
           <Route exact path="/prototype-alerts" component={AlertsPrototype} />
+          <Route exact path="/prototype-editor-toolbar" component={EditorToolbarPrototype} />
           <Route
             exact
             path="/prototype-nested-popups-and-dialogs"

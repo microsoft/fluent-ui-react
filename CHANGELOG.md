@@ -17,18 +17,47 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Features
+- Export `robot`, `tabs` and `plugs` icon to Teams theme @codepretty ([#2026](https://github.com/stardust-ui/react/pull/2026))
+- Add CSSinJS debug panel @levithomason @miroslavstastny @mnajdova ([#1974](https://github.com/stardust-ui/react/pull/1974))
+
+### Fixes
+- Correctly handle RTL in `Alert` component @miroslavstastny ([#2018](https://github.com/stardust-ui/react/pull/2018))
+
+### Documentation
+- Fix 'RTL' and 'Theme it' in examples @miroslavstastny ([#2020](https://github.com/stardust-ui/react/pull/2020))
+
+### Performance
+- Remove redundant usages of `Box` component in `Attachment`, `Popup` and `Tooltip` @layershifter ([#2023](https://github.com/stardust-ui/react/pull/2023))
+
+<!--------------------------------[ v0.40.0 ]------------------------------- -->
+## [v0.40.0](https://github.com/stardust-ui/react/tree/v0.40.0) (2019-10-09)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.39.0...v0.40.0)
+
+### BREAKING CHANGES
+- Remove `onReduceItems` prop from Toolbar @miroslavstastny ([#2010](https://github.com/stardust-ui/react/pull/2010))
+
 ### Fixes
 - Fix `bodyBackground` color for Teams dark theme to be the correct grey value @codepretty ([#1961](https://github.com/stardust-ui/react/pull/1961))
 - Updating `Button` styles for Teams dark & high contrast themes to match design @notandrew ([#1933](https://github.com/stardust-ui/react/pull/1933))
 - Updating the `attachment` component styles to match Teams theme @notandrew ([#2012](https://github.com/stardust-ui/react/pull/2012))
 - Update Office brand icons in Teams theme with latest version @notandrew ([#1954](https://github.com/stardust-ui/react/pull/1954))
 - Fix various component documentation issues @davezuko ([#1992](https://github.com/stardust-ui/react/pull/1992))
+- Fix accessibility issue by adding border to reactions in Teams high contrast theme @codepretty ([#2001](https://github.com/stardust-ui/react/pull/2001))
 
 ### Features
 - Add experimental runtime accessibility attributes validation (the initial step validates the Button component only) @mshoho ([#1911](https://github.com/stardust-ui/react/pull/1911))
 - Add `sync` icon to Teams theme @codepretty ([#1973](https://github.com/stardust-ui/react/pull/1973))
 - Updating category colors palette and schemes in Teams theme @codepretty ([#1994](https://github.com/stardust-ui/react/pull/1994))
 - Add `bell` icon to Teams theme @codepretty ([#1993](https://github.com/stardust-ui/react/pull/1993))
+- Simplify rendering when tooltip is not visible @jurokapsiar ([#1981](https://github.com/stardust-ui/react/pull/1981))
+- Add `thumbtack`, `thumbtack-slash` and `question-circle` icons to Teams theme @codepretty ([#2000](https://github.com/stardust-ui/react/pull/2000))
+- Add `overflow` prop to `Toolbar` @levithomason @miroslavstastny @layershifter ([#2010](https://github.com/stardust-ui/react/pull/2010))
+
+### Documentation
+- Copy to clipboard prototype - attached confirmation @jurokapsiar ([#1900](https://github.com/stardust-ui/react/pull/1900))
+- Add `EditorToolbar` prototype @layershifter ([#2010](https://github.com/stardust-ui/react/pull/2010))
+
 
 <!--------------------------------[ v0.39.0 ]------------------------------- -->
 ## [v0.39.0](https://github.com/stardust-ui/react/tree/v0.39.0) (2019-09-23)

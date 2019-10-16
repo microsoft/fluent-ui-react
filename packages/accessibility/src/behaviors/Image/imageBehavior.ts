@@ -21,5 +21,4 @@ export default imageBehavior
 type ImageBehaviorProps = {
   /** Alternative text. */
   alt?: string
-  'aria-label'?: string
 } & Pick<AccessibilityAttributes, 'aria-label'>

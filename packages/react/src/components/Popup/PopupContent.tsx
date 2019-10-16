@@ -1,4 +1,10 @@
-import { Ref } from '@stardust-ui/react-component-ref'
+import {
+  FocusTrapZone,
+  FocusTrapZoneProps,
+  AutoFocusZoneProps,
+  AutoFocusZone,
+} from '@stardust-ui/react-bindings'
+import cx from 'classnames'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
@@ -17,15 +23,8 @@ import {
   ShorthandFactory,
 } from '../../lib'
 import { Accessibility } from '@stardust-ui/accessibility'
-import {
-  FocusTrapZone,
-  FocusTrapZoneProps,
-  AutoFocusZoneProps,
-  AutoFocusZone,
-} from '../../lib/accessibility/FocusZone'
 import { PopperChildrenProps } from '../../lib/positioner'
 import { WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
-import Box from '../Box/Box'
 
 export interface PopupContentSlotClassNames {
   content: string
@@ -59,7 +58,7 @@ export interface PopupContentProps
   pointing?: boolean
 
   /** A ref to a pointer element. */
-  pointerRef?: React.Ref<Element>
+  pointerRef?: React.Ref<HTMLDivElement>
 
   /** Controls whether or not focus trap should be applied, using boolean or FocusTrapZoneProps type value. */
   trapFocus?: boolean | FocusTrapZoneProps
@@ -114,21 +113,10 @@ class PopupContent extends UIComponent<WithAsProp<PopupContentProps>> {
 
     const popupContent = (
       <>
-        {pointing && (
-          <Ref innerRef={pointerRef}>
-            {Box.create({}, { defaultProps: { styles: styles.pointer } })}
-          </Ref>
-        )}
-        {Box.create(
-          {},
-          {
-            defaultProps: {
-              className: PopupContent.slotClassNames.content,
-              children: childrenExist(children) ? children : content,
-              styles: styles.content,
-            },
-          },
-        )}
+        {pointing && <div className={classes.pointer} ref={pointerRef} />}
+        <div className={cx(PopupContent.slotClassNames.content, classes.content)}>
+          {childrenExist(children) ? children : content}
+        </div>
       </>
     )
 

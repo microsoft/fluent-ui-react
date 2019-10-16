@@ -14,7 +14,6 @@ import {
 import Icon, { IconProps } from '../Icon/Icon'
 import Button, { ButtonProps } from '../Button/Button'
 import Text, { TextProps } from '../Text/Text'
-import Box from '../Box/Box'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
 
 export interface AttachmentProps extends UIComponentProps, ChildrenComponentProps {
@@ -114,10 +113,7 @@ class Attachment extends UIComponent<WithAsProp<AttachmentProps>> {
               className: Attachment.slotClassNames.action,
             },
           })}
-        {!_.isNil(progress) &&
-          Box.create('', {
-            defaultProps: { styles: styles.progress },
-          })}
+        {!_.isNil(progress) && <div className={classes.progress} />}
       </ElementType>
     )
   }
