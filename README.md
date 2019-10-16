@@ -1,13 +1,13 @@
 <!-- Logo -->
 <p align="center">
-  <a href="https://stardust-ui.github.io/react">
+  <a href="https://microsoft.github.io/fluent-ui-react">
     <img height="128" width="128" src="https://github.com/stardust-ui/react/raw/master/docs/src/logo.png">
   </a>
 </p>
 
 <!-- Name -->
 <h1 align="center">
-  <a href="https://stardust-ui.github.io/react">Stardust UI</a>
+  <a href="https://microsoft.github.io/fluent-ui-react">Fluent UI</a>
 </h1>
 
 <!-- Badges -->
@@ -38,7 +38,7 @@
 
 ***
 
-Stardust is a set of specifications and tools for building UI libraries. It is based on a fork of [Semantic UI React (SUIR)][200].
+Fluent UI React represents a set of specifications and tools for building UI libraries.
 
 ## How Can I Help?
 
