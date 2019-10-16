@@ -16,6 +16,7 @@ const carouselBehavior: Accessibility<CarouselBehaviorProps> = props => ({
     },
     itemsContainer: {
       tabIndex: 0,
+      'aria-labelledby': props.itemIds[props.activeIndex],
     },
     ...(props.tabList && {
       buttonNext: {
@@ -54,6 +55,8 @@ const carouselBehavior: Accessibility<CarouselBehaviorProps> = props => ({
 export type CarouselBehaviorProps = {
   /** Element type. */
   tabList: Object | Object[]
+  itemIds: string[]
+  activeIndex: number
 }
 
 export default carouselBehavior
