@@ -39,3 +39,5 @@ export * from './whatInput'
 
 export * from './commonPropInterfaces'
 export { commonPropTypes }
+
+export { default as withDebugId } from './withDebugId'
