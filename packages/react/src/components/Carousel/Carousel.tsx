@@ -66,6 +66,7 @@ export interface CarouselProps extends UIComponentProps, ChildrenComponentProps 
 
 export interface CarouselState {
   activeIndex: number
+  ariaLiveOn: boolean
   ariaLiveText: string
   itemIds: string[]
 }
@@ -115,8 +116,8 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
       const { cyclical, items, tabList } = this.props
       this.handleNext(e)
 
-      if (activeIndex >= items.length - 2 && !cyclical && !tabList) {
-        this.itemsContainerRef.current.focus()
+      if (!tabList && activeIndex >= items.length - 2 && !cyclical) {
+        this.buttonPreviousRef.current.focus()
       }
     },
     movePreviousAndFocusContainerIfFirst: e => {
@@ -125,8 +126,8 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
       const { cyclical, tabList } = this.props
       this.handlePrevious(e)
 
-      if (activeIndex <= 1 && !cyclical && !tabList) {
-        this.itemsContainerRef.current.focus()
+      if (!tabList && activeIndex <= 1 && !cyclical) {
+        this.buttonNextRef.current.focus()
       }
     },
   }
@@ -139,6 +140,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
 
   state = {
     activeIndex: 0,
+    ariaLiveOn: false,
     ariaLiveText: '',
     itemIds: [] as string[],
   }
@@ -155,6 +157,8 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
   }
 
   itemsContainerRef = React.createRef<HTMLElement>()
+  buttonNextRef = React.createRef<HTMLElement>()
+  buttonPreviousRef = React.createRef<HTMLElement>()
 
   setActiveIndex(index: number): void {
     const { cyclical, items } = this.props
@@ -195,6 +199,14 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
               accessibility.keyHandlers.itemsContainer,
               unhandledProps,
             )}
+            onBlur={(e: React.FocusEvent, buttonProps: ButtonProps) => {
+              if (
+                e.relatedTarget !== this.buttonNextRef.current &&
+                e.relatedTarget !== this.buttonPreviousRef.current
+              ) {
+                this.setState({ ariaLiveOn: false })
+              }
+            }}
           >
             {items.map((item, index) =>
               CarouselItem.create(item, {
@@ -214,10 +226,16 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
 
   handlePrevious = (e: React.SyntheticEvent) => {
     this.setActiveIndex(this.state.activeIndex - 1)
+    this.setState({
+      ariaLiveOn: true,
+    })
   }
 
   handleNext = (e: React.SyntheticEvent) => {
     this.setActiveIndex(this.state.activeIndex + 1)
+    this.setState({
+      ariaLiveOn: true,
+    })
   }
 
   renderControls = (accessibility, styles) => {
@@ -225,39 +243,59 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
 
     return (
       <>
-        {Button.create(buttonPrevious, {
-          defaultProps: {
-            ...accessibility.attributes.buttonPrevious,
-            iconOnly: true,
-            icon: 'stardust-chevron-left',
-            styles: styles.buttonPrevious,
-            ...applyAccessibilityKeyHandlers(
-              accessibility.keyHandlers.buttonPrevious,
-              buttonPrevious,
-            ),
-          },
-          overrideProps: (predefinedProps: ButtonProps) => ({
-            onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
-              _.invoke(predefinedProps, 'onClick', e, buttonProps)
-              this.handlePrevious(e)
+        <Ref innerRef={this.buttonPreviousRef}>
+          {Button.create(buttonPrevious, {
+            defaultProps: {
+              ...accessibility.attributes.buttonPrevious,
+              iconOnly: true,
+              icon: 'stardust-chevron-left',
+              styles: styles.buttonPrevious,
+              ...applyAccessibilityKeyHandlers(
+                accessibility.keyHandlers.buttonPrevious,
+                buttonPrevious,
+              ),
             },
-          }),
-        })}
-        {Button.create(buttonNext, {
-          defaultProps: {
-            ...accessibility.attributes.buttonNext,
-            iconOnly: true,
-            icon: 'stardust-chevron-right',
-            styles: styles.buttonNext,
-            ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.buttonNext, buttonNext),
-          },
-          overrideProps: (predefinedProps: ButtonProps) => ({
-            onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
-              _.invoke(predefinedProps, 'onClick', e, buttonProps)
-              this.handleNext(e)
+            overrideProps: (predefinedProps: ButtonProps) => ({
+              onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
+                _.invoke(predefinedProps, 'onClick', e, buttonProps)
+                this.handlePrevious(e)
+              },
+              onBlur: (e: React.FocusEvent, buttonProps: ButtonProps) => {
+                if (
+                  e.relatedTarget !== this.buttonNextRef.current &&
+                  e.relatedTarget !== this.itemsContainerRef.current
+                ) {
+                  this.setState({ ariaLiveOn: false })
+                }
+              },
+            }),
+          })}
+        </Ref>
+        <Ref innerRef={this.buttonNextRef}>
+          {Button.create(buttonNext, {
+            defaultProps: {
+              ...accessibility.attributes.buttonNext,
+              iconOnly: true,
+              icon: 'stardust-chevron-right',
+              styles: styles.buttonNext,
+              ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.buttonNext, buttonNext),
             },
-          }),
-        })}
+            overrideProps: (predefinedProps: ButtonProps) => ({
+              onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
+                _.invoke(predefinedProps, 'onClick', e, buttonProps)
+                this.handleNext(e)
+              },
+              onBlur: (e: React.FocusEvent, buttonProps: ButtonProps) => {
+                if (
+                  e.relatedTarget !== this.buttonPreviousRef.current &&
+                  e.relatedTarget !== this.itemsContainerRef.current
+                ) {
+                  this.setState({ ariaLiveOn: false })
+                }
+              },
+            }),
+          })}
+        </Ref>
       </>
     )
   }

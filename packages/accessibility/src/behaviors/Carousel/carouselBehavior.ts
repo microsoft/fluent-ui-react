@@ -12,7 +12,7 @@ const carouselBehavior: Accessibility<CarouselBehaviorProps> = props => ({
       role: 'region',
     },
     itemsContainerWrapper: {
-      'aria-live': 'polite',
+      'aria-live': props.ariaLiveOn ? 'polite' : 'off',
     },
     itemsContainer: {
       tabIndex: 0,
@@ -57,6 +57,7 @@ export type CarouselBehaviorProps = {
   tabList: Object | Object[]
   itemIds: string[]
   activeIndex: number
+  ariaLiveOn: boolean
 }
 
 export default carouselBehavior
