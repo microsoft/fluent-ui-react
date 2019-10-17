@@ -1,32 +1,29 @@
-import { Button, Dialog, Box } from '@stardust-ui/react'
+import { Button, Dialog, Flex, Text } from '@stardust-ui/react'
 import * as React from 'react'
 
-const customStylesWithComponent = compStyles => {
-  const customStyles = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'baseline',
-  }
-  return { ...customStyles, ...compStyles }
-}
-
-const CustomFooter = ({ styles, actions }) => {
-  return (
-    <Box styles={customStylesWithComponent(styles())}>
-      <span>any custom text in footer</span>
-      {actions}
-    </Box>
-  )
-}
-
-const DialogExampleContent: React.FC = () => (
+const DialogExampleFooter: React.FC = () => (
   <Dialog
     cancelButton="Cancel"
-    confirmButton="Confirm"
-    content="Are you sure you want to confirm this action?"
-    header="Action confirmation"
+    confirmButton="Create"
+    content="Are you sure you want to create a new project?"
+    header="Project creation"
     trigger={<Button content="Open a dialog" />}
-    footer={render => render({}, (C, p) => <CustomFooter {...p} />)}
+    footer={render =>
+      render(null, (Component, props) => {
+        const { styles, ...rest } = props
+
+        return (
+          <Flex styles={styles}>
+            {/* <Button text>Privacy notes</Button> */}
+            {/* Privacy notes */}
+            <Text as="a" href="" target="_blank" content="Privacy notes" color="brand" />
+            <Flex.Item push>
+              <Component {...rest} />
+            </Flex.Item>
+          </Flex>
+        )
+      })
+    }
   />
 )
 

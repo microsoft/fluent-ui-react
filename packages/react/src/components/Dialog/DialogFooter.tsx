@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
 
 import {
   createShorthandFactory,
@@ -12,15 +11,12 @@ import {
   childrenExist,
 } from '../../lib'
 
-import { ShorthandValue, WithAsProp, withSafeTypeForAs } from '../../types'
-import { BoxProps } from '../Box/Box'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface DialogFooterProps
   extends UIComponentProps,
     ChildrenComponentProps,
-    ContentComponentProps {
-  /** Dialog actions */
-}
+    ContentComponentProps {}
 
 class DialogFooter extends UIComponent<WithAsProp<DialogFooterProps>> {
   static create: ShorthandFactory<DialogFooterProps>
@@ -32,20 +28,20 @@ class DialogFooter extends UIComponent<WithAsProp<DialogFooterProps>> {
     ...commonPropTypes.createCommon(),
   }
 
-  renderComponent({ ElementType, classes, unhandledProps }): React.ReactNode {
-    const { children, actions, styles } = this.props
+  renderComponent({ accessibility, ElementType, classes, unhandledProps }): React.ReactNode {
+    const { children, content } = this.props
 
     return (
-      <ElementType className={classes.root} {...unhandledProps}>
+      <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
         {childrenExist(children) ? children : content}
       </ElementType>
     )
   }
 }
 
-DialogFooter.create = createShorthandFactory({ Component: DialogFooter, mappedContent: 'content' })
+DialogFooter.create = createShorthandFactory({ Component: DialogFooter, mappedProp: 'content' })
 
 /**
- * A TooltipContent contains the content of a Tooltip component.
+ * A DialogFooter represents footer content in Dialog, usually shows dialog actions.
  */
 export default withSafeTypeForAs<typeof DialogFooter, DialogFooterProps>(DialogFooter)

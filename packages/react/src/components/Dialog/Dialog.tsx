@@ -25,13 +25,14 @@ import Box, { BoxProps } from '../Box/Box'
 import Header, { HeaderProps } from '../Header/Header'
 import Portal, { TriggerAccessibility } from '../Portal/Portal'
 import Flex from '../Flex/Flex'
-import DialogFooter from './DialogFooter'
+import DialogFooter, { DialogFooterProps } from './DialogFooter'
 
 export interface DialogSlotClassNames {
   header: string
   headerAction: string
   content: string
   overlay: string
+  footer: string
 }
 
 export interface DialogProps
@@ -146,6 +147,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
   }
 
   static autoControlledProps = ['open']
+  static Footer = DialogFooter
 
   actionHandlers = {
     closeAndFocusTrigger: e => {
@@ -315,7 +317,8 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
           {/* <div style={styles.footer}> */}
           {DialogFooter.create(footer, {
             overrideProps: {
-              children: dialogActions,
+              content: dialogActions,
+              className: Dialog.slotClassNames.footer,
               styles: styles.footer,
             },
           })}
@@ -405,6 +408,7 @@ Dialog.slotClassNames = {
   headerAction: `${Dialog.className}__headerAction`,
   content: `${Dialog.className}__content`,
   overlay: `${Dialog.className}__overlay`,
+  footer: `${Dialog.className}__footer`,
 }
 
 /**
