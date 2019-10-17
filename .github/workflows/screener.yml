@@ -1,0 +1,16 @@
+name: Screener
+on: [push, pull_request]
+
+jobs:
+  test:
+    name: Test visuals on Screener
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 8
+      - run: yarn install
+      - run: yarn test:visual
+        env:
+          CI: true
+          NODE_AUTH_TOKEN: ${{secrets.SCREENER_API_KEY}}
