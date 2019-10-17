@@ -44,6 +44,7 @@ import NestedPopupsAndDialogsPrototype from './prototypes/NestedPopupsAndDialogs
 import VirtualizedTreePrototype from './prototypes/VirtualizedTree'
 import CopyToClipboardPrototype from './prototypes/CopyToClipboard'
 import ParticipantsListPrototype from './prototypes/ParticipantsList'
+import CustomScrollbarPrototype from './prototypes/customScrollbar'
 import EditorToolbarPrototype from './prototypes/EditorToolbar'
 
 const Routes = () => (
@@ -63,6 +64,7 @@ const Routes = () => (
           <Route exact path="/quick-start" component={QuickStart} />
           <Route exact path="/prototype-chat-pane" component={ChatPanePrototype} />
           <Route exact path="/prototype-chat-messages" component={ChatMessagesPrototype} />
+          <Route exact path="/prototype-custom-scrollbar" component={CustomScrollbarPrototype} />
           <Route exact path="/prototype-custom-toolbar" component={CustomToolbarPrototype} />
           <Route exact path="/prototype-async-shorthand" component={AsyncShorthandPrototype} />
           <Route exact path="/prototype-employee-card" component={EmployeeCardPrototype} />
