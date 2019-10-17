@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { hot } from 'react-hot-loader/root'
-import { Provider, themes } from '@stardust-ui/react'
+import { Provider, Debug, themes } from '@stardust-ui/react'
 
 import { mergeThemes } from 'src/lib'
 import { ThemeContext, ThemeContextData, themeContextDefaults } from './context/ThemeContext'
@@ -40,7 +40,10 @@ class App extends React.Component<any, ThemeContextData> {
           })}
         >
           <PerfDataProvider>
-            <Routes />
+            <div>
+              <Debug />
+              <Routes />
+            </div>
           </PerfDataProvider>
         </Provider>
       </ThemeContext.Provider>

@@ -1,5 +1,8 @@
 import mergeThemes, { mergeStyles } from 'src/lib/mergeThemes'
-import { ComponentStyleFunctionParam, ICSSInJSStyle } from 'src/themes/types'
+import { ComponentStyleFunctionParam, ICSSInJSStyle, ThemeInput } from 'src/themes/types'
+import * as _ from 'lodash'
+import { callable, themes, withDebugId } from 'src/index'
+import * as debugEnabled from 'src/lib/debug/debugEnabled'
 
 describe('mergeThemes', () => {
   test(`always returns an object`, () => {
@@ -385,6 +388,193 @@ describe('mergeThemes', () => {
           color: 'blue',
         },
       })
+    })
+  })
+
+  describe('debug frames', () => {
+    let originalDebugEnabled
+
+    beforeEach(() => {
+      originalDebugEnabled = debugEnabled.isEnabled
+    })
+
+    afterEach(() => {
+      Object.defineProperty(debugEnabled, 'isEnabled', {
+        get: () => originalDebugEnabled,
+      })
+    })
+
+    function mockIsDebugEnabled(enabled: boolean) {
+      Object.defineProperty(debugEnabled, 'isEnabled', {
+        get: jest.fn(() => enabled),
+      })
+    }
+
+    test('are saved if debug is enabled', () => {
+      mockIsDebugEnabled(true)
+      const target: ThemeInput = {
+        siteVariables: { varA: 'tVarA' },
+        componentVariables: { Button: { btnVar: 'tBtnVar' } },
+        componentStyles: { Button: { root: { style: 'tStyleA' } } },
+      }
+      const source = {
+        siteVariables: { varA: 'sVarA' },
+        componentVariables: { Button: sv => ({ btnVar: sv.varA }) },
+        componentStyles: { Button: { root: ({ variables }) => ({ style: variables.btnVar }) } },
+      }
+
+      const merged = mergeThemes(target, source)
+
+      expect(merged.siteVariables).toMatchObject({
+        _debug: [
+          {
+            /* FIXME: unnecessary empty object */
+          },
+          { resolved: { varA: 'tVarA' } },
+          { resolved: { varA: 'sVarA' } },
+        ],
+      })
+
+      const buttonVariables = merged.componentVariables.Button(merged.siteVariables)
+      expect(buttonVariables).toMatchObject({
+        _debug: [
+          {
+            /* FIXME: unnecessary empty object */
+          },
+          { resolved: { btnVar: 'tBtnVar' } },
+          { resolved: { btnVar: 'sVarA' } },
+        ],
+      })
+
+      const buttonRootStyles = merged.componentStyles.Button.root({ variables: buttonVariables })
+      expect(buttonRootStyles).toMatchObject({
+        _debug: [{ styles: { style: 'tStyleA' } }, { styles: { style: 'sVarA' } }],
+      })
+    })
+
+    test('are not saved if debug is disabled', () => {
+      mockIsDebugEnabled(false)
+      const target: ThemeInput = {
+        siteVariables: { varA: 'tVarA' },
+        componentVariables: { Button: { btnVar: 'tBtnVar' } },
+        componentStyles: { Button: { root: { style: 'tStyleA' } } },
+      }
+      const source = {
+        siteVariables: { varA: 'sVarA' },
+        componentVariables: { Button: sv => ({ btnVar: sv.varA }) },
+        componentStyles: { Button: { root: ({ variables }) => ({ style: variables.btnVar }) } },
+      }
+
+      const merged = mergeThemes(target, source)
+      expect(merged.siteVariables._debug).toBe(undefined)
+      const buttonVariables = merged.componentVariables.Button(merged.siteVariables)
+      expect(buttonVariables._debug).toBe(undefined)
+      const buttonRootStyles = merged.componentStyles.Button.root({ variables: buttonVariables })
+      expect(buttonRootStyles._debug).toBe(undefined)
+    })
+
+    test('contain debugId', () => {
+      mockIsDebugEnabled(true)
+      const target: ThemeInput = withDebugId(
+        {
+          siteVariables: { varA: 'tVarA' },
+          componentVariables: { Button: { btnVar: 'tBtnVar' } },
+          componentStyles: { Button: { root: { style: 'tStyleA' } } },
+        },
+        'target',
+      )
+      const source = withDebugId(
+        {
+          siteVariables: { varA: 'sVarA' },
+          componentVariables: { Button: sv => ({ btnVar: sv.varA }) },
+          componentStyles: { Button: { root: ({ variables }) => ({ style: variables.btnVar }) } },
+        },
+        'source',
+      )
+
+      const merged = mergeThemes(target, source)
+
+      expect(merged.siteVariables).toMatchObject({
+        _debug: [
+          {
+            /* FIXME: unnecessary empty object */
+          },
+          { debugId: 'target' },
+          { debugId: 'source' },
+        ],
+      })
+
+      const buttonVariables = merged.componentVariables.Button(merged.siteVariables)
+      expect(buttonVariables).toMatchObject({
+        _debug: [
+          {
+            /* FIXME: unnecessary empty object */
+          },
+          { debugId: 'target' },
+          { debugId: 'source' },
+        ],
+      })
+
+      const buttonRootStyles = merged.componentStyles.Button.root({ variables: buttonVariables })
+      expect(buttonRootStyles).toMatchObject({
+        _debug: [{ debugId: 'target' }, { debugId: 'source' }],
+      })
+    })
+  })
+
+  // This test is disabled by default
+  // It's purpose is to be executed manually to measure performance of mergeThemes
+  xdescribe('performance', () => {
+    let originalDebugEnabled
+
+    beforeEach(() => {
+      originalDebugEnabled = debugEnabled.isEnabled
+    })
+
+    afterEach(() => {
+      Object.defineProperty(debugEnabled, 'isEnabled', {
+        get: () => originalDebugEnabled,
+      })
+    })
+
+    function mockIsDebugEnabled(enabled: boolean) {
+      Object.defineProperty(debugEnabled, 'isEnabled', {
+        get: jest.fn(() => enabled),
+      })
+    }
+
+    test('100 themes with debug disabled', () => {
+      mockIsDebugEnabled(false)
+
+      const merged = mergeThemes(..._.times(100, n => themes.teams))
+      const resolvedStyles = _.mapValues(
+        merged.componentStyles,
+        (componentStyle, componentName) => {
+          const compVariables = _.get(merged.componentVariables, componentName, callable({}))(
+            merged.siteVariables,
+          )
+          const styleParam: ComponentStyleFunctionParam = {
+            displayName: componentName,
+            props: {},
+            variables: compVariables,
+            theme: merged,
+            rtl: false,
+            disableAnimations: false,
+          }
+          return _.mapValues(componentStyle, (partStyle, partName) => {
+            if (partName === '_debug') {
+              // TODO: fix in code, happens only with mergeThemes(singleTheme)
+              return undefined
+            }
+            if (typeof partStyle !== 'function') {
+              fail(`Part style is not a function??? ${componentName} ${partStyle} ${partName}`)
+            }
+            return partStyle(styleParam)
+          })
+        },
+      )
+      expect(resolvedStyles.Button.root).toMatchObject({})
+      // console.log(resolvedStyles.Button.root)
     })
   })
 })
