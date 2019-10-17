@@ -33,6 +33,8 @@ export interface ComponentExampleProps
   extends RouteComponentProps<any, any>,
     ComponentSourceManagerRenderProps,
     ExampleContextValue {
+  error: Error | null
+  onError: (error: Error | null) => void
   title: React.ReactNode
   description?: React.ReactNode
   examplePath: string
@@ -216,8 +218,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
     return this.kebabExamplePath
   }
-
-  getDisplayName = () => this.props.examplePath.split('/')[1]
 
   handleCodeApiChange = apiType => () => {
     this.props.handleCodeAPIChange(apiType)
@@ -431,7 +431,9 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       currentCode,
       currentCodeLanguage,
       currentCodePath,
+      error,
       description,
+      onError,
       title,
       wasCodeChanged,
     } = this.props
@@ -497,77 +499,51 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
             {children && <Segment styles={childrenStyle}>{children}</Segment>}
 
-            {showCode || wasCodeChanged ? (
-              <SourceRender
-                babelConfig={babelConfig}
-                source={currentCode}
-                // Temporary workaround for:
-                // https://github.com/stardust-ui/react/issues/1952
-                // renderHtml={false}
-                renderHtml={showCode}
-                resolver={importResolver}
-                unstable_hot
-              >
-                {({ element, error }) => (
-                  <>
-                    <Segment
-                      className={`rendered-example ${this.getKebabExamplePath()}`}
-                      styles={exampleStyles}
-                    >
-                      <Provider theme={newTheme} rtl={showRtl}>
-                        <VariableResolver onResolve={this.handleVariableResolve}>
-                          {element}
-                        </VariableResolver>
-                      </Provider>
-                    </Segment>
+            <Segment
+              className={`rendered-example ${this.getKebabExamplePath()}`}
+              styles={exampleStyles}
+            >
+              <Provider theme={newTheme} rtl={showRtl}>
+                <VariableResolver onResolve={this.handleVariableResolve}>
+                  {showCode || wasCodeChanged ? (
+                    <SourceRender
+                      babelConfig={babelConfig}
+                      hot
+                      onRender={onError}
+                      source={currentCode}
+                      resolver={importResolver}
+                    />
+                  ) : (
+                    React.createElement(component)
+                  )}
+                </VariableResolver>
+              </Provider>
+            </Segment>
+            <LogInspector silent />
 
-                    <LogInspector silent />
-
-                    {showCode && (
-                      <div
-                        style={{
-                          boxShadow: `0 0 0 0.5em ${error ? ERROR_COLOR : 'transparent'}`,
-                        }}
-                      >
-                        {this.renderSourceCode()}
-                        {error && (
-                          <pre
-                            style={{
-                              position: 'sticky',
-                              bottom: 0,
-                              padding: '1em',
-                              // don't block viewport
-                              maxHeight: '50vh',
-                              overflowY: 'auto',
-                              color: '#fff',
-                              background: ERROR_COLOR,
-                              whiteSpace: 'pre-wrap',
-                              // above code editor text :/
-                              zIndex: 4,
-                            }}
-                          >
-                            {error.toString()}
-                          </pre>
-                        )}
-                      </div>
-                    )}
-                  </>
+            {showCode && (
+              <div style={{ boxShadow: `0 0 0 0.5em ${error ? ERROR_COLOR : 'transparent'}` }}>
+                {this.renderSourceCode()}
+                {error && (
+                  <pre
+                    style={{
+                      position: 'sticky',
+                      bottom: 0,
+                      padding: '1em',
+                      // don't block viewport
+                      maxHeight: '50vh',
+                      overflowY: 'auto',
+                      color: '#fff',
+                      background: ERROR_COLOR,
+                      whiteSpace: 'pre-wrap',
+                      // above code editor text :/
+                      zIndex: 4,
+                    }}
+                  >
+                    {error.toString()}
+                  </pre>
                 )}
-              </SourceRender>
-            ) : (
-              <>
-                <Segment
-                  className={`rendered-example ${this.getKebabExamplePath()}`}
-                  styles={exampleStyles}
-                >
-                  <Provider theme={newTheme} rtl={showRtl}>
-                    <VariableResolver onResolve={this.handleVariableResolve}>
-                      {React.createElement(component)}
-                    </VariableResolver>
-                  </Provider>
-                </Segment>
-                <LogInspector silent />
-              </>
+              </div>
             )}
 
             {showVariables && (
@@ -584,14 +560,26 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   }
 }
 
-const ComponentExampleWithTheme = props => (
-  <ExampleContext.Consumer>
-    {exampleProps => (
-      <ComponentSourceManager examplePath={props.examplePath}>
-        {codeProps => <ComponentExample {...props} {...exampleProps} {...codeProps} />}
-      </ComponentSourceManager>
-    )}
-  </ExampleContext.Consumer>
-)
+const ComponentExampleWithTheme = props => {
+  const exampleProps = React.useContext(ExampleContext)
+
+  // This must be under ComponentExample:
+  // React handles setState() in hooks and classes differently: it performs strict equal check in hooks
+  const [error, setError] = React.useState<Error | null>(null)
+
+  return (
+    <ComponentSourceManager examplePath={props.examplePath}>
+      {codeProps => (
+        <ComponentExample
+          {...props}
+          {...exampleProps}
+          {...codeProps}
+          onError={setError}
+          error={error}
+        />
+      )}
+    </ComponentSourceManager>
+  )
+}
 
 export default withRouter(ComponentExampleWithTheme)
