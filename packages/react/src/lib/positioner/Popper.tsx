@@ -13,8 +13,16 @@ const createPopper = (
   reference: Element | _PopperJS.ReferenceObject,
   popper: Element,
   options?: PopperJS.PopperOptions,
-): PopperJS => new ((_PopperJS as any).default || _PopperJS)(reference, popper, options)
-
+): PopperJS => {
+  const instance = new ((_PopperJS as any).default || _PopperJS)(reference, popper, {
+    ...options,
+    eventsEnabled: false,
+  })
+  const actualWindow = popper.ownerDocument.defaultView
+  instance.scheduleUpdate = () => actualWindow.requestAnimationFrame(instance.update)
+  instance.enableEventListeners()
+  return instance
+}
 /**
  * Popper relies on the 3rd party library [Popper.js](https://github.com/FezVrasta/popper.js) for positioning.
  */
