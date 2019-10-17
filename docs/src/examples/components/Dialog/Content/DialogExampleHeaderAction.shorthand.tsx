@@ -9,6 +9,7 @@ const DialogExampleHeaderAction: React.FC = () => {
       open={open}
       onOpen={() => setOpen(true)}
       onCancel={() => setOpen(false)}
+      onConfirm={() => setOpen(false)}
       confirmButton="Confirm"
       content="Are you sure you want to confirm this action?"
       header="Action confirmation"
