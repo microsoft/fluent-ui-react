@@ -33,7 +33,6 @@
     "test:e2e": "gulp test:e2e",
     "test:e2e:serve": "gulp test:e2e:serve",
     "test:watch": "gulp test:watch",
-    "test:vulns": "gulp test:vulns",
     "test:visual": "gulp screener",
     "test:projects": "gulp test:projects",
     "test:circulars": "gulp test:circulars:run"
@@ -139,7 +138,6 @@
     "semver": "^6.2.0",
     "shallowequal": "^1.1.0",
     "simulant": "^0.2.2",
-    "snyk": "^1.196.0",
     "syncpack": "^4.5.4",
     "through2": "^2.0.3",
     "tmp": "^0.0.33",
