@@ -14,8 +14,6 @@ const DialogExampleFooter: React.FC = () => (
 
         return (
           <Flex styles={styles}>
-            {/* <Button text>Privacy notes</Button> */}
-            {/* Privacy notes */}
             <Text as="a" href="" target="_blank" content="Privacy notes" color="brand" />
             <Flex.Item push>
               <Component {...rest} />
