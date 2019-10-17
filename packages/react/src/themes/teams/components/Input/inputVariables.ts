@@ -17,6 +17,7 @@ export interface InputVariables {
   inputPadding: string
   inputFocusBorderColor: string
   inputFocusBorderRadius: string
+  lineHeight: string
   placeholderColor: string
 }
 
@@ -27,7 +28,7 @@ export default (siteVars): InputVariables => ({
   inputPaddingWithIconAtStart: `${pxToRem(7)} ${pxToRem(12)} ${pxToRem(7)} ${pxToRem(24)}`,
   inputPaddingWithIconAtEnd: `${pxToRem(7)} ${pxToRem(24)} ${pxToRem(7)} ${pxToRem(12)}`,
 
-  inputPadding: `${pxToRem(7)} ${pxToRem(12)}`,
+  inputPadding: `${pxToRem(5)} ${pxToRem(12)}`,
 
   borderColor: 'transparent',
   borderRadius: `${pxToRem(3)} ${pxToRem(3)} ${pxToRem(2)} ${pxToRem(2)}`,
@@ -37,6 +38,8 @@ export default (siteVars): InputVariables => ({
 
   fontColor: siteVars.colorScheme.default.foreground,
   fontSize: siteVars.fontSizes.medium,
+
+  lineHeight: siteVars.lineHeightMedium,
 
   iconColor: siteVars.colorScheme.default.foreground,
   inputFocusBorderColor: `transparent transparent ${siteVars.colorScheme.brand.borderFocus1} transparent`,
