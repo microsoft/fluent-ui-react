@@ -113,16 +113,22 @@ const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, Dropdow
     return {
       boxShadow: 'none',
       margin: '0',
+      background: v.backgroundColor,
       justifyContent: 'left',
       padding: v.comboboxPaddingButton,
       height: pxToRem(32),
       ...(p.multiple && { minWidth: 0, flex: 1 }),
       ...transparentColorStyleObj,
       ':focus': {
-        color: v.color,
+        background: v.backgroundColor,
+
+        ':active': {
+          background: v.backgroundColor,
+        },
       },
       ':focus-visible': {
         color: v.color,
+        background: v.backgroundColor,
         ...transparentColorStyle,
         ':after': {
           borderColor: 'transparent',
@@ -130,10 +136,9 @@ const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, Dropdow
         ':before': {
           borderColor: 'transparent',
         },
-        ':active': transparentColorStyle,
       },
       ':hover': {
-        ...transparentColorStyle,
+        background: v.backgroundColor,
       },
       ...(p.inline && {
         paddingLeft: 0,
