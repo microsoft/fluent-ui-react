@@ -54,17 +54,6 @@ jobs:
           name: E2E Tests
           command: yarn test:e2e
 
-      - restore_cache:
-          key: v1.1-vuln-scans-{{ checksum "yarn.lock" }}
-      - run:
-          name: Vulnerability Tests
-          command: yarn test:vulns
-      # https://discuss.circleci.com/t/add-mechanism-to-update-existing-cache-key/9014/12
-      - save_cache:
-          key: v1.1-vuln-scans-{{ checksum "yarn.lock" }}-{{ epoch }}
-          paths:
-            - .vuln-scans
-
       - run:
           name: Project Tests
           command: yarn test:projects
