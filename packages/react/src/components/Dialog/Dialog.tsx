@@ -314,7 +314,6 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
             },
           })}
 
-          {/* <div style={styles.footer}> */}
           {DialogFooter.create(footer, {
             overrideProps: {
               content: dialogActions,
@@ -322,28 +321,6 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
               styles: styles.footer,
             },
           })}
-          {/* </div> */}
-
-          {/* {ButtonGroup.create(actions, {
-            defaultProps: {
-              styles: styles.actions,
-            },
-            overrideProps: {
-              content: (
-                <Flex gap="gap.smaller">
-                  {Button.create(cancelButton, {
-                    overrideProps: this.handleCancelButtonOverrides,
-                  })}
-                  {Button.create(confirmButton, {
-                    defaultProps: {
-                      primary: true,
-                    },
-                    overrideProps: this.handleConfirmButtonOverrides,
-                  })}
-                </Flex>
-              ),
-            },
-          })} */}
         </ElementType>
       </Ref>
     )
