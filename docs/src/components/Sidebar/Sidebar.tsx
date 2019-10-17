@@ -28,6 +28,8 @@ const pkg = require('../../../../packages/react/package.json')
 const componentMenu: ComponentMenuItem[] = require('docs/src/componentMenu')
 const behaviorMenu: ComponentMenuItem[] = require('docs/src/behaviorMenu')
 
+const componentsBlackList = ['Debug', 'Design']
+
 class Sidebar extends React.Component<any, any> {
   static propTypes = {
     match: PropTypes.object.isRequired,
@@ -258,7 +260,7 @@ class Sidebar extends React.Component<any, any> {
     const treeItemsByType = _.map(constants.typeOrder, nextType => {
       const items = _.chain([...componentMenu, ...behaviorMenu])
         .filter(({ type }) => type === nextType)
-        .filter(({ displayName }) => displayName !== 'Design')
+        .filter(({ displayName }) => !_.includes(componentsBlackList, displayName))
         .map(info => ({
           key: info.displayName.concat(nextType),
           title: { content: info.displayName, as: NavLink, to: getComponentPathname(info) },
@@ -277,6 +279,11 @@ class Sidebar extends React.Component<any, any> {
       {
         key: 'chatMssages',
         title: { content: 'Chat Messages', as: NavLink, to: '/prototype-chat-messages' },
+        public: true,
+      },
+      {
+        key: 'customscrollbar',
+        title: { content: 'Custom Scrollbar', as: NavLink, to: '/prototype-custom-scrollbar' },
         public: true,
       },
       {

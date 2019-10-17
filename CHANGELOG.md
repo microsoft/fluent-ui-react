@@ -19,12 +19,15 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Features
 - Export `robot`, `tabs` and `plugs` icon to Teams theme @codepretty ([#2026](https://github.com/stardust-ui/react/pull/2026))
+- Add CSSinJS debug panel @levithomason @miroslavstastny @mnajdova ([#1974](https://github.com/stardust-ui/react/pull/1974))
 
 ### Fixes
 - Correctly handle RTL in `Alert` component @miroslavstastny ([#2018](https://github.com/stardust-ui/react/pull/2018))
+- Popper should use the correct window instance @jurokapsiar ([#2028](https://github.com/stardust-ui/react/pull/2028))
 
 ### Documentation
 - Fix 'RTL' and 'Theme it' in examples @miroslavstastny ([#2020](https://github.com/stardust-ui/react/pull/2020))
+- Prototype for custom scrollbar for menu, dialog, popup and list @jurokapsiar ([#1962](https://github.com/stardust-ui/react/pull/1962))
 
 ### Performance
 - Remove redundant usages of `Box` component in `Attachment`, `Popup` and `Tooltip` @layershifter ([#2023](https://github.com/stardust-ui/react/pull/2023))
