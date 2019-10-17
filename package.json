@@ -127,7 +127,7 @@
     "react-hot-loader": "^4.8.2",
     "react-markdown": "^4.0.8",
     "react-router-dom": "^5.0.1",
-    "react-source-render": "3.0.0-5",
+    "react-source-render": "4.0.0-1",
     "react-test-renderer": "^16.8.5",
     "react-virtualized": "^9.21.1",
     "react-vis": "^1.11.6",
