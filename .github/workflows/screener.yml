@@ -14,4 +14,4 @@ jobs:
       - run: yarn test:visual
         env:
           CI: true
-          NODE_AUTH_TOKEN: ${{secrets.SCREENER_API_KEY}}
+          SCREENER_API_KEY: ${{secrets.SCREENER_API_KEY}}
