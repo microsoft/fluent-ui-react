@@ -7,7 +7,9 @@ import { ReactWrapper } from 'enzyme'
 
 describe('Toolbar', () => {
   isConformant(Toolbar)
-
+  isConformant(Toolbar, {
+    requiredProps: { overflow: true },
+  })
   describe('variables', () => {
     function checkMergedVariables(toolbar: ReactWrapper): void {
       expect(

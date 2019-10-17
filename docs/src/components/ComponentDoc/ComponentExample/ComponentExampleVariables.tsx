@@ -1,5 +1,4 @@
 import {
-  Checkbox,
   Grid,
   Header,
   Segment,
@@ -37,7 +36,7 @@ const ComponentExampleVariables: React.FunctionComponent<
   const { onChange, overriddenVariables, usedVariables } = props
 
   const { theme } = React.useContext<ProviderContextPrepared>(ThemeContext)
-  const [hideUnused, setHideUnused] = React.useState(true)
+  const [hideUnused] = React.useState(true)
 
   const componentVariables: ThemeComponentVariablesPrepared = _.pickBy(
     mergeThemeVariables(theme.componentVariables, overriddenVariables),
@@ -68,12 +67,13 @@ const ComponentExampleVariables: React.FunctionComponent<
 
   return (
     <div>
-      <Checkbox
-        checked={!hideUnused}
-        label="Hide unused variables"
-        onChange={(e, data) => setHideUnused(!data.checked)}
-        styles={{ float: 'right', top: '1.25rem', right: '1.25rem' }}
-      />
+      {/* Temporarily disabled as the functionality in useEnhancedRenderer is broken */}
+      {/* <Checkbox */}
+      {/*  checked={!hideUnused} */}
+      {/*  label="Hide unused variables" */}
+      {/*  onChange={(e, data) => setHideUnused(!data.checked)} */}
+      {/*  styles={{ float: 'right', top: '1.25rem', right: '1.25rem' }} */}
+      {/* /> */}
 
       {_.map(filteredVariables, (componentVariables, componentName) => {
         const groupedVariables: Record<string, string[]> = _.groupBy(
