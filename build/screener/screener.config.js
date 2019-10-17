@@ -38,4 +38,8 @@ module.exports = {
     baseBranch: 'master',
     failureExitCode: 0,
   }),
+  ...(process.env.GITHUB_REF && {
+    branch: process.env.GITHUB_REF,
+    commit: process.env.GITHUB_SHA,
+  }),
 }
