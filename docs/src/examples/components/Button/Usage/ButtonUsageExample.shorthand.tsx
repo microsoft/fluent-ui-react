@@ -6,45 +6,25 @@ const ButtonUsageExampleShorthand = () => (
     <Provider
       theme={{
         componentVariables: {
-          Button: siteVariables => ({
-            color: siteVariables.colors.brand[600],
-            colorHover: siteVariables.colors.brand[300],
-            colorFocus: siteVariables.colors.brand[900],
-            backgroundColor: '#252424', // no mapping color - tried - siteVariables.colors.grey[750]
-            backgroundColorActive: siteVariables.colors.brand[200],
-            backgroundColorHover: siteVariables.colors.brand[50],
-            backgroundColorFocus: siteVariables.colors.brand[200],
-            borderColor: siteVariables.colors.brand[200],
-            borderColorHover: siteVariables.colors.brand[300],
+          Button: siteVars => ({
+            color: siteVars.colorScheme.brand.foreground,
+            colorHover: siteVars.colorScheme.brand.foreground,
+            colorFocus: siteVars.colorScheme.default.foreground,
+            colorDisabled: siteVars.colorScheme.brandForegroundDisabled,
+            backgroundColor: siteVars.colorScheme.default.background,
+            backgroundColorActive: siteVars.colorScheme.brandBorderPressed,
+            backgroundColorHover: siteVars.colorScheme.brand.backgroundHover1,
+            backgroundColorFocus: siteVars.colorScheme.default.background,
+            backgroundColorDisabled: siteVars.colorScheme.brand.backgroundDisabled,
+            borderColor: siteVars.colorScheme.brandBorder2,
+            borderColorHover: siteVars.colorScheme.brandBorderHover,
           }),
         },
       }}
     >
-      <Button content="Tinted Button" />
+      <Button content="Tinted Button" /> <Button disabled content="Tinted Button Disabled" />
     </Provider>
-    This button's styling is only applicable to dark theme.
-    <br />
-    <br />
-    <Provider
-      theme={{
-        componentVariables: {
-          Button: siteVariables => ({
-            color: siteVariables.colors.brand[600],
-            colorHover: siteVariables.colors.brand[600],
-            colorFocus: siteVariables.colors.brand[900],
-            backgroundColor: siteVariables.colors.white,
-            backgroundColorActive: siteVariables.colors.brand[200],
-            backgroundColorHover: siteVariables.colors.brand[50],
-            backgroundColorFocus: siteVariables.colors.brand[200],
-            borderColor: siteVariables.colors.brand[200],
-            borderColorHover: siteVariables.colors.brand[300],
-          }),
-        },
-      }}
-    >
-      <Button content="Tinted Button" />
-    </Provider>
-    This button's styling is only applicable to light theme.
+    This button's styling is using color scheme variables.
   </div>
 )
 

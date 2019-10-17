@@ -16,6 +16,7 @@ export interface ButtonVariables {
   color: string
   colorHover: string
   colorFocus: string
+  colorActive: string
   colorDisabled: string
   backgroundColor: string
   backgroundColorActive: string
@@ -24,27 +25,19 @@ export interface ButtonVariables {
   backgroundColorDisabled: string
   borderColor: string
   borderColorHover: string
+  borderColorActive: string
   borderColorDisabled: string
 
   primaryColor: string
   primaryColorHover: string
-  primaryColorFocus: string
   primaryBackgroundColor: string
   primaryBackgroundColorActive: string
   primaryBackgroundColorHover: string
   primaryBackgroundColorFocus: string
+  primaryBackgroundColorDisabled: string
   primaryBorderColor: string
 
   circularBorderRadius: string
-  circularColor: string
-  circularColorActive: string
-  circularBackgroundColor: string
-  circularBackgroundColorActive: string
-  circularBackgroundColorHover: string
-  circularBackgroundColorFocus: string
-  circularBorderColor: string
-  circularBorderColorHover: string
-  circularBorderColorFocus: string
 
   textColor: string
   textColorHover: string
@@ -52,6 +45,7 @@ export interface ButtonVariables {
   textPrimaryColorHover: string
   textColorDisabled: string
 
+  primaryBoxShadow: string
   boxShadow: string
 
   loaderBorderSize: string
@@ -82,38 +76,31 @@ export default (siteVars: any): ButtonVariables => ({
   contentFontWeight: siteVars.fontWeightSemibold,
   contentLineHeight: siteVars.lineHeightMedium,
 
-  color: siteVars.colors.grey[750],
-  colorHover: siteVars.colors.grey[750],
-  colorFocus: siteVars.colors.grey[750],
+  color: siteVars.colorScheme.default.foreground,
+  colorHover: siteVars.colorScheme.default.foregroundHover,
+  colorFocus: siteVars.colorScheme.default.foreground,
+  colorActive: siteVars.colorScheme.default.foregroundPressed,
   colorDisabled: siteVars.colorScheme.brand.foregroundDisabled,
-  backgroundColor: siteVars.colors.white,
-  backgroundColorActive: siteVars.colors.grey[200],
-  backgroundColorHover: siteVars.colors.grey[50],
+  backgroundColor: siteVars.colorScheme.default.background,
+  backgroundColorActive: siteVars.colorScheme.default.backgroundPressed,
+  backgroundColorHover: siteVars.colorScheme.default.backgroundHover1,
   backgroundColorFocus: '',
-  backgroundColorDisabled: siteVars.colors.grey[150],
-  borderColor: siteVars.colors.grey[200],
-  borderColorHover: siteVars.colors.grey[250],
+  backgroundColorDisabled: siteVars.colorScheme.default.backgroundDisabled1,
+  borderColor: siteVars.colorScheme.default.border,
+  borderColorHover: siteVars.colorScheme.default.borderHover,
+  borderColorActive: siteVars.colorScheme.default.borderPressed,
   borderColorDisabled: 'transparent',
 
-  primaryColor: siteVars.colors.white,
-  primaryColorHover: siteVars.colors.white,
-  primaryColorFocus: siteVars.colors.white,
-  primaryBackgroundColor: siteVars.colors.brand[600],
-  primaryBackgroundColorActive: siteVars.colors.brand[900],
-  primaryBackgroundColorHover: siteVars.colors.brand[800],
+  primaryColor: siteVars.colorScheme.brand.foreground4,
+  primaryColorHover: siteVars.colorScheme.brand.foreground4,
+  primaryBackgroundColor: siteVars.colorScheme.brand.background,
+  primaryBackgroundColorActive: siteVars.colorScheme.brand.backgroundPressed,
+  primaryBackgroundColorHover: siteVars.colorScheme.brand.backgroundHover,
   primaryBackgroundColorFocus: '',
+  primaryBackgroundColorDisabled: siteVars.colorScheme.default.backgroundDisabled,
   primaryBorderColor: 'transparent',
 
   circularBorderRadius: pxToRem(999),
-  circularColor: siteVars.colors.grey[500],
-  circularColorActive: siteVars.colors.white,
-  circularBackgroundColor: siteVars.colors.white,
-  circularBackgroundColorActive: siteVars.colors.grey[500],
-  circularBackgroundColorHover: siteVars.colors.grey[450],
-  circularBackgroundColorFocus: '',
-  circularBorderColor: siteVars.colors.grey[500],
-  circularBorderColorHover: 'transparent',
-  circularBorderColorFocus: siteVars.colors.grey[500],
 
   textColor: siteVars.colorScheme.default.foreground1,
   textColorHover: siteVars.colorScheme.brand.foreground1,
@@ -121,6 +108,7 @@ export default (siteVars: any): ButtonVariables => ({
   textPrimaryColorHover: siteVars.colorScheme.brand.foreground1,
   textColorDisabled: siteVars.colorScheme.brand.foregroundDisabled1,
 
+  primaryBoxShadow: siteVars.shadowLevel1Darker,
   boxShadow: siteVars.shadowLevel1,
 
   loaderBorderSize: pxToRem(2),

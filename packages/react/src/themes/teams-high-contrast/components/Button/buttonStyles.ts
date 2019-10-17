@@ -10,30 +10,15 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         ':focus-visible': {
           backgroundColor: v.backgroundColorFocus,
           color: v.colorHover,
+          borderColor: 'transparent',
 
           '&:hover': {
             color: v.colorHover,
             backgroundColor: v.backgroundColorHover,
-            borderColor: v.borderColorHover,
+            borderColor: 'transparent',
           },
         },
       }),
-
-      // circular button defaults
-      ...(p.circular &&
-        !p.text && {
-          ':focus-visible': {
-            color: v.colorHover,
-            borderColor: v.circularBorderColorFocus,
-            backgroundColor: v.circularBackgroundColorFocus,
-
-            '&:hover': {
-              color: v.circularColorActive,
-              backgroundColor: v.circularBackgroundColorHover,
-              borderColor: v.circularBorderColorHover,
-            },
-          },
-        }),
 
       // Overrides for "primary" buttons
       ...(p.primary &&

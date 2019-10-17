@@ -57,13 +57,21 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         ':focus': {
           ...borderFocusStyles[':focus'],
           ':active': {
+            color: v.colorActive,
             backgroundColor: v.backgroundColorActive,
+            borderColor: v.borderColorActive,
             boxShadow: 'none',
           },
         },
 
         ':focus-visible': {
           ...borderFocusStyles[':focus-visible'],
+          borderColor: v.borderColor,
+          borderWidth,
+
+          ':hover': {
+            borderColor: v.borderColorHover,
+          },
         },
 
         ...(p.size === 'small' && {
@@ -76,33 +84,11 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         !p.text && {
           minWidth: v.height,
           padding: 0,
-          color: v.circularColor,
-          backgroundColor: v.circularBackgroundColor,
-          borderColor: v.circularBorderColor,
           borderRadius: v.circularBorderRadius,
 
           ...(p.size === 'small' && {
             minWidth: v.sizeSmallHeight,
           }),
-
-          ':hover': {
-            color: v.circularColorActive,
-            backgroundColor: v.circularBackgroundColorHover,
-            borderColor: v.circularBorderColorHover,
-          },
-
-          ':focus': {
-            ...borderFocusStyles[':focus'],
-            ':active': {
-              backgroundColor: v.circularBackgroundColorActive,
-              boxShadow: 'none',
-            },
-          },
-
-          ':focus-visible': {
-            ...borderFocusStyles[':focus-visible'],
-            borderColor: v.circularBorderColorFocus,
-          },
         }),
 
       // text button defaults
@@ -141,7 +127,7 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
           color: v.primaryColor,
           backgroundColor: v.primaryBackgroundColor,
           borderColor: v.primaryBorderColor,
-          boxShadow: siteVariables.shadowLevel1Dark,
+          boxShadow: v.primaryBoxShadow,
 
           ':focus': {
             ...borderFocusStyles[':focus'],
@@ -183,6 +169,12 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
           ':hover': {
             backgroundColor: v.backgroundColorDisabled,
           },
+          ...(p.primary && {
+            backgroundColor: v.primaryBackgroundColorDisabled,
+            ':hover': {
+              backgroundColor: v.primaryBackgroundColorDisabled,
+            },
+          }),
         }),
       }),
 
