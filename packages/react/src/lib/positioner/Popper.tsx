@@ -14,10 +14,15 @@ const createPopper = (
   popper: Element,
   options?: PopperJS.PopperOptions,
 ): PopperJS => {
-  const instance = new ((_PopperJS as any).default || _PopperJS)(reference, popper, options)
+  const instance = new ((_PopperJS as any).default || _PopperJS)(reference, popper, {
+    ...options,
+    eventsEnabled: false,
+  })
   const actualWindow = popper.ownerDocument.defaultView
   instance.scheduleUpdate = () => actualWindow.requestAnimationFrame(instance.update)
-
+  if (options.eventsEnabled !== false) {
+    instance.enableEventListeners()
+  }
   return instance
 }
 /**
