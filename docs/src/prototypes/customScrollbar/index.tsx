@@ -1,28 +1,24 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import Scrollbars from 'react-custom-scrollbars'
-import { Text, Menu, List, Button, Popup, Dialog, MenuItemProps } from '@stardust-ui/react'
+import { Text, Menu, List, Button, Popup, Dialog } from '@stardust-ui/react'
 import { PrototypeSection, ComponentPrototype } from '../Prototypes'
-
-const submenuWithScrollbars = (menu: MenuItemProps['menu'], height: string) => {
-  return render =>
-    render(menu, (Component, props) => <Component {...props} as={Scrollbars} style={{ height }} />)
-}
 
 const ScrollbarMenuPrototype = () => {
   const items = [
     {
       key: 'with-scrollbar',
       content: 'Submenu with scrollbar',
-      menu: submenuWithScrollbars(
-        { items: _.range(50).map((i: number) => `Menu Item No. ${i}`) },
-        '20rem',
-      ),
+      menu: {
+        as: Scrollbars,
+        items: _.times(50, (i: number) => `Menu Item No. ${i}`),
+        style: { height: '20rem' },
+      },
     },
     {
       key: 'without-scrollbar',
       content: 'Submenu without scrollbar',
-      menu: _.range(5).map((i: number) => `Menu Item No. ${i}`),
+      menu: _.times(5, (i: number) => `Menu Item No. ${i}`),
     },
   ]
 
@@ -50,7 +46,7 @@ const ScrollbarDialogPrototype = () => {
 
   return (
     <Dialog
-      trigger={<Button content="Open popup" />}
+      trigger={<Button content="Open dialog" />}
       header="Dialog with scrollbar"
       cancelButton="Close"
       content={{
@@ -62,7 +58,7 @@ const ScrollbarDialogPrototype = () => {
 }
 
 const ScrollbarListPrototype = () => {
-  const items = _.range(50).map((i: number) => ({
+  const items = _.times(50, (i: number) => ({
     header: `Header ${i}`,
     content: `Content ${i}`,
     key: `item-${i}`,
