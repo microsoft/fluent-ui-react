@@ -29,7 +29,7 @@ import {
 import { Props, ProviderContextPrepared } from '../types'
 import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/reactTypes'
 import getKeyDownHandlers from './getKeyDownHandlers'
-import { emptyTheme, mergeComponentStyles } from './mergeThemes'
+import { emptyTheme, mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import createAnimationStyles from './createAnimationStyles'
 import { isEnabled as isDebugEnabled } from './debug/debugEnabled'
 import { DebugData } from './debug/debugData'
@@ -151,7 +151,6 @@ const renderComponent = <P extends {}>(
   config: RenderConfig<P>,
   context?: ProviderContextPrepared,
 ): React.ReactElement<P> => {
-  performance.now()
   const {
     className,
     displayName,
@@ -173,22 +172,19 @@ const renderComponent = <P extends {}>(
   const ElementType = getElementType(props) as React.ReactType<P>
   const stateAndProps = { ...state, ...props }
 
-  // Resolve variables for this component, allow props.variables to override
-  if (!theme.resolvedComponentVariables[displayName]) {
-    theme.resolvedComponentVariables[displayName] = callable(theme.componentVariables[displayName])(
-      theme.siteVariables,
-    )
+  // Resolve variables for this component, cache the result in provider
+  if (!(displayName in theme.resolvedComponentVariables)) {
+    theme.resolvedComponentVariables[displayName] =
+      callable(theme.componentVariables[displayName])(theme.siteVariables) || {} // component variables must not be undefined/null (see mergeComponentVariables contract)
   }
 
-  const resolvedVariables = deepmerge(
-    theme.resolvedComponentVariables[displayName],
-    callable(props.variables)(theme.siteVariables),
-  )
-
-  // const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
-  //   theme.componentVariables[displayName],
-  //   props.variables && withDebugId(props.variables, 'props.variables'),
-  // )(theme.siteVariables)
+  // Merge inline variables on top of cached variables
+  const resolvedVariables = props.variables
+    ? mergeComponentVariables(
+        theme.resolvedComponentVariables[displayName],
+        withDebugId(props.variables, 'props.variables'),
+      )(theme.siteVariables)
+    : theme.resolvedComponentVariables[displayName]
 
   const animationCSSProp = props.animation
     ? createAnimationStyles(props.animation, context.theme)
@@ -296,7 +292,6 @@ const renderComponent = <P extends {}>(
   }
 
   return render(resolvedConfig)
-  performance.now()
 }
 
 export default renderComponent

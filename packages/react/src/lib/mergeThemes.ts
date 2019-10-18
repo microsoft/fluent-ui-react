@@ -118,6 +118,8 @@ export const mergeComponentStyles =
 export const mergeComponentVariables__PROD = (
   ...sources: ComponentVariablesInput[]
 ): ComponentVariablesPrepared => {
+  const initial = () => ({})
+
   return sources.reduce<ComponentVariablesPrepared>((acc, next) => {
     return (...args) => {
       const accumulatedVariables = acc(...args)
