@@ -30,7 +30,6 @@ import { CarouselSlideProps } from './CarouselSlide'
 import Menu, { MenuProps } from '../Menu/Menu'
 import Text from '../Text/Text'
 import { MenuItemProps } from '../Menu/MenuItem'
-import { screenReaderContainerStyles } from '../../lib/accessibility/Styles/accessibilityStyles'
 
 export interface CarouselProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -43,6 +42,11 @@ export interface CarouselProps extends UIComponentProps, ChildrenComponentProps 
 
   /** Shorthand for the button that navigates to the previous item. */
   buttonPrevious?: ShorthandValue<ButtonProps>
+
+  /** Message generator for item position in the carousel. Used to generate
+   * individual i11y messages for items, such as "1 of 4".
+   */
+  getItemPositionText?: (index: number, size: number) => string
 
   /** Shorthand array of props for CarouselItem. */
   items?: ShorthandCollection<CarouselItemProps>
@@ -67,7 +71,6 @@ export interface CarouselProps extends UIComponentProps, ChildrenComponentProps 
 export interface CarouselState {
   activeIndex: number
   ariaLiveOn: boolean
-  ariaLiveText: string
   itemIds: string[]
 }
 
@@ -86,6 +89,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
     buttonNext: customPropTypes.itemShorthand,
     buttonPrevious: customPropTypes.itemShorthand,
     cyclical: PropTypes.bool,
+    getItemPositionText: PropTypes.func,
     items: customPropTypes.collectionShorthand,
     tabList: PropTypes.oneOfType([
       customPropTypes.collectionShorthand,
@@ -104,17 +108,22 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
   actionHandlers = {
     moveNext: e => {
       e.preventDefault()
-      this.handleNext(e)
+      this.handleNext(e, true)
     },
     movePrevious: e => {
       e.preventDefault()
-      this.handlePrevious(e)
+      this.handlePrevious(e, true)
     },
     moveNextAndFocusContainerIfLast: e => {
       e.preventDefault()
       const { activeIndex } = this.state
       const { cyclical, items, tabList } = this.props
-      this.handleNext(e)
+
+      this.setState({
+        ariaLiveOn: true,
+      })
+
+      this.handleNext(e, false)
 
       if (!tabList && activeIndex >= items.length - 2 && !cyclical) {
         this.buttonPreviousRef.current.focus()
@@ -124,7 +133,12 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
       e.preventDefault()
       const { activeIndex } = this.state
       const { cyclical, tabList } = this.props
-      this.handlePrevious(e)
+
+      this.setState({
+        ariaLiveOn: true,
+      })
+
+      this.handlePrevious(e, false)
 
       if (!tabList && activeIndex <= 1 && !cyclical) {
         this.buttonNextRef.current.focus()
@@ -132,16 +146,9 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
     },
   }
 
-  clearAriaLiveText = _.debounce(() => {
-    this.setState({
-      ariaLiveText: '',
-    })
-  }, 500)
-
   state = {
     activeIndex: 0,
     ariaLiveOn: false,
-    ariaLiveText: '',
     itemIds: [] as string[],
   }
 
@@ -156,86 +163,92 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
     }
   }
 
-  itemsContainerRef = React.createRef<HTMLElement>()
+  itemRefs = [] as React.RefObject<HTMLElement>[]
   buttonNextRef = React.createRef<HTMLElement>()
   buttonPreviousRef = React.createRef<HTMLElement>()
 
-  setActiveIndex(index: number): void {
+  focusItemAtIndex = _.debounce((index: number) => {
+    this.itemRefs[index].current.focus()
+  }, 400)
+
+  setActiveIndex(index: number, focusItem: boolean): void {
     const { cyclical, items } = this.props
     const lastItemIndex = items.length - 1
     let activeIndex = index
 
     if (index < 0) {
-      activeIndex = cyclical ? lastItemIndex : 0
+      if (!cyclical) {
+        return
+      }
+      activeIndex = 0
     }
 
     if (index > lastItemIndex) {
-      activeIndex = cyclical ? 0 : lastItemIndex
+      if (!cyclical) {
+        return
+      }
+      activeIndex = lastItemIndex
     }
 
     this.setState({
       activeIndex,
-      ariaLiveText: `${activeIndex + 1} of ${items.length}`,
     })
-    this.clearAriaLiveText()
+
+    if (focusItem) {
+      this.focusItemAtIndex(activeIndex)
+    }
   }
 
   renderContent = (accessibility, styles, unhandledProps) => {
-    const { ariaRoleDescription, items, renderItemSlide } = this.props
-    const { activeIndex, ariaLiveText, itemIds } = this.state
+    const { ariaRoleDescription, getItemPositionText, items, renderItemSlide } = this.props
+    const { activeIndex, itemIds } = this.state
 
     if (!items) {
       return null
     }
 
+    this.itemRefs = []
+
     return (
       <div style={styles.itemsContainerWrapper} {...accessibility.attributes.itemsContainerWrapper}>
-        <Ref innerRef={this.itemsContainerRef}>
-          <div
-            aria-roledescription={ariaRoleDescription}
-            style={styles.itemsContainer}
-            {...accessibility.attributes.itemsContainer}
-            {...applyAccessibilityKeyHandlers(
-              accessibility.keyHandlers.itemsContainer,
-              unhandledProps,
-            )}
-            onBlur={(e: React.FocusEvent, buttonProps: ButtonProps) => {
-              if (
-                e.relatedTarget !== this.buttonNextRef.current &&
-                e.relatedTarget !== this.buttonPreviousRef.current
-              ) {
-                this.setState({ ariaLiveOn: false })
-              }
-            }}
-          >
-            {items.map((item, index) =>
-              CarouselItem.create(item, {
-                defaultProps: {
-                  renderItemSlide,
-                  active: activeIndex === index,
-                  id: itemIds[index],
-                },
-              }),
-            )}
-          </div>
-        </Ref>
-        <div style={screenReaderContainerStyles}>{ariaLiveText}</div>
+        <div
+          aria-roledescription={ariaRoleDescription}
+          style={styles.itemsContainer}
+          {...accessibility.attributes.itemsContainer}
+          {...applyAccessibilityKeyHandlers(
+            accessibility.keyHandlers.itemsContainer,
+            unhandledProps,
+          )}
+        >
+          {items.map((item, index) => {
+            const itemRef = React.createRef<HTMLElement>()
+            this.itemRefs.push(itemRef)
+            return (
+              <Ref innerRef={itemRef}>
+                {CarouselItem.create(item, {
+                  defaultProps: {
+                    renderItemSlide,
+                    active: activeIndex === index,
+                    id: itemIds[index],
+                    ...(getItemPositionText && {
+                      itemPositionText: getItemPositionText(index, items.length),
+                    }),
+                  },
+                })}
+              </Ref>
+            )
+          })}
+        </div>
       </div>
     )
   }
 
-  handlePrevious = (e: React.SyntheticEvent) => {
-    this.setActiveIndex(this.state.activeIndex - 1)
-    this.setState({
-      ariaLiveOn: true,
-    })
+  handlePrevious = (e: React.SyntheticEvent, focusItem: boolean) => {
+    this.setActiveIndex(this.state.activeIndex - 1, focusItem)
   }
 
-  handleNext = (e: React.SyntheticEvent) => {
-    this.setActiveIndex(this.state.activeIndex + 1)
-    this.setState({
-      ariaLiveOn: true,
-    })
+  handleNext = (e: React.SyntheticEvent, focusItem: boolean) => {
+    this.setActiveIndex(this.state.activeIndex + 1, focusItem)
   }
 
   renderControls = (accessibility, styles) => {
@@ -258,13 +271,13 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
             overrideProps: (predefinedProps: ButtonProps) => ({
               onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
                 _.invoke(predefinedProps, 'onClick', e, buttonProps)
-                this.handlePrevious(e)
+                this.setState({
+                  ariaLiveOn: true,
+                })
+                this.handlePrevious(e, false)
               },
               onBlur: (e: React.FocusEvent, buttonProps: ButtonProps) => {
-                if (
-                  e.relatedTarget !== this.buttonNextRef.current &&
-                  e.relatedTarget !== this.itemsContainerRef.current
-                ) {
+                if (e.relatedTarget !== this.buttonNextRef.current) {
                   this.setState({ ariaLiveOn: false })
                 }
               },
@@ -283,13 +296,13 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
             overrideProps: (predefinedProps: ButtonProps) => ({
               onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
                 _.invoke(predefinedProps, 'onClick', e, buttonProps)
-                this.handleNext(e)
+                this.setState({
+                  ariaLiveOn: true,
+                })
+                this.handleNext(e, false)
               },
               onBlur: (e: React.FocusEvent, buttonProps: ButtonProps) => {
-                if (
-                  e.relatedTarget !== this.buttonPreviousRef.current &&
-                  e.relatedTarget !== this.itemsContainerRef.current
-                ) {
+                if (e.relatedTarget !== this.buttonPreviousRef.current) {
                   this.setState({ ariaLiveOn: false })
                 }
               },
@@ -326,8 +339,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
           onItemClick: (e: React.SyntheticEvent, itemProps: MenuItemProps) => {
             const { index } = itemProps
 
-            this.setActiveIndex(index)
-            // this.itemsContainerRef.current.focus()
+            this.setActiveIndex(index, true)
 
             _.invoke(predefinedProps, 'onClick', e, itemProps)
           },

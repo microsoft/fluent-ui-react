@@ -38,6 +38,7 @@ const CarouselExample = () => (
       })),
     }}
     items={carouselItems}
+    getItemPositionText={(index: number, size: number) => `${index + 1} of ${size}`}
   />
 )
 

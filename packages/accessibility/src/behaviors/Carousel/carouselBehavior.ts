@@ -12,10 +12,7 @@ const carouselBehavior: Accessibility<CarouselBehaviorProps> = props => ({
       role: 'region',
     },
     itemsContainerWrapper: {
-      'aria-live': props.ariaLiveOn ? 'off' : 'off',
-    },
-    itemsContainer: {
-      // tabIndex: 0,
+      'aria-live': props.ariaLiveOn ? 'polite' : 'off',
     },
     ...(props.tabList && {
       buttonNext: {

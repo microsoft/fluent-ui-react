@@ -2,7 +2,6 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import { carouselItemBehavior } from '@stardust-ui/accessibility'
-import { Ref } from '@stardust-ui/react-component-ref'
 
 import {
   UIComponent,
@@ -25,6 +24,12 @@ export interface CarouselItemProps
     ContentComponentProps {
   /** Whether or not the item is in view or not. */
   active?: boolean
+
+  /**
+   * Text to be added in the DOM that will specify item position. To be picked
+   * up by screen readers.
+   */
+  itemPositionText?: string
 
   /**
    * A custom render iterator for rendering each carousel slide.
@@ -52,6 +57,7 @@ class CarouselItem extends UIComponent<WithAsProp<CarouselItemProps>> {
       content: false,
     }),
     active: PropTypes.bool,
+    itemPositionText: PropTypes.string,
     renderItemSlide: PropTypes.func,
     slide: customPropTypes.itemShorthand,
   }
@@ -61,19 +67,6 @@ class CarouselItem extends UIComponent<WithAsProp<CarouselItemProps>> {
     accessibility: carouselItemBehavior,
   }
 
-  contentRef = React.createRef<HTMLElement>()
-  timeout = null
-
-  componentDidUpdate(prevProps) {
-    if (!prevProps.active && this.props.active) {
-      this.timeout = setTimeout(() => {
-        this.contentRef.current.focus()
-      }, 400)
-    } else if (prevProps.active && !this.props.active) {
-      clearTimeout(this.timeout)
-    }
-  }
-
   renderContent() {
     const { renderItemSlide, slide } = this.props
 
@@ -81,19 +74,17 @@ class CarouselItem extends UIComponent<WithAsProp<CarouselItemProps>> {
   }
 
   renderComponent({ ElementType, classes, styles, accessibility, unhandledProps }) {
-    const { children } = this.props
+    const { children, itemPositionText } = this.props
     return (
-      <Ref innerRef={this.contentRef}>
-        <ElementType
-          className={classes.root}
-          {...accessibility.attributes.root}
-          {...unhandledProps}
-          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
-        >
-          <div style={screenReaderContainerStyles}>{'blabla'}</div>
-          {childrenExist(children) ? children : this.renderContent()}
-        </ElementType>
-      </Ref>
+      <ElementType
+        className={classes.root}
+        {...accessibility.attributes.root}
+        {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
+      >
+        <div style={screenReaderContainerStyles}>{itemPositionText}</div>
+        {childrenExist(children) ? children : this.renderContent()}
+      </ElementType>
     )
   }
 }
