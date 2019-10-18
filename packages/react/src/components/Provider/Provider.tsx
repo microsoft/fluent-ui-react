@@ -40,8 +40,8 @@ export interface ProviderProps extends ChildrenComponentProps {
   unstable_performanceBits?: number
 }
 
-export const PerformanceBitCacheThemeVariables = 1 >> 0 // not implemented yet
-export const PerformanceBitMemoizeFelaStyles = 1 >> 0
+export const PerformanceBitCacheThemeVariables = 0x1 // not implemented yet
+export const PerformanceBitMemoizeFelaStyles = 0x2
 export const PerformanceAllBits =
   PerformanceBitMemoizeFelaStyles | PerformanceBitCacheThemeVariables
 

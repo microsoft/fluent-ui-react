@@ -237,13 +237,11 @@ const renderComponent = <P extends {}>(
 
     if (renderer) {
       if (unstable_performanceBits & PerformanceBitMemoizeFelaStyles) {
-        console.log('BLAZING!')
         classes[slotName] = renderer.unstable_memoizedRenderRule(
           resolvedStyles[slotName],
           direction,
         )
       } else {
-        console.log('NOT BLAZING')
         classes[slotName] = renderer.renderRule(callable(resolvedStyles[slotName]), felaParam)
       }
     }
