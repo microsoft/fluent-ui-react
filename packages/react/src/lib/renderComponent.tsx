@@ -166,25 +166,30 @@ const renderComponent = <P extends {}>(
     logProviderMissingWarning()
   }
 
-  const { disableAnimations = false, renderer = null, rtl = false, theme = emptyTheme } =
-    context || {}
+  const {
+    disableAnimations = false,
+    renderer = null,
+    rtl = false,
+    theme = emptyTheme,
+    resolvedComponentVariables = {},
+  } = context || {}
 
   const ElementType = getElementType(props) as React.ReactType<P>
   const stateAndProps = { ...state, ...props }
 
   // Resolve variables for this component, cache the result in provider
-  if (!(displayName in theme.resolvedComponentVariables)) {
-    theme.resolvedComponentVariables[displayName] =
+  if (!(displayName in resolvedComponentVariables)) {
+    resolvedComponentVariables[displayName] =
       callable(theme.componentVariables[displayName])(theme.siteVariables) || {} // component variables must not be undefined/null (see mergeComponentVariables contract)
   }
 
   // Merge inline variables on top of cached variables
   const resolvedVariables = props.variables
     ? mergeComponentVariables(
-        theme.resolvedComponentVariables[displayName],
+        resolvedComponentVariables[displayName],
         withDebugId(props.variables, 'props.variables'),
       )(theme.siteVariables)
-    : theme.resolvedComponentVariables[displayName]
+    : resolvedComponentVariables[displayName]
 
   const animationCSSProp = props.animation
     ? createAnimationStyles(props.animation, context.theme)

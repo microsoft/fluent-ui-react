@@ -31,7 +31,6 @@ export const emptyTheme: ThemePrepared = {
     fontSizes: {},
   },
   componentVariables: {},
-  resolvedComponentVariables: {},
   componentStyles: {},
   fontFaces: [],
   staticStyles: [],
@@ -336,8 +335,6 @@ const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
       acc.staticStyles = mergeStaticStyles(...acc.staticStyles, ...(next.staticStyles || []))
 
       acc.animations = mergeAnimations(acc.animations, next.animations)
-
-      acc.resolvedComponentVariables = {} // do not merge resoved component variables
 
       return acc
     },
