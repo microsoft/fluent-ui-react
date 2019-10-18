@@ -22,7 +22,7 @@ describe('Popup in ToolbarMenu', () => {
     expect(await e2e.exists(popupElementId)).toBe(true)
   })
 
-  xit('Popup can be opened using keyboard', async () => {
+  it('Popup can be opened using keyboard', async () => {
     // focuses menu button
     await e2e.pressKey('Tab')
 
@@ -60,7 +60,7 @@ describe('Popup in ToolbarMenu', () => {
     expect(await e2e.exists(popupElementId)).toBe(true)
   })
 
-  xit('Click inside Popup does not hide Popup', async () => {
+  it('Click inside Popup does not hide Popup', async () => {
     // opens menu
     await e2e.clickOn(menuButtonId)
     expect(await e2e.exists(toolbarMenuId)).toBe(true)
