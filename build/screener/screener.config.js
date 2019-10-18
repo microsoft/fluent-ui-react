@@ -40,7 +40,10 @@ module.exports = {
     // failureExitCode: 0,
   }),
   ...(process.env.GITHUB_REF && {
-    branch: process.env.GITHUB_REF,
+    // GITHUB_REF can be:
+    // - refs/heads/feature-branch-1
+    // - refs/pull/2040/merge
+    branch: process.env.GITHUB_REF.split('/')[2],
     commit: process.env.GITHUB_SHA,
   }),
 }
