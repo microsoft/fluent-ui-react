@@ -170,17 +170,30 @@ const renderComponent = <P extends {}>(
     logProviderMissingWarning()
   }
 
-  const { disableAnimations = false, renderer = null, rtl = false, theme = emptyTheme } =
-    context || {}
+  const {
+    disableAnimations = false,
+    renderer = null,
+    rtl = false,
+    theme = emptyTheme,
+    _internal_resolvedComponentVariables: resolvedComponentVariables = {},
+  } = context || {}
 
   const ElementType = getElementType(props) as React.ReactType<P>
   const stateAndProps = { ...state, ...props }
 
-  // Resolve variables for this component, allow props.variables to override
-  const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
-    theme.componentVariables[displayName],
-    props.variables && withDebugId(props.variables, 'props.variables'),
-  )(theme.siteVariables)
+  // Resolve variables for this component, cache the result in provider
+  if (!resolvedComponentVariables[displayName]) {
+    resolvedComponentVariables[displayName] =
+      callable(theme.componentVariables[displayName])(theme.siteVariables) || {} // component variables must not be undefined/null (see mergeComponentVariables contract)
+  }
+
+  // Merge inline variables on top of cached variables
+  const resolvedVariables = props.variables
+    ? mergeComponentVariables(
+        resolvedComponentVariables[displayName],
+        withDebugId(props.variables, 'props.variables'),
+      )(theme.siteVariables)
+    : resolvedComponentVariables[displayName]
 
   const animationCSSProp = props.animation
     ? createAnimationStyles(props.animation, context.theme)
