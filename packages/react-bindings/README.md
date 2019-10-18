@@ -37,7 +37,7 @@ A React hook that provides bindings for accessibility behaviors.
 
 #### Usage
 
-The example below assumes a component called `<Input>` will be used this way:
+The example below assumes a component called `<Image>` will be used this way:
 
 ```tsx
 const imageBehavior: Accessibility<{ disabled: boolean }> = props => ({
