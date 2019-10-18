@@ -180,14 +180,14 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
       if (!cyclical) {
         return
       }
-      activeIndex = 0
+      activeIndex = lastItemIndex
     }
 
     if (index > lastItemIndex) {
       if (!cyclical) {
         return
       }
-      activeIndex = lastItemIndex
+      activeIndex = 0
     }
 
     this.setState({
