@@ -8,7 +8,6 @@ export default (siteVars): Partial<DropdownVariablesHC> => ({
   backgroundColor: siteVars.colors.black,
   borderColor: siteVars.colors.white,
   borderWidth: `1px`,
-  backgroundColorHover: siteVars.colors.black,
   borderColorHover: siteVars.accessibleYellow,
   borderColorFocus: siteVars.accessibleCyan,
   color: siteVars.colors.white,

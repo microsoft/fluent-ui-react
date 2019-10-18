@@ -82,7 +82,7 @@ const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, Dropdow
     ...(p.open && p.position === 'above' && { borderRadius: v.openAboveContainerBorderRadius }),
     ...(p.open && p.position === 'below' && { borderRadius: v.openBelowContainerBorderRadius }),
     ':hover': {
-      backgroundColor: v.backgroundColorHover,
+      backgroundColor: v.backgroundColor,
       [`& .${Dropdown.slotClassNames.triggerButton}`]: {
         // reset all styles
       },

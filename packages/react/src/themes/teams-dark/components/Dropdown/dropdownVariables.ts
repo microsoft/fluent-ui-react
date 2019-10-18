@@ -2,7 +2,6 @@ import { DropdownVariables } from '../../../teams/components/Dropdown/dropdownVa
 
 export default (siteVars): Partial<DropdownVariables> => ({
   backgroundColor: siteVars.colors.grey[650],
-  backgroundColorHover: siteVars.colors.grey[550],
   borderColor: 'transparent',
   borderColorFocus: siteVars.colors.brand[400],
   color: siteVars.colors.grey[250],

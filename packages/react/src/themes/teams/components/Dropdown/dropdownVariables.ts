@@ -50,7 +50,7 @@ export default (siteVars): DropdownVariables => ({
   backgroundColorInverted: siteVars.colorScheme.default.background,
   borderColor: 'transparent',
   borderColorFocus: siteVars.colors.brand[600],
-  borderWidth: '0px',
+  borderWidth: '0',
   containerBorderRadius: `${cornerRadius}`,
   openAboveContainerBorderRadius: `0 0 ${cornerRadius} ${cornerRadius}`,
   openBelowContainerBorderRadius: `${cornerRadius} ${cornerRadius} 0 0`,

@@ -18,7 +18,7 @@ const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, Dropdow
   container: ({ props: p, variables: v }): ICSSInJSStyle => ({
     ...(!p.open && {
       ':hover': {
-        backgroundColor: v.backgroundColorHover,
+        backgroundColor: v.backgroundColor,
         borderColor: v.borderColorHover,
         [`& .${Dropdown.slotClassNames.triggerButton}`]: {
           color: v.triggerButtonColorHover,
