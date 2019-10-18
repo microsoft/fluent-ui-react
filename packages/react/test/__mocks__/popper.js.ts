@@ -8,6 +8,7 @@ export default class Popper {
     return {
       destroy: () => {},
       scheduleUpdate: () => {},
+      enableEventListeners: () => {},
     }
   }
 }
