@@ -45,6 +45,9 @@ const selectedStyle = variables => ({
 
 const listItemStyles: ComponentSlotStylesPrepared<ListItemProps, any> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    display: 'flex',
+    alignItems: 'center',
+
     minHeight: v.minHeight,
     padding: v.rootPadding,
     ...((p.selectable || p.navigable) && {
@@ -61,6 +64,7 @@ const listItemStyles: ComponentSlotStylesPrepared<ListItemProps, any> = {
       fontWeight: 'bold',
     }),
   }),
+
   media: ({ props: p }): ICSSInJSStyle => ({
     ...(p.important && {
       '::before': {
@@ -76,36 +80,58 @@ const listItemStyles: ComponentSlotStylesPrepared<ListItemProps, any> = {
       marginRight: pxToRem(8),
     }),
   }),
+
   header: ({ props: p, variables: v }) => ({
+    flexGrow: 1,
     fontSize: v.headerFontSize,
     lineHeight: v.headerLineHeight,
+
     ...(p.truncateHeader && truncateStyle),
     ...((!p.content || p.headerMedia) && {
       marginRight: pxToRem(8),
     }),
   }),
+
   headerMedia: ({ variables: v }): ICSSInJSStyle => ({
+    alignSelf: 'flex-end',
+
     fontSize: v.headerMediaFontSize,
     lineHeight: v.headerMediaLineHeight,
-    alignSelf: 'flex-end',
   }),
+
   content: ({ props: p, variables: v }) => ({
+    flexGrow: 1,
     fontSize: v.contentFontSize,
     lineHeight: v.contentLineHeight,
+
     ...(p.truncateContent && truncateStyle),
     ...((!p.header || p.contentMedia) && {
       marginRight: pxToRem(8),
     }),
   }),
+
   contentMedia: ({ props: p, variables: v }) => ({
     fontSize: v.contentMediaFontSize,
     lineHeight: v.contentMediaLineHeight,
   }),
+
   endMedia: ({ props: p }) => ({
-    ...((p.selectable || p.navigable) && { display: 'none' }),
     flexShrink: 0,
+    ...((p.selectable || p.navigable) && { display: 'none' }),
   }),
+
+  headerWrapper: () => ({
+    display: 'flex',
+  }),
+
+  contentWrapper: () => ({
+    display: 'flex',
+  }),
+
   main: () => ({
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
     minWidth: 0, // needed for the truncate styles to work
   }),
 }
