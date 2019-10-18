@@ -1,8 +1,9 @@
+import { KeyActions } from '@stardust-ui/accessibility'
 import * as _ from 'lodash'
 import * as keyboardKey from 'keyboard-key'
 import * as React from 'react'
+
 import shouldHandleOnKeys from './shouldHandleOnKeys'
-import { KeyActions } from './accessibility/types'
 import { AccessibilityActionHandlers, AccessibilityKeyHandlers } from './accessibility/reactTypes'
 
 const rtlKeyMap = {

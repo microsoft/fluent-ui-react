@@ -12,7 +12,9 @@ import * as Layout from './pages/Layout.mdx'
 import Accessibility from './views/Accessibility'
 import Colors from './views/Colors'
 import ColorPalette from './views/ColorPalette'
+import CategoryColorPalette from './views/CategoryColorPalette'
 import ColorSchemes from './views/ColorSchemes'
+import CategoryColorSchemes from './views/CategoryColorSchemes'
 
 import FAQ from './views/FAQ'
 import * as ShorthandProps from './pages/ShorthandProps.mdx'
@@ -42,6 +44,8 @@ import NestedPopupsAndDialogsPrototype from './prototypes/NestedPopupsAndDialogs
 import VirtualizedTreePrototype from './prototypes/VirtualizedTree'
 import CopyToClipboardPrototype from './prototypes/CopyToClipboard'
 import ParticipantsListPrototype from './prototypes/ParticipantsList'
+import CustomScrollbarPrototype from './prototypes/customScrollbar'
+import EditorToolbarPrototype from './prototypes/EditorToolbar'
 
 const Routes = () => (
   <BrowserRouter basename={__BASENAME__}>
@@ -60,6 +64,7 @@ const Routes = () => (
           <Route exact path="/quick-start" component={QuickStart} />
           <Route exact path="/prototype-chat-pane" component={ChatPanePrototype} />
           <Route exact path="/prototype-chat-messages" component={ChatMessagesPrototype} />
+          <Route exact path="/prototype-custom-scrollbar" component={CustomScrollbarPrototype} />
           <Route exact path="/prototype-custom-toolbar" component={CustomToolbarPrototype} />
           <Route exact path="/prototype-async-shorthand" component={AsyncShorthandPrototype} />
           <Route exact path="/prototype-employee-card" component={EmployeeCardPrototype} />
@@ -71,6 +76,7 @@ const Routes = () => (
           <Route exact path="/prototype-popups" component={PopupsPrototype} />
           <Route exact path="/icon-viewer" component={IconViewerPrototype} />
           <Route exact path="/prototype-alerts" component={AlertsPrototype} />
+          <Route exact path="/prototype-editor-toolbar" component={EditorToolbarPrototype} />
           <Route
             exact
             path="/prototype-nested-popups-and-dialogs"
@@ -98,7 +104,9 @@ const Routes = () => (
           </Route>
           <Route exact path="/colors" component={Colors} />
           <Route exact path="/color-palette" component={ColorPalette} />
+          <Route exact path="/color-palette-category" component={CategoryColorPalette} />
           <Route exact path="/color-schemes" component={ColorSchemes} />
+          <Route exact path="/color-schemes-category" component={CategoryColorSchemes} />
           <Route exact path="/*" component={PageNotFound} />
         </Switch>
       </DocsLayout>

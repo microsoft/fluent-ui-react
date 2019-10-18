@@ -1,4 +1,4 @@
-import callable from './callable'
+import { callable } from '@stardust-ui/react-bindings'
 import * as _ from 'lodash'
 
 /**

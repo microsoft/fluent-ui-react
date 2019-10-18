@@ -1,4 +1,4 @@
-import { Accessibility } from '../../lib/accessibility/types'
+import { Accessibility, textAreaBehavior } from '@stardust-ui/accessibility'
 import { ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -11,7 +11,6 @@ import {
   AutoControlledComponent,
   applyAccessibilityKeyHandlers,
 } from '../../lib'
-import { textAreaBehavior } from '../../lib/accessibility'
 
 export interface TextAreaProps extends UIComponentProps, ChildrenComponentProps {
   /** Accessibility behavior if overridden by the user. */

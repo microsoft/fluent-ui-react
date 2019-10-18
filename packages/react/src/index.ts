@@ -6,6 +6,7 @@ import * as themes from './themes'
 export { themes }
 export * from './themes/types'
 export * from './themes/colorUtils'
+export * from './themes/createTheme'
 
 //
 // Teams theme
@@ -48,6 +49,9 @@ export { default as ChatMessage } from './components/Chat/ChatMessage'
 
 export * from './components/Checkbox/Checkbox'
 export { default as Checkbox } from './components/Checkbox/Checkbox'
+
+export * from './components/Debug/Debug'
+export { default as Debug } from './components/Debug/Debug'
 
 export * from './components/Design/Design'
 export { default as Design } from './components/Design/Design'
@@ -212,11 +216,6 @@ export * from './components/Tooltip/TooltipContent'
 export { default as TooltipContent } from './components/Tooltip/TooltipContent'
 
 //
-// Accessibility behaviors
-//
-export * from './lib/accessibility'
-
-//
 // Utilities
 //
 export { default as mergeThemes } from './lib/mergeThemes'
@@ -237,7 +236,7 @@ import {
   getNextElement,
   getPreviousElement,
   focusAsync,
-} from './lib/accessibility/FocusZone/focusUtilities'
+} from '@stardust-ui/react-bindings'
 
 export const FocusZoneUtilities = {
   getFirstTabbable,
@@ -248,10 +247,7 @@ export const FocusZoneUtilities = {
   getPreviousElement,
   focusAsync,
 }
-export * from './lib/accessibility/FocusZone/FocusZone.types'
-export * from './lib/accessibility/FocusZone/FocusTrapZone.types'
-export * from './lib/accessibility/FocusZone/AutoFocusZone.types'
-export * from './lib/accessibility/types'
-export * from './lib/accessibility/reactTypes'
 
+export * from '@stardust-ui/accessibility'
 export * from '@stardust-ui/react-component-ref'
+export * from '@stardust-ui/react-bindings'

@@ -9,6 +9,7 @@ import arrowLeft from './arrowLeft'
 import arrowRight from './arrowRight'
 import audioOff from './audioOff'
 import ban from './ban'
+import bell from './bell'
 import bellMute from './bellMute'
 import bold from './bold'
 import bookmark from './bookmark'
@@ -102,6 +103,7 @@ import mic from './mic'
 import micOff from './micOff'
 import more from './more'
 import notes from './notes'
+import notificationsMuted from './notificationsMuted'
 import oneDrive from './oneDrive'
 import microsoftStream from './microsoftStream'
 import userPhone from './userPhone'
@@ -116,10 +118,12 @@ import participantRemove from './participantRemove'
 import phoneClock from './phoneClock'
 import phoneArrow from './phoneArrow'
 import play from './play'
+import plugs from './plugs'
 import poll from './poll'
 import presenceAvailable from './presenceAvailable'
 import presenceStroke from './presenceStroke'
 import qna from './qna'
+import questionCircle from './questionCircle'
 import quote from './quote'
 import readAloud from './read-aloud'
 import redbang from './redbang'
@@ -127,6 +131,7 @@ import redo from './redo'
 import removeFormat from './removeFormat'
 import reply from './reply'
 import retry from './retry'
+import robot from './robot'
 import shareAlt from './shareAlt'
 import skypeLogo from './skypeLogo'
 import snooze from './snooze'
@@ -139,12 +144,15 @@ import stardustCircle from './stardustCircle'
 import sticker from './sticker'
 import strike from './strike'
 import sync from './sync'
+import tabs from './tabs'
 import table from './table'
 import tableAdd from './tableAdd'
 import tableDelete from './tableDelete'
 import teamCreate from './teamCreate'
 import teams from './teams'
 import toDoList from './toDoList'
+import thumbtack from './thumbtack'
+import thumbtackSlash from './thumbtackSlash'
 import translation from './translation'
 import trashCan from './trashCan'
 import triangleDown from './triangleDown'
@@ -171,7 +179,9 @@ export default {
   'arrow-right': arrowRight,
   'audio-off': audioOff,
   ban,
+  bell,
   'bell-slash': bellMute,
+  'bell-snooze': snooze,
   bold,
   bookmark,
   broadcast,
@@ -257,6 +267,7 @@ export default {
   'mic-off': micOff,
   more,
   'user-phone': userPhone,
+  'notifications-muted': notificationsMuted,
   'number-list': numberList,
   'open-outside': openOutside,
   outdent,
@@ -268,10 +279,12 @@ export default {
   'phone-clock': phoneClock,
   'phone-arrow': phoneArrow,
   play,
+  plugs,
   poll,
   'presence-available': presenceAvailable,
   'presence-stroke': presenceStroke,
   qna,
+  'question-circle': questionCircle,
   quote,
   'read-aloud': readAloud,
   redbang,
@@ -279,19 +292,22 @@ export default {
   'remove-format': removeFormat,
   reply,
   retry,
+  robot,
   search,
   send,
   settings,
   'share-alt': shareAlt,
-  'bell-snooze': snooze,
   star,
   sticker,
   strike,
   sync,
+  tabs,
   table,
   'table-add': tableAdd,
   'table-delete': tableDelete,
   teams,
+  thumbtack,
+  'thumbtack-slash': thumbtackSlash,
   'to-do-list': toDoList,
   translation,
   'trash-can': trashCan,

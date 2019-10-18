@@ -1,4 +1,3 @@
-import { Ref } from '@stardust-ui/react-component-ref'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
@@ -15,11 +14,10 @@ import {
   rtlTextContainer,
   ShorthandFactory,
 } from '../../lib'
-import { Accessibility } from '../../lib/accessibility/types'
+import { Accessibility } from '@stardust-ui/accessibility'
 
 import { PopperChildrenProps } from '../../lib/positioner'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
-import Box from '../Box/Box'
 
 export interface TooltipContentProps
   extends UIComponentProps,
@@ -33,11 +31,14 @@ export interface TooltipContentProps
   /** An actual placement value from Popper. */
   placement?: PopperChildrenProps['placement']
 
+  /** Defines whether tooltip is displayed. */
+  open?: boolean
+
   /** A tooltip can show a pointer to trigger. */
   pointing?: boolean
 
   /** A ref to a pointer element. */
-  pointerRef?: React.Ref<Element>
+  pointerRef?: React.Ref<HTMLDivElement>
 }
 
 class TooltipContent extends UIComponent<WithAsProp<TooltipContentProps>> {
@@ -60,7 +61,7 @@ class TooltipContent extends UIComponent<WithAsProp<TooltipContentProps>> {
     unhandledProps,
     styles,
   }: RenderResultConfig<TooltipContentProps>): React.ReactNode {
-    const { children, content, pointing, pointerRef } = this.props
+    const { children, content, open, pointing, pointerRef } = this.props
 
     return (
       <ElementType
@@ -69,21 +70,9 @@ class TooltipContent extends UIComponent<WithAsProp<TooltipContentProps>> {
         {...accessibility.attributes.root}
         {...unhandledProps}
       >
-        {pointing && (
-          <Ref innerRef={pointerRef}>
-            {Box.create({}, { defaultProps: { styles: styles.pointer } })}
-          </Ref>
-        )}
+        {open && pointing && <div className={classes.pointer} ref={pointerRef} />}
 
-        {Box.create(
-          {},
-          {
-            defaultProps: {
-              children: childrenExist(children) ? children : content,
-              styles: styles.content,
-            },
-          },
-        )}
+        <div className={classes.content}>{childrenExist(children) ? children : content}</div>
       </ElementType>
     )
   }

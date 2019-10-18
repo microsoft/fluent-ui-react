@@ -1,3 +1,4 @@
+import { Accessibility, toolbarMenuItemBehavior, submenuBehavior } from '@stardust-ui/accessibility'
 import * as React from 'react'
 import * as _ from 'lodash'
 import cx from 'classnames'
@@ -6,6 +7,7 @@ import * as PropTypes from 'prop-types'
 import { EventListener } from '@stardust-ui/react-component-event-listener'
 import { Ref, toRefObject } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { focusAsync } from '@stardust-ui/react-bindings'
 
 import {
   ChildrenComponentProps,
@@ -27,8 +29,6 @@ import {
   Omit,
   ShorthandCollection,
 } from '../../types'
-import { Accessibility } from '../../lib/accessibility/types'
-import { toolbarMenuItemBehavior, submenuBehavior } from '../../lib/accessibility'
 import { Popper } from '../../lib/positioner'
 
 import Box, { BoxProps } from '../Box/Box'
@@ -39,7 +39,6 @@ import {
   ToolbarMenuItemShorthandKinds,
   default as ToolbarMenu,
 } from './ToolbarMenu'
-import { focusAsync } from '../../lib/accessibility/FocusZone'
 
 export interface ToolbarMenuItemProps
   extends UIComponentProps,

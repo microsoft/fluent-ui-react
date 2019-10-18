@@ -14,7 +14,7 @@ import {
   createShorthandFactory,
   ShorthandFactory,
 } from '../../lib'
-import { Accessibility } from '../../lib/accessibility/types'
+import { Accessibility } from '@stardust-ui/accessibility'
 import Reaction, { ReactionProps } from './Reaction'
 
 export interface ReactionGroupProps

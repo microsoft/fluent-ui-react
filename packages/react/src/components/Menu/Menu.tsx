@@ -1,3 +1,4 @@
+import { Accessibility, menuBehavior } from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -17,8 +18,6 @@ import {
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
 import MenuItem, { MenuItemProps } from './MenuItem'
-import { menuBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 import { ComponentVariablesObject, ComponentSlotStylesPrepared } from '../../themes/types'
 import {
@@ -265,6 +264,9 @@ Menu.create = createShorthandFactory({ Component: Menu, mappedArrayProp: 'items'
  * @accessibilityIssues
  * [JAWS - navigation instruction for menubar](https://github.com/FreedomScientific/VFO-standards-support/issues/203)
  * [JAWS - navigation instruction for menu with aria-orientation="horizontal"](https://github.com/FreedomScientific/VFO-standards-support/issues/204)
+ * [JAWS [VC] doesn't narrate menu item, when it is open from menu button](https://github.com/FreedomScientific/VFO-standards-support/issues/324)
+ * [JAWS [app mode] focus moves to second menu item, when it is open from menu button](https://github.com/FreedomScientific/VFO-standards-support/issues/325)
+ * [Enter into a tablist JAWS narrates: To switch pages, press Control+PageDown](https://github.com/FreedomScientific/VFO-standards-support/issues/337)
  * 51114083 VoiceOver+Web narrate wrong position in menu / total count of menu items, when pseudo element ::after or ::before is used
  */
 export default withSafeTypeForAs<typeof Menu, MenuProps, 'ul'>(Menu)

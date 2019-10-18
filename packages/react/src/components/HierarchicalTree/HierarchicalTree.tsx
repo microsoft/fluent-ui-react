@@ -1,3 +1,4 @@
+import { Accessibility, hierarchicalTreeBehavior } from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -24,8 +25,6 @@ import {
   ShorthandCollection,
   ComponentEventHandler,
 } from '../../types'
-import { Accessibility } from '../../lib/accessibility/types'
-import { hierarchicalTreeBehavior } from '../../lib/accessibility'
 
 export interface HierarchicalTreeSlotClassNames {
   item: string
