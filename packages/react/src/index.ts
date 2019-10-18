@@ -65,6 +65,9 @@ export { default as Divider } from './components/Divider/Divider'
 export * from './components/Dialog/Dialog'
 export { default as Dialog } from './components/Dialog/Dialog'
 
+export * from './components/Dialog/DialogFooter'
+export { default as DialogFooter } from './components/Dialog/DialogFooter'
+
 export * from './components/Dropdown/Dropdown'
 export { default as Dropdown } from './components/Dropdown/Dropdown'
 export * from './components/Dropdown/DropdownItem'
