@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
-import { submenuBehavior, toolbarMenuItemCheckboxBehavior } from '@stardust-ui/accessibility'
+import { toolbarMenuBehavior, toolbarMenuItemCheckboxBehavior } from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 
 import {
@@ -13,6 +13,7 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   ShorthandFactory,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
@@ -36,6 +37,13 @@ export interface ToolbarMenuProps
     ContentComponentProps {
   /** Shorthand array of props for ToolbarMenu. */
   items?: ShorthandCollection<ToolbarMenuItemProps, ToolbarMenuItemShorthandKinds>
+
+  // /**
+  //  * Called after a user clicks the button.
+  //  * @param {SyntheticEvent} event - React's original SyntheticEvent.
+  //  * @param {object} data - All props.
+  //  */
+  // onClick?: ComponentEventHandler<ToolbarMenuProps>
 
   /**
    * Called on item click.
@@ -62,14 +70,21 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
   static propTypes = {
     ...commonPropTypes.createCommon(),
     items: customPropTypes.collectionShorthandWithKindProp(['divider', 'item']),
+    // onClick: PropTypes.func,
     onItemClick: PropTypes.func,
     submenu: PropTypes.bool,
     submenuIndicator: customPropTypes.itemShorthandWithoutJSX,
   }
 
   static defaultProps = {
-    accessibility: submenuBehavior,
+    accessibility: toolbarMenuBehavior,
     as: 'ul',
+  }
+
+  actionHandlers = {
+    performClick: e => {
+      _.invoke(this.props, 'onClick', e, this.props)
+    },
   }
 
   handleItemOverrides = variables => predefinedProps => ({
@@ -132,7 +147,12 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
   renderComponent({ ElementType, classes, accessibility, variables, unhandledProps }) {
     const { children, items } = this.props
     return (
-      <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
+      <ElementType
+        className={classes.root}
+        {...accessibility.attributes.root}
+        {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
+      >
         {childrenExist(children) ? children : this.renderItems(items, variables)}
       </ElementType>
     )
