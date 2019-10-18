@@ -163,7 +163,6 @@ class ToolbarMenuItem extends AutoControlledComponent<
 
   menuRef = React.createRef<HTMLElement>()
   itemRef = React.createRef<HTMLElement>()
-  wrapperRef = React.createRef<HTMLElement>()
 
   actionHandlers = {
     performClick: event => {
@@ -313,30 +312,15 @@ class ToolbarMenuItem extends AutoControlledComponent<
     const hasChildren = childrenExist(children)
 
     if (popup && !hasChildren) {
-      return (
-        <Ref innerRef={this.wrapperRef}>
-          {Box.create(wrapper || {}, {
-            defaultProps: {
-              className: cx(ToolbarMenuItem.slotClassNames.wrapper, classes.wrapper),
-              onClick: e => this.handleWrapperClick(e),
-              ...accessibility.attributes.wrapper,
-              ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, wrapper),
-            },
-            overrideProps: () => ({
-              children: Popup.create(popup, {
-                defaultProps: {
-                  trapFocus: true,
-                  inline: true,
-                },
-                overrideProps: {
-                  trigger: elementType,
-                  children: undefined, // force-reset `children` defined for `Popup` as it collides with the `trigger`
-                },
-              }),
-            }),
-          })}
-        </Ref>
-      )
+      return Popup.create(popup, {
+        defaultProps: {
+          trapFocus: true,
+        },
+        overrideProps: {
+          trigger: elementType,
+          children: undefined, // force-reset `children` defined for `Popup` as it collides with the `trigger`
+        },
+      })
     }
 
     const menuItemInner = hasChildren ? children : <Ref innerRef={this.itemRef}>{elementType}</Ref>
@@ -365,25 +349,21 @@ class ToolbarMenuItem extends AutoControlledComponent<
       return menuItemInner
     }
 
-    return (
-      <Ref innerRef={this.wrapperRef}>
-        {Box.create(wrapper, {
-          defaultProps: {
-            className: cx(ToolbarMenuItem.slotClassNames.wrapper, classes.wrapper),
-            ...accessibility.attributes.wrapper,
-            ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, wrapper),
-          },
-          overrideProps: () => ({
-            children: (
-              <>
-                {menuItemInner}
-                {maybeSubmenu}
-              </>
-            ),
-          }),
-        })}
-      </Ref>
-    )
+    return Box.create(wrapper, {
+      defaultProps: {
+        className: cx(ToolbarMenuItem.slotClassNames.wrapper, classes.wrapper),
+        ...accessibility.attributes.wrapper,
+        ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, wrapper),
+      },
+      overrideProps: () => ({
+        children: (
+          <>
+            {menuItemInner}
+            {maybeSubmenu}
+          </>
+        ),
+      }),
+    })
   }
 
   handleClick = (e: MouseEvent) => {
@@ -413,21 +393,6 @@ class ToolbarMenuItem extends AutoControlledComponent<
     }
 
     _.invoke(this.props, 'onClick', e, this.props)
-  }
-
-  handleWrapperClick = e => {
-    const { popup } = this.props
-    if (!popup) {
-      return
-    }
-
-    const isItemClick = doesNodeContainClick(this.itemRef.current, e, this.context.target)
-
-    if (!isItemClick) {
-      // is click inside the popup
-      e.preventDefault()
-      e.stopPropagation()
-    }
   }
 }
 
