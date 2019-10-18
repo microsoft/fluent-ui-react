@@ -139,6 +139,7 @@ const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, Dropdow
       },
       ':hover': {
         background: v.backgroundColor,
+        borderColor: 'transparent',
       },
       ...(p.inline && {
         paddingLeft: 0,
