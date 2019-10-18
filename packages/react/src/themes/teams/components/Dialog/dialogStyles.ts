@@ -18,11 +18,13 @@ export default {
     color: v.foregroundColor,
   }),
 
-  actions: (): ICSSInJSStyle => ({
+  footer: (): ICSSInJSStyle => ({
+    gridColumn: '1 / -1',
     gridRow: 3,
-    gridColumn: '1 / span 2',
-    '-ms-grid-column-align': 'end',
-    justifySelf: 'right',
+  }),
+
+  actions: (): ICSSInJSStyle => ({
+    display: 'inline-block',
   }),
 
   content: ({ variables: v }: DialogStyleParams): ICSSInJSStyle => ({
