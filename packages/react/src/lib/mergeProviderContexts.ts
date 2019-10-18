@@ -55,7 +55,7 @@ const mergeProviderContexts = (
     disableAnimations: false,
     originalThemes: [],
     target: document, // eslint-disable-line no-undef
-    resolvedComponentVariables: {},
+    _internal_resolvedComponentVariables: {},
     renderer: undefined,
   }
 

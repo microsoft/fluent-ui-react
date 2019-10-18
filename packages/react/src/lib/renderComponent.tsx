@@ -171,14 +171,14 @@ const renderComponent = <P extends {}>(
     renderer = null,
     rtl = false,
     theme = emptyTheme,
-    resolvedComponentVariables = {},
+    _internal_resolvedComponentVariables: resolvedComponentVariables = {},
   } = context || {}
 
   const ElementType = getElementType(props) as React.ReactType<P>
   const stateAndProps = { ...state, ...props }
 
   // Resolve variables for this component, cache the result in provider
-  if (!(displayName in resolvedComponentVariables)) {
+  if (!resolvedComponentVariables[displayName]) {
     resolvedComponentVariables[displayName] =
       callable(theme.componentVariables[displayName])(theme.siteVariables) || {} // component variables must not be undefined/null (see mergeComponentVariables contract)
   }
