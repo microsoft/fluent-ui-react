@@ -34,6 +34,7 @@ import createAnimationStyles from './createAnimationStyles'
 import { isEnabled as isDebugEnabled } from './debug/debugEnabled'
 import { DebugData } from './debug/debugData'
 import withDebugId from './withDebugId'
+import { PerformanceBitMemoizeFelaStyles } from '@stardust-ui/react'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
@@ -166,8 +167,13 @@ const renderComponent = <P extends {}>(
     logProviderMissingWarning()
   }
 
-  const { disableAnimations = false, renderer = null, rtl = false, theme = emptyTheme } =
-    context || {}
+  const {
+    disableAnimations = false,
+    renderer = null,
+    rtl = false,
+    theme = emptyTheme,
+    unstable_performanceBits = 0,
+  } = context || {}
 
   const ElementType = getElementType(props) as React.ReactType<P>
   const stateAndProps = { ...state, ...props }
@@ -230,7 +236,16 @@ const renderComponent = <P extends {}>(
     }
 
     if (renderer) {
-      classes[slotName] = renderer.renderRule(callable(resolvedStyles[slotName]), felaParam)
+      if (unstable_performanceBits & PerformanceBitMemoizeFelaStyles) {
+        console.log('BLAZING!')
+        classes[slotName] = renderer.unstable_memoizedRenderRule(
+          resolvedStyles[slotName],
+          direction,
+        )
+      } else {
+        console.log('NOT BLAZING')
+        classes[slotName] = renderer.renderRule(callable(resolvedStyles[slotName]), felaParam)
+      }
     }
   })
 

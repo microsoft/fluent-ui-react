@@ -1,9 +1,11 @@
+import { callable } from '@stardust-ui/react-bindings'
 import { createRenderer as createFelaRenderer } from 'fela'
 import felaPluginEmbedded from 'fela-plugin-embedded'
 import felaPluginFallbackValue from 'fela-plugin-fallback-value'
 import felaPluginPlaceholderPrefixer from 'fela-plugin-placeholder-prefixer'
 import felaPluginPrefixer from 'fela-plugin-prefixer'
 import felaPluginRtl from 'fela-plugin-rtl'
+import memoize from 'fast-memoize'
 
 import { Renderer } from '../themes/types'
 import felaDisableAnimationsPlugin from './felaDisableAnimationsPlugin'
@@ -77,6 +79,14 @@ const rendererConfig = {
   ],
 }
 
-export const createRenderer = (): Renderer => createFelaRenderer(rendererConfig)
+export const createRenderer = (): Renderer => {
+  const renderer = createFelaRenderer(rendererConfig) as Renderer
+  renderer.unstable_memoizedRenderRule = memoize((styles, direction) => {
+    return renderer.renderRule(callable(styles), {
+      theme: { direction },
+    })
+  })
+  return renderer
+}
 
 export const felaRenderer = createRenderer()

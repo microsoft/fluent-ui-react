@@ -37,7 +37,13 @@ export interface ProviderProps extends ChildrenComponentProps {
   target?: Document
   theme?: ThemeInput
   variables?: ComponentVariablesInput
+  unstable_performanceBits?: number
 }
+
+export const PerformanceBitCacheThemeVariables = 1 >> 0 // not implemented yet
+export const PerformanceBitMemoizeFelaStyles = 1 >> 0
+export const PerformanceAllBits =
+  PerformanceBitMemoizeFelaStyles | PerformanceBitCacheThemeVariables
 
 /**
  * The Provider passes the CSS-in-JS renderer, theme styles and other settings to Stardust components.
@@ -76,10 +82,12 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
     disableAnimations: PropTypes.bool,
     children: PropTypes.node.isRequired,
     target: PropTypes.object,
+    unstable_performanceBits: PropTypes.number,
   }
 
   static defaultProps = {
     theme: {},
+    unstable_performanceBits: 0,
   }
 
   static Consumer = ProviderConsumer
@@ -153,6 +161,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
       target,
       theme,
       variables,
+      unstable_performanceBits,
       ...unhandledProps
     } = this.props
     const inputContext: ProviderContextInput = {
@@ -167,6 +176,20 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
     // rehydration disabled to avoid leaking styles between renderers
     // https://github.com/rofrischmann/fela/blob/master/docs/api/fela-dom/rehydrate.md
     this.outgoingContext = mergeContexts(incomingContext, inputContext)
+    this.outgoingContext.unstable_performanceBits = unstable_performanceBits
+
+    if (process.env.NODE_ENV !== 'production') {
+      console.log(
+        [
+          '@stardust-ui/react: following performance optimizations are turned on:',
+          unstable_performanceBits & PerformanceBitCacheThemeVariables && '- cache theme variables',
+          unstable_performanceBits & PerformanceBitMemoizeFelaStyles &&
+            '- memoize calls to Fela to avoid plugin execution',
+        ]
+          .filter(Boolean)
+          .join('\n'),
+      )
+    }
 
     this.renderStaticStylesOnce(this.outgoingContext.theme)
 
