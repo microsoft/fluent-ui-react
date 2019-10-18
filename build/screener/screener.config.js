@@ -36,7 +36,8 @@ module.exports = {
 
   ...(process.env.CI && {
     baseBranch: 'master',
-    failureExitCode: 0,
+    // Disable exit code to fail in Github Actions
+    // failureExitCode: 0,
   }),
   ...(process.env.GITHUB_REF && {
     branch: process.env.GITHUB_REF,

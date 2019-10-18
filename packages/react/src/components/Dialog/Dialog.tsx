@@ -257,26 +257,31 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
     } = this.props
     const { open } = this.state
 
-    const dialogActions = ButtonGroup.create(actions, {
-      defaultProps: {
-        styles: styles.actions,
-      },
-      overrideProps: {
-        content: (
-          <Flex gap="gap.smaller">
-            {Button.create(cancelButton, {
-              overrideProps: this.handleCancelButtonOverrides,
-            })}
-            {Button.create(confirmButton, {
-              defaultProps: {
-                primary: true,
-              },
-              overrideProps: this.handleConfirmButtonOverrides,
-            })}
-          </Flex>
-        ),
-      },
+    const cancelElement = Button.create(cancelButton, {
+      overrideProps: this.handleCancelButtonOverrides,
     })
+    const confirmElement = Button.create(confirmButton, {
+      defaultProps: {
+        primary: true,
+      },
+      overrideProps: this.handleConfirmButtonOverrides,
+    })
+
+    const dialogActions =
+      (cancelElement || confirmElement) &&
+      ButtonGroup.create(actions, {
+        defaultProps: {
+          styles: styles.actions,
+        },
+        overrideProps: {
+          content: (
+            <Flex gap="gap.smaller">
+              {cancelElement}
+              {confirmElement}
+            </Flex>
+          ),
+        },
+      })
 
     const dialogContent = (
       <Ref innerRef={this.contentRef}>
