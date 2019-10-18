@@ -255,7 +255,6 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
       return Popup.create(popup, {
         defaultProps: {
           trapFocus: true,
-          inline: true,
         },
         overrideProps: {
           trigger: itemElement,
