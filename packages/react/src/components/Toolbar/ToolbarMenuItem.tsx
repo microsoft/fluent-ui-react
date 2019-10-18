@@ -1,4 +1,4 @@
-import { Accessibility, toolbarMenuItemBehavior, submenuBehavior } from '@stardust-ui/accessibility'
+import { Accessibility, toolbarMenuItemBehavior } from '@stardust-ui/accessibility'
 import * as React from 'react'
 import * as _ from 'lodash'
 import cx from 'classnames'
@@ -332,7 +332,6 @@ class ToolbarMenuItem extends AutoControlledComponent<
             <Popper align="top" position={rtl ? 'before' : 'after'} targetRef={this.itemRef}>
               {ToolbarMenu.create(menu, {
                 defaultProps: {
-                  accessibility: submenuBehavior,
                   className: ToolbarMenuItem.slotClassNames.submenu,
                   styles: styles.menu,
                   submenu: true,

@@ -6,7 +6,6 @@ import * as React from 'react'
 const ToolbarExampleMenuShorthand = () => {
   const [menuOpen, setMenuOpen] = React.useState(false)
 
-  const onItemClick = useLogKnob('onItemClick', null, createCallbackLogFormatter(['content']))
   const onMenuOpenChange = useLogKnob(
     'onMenuOpenChange',
     (e, { menuOpen }) => setMenuOpen(menuOpen),
@@ -37,7 +36,6 @@ const ToolbarExampleMenuShorthand = () => {
               { key: 'divider', kind: 'divider' },
               'Without icon',
             ],
-            onItemClick,
           },
           menuOpen,
           onMenuOpenChange,

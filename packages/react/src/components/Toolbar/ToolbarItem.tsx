@@ -4,6 +4,7 @@ import * as PropTypes from 'prop-types'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import { Accessibility, toolbarItemBehavior } from '@stardust-ui/accessibility'
 import cx from 'classnames'
+import * as keyboardKey from 'keyboard-key'
 import { Ref, toRefObject } from '@stardust-ui/react-component-ref'
 import { EventListener } from '@stardust-ui/react-component-event-listener'
 
@@ -194,6 +195,17 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
       this.trySetMenuOpen(menuOpen, e)
       if (!menuOpen && this.itemRef) {
         this.itemRef.current.focus()
+      }
+    },
+    onClick: e => {
+      this.trySetMenuOpen(false, e)
+    },
+    onKeyDown: e => {
+      if (
+        keyboardKey.getCode(e) === keyboardKey.Enter ||
+        keyboardKey.getCode(e) === keyboardKey.Spacebar
+      ) {
+        this.trySetMenuOpen(false, e)
       }
     },
     variables: mergeComponentVariables(variables, predefinedProps.variables),
