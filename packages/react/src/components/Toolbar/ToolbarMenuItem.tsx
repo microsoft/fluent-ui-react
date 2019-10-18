@@ -8,6 +8,11 @@ import { EventListener } from '@stardust-ui/react-component-event-listener'
 import { Ref, toRefObject } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import { focusAsync } from '@stardust-ui/react-bindings'
+import {
+  GetRefs,
+  NodeRef,
+  Unstable_NestingAuto,
+} from '@stardust-ui/react-component-nesting-registry'
 
 import {
   ChildrenComponentProps,
@@ -238,23 +243,30 @@ class ToolbarMenuItem extends AutoControlledComponent<
     })
   }
 
-  outsideClickHandler = e => {
-    if (!this.isSubmenuOpen()) return
-    if (
-      !doesNodeContainClick(this.itemRef.current, e, this.context.target) &&
-      !doesNodeContainClick(this.menuRef.current, e, this.context.target)
-    ) {
+  outsideClickHandler = (getRefs: GetRefs) => (e: MouseEvent) => {
+    const isItemClick = doesNodeContainClick(this.itemRef.current, e, this.context.target)
+    const isNestedClick = _.some(getRefs(), (childRef: NodeRef) => {
+      return doesNodeContainClick(childRef.current as HTMLElement, e, this.context.target)
+    })
+    const isInside = isItemClick || isNestedClick
+
+    if (!isInside) {
       this.trySetMenuOpen(false, e)
     }
   }
 
-  handleMenuOverrides = predefinedProps => ({
-    onClick: (e, menuProps) => {
-      const { popup } = this.props
+  handleMenuOverrides = (getRefs: GetRefs) => (predefinedProps: ToolbarMenuProps) => ({
+    onItemClick: (e, itemProps: ToolbarMenuItemProps) => {
+      const { popup, menuOpen } = itemProps
+      _.invoke(predefinedProps, 'onItemClick', e, itemProps)
+      if (popup) {
+        return
+      }
 
-      if (!popup) this.trySetMenuOpen(false, e)
-
-      _.invoke(predefinedProps, 'onClick', e, menuProps)
+      this.trySetMenuOpen(menuOpen, e)
+      if (!menuOpen && this.itemRef) {
+        this.itemRef.current.focus()
+      }
     },
   })
 
@@ -315,6 +327,9 @@ class ToolbarMenuItem extends AutoControlledComponent<
       return Popup.create(popup, {
         defaultProps: {
           trapFocus: true,
+          onOpenChange: e => {
+            e.stopPropagation()
+          },
         },
         overrideProps: {
           trigger: elementType,
@@ -327,22 +342,32 @@ class ToolbarMenuItem extends AutoControlledComponent<
 
     const maybeSubmenu =
       menu && menuOpen ? (
-        <>
-          <Ref innerRef={this.menuRef}>
-            <Popper align="top" position={rtl ? 'before' : 'after'} targetRef={this.itemRef}>
-              {ToolbarMenu.create(menu, {
-                defaultProps: {
-                  className: ToolbarMenuItem.slotClassNames.submenu,
-                  styles: styles.menu,
-                  submenu: true,
-                  submenuIndicator,
-                },
-                overrideProps: this.handleMenuOverrides,
-              })}
-            </Popper>
-          </Ref>
-          <EventListener listener={this.outsideClickHandler} targetRef={targetRef} type="click" />
-        </>
+        <Unstable_NestingAuto>
+          {(getRefs, nestingRef) => (
+            <>
+              <Ref innerRef={nestingRef}>
+                <Ref innerRef={this.menuRef}>
+                  <Popper align="top" position={rtl ? 'before' : 'after'} targetRef={this.itemRef}>
+                    {ToolbarMenu.create(menu, {
+                      defaultProps: {
+                        className: ToolbarMenuItem.slotClassNames.submenu,
+                        styles: styles.menu,
+                        submenu: true,
+                        submenuIndicator,
+                      },
+                      overrideProps: this.handleMenuOverrides(getRefs),
+                    })}
+                  </Popper>
+                </Ref>
+              </Ref>
+              <EventListener
+                listener={this.outsideClickHandler(getRefs)}
+                targetRef={targetRef}
+                type="click"
+              />
+            </>
+          )}
+        </Unstable_NestingAuto>
       ) : null
 
     if (!wrapper) {
@@ -375,15 +400,10 @@ class ToolbarMenuItem extends AutoControlledComponent<
     }
 
     if (menu) {
-      if (doesNodeContainClick(this.menuRef.current, e, this.context.target)) {
-        // submenu was clicked => close it and propagate
-        this.trySetMenuOpen(false, e, () => focusAsync(this.itemRef.current))
-      } else {
-        // the menuItem element was clicked => toggle the open/close and stop propagation
-        this.trySetMenuOpen(!this.state.menuOpen, e)
-        e.stopPropagation()
-        e.preventDefault()
-      }
+      // the menuItem element was clicked => toggle the open/close and stop propagation
+      this.trySetMenuOpen(!this.state.menuOpen, e)
+      e.stopPropagation()
+      e.preventDefault()
     }
 
     if (popup) {

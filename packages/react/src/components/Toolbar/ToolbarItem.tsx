@@ -196,9 +196,6 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
         this.itemRef.current.focus()
       }
     },
-    onClick: e => {
-      this.trySetMenuOpen(false, e)
-    },
     variables: mergeComponentVariables(variables, predefinedProps.variables),
   })
 
