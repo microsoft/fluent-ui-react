@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import { carouselItemBehavior } from '@stardust-ui/accessibility'
+import { Ref } from '@stardust-ui/react-component-ref'
 
 import {
   UIComponent,
@@ -14,6 +15,7 @@ import {
   ContentComponentProps,
   ChildrenComponentProps,
 } from '../../lib'
+import { screenReaderContainerStyles } from '../../lib/accessibility/Styles/accessibilityStyles'
 import { WithAsProp, withSafeTypeForAs, ShorthandValue, ShorthandRenderFunction } from '../../types'
 import CarouselSlide, { CarouselSlideProps } from './CarouselSlide'
 
@@ -59,6 +61,19 @@ class CarouselItem extends UIComponent<WithAsProp<CarouselItemProps>> {
     accessibility: carouselItemBehavior,
   }
 
+  contentRef = React.createRef<HTMLElement>()
+  timeout = null
+
+  componentDidUpdate(prevProps) {
+    if (!prevProps.active && this.props.active) {
+      this.timeout = setTimeout(() => {
+        this.contentRef.current.focus()
+      }, 400)
+    } else if (prevProps.active && !this.props.active) {
+      clearTimeout(this.timeout)
+    }
+  }
+
   renderContent() {
     const { renderItemSlide, slide } = this.props
 
@@ -68,14 +83,17 @@ class CarouselItem extends UIComponent<WithAsProp<CarouselItemProps>> {
   renderComponent({ ElementType, classes, styles, accessibility, unhandledProps }) {
     const { children } = this.props
     return (
-      <ElementType
-        className={classes.root}
-        {...accessibility.attributes.root}
-        {...unhandledProps}
-        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
-      >
-        {childrenExist(children) ? children : this.renderContent()}
-      </ElementType>
+      <Ref innerRef={this.contentRef}>
+        <ElementType
+          className={classes.root}
+          {...accessibility.attributes.root}
+          {...unhandledProps}
+          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
+        >
+          <div style={screenReaderContainerStyles}>{'blabla'}</div>
+          {childrenExist(children) ? children : this.renderContent()}
+        </ElementType>
+      </Ref>
     )
   }
 }

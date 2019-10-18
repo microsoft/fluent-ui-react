@@ -327,7 +327,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
             const { index } = itemProps
 
             this.setActiveIndex(index)
-            this.itemsContainerRef.current.focus()
+            // this.itemsContainerRef.current.focus()
 
             _.invoke(predefinedProps, 'onClick', e, itemProps)
           },

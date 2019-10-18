@@ -8,6 +8,7 @@ const carouselItemBehavior: Accessibility<CarouselItemProps> = props => ({
     root: {
       role: 'tabpanel',
       'aria-hidden': props.active ? 'false' : 'true',
+      tabIndex: props.active ? 0 : -1,
     },
   },
 
