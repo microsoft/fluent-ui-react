@@ -161,6 +161,9 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
       event.preventDefault()
       this.handleClick(event)
     },
+    performWrapperClick: event => {
+      this.handleWrapperClick(event)
+    },
     closeMenuAndFocusTrigger: event => {
       this.trySetMenuOpen(false, event)
       if (this.itemRef) {
@@ -173,6 +176,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
   }
 
   itemRef = React.createRef<HTMLElement>()
+  menuRef = React.createRef<HTMLElement>()
 
   handleMenuOverrides = (getRefs: GetRefs, variables) => (predefinedProps: ToolbarMenuProps) => ({
     onBlur: (e: React.FocusEvent) => {
@@ -222,20 +226,22 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
         {(getRefs, nestingRef) => (
           <>
             <Ref innerRef={nestingRef}>
-              <Popper
-                align="start"
-                position="above"
-                modifiers={{
-                  preventOverflow: {
-                    escapeWithReference: false, // escapeWithReference breaks positioning of ToolbarMenu in overflow mode because Popper components sets modifiers on scrollable container
-                  },
-                }}
-                targetRef={this.itemRef}
-              >
-                {ToolbarMenu.create(menu, {
-                  overrideProps: this.handleMenuOverrides(getRefs, variables),
-                })}
-              </Popper>
+              <Ref innerRef={this.menuRef}>
+                <Popper
+                  align="start"
+                  position="above"
+                  modifiers={{
+                    preventOverflow: {
+                      escapeWithReference: false, // escapeWithReference breaks positioning of ToolbarMenu in overflow mode because Popper components sets modifiers on scrollable container
+                    },
+                  }}
+                  targetRef={this.itemRef}
+                >
+                  {ToolbarMenu.create(menu, {
+                    overrideProps: this.handleMenuOverrides(getRefs, variables),
+                  })}
+                </Popper>
+              </Ref>
             </Ref>
             <EventListener
               listener={this.handleOutsideClick(getRefs)}
@@ -276,8 +282,12 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
             ...accessibility.attributes.wrapper,
             ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, wrapper),
           },
-          overrideProps: () => ({
+          overrideProps: predefinedProps => ({
             children: contentElement,
+            onClick: e => {
+              this.handleWrapperClick(e)
+              _.invoke(predefinedProps, 'onClick', e)
+            },
           }),
         })
       }
@@ -309,6 +319,18 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
     }
 
     _.invoke(this.props, 'onClick', e, this.props)
+  }
+
+  handleWrapperClick = e => {
+    const { menu } = this.props
+    if (menu) {
+      if (doesNodeContainClick(this.menuRef.current, e, this.context.target)) {
+        this.trySetMenuOpen(false, e)
+        if (this.itemRef) {
+          this.itemRef.current.focus()
+        }
+      }
+    }
   }
 
   handleOutsideClick = (getRefs: GetRefs) => (e: MouseEvent) => {
