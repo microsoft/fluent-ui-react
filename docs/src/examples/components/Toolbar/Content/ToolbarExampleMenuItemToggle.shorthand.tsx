@@ -16,6 +16,7 @@ const ToolbarExampleMenuItemToggle = () => {
 
   return (
     <Toolbar
+      aria-labelledby="toolbar-can-contain-toggle-items-in-a-menu"
       items={[
         {
           key: 'more',

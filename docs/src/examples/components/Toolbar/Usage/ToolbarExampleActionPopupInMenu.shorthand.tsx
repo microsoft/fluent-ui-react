@@ -30,6 +30,7 @@ const ToolbarExampleActionPopupInMenu = () => {
   const [menuOpen, setMenuOpen] = React.useState(false)
   return (
     <Toolbar
+      aria-labelledby="popup-with-an-action-in-menu"
       items={[
         {
           icon: 'more',

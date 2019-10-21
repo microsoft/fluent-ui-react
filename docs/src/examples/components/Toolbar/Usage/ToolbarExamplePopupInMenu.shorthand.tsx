@@ -7,6 +7,7 @@ const ToolbarExamplePopupInMenu = () => {
 
   return (
     <Toolbar
+      aria-labelledby="popup-in-menu"
       items={[
         {
           key: 'menu1',

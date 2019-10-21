@@ -7,6 +7,7 @@ const ToolbarExampleMenuRadioGroup = () => {
 
   return (
     <Toolbar
+      aria-labelledby="toolbar-can-contain-a-radio-group-in-a-menu"
       items={[
         {
           key: 'more',

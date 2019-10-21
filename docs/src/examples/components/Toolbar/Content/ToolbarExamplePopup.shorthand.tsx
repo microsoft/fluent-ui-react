@@ -31,6 +31,7 @@ const ToolbarExamplePopupShorthand = () => {
   const [fontColorActive, setFontColorActive] = React.useState(false)
   return (
     <Toolbar
+      aria-labelledby="toolbar-can-contain-a-popup"
       items={[
         {
           key: 'highlight',
