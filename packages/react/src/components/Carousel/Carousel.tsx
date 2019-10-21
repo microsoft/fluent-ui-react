@@ -142,10 +142,6 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
       const { activeIndex } = this.state
       const { cyclical, items, tabList } = this.props
 
-      this.setState({
-        ariaLiveOn: true,
-      })
-
       this.handleNext(e, false)
 
       if (!tabList && activeIndex >= items.length - 2 && !cyclical) {
@@ -156,10 +152,6 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
       e.preventDefault()
       const { activeIndex } = this.state
       const { cyclical, tabList } = this.props
-
-      this.setState({
-        ariaLiveOn: true,
-      })
 
       this.handlePrevious(e, false)
 
