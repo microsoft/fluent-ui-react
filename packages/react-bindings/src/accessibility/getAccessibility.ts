@@ -1,5 +1,6 @@
 import {
   Accessibility,
+  AccessibilityAttributes,
   AccessibilityAttributesBySlot,
   AccessibilityDefinition,
 } from '@stardust-ui/accessibility'
@@ -36,6 +37,13 @@ const getAccessibility = <Props extends Record<string, any>>(
     if (definition.attributes) {
       Object.keys(definition.attributes).forEach(slotName => {
         const validatorName = `${displayName}${slotName === 'root' ? '' : `__${slotName}`}`
+
+        if (!(definition.attributes as AccessibilityAttributesBySlot)[slotName]) {
+          ;(definition.attributes as AccessibilityAttributesBySlot)[
+            slotName
+          ] = {} as AccessibilityAttributes
+        }
+
         ;(definition.attributes as AccessibilityAttributesBySlot)[slotName][
           'data-aa-class'
         ] = validatorName
