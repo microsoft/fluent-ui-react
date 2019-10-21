@@ -3,6 +3,8 @@ import * as keyboardKey from 'keyboard-key'
 
 /**
  * @specification
+ * Adds attribute 'role=region' to 'root' slot.
+ * Adds attribute 'aria-live=polite' to 'itemsContainerWrapper' slot if 'ariaLiveOn' property is true. Sets the attribute to 'off' otherwise.
  * Triggers 'moveNext' action with 'ArrowRight' on 'itemsContainer'.
  * Triggers 'movePrevious' action with 'ArrowLeft' on 'itemsContainer'.
  */
