@@ -39,9 +39,11 @@ export const mergeBooleanValues = (target, ...sources) => {
 const mergeProviderContexts = (
   ...contexts: (ProviderContextInput | ProviderContextPrepared)[]
 ): ProviderContextPrepared => {
-  const emptyContext = {
+  const emptyContext: ProviderContextPrepared = {
     theme: {
-      siteVariables: {},
+      siteVariables: {
+        fontSizes: {},
+      },
       componentVariables: {},
       componentStyles: {},
       fontFaces: [],
@@ -53,7 +55,9 @@ const mergeProviderContexts = (
     disableAnimations: false,
     originalThemes: [],
     target: document, // eslint-disable-line no-undef
-  } as ProviderContextPrepared
+    _internal_resolvedComponentVariables: {},
+    renderer: undefined,
+  }
 
   return contexts.reduce<ProviderContextPrepared>(
     (acc: ProviderContextPrepared, next: ProviderContextInput | ProviderContextPrepared) => {
