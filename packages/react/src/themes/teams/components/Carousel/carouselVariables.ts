@@ -1,13 +1,13 @@
 export interface CarouselVariables {
   width: number
   height: number
-  buttonPreviousSize: number
-  buttonNextSize: number
+  paddlePreviousSize: number
+  paddleNextSize: number
 }
 
 export default (siteVars): CarouselVariables => ({
   width: 300,
   height: 300,
-  buttonPreviousSize: 32,
-  buttonNextSize: 32,
+  paddlePreviousSize: 32,
+  paddleNextSize: 32,
 })

@@ -17,11 +17,11 @@ const carouselBehavior: Accessibility<CarouselBehaviorProps> = props => ({
       'aria-live': props.ariaLiveOn ? 'polite' : 'off',
     },
     ...(props.tabList && {
-      buttonNext: {
+      paddleNext: {
         tabIndex: -1,
         'aria-hidden': 'true',
       },
-      buttonPrevious: {
+      paddlePrevious: {
         tabIndex: -1,
         'aria-hidden': 'true',
       },
@@ -37,12 +37,12 @@ const carouselBehavior: Accessibility<CarouselBehaviorProps> = props => ({
         keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
       },
     },
-    buttonNext: {
+    paddleNext: {
       moveNextAndFocusContainerIfLast: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },
     },
-    buttonPrevious: {
+    paddlePrevious: {
       movePreviousAndFocusContainerIfFirst: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },

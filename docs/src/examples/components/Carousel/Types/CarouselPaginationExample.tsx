@@ -25,8 +25,8 @@ const CarouselExample = () => (
     ariaRoleDescription="carousel"
     items={carouselItems}
     tabList={false}
-    buttonNext={{ 'aria-label': 'go to next slide' }}
-    buttonPrevious={{ 'aria-label': 'go to previous slide' }}
+    paddleNext={{ 'aria-label': 'go to next slide' }}
+    paddlePrevious={{ 'aria-label': 'go to previous slide' }}
     getItemPositionText={(index: number, size: number) => `${index + 1} of ${size}`}
   />
 )

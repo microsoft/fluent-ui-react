@@ -37,11 +37,8 @@ export interface CarouselProps extends UIComponentProps, ChildrenComponentProps 
    */
   ariaRoleDescription?: string
 
-  /** Shorthand for the button that navigates to the next item. */
-  buttonNext?: ShorthandValue<ButtonProps>
-
-  /** Shorthand for the button that navigates to the previous item. */
-  buttonPrevious?: ShorthandValue<ButtonProps>
+  /** Specifies if the process of switching slides is cyclical. */
+  cyclical?: boolean
 
   /** Message generator for item position in the carousel. Used to generate
    * individual i11y messages for items, such as "1 of 4".
@@ -51,8 +48,11 @@ export interface CarouselProps extends UIComponentProps, ChildrenComponentProps 
   /** Shorthand array of props for CarouselItem. */
   items?: ShorthandCollection<CarouselItemProps>
 
-  /** Specifies if the process of switching slides is cyclical. */
-  cyclical?: boolean
+  /** Shorthand for the button that navigates to the next item. */
+  paddleNext?: ShorthandValue<ButtonProps>
+
+  /** Shorthand for the button that navigates to the previous item. */
+  paddlePrevious?: ShorthandValue<ButtonProps>
 
   /**
    * A custom render iterator for rendering each carousel slide.
@@ -86,11 +86,12 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
       content: false,
     }),
     ariaRoleDescription: PropTypes.string,
-    buttonNext: customPropTypes.itemShorthand,
-    buttonPrevious: customPropTypes.itemShorthand,
     cyclical: PropTypes.bool,
     getItemPositionText: PropTypes.func,
     items: customPropTypes.collectionShorthand,
+    paddleNext: customPropTypes.itemShorthand,
+    paddlePrevious: customPropTypes.itemShorthand,
+    renderItemSlide: PropTypes.func,
     tabList: PropTypes.oneOfType([
       customPropTypes.collectionShorthand,
       customPropTypes.itemShorthand,
@@ -100,8 +101,8 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
   static defaultProps = {
     accessibility: carouselBehavior,
     as: 'div',
-    buttonPrevious: {},
-    buttonNext: {},
+    paddlePrevious: {},
+    paddleNext: {},
     tabList: {},
   }
 
@@ -126,7 +127,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
       this.handleNext(e, false)
 
       if (!tabList && activeIndex >= items.length - 2 && !cyclical) {
-        this.buttonPreviousRef.current.focus()
+        this.paddlePreviousRef.current.focus()
       }
     },
     movePreviousAndFocusContainerIfFirst: e => {
@@ -141,7 +142,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
       this.handlePrevious(e, false)
 
       if (!tabList && activeIndex <= 1 && !cyclical) {
-        this.buttonNextRef.current.focus()
+        this.paddleNextRef.current.focus()
       }
     },
   }
@@ -164,8 +165,8 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
   }
 
   itemRefs = [] as React.RefObject<HTMLElement>[]
-  buttonNextRef = React.createRef<HTMLElement>()
-  buttonPreviousRef = React.createRef<HTMLElement>()
+  paddleNextRef = React.createRef<HTMLElement>()
+  paddlePreviousRef = React.createRef<HTMLElement>()
 
   focusItemAtIndex = _.debounce((index: number) => {
     this.itemRefs[index].current.focus()
@@ -252,20 +253,20 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
   }
 
   renderControls = (accessibility, styles) => {
-    const { buttonPrevious, buttonNext } = this.props
+    const { paddlePrevious, paddleNext } = this.props
 
     return (
       <>
-        <Ref innerRef={this.buttonPreviousRef}>
-          {Button.create(buttonPrevious, {
+        <Ref innerRef={this.paddlePreviousRef}>
+          {Button.create(paddlePrevious, {
             defaultProps: {
-              ...accessibility.attributes.buttonPrevious,
+              ...accessibility.attributes.paddlePrevious,
               iconOnly: true,
               icon: 'stardust-chevron-left',
-              styles: styles.buttonPrevious,
+              styles: styles.paddlePrevious,
               ...applyAccessibilityKeyHandlers(
-                accessibility.keyHandlers.buttonPrevious,
-                buttonPrevious,
+                accessibility.keyHandlers.paddlePrevious,
+                paddlePrevious,
               ),
             },
             overrideProps: (predefinedProps: ButtonProps) => ({
@@ -274,7 +275,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
                 this.handlePrevious(e, false)
               },
               onBlur: (e: React.FocusEvent, buttonProps: ButtonProps) => {
-                if (e.relatedTarget !== this.buttonNextRef.current) {
+                if (e.relatedTarget !== this.paddleNextRef.current) {
                   this.setState({ ariaLiveOn: false })
                 }
               },
@@ -287,14 +288,14 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
             }),
           })}
         </Ref>
-        <Ref innerRef={this.buttonNextRef}>
-          {Button.create(buttonNext, {
+        <Ref innerRef={this.paddleNextRef}>
+          {Button.create(paddleNext, {
             defaultProps: {
-              ...accessibility.attributes.buttonNext,
+              ...accessibility.attributes.paddleNext,
               iconOnly: true,
               icon: 'stardust-chevron-right',
-              styles: styles.buttonNext,
-              ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.buttonNext, buttonNext),
+              styles: styles.paddleNext,
+              ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.paddleNext, paddleNext),
             },
             overrideProps: (predefinedProps: ButtonProps) => ({
               onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
@@ -302,7 +303,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
                 this.handleNext(e, false)
               },
               onBlur: (e: React.FocusEvent, buttonProps: ButtonProps) => {
-                if (e.relatedTarget !== this.buttonPreviousRef.current) {
+                if (e.relatedTarget !== this.paddlePreviousRef.current) {
                   this.setState({ ariaLiveOn: false })
                 }
               },

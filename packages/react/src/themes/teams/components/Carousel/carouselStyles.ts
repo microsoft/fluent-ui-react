@@ -24,17 +24,17 @@ const carouselStyles: ComponentSlotStylesPrepared<
     transitionDuration: '.4s',
     willChange: 'transform',
   }),
-  buttonNext: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    height: pxToRem(v.buttonNextSize),
-    top: pxToRem(-v.height / 2 - v.buttonNextSize / 2),
-    left: pxToRem(v.width - 2 * v.buttonNextSize),
+  paddleNext: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    height: pxToRem(v.paddleNextSize),
+    top: pxToRem(-v.height / 2 - v.paddleNextSize / 2),
+    left: pxToRem(v.width - 2 * v.paddleNextSize),
     ...(p.items !== undefined && {
       visibility: !p.cyclical && p.activeIndex === p.items.length - 1 ? 'hidden' : 'visible',
     }),
   }),
-  buttonPrevious: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    height: pxToRem(v.buttonPreviousSize),
-    top: pxToRem(-v.height / 2 - v.buttonPreviousSize / 2),
+  paddlePrevious: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    height: pxToRem(v.paddlePreviousSize),
+    top: pxToRem(-v.height / 2 - v.paddlePreviousSize / 2),
     ...(p.items !== undefined && {
       visibility: !p.cyclical && p.activeIndex === 0 ? 'hidden' : 'visible',
     }),
