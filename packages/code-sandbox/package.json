@@ -1,11 +1,11 @@
 {
   "name": "@stardust-ui/code-sandbox",
   "description": "Stardust UI tools for CodeSandbox.",
-  "version": "0.40.0",
+  "version": "0.40.1",
   "author": "Oleksandr Fediashov <a@fedyashov.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
-    "@stardust-ui/react": "^0.40.0"
+    "@stardust-ui/react": "^0.40.1"
   },
   "files": [
     "dist"

@@ -18,6 +18,7 @@ export { default as ChatMessage } from './components/Chat/chatMessageStyles'
 export { default as Checkbox } from './components/Checkbox/checkboxStyles'
 
 export { default as Dialog } from './components/Dialog/dialogStyles'
+export { default as DialogFooter } from './components/Dialog/dialogFooterStyles'
 
 export { default as Divider } from './components/Divider/dividerStyles'
 
