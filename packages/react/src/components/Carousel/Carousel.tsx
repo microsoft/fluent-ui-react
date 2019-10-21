@@ -271,15 +271,18 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
             overrideProps: (predefinedProps: ButtonProps) => ({
               onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
                 _.invoke(predefinedProps, 'onClick', e, buttonProps)
-                this.setState({
-                  ariaLiveOn: true,
-                })
                 this.handlePrevious(e, false)
               },
               onBlur: (e: React.FocusEvent, buttonProps: ButtonProps) => {
                 if (e.relatedTarget !== this.buttonNextRef.current) {
                   this.setState({ ariaLiveOn: false })
                 }
+              },
+              onFocus: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
+                _.invoke(predefinedProps, 'onFocus', e, buttonProps)
+                this.setState({
+                  ariaLiveOn: true,
+                })
               },
             }),
           })}
@@ -296,15 +299,18 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
             overrideProps: (predefinedProps: ButtonProps) => ({
               onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
                 _.invoke(predefinedProps, 'onClick', e, buttonProps)
-                this.setState({
-                  ariaLiveOn: true,
-                })
                 this.handleNext(e, false)
               },
               onBlur: (e: React.FocusEvent, buttonProps: ButtonProps) => {
                 if (e.relatedTarget !== this.buttonPreviousRef.current) {
                   this.setState({ ariaLiveOn: false })
                 }
+              },
+              onFocus: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
+                _.invoke(predefinedProps, 'onFocus', e, buttonProps)
+                this.setState({
+                  ariaLiveOn: true,
+                })
               },
             }),
           })}
