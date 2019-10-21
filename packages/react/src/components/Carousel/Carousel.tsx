@@ -40,7 +40,8 @@ export interface CarouselProps extends UIComponentProps, ChildrenComponentProps 
   /** Specifies if the process of switching slides is cyclical. */
   cyclical?: boolean
 
-  /** Message generator for item position in the carousel. Used to generate
+  /**
+   * Message generator for item position in the carousel. Used to generate
    * individual i11y messages for items, such as "1 of 4".
    */
   getItemPositionText?: (index: number, size: number) => string
@@ -48,8 +49,23 @@ export interface CarouselProps extends UIComponentProps, ChildrenComponentProps 
   /** Shorthand array of props for CarouselItem. */
   items?: ShorthandCollection<CarouselItemProps>
 
+  /**
+   * A Carousel can position its navigation to the bottom by default,
+   * to the top, to the left or to the right of the content.
+   */
+  navigationPosition?: 'bottom' | 'top' | 'left' | 'right'
+
+  /** A Carousel's paddles may fade away when mouse is not hovering the code. */
+  paddlesFade?: boolean
+
   /** Shorthand for the button that navigates to the next item. */
   paddleNext?: ShorthandValue<ButtonProps>
+
+  /**
+   * A Carousel can position its paddels inside the content, outside or inline
+   * with the navigation component.
+   */
+  paddlesPosition?: 'inside' | 'outside' | 'inline'
 
   /** Shorthand for the button that navigates to the previous item. */
   paddlePrevious?: ShorthandValue<ButtonProps>
@@ -63,6 +79,12 @@ export interface CarouselProps extends UIComponentProps, ChildrenComponentProps 
    * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
    */
   renderItemSlide?: ShorthandRenderFunction<CarouselSlideProps>
+
+  /**
+   * On slide transition, the Carousel may translate the slides' position,
+   * fade their appearance or just hide and show without any animation.
+   */
+  slideTransition?: 'translate' | 'fade' | 'display'
 
   /** Shorthand array of props for the buttons of the tabs navigation. */
   tabList?: ShorthandValue<MenuProps> | ShorthandCollection<MenuItemProps>

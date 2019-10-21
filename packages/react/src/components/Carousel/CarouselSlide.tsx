@@ -31,7 +31,6 @@ class CarouselSlide extends UIComponent<WithAsProp<CarouselSlideProps>> {
 
   static defaultProps = {
     as: 'div',
-    // accessibility: treeBehavior,
   }
 
   renderComponent({ ElementType, classes, styles, accessibility, unhandledProps }) {
