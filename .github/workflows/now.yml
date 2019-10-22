@@ -11,4 +11,4 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           zeit-token: ${{ secrets.ZEIT_TOKEN }}
-          zeit-team-id: stardust-ui
+          now-args: --scope stardust-ui
