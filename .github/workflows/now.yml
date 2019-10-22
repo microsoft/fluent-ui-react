@@ -1,0 +1,14 @@
+name: now.sh
+on: [pull_request]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: amondnet/now-deployment@v1
+        id: now-deployment
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          zeit-token: ${{ secrets.ZEIT_TOKEN }}
+          zeit-team-id: stardust-ui
