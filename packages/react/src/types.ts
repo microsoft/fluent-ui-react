@@ -168,4 +168,5 @@ export interface ProviderContextPrepared {
   target: Document
   theme: ThemePrepared
   originalThemes: (ThemeInput | undefined)[]
+  _internal_resolvedComponentVariables: Record<string, object>
 }
