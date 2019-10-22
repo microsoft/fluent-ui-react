@@ -9,6 +9,7 @@ document.body.appendChild(mountNode)
 ReactDOM.render(
   <AppContainer>
     <App />
+    <div id="dumb" />
   </AppContainer>,
   mountNode,
 )
