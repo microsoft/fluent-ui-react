@@ -73,7 +73,7 @@ const ToolbarExampleShorthand = () => {
   return (
     <>
       <Toolbar
-        aria-labelledby="text-editor-toolbar"
+        aria-label="Text editor"
         items={[
           {
             key: 'bold',

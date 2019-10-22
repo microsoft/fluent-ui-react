@@ -15,7 +15,7 @@ const ToolbarExampleMenuShorthand = () => {
 
   return (
     <Toolbar
-      aria-labelledby="toolbar-can-contain-a-menu"
+      aria-label="Toolbar can contain a menu"
       items={[
         {
           key: 'more',

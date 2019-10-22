@@ -19,7 +19,7 @@ const ToolbarExampleShorthand = () => {
 
   return (
     <Toolbar
-      aria-labelledby="with-tooltips"
+      aria-label="With tooltips"
       items={[
         {
           key: 'bold',

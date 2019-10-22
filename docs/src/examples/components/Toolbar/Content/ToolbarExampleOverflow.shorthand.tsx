@@ -18,7 +18,7 @@ const ToolbarExampleOverflow = () => {
 
   return (
     <Toolbar
-      aria-labelledby="toolbar-overflow-menu"
+      aria-label="Toolbar overflow menu"
       items={toolbarItems}
       overflow
       overflowOpen={overflowOpen}
