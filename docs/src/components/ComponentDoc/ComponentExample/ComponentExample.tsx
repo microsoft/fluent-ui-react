@@ -38,6 +38,7 @@ export interface ComponentExampleProps
   title: React.ReactNode
   description?: React.ReactNode
   examplePath: string
+  toolbarAriaLabel?: string
 }
 
 interface ComponentExampleState {
@@ -436,6 +437,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       onError,
       title,
       wasCodeChanged,
+      toolbarAriaLabel,
     } = this.props
     const {
       anchorName,
@@ -475,6 +477,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
                 <Flex.Item push>
                   <ComponentControls
+                    toolbarAriaLabel={toolbarAriaLabel}
                     anchorName={anchorName}
                     exampleCode={currentCode}
                     exampleLanguage={currentCodeLanguage}

@@ -53,6 +53,12 @@ const toolbarMenuItemStyles = {
     right: pxToRem(7),
   }),
 
+  submenuIndicator: ({ variables: v }): ICSSInJSStyle => ({
+    float: 'right',
+    position: 'fixed',
+    right: pxToRem(7),
+  }),
+
   wrapper: () => ({
     display: 'block',
   }),
