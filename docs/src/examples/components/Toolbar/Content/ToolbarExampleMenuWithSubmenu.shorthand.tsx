@@ -3,7 +3,7 @@ import { useLogKnob } from '@stardust-ui/docs-components'
 import { Toolbar } from '@stardust-ui/react'
 import * as React from 'react'
 
-const ToolbarExampleMenuShorthand = () => {
+const ToolbarExampleMenuWithSubmenuShorthand = () => {
   const [menuOpen, setMenuOpen] = React.useState(false)
 
   const onMenuOpenChange = useLogKnob(
@@ -19,24 +19,19 @@ const ToolbarExampleMenuShorthand = () => {
           key: 'more',
           icon: 'more',
           active: menuOpen,
-          menu: {
-            items: [
-              {
-                key: 'play',
-                content: 'Play',
-                icon: 'play',
-                menu: {
-                  items: [
-                    'Play with audio',
-                    { content: 'Play with video', menu: ['HD', 'Full HD'] },
-                  ],
-                },
+          menu: [
+            {
+              key: 'play',
+              content: 'Play',
+              icon: 'play',
+              menu: {
+                items: ['Play with audio', { content: 'Play with video', menu: ['HD', 'Full HD'] }],
               },
-              { key: 'pause', content: 'Pause', icon: 'pause' },
-              { key: 'divider', kind: 'divider' },
-              'Without icon',
-            ],
-          },
+            },
+            { key: 'pause', content: 'Pause', icon: 'pause' },
+            { key: 'divider', kind: 'divider' },
+            'Without icon',
+          ],
           menuOpen,
           onMenuOpenChange,
         },
@@ -45,4 +40,4 @@ const ToolbarExampleMenuShorthand = () => {
   )
 }
 
-export default ToolbarExampleMenuShorthand
+export default ToolbarExampleMenuWithSubmenuShorthand

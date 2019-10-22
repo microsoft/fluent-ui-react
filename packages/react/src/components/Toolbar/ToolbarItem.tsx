@@ -166,9 +166,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
     },
     closeMenuAndFocusTrigger: event => {
       this.trySetMenuOpen(false, event)
-      if (this.itemRef) {
-        this.itemRef.current.focus()
-      }
+      _.invoke(this.itemRef.current, 'focus')
     },
     doNotNavigateNextToolbarItem: event => {
       event.stopPropagation()
@@ -176,7 +174,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
   }
 
   itemRef = React.createRef<HTMLElement>()
-  menuRef = React.createRef<HTMLElement>()
+  menuRef = React.createRef<HTMLElement>() as React.MutableRefObject<HTMLElement>
 
   handleMenuOverrides = (getRefs: GetRefs, variables) => (predefinedProps: ToolbarMenuProps) => ({
     onBlur: (e: React.FocusEvent) => {
@@ -196,8 +194,8 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
       }
       // TODO: should we pass toolbarMenuItem to the user callback so he can decide if he wants to close the menu?
       this.trySetMenuOpen(menuOpen, e)
-      if (!menuOpen && this.itemRef) {
-        this.itemRef.current.focus()
+      if (!menuOpen) {
+        _.invoke(this.itemRef.current, 'focus')
       }
     },
     variables: mergeComponentVariables(variables, predefinedProps.variables),
@@ -225,23 +223,26 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
       <Unstable_NestingAuto>
         {(getRefs, nestingRef) => (
           <>
-            <Ref innerRef={nestingRef}>
-              <Ref innerRef={this.menuRef}>
-                <Popper
-                  align="start"
-                  position="above"
-                  modifiers={{
-                    preventOverflow: {
-                      escapeWithReference: false, // escapeWithReference breaks positioning of ToolbarMenu in overflow mode because Popper components sets modifiers on scrollable container
-                    },
-                  }}
-                  targetRef={this.itemRef}
-                >
-                  {ToolbarMenu.create(menu, {
-                    overrideProps: this.handleMenuOverrides(getRefs, variables),
-                  })}
-                </Popper>
-              </Ref>
+            <Ref
+              innerRef={(node: HTMLElement) => {
+                nestingRef.current = node
+                this.menuRef.current = node
+              }}
+            >
+              <Popper
+                align="start"
+                position="above"
+                modifiers={{
+                  preventOverflow: {
+                    escapeWithReference: false, // escapeWithReference breaks positioning of ToolbarMenu in overflow mode because Popper components sets modifiers on scrollable container
+                  },
+                }}
+                targetRef={this.itemRef}
+              >
+                {ToolbarMenu.create(menu, {
+                  overrideProps: this.handleMenuOverrides(getRefs, variables),
+                })}
+              </Popper>
             </Ref>
             <EventListener
               listener={this.handleOutsideClick(getRefs)}
@@ -326,9 +327,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
     if (menu) {
       if (doesNodeContainClick(this.menuRef.current, e, this.context.target)) {
         this.trySetMenuOpen(false, e)
-        if (this.itemRef) {
-          this.itemRef.current.focus()
-        }
+        _.invoke(this.itemRef.current, 'focus')
       }
     }
   }

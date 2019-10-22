@@ -38,13 +38,6 @@ export interface ToolbarMenuProps
   /** Shorthand array of props for ToolbarMenu. */
   items?: ShorthandCollection<ToolbarMenuItemProps, ToolbarMenuItemShorthandKinds>
 
-  // /**
-  //  * Called after a user clicks the button.
-  //  * @param {SyntheticEvent} event - React's original SyntheticEvent.
-  //  * @param {object} data - All props.
-  //  */
-  // onClick?: ComponentEventHandler<ToolbarMenuProps>
-
   /**
    * Called on item click.
    *
@@ -70,7 +63,6 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
   static propTypes = {
     ...commonPropTypes.createCommon(),
     items: customPropTypes.collectionShorthandWithKindProp(['divider', 'item']),
-    // onClick: PropTypes.func,
     onItemClick: PropTypes.func,
     submenu: PropTypes.bool,
     submenuIndicator: customPropTypes.itemShorthandWithoutJSX,

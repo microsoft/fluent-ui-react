@@ -166,8 +166,8 @@ class ToolbarMenuItem extends AutoControlledComponent<
 
   static autoControlledProps = ['menuOpen']
 
-  menuRef = React.createRef<HTMLElement>()
   itemRef = React.createRef<HTMLElement>()
+  menuRef = React.createRef<HTMLElement>() as React.MutableRefObject<HTMLElement>
 
   actionHandlers = {
     performClick: event => {
@@ -184,7 +184,7 @@ class ToolbarMenuItem extends AutoControlledComponent<
     closeAllMenus: event => this.closeAllMenus(event),
   }
 
-  openMenu = (e: Event) => {
+  openMenu = (e: React.KeyboardEvent) => {
     const { menu } = this.props
     const { menuOpen } = this.state
     if (menu && !menuOpen) {
@@ -194,7 +194,7 @@ class ToolbarMenuItem extends AutoControlledComponent<
     }
   }
 
-  closeMenu = (e: Event) => {
+  closeMenu = (e: React.KeyboardEvent) => {
     if (!this.isSubmenuOpen()) {
       return
     }
@@ -264,8 +264,8 @@ class ToolbarMenuItem extends AutoControlledComponent<
       }
 
       this.trySetMenuOpen(menuOpen, e)
-      if (!menuOpen && this.itemRef) {
-        this.itemRef.current.focus()
+      if (!menuOpen) {
+        _.invoke(this.itemRef.current, 'focus')
       }
     },
   })
@@ -345,20 +345,23 @@ class ToolbarMenuItem extends AutoControlledComponent<
         <Unstable_NestingAuto>
           {(getRefs, nestingRef) => (
             <>
-              <Ref innerRef={nestingRef}>
-                <Ref innerRef={this.menuRef}>
-                  <Popper align="top" position={rtl ? 'before' : 'after'} targetRef={this.itemRef}>
-                    {ToolbarMenu.create(menu, {
-                      defaultProps: {
-                        className: ToolbarMenuItem.slotClassNames.submenu,
-                        styles: styles.menu,
-                        submenu: true,
-                        submenuIndicator,
-                      },
-                      overrideProps: this.handleMenuOverrides(getRefs),
-                    })}
-                  </Popper>
-                </Ref>
+              <Ref
+                innerRef={(node: HTMLElement) => {
+                  nestingRef.current = node
+                  this.menuRef.current = node
+                }}
+              >
+                <Popper align="top" position={rtl ? 'before' : 'after'} targetRef={this.itemRef}>
+                  {ToolbarMenu.create(menu, {
+                    defaultProps: {
+                      className: ToolbarMenuItem.slotClassNames.submenu,
+                      styles: styles.menu,
+                      submenu: true,
+                      submenuIndicator,
+                    },
+                    overrideProps: this.handleMenuOverrides(getRefs),
+                  })}
+                </Popper>
               </Ref>
               <EventListener
                 listener={this.outsideClickHandler(getRefs)}
@@ -391,7 +394,7 @@ class ToolbarMenuItem extends AutoControlledComponent<
     })
   }
 
-  handleClick = (e: MouseEvent) => {
+  handleClick = (e: React.MouseEvent) => {
     const { disabled, menu, popup } = this.props
 
     if (disabled) {
