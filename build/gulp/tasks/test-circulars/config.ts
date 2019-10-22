@@ -16,5 +16,22 @@ export const cyclesToSkip = [
     reactPackageDist('components/Reaction/Reaction.js'),
     reactPackageDist('components/Reaction/ReactionGroup.js'),
   ],
-  [reactPackageDist('components/Toolbar/ToolbarMenuItem.js')],
+  [
+    reactPackageDist('components/Toolbar/ToolbarMenu.js'),
+    reactPackageDist('components/Toolbar/ToolbarMenuRadioGroup.js'),
+    reactPackageDist('components/Toolbar/ToolbarMenuItem.js'),
+    reactPackageDist('components/Toolbar/ToolbarMenu.js'),
+  ],
+  [
+    reactPackageDist('components/Toolbar/ToolbarMenuItem.js'),
+    reactPackageDist('components/Toolbar/ToolbarMenu.js'),
+    reactPackageDist('components/Toolbar/ToolbarMenuRadioGroup.js'),
+    reactPackageDist('components/Toolbar/ToolbarMenuItem.js'),
+  ],
+  [
+    reactPackageDist('components/Toolbar/ToolbarMenuRadioGroup.js'),
+    reactPackageDist('components/Toolbar/ToolbarMenuItem.js'),
+    reactPackageDist('components/Toolbar/ToolbarMenu.js'),
+    reactPackageDist('components/Toolbar/ToolbarMenuRadioGroup.js'),
+  ],
 ]
