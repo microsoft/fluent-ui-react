@@ -21,6 +21,7 @@ const ToolbarExampleMenuItemToggle = () => {
           key: 'more',
           active: menuOpen,
           icon: 'more',
+          title: 'More',
           menu: [
             {
               key: 'bold',

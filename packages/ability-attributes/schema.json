@@ -121,7 +121,7 @@
             },
             {
               "parameter": false,
-              "attribute": false
+              "attribute": [false, "false"]
             }
           ]
         },
@@ -167,11 +167,11 @@
           "value": [
             {
               "parameter": true,
-              "attribute": "true"
+              "attribute": ["true", "menu"]
             },
             {
               "parameter": false,
-              "attribute": false
+              "attribute": [false, "false"]
             }
           ]
         }
@@ -189,9 +189,91 @@
             },
             {
               "parameter": false,
+              "attribute": [false, "false"]
+            }
+          ]
+        }
+      ]
+    },
+    "$isPressed": {
+      "name": "isPressed",
+      "attributes": [
+        {
+          "name": "aria-pressed",
+          "value": [
+            {
+              "parameter": true,
+              "attribute": "true"
+            },
+            {
+              "parameter": false,
+              "attribute": [false, "false"]
+            }
+          ]
+        }
+      ]
+    },
+    "$checked": {
+      "name": "checked",
+      "attributes": [
+        {
+          "name": "checked",
+          "value": [
+            {
+              "parameter": true,
+              "attribute": true
+            },
+            {
+              "parameter": false,
               "attribute": false
             }
           ]
+        },
+        {
+          "name": "aria-checked",
+          "value": [
+            {
+              "parameter": true,
+              "attribute": "true"
+            },
+            {
+              "parameter": false,
+              "attribute": [false, "false"]
+            }
+          ],
+          "optional": true
+        }
+      ]
+    },
+    "$checked-custom": {
+      "name": "checked",
+      "attributes": [
+        {
+          "name": "aria-checked",
+          "value": [
+            {
+              "parameter": true,
+              "attribute": "true"
+            },
+            {
+              "parameter": false,
+              "attribute": [false, "false"]
+            }
+          ]
+        },
+        {
+          "name": "checked",
+          "value": [
+            {
+              "parameter": true,
+              "attribute": true
+            },
+            {
+              "parameter": false,
+              "attribute": false
+            }
+          ],
+          "optional": true
         }
       ]
     }
@@ -296,10 +378,15 @@
         },
         {
           "ref": "$hasPopup",
-          "optional": true
+          "optional": true,
+          "overridable": "hasPopup"
         },
         {
           "ref": "$isExpanded",
+          "optional": true
+        },
+        {
+          "ref": "$isPressed",
           "optional": true
         }
       ],
@@ -325,7 +412,8 @@
             {
               "name": "role",
               "value": "button",
-              "optional": true
+              "optional": true,
+              "overridable": "role"
             }
           ]
         },
@@ -350,12 +438,14 @@
           "attributes": [
             {
               "name": "type",
-              "value": ["button", "submit", "reset"]
+              "value": ["button", "submit", "reset"],
+              "overridable": "type"
             },
             {
               "name": "role",
               "value": "button",
-              "optional": true
+              "optional": true,
+              "overridable": "role"
             }
           ]
         },
@@ -379,10 +469,152 @@
           "attributes": [
             {
               "name": "role",
-              "value": "button"
+              "value": "button",
+              "overridable": "role"
             },
             {
               "ref": "$tabindex"
+            }
+          ]
+        }
+      }
+    },
+    "PopupButton": {
+      "inherits": "Button",
+      "parameters": [
+        {
+          "overrides": "hasPopup",
+          "ref": null
+        }
+      ],
+      "tags": {
+        "<button>": {
+          "attributes": [
+            {
+              "name": "aria-haspopup",
+              "value": "true"
+            }
+          ]
+        },
+        "<input>": {
+          "attributes": [
+            {
+              "name": "aria-haspopup",
+              "value": "true"
+            }
+          ]
+        },
+        "<div>, <span>": {
+          "attributes": [
+            {
+              "name": "aria-haspopup",
+              "value": "true"
+            }
+          ]
+        }
+      }
+    },
+    "ToolbarItem": {
+      "inherits": "Button"
+    },
+    "Checkbox": {
+      "inherits": "Button",
+      "parameters": [
+        {
+          "rel": "@checked"
+        }
+      ],
+      "tags": {
+        "<button>": {
+          "parameters": {
+            "@checked": {
+              "ref": "$checked",
+              "optional": true
+            }
+          },
+          "attributes": [
+            {
+              "name": "role",
+              "value": "checkbox",
+              "overrides": "role",
+              "overridable": "role"
+            }
+          ]
+        },
+        "<input>": {
+          "parameters": {
+            "@checked": {
+              "ref": "$checked",
+              "optional": true
+            }
+          },
+          "attributes": [
+            {
+              "name": "type",
+              "value": "checkbox",
+              "overrides": "type",
+              "overridable": "type"
+            },
+            {
+              "name": "role",
+              "value": "checkbox",
+              "optional": true,
+              "overrides": "role",
+              "overridable": "role"
+            }
+          ]
+        },
+        "<div>, <span>": {
+          "parameters": {
+            "@checked": {
+              "ref": "$checked-custom",
+              "optional": true
+            }
+          },
+          "attributes": [
+            {
+              "name": "role",
+              "value": "checkbox",
+              "overrides": "role",
+              "overridable": "role"
+            }
+          ]
+        }
+      }
+    },
+    "RadioGroupItem": {
+      "inherits": "Checkbox",
+      "tags": {
+        "<button>": {
+          "attributes": [
+            {
+              "name": "role",
+              "value": "radio",
+              "overrides": "role"
+            }
+          ]
+        },
+        "<input>": {
+          "attributes": [
+            {
+              "name": "type",
+              "value": "radio",
+              "overrides": "type"
+            },
+            {
+              "name": "role",
+              "value": "radio",
+              "optional": true,
+              "overrides": "role"
+            }
+          ]
+        },
+        "<div>, <span>": {
+          "attributes": [
+            {
+              "name": "role",
+              "value": "radio",
+              "overrides": "role"
             }
           ]
         }

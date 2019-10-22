@@ -2284,26 +2284,26 @@ abbrev@1, abbrev@^1.1.1:
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
   integrity sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==
 
-ability-attributes-generator@^0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/ability-attributes-generator/-/ability-attributes-generator-0.0.6.tgz#fede3dc3cf71b25f0ff0bc0ebc48d4a010e32e2e"
-  integrity sha512-w82HHKmcAzvOI4L1cylkaGYa4rP5S5j4PfT1BloIR/zGuatgVUnyDHFBz6ndlsaVoxM29vGvDkc2xi/YSA4mTg==
+ability-attributes-generator@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/ability-attributes-generator/-/ability-attributes-generator-0.0.8.tgz#e2065ed6978ed2acd350aa90cad2fcb86882a978"
+  integrity sha512-GN7lfbyOnpYXBEH2BT6e9gsXwna3v+nOfojzHTKJKuo6HiT8seCSLxqWGbxLW/RMNacqIjJ2OA04d4ufzPx9yw==
   dependencies:
-    ability-attributes "^0.0.6"
+    ability-attributes "^0.0.8"
     ajv "^6.10.2"
     commander "^2.20.0"
 
-ability-attributes-js-constraints@^0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/ability-attributes-js-constraints/-/ability-attributes-js-constraints-0.0.6.tgz#5ebf0ce421d59507e18fb243db8ec715b4938bcc"
-  integrity sha512-PLKxc5/Cl3JMBSwJLPMOzMcgWCtdijk0UQA0EPnIx1N+71WnOOgs233R27qdXq05taV9wYQNVX+46rFsr7l/aA==
+ability-attributes-js-constraints@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/ability-attributes-js-constraints/-/ability-attributes-js-constraints-0.0.8.tgz#f954ae16a90c92bc2d25a7e20c1ec292749658e0"
+  integrity sha512-+TjS0GcQnFaX0thTs+sXiGtNelPcy6odeN8hKntd1KxsnFtqyrC3l2i55s+z3rRzei6BvkoSHvkKEOjk0E5UjA==
 
-ability-attributes@^0.0.6:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/ability-attributes/-/ability-attributes-0.0.6.tgz#5873368f8919d15db418c718d4ed7e3b893b00e3"
-  integrity sha512-/sF4ELiM0Hvztsqj2NXnwz891EGb4gVaT4GFwfgkd0rqu3hsGyZqU8SfYl+AA+dH2cmlYuM+u0+r0F9i5zvjtw==
+ability-attributes@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/ability-attributes/-/ability-attributes-0.0.8.tgz#b7fca379a5ba5147e4e867ba80187142db4d49ce"
+  integrity sha512-GU2Gd1nAUzvTEu4+615DKCf7OkWf+rL5kLmsi3Fg+nY7fhjrMT1ZwsU8MJ8hqilipspq1Q2yIuUYj4q8l2W8nQ==
   dependencies:
-    ability-attributes-js-constraints "^0.0.6"
+    ability-attributes-js-constraints "^0.0.8"
 
 accepts@~1.3.5, accepts@~1.3.7:
   version "1.3.7"

@@ -36,6 +36,7 @@ const ToolbarExamplePopupShorthand = () => {
           key: 'highlight',
           icon: { name: 'highlight', outline: true },
           active: highlightOpen,
+          title: 'Highlight',
           popup: {
             content: (
               <HighlightPopup
@@ -54,6 +55,7 @@ const ToolbarExamplePopupShorthand = () => {
           key: 'font-color',
           icon: { name: 'font-color', outline: true },
           active: fontColorActive,
+          title: 'Font color',
           popup: {
             content: <Input icon="search" placeholder="Search..." />,
             onOpenChange: () => {

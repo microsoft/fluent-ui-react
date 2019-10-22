@@ -27,6 +27,7 @@ const PopupExamplePosition = () => {
           <Button
             icon={{ name: iconNames[position], circular: true, bordered: true }}
             styles={buttonStyles}
+            title={'Show popup'}
           />
         }
         content={

@@ -12,6 +12,7 @@ const ToolbarExampleMenuRadioGroup = () => {
           key: 'more',
           active: menuOpen,
           icon: 'more',
+          title: 'More',
           menu: [
             {
               key: 'group',

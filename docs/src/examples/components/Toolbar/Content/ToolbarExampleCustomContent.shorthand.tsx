@@ -4,7 +4,7 @@ import { Button, Text, Toolbar } from '@stardust-ui/react'
 const ToolbarExampleCustomContentShorthand = () => (
   <Toolbar
     items={[
-      { key: 'bold', icon: 'bold' },
+      { key: 'bold', icon: 'bold', title: 'Bold' },
       {
         key: 'custom-text',
         content: <Text content="Text" />,

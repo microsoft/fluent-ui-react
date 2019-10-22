@@ -20,6 +20,7 @@ const ToolbarExampleMenuShorthand = () => {
           key: 'more',
           icon: 'more',
           active: menuOpen,
+          title: 'More',
           menu: {
             items: [
               { key: 'play', content: 'Play', icon: 'play' },

@@ -12,6 +12,7 @@ const ToolbarExamplePopupInMenu = () => {
           key: 'menu1',
           icon: 'more',
           active: menu1Open,
+          title: 'More',
           menu: [
             {
               key: 'popup',
@@ -28,11 +29,13 @@ const ToolbarExamplePopupInMenu = () => {
           key: 'italic',
           kind: 'toggle' as ToolbarItemShorthandKinds,
           icon: { name: 'italic', outline: true },
+          title: 'Italic',
         },
         {
           key: 'menu2',
           icon: 'more',
           active: menu2Open,
+          title: 'More',
           menu: [
             {
               key: 'popup',
