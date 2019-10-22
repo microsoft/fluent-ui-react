@@ -166,9 +166,6 @@ class ToolbarMenuItem extends AutoControlledComponent<
 
   static autoControlledProps = ['menuOpen']
 
-  static getDerivedStateFromProps: null
-  static getAutoControlledStateFromProps: null
-
   itemRef = React.createRef<HTMLElement>()
   menuRef = React.createRef<HTMLElement>() as React.MutableRefObject<HTMLElement>
 
