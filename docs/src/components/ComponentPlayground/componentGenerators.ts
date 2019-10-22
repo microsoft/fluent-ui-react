@@ -2,6 +2,7 @@ import { useSelectKnob, useStringKnob } from '@stardust-ui/docs-components'
 import {
   AvatarProps,
   BoxProps,
+  DialogProps,
   DividerProps,
   EmbedProps,
   IconProps,
@@ -25,6 +26,10 @@ export const Avatar: KnobComponentGenerators<AvatarProps> = {
 export const Box: KnobComponentGenerators<BoxProps> = {
   // TODO: fix support for boxes
   children: () => null,
+}
+
+export const Dialog: KnobComponentGenerators<DialogProps> = {
+  footer: () => null,
 }
 
 export const Divider: KnobComponentGenerators<DividerProps> = {

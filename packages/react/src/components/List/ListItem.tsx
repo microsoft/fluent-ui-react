@@ -1,4 +1,5 @@
 import { Accessibility, listItemBehavior } from '@stardust-ui/accessibility'
+import cx from 'classnames'
 import * as React from 'react'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -11,16 +12,17 @@ import {
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
 } from '../../lib'
-import Flex from '../Flex/Flex'
 import { ShorthandValue, WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Box, { BoxProps } from '../Box/Box'
 
 export interface ListItemSlotClassNames {
   header: string
   headerMedia: string
-  main: string
+  headerWrapper: string
   content: string
   contentMedia: string
+  contentWrapper: string
+  main: string
   media: string
   endMedia: string
 }
@@ -113,8 +115,8 @@ class ListItem extends UIComponent<WithAsProp<ListItemProps>> {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  renderComponent({ classes, accessibility, unhandledProps, styles }) {
-    const { as, debug, endMedia, media, content, contentMedia, header, headerMedia } = this.props
+  renderComponent({ ElementType, classes, accessibility, unhandledProps, styles }) {
+    const { endMedia, media, content, contentMedia, header, headerMedia } = this.props
 
     const contentElement = Box.create(content, {
       defaultProps: {
@@ -153,29 +155,8 @@ class ListItem extends UIComponent<WithAsProp<ListItemProps>> {
       },
     })
 
-    const hasHeaderPart = !!(headerElement || headerMediaElement)
-    const headerPart = hasHeaderPart && (
-      <>
-        <Flex.Item grow>{headerElement}</Flex.Item>
-        {headerMediaElement}
-      </>
-    )
-
-    const hasContentPart = !!(contentElement || contentMediaElement)
-    const contentPart = hasContentPart && (
-      <>
-        <Flex.Item grow>{contentElement}</Flex.Item>
-        {contentMediaElement}
-      </>
-    )
-
-    const hasBothParts = hasContentPart && hasHeaderPart
-
     return (
-      <Flex
-        vAlign="center"
-        as={as}
-        debug={debug}
+      <ElementType
         className={classes.root}
         onClick={this.handleClick}
         {...accessibility.attributes.root}
@@ -184,14 +165,23 @@ class ListItem extends UIComponent<WithAsProp<ListItemProps>> {
       >
         {mediaElement}
 
-        <Flex.Item grow>
-          <Flex className={ListItem.slotClassNames.main} column={hasBothParts} styles={styles.main}>
-            {hasBothParts ? <Flex>{headerPart}</Flex> : headerPart}
-            {hasBothParts ? <Flex>{contentPart}</Flex> : contentPart}
-          </Flex>
-        </Flex.Item>
+        <div className={cx(ListItem.slotClassNames.main, classes.main)}>
+          {(headerElement || headerMediaElement) && (
+            <div className={cx(ListItem.slotClassNames.headerWrapper, classes.headerWrapper)}>
+              {headerElement}
+              {headerMediaElement}
+            </div>
+          )}
+          {(contentElement || contentMediaElement) && (
+            <div className={cx(ListItem.slotClassNames.contentWrapper, classes.contentWrapper)}>
+              {contentElement}
+              {contentMediaElement}
+            </div>
+          )}
+        </div>
+
         {endMediaElement}
-      </Flex>
+      </ElementType>
     )
   }
 }
@@ -200,9 +190,11 @@ ListItem.create = createShorthandFactory({ Component: ListItem, mappedProp: 'con
 ListItem.slotClassNames = {
   header: `${ListItem.className}__header`,
   headerMedia: `${ListItem.className}__headerMedia`,
+  headerWrapper: `${ListItem.className}__headerWrapper`,
   main: `${ListItem.className}__main`,
   content: `${ListItem.className}__content`,
   contentMedia: `${ListItem.className}__contentMedia`,
+  contentWrapper: `${ListItem.className}__contentWrapper`,
   media: `${ListItem.className}__media`,
   endMedia: `${ListItem.className}__endMedia`,
 }
