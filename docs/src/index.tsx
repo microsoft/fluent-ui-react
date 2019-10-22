@@ -7,9 +7,11 @@ const mountNode = document.createElement('div')
 document.body.appendChild(mountNode)
 
 ReactDOM.render(
-  <AppContainer>
-    <App />
+  <div>
+    <AppContainer>
+      <App />
+    </AppContainer>
     <div id="dumb" />
-  </AppContainer>,
+  </div>,
   mountNode,
 )
