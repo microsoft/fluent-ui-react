@@ -37,7 +37,7 @@ const getIndicatorStyles: ComponentSlotStyleFunction<DropdownPropsAndState, Drop
   display: 'flex',
   justifyContent: 'center',
 
-  backgroundColor: 'transparent',
+  backgroundColor: v.backgroundColor,
   cursor: 'pointer',
   userSelect: 'none',
 
@@ -118,7 +118,6 @@ const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, Dropdow
       padding: v.comboboxPaddingButton,
       height: pxToRem(32),
       ...(p.multiple && { minWidth: 0, flex: 1 }),
-      ...transparentColorStyleObj,
       ':focus': {
         background: v.backgroundColor,
 
@@ -138,7 +137,7 @@ const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, Dropdow
         },
       },
       ':hover': {
-        background: v.backgroundColor,
+        background: v.backgroundColorHover,
         borderColor: 'transparent',
       },
       ...(p.inline && {

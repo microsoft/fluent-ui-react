@@ -3,6 +3,7 @@ import { pxToRem } from '../../../../lib'
 export interface DropdownVariables {
   backgroundColor: string
   backgroundColorInverted: string
+  backgroundColorHover: string
   borderColor: string
   borderColorFocus: string
   borderWidth: string
@@ -48,6 +49,7 @@ const [cornerRadius, _12px_asRem] = [3, 12].map(v => pxToRem(v))
 export default (siteVars): DropdownVariables => ({
   backgroundColor: siteVars.colorScheme.default.background2,
   backgroundColorInverted: siteVars.colorScheme.default.background,
+  backgroundColorHover: siteVars.colorScheme.default.background3,
   borderColor: 'transparent',
   borderColorFocus: siteVars.colors.brand[600],
   borderWidth: '0',
