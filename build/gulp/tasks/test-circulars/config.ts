@@ -16,4 +16,5 @@ export const cyclesToSkip = [
     reactPackageDist('components/Reaction/Reaction.js'),
     reactPackageDist('components/Reaction/ReactionGroup.js'),
   ],
+  [reactPackageDist('components/Toolbar/ToolbarMenuItem.js')],
 ]
