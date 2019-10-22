@@ -7,6 +7,7 @@ const ToolbarExampleRadioGroupShorthand = () => {
   const [toDoListActive, setToDoListActive] = React.useState(false)
   return (
     <Toolbar
+      aria-label="Toolbar can contain a radio group"
       items={[
         {
           key: 'radiogroup',
