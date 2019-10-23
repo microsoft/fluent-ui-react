@@ -1,10 +1,9 @@
 import { Alert, Flex, Text } from '@stardust-ui/react'
 
 export const meta = {
-  title: 'Design Principles',
-  next: { name: 'Shorthand Props', url: '/shorthand-props' },
+ title: 'Design Principles',
+ next: { name: 'Shorthand Props', url: '/shorthand-props' },
 }
-
 <Flex column hAlign="center" padding="padding.medium">
 
 <Text size='large' color='gray'>
@@ -20,9 +19,19 @@ This page gives you the assumptions and reasoning we've used that drives our des
 
 Walk through a component file and explain WHY each of the design patterns in it exist.
 
-# First Principles
+## First Principles
 
-## Component Anatomies
+### Future Proofing
+
+- UI libraries and frameworks change, React will be replaced.
+- UI designs change more frequently.
+- Different products require different component features and behaviors.
+- UI 
+
+
+### Component Anatomies
+
+### Component Anatomies
 
 Standardized component anatomies are at the core of the Stardust's approach to components concept.
 A component anatomy is simply a name of component and all of its parts.
@@ -46,6 +55,10 @@ Stardust components aim to allow you to extend, override, or replace the state, 
 Our components attempt to "do the right thing" by default, but do not lock you in to any decision.
 
 This is usually achieved by allowing the user to pass state, style, and accessibility information through React context or component props.
+
+### Function Components & Class Components
+
+We believe in breaking down utilities to support
 
 ## Conformance
 
@@ -121,50 +134,42 @@ All Stardust components are tested against conformance criteria. This ensures th
 
 ### `test('matches constructor name')`
 
-## `as` prop
+--------------------------
 
-Stardust UI provides a way to compose React components through the `as` prop. It allows to compose component features and props without adding extra nested components.
+Philosophy
+The project should help contributors fall into the pit of success by catching common mistakes
 
-```jsx
-<>
-  {/* 🧱 Each Stardust UI component has a default value for `as` prop */}
-  {/* Will output: <h1 class="ui-header" /> */}
-  <Header />
-  {/* Uses another tag: <h2 class="ui-header" /> */}
-  <Header as="h2" />
-</>
-```
+### `throwError(`Components should export a class or function, got: ${componentType}.`)`
+Problems
+- Sometimes contributors forget to export their component.
+- Sometimes contributors export their component incorrectly.
 
-<Alert warning>
-  <p>
-    Using <code>as</code> prop can change the behavior of the component. If this prop is used it is
-    the responsibility of the consumer to verify accessibility and styling aspects of the component
-    and handle them correctly.
-  </p>
-</Alert>
+Solutions
 
-## Unhandled props & DOM attributes
 
-Our components handle only props that are defined in their interfaces, all unhandled props are passed to the component you are rendering `as`. It means that all HTML props are supported on all Stardust UI components.
 
-```jsx
-<>
-  {/* `type` is an unhandled prop on `Button` and is passed through ⬇️*/}
-  {/* Will output: <button class="ui-button" type="submit" /> */}
-  <Button type="submit" />
-  {/* `onLoad` and `onError` will be passed to `img` */}
-  {/* Will output: <img class="ui-image" src="//placehold.it/300" /> */}
-  <Image src="//placehold.it/300" onLoad={() => alert('Loaded')} onError={() => alert('Error')} />
-</>
-```
+throwError(
+      [
+        'Component is not a named function. This should help identify it:\n\n',
+        `${ReactDOMServer.renderToStaticMarkup(<Component />)}`,
+      ].join(''),
+    )
 
-This is also essential for working with third party libraries like `react-router`.
-
-```jsx
-import { Link } from 'react-router-dom'
-
-// 💡 `to` prop is not handled in `Button` and will be passed to `Link` component
-;<Button as={Link} to="/home">
-  To homepage
-</Button>
-```
+test('component info file exists
+test('has a docblock description
+test('is a static component on its parent
+test('spreads user props
+describe('"as" prop (common)
+test('renders the component as HTML tags or passes "as" to the next component
+test('renders as a functional component or passes "as" to the next component
+test('renders as a ReactClass or passes "as" to the next component
+test('passes extra props to the component it is renders as
+describe('handles props
+test('defines handled props in Component.handledProps
+test('Component.handledProps includes all handled props
+test('defines an "accessibility" prop in Component.handledProps
+test('spreads "attributes" on root
+test('handles events transparently
+describe('static className (common)
+describe('static displayName (common)
+test('matches constructor name

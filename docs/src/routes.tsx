@@ -8,7 +8,7 @@ import DocsBehaviorRoot from './components/DocsBehaviorRoot'
 import MarkdownPage from 'docs/src/components/MarkdownPage'
 
 import * as Composition from './pages/Composition.mdx'
-import * as DesignPrinciples from './pages/Design Principles.mdx'
+import * as DesignPrinciples from './pages/Design Principles.md'
 import * as Layout from './pages/Layout.mdx'
 import Accessibility from './views/Accessibility'
 import Colors from './views/Colors'
