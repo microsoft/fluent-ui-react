@@ -23,14 +23,16 @@ const style: React.CSSProperties = {
 const DebugComponentViewer: React.FC<DebugComponentViewerProps> = props => {
   const { fiberNav, onFiberChanged, onFiberSelected } = props
 
-  const ownerNav = fiberNav.owner
+  const ownerNav = fiberNav.owner || ({ jsxString: 'unknown' } as FiberNavigator)
 
   const parentNavs = []
-  let parentNav = fiberNav.parent
+  if (fiberNav.owner) {
+    let parentNav = fiberNav.parent
 
-  while (parentNav && !parentNav.isEqual(ownerNav)) {
-    if (parentNav.stardustDebug) parentNavs.unshift(parentNav)
-    parentNav = parentNav.parent
+    while (parentNav && !parentNav.isEqual(ownerNav)) {
+      if (parentNav.stardustDebug) parentNavs.unshift(parentNav)
+      parentNav = parentNav.parent
+    }
   }
 
   const component = fiberNav.name && <DebugLine>{fiberNav.jsxString}</DebugLine>
