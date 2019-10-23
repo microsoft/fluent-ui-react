@@ -90,9 +90,12 @@ const getAccessibility = (
           definition.attributes[slotName] = {}
         }
 
-        definition.attributes[slotName]['data-aa-class'] = `${displayName}${
-          slotName === 'root' ? '' : `__${slotName}`
-        }`
+        const slotAttributes = definition.attributes[slotName]
+        if (!('data-aa-class' in slotAttributes)) {
+          definition.attributes[slotName]['data-aa-class'] = `${displayName}${
+            slotName === 'root' ? '' : `__${slotName}`
+          }`
+        }
       })
     }
   }

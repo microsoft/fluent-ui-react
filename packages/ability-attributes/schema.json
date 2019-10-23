@@ -2,12 +2,12 @@
   "version": "1.0",
   "constraints": {
     "$atomic": {
-      "xpath": "not(boolean((.//*[@role and @role != 'none' and @role != 'presentation'] | .//a | .//area | .//button | .//input | .//object | .//select | .//textarea)[ancestor-or-self::*[@aria-hidden != 'true']]))",
-      "description": "Component cannot contain other accessible components"
+      "xpath": "not(boolean((.//*[@role and @role != 'none' and @role != 'presentation'] | .//a | .//area | .//button | .//input | .//object | .//select | .//textarea)[not(ancestor-or-self::*/@aria-hidden = 'true')]))",
+      "description": "Element cannot contain other accessible elements"
     },
-    "$hasText": {
-      "xpath": ".//text()[normalize-space(.) != '']",
-      "description": "Component must contain text nodes"
+    "$hasTitleOrText": {
+      "xpath": "boolean(@title and @title != '') or boolean(.//text()[normalize-space(.) != ''])",
+      "description": "Element must contain text nodes or title attribute"
     },
     "$existingIDs": {
       "js": "checkIdentifiers",
@@ -15,13 +15,37 @@
     }
   },
   "parameters": {
+    "$title": {
+      "name": "title",
+      "attributes": [
+        {
+          "name": "title",
+          "constraints": [
+            {
+              "xpath": "normalize-space(@title) != ''",
+              "description": "title attribute value cannot be empty"
+            },
+            {
+              "js": "equalsToAccessibilityLabelIfAny",
+              "description": "In order to not confuse the users, the title attribute value should be equal to the accessibility label value"
+            }
+          ]
+        }
+      ]
+    },
     "$label": {
       "one": [
         {
           "name": "label",
           "attributes": [
             {
-              "name": "aria-label"
+              "name": "aria-label",
+              "constraints": [
+                {
+                  "xpath": "normalize-space(@aria-label) != ''",
+                  "description": "aria-label attribute value cannot be empty"
+                }
+              ]
             }
           ]
         },
@@ -97,7 +121,7 @@
             },
             {
               "parameter": false,
-              "attribute": false
+              "attribute": [false, "false"]
             }
           ]
         },
@@ -143,13 +167,113 @@
           "value": [
             {
               "parameter": true,
+              "attribute": ["true", "menu"]
+            },
+            {
+              "parameter": false,
+              "attribute": [false, "false"]
+            }
+          ]
+        }
+      ]
+    },
+    "$isExpanded": {
+      "name": "isExpanded",
+      "attributes": [
+        {
+          "name": "aria-expanded",
+          "value": [
+            {
+              "parameter": true,
               "attribute": "true"
+            },
+            {
+              "parameter": false,
+              "attribute": [false, "false"]
+            }
+          ]
+        }
+      ]
+    },
+    "$isPressed": {
+      "name": "isPressed",
+      "attributes": [
+        {
+          "name": "aria-pressed",
+          "value": [
+            {
+              "parameter": true,
+              "attribute": "true"
+            },
+            {
+              "parameter": false,
+              "attribute": [false, "false"]
+            }
+          ]
+        }
+      ]
+    },
+    "$checked": {
+      "name": "checked",
+      "attributes": [
+        {
+          "name": "checked",
+          "value": [
+            {
+              "parameter": true,
+              "attribute": true
             },
             {
               "parameter": false,
               "attribute": false
             }
           ]
+        },
+        {
+          "name": "aria-checked",
+          "value": [
+            {
+              "parameter": true,
+              "attribute": "true"
+            },
+            {
+              "parameter": false,
+              "attribute": [false, "false"]
+            }
+          ],
+          "optional": true
+        }
+      ]
+    },
+    "$checked-custom": {
+      "name": "checked",
+      "attributes": [
+        {
+          "name": "aria-checked",
+          "value": [
+            {
+              "parameter": true,
+              "attribute": "true"
+            },
+            {
+              "parameter": false,
+              "attribute": [false, "false"]
+            }
+          ]
+        },
+        {
+          "name": "checked",
+          "value": [
+            {
+              "parameter": true,
+              "attribute": true
+            },
+            {
+              "parameter": false,
+              "attribute": false
+            }
+          ],
+          "optional": true
         }
       ]
     }
@@ -194,7 +318,7 @@
         {
           "ref": "$label",
           "optional": {
-            "ref": "$hasText"
+            "ref": "$hasTitleOrText"
           }
         }
       ],
@@ -236,6 +360,10 @@
       ],
       "parameters": [
         {
+          "ref": "$title",
+          "optional": true
+        },
+        {
           "rel": "@label"
         },
         {
@@ -250,6 +378,15 @@
         },
         {
           "ref": "$hasPopup",
+          "optional": true,
+          "overridable": "hasPopup"
+        },
+        {
+          "ref": "$isExpanded",
+          "optional": true
+        },
+        {
+          "ref": "$isPressed",
           "optional": true
         }
       ],
@@ -259,7 +396,7 @@
             "@label": {
               "ref": "$label",
               "optional": {
-                "ref": "$hasText"
+                "ref": "$hasTitleOrText"
               }
             },
             "@tabbable": {
@@ -275,7 +412,8 @@
             {
               "name": "role",
               "value": "button",
-              "optional": true
+              "optional": true,
+              "overridable": "role"
             }
           ]
         },
@@ -285,7 +423,7 @@
               "ref": "$label",
               "optional": {
                 "xpath": "normalize-space(@value) != ''",
-                "description": "Component must contain value attribute"
+                "description": "Element must contain value attribute"
               }
             },
             "@tabbable": {
@@ -300,12 +438,14 @@
           "attributes": [
             {
               "name": "type",
-              "value": ["button", "submit", "reset"]
+              "value": ["button", "submit", "reset"],
+              "overridable": "type"
             },
             {
               "name": "role",
               "value": "button",
-              "optional": true
+              "optional": true,
+              "overridable": "role"
             }
           ]
         },
@@ -314,7 +454,7 @@
             "@label": {
               "ref": "$label",
               "optional": {
-                "ref": "$hasText"
+                "ref": "$hasTitleOrText"
               }
             },
             "@tabbable": {
@@ -329,10 +469,152 @@
           "attributes": [
             {
               "name": "role",
-              "value": "button"
+              "value": "button",
+              "overridable": "role"
             },
             {
               "ref": "$tabindex"
+            }
+          ]
+        }
+      }
+    },
+    "PopupButton": {
+      "inherits": "Button",
+      "parameters": [
+        {
+          "overrides": "hasPopup",
+          "ref": null
+        }
+      ],
+      "tags": {
+        "<button>": {
+          "attributes": [
+            {
+              "name": "aria-haspopup",
+              "value": "true"
+            }
+          ]
+        },
+        "<input>": {
+          "attributes": [
+            {
+              "name": "aria-haspopup",
+              "value": "true"
+            }
+          ]
+        },
+        "<div>, <span>": {
+          "attributes": [
+            {
+              "name": "aria-haspopup",
+              "value": "true"
+            }
+          ]
+        }
+      }
+    },
+    "ToolbarItem": {
+      "inherits": "Button"
+    },
+    "Checkbox": {
+      "inherits": "Button",
+      "parameters": [
+        {
+          "rel": "@checked"
+        }
+      ],
+      "tags": {
+        "<button>": {
+          "parameters": {
+            "@checked": {
+              "ref": "$checked",
+              "optional": true
+            }
+          },
+          "attributes": [
+            {
+              "name": "role",
+              "value": "checkbox",
+              "overrides": "role",
+              "overridable": "role"
+            }
+          ]
+        },
+        "<input>": {
+          "parameters": {
+            "@checked": {
+              "ref": "$checked",
+              "optional": true
+            }
+          },
+          "attributes": [
+            {
+              "name": "type",
+              "value": "checkbox",
+              "overrides": "type",
+              "overridable": "type"
+            },
+            {
+              "name": "role",
+              "value": "checkbox",
+              "optional": true,
+              "overrides": "role",
+              "overridable": "role"
+            }
+          ]
+        },
+        "<div>, <span>": {
+          "parameters": {
+            "@checked": {
+              "ref": "$checked-custom",
+              "optional": true
+            }
+          },
+          "attributes": [
+            {
+              "name": "role",
+              "value": "checkbox",
+              "overrides": "role",
+              "overridable": "role"
+            }
+          ]
+        }
+      }
+    },
+    "RadioGroupItem": {
+      "inherits": "Checkbox",
+      "tags": {
+        "<button>": {
+          "attributes": [
+            {
+              "name": "role",
+              "value": "radio",
+              "overrides": "role"
+            }
+          ]
+        },
+        "<input>": {
+          "attributes": [
+            {
+              "name": "type",
+              "value": "radio",
+              "overrides": "type"
+            },
+            {
+              "name": "role",
+              "value": "radio",
+              "optional": true,
+              "overrides": "role"
+            }
+          ]
+        },
+        "<div>, <span>": {
+          "attributes": [
+            {
+              "name": "role",
+              "value": "radio",
+              "overrides": "role"
             }
           ]
         }
