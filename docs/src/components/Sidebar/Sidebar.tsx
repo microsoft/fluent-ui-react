@@ -147,6 +147,15 @@ class Sidebar extends React.Component<any, any> {
             },
           },
           {
+            key: 'design-principles',
+            title: {
+              as: NavLink,
+              content: 'Design Principles',
+              activeClassName: 'active',
+              to: '/design-principles',
+            },
+          },
+          {
             key: 'composition',
             title: {
               as: NavLink,

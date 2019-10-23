@@ -41,8 +41,8 @@ const Introduction = () => (
 
     <h3>Learn</h3>
     <p>
-      The best place to start is with the <NavLink to="shorthand-props">Shorthand Props</NavLink>{' '}
-      concept.
+      The best place to start is with the{' '}
+      <NavLink to="design-principles">Design Principles</NavLink> concept.
     </p>
 
     <h3>Start</h3>

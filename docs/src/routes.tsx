@@ -8,6 +8,7 @@ import DocsBehaviorRoot from './components/DocsBehaviorRoot'
 import MarkdownPage from 'docs/src/components/MarkdownPage'
 
 import * as Composition from './pages/Composition.mdx'
+import * as DesignPrinciples from './pages/Design Principles.mdx'
 import * as Layout from './pages/Layout.mdx'
 import Accessibility from './views/Accessibility'
 import Colors from './views/Colors'
@@ -103,6 +104,9 @@ const Routes = () => (
           <Route exact path="/integrate-custom-components" component={IntegrateCustomComponents} />
           <Route exact path="/composition">
             <MarkdownPage page={Composition} />
+          </Route>
+          <Route exact path="/design-principles">
+            <MarkdownPage page={DesignPrinciples} />
           </Route>
           <Route exact path="/colors" component={Colors} />
           <Route exact path="/color-palette" component={ColorPalette} />
