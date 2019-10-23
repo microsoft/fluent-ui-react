@@ -18,7 +18,7 @@ const SplitButtonExamplePrimaryShorthand = () => (
       onMainButtonClick={() => alert('button was clicked')}
     />
     <span aria-hidden="true" id="instruction-message-primary-button" style={{ opacity: 0 }}>
-      to open menu, press Alt + Arrrow Down
+      to open menu, press Alt + Arrow Down
     </span>
   </div>
 )
