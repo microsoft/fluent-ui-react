@@ -40,6 +40,6 @@ const items = [
   },
 ]
 
-const TreeExclusiveExample = () => <Tree aria-labelledby="exclusive" items={items} exclusive />
+const TreeExclusiveExample = () => <Tree aria-label="exclusive" items={items} exclusive />
 
 export default TreeExclusiveExample
