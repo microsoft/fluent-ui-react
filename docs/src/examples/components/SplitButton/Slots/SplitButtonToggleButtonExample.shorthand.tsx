@@ -6,7 +6,7 @@ const SplitButtonExampleToggleButtonShorthand = () => {
   const [open, setOpen] = useBooleanKnob({ name: 'open' })
 
   return (
-    <div>
+    <>
       <SplitButton
         menu={[
           { key: 'group', content: 'New group message' },
@@ -27,7 +27,7 @@ const SplitButtonExampleToggleButtonShorthand = () => {
       <span aria-hidden="true" id="instruction-message-icon" style={{ opacity: 0 }}>
         to open menu, press Alt + Arrow Down
       </span>
-    </div>
+    </>
   )
 }
 

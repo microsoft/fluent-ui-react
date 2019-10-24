@@ -2,7 +2,7 @@ import * as React from 'react'
 import { SplitButton } from '@stardust-ui/react'
 
 const SplitButtonExampleShorthand = () => (
-  <div>
+  <>
     <SplitButton
       menu={[
         { key: 'group', content: 'New group message' },
@@ -19,7 +19,7 @@ const SplitButtonExampleShorthand = () => (
     <span aria-hidden="true" id="instruction-message" style={{ opacity: 0 }}>
       to open menu, press Alt + Arrow Down
     </span>
-  </div>
+  </>
 )
 
 export default SplitButtonExampleShorthand
