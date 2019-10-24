@@ -7,6 +7,7 @@ import menuButtonBehavior from '../MenuButton/menuButtonBehavior'
 /**
  * @specification
  * Adds attribute 'tabIndex=-1' to 'toggleButton' slot.
+ * Adds attribute 'aria-haspopup=true' to 'toggleButton' slot.
  */
 const splitButtonBehavior: Accessibility = props => {
   const splitButtonMenuButtonBehavior = props => {
@@ -36,6 +37,7 @@ const splitButtonBehavior: Accessibility = props => {
       root: {},
       toggleButton: {
         tabIndex: -1,
+        'aria-haspopup': true,
       },
     },
     childBehaviors: {
