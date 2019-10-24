@@ -28,7 +28,7 @@ const getKeyDownHandlers = (
   if (!componentActionHandlers || !behaviorKeyActions) return keyHandlers
 
   for (const componentPart in behaviorKeyActions) {
-    const componentPartKeyAction = behaviorKeyActions[componentPart]
+    const componentPartKeyAction = _.pickBy(behaviorKeyActions[componentPart], 'keyCombinations')
     const handledActions = _.intersection(
       _.keys(componentPartKeyAction),
       _.keys(componentActionHandlers),
