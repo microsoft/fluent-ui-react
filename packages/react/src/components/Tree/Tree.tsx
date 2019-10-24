@@ -37,13 +37,13 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
   /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
-  /** Ids of opened items. */
+  /** Ids of expanded items. */
   activeItemIds?: string[]
 
   /** Initial activeItemIds value. */
   defaultActiveItemIds?: string[]
 
-  /** Only allow one subtree to be open at a time. */
+  /** Only allow one subtree to be expanded at a time. */
   exclusive?: boolean
 
   /** Shorthand array of props for Tree. */
@@ -151,7 +151,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     let { activeItemIds } = nextProps
 
     if (!activeItemIds && items) {
-      activeItemIds = []
+      activeItemIds = prevState.activeItemIds
       items.forEach(item => {
         if (item['expanded'] && activeItemIds.indexOf(item['id']) === -1) {
           activeItemIds.push(item['id'])
@@ -285,14 +285,14 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
           const itemForRender = itemsForRender[item['id']]
           const { elementRef, ...restItemForRender } = itemForRender
           const isSubtree = hasSubtree(item)
-          const isSubtreeOpen = isSubtree && this.isActiveItem(item['id'])
+          const isSubtreeExpanded = isSubtree && this.isActiveItem(item['id'])
           const renderedItem = TreeItem.create(item, {
             defaultProps: {
               accessibility: accessibility.childBehaviors
                 ? accessibility.childBehaviors.item
                 : undefined,
               className: Tree.slotClassNames.item,
-              open: isSubtreeOpen,
+              expanded: isSubtreeExpanded,
               renderItemTitle,
               key: item['id'],
               contentRef: elementRef,
@@ -304,7 +304,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
           return [
             ...renderedItems,
             renderedItem,
-            ...(isSubtreeOpen ? renderItems(item['items']) : ([] as any)),
+            ...(isSubtreeExpanded ? renderItems(item['items']) : ([] as any)),
           ]
         },
         [],

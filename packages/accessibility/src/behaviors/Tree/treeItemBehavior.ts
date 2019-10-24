@@ -7,7 +7,7 @@ import treeTitleBehavior from './treeTitleBehavior'
 /**
  * @description
  * Adds role 'treeitem' to a non-leaf item and 'none' to a leaf item.
- * Adds 'aria-expanded' with a value based on the 'open' prop if item is not a leaf.
+ * Adds 'aria-expanded' with a value based on the 'expanded' prop if item is not a leaf.
  * Adds 'tabIndex' as '-1' if the item is not a leaf.
  *
  * @specification
@@ -22,7 +22,7 @@ const treeItemBehavior: Accessibility<TreeItemBehaviorProps> = props => ({
     root: {
       role: 'none',
       ...(props.hasSubtree && {
-        'aria-expanded': props.open,
+        'aria-expanded': props.expanded,
         tabIndex: -1,
         [IS_FOCUSABLE_ATTRIBUTE]: true,
         role: 'treeitem',
@@ -37,7 +37,7 @@ const treeItemBehavior: Accessibility<TreeItemBehaviorProps> = props => ({
       performClick: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },
-      ...(isSubtreeOpen(props) && {
+      ...(isSubtreeExpanded(props) && {
         collapse: {
           keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
         },
@@ -45,7 +45,7 @@ const treeItemBehavior: Accessibility<TreeItemBehaviorProps> = props => ({
           keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
         },
       }),
-      ...(!isSubtreeOpen(props) && {
+      ...(!isSubtreeExpanded(props) && {
         expand: {
           keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
         },
@@ -64,18 +64,18 @@ const treeItemBehavior: Accessibility<TreeItemBehaviorProps> = props => ({
 })
 
 export type TreeItemBehaviorProps = {
-  /** If item is a subtree, it indicates if it's open. */
-  open?: boolean
+  /** If item is a subtree, it indicates if it's expanded. */
+  expanded?: boolean
   level?: number
   index?: number
   hasSubtree?: boolean
   treeSize?: number
 }
 
-/** Checks if current tree item has a subtree and it is opened */
-const isSubtreeOpen = (props: TreeItemBehaviorProps): boolean => {
-  const { hasSubtree, open } = props
-  return !!(hasSubtree && open)
+/** Checks if current tree item has a subtree and it is expanded */
+const isSubtreeExpanded = (props: TreeItemBehaviorProps): boolean => {
+  const { hasSubtree, expanded } = props
+  return !!(hasSubtree && expanded)
 }
 
 export default treeItemBehavior
