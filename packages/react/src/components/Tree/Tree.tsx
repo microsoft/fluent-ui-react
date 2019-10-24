@@ -146,9 +146,21 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
   }
 
   static getAutoControlledStateFromProps(nextProps: TreeProps, prevState: TreeState) {
-    const itemsForRender = Tree.getItemsForRender(nextProps.items)
+    const { items } = nextProps
+    const itemsForRender = Tree.getItemsForRender(items)
+    let { activeItemIds } = nextProps
+
+    if (!activeItemIds && items) {
+      activeItemIds = []
+      items.forEach(item => {
+        if (item['expanded'] && activeItemIds.indexOf(item['id']) === -1) {
+          activeItemIds.push(item['id'])
+        }
+      })
+    }
 
     return {
+      activeItemIds,
       itemsForRender,
     }
   }
