@@ -18,7 +18,14 @@ const PortalWindow: React.FunctionComponent<PortalWindowProps> = ({ children, on
     externalWindow.current.document.documentElement.style.fontSize = getComputedStyle(
       document.documentElement,
     ).fontSize
+    externalWindow.current.document.documentElement.style.height = '100%'
+    externalWindow.current.document.documentElement.style.width = '100%'
+    externalWindow.current.document.body.style.height = '100%'
+    externalWindow.current.document.body.style.width = '100%'
+
     externalContainer.current = externalWindow.current.document.createElement('div')
+    externalContainer.current.style.height = 'inherit'
+    externalContainer.current.style.width = 'inherit'
 
     externalWindow.current.document.body.appendChild(externalContainer.current)
     if (onClose) externalWindow.current.onbeforeunload = onClose
