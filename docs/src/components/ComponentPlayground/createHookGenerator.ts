@@ -37,6 +37,15 @@ const createHookGenerator = (options: KnobGeneratorOptions): null | KnobDefiniti
 
   // TODO: add support for AutoControlled props
   const Component = Stardust[componentInfo.displayName]
+
+  if (process.env.NODE_ENV !== 'production') {
+    if (!Component) {
+      throw new Error(
+        `Cannot find an export for "${componentInfo.displayName}", please check that it is exported from "@stardust-ui/react"`,
+      )
+    }
+  }
+
   const { autoControlledProps = [] } = Component
 
   if (autoControlledProps.indexOf(propDef.name) !== -1) {

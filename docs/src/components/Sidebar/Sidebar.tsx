@@ -282,6 +282,11 @@ class Sidebar extends React.Component<any, any> {
         public: true,
       },
       {
+        key: 'customscrollbar',
+        title: { content: 'Custom Scrollbar', as: NavLink, to: '/prototype-custom-scrollbar' },
+        public: true,
+      },
+      {
         key: 'customtoolbar',
         title: { content: 'Custom Styled Toolbar', as: NavLink, to: '/prototype-custom-toolbar' },
         public: true,
