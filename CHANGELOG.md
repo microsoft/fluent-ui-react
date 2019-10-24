@@ -24,6 +24,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Features
 - Add `menu` prop on `ToolbarMenuItem` component @mnajdova ([#1984](https://github.com/stardust-ui/react/pull/1984))
+- Add bounce animation to button clicks in Teams theme @notandrew ([#1724](https://github.com/stardust-ui/react/pull/1724))
 
 ### Documentation
 - Editor Toolbar prototype: Fix overflow menu overflowing in Portal window @miroslavstastny ([#2053](https://github.com/stardust-ui/react/pull/2053))
@@ -61,7 +62,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixes
 - Fix `bodyBackground` color for Teams dark theme to be the correct grey value @codepretty ([#1961](https://github.com/stardust-ui/react/pull/1961))
 - Updating `Button` styles for Teams dark & high contrast themes to match design @notandrew ([#1933](https://github.com/stardust-ui/react/pull/1933))
-- Add bounce animation to button clicks in Teams theme @notandrew ([#1724](https://github.com/stardust-ui/react/pull/1724))
 - Update Office brand icons in Teams theme with latest version @notandrew ([#1954](https://github.com/stardust-ui/react/pull/1954))
 - Fix various component documentation issues @davezuko ([#1992](https://github.com/stardust-ui/react/pull/1992))
 - Fix accessibility issue by adding border to reactions in Teams high contrast theme @codepretty ([#2001](https://github.com/stardust-ui/react/pull/2001))
