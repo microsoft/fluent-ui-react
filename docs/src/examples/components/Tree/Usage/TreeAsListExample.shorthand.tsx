@@ -70,6 +70,12 @@ const items = [
   },
 ]
 
-const TreeAsListExampleShorthand = () => <Tree items={items} accessibility={treeAsListBehavior} />
+const TreeAsListExampleShorthand = () => (
+  <Tree
+    items={items}
+    aria-label="Tree with list accessibility roles"
+    accessibility={treeAsListBehavior}
+  />
+)
 
 export default TreeAsListExampleShorthand
