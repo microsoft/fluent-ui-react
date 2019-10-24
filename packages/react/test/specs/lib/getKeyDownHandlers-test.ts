@@ -100,11 +100,19 @@ describe('getKeyDownHandlers', () => {
     test('should ignore actions with no keyCombinations', () => {
       const actions = {
         testAction: jest.fn(),
-        otherAction: jest.fn(),
+        actionFalse: jest.fn(),
+        actionNull: jest.fn(),
+        actionEmpty: jest.fn(),
       }
 
-      actionsDefinition[partElementName].otherAction = {
+      actionsDefinition[partElementName].actionFalse = {
         keyCombinations: false,
+      }
+      actionsDefinition[partElementName].actionNull = {
+        keyCombinations: null,
+      }
+      actionsDefinition[partElementName].actionEmpty = {
+        keyCombinations: [],
       }
 
       const keyHandlers = getKeyDownHandlers(actions, actionsDefinition)
@@ -112,7 +120,9 @@ describe('getKeyDownHandlers', () => {
       keyHandlers[partElementName] &&
         keyHandlers[partElementName]['onKeyDown'](eventArg(testKeyCode))
       expect(actions.testAction).toHaveBeenCalled()
-      expect(actions.otherAction).not.toHaveBeenCalled()
+      expect(actions.actionFalse).not.toHaveBeenCalled()
+      expect(actions.actionNull).not.toHaveBeenCalled()
+      expect(actions.actionEmpty).not.toHaveBeenCalled()
     })
 
     describe('with respect of RTL', () => {
@@ -157,15 +167,23 @@ describe('getKeyDownHandlers', () => {
       test('should ignore actions with no keyCombinations', () => {
         const actions = {
           actionOnRightArrow: jest.fn(),
-          otherAction: jest.fn(),
+          actionFalse: jest.fn(),
+          actionNull: jest.fn(),
+          actionEmpty: jest.fn(),
         }
 
         actionsDefinition[partElementName].actionOnRightArrow = {
           keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
         }
 
-        actionsDefinition[partElementName].otherAction = {
+        actionsDefinition[partElementName].actionFalse = {
           keyCombinations: false,
+        }
+        actionsDefinition[partElementName].actionNull = {
+          keyCombinations: null,
+        }
+        actionsDefinition[partElementName].actionEmpty = {
+          keyCombinations: [],
         }
 
         const keyHandlers = getKeyDownHandlers(actions, actionsDefinition, true)
@@ -173,7 +191,9 @@ describe('getKeyDownHandlers', () => {
         keyHandlers[partElementName] &&
           keyHandlers[partElementName]['onKeyDown'](eventArg(keyboardKey.ArrowLeft))
         expect(actions.actionOnRightArrow).toHaveBeenCalled()
-        expect(actions.otherAction).not.toHaveBeenCalled()
+        expect(actions.actionFalse).not.toHaveBeenCalled()
+        expect(actions.actionNull).not.toHaveBeenCalled()
+        expect(actions.actionEmpty).not.toHaveBeenCalled()
       })
     })
   })
@@ -203,12 +223,20 @@ describe('getKeyDownHandlers', () => {
     test('when action definition has no keyCombinations', () => {
       const actions = {
         testAction: () => {},
-        otherAction: () => {},
+        actionFalse: () => {},
+        actionNull: () => {},
+        actionEmpty: () => {},
       }
 
       actionsDefinition.anotherPart = {
-        otherAction: {
+        actionFalse: {
           keyCombinations: false,
+        },
+        actionNull: {
+          keyCombinations: null,
+        },
+        actionEmpty: {
+          keyCombinations: [],
         },
       }
 
