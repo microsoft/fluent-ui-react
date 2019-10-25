@@ -13,6 +13,7 @@ const toolbarMenuItemStyles = {
 
     return {
       color: v.menuItemForeground || colors.foreground1,
+      borderWidth: v.menuBorderWidth,
       backgroundColor: 'transparent',
       borderColor: 'transparent',
       display: 'flex',
