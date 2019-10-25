@@ -54,14 +54,15 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
           borderColor: v.borderColorHover,
         },
 
+        ':active': {
+          color: v.colorActive,
+          backgroundColor: v.backgroundColorActive,
+          borderColor: v.borderColorActive,
+          boxShadow: 'none',
+        },
+
         ':focus': {
           ...borderFocusStyles[':focus'],
-          ':active': {
-            color: v.colorActive,
-            backgroundColor: v.backgroundColorActive,
-            borderColor: v.borderColorActive,
-            boxShadow: 'none',
-          },
         },
 
         ':focus-visible': {
@@ -129,12 +130,13 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
           borderColor: v.primaryBorderColor,
           boxShadow: v.primaryBoxShadow,
 
+          ':active': {
+            backgroundColor: v.primaryBackgroundColorActive,
+            boxShadow: 'none',
+          },
+
           ':focus': {
             ...borderFocusStyles[':focus'],
-            ':active': {
-              backgroundColor: v.primaryBackgroundColorActive,
-              boxShadow: 'none',
-            },
           },
 
           ':focus-visible': {
