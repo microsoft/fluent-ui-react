@@ -156,5 +156,23 @@ describe('Tree', () => {
         .simulate('keydown', { keyCode: keyboardKey['*'] })
       checkOpenTitles(wrapper, ['1', '11', '12', '2', '21', '22', '3'])
     })
+
+    it('should have items expanded based on their expanded prop', () => {
+      const itemsClone = JSON.parse(JSON.stringify(items))
+      itemsClone[0]['expanded'] = true
+      itemsClone[0]['items'][1]['expanded'] = true
+      const wrapper = mountWithProvider(<Tree items={itemsClone} />)
+
+      checkOpenTitles(wrapper, ['1', '11', '12', '121', '2', '3'])
+    })
+
+    it('should have expanded prop from items overriden by controlling activeItemIds', () => {
+      const itemsClone = JSON.parse(JSON.stringify(items))
+      itemsClone[0]['expanded'] = true
+      itemsClone[0]['items'][1]['expanded'] = true
+      const wrapper = mountWithProvider(<Tree items={itemsClone} activeItemIds={['2', '21']} />)
+
+      checkOpenTitles(wrapper, ['1', '2', '21', '211', '22', '3'])
+    })
   })
 })
