@@ -15,12 +15,10 @@ export default (siteVars: any): Partial<ButtonVariables> => {
 
     invertedColor: siteVars.colors.white,
     invertedColorHover: siteVars.colors.white,
-    invertedColorFocus: siteVars.colors.white,
     invertedBackgroundColor: 'transparent',
     invertedBackgroundColorActive: 'rgba(255,255,255,.2)',
     invertedBackgroundColorHover: 'rgba(255,255,255,.1)',
     invertedBackgroundColorFocus: 'rgba(255,255,255,.2)',
-    invertedBackgroundColorDisabled: siteVars.colors.grey[150],
     invertedBorderColor: 'rgba(255,255,255,.3)',
 
     primaryBackgroundColorActive: siteVars.colors.brand[800],

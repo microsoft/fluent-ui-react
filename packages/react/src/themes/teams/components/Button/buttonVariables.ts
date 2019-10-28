@@ -124,6 +124,7 @@ export default (siteVars: any): ButtonVariables => ({
   invertedBackgroundColorFocus: 'rgba(255,255,255,.2)',
   invertedBackgroundColorDisabled: siteVars.colors.grey[150],
   invertedBorderColor: 'rgba(255,255,255,.3)',
+  invertedBorderColorHover: 'rgba(255,255,255,.3)',
 
   circularBorderRadius: pxToRem(999),
   circularColor: siteVars.colors.grey[500],
