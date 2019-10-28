@@ -22,6 +22,9 @@ const toolbarItemBehavior: Accessibility<ToolbarItemBehaviorProps> = props => {
   }
   behaviorData.keyActions.wrapper = {
     ...behaviorData.keyActions.wrapper,
+    performWrapperClick: {
+      keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
+    },
     closeMenuAndFocusTrigger: {
       keyCombinations:
         props.menu && props.menuOpen

@@ -11,7 +11,6 @@ export { default as stringLiteralsArray } from './stringLiteralsArray'
 export { default as getOrGenerateIdFromShorthand } from './getOrGenerateIdFromShorthand'
 
 export * from './factories'
-export { default as callable } from './callable'
 export { default as constants } from './constants'
 export { default as mergeThemes } from './mergeThemes'
 export { default as mergeProviderContexts } from './mergeProviderContexts'
@@ -40,3 +39,5 @@ export * from './whatInput'
 
 export * from './commonPropInterfaces'
 export { commonPropTypes }
+
+export { default as withDebugId } from './withDebugId'

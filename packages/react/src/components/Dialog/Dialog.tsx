@@ -1,4 +1,5 @@
 import { Accessibility, dialogBehavior } from '@stardust-ui/accessibility'
+import { FocusTrapZoneProps } from '@stardust-ui/react-bindings'
 import { Unstable_NestingAuto } from '@stardust-ui/react-component-nesting-registry'
 import { EventListener } from '@stardust-ui/react-component-event-listener'
 import { Ref, toRefObject } from '@stardust-ui/react-component-ref'
@@ -17,7 +18,6 @@ import {
   applyAccessibilityKeyHandlers,
   getOrGenerateIdFromShorthand,
 } from '../../lib'
-import { FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Button, { ButtonProps } from '../Button/Button'
 import ButtonGroup from '../Button/ButtonGroup'
@@ -25,12 +25,14 @@ import Box, { BoxProps } from '../Box/Box'
 import Header, { HeaderProps } from '../Header/Header'
 import Portal, { TriggerAccessibility } from '../Portal/Portal'
 import Flex from '../Flex/Flex'
+import DialogFooter, { DialogFooterProps } from './DialogFooter'
 
 export interface DialogSlotClassNames {
   header: string
   headerAction: string
   content: string
   overlay: string
+  footer: string
 }
 
 export interface DialogProps
@@ -62,6 +64,9 @@ export interface DialogProps
 
   /** A dialog can contain a button next to the header. */
   headerAction?: ShorthandValue<ButtonProps>
+
+  /** A dialog can contain a footer. */
+  footer?: ShorthandValue<DialogFooterProps>
 
   /**
    * Called after a user clicks the cancel button.
@@ -137,10 +142,12 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
     backdrop: true,
     closeOnOutsideClick: true,
     overlay: {},
+    footer: {},
     trapFocus: true,
   }
 
   static autoControlledProps = ['open']
+  static Footer = DialogFooter
 
   actionHandlers = {
     closeAndFocusTrigger: e => {
@@ -246,8 +253,35 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       overlay,
       trapFocus,
       trigger,
+      footer,
     } = this.props
     const { open } = this.state
+
+    const cancelElement = Button.create(cancelButton, {
+      overrideProps: this.handleCancelButtonOverrides,
+    })
+    const confirmElement = Button.create(confirmButton, {
+      defaultProps: {
+        primary: true,
+      },
+      overrideProps: this.handleConfirmButtonOverrides,
+    })
+
+    const dialogActions =
+      (cancelElement || confirmElement) &&
+      ButtonGroup.create(actions, {
+        defaultProps: {
+          styles: styles.actions,
+        },
+        overrideProps: {
+          content: (
+            <Flex gap="gap.smaller">
+              {cancelElement}
+              {confirmElement}
+            </Flex>
+          ),
+        },
+      })
 
     const dialogContent = (
       <Ref innerRef={this.contentRef}>
@@ -285,24 +319,11 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
             },
           })}
 
-          {ButtonGroup.create(actions, {
-            defaultProps: {
-              styles: styles.actions,
-            },
+          {DialogFooter.create(footer, {
             overrideProps: {
-              content: (
-                <Flex gap="gap.smaller">
-                  {Button.create(cancelButton, {
-                    overrideProps: this.handleCancelButtonOverrides,
-                  })}
-                  {Button.create(confirmButton, {
-                    defaultProps: {
-                      primary: true,
-                    },
-                    overrideProps: this.handleConfirmButtonOverrides,
-                  })}
-                </Flex>
-              ),
+              content: dialogActions,
+              className: Dialog.slotClassNames.footer,
+              styles: styles.footer,
             },
           })}
         </ElementType>
@@ -369,6 +390,7 @@ Dialog.slotClassNames = {
   headerAction: `${Dialog.className}__headerAction`,
   content: `${Dialog.className}__content`,
   overlay: `${Dialog.className}__overlay`,
+  footer: `${Dialog.className}__footer`,
 }
 
 /**

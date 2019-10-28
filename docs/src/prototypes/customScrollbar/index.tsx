@@ -1,70 +1,32 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import Scrollbars from 'react-custom-scrollbars'
-import {
-  Text,
-  Menu,
-  List,
-  Button,
-  Popup,
-  Dialog,
-  ShorthandValue,
-  MenuProps,
-  Dropdown,
-} from '@stardust-ui/react'
+import { Text, Menu, List, Button, Popup, Dialog, Dropdown } from '@stardust-ui/react'
 import { PrototypeSection, ComponentPrototype } from '../Prototypes'
-
-const submenuWithScrollbars = (shorthand: ShorthandValue<MenuProps>, height: string) => {
-  return render => render(shorthand, (C, p) => <C {...p} as={Scrollbars} style={{ height }} />)
-}
 
 const ScrollbarMenuPrototype = () => {
   const items = [
     {
       key: 'with-scrollbar',
       content: 'Submenu with scrollbar',
-      menu: submenuWithScrollbars(
-        { items: _.range(50).map((i: number) => `Menu Item No. ${i}`) },
-        '20rem',
-      ),
+      menu: {
+        as: Scrollbars,
+        items: _.times(50, (i: number) => `Menu Item No. ${i}`),
+        style: { height: '20rem' },
+      },
     },
     {
       key: 'without-scrollbar',
       content: 'Submenu without scrollbar',
-      menu: _.range(5).map((i: number) => `Menu Item No. ${i}`),
+      menu: _.times(5, (i: number) => `Menu Item No. ${i}`),
     },
   ]
 
   return <Menu items={items} />
 }
 
-// const ScrollbarMenuVerticalPrototype = () => {
-//   const items = [
-//     {
-//       key: 'with-scrollbar',
-//       content: 'Submenu with scrollbar',
-//       menu: {
-//         items: _.range(50).map((i: number) => `Menu Item No. ${i}`),
-//       },
-//     },
-//     {
-//       key: 'without-scrollbar',
-//       content: 'Submenu without scrollbar',
-//       menu: _.range(5).map((i: number) => `Menu Item No. ${i}`),
-//     },
-//   ].concat(_.range(50).map((i: number) => `Menu Item No. ${i}`) as any)
-
-//   return (
-//     <Menu
-//       as={props => <Menu {...props} as={Scrollbars} style={{ width: '20rem', height: '20rem' }} />}
-//       vertical
-//       items={items}
-//     />
-//   )
-// }
-
 const ScrollbarPopupPrototype = () => {
-  const lines = _.range(50).map((i: number) => <p key={i}>Long long text line {i}</p>)
+  const lines = _.times(50, i => <p key={i}>Long long text line {i}</p>)
 
   return (
     <Popup
@@ -80,11 +42,11 @@ const ScrollbarPopupPrototype = () => {
 }
 
 const ScrollbarDialogPrototype = () => {
-  const lines = _.range(50).map((i: number) => <p key={i}>Long long text line {i}</p>)
+  const lines = _.times(50, i => <p key={i}>Long long text line {i}</p>)
 
   return (
     <Dialog
-      trigger={<Button content="Open popup" />}
+      trigger={<Button content="Open dialog" />}
       header="Dialog with scrollbar"
       cancelButton="Close"
       content={{
@@ -96,7 +58,7 @@ const ScrollbarDialogPrototype = () => {
 }
 
 const ScrollbarListPrototype = () => {
-  const items = _.range(50).map((i: number) => ({
+  const items = _.times(50, (i: number) => ({
     header: `Header ${i}`,
     content: `Content ${i}`,
     key: `item-${i}`,
@@ -119,18 +81,18 @@ const ScrollbarDropdownPrototype = () => {
   const dropdownListWithScroll = render =>
     render({}, (C, p) =>
       p.items && p.items.length ? (
-        <C
-          {...p}
-          as={Scrollbars}
-          styles={{ ...p.styles, overflowX: undefined }}
-          style={{ height: '20rem', zIndex: 10000 }}
-        />
+        <C {...p} as={Scrollbars} style={{ height: '20rem' }} />
       ) : (
         <C {...p} />
       ),
     )
-
-  return <Dropdown items={items} list={dropdownListWithScroll} /> // , styles: { overflowX: unset }
+  // , styles: { overflowX: unset }
+  return (
+    <div>
+      <Dropdown items={items} list={dropdownListWithScroll} />
+      <Dropdown items={items} />
+    </div>
+  )
 }
 
 const CustomScrollbarPrototypes: React.FC = () => {
@@ -140,15 +102,9 @@ const CustomScrollbarPrototypes: React.FC = () => {
         Note: Stardust does not provide custom scrollbars. It is possible to integrate Stardust
         components with any custom scrollbars framework.
       </Text>
-      <ComponentPrototype title="Dropdown" description="Scrollbar can be integrated in a Dropdown">
-        <ScrollbarDropdownPrototype />
-      </ComponentPrototype>
       <ComponentPrototype title="Menu" description="Scrollbar can be integrated in Menu">
         <ScrollbarMenuPrototype />
       </ComponentPrototype>
-      {/* <ComponentPrototype title="Menu Vertical" description="Scrollbar can be integrated in Menu">
-        <ScrollbarMenuVerticalPrototype />
-      </ComponentPrototype> */}
       <ComponentPrototype title="Popup" description="Scrollbar can be integrated in Popup content">
         <ScrollbarPopupPrototype />
       </ComponentPrototype>
@@ -160,6 +116,9 @@ const CustomScrollbarPrototypes: React.FC = () => {
       </ComponentPrototype>
       <ComponentPrototype title="List" description="Scrollbar can be integrated in selectable List">
         <ScrollbarListPrototype />
+      </ComponentPrototype>
+      <ComponentPrototype title="Dropdown" description="Scrollbar can be integrated in Dropdown">
+        <ScrollbarDropdownPrototype />
       </ComponentPrototype>
     </PrototypeSection>
   )

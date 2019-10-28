@@ -22,6 +22,7 @@ type ComponentControlsProps = {
   showRtl: boolean
   showVariables: boolean
   showTransparent: boolean
+  toolbarAriaLabel?: string
 }
 
 const controlsTheme: ThemeInput = {
@@ -60,6 +61,7 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
     onShowRtl,
     onShowTransparent,
     onShowVariables,
+    toolbarAriaLabel,
     ...rest
   } = props
 
@@ -70,6 +72,7 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
         fluid
         pills
         accessibility={menuAsToolbarBehavior}
+        aria-label={toolbarAriaLabel || null}
         items={[
           {
             key: 'show-code',

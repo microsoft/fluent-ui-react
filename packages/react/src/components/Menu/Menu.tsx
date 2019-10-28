@@ -128,7 +128,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
     underlined: PropTypes.bool,
     vertical: PropTypes.bool,
     submenu: PropTypes.bool,
-    indicator: customPropTypes.itemShorthand,
+    indicator: customPropTypes.itemShorthandWithoutJSX,
   }
 
   static defaultProps = {
@@ -266,6 +266,7 @@ Menu.create = createShorthandFactory({ Component: Menu, mappedArrayProp: 'items'
  * [JAWS - navigation instruction for menu with aria-orientation="horizontal"](https://github.com/FreedomScientific/VFO-standards-support/issues/204)
  * [JAWS [VC] doesn't narrate menu item, when it is open from menu button](https://github.com/FreedomScientific/VFO-standards-support/issues/324)
  * [JAWS [app mode] focus moves to second menu item, when it is open from menu button](https://github.com/FreedomScientific/VFO-standards-support/issues/325)
+ * [Enter into a tablist JAWS narrates: To switch pages, press Control+PageDown](https://github.com/FreedomScientific/VFO-standards-support/issues/337)
  * 51114083 VoiceOver+Web narrate wrong position in menu / total count of menu items, when pseudo element ::after or ::before is used
  */
 export default withSafeTypeForAs<typeof Menu, MenuProps, 'ul'>(Menu)

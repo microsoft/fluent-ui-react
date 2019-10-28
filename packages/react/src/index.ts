@@ -6,6 +6,7 @@ import * as themes from './themes'
 export { themes }
 export * from './themes/types'
 export * from './themes/colorUtils'
+export * from './themes/createTheme'
 
 //
 // Teams theme
@@ -49,6 +50,9 @@ export { default as ChatMessage } from './components/Chat/ChatMessage'
 export * from './components/Checkbox/Checkbox'
 export { default as Checkbox } from './components/Checkbox/Checkbox'
 
+export * from './components/Debug/Debug'
+export { default as Debug } from './components/Debug/Debug'
+
 export * from './components/Design/Design'
 export { default as Design } from './components/Design/Design'
 
@@ -60,6 +64,9 @@ export { default as Divider } from './components/Divider/Divider'
 
 export * from './components/Dialog/Dialog'
 export { default as Dialog } from './components/Dialog/Dialog'
+
+export * from './components/Dialog/DialogFooter'
+export { default as DialogFooter } from './components/Dialog/DialogFooter'
 
 export * from './components/Dropdown/Dropdown'
 export { default as Dropdown } from './components/Dropdown/Dropdown'
@@ -232,7 +239,7 @@ import {
   getNextElement,
   getPreviousElement,
   focusAsync,
-} from './lib/accessibility/FocusZone/focusUtilities'
+} from '@stardust-ui/react-bindings'
 
 export const FocusZoneUtilities = {
   getFirstTabbable,
@@ -243,10 +250,7 @@ export const FocusZoneUtilities = {
   getPreviousElement,
   focusAsync,
 }
-export * from './lib/accessibility/FocusZone/FocusZone.types'
-export * from './lib/accessibility/FocusZone/FocusTrapZone.types'
-export * from './lib/accessibility/FocusZone/AutoFocusZone.types'
-export * from './lib/accessibility/reactTypes'
 
 export * from '@stardust-ui/accessibility'
 export * from '@stardust-ui/react-component-ref'
+export * from '@stardust-ui/react-bindings'

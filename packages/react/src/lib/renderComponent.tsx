@@ -4,12 +4,18 @@ import {
   FocusZoneDefinition,
   Accessibility,
 } from '@stardust-ui/accessibility'
-import { getElementType, getUnhandledProps } from '@stardust-ui/react-bindings'
+import {
+  callable,
+  FocusZone,
+  FocusZoneProps,
+  FOCUSZONE_WRAP_ATTRIBUTE,
+  getElementType,
+  getUnhandledProps,
+} from '@stardust-ui/react-bindings'
 import cx from 'classnames'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import callable from './callable'
 import logProviderMissingWarning from './providerMissingHandler'
 import {
   ComponentStyleFunctionParam,
@@ -19,16 +25,15 @@ import {
   PropsWithVarsAndStyles,
   State,
   ThemePrepared,
-  ComponentSlotStylesInput,
 } from '../themes/types'
 import { Props, ProviderContextPrepared } from '../types'
 import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/reactTypes'
 import getKeyDownHandlers from './getKeyDownHandlers'
 import { emptyTheme, mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
-import { FocusZoneProps, FocusZone } from './accessibility/FocusZone'
-import { FOCUSZONE_WRAP_ATTRIBUTE } from './accessibility/FocusZone/focusUtilities'
 import createAnimationStyles from './createAnimationStyles'
-import Debug, { isEnabled as isDebugEnabled } from './debug'
+import { isEnabled as isDebugEnabled } from './debug/debugEnabled'
+import { DebugData } from './debug/debugData'
+import withDebugId from './withDebugId'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
@@ -51,7 +56,7 @@ export interface RenderConfig<P> {
   state: State
   actionHandlers: AccessibilityActionHandlers
   render: RenderComponentCallback<P>
-  saveDebug: (debug: Debug | null) => void
+  saveDebug: (debug: DebugData | null) => void
 }
 
 const emptyBehavior: ReactAccessibilityBehavior = {
@@ -81,6 +86,10 @@ const getAccessibility = (
     if (definition.attributes) {
       const slotNames = Object.keys(definition.attributes)
       slotNames.forEach(slotName => {
+        if (!definition.attributes[slotName]) {
+          definition.attributes[slotName] = {}
+        }
+
         definition.attributes[slotName]['data-aa-class'] = `${displayName}${
           slotName === 'root' ? '' : `__${slotName}`
         }`
@@ -142,16 +151,6 @@ const renderWithFocusZone = <P extends {}>(
   return render(config)
 }
 
-const resolveStyles = (
-  styles: ComponentSlotStylesInput,
-  styleParam: ComponentStyleFunctionParam,
-): ComponentSlotStylesPrepared => {
-  return Object.keys(styles).reduce(
-    (acc, next) => ({ ...acc, [next]: callable(styles[next])(styleParam) }),
-    {},
-  )
-}
-
 const renderComponent = <P extends {}>(
   config: RenderConfig<P>,
   context?: ProviderContextPrepared,
@@ -171,17 +170,30 @@ const renderComponent = <P extends {}>(
     logProviderMissingWarning()
   }
 
-  const { disableAnimations = false, renderer = null, rtl = false, theme = emptyTheme } =
-    context || {}
+  const {
+    disableAnimations = false,
+    renderer = null,
+    rtl = false,
+    theme = emptyTheme,
+    _internal_resolvedComponentVariables: resolvedComponentVariables = {},
+  } = context || {}
 
   const ElementType = getElementType(props) as React.ReactType<P>
   const stateAndProps = { ...state, ...props }
 
-  // Resolve variables for this component, allow props.variables to override
-  const resolvedVariables: ComponentVariablesObject = mergeComponentVariables(
-    theme.componentVariables[displayName],
-    props.variables,
-  )(theme.siteVariables)
+  // Resolve variables for this component, cache the result in provider
+  if (!resolvedComponentVariables[displayName]) {
+    resolvedComponentVariables[displayName] =
+      callable(theme.componentVariables[displayName])(theme.siteVariables) || {} // component variables must not be undefined/null (see mergeComponentVariables contract)
+  }
+
+  // Merge inline variables on top of cached variables
+  const resolvedVariables = props.variables
+    ? mergeComponentVariables(
+        resolvedComponentVariables[displayName],
+        withDebugId(props.variables, 'props.variables'),
+      )(theme.siteVariables)
+    : resolvedComponentVariables[displayName]
 
   const animationCSSProp = props.animation
     ? createAnimationStyles(props.animation, context.theme)
@@ -190,9 +202,9 @@ const renderComponent = <P extends {}>(
   // Resolve styles using resolved variables, merge results, allow props.styles to override
   const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
     theme.componentStyles[displayName],
-    { root: props.design },
-    { root: props.styles },
-    { root: animationCSSProp },
+    withDebugId({ root: props.design }, 'props.design'),
+    withDebugId({ root: props.styles }, 'props.styles'),
+    withDebugId({ root: animationCSSProp }, 'props.animation'),
   )
 
   const accessibility: ReactAccessibilityBehavior = getAccessibility(
@@ -219,13 +231,20 @@ const renderComponent = <P extends {}>(
   const direction = rtl ? 'rtl' : 'ltr'
   const felaParam = {
     theme: { direction },
+    displayName, // does not affect styles, only used by useEnhancedRenderer in docs
   }
 
   const resolvedStyles: ComponentSlotStylesPrepared = {}
+  const resolvedStylesDebug: { [key: string]: { styles: Object }[] } = {}
   const classes: ComponentSlotClasses = {}
 
   Object.keys(mergedStyles).forEach(slotName => {
     resolvedStyles[slotName] = callable(mergedStyles[slotName])(styleParam)
+
+    if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
+      resolvedStylesDebug[slotName] = resolvedStyles[slotName]['_debug']
+      delete resolvedStyles[slotName]['_debug']
+    }
 
     if (renderer) {
       classes[slotName] = renderer.renderRule(callable(resolvedStyles[slotName]), felaParam)
@@ -245,22 +264,40 @@ const renderComponent = <P extends {}>(
     theme,
   }
 
-  if (accessibility.focusZone) {
-    return renderWithFocusZone(render, accessibility.focusZone, resolvedConfig)
+  // conditionally add sources for evaluating debug information to component
+  if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
+    saveDebug({
+      componentName: displayName,
+      componentVariables: _.filter(
+        resolvedVariables._debug,
+        variables => !_.isEmpty(variables.resolved),
+      ),
+      componentStyles: _.mapValues(resolvedStylesDebug, v =>
+        _.filter(v, v => {
+          return !_.isEmpty(v.styles)
+        }),
+      ),
+      siteVariables: _.filter(theme.siteVariables._debug, siteVars => {
+        if (_.isEmpty(siteVars) || _.isEmpty(siteVars.resolved)) {
+          return false
+        }
+
+        const keys = Object.keys(siteVars.resolved)
+        if (
+          keys.length === 1 &&
+          keys.pop() === 'fontSizes' &&
+          _.isEmpty(siteVars.resolved['fontSizes'])
+        ) {
+          return false
+        }
+
+        return true
+      }),
+    })
   }
 
-  // conditionally add sources for evaluating debug information to component
-  if (isDebugEnabled) {
-    saveDebug(
-      new Debug({
-        componentName: displayName,
-        themes: context ? context.originalThemes : [],
-        instanceStylesOverrides: props.styles,
-        instanceVariablesOverrides: props.variables,
-        resolveStyles: styles => resolveStyles(styles, styleParam),
-        resolveVariables: variables => callable(variables)(theme.siteVariables),
-      }),
-    )
+  if (accessibility.focusZone) {
+    return renderWithFocusZone(render, accessibility.focusZone, resolvedConfig)
   }
 
   return render(resolvedConfig)

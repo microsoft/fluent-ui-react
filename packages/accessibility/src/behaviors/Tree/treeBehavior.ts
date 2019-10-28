@@ -7,6 +7,7 @@ import treeItemBehavior from './treeItemBehavior'
 /**
  * @specification
  * Adds role 'tree' to 'root' slot.
+ * Adds attribute 'tabIndex=-1' to 'root' slot.
  * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'root' slot.
  * Embeds component into FocusZone.
  * Provides arrow key navigation in vertical direction.
@@ -18,6 +19,7 @@ const treeBehavior: Accessibility<TreeBehaviorProps> = props => {
       root: {
         role: 'tree',
         'aria-labelledby': props['aria-labelledby'],
+        tabIndex: -1,
       },
     },
     keyActions: {
