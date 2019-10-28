@@ -163,22 +163,24 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         borderColor: v.invertedBorderColor,
 
         ':hover': {
-          color: v.invertedColor,
-          backgroundColor: 'rgba(255,255,255,.1)',
-          borderColor: v.borderColorHover,
+          color: v.invertedColorHover,
+          backgroundColor: v.invertedBackgroundColorHover,
+          borderColor: v.invertedBorderColorHover,
         },
 
         ':focus': {
           ...borderFocusStyles[':focus'],
           boxShadow: 'none',
+          color: v.invertedColorHover,
           ':active': {
             backgroundColor: v.invertedBackgroundColorActive,
+            color: v.invertedColorHover,
           },
         },
         ':focus-visible': {
           ...borderFocusStyles[':focus-visible'],
-          color: v.invertedColor,
-          backgroundColor: v.invertedBackgroundColorFocus,
+          color: v.invertedColorHover,
+          backgroundColor: v.invertedBackgroundColorActive,
         },
       }),
 
