@@ -271,7 +271,6 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
         styles: styles.popupContent,
         content: content && <Ref innerRef={this.menuRef}>{content}</Ref>,
       },
-      unstable_pinned: true,
       children: undefined, // force-reset `children` defined for `Popup` as it collides with the `trigger
       ...(contextMenu
         ? {
