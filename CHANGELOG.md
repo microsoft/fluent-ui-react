@@ -24,6 +24,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Accessibility improvements for `tree` and `splitButton` @kolaps33 ([#2032](https://github.com/stardust-ui/react/pull/2032))
 - Update color scheme values in Teams theme @codepretty ([#2063](https://github.com/stardust-ui/react/pull/2063))
 - Fixing a core keydown disconnect issue @dzearing ([#2056](https://github.com/stardust-ui/react/pull/2056))
+- Updating the `attachment` component styles to match Teams theme @notandrew ([#2012](https://github.com/stardust-ui/react/pull/2012))
 
 ### Features
 - Add `menu` prop on `ToolbarMenuItem` component @mnajdova ([#1984](https://github.com/stardust-ui/react/pull/1984))
@@ -64,7 +65,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixes
 - Fix `bodyBackground` color for Teams dark theme to be the correct grey value @codepretty ([#1961](https://github.com/stardust-ui/react/pull/1961))
 - Updating `Button` styles for Teams dark & high contrast themes to match design @notandrew ([#1933](https://github.com/stardust-ui/react/pull/1933))
-- Updating the `attachment` component styles to match Teams theme @notandrew ([#2012](https://github.com/stardust-ui/react/pull/2012))
 - Update Office brand icons in Teams theme with latest version @notandrew ([#1954](https://github.com/stardust-ui/react/pull/1954))
 - Fix various component documentation issues @davezuko ([#1992](https://github.com/stardust-ui/react/pull/1992))
 - Fix accessibility issue by adding border to reactions in Teams high contrast theme @codepretty ([#2001](https://github.com/stardust-ui/react/pull/2001))
