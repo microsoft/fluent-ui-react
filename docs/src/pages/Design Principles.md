@@ -1,8 +1,8 @@
 import { Alert, Flex, Text } from '@stardust-ui/react'
 
 export const meta = {
- title: 'Design Principles',
- next: { name: 'Shorthand Props', url: '/shorthand-props' },
+  title: 'Design Principles',
+  next: { name: 'Shorthand Props', url: '/shorthand-props' },
 }
 <Flex column hAlign="center" padding="padding.medium">
 
@@ -21,30 +21,68 @@ Walk through a component file and explain WHY each of the design patterns in it 
 
 ## First Principles
 
-### Future Proofing
+### Useful out of the box
 
-- UI libraries and frameworks change, React will be replaced.
-- UI designs change more frequently.
-- Different products require different component features and behaviors.
-- UI 
+Components should be immediately useful out of the box.
 
+#### Auto controlled state
+
+Components should not require "wiring" to work.
+Example, a Dropdown should open when clicked without requiring the dev to wire the `open` prop to an `onOpen` handler and manage the state.
+
+Components should give up control to the dev if the dev passes props.
+Example, a Dropdown should never change the `open` state if a dev has explicitly an `open` value.
+
+Components should resume automatic control of state if the dev removes props. 
+Example, a Dropdown should automatically open and close when appropriate if the dev removes the `open`.
 
 ### Component Anatomies
 
-### Component Anatomies
+A component anatomy is simply the name of component and all of its parts.
+Standardized component anatomies are at the core of the Stardust's approach to components.
+Component anatomies provide a consistent and predictable interface that allows us to create reusable and generic abstractions.
 
-Standardized component anatomies are at the core of the Stardust's approach to components concept.
-A component anatomy is simply a name of component and all of its parts.
+#### Slots
+There is one slot for each part in a component's anatomy.
+Example, an Dialog contains a `header` part, a `content` part, and a `footer` part (among others).
+There is then one prop for each of these slots in the Dialog's API.
+ 
+#### State, style, accessibility
+Props containing state information
 
-Stardust bases on design decisions on these principles:
+### Automatic Accessibility
+
+#### Role and Aria
+
+When it is possible to always "do the right thing", `role` and `aria` props should be added and removed automatically.
+Example, a Checkbox should automatically add and remove `aria-checked` when the dev adds or removes the `checked` prop.
+
+#### Keyboard Navigation
+
+Components should be keyboard navigable by default.
+Example, 
 
 ### Framework Agnostic
 
+Frameworks change often.
+The concept and functional parts of components will live for a very long time.
+
+Example, the dropdown component has lived through many evolutions of frameworks with little change.
+The anatomy, state, and accessibility aspects
+
+The concept and use of dropdown will live on.
+
+We shouldn't
 Although this doc site is about React components, the internals of these components are built using framework agnostic parts.
 
 ### Design Agnostic
 
-Stardust components do not dictate any theme.
+UI designs change very often.
+When a component design changes it almost never requires a functional change to the component.
+Yet, with traditional component architectures often times design changes are not possible to implement and require rewriting the component. 
+
+Stardust components do not dictate any theme or style.
+Any component can be styled in anyway allowing full reuse of the functional accessibility
 
 ### Extend, override, or replace anything at any time
 
@@ -54,7 +92,7 @@ Stardust components do not dictate any theme.
 Stardust components aim to allow you to extend, override, or replace the state, styling, and accessibility features of any component at any time.
 Our components attempt to "do the right thing" by default, but do not lock you in to any decision.
 
-This is usually achieved by allowing the user to pass state, style, and accessibility information through React context or component props.
+This is usually achieved by allowing the dev to pass state, style, and accessibility information through React context or component props.
 
 ### Function Components & Class Components
 
@@ -134,26 +172,26 @@ All Stardust components are tested against conformance criteria. This ensures th
 
 ### `test('matches constructor name')`
 
---------------------------
+---
 
 Philosophy
 The project should help contributors fall into the pit of success by catching common mistakes
 
-### `throwError(`Components should export a class or function, got: ${componentType}.`)`
+### `throwError(`Components should export a class or function, got: \${componentType}.`)`
+
 Problems
+
 - Sometimes contributors forget to export their component.
 - Sometimes contributors export their component incorrectly.
 
 Solutions
 
-
-
 throwError(
-      [
-        'Component is not a named function. This should help identify it:\n\n',
-        `${ReactDOMServer.renderToStaticMarkup(<Component />)}`,
-      ].join(''),
-    )
+[
+'Component is not a named function. This should help identify it:\n\n',
+`${ReactDOMServer.renderToStaticMarkup(<Component />)}`,
+].join(''),
+)
 
 test('component info file exists
 test('has a docblock description
