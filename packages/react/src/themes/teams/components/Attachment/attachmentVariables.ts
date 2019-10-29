@@ -30,7 +30,7 @@ export default (siteVariables: any): AttachmentVariables => ({
   borderColor: siteVariables.colors.grey[200],
   borderRadius: pxToRem(3),
   backgroundColor: siteVariables.colors.grey[100],
-  backgroundColorHover: siteVariables.colors.grey[200],
+  backgroundColorHover: siteVariables.colors.grey[150],
   textColor: siteVariables.colors.grey[750],
   textColorHover: siteVariables.colors.grey[750],
   boxShadow: siteVariables.shadowLevel1,
