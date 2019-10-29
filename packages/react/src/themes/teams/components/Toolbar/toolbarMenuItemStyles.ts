@@ -7,6 +7,7 @@ const toolbarMenuItemStyles = {
     const colors = getColorScheme(v.colorScheme)
 
     return {
+      position: 'relative',
       color: v.menuItemForeground || colors.foreground1,
       backgroundColor: 'transparent',
       borderColor: 'transparent',
@@ -43,15 +44,15 @@ const toolbarMenuItemStyles = {
   },
 
   activeIndicator: ({ variables: v }): ICSSInJSStyle => ({
-    float: 'right',
-    position: 'fixed',
+    position: 'absolute',
     right: pxToRem(7),
+    top: pxToRem(7),
   }),
 
   submenuIndicator: ({ variables: v }): ICSSInJSStyle => ({
-    float: 'right',
-    position: 'fixed',
+    position: 'absolute',
     right: pxToRem(7),
+    top: pxToRem(7),
   }),
 
   wrapper: () => ({
