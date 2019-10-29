@@ -1,6 +1,11 @@
 import { ButtonVariables } from '../../../teams/components/Button/buttonVariables'
 
-export default (siteVars: any): Partial<ButtonVariables> => {
+export interface ButtonHighContrastVariables {
+  backgroundColorFocus: string
+  primaryBackgroundColorFocus: string
+}
+
+export default (siteVars: any): Partial<ButtonVariables> & ButtonHighContrastVariables => {
   return {
     backgroundColorActive: siteVars.colors.white,
     backgroundColorFocus: siteVars.accessibleCyan,

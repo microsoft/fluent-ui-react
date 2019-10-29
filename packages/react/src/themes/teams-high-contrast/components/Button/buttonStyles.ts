@@ -1,8 +1,12 @@
 import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { ButtonProps } from '../../../../components/Button/Button'
 import { ButtonVariables } from '../../../teams/components/Button/buttonVariables'
+import { ButtonHighContrastVariables } from './buttonVariables'
 
-const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = {
+const buttonStyles: ComponentSlotStylesPrepared<
+  ButtonProps,
+  ButtonVariables & ButtonHighContrastVariables
+> = {
   root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
     return {
       // rectangular button defaults
