@@ -111,11 +111,11 @@ const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, Dropdow
 
   triggerButton: ({ props: p, variables: v }): ICSSInJSStyle => {
     return {
+      overflow: 'hidden',
       boxShadow: 'none',
       margin: '0',
       justifyContent: 'left',
       padding: v.comboboxPaddingButton,
-      height: pxToRem(32),
       ...(p.multiple && { minWidth: 0, flex: 1 }),
       ...transparentColorStyleObj,
       ':focus': {
