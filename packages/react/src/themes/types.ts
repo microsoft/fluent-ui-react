@@ -370,9 +370,15 @@ export type ComponentSlotStyle<TProps = {}, TVars = {}> =
 export interface ComponentSlotStylesInput<TProps = {}, TVars = {}>
   extends ObjectOf<ComponentSlotStyle<TProps, TVars>> {}
 
+export type ComponentStyleSelector<TProps> =
+  | { [key in keyof TProps]: any }
+  | { [key in keyof TProps]: any }[]
+
 export type ComponentSelectorsAndStyles<TProps = {}, TVars = {}> = (
   vars: TVars,
-) => { [key in keyof TProps]: [Partial<TProps>, ICSSInJSStyle][] }
+) => {
+  [key: string]: [ComponentStyleSelector<TProps>, ICSSInJSStyle][]
+}
 
 export interface ComponentSlotStylesPrepared<TProps = {}, TVars = {}>
   extends ObjectOf<ComponentSlotStyleFunction<TProps, TVars>> {}

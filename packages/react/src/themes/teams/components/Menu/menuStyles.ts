@@ -1,67 +1,101 @@
 import { pxToRem } from '../../../../lib'
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { ComponentSelectorsAndStyles } from '../../../types'
 import { MenuProps, MenuState } from '../../../../components/Menu/Menu'
 import { MenuVariables } from './menuVariables'
-import {
-  verticalPillsBottomMargin,
-  horizontalPillsRightMargin,
-  verticalPointingBottomMargin,
-} from './menuItemStyles'
-import { getColorScheme } from '../../colors'
+import { backportComponentStyle } from '../../../../lib/resolveComponentRules'
 
-type MenuPropsAndState = MenuProps & MenuState
+type MenuPropsAndState = MenuProps & MenuState & { root?: any; divider?: any }
 
-export default {
-  root: ({ props: p, variables: v }): ICSSInJSStyle => {
-    const { iconOnly, fluid, pointing, pills, primary, underlined, vertical, submenu } = p
-    const colors = getColorScheme(v.colorScheme, null, primary)
-
-    return {
-      display: 'flex',
-      minHeight: pxToRem(24),
-      margin: 0,
-      padding: 0,
-      color: v.color,
-      backgroundColor: v.backgroundColor || 'inherit',
-      listStyleType: 'none',
-      ...(iconOnly && { alignItems: 'center' }),
-      ...(vertical && {
-        flexDirection: 'column',
-        backgroundColor: v.verticalBackgroundColor,
-        padding: `${pxToRem(8)} 0`,
-        ...(submenu && {
+const menuStyles: ComponentSelectorsAndStyles<MenuPropsAndState, MenuVariables> = v => {
+  return {
+    root: [
+      [
+        null,
+        {
+          // TODO: add for different colors - primary or not primary...
+          // const colors = getColorScheme(v.colorScheme, null, primary)
+          display: 'flex',
+          minHeight: pxToRem(24),
+          margin: 0,
+          padding: 0,
+          color: v.color,
+          backgroundColor: v.backgroundColor || 'inherit',
+          listStyleType: 'none',
+        },
+      ],
+      [{ iconOnly: true }, { alignItems: 'center' }],
+      [
+        { vertical: true },
+        {
+          flexDirection: 'column',
+          backgroundColor: v.verticalBackgroundColor,
+          padding: `${pxToRem(8)} 0`,
+        },
+      ],
+      [
+        { vertical: true, submenu: true },
+        {
           boxShadow: v.verticalBoxShadow,
-        }),
-        ...(!fluid && !submenu && { width: 'fit-content' }),
-        ...(iconOnly && {
+        },
+      ],
+      [
+        { vertical: true, iconOnly: true },
+        {
           display: 'inline-block',
           width: 'auto',
-        }),
-      }),
-      ...(!pills &&
-        !iconOnly &&
-        !(pointing && vertical) &&
-        !underlined && {
-          // primary has hardcoded grey border color
-          border: `${v.borderWidth} solid ${
-            primary ? v.primaryBorderColor : v.borderColor || colors.border
-          }`,
+        },
+      ],
+      [{ vertical: true, fluid: false, submenu: false }, { width: 'fit-content' }],
+      [
+        [
+          { pills: false, iconOnly: false, underlined: false, pointing: false, primary: true },
+          { pills: false, iconOnly: false, underlined: false, vertical: false, primary: true },
+        ],
+        {
+          border: `${v.borderWidth} solid ${v.primaryBorderColor /* || colors.border */}`,
           borderRadius: pxToRem(4),
-        }),
-      ...(underlined && {
-        borderBottom: `${v.underlinedBottomBorderWidth} solid ${v.underlinedBorderColor}`,
-      }),
-    }
-  },
-  divider: ({ props: { pointing, vertical, pills } }) => ({
-    ...(pointing &&
-      vertical && {
-        marginBottom: verticalPointingBottomMargin,
-      }),
-    ...(pills && {
-      ...(vertical
-        ? { margin: `0 0 ${verticalPillsBottomMargin} 0` }
-        : { margin: `0 ${horizontalPillsRightMargin} 0 0` }),
-    }),
-  }),
-} as ComponentSlotStylesPrepared<MenuPropsAndState, MenuVariables>
+        },
+      ],
+      [
+        [
+          { pills: false, iconOnly: false, underlined: false, pointing: false, primary: true },
+          { pills: false, iconOnly: false, underlined: false, vertical: false, primary: true },
+        ],
+        {
+          // colors.border ?!
+          border: `${v.borderWidth} solid ${v.primaryBorderColor /* || colors.border */}`,
+          borderRadius: pxToRem(4),
+        },
+      ],
+      [
+        [
+          { pills: false, iconOnly: false, underlined: false, pointing: false, primary: false },
+          { pills: false, iconOnly: false, underlined: false, vertical: false, primary: false },
+        ],
+        {
+          // colors.border ?!
+          border: `${v.borderWidth} solid ${v.borderColor /* || colors.border */}`,
+          borderRadius: pxToRem(4),
+        },
+      ],
+      [
+        { underlined: true },
+        {
+          borderBottom: `${v.underlinedBottomBorderWidth} solid ${v.underlinedBorderColor}`,
+        },
+      ],
+    ],
+    divider: [
+      [
+        { pointing: true, vertical: true },
+        {
+          marginBottom: v.verticalPointingBottomMargin,
+        },
+      ],
+      [{ pills: true, vertical: true }, { margin: `0 0 ${v.verticalPillsBottomMargin} 0` }],
+      [{ pills: true, vertical: false }, { margin: `0 ${v.horizontalPillsRightMargin} 0 0` }],
+    ],
+  }
+}
+
+export default backportComponentStyle(menuStyles)

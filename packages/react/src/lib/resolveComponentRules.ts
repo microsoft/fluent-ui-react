@@ -28,7 +28,12 @@ const isMatch = (props, selector): boolean => {
 
 const reduceSelectorStyleTuples = (props, tuples: [object, ICSSInJSStyle][]): ICSSInJSStyle => {
   return tuples.reduce((acc, [selector, style]) => {
-    return isMatch(props, selector) ? deepMergeObjects(acc, style) : acc
+    if (Array.isArray(selector)) {
+      selector.forEach(sel => (isMatch(props, sel) ? deepMergeObjects(acc, style) : acc))
+      return acc
+    } 
+      return isMatch(props, selector) ? deepMergeObjects(acc, style) : acc
+    
   }, {})
 }
 

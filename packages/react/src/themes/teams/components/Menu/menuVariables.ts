@@ -57,6 +57,10 @@ export interface MenuVariables {
 
   dividerHeight: string
   borderWidth: string
+
+  verticalPillsBottomMargin: string
+  horizontalPillsRightMargin: string
+  verticalPointingBottomMargin: string
 }
 
 export default (siteVars: any): MenuVariables => {
@@ -122,5 +126,9 @@ export default (siteVars: any): MenuVariables => {
 
     dividerHeight: pxToRem(1),
     borderWidth: pxToRem(1),
+
+    verticalPillsBottomMargin: pxToRem(5),
+    horizontalPillsRightMargin: pxToRem(8),
+    verticalPointingBottomMargin: pxToRem(12),
   }
 }
