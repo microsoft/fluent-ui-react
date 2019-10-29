@@ -14,9 +14,9 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
 
     const borderFocusStyles = getBorderFocusStyles({
       siteVariables,
+      borderPadding: borderWidth,
       ...(p.circular && {
-        borderRadius: v.circularBorderRadius,
-        focusOuterBorderColor: v.circularBorderColorFocus,
+        borderPadding: pxToRem(4),
       }),
     })
 
@@ -57,17 +57,24 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
 
         ':active': {
           ...createAnimationStyles('scaleDownSoft', theme),
+          color: v.colorActive,
+          backgroundColor: v.backgroundColorActive,
+          borderColor: v.borderColorActive,
+          boxShadow: 'none',
         },
 
         ':focus': {
           ...borderFocusStyles[':focus'],
-          boxShadow: 'none',
-          ':active': { backgroundColor: v.backgroundColorActive },
         },
+
         ':focus-visible': {
           ...borderFocusStyles[':focus-visible'],
-          color: v.colorFocus,
-          backgroundColor: v.backgroundColorFocus,
+          borderColor: v.borderColor,
+          borderWidth,
+
+          ':hover': {
+            borderColor: v.borderColorHover,
+          },
         },
 
         ...(p.size === 'small' && {
@@ -80,31 +87,11 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         !p.text && {
           minWidth: v.height,
           padding: 0,
-          color: v.circularColor,
-          backgroundColor: v.circularBackgroundColor,
-          borderColor: v.circularBorderColor,
           borderRadius: v.circularBorderRadius,
 
           ...(p.size === 'small' && {
             minWidth: v.sizeSmallHeight,
           }),
-
-          ':hover': {
-            color: v.circularColorActive,
-            backgroundColor: v.circularBackgroundColorHover,
-            borderColor: v.circularBorderColorHover,
-          },
-
-          ':focus': {
-            ...borderFocusStyles[':focus'],
-            boxShadow: 'none',
-            ':active': { backgroundColor: v.circularBackgroundColorActive },
-          },
-          ':focus-visible': {
-            ...borderFocusStyles[':focus-visible'],
-            color: v.circularColorActive,
-            backgroundColor: v.circularBackgroundColorFocus,
-          },
         }),
 
       // text button defaults
@@ -126,6 +113,7 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
           boxShadow: 'none',
           ...borderFocusStyles[':focus'],
         },
+
         ':focus-visible': {
           ...borderFocusStyles[':focus-visible'],
           ...getIconFillOrOutlineStyles({ outline: false }),
@@ -142,22 +130,24 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
           color: v.primaryColor,
           backgroundColor: v.primaryBackgroundColor,
           borderColor: v.primaryBorderColor,
-          boxShadow: siteVariables.shadowLevel1Dark,
+          boxShadow: v.primaryBoxShadow,
 
-          ':hover': {
-            color: v.primaryColorHover,
-            backgroundColor: v.primaryBackgroundColorHover,
+          ':active': {
+            backgroundColor: v.primaryBackgroundColorActive,
+            boxShadow: 'none',
           },
 
           ':focus': {
             ...borderFocusStyles[':focus'],
-            boxShadow: 'none',
-            ':active': { backgroundColor: v.primaryBackgroundColorActive },
           },
+
           ':focus-visible': {
             ...borderFocusStyles[':focus-visible'],
-            color: v.primaryColorFocus,
-            backgroundColor: v.primaryBackgroundColorFocus,
+          },
+
+          ':hover': {
+            color: v.primaryColorHover,
+            backgroundColor: v.primaryBackgroundColorHover,
           },
         }),
 
@@ -184,6 +174,12 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
           ':hover': {
             backgroundColor: v.backgroundColorDisabled,
           },
+          ...(p.primary && {
+            backgroundColor: v.primaryBackgroundColorDisabled,
+            ':hover': {
+              backgroundColor: v.primaryBackgroundColorDisabled,
+            },
+          }),
         }),
       }),
 

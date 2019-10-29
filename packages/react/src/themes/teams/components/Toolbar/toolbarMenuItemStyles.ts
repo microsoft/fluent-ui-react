@@ -1,13 +1,19 @@
 import { ICSSInJSStyle } from '../../../types'
 import { getColorScheme } from '../../colors'
 import { pxToRem } from '../../../../lib'
+import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 const toolbarMenuItemStyles = {
-  root: ({ props: p, variables: v }): ICSSInJSStyle => {
+  root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
     const colors = getColorScheme(v.colorScheme)
+    const borderFocusStyles = getBorderFocusStyles({
+      siteVariables,
+      borderRadius: 0,
+    })
 
     return {
       color: v.menuItemForeground || colors.foreground1,
+      borderWidth: v.menuBorderWidth,
       backgroundColor: 'transparent',
       borderColor: 'transparent',
       display: 'flex',
@@ -16,6 +22,7 @@ const toolbarMenuItemStyles = {
       maxWidth: '100%',
       padding: v.menuItemPadding,
       cursor: 'pointer',
+      position: 'relative',
 
       ':focus': {
         outline: 0,
@@ -26,10 +33,7 @@ const toolbarMenuItemStyles = {
         backgroundColor: v.menuItemBackgroundHover || colors.menuItemBackgroundHover,
       },
 
-      ':focus-visible': {
-        color: v.menuItemForegroundFocus || colors.menuItemForegroundFocus,
-        backgroundColor: v.menuItemBackgroundFocus || colors.menuItemBackgroundFocus,
-      },
+      ':focus-visible': borderFocusStyles[':focus-visible'],
 
       ...(p.disabled && {
         cursor: 'default',
