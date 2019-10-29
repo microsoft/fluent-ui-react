@@ -17,16 +17,9 @@ import {
   getOrGenerateIdFromShorthand,
   SizeValue,
 } from '../../lib'
-import {
-  WithAsProp,
-  withSafeTypeForAs,
-  ShorthandCollection,
-  ShorthandValue,
-  ShorthandRenderFunction,
-} from '../../types'
+import { WithAsProp, withSafeTypeForAs, ShorthandCollection, ShorthandValue } from '../../types'
 import Button, { ButtonProps } from '../Button/Button'
 import CarouselItem, { CarouselItemProps } from './CarouselItem'
-import { CarouselSlideProps } from './CarouselSlide'
 import Menu, { MenuProps } from '../Menu/Menu'
 import Text from '../Text/Text'
 import { MenuItemProps } from '../Menu/MenuItem'
@@ -71,16 +64,6 @@ export interface CarouselProps extends UIComponentProps, ChildrenComponentProps 
   paddlePrevious?: ShorthandValue<ButtonProps>
 
   /**
-   * A custom render iterator for rendering each carousel slide.
-   * The default component, props, and children are available for each carousel slide.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderItemSlide?: ShorthandRenderFunction<CarouselSlideProps>
-
-  /**
    * On slide transition, the Carousel may translate the slides' position,
    * fade their appearance or just hide and show without any animation.
    */
@@ -113,7 +96,6 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
     items: customPropTypes.collectionShorthand,
     paddleNext: customPropTypes.itemShorthand,
     paddlePrevious: customPropTypes.itemShorthand,
-    renderItemSlide: PropTypes.func,
     tabList: PropTypes.oneOfType([
       customPropTypes.collectionShorthand,
       customPropTypes.itemShorthand,
@@ -215,7 +197,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
   }
 
   renderContent = (accessibility, styles, unhandledProps) => {
-    const { ariaRoleDescription, getItemPositionText, items, renderItemSlide } = this.props
+    const { ariaRoleDescription, getItemPositionText, items } = this.props
     const { activeIndex, itemIds } = this.state
 
     if (!items) {
@@ -242,7 +224,6 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
               <Ref innerRef={itemRef}>
                 {CarouselItem.create(item, {
                   defaultProps: {
-                    renderItemSlide,
                     active: activeIndex === index,
                     id: itemIds[index],
                     ...(getItemPositionText && {

@@ -15,8 +15,7 @@ import {
   ChildrenComponentProps,
 } from '../../lib'
 import { screenReaderContainerStyles } from '../../lib/accessibility/Styles/accessibilityStyles'
-import { WithAsProp, withSafeTypeForAs, ShorthandValue, ShorthandRenderFunction } from '../../types'
-import CarouselSlide, { CarouselSlideProps } from './CarouselSlide'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface CarouselItemProps
   extends UIComponentProps,
@@ -30,19 +29,6 @@ export interface CarouselItemProps
    * up by screen readers.
    */
   itemPositionText?: string
-
-  /**
-   * A custom render iterator for rendering each carousel slide.
-   * The default component, props, and children are available for each carousel slide.
-   *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
-   */
-  renderItemSlide?: ShorthandRenderFunction<CarouselSlideProps>
-
-  /** Properties for CarouselSlide. */
-  slide?: ShorthandValue<CarouselSlideProps>
 }
 
 class CarouselItem extends UIComponent<WithAsProp<CarouselItemProps>> {
@@ -53,9 +39,7 @@ class CarouselItem extends UIComponent<WithAsProp<CarouselItemProps>> {
   static className = 'ui-carousel__item'
 
   static propTypes = {
-    ...commonPropTypes.createCommon({
-      content: false,
-    }),
+    ...commonPropTypes.createCommon(),
     active: PropTypes.bool,
     itemPositionText: PropTypes.string,
     renderItemSlide: PropTypes.func,
@@ -67,14 +51,8 @@ class CarouselItem extends UIComponent<WithAsProp<CarouselItemProps>> {
     accessibility: carouselItemBehavior,
   }
 
-  renderContent() {
-    const { renderItemSlide, slide } = this.props
-
-    return CarouselSlide.create(slide, { render: renderItemSlide })
-  }
-
   renderComponent({ ElementType, classes, styles, accessibility, unhandledProps }) {
-    const { children, itemPositionText } = this.props
+    const { children, content, itemPositionText } = this.props
     return (
       <ElementType
         className={classes.root}
@@ -83,13 +61,13 @@ class CarouselItem extends UIComponent<WithAsProp<CarouselItemProps>> {
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
         <div style={screenReaderContainerStyles}>{itemPositionText}</div>
-        {childrenExist(children) ? children : this.renderContent()}
+        {childrenExist(children) ? children : content}
       </ElementType>
     )
   }
 }
 
-CarouselItem.create = createShorthandFactory({ Component: CarouselItem, mappedProp: 'slide' })
+CarouselItem.create = createShorthandFactory({ Component: CarouselItem, mappedProp: 'content' })
 
 /**
  * A Carousel displays data organised as a gallery.

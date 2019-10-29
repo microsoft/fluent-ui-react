@@ -1,26 +1,32 @@
 import * as React from 'react'
 import { Carousel, Image, SizeValue } from '@stardust-ui/react'
 
+const imageAltTags = {
+  ade: 'Portrait of Ade',
+  elliot: 'Portrait of Elliot',
+  kristy: 'Portrait of Kristy',
+  nan: 'Portrait of Nan',
+}
 const carouselItems = [
   {
     key: 'ade',
     id: 'ade',
-    slide: { as: Image, src: 'public/images/avatar/large/ade.jpg', alt: 'Portrait of Ade' },
+    content: <Image src="public/images/avatar/large/ade.jpg" fluid alt={imageAltTags.ade} />,
   },
   {
     key: 'elliot',
     id: 'elliot',
-    slide: { as: Image, src: 'public/images/avatar/large/elliot.jpg', alt: 'Portrait of Elliot' },
+    content: <Image src="public/images/avatar/large/elliot.jpg" fluid alt={imageAltTags.elliot} />,
   },
   {
     key: 'kristy',
     id: 'kristy',
-    slide: { as: Image, src: 'public/images/avatar/large/kristy.png', alt: 'Portrait of Kristy' },
+    content: <Image src="public/images/avatar/large/kristy.png" fluid alt={imageAltTags.kristy} />,
   },
   {
     key: 'nan',
     id: 'nan',
-    slide: { as: Image, src: 'public/images/avatar/large/nan.jpg', alt: 'Portrait of Nan' },
+    content: <Image src="public/images/avatar/large/nan.jpg" fluid alt={imageAltTags.nan} />,
   },
 ]
 
@@ -31,7 +37,7 @@ const CarouselExample = () => (
       'aria-label': 'people portraits',
       items: carouselItems.map((item, index) => ({
         key: index,
-        'aria-label': item.slide.alt,
+        'aria-label': imageAltTags[item.id],
         'aria-controls': item.id,
         icon: { name: 'stardust-circle', size: 'smallest' as SizeValue },
       })),

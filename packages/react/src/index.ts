@@ -222,8 +222,6 @@ export * from './components/Carousel/Carousel'
 export { default as Carousel } from './components/Carousel/Carousel'
 export * from './components/Carousel/CarouselItem'
 export { default as CarouselItem } from './components/Carousel/CarouselItem'
-export * from './components/Carousel/CarouselSlide'
-export { default as CarouselSlide } from './components/Carousel/CarouselSlide'
 
 //
 // Utilities
