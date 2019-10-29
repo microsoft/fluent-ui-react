@@ -1,7 +1,6 @@
 import { toRefObject, Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
@@ -10,7 +9,6 @@ import {
   childrenExist,
   AutoControlledComponent,
   RenderResultConfig,
-  isBrowser,
   ChildrenComponentProps,
   ContentComponentProps,
   StyledComponentProps,
@@ -18,6 +16,8 @@ import {
   isFromKeyboard,
   setWhatInputSource,
   getOrGenerateIdFromShorthand,
+  createShorthandFactory,
+  ShorthandFactory,
 } from '../../lib'
 import { ShorthandValue, Props } from '../../types'
 import {
@@ -27,10 +27,10 @@ import {
   BasicPositioningProps,
   PopperChildrenProps,
 } from '../../lib/positioner'
-import TooltipContent from './TooltipContent'
-import { tooltipBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
+import TooltipContent, { TooltipContentProps } from './TooltipContent'
+import { Accessibility, tooltipBehavior } from '@stardust-ui/accessibility'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
+import PortalInner from '../Portal/PortalInner'
 
 export interface TooltipSlotClassNames {
   content: string
@@ -44,10 +44,12 @@ export interface TooltipState {
 export interface TooltipProps
   extends StyledComponentProps<TooltipProps>,
     ChildrenComponentProps,
-    ContentComponentProps<ShorthandValue>,
+    ContentComponentProps<ShorthandValue<TooltipContentProps>>,
     BasicPositioningProps {
   /**
    * Accessibility behavior if overridden by the user.
+   * @default tooltipBehavior
+   * @available tooltipAsLabelBehavior
    * */
   accessibility?: Accessibility
 
@@ -66,6 +68,17 @@ export interface TooltipProps
   /** Defines whether tooltip is displayed. */
   open?: boolean
 
+  /**
+   * TODO: should this be centralized?
+   * Offset value to apply to rendered component. Accepts the following units:
+   * - px or unit-less, interpreted as pixels
+   * - %, percentage relative to the length of the trigger element
+   * - %p, percentage relative to the length of the component element
+   * - vw, CSS viewport width unit
+   * - vh, CSS viewport height unit
+   */
+  offset?: string
+
   /** A tooltip can show a pointer to trigger. */
   pointing?: boolean
 
@@ -79,8 +92,11 @@ export interface TooltipProps
 }
 
 /**
- * A tooltip that displays information related to an element when the element receives keyboard focus
- * or the mouse hovers over it.
+ * A Tooltip displays additional non-modal information on top of its target element.
+ * Tooltip doesn't receive focus and cannot contain focusable elements.
+ *
+ * @accessibility
+ * Implements [ARIA Tooltip](https://www.w3.org/TR/wai-aria-practices-1.1/#tooltip) design pattern.
  */
 export default class Tooltip extends AutoControlledComponent<TooltipProps, TooltipState> {
   static displayName = 'Tooltip'
@@ -104,6 +120,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     inline: PropTypes.bool,
     mountNode: customPropTypes.domNode,
     mouseLeaveDelay: PropTypes.number,
+    offset: PropTypes.string,
     open: PropTypes.bool,
     onOpenChange: PropTypes.func,
     pointing: PropTypes.bool,
@@ -115,16 +132,17 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
 
   static defaultProps: TooltipProps = {
     align: 'center',
-    mountNode: isBrowser() ? document.body : null,
     position: 'above',
-    mouseLeaveDelay: 500,
+    mouseLeaveDelay: 10,
     pointing: true,
     accessibility: tooltipBehavior,
   }
 
   static autoControlledProps = ['open']
 
-  pointerTargetRef = React.createRef<HTMLElement>()
+  static create: ShorthandFactory<TooltipProps>
+
+  pointerTargetRef = React.createRef<HTMLDivElement>()
   triggerRef = React.createRef<HTMLElement>()
   contentRef = React.createRef<HTMLElement>()
   closeTimeoutId
@@ -135,6 +153,10 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
       e.stopPropagation()
       e.preventDefault()
     },
+  }
+
+  getInitialAutoControlledState(): Partial<TooltipState> {
+    return { open: false }
   }
 
   static getAutoControlledStateFromProps(
@@ -154,9 +176,8 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     const { mountNode, children, trigger } = this.props
     const tooltipContent = this.renderTooltipContent(classes.content, rtl, accessibility)
 
-    const triggerElement = React.Children.only(
-      childrenExist(children) ? children : trigger,
-    ) as React.ReactElement<any>
+    const triggerNode = childrenExist(children) ? children : trigger
+    const triggerElement = triggerNode && (React.Children.only(triggerNode) as React.ReactElement)
     const triggerProps = this.getTriggerProps(triggerElement)
 
     return (
@@ -170,7 +191,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
             })}
           </Ref>
         )}
-        {mountNode && ReactDOM.createPortal(tooltipContent, mountNode)}
+        <PortalInner mountNode={mountNode}>{tooltipContent}</PortalInner>
       </>
     )
   }
@@ -228,13 +249,16 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     rtl: boolean,
     accessibility: ReactAccessibilityBehavior,
   ): JSX.Element {
-    const { align, position, target } = this.props
+    const { align, position, target, offset } = this.props
+    const { open } = this.state
 
     return (
       <Popper
         pointerTargetRef={this.pointerTargetRef}
         align={align}
+        offset={offset}
         position={position}
+        enabled={open}
         rtl={rtl}
         targetRef={target ? toRefObject(target) : this.triggerRef}
         children={this.renderPopperChildren.bind(this, tooltipPositionClasses, rtl, accessibility)}
@@ -261,6 +285,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     const tooltipContent = Tooltip.Content.create(content, {
       defaultProps: {
         ...tooltipContentAttributes,
+        open: this.state.open,
         placement,
         pointing,
         pointerRef: this.pointerTargetRef,
@@ -272,7 +297,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
   }
 
   trySetOpen(newValue: boolean, eventArgs: any) {
-    this.trySetState({ open: newValue })
+    this.setState({ open: newValue })
     _.invoke(this.props, 'onOpenChange', eventArgs, { ...this.props, ...{ open: newValue } })
   }
 
@@ -297,3 +322,5 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     }
   }
 }
+
+Tooltip.create = createShorthandFactory({ Component: Tooltip, mappedProp: 'content' })

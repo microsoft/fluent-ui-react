@@ -9,6 +9,11 @@ const Types = () => (
       description="A default Input."
       examplePath="components/Input/Types/InputExample"
     />
+    <ComponentExample
+      title="Inverted colors"
+      description="An input can show an inverted background color."
+      examplePath="components/Input/Types/InputInvertedExample"
+    />
   </ExampleSection>
 )
 

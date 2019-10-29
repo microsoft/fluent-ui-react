@@ -31,10 +31,10 @@ const webpackConfig: any = {
     '@babel/standalone': 'Babel',
     'anchor-js': 'AnchorJS',
     'prettier/standalone': 'prettier',
-    // These Prettier plugins doesn't have any exports
-    'prettier/parser-babylon': 'window',
-    'prettier/parser-html': 'window',
-    'prettier/parser-typescript': 'window',
+    // These Prettier plugins are available under window.prettierPlugins
+    'prettier/parser-babylon': ['prettierPlugins', 'babylon'],
+    'prettier/parser-html': ['prettierPlugins', 'html'],
+    'prettier/parser-typescript': ['prettierPlugins', 'typescript'],
     'prop-types': 'PropTypes',
     react: 'React',
     'react-dom': 'ReactDOM',
@@ -107,6 +107,7 @@ const webpackConfig: any = {
       contextRegExp: /moment$/,
     }),
     __DEV__ &&
+      !process.env.CI &&
       new webpack.ProgressPlugin({
         entries: true,
         modules: true,
@@ -120,8 +121,6 @@ const webpackConfig: any = {
       src: paths.packageSrc('react'),
       docs: paths.base('docs'),
     },
-    // Allows to avoid multiple inclusions of the same module
-    modules: [paths.base('node_modules')],
   },
   optimization: {
     // Automatically split vendor and commons

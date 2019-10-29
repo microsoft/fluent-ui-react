@@ -3,7 +3,13 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
-import { UIComponent, RenderResultConfig, createShorthandFactory, commonPropTypes } from '../../lib'
+import {
+  UIComponent,
+  RenderResultConfig,
+  createShorthandFactory,
+  commonPropTypes,
+  ShorthandFactory,
+} from '../../lib'
 import { ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
 import { UIComponentProps } from '../../lib/commonPropInterfaces'
 import Input from '../Input/Input'
@@ -64,7 +70,7 @@ export interface DropdownSearchInputProps extends UIComponentProps<DropdownSearc
 
 class DropdownSearchInput extends UIComponent<WithAsProp<DropdownSearchInputProps>, any> {
   static displayName = 'DropdownSearchInput'
-  static create: Function
+  static create: ShorthandFactory<DropdownSearchInputProps>
   static slotClassNames: DropdownSearchInputSlotClassNames
   static className = 'ui-dropdown__searchinput'
 
@@ -143,7 +149,7 @@ DropdownSearchInput.slotClassNames = {
 DropdownSearchInput.create = createShorthandFactory({ Component: DropdownSearchInput })
 
 /**
- * A sub-component of a search Dropdown.
+ * A DropdownSearchInput represents item of 'search' Dropdown.
  * Used to display the search input field.
  */
 export default withSafeTypeForAs<typeof DropdownSearchInput, DropdownSearchInputProps>(

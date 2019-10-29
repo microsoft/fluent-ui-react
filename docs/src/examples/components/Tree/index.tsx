@@ -1,10 +1,12 @@
 import * as React from 'react'
 import Types from './Types'
+import Usage from './Usage'
 
 const TreeExamples = () => (
-  <div>
+  <>
     <Types />
-  </div>
+    <Usage />
+  </>
 )
 
 export default TreeExamples

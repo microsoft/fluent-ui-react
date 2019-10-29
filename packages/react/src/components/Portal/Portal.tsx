@@ -1,5 +1,7 @@
-import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
-import { handleRef, Ref } from '@stardust-ui/react-component-ref'
+import { AccessibilityAttributes } from '@stardust-ui/accessibility'
+import { FocusTrapZone, FocusTrapZoneProps } from '@stardust-ui/react-bindings'
+import { EventListener } from '@stardust-ui/react-component-event-listener'
+import { handleRef, Ref, toRefObject } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -15,13 +17,11 @@ import {
   rtlTextContainer,
 } from '../../lib'
 import PortalInner from './PortalInner'
-import { FocusTrapZone, FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
-import { AccessibilityAttributes } from '../../lib/accessibility/types'
-import { AccessibilityKeyHandlers } from '../../lib/accessibility/reactTypes'
+import { AccessibilityHandlerProps } from '../../lib/accessibility/reactTypes'
 
 export type TriggerAccessibility = {
   attributes?: AccessibilityAttributes
-  keyHandlers?: AccessibilityKeyHandlers
+  keyHandlers?: AccessibilityHandlerProps
 }
 
 export interface PortalProps extends ChildrenComponentProps, ContentComponentProps {
@@ -77,7 +77,7 @@ export interface PortalState {
 }
 
 /**
- * A component that allows you to render children outside their parent.
+ * A Portal allows to render children outside of their parent.
  */
 class Portal extends AutoControlledComponent<PortalProps, PortalState> {
   portalNode: HTMLElement
@@ -121,8 +121,10 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
   renderPortal(): JSX.Element | undefined {
     const { children, content, trapFocus } = this.props
     const { open } = this.state
+
     const contentToRender = childrenExist(children) ? children : content
     const focusTrapZoneProps = (_.keys(trapFocus).length && trapFocus) || {}
+    const targetRef = toRefObject(this.context.target)
 
     return (
       open && (
@@ -137,11 +139,7 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
             ) : (
               contentToRender
             )}
-            <EventListener
-              listener={this.handleDocumentClick}
-              targetRef={documentRef}
-              type="click"
-            />
+            <EventListener listener={this.handleDocumentClick} targetRef={targetRef} type="click" />
           </PortalInner>
         </Ref>
       )
@@ -185,19 +183,19 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
 
     _.invoke(this.props, 'onTriggerClick', e) // Call handler from parent component
     _.invoke(trigger, 'props.onClick', e, ...unhandledProps) // Call original event handler
-    this.trySetState({ open: !this.state.open })
+    this.setState({ open: !this.state.open })
   }
 
   handleDocumentClick = (e: MouseEvent) => {
     if (
       !this.portalNode || // no portal
-      doesNodeContainClick(this.triggerNode, e) || // event happened in trigger (delegate to trigger handlers)
-      doesNodeContainClick(this.portalNode, e) // event happened in the portal
+      doesNodeContainClick(this.triggerNode, e, this.context.target) || // event happened in trigger (delegate to trigger handlers)
+      doesNodeContainClick(this.portalNode, e, this.context.target) // event happened in the portal
     ) {
       return // ignore the click
     }
     _.invoke(this.props, 'onOutsideClick', e)
-    this.trySetState({ open: false })
+    this.setState({ open: false })
   }
 }
 

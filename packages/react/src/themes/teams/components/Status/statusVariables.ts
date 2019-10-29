@@ -13,12 +13,8 @@ export interface StatusVariables {
   defaultBackgroundColor: string
   defaultTextColor: string
 
-  backgroundRed: string
-  backgroundOrange: string
-  backgroundYellow: string
-  backgroundGreen: string
-  backgroundBlue: string
-  backgroundViolet: string
+  borderColor: string
+  borderWidth: string
 
   smallest: string
   smaller: string
@@ -41,14 +37,8 @@ export default (siteVariables: SiteVariablesInput): StatusVariables => ({
   defaultBackgroundColor: siteVariables.colors.grey[350],
   defaultTextColor: siteVariables.colors.white,
 
-  backgroundRed: siteVariables.errorStatusBackgroundColor,
-  backgroundOrange: siteVariables.warningStatusBackgroundColor,
-  // TODO: support real site variables colors here
-  backgroundYellow: 'yellow',
-  backgroundGreen: siteVariables.successStatusBackgroundColor,
-  backgroundBlue: siteVariables.infoStatusBackgroundColor,
-  // TODO: support real site variables colors here
-  backgroundViolet: 'violet',
+  borderColor: 'transparent',
+  borderWidth: '0',
 
   smallest: pxToRem(8),
   smaller: pxToRem(8),

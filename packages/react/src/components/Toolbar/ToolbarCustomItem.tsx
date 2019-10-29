@@ -1,3 +1,5 @@
+import { Accessibility, IS_FOCUSABLE_ATTRIBUTE } from '@stardust-ui/accessibility'
+import * as _ from 'lodash'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
@@ -9,14 +11,10 @@ import {
   UIComponent,
   childrenExist,
   commonPropTypes,
-  isFromKeyboard,
+  ShorthandFactory,
 } from '../../lib'
 
 import { ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
-import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
-import { IS_FOCUSABLE_ATTRIBUTE } from '../../lib/accessibility/FocusZone'
-import * as _ from 'lodash'
 
 export interface ToolbarCustomItemProps
   extends UIComponentProps,
@@ -34,7 +32,7 @@ export interface ToolbarCustomItemProps
   focusable?: boolean
 
   /** A custom item can't be actionable. */
-  onClick: never
+  onClick?: never
 
   /**
    * Called after user's focus. Will be called only if the item is focusable.
@@ -51,19 +49,12 @@ export interface ToolbarCustomItemProps
   onBlur?: ComponentEventHandler<ToolbarCustomItemProps>
 }
 
-interface ToolbarCustomItemState {
-  isFromKeyboard: boolean
-}
-
-class ToolbarCustomItem extends UIComponent<
-  WithAsProp<ToolbarCustomItemProps>,
-  ToolbarCustomItemState
-> {
+class ToolbarCustomItem extends UIComponent<WithAsProp<ToolbarCustomItemProps>> {
   static displayName = 'ToolbarCustomItem'
 
   static className = 'ui-toolbar__customitem'
 
-  static create: Function
+  static create: ShorthandFactory<ToolbarCustomItemProps>
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
@@ -73,20 +64,14 @@ class ToolbarCustomItem extends UIComponent<
     onBlur: PropTypes.func,
   }
 
-  static defaultProps = {
-    accessibility: defaultBehavior,
-  }
-
   handleBlur = (e: React.SyntheticEvent) => {
     if (this.props.focusable) {
-      this.setState({ isFromKeyboard: false })
       _.invoke(this.props, 'onBlur', e, this.props)
     }
   }
 
   handleFocus = (e: React.SyntheticEvent) => {
     if (this.props.focusable) {
-      this.setState({ isFromKeyboard: isFromKeyboard() })
       _.invoke(this.props, 'onFocus', e, this.props)
     }
   }
@@ -114,8 +99,7 @@ ToolbarCustomItem.create = createShorthandFactory({
 })
 
 /**
- * Custom toolbar item.
- * The item renders as a non-focusable div with custom content inside.
+ * A ToolbarCustomItem renders Toolbar item as a non-actionable `div` with custom content inside.
  */
 export default withSafeTypeForAs<typeof ToolbarCustomItem, ToolbarCustomItemProps>(
   ToolbarCustomItem,

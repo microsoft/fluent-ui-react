@@ -1,9 +1,9 @@
 import * as _ from 'lodash'
 import * as _prettier from 'prettier/standalone'
 
-import 'prettier/parser-babylon'
-import 'prettier/parser-html'
-import 'prettier/parser-typescript'
+import babylon from 'prettier/parser-babylon'
+import html from 'prettier/parser-html'
+import typescript from 'prettier/parser-typescript'
 
 import { CodeSnippetMode, CodeSnippetValue } from './types'
 
@@ -18,7 +18,11 @@ const prettierConfig = {
   semi: false,
   singleQuote: true,
   trailingComma: 'all',
-  plugins: typeof window !== 'undefined' ? (window as any).prettierPlugins : [],
+  plugins: {
+    babylon,
+    html,
+    typescript,
+  },
 }
 
 const normalizeToString = (value: CodeSnippetValue): string => {
@@ -26,7 +30,7 @@ const normalizeToString = (value: CodeSnippetValue): string => {
   return _.isObject(value) ? JSON.stringify(value, null, 2) : (value as string)
 }
 
-export const prettifyCode = (code: string, parser: 'babylon' | 'html' | 'typescript') => {
+export const prettifyCode = (code: string, parser: 'babel' | 'json' | 'html' | 'typescript') => {
   const formatted = prettier.format(code, {
     ...prettierConfig,
     // a narrower print width is more friendly to doc examples
@@ -38,9 +42,9 @@ export const prettifyCode = (code: string, parser: 'babylon' | 'html' | 'typescr
 
 const formatters = {
   bash: (val: string = ''): string => val.replace(/^/g, '$  '),
-  json: (val: string): string => val,
-  js: (val: string = ''): string => prettifyCode(val, 'babylon'),
-  jsx: (val: string = ''): string => prettifyCode(val, 'babylon'),
+  json: (val: string): string => prettifyCode(val, 'json'),
+  js: (val: string = ''): string => prettifyCode(val, 'babel'),
+  jsx: (val: string = ''): string => prettifyCode(val, 'babel'),
   html: (val: string = ''): string => prettifyCode(val, 'html'),
 }
 

@@ -1,85 +1,99 @@
-import { Ref } from '@stardust-ui/react-component-ref'
+import { Accessibility, dialogBehavior } from '@stardust-ui/accessibility'
+import { FocusTrapZoneProps } from '@stardust-ui/react-bindings'
+import { Unstable_NestingAuto } from '@stardust-ui/react-component-nesting-registry'
+import { EventListener } from '@stardust-ui/react-component-event-listener'
+import { Ref, toRefObject } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import * as keyboardKey from 'keyboard-key'
 
 import {
   UIComponentProps,
   commonPropTypes,
-  ColorComponentProps,
   ContentComponentProps,
   AutoControlledComponent,
   doesNodeContainClick,
   applyAccessibilityKeyHandlers,
   getOrGenerateIdFromShorthand,
 } from '../../lib'
-import { dialogBehavior } from '../../lib/accessibility'
-import { FocusTrapZoneProps } from '../../lib/accessibility/FocusZone'
-import { Accessibility } from '../../lib/accessibility/types'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Button, { ButtonProps } from '../Button/Button'
+import ButtonGroup from '../Button/ButtonGroup'
 import Box, { BoxProps } from '../Box/Box'
-import Header from '../Header/Header'
-import Portal from '../Portal/Portal'
+import Header, { HeaderProps } from '../Header/Header'
+import Portal, { TriggerAccessibility } from '../Portal/Portal'
 import Flex from '../Flex/Flex'
+import DialogFooter, { DialogFooterProps } from './DialogFooter'
 
 export interface DialogSlotClassNames {
   header: string
+  headerAction: string
   content: string
+  overlay: string
+  footer: string
 }
 
 export interface DialogProps
   extends UIComponentProps,
-    ContentComponentProps<ShorthandValue>,
-    ColorComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default dialogBehavior
-   */
+    ContentComponentProps<ShorthandValue<BoxProps>> {
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** A dialog can contain actions. */
-  actions?: ShorthandValue
+  actions?: ShorthandValue<BoxProps>
+
+  /** A dialog can have a backdrop on its overlay. */
+  backdrop?: boolean
 
   /** A dialog can contain a cancel button. */
-  cancelButton?: ShorthandValue
+  cancelButton?: ShorthandValue<ButtonProps>
+
+  /** A dialog can be closed when a user clicks outside of it. */
+  closeOnOutsideClick?: boolean
 
   /** A dialog can contain a confirm button. */
-  confirmButton?: ShorthandValue
+  confirmButton?: ShorthandValue<ButtonProps>
 
-  /** Initial value for 'open'. */
+  /** A dialog can be open by default. */
   defaultOpen?: boolean
 
   /** A dialog can contain a header. */
-  header?: ShorthandValue
+  header?: ShorthandValue<HeaderProps>
+
+  /** A dialog can contain a button next to the header. */
+  headerAction?: ShorthandValue<ButtonProps>
+
+  /** A dialog can contain a footer. */
+  footer?: ShorthandValue<DialogFooterProps>
 
   /**
-   * Called after user's click a cancel button.
+   * Called after a user clicks the cancel button.
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props.
    */
   onCancel?: ComponentEventHandler<DialogProps>
 
   /**
-   * Called after user's click a confirm button.
+   * Called after a user clicks the confirm button.
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props.
    */
   onConfirm?: ComponentEventHandler<DialogProps>
 
   /**
-   * Called after user's opened a dialog.
+   * Called after a user opens the dialog.
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props.
    */
   onOpen?: ComponentEventHandler<DialogProps>
 
-  /** Defines whether a dialog is displayed. */
+  /** A dialog's open state can be controlled. */
   open?: boolean
 
   /** A dialog can contain a overlay. */
-  overlay?: ShorthandValue
+  overlay?: ShorthandValue<BoxProps>
 
   /** Controls whether or not focus trap should be applied, using boolean or FocusTrapZoneProps type value. */
   trapFocus?: true | FocusTrapZoneProps
@@ -94,9 +108,6 @@ export interface DialogState {
   open?: boolean
 }
 
-/**
- * A Dialog informs users about specific tasks or may contain critical information, require decisions, or involve multiple interactions.
- */
 class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogState> {
   static displayName = 'Dialog'
   static className = 'ui-dialog'
@@ -107,10 +118,12 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
     ...commonPropTypes.createCommon({
       children: false,
       content: 'shorthand',
-      color: true,
     }),
     actions: customPropTypes.itemShorthand,
+    backdrop: PropTypes.bool,
+    headerAction: customPropTypes.itemShorthand,
     cancelButton: customPropTypes.itemShorthand,
+    closeOnOutsideClick: PropTypes.bool,
     confirmButton: customPropTypes.itemShorthand,
     defaultOpen: PropTypes.bool,
     header: customPropTypes.itemShorthand,
@@ -124,13 +137,17 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
   }
 
   static defaultProps = {
-    accessibility: dialogBehavior,
+    accessibility: dialogBehavior as Accessibility,
     actions: {},
+    backdrop: true,
+    closeOnOutsideClick: true,
     overlay: {},
+    footer: {},
     trapFocus: true,
   }
 
   static autoControlledProps = ['open']
+  static Footer = DialogFooter
 
   actionHandlers = {
     closeAndFocusTrigger: e => {
@@ -141,7 +158,8 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
     },
     close: e => this.handleDialogCancel(e),
   }
-  contentRef = React.createRef<HTMLElement>()
+  contentRef = React.createRef<HTMLElement>() as React.MutableRefObject<HTMLElement>
+  overlayRef = React.createRef<HTMLElement>() as React.MutableRefObject<HTMLElement>
   triggerRef = React.createRef<HTMLElement>()
 
   getInitialAutoControlledState(): DialogState {
@@ -162,17 +180,17 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
 
   handleDialogCancel = (e: Event | React.SyntheticEvent) => {
     _.invoke(this.props, 'onCancel', e, { ...this.props, open: false })
-    this.trySetState({ open: false })
+    this.setState({ open: false })
   }
 
   handleDialogConfirm = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onConfirm', e, { ...this.props, open: false })
-    this.trySetState({ open: false })
+    this.setState({ open: false })
   }
 
   handleDialogOpen = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onOpen', e, { ...this.props, open: true })
-    this.trySetState({ open: true })
+    this.setState({ open: true })
   }
 
   handleCancelButtonOverrides = (predefinedProps: ButtonProps) => ({
@@ -189,34 +207,88 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
     },
   })
 
-  handleOverlayOverrides = (content: JSX.Element) => (predefinedProps: BoxProps) => ({
-    content,
-    onClick: (e: React.SyntheticEvent, overlayProps: BoxProps) => {
-      _.invoke(predefinedProps, 'onClick', e, overlayProps)
+  handleOverlayClick = (e: MouseEvent) => {
+    // Dialog has different conditions to close than Popup, so we don't need to iterate across all
+    // refs
+    const isInsideContentClick = doesNodeContainClick(
+      this.contentRef.current,
+      e,
+      this.context.target,
+    )
+    const isInsideOverlayClick = doesNodeContainClick(
+      this.overlayRef.current,
+      e,
+      this.context.target,
+    )
 
-      if (!doesNodeContainClick(this.contentRef.current, e)) {
-        this.handleDialogCancel(e)
-      }
-    },
-  })
+    const shouldClose = !isInsideContentClick && isInsideOverlayClick
 
-  renderComponent({ accessibility, classes, ElementType, styles, unhandledProps }) {
+    if (shouldClose) {
+      this.handleDialogCancel(e)
+    }
+  }
+
+  handleDocumentKeydown = (getRefs: Function) => (e: KeyboardEvent) => {
+    // if focus was lost from Dialog, for e.g. when click on Dialog's content
+    // and ESC is pressed, the opened Dialog should get closed and the trigger should get focus
+    const lastOverlayRef = getRefs().pop()
+    const isLastOpenedDialog: boolean =
+      lastOverlayRef && lastOverlayRef.current === this.overlayRef.current
+
+    if (keyboardKey.getCode(e) === keyboardKey.Escape && isLastOpenedDialog) {
+      this.handleDialogCancel(e)
+      _.invoke(this.triggerRef, 'current.focus')
+    }
+  }
+
+  renderComponent({ accessibility, classes, ElementType, styles, unhandledProps, rtl }) {
     const {
       actions,
-      confirmButton,
       cancelButton,
+      closeOnOutsideClick,
+      confirmButton,
       content,
       header,
+      headerAction,
       overlay,
       trapFocus,
       trigger,
+      footer,
     } = this.props
     const { open } = this.state
+
+    const cancelElement = Button.create(cancelButton, {
+      overrideProps: this.handleCancelButtonOverrides,
+    })
+    const confirmElement = Button.create(confirmButton, {
+      defaultProps: {
+        primary: true,
+      },
+      overrideProps: this.handleConfirmButtonOverrides,
+    })
+
+    const dialogActions =
+      (cancelElement || confirmElement) &&
+      ButtonGroup.create(actions, {
+        defaultProps: {
+          styles: styles.actions,
+        },
+        overrideProps: {
+          content: (
+            <Flex gap="gap.smaller">
+              {cancelElement}
+              {confirmElement}
+            </Flex>
+          ),
+        },
+      })
 
     const dialogContent = (
       <Ref innerRef={this.contentRef}>
         <ElementType
           className={classes.root}
+          // it's required to have an `rtl` attribute there as Dialog is rendered outside the main DOM tree
+          dir={rtl ? 'rtl' : undefined}
           {...accessibility.attributes.popup}
           {...unhandledProps}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.popup, unhandledProps)}
@@ -229,6 +301,16 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
               ...accessibility.attributes.header,
             },
           })}
+          {Button.create(headerAction, {
+            defaultProps: {
+              className: Dialog.slotClassNames.headerAction,
+              styles: styles.headerAction,
+              text: true,
+              iconOnly: true,
+              ...accessibility.attributes.headerAction,
+            },
+          })}
+
           {Box.create(content, {
             defaultProps: {
               styles: styles.content,
@@ -237,28 +319,19 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
             },
           })}
 
-          {Box.create(actions, {
-            defaultProps: {
-              styles: styles.actions,
-            },
+          {DialogFooter.create(footer, {
             overrideProps: {
-              content: (
-                <Flex gap="gap.smaller" hAlign="end">
-                  {Button.create(cancelButton, { overrideProps: this.handleCancelButtonOverrides })}
-                  {Button.create(confirmButton, {
-                    defaultProps: {
-                      primary: true,
-                    },
-                    overrideProps: this.handleConfirmButtonOverrides,
-                  })}
-                </Flex>
-              ),
+              content: dialogActions,
+              className: Dialog.slotClassNames.footer,
+              styles: styles.footer,
             },
           })}
         </ElementType>
       </Ref>
     )
-    const triggerAccessibility = {
+
+    const targetRef = toRefObject(this.context.target)
+    const triggerAccessibility: TriggerAccessibility = {
       attributes: accessibility.attributes.trigger,
       keyHandlers: accessibility.keyHandlers.trigger,
     }
@@ -272,12 +345,41 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
         triggerAccessibility={triggerAccessibility}
         triggerRef={this.triggerRef}
       >
-        {Box.create(overlay, {
-          defaultProps: {
-            styles: styles.overlay,
-          },
-          overrideProps: this.handleOverlayOverrides(dialogContent),
-        })}
+        <Unstable_NestingAuto>
+          {(getRefs, nestingRef) => (
+            <>
+              <Ref
+                innerRef={(contentNode: HTMLElement) => {
+                  this.overlayRef.current = contentNode
+                  nestingRef.current = contentNode
+                }}
+              >
+                {Box.create(overlay, {
+                  defaultProps: {
+                    className: Dialog.slotClassNames.overlay,
+                    styles: styles.overlay,
+                  },
+                  overrideProps: { content: dialogContent },
+                })}
+              </Ref>
+
+              {closeOnOutsideClick && (
+                <EventListener
+                  listener={this.handleOverlayClick}
+                  targetRef={targetRef}
+                  type="click"
+                  capture
+                />
+              )}
+              <EventListener
+                listener={this.handleDocumentKeydown(getRefs)}
+                targetRef={targetRef}
+                type="keydown"
+                capture
+              />
+            </>
+          )}
+        </Unstable_NestingAuto>
       </Portal>
     )
   }
@@ -285,12 +387,22 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
 
 Dialog.slotClassNames = {
   header: `${Dialog.className}__header`,
+  headerAction: `${Dialog.className}__headerAction`,
   content: `${Dialog.className}__content`,
+  overlay: `${Dialog.className}__overlay`,
+  footer: `${Dialog.className}__footer`,
 }
 
 /**
- * A Dialog displays important information on top of a page which usually requires user's attention, confirmation or interaction.
+ * A Dialog displays important information on top of a page which requires a user's attention, confirmation, or interaction.
+ * Dialogs are purposefully interruptive, so they should be used sparingly.
+ *
  * @accessibility
  * Implements [ARIA Dialog (Modal)](https://www.w3.org/TR/wai-aria-practices-1.1/#dialog_modal) design pattern.
+ * @accessibilityIssues
+ * [NVDA narrates dialog title and button twice](https://github.com/nvaccess/nvda/issues/10003)
+ * [NVDA does not recognize the ARIA 1.1 values of aria-haspopup](https://github.com/nvaccess/nvda/issues/8235)
+ * [Jaws does not announce token values of aria-haspopup](https://github.com/FreedomScientific/VFO-standards-support/issues/33)
+ * [Issue 989517: VoiceOver narrates dialog content and button twice](https://bugs.chromium.org/p/chromium/issues/detail?id=989517)
  */
 export default withSafeTypeForAs<typeof Dialog, DialogProps>(Dialog)

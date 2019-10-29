@@ -1,9 +1,9 @@
 import { ICSSInJSStyle } from '../../../types'
 import { getColorScheme } from '../../colors'
+import { pxToRem } from '../../../../lib'
 
 const toolbarMenuItemStyles = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
-    const { disabled, isFromKeyboard } = p
     const colors = getColorScheme(v.colorScheme)
 
     return {
@@ -26,12 +26,12 @@ const toolbarMenuItemStyles = {
         backgroundColor: v.menuItemBackgroundHover || colors.menuItemBackgroundHover,
       },
 
-      ...(isFromKeyboard && {
+      ':focus-visible': {
         color: v.menuItemForegroundFocus || colors.menuItemForegroundFocus,
         backgroundColor: v.menuItemBackgroundFocus || colors.menuItemBackgroundFocus,
-      }),
+      },
 
-      ...(disabled && {
+      ...(p.disabled && {
         cursor: 'default',
         color: v.menuItemForegroundDisabled || colors.foregroundDisabled1,
         backgroundColor: v.menuItemBackgroundDisabled,
@@ -42,9 +42,21 @@ const toolbarMenuItemStyles = {
     }
   },
 
-  wrapper: {
+  activeIndicator: ({ variables: v }): ICSSInJSStyle => ({
+    float: 'right',
+    position: 'fixed',
+    right: pxToRem(7),
+  }),
+
+  submenuIndicator: ({ variables: v }): ICSSInJSStyle => ({
+    float: 'right',
+    position: 'fixed',
+    right: pxToRem(7),
+  }),
+
+  wrapper: () => ({
     display: 'block',
-  },
+  }),
 }
 
 export default toolbarMenuItemStyles

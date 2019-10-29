@@ -1,4 +1,4 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import * as _ from 'lodash'
 import {
   default as ChatMessage,
@@ -10,7 +10,7 @@ import { screenReaderContainerStyles } from '../../../../lib/accessibility/Style
 import { pxToRem } from '../../../../lib'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 
-const chatMessageStyles: ComponentSlotStylesInput<
+const chatMessageStyles: ComponentSlotStylesPrepared<
   ChatMessageProps & ChatMessageState,
   ChatMessageVariables
 > = {
@@ -52,14 +52,14 @@ const chatMessageStyles: ComponentSlotStylesInput<
       },
     }),
 
-    ...getBorderFocusStyles({ siteVariables, isFromKeyboard: p.isFromKeyboard }),
+    ...getBorderFocusStyles({ siteVariables }),
 
     // actions menu's appearance can be controlled by the value of showActionMenu variable - in this
     // case this variable will serve the single source of truth on whether actions menu should be shown.
     // Otherwise, if the variable is not provided, the default appearance logic will be used for actions menu.
     ...(_.isNil(v.showActionMenu) && {
       ':hover': {
-        [`& .${ChatMessage.slotClassNames.actionMenu}`]: {
+        [`> .${ChatMessage.slotClassNames.actionMenu}`]: {
           opacity: 1,
           width: 'auto',
         },
@@ -84,11 +84,12 @@ const chatMessageStyles: ComponentSlotStylesInput<
 
   actionMenu: ({ props: p, variables: v }): ICSSInJSStyle => ({
     backgroundColor: v.backgroundColor,
+    border: '1px solid',
+    borderColor: v.reactionGroupBorderColor,
     borderRadius: v.borderRadius,
     boxShadow: v.actionMenuBoxShadow,
-    position: 'absolute',
-    right: v.actionMenuPositionRight,
-    top: v.actionMenuPositionTop,
+    // we need higher zIndex for the action menu in order to be displayed above the focus border of the chat message
+    zIndex: 1000,
 
     ...(_.isNil(v.showActionMenu) && {
       overflow: p.focused ? 'visible' : 'hidden',
@@ -150,7 +151,7 @@ const chatMessageStyles: ComponentSlotStylesInput<
       width: 'auto',
       borderRadius: '50%',
       top: pxToRem(4),
-      zIndex: '1',
+      zIndex: 1,
       [sidePosition]: 0,
       transform: p.badgePosition === 'start' ? 'translateX(-50%)' : 'translateX(50%)',
     }

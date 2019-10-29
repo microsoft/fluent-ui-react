@@ -1,7 +1,7 @@
 import * as React from 'react'
 import DocPage from '../components/DocPage/DocPage'
 import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
-import { link } from '../utils/helpers'
+import { link, code } from '../utils/helpers'
 
 import { CodeSnippet } from '@stardust-ui/docs-components'
 import { Header } from '@stardust-ui/react'
@@ -30,13 +30,19 @@ export default () => (
           <li>
             {link(
               'How can I set default value of Form.Field?',
-              '#how-can-i-set-default-value-on-form-field',
+              '#how-can-i-set-default-value-of-form-field',
             )}
           </li>
           <li>
             {link(
               'Is there an onLoad or equivalent event for Image components so I can run a function after an image loads?',
-              'is-there-an-onload-or-equivalent-event-for-image-components-so-i',
+              '#is-there-an-onload-or-equivalent-event-for-image-components-so-i',
+            )}
+          </li>
+          <li>
+            {link(
+              "What's the difference between Flex, Grid, Layout, Box and Segment components?",
+              '#whats-the-difference-between-flex-grid-layout-box-and-segment-co',
             )}
           </li>
         </ul>
@@ -108,6 +114,46 @@ export default () => (
             `}
           />
         </p>
+      }
+    />
+
+    <Question>
+      What's the difference between {code('Flex')}, {code('Grid')}, {code('Layout')}, {code('Box')}{' '}
+      and {code('Segment')} components?
+    </Question>
+    <Answer
+      content={
+        <div>
+          <p>
+            {code('Flex')}, {code('Grid')} and {code('Layout')} components handle layout aspects.
+            The {code('Flex')} component is for laying out items in one direction, while the{' '}
+            {code('Grid')} component is made for two dimensional layouts. Visit the{' '}
+            {link('Layout guide', '/layout')} page for a detailed comparison between {code('Flex')}
+            and {code('Grid')}.
+          </p>
+          <p>
+            The {code('Layout')} component is now deprecated. Its purpose was arrangement of the
+            content of a component. {code('Flex')} or {code('Grid')} component should be used
+            instead of the {code('Layout')}
+            component.
+          </p>
+          <p>
+            {code('Box')} is a utility component that is often used by Stardust to implement
+            higher-level components. By default, it renders styled {code('div')} element.
+          </p>
+          <p>
+            The cases when client might want to use it are very exceptional, and all are about
+            applying custom styles to rendered {code('div')} element. However, more robust approach
+            that won't break theming consistency is to instead create a custom component and define
+            related styles as part of a theme. Visit{' '}
+            {link('Integrate Custom Components', '/integrate-custom-components')}
+            page to see how this can be done.
+          </p>
+          <p>
+            {link('Segment', '/components/segment')} groups related content together. It shouldn't
+            be used to handle layout aspects.
+          </p>
+        </div>
       }
     />
 

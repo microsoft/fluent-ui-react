@@ -1,8 +1,9 @@
+import { KeyActions } from '@stardust-ui/accessibility'
 import * as _ from 'lodash'
 import * as keyboardKey from 'keyboard-key'
 import * as React from 'react'
+
 import shouldHandleOnKeys from './shouldHandleOnKeys'
-import { KeyActions } from './accessibility/types'
 import { AccessibilityActionHandlers, AccessibilityKeyHandlers } from './accessibility/reactTypes'
 
 const rtlKeyMap = {
@@ -27,7 +28,10 @@ const getKeyDownHandlers = (
   if (!componentActionHandlers || !behaviorKeyActions) return keyHandlers
 
   for (const componentPart in behaviorKeyActions) {
-    const componentPartKeyAction = behaviorKeyActions[componentPart]
+    const componentPartKeyAction = _.pickBy(
+      behaviorKeyActions[componentPart],
+      actions => !_.isEmpty(actions.keyCombinations),
+    )
     const handledActions = _.intersection(
       _.keys(componentPartKeyAction),
       _.keys(componentActionHandlers),

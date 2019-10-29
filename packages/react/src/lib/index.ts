@@ -4,18 +4,14 @@ export { default as applyAccessibilityKeyHandlers } from './applyAccessibilityKe
 export { default as AutoControlledComponent } from './AutoControlledComponent'
 export { default as childrenExist } from './childrenExist'
 export { default as UIComponent } from './UIComponent'
-export { default as felaRenderer } from './felaRenderer'
+export { createRenderer, felaRenderer } from './felaRenderer'
 export { default as toCompactArray } from './toCompactArray'
 export { default as rtlTextContainer } from './rtlTextContainer'
 export { default as stringLiteralsArray } from './stringLiteralsArray'
 export { default as getOrGenerateIdFromShorthand } from './getOrGenerateIdFromShorthand'
 
 export * from './factories'
-export { default as callable } from './callable'
 export { default as constants } from './constants'
-export { default as getClasses } from './getClasses'
-export { default as getElementType } from './getElementType'
-export { default as getUnhandledProps } from './getUnhandledProps'
 export { default as mergeThemes } from './mergeThemes'
 export { default as mergeProviderContexts } from './mergeProviderContexts'
 
@@ -43,3 +39,5 @@ export * from './whatInput'
 
 export * from './commonPropInterfaces'
 export { commonPropTypes }
+
+export { default as withDebugId } from './withDebugId'

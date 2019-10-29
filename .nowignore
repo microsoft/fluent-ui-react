@@ -17,7 +17,6 @@ perf/dist
 .editorconfig
 .gitignore
 .prettierignore
-.snyk
 codecov.yml
 dangerfile.ts
 jest.config.js

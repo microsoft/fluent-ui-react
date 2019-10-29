@@ -16,7 +16,7 @@ const spinner = {
 
 const AnimatedIcon = () => (
   <Animation name="spinner">
-    <Icon name="umbrella" circular bordered />
+    <Icon name="mention" circular bordered />
   </Animation>
 )
 

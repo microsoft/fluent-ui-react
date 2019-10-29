@@ -27,7 +27,7 @@ const ColorVariants = createComponent<ColorVariantsProps>({
           <ColorBox
             name={name}
             size={size}
-            value={colors[name][600] || colors[name][500]}
+            value={colors[name][600] || colors[name][500] || colors[name][400]}
             copyToClipboardIcon={false}
           />
 

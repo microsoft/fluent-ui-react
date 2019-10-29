@@ -240,14 +240,4 @@ describe('RadioGroup', () => {
   describe('shorthand API for items', () => {
     itemsTest(getShorthandItems)
   })
-
-  describe('children API for items', () => {
-    const getChildrenItems = props => {
-      return getShorthandItems(props).map(item => {
-        return <RadioGroupItem {...item} />
-      })
-    }
-
-    itemsTest(getChildrenItems, false)
-  })
 })

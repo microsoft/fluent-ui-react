@@ -56,4 +56,12 @@ describe('felaRenderKeyframesPlugin', () => {
       animationDuration: '2s',
     })
   })
+
+  test('does not transform a list of strings', () => {
+    const style = {
+      display: ['inline-grid', '-ms-inline-grid'],
+    }
+
+    expect(renderInvokeKeyframes(style, 'RULE', felaRenderer)).toMatchObject(style)
+  })
 })

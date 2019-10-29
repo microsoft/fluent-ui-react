@@ -29,14 +29,15 @@ class DocsBehaviorRoot extends React.Component<any, any> {
     }
 
     const { match } = this.props
-    const pageTitle = `${_.capitalize(match.params.name)} accessibility behaviors`
+    const componentName = _.upperFirst(_.camelCase(match.params.name))
+    const pageTitle = `${componentName} accessibility behaviors`
     return (
       <DocumentTitle title={pageTitle}>
         <Segment styles={{ backgroundColor: 'transparent' }}>
           <Header as="h1" aria-level={2} content={pageTitle} />
 
           {behaviorMenuItems
-            .find(behavior => behavior.displayName === _.capitalize(match.params.name))
+            .find(behavior => behavior.displayName === componentName)
             .variations.map((variation, keyValue) => (
               <React.Fragment key={keyValue}>
                 <Segment

@@ -1,3 +1,4 @@
+import { Accessibility, accordionBehavior } from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -12,10 +13,8 @@ import {
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
 } from '../../lib'
-import { accordionBehavior } from '../../lib/accessibility'
 import AccordionTitle, { AccordionTitleProps } from './AccordionTitle'
-import AccordionContent from './AccordionContent'
-import { Accessibility } from '../../lib/accessibility/types'
+import AccordionContent, { AccordionContentProps } from './AccordionContent'
 
 import {
   ComponentEventHandler,
@@ -38,7 +37,7 @@ export interface AccordionProps extends UIComponentProps, ChildrenComponentProps
   /** Initial activeIndex value. */
   defaultActiveIndex?: number[] | number
 
-  /** Only allow one panel open at a time. */
+  /** Only allow one panel to be expanded at a time. */
   exclusive?: boolean
 
   /** At least one panel should be expanded at any time. */
@@ -54,8 +53,8 @@ export interface AccordionProps extends UIComponentProps, ChildrenComponentProps
 
   /** Shorthand array of props for Accordion. */
   panels?: {
-    content: ShorthandValue
-    title: ShorthandValue
+    content: ShorthandValue<AccordionContentProps>
+    title: ShorthandValue<AccordionTitleProps>
   }[]
 
   /**
@@ -64,7 +63,7 @@ export interface AccordionProps extends UIComponentProps, ChildrenComponentProps
    * @param {React.ReactType} Component - The panel's component type.
    * @param {object} props - The panel's computed props.
    */
-  renderPanelTitle?: ShorthandRenderFunction
+  renderPanelTitle?: ShorthandRenderFunction<AccordionTitleProps>
 
   /**
    * A custom renderer for each Accordion's panel content.
@@ -72,12 +71,11 @@ export interface AccordionProps extends UIComponentProps, ChildrenComponentProps
    * @param {React.ReactType} Component - The panel's component type.
    * @param {object} props - The panel's computed props.
    */
-  renderPanelContent?: ShorthandRenderFunction
+  renderPanelContent?: ShorthandRenderFunction<AccordionContentProps>
 
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
-   * */
+   */
   accessibility?: Accessibility
 }
 
@@ -203,8 +201,7 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
       const { index } = titleProps
       const activeIndex = this.computeNewIndex(index)
 
-      this.trySetState({ activeIndex })
-      this.setState({ focusedIndex: index })
+      this.setState({ activeIndex, focusedIndex: index })
 
       _.invoke(predefinedProps, 'onClick', e, titleProps)
       _.invoke(this.props, 'onTitleClick', e, titleProps)
@@ -308,7 +305,8 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
 }
 
 /**
- * An accordion allows users to toggle the display of sections of content.
+ * An Accordion represents stacked set of content sections, with action elements to toggle the display of these sections.
+ *
  * @accessibility
  * Implements [ARIA Accordion](https://www.w3.org/TR/wai-aria-practices-1.1/#accordion) design pattern (keyboard navigation not yet supported).
  */

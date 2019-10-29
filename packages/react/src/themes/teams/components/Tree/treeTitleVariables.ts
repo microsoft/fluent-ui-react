@@ -1,9 +1,13 @@
+import { pxToRem } from '../../../../lib'
+
 export interface TreeTitleVariables {
-  defaultColor: string
+  color: string
+  padding: string
 }
 
 export default (siteVars: any): TreeTitleVariables => {
   return {
-    defaultColor: siteVars.colors.grey[750],
+    color: siteVars.colorScheme.default.foreground,
+    padding: `${pxToRem(1)} 0`,
   }
 }

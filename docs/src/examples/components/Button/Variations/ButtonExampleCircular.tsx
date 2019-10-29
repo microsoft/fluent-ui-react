@@ -5,7 +5,10 @@ const ButtonExampleCircular = () => (
   <Flex gap="gap.smaller">
     <Button circular>C</Button>
     <Button circular icon>
-      <Icon name="book" xSpacing="none" />
+      <Icon name="emoji" xSpacing="none" />
+    </Button>
+    <Button circular icon primary>
+      <Icon name="broadcast" xSpacing="none" />
     </Button>
   </Flex>
 )

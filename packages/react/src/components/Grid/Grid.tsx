@@ -1,3 +1,4 @@
+import { Accessibility } from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -12,17 +13,11 @@ import {
   rtlTextContainer,
 } from '../../lib'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
-import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
 
-export interface GridProps
-  extends UIComponentProps,
-    ChildrenComponentProps,
-    ContentComponentProps<React.ReactNode | React.ReactNode[]> {
+export interface GridProps extends UIComponentProps, ChildrenComponentProps, ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
-   * @available gridBehavior
+   * @available gridBehavior, gridHorizontalBehavior
    * */
   accessibility?: Accessibility
 
@@ -33,7 +28,7 @@ export interface GridProps
   rows?: string | number
 }
 
-class Grid extends UIComponent<WithAsProp<GridProps>, any> {
+class Grid extends UIComponent<WithAsProp<GridProps>> {
   static displayName = 'Grid'
 
   static className = 'ui-grid'
@@ -55,7 +50,6 @@ class Grid extends UIComponent<WithAsProp<GridProps>, any> {
 
   static defaultProps: WithAsProp<GridProps> = {
     as: 'div',
-    accessibility: defaultBehavior,
   }
 
   renderComponent({
@@ -80,6 +74,6 @@ class Grid extends UIComponent<WithAsProp<GridProps>, any> {
 }
 
 /**
- * A grid is used to harmonize negative space in a layout.
+ * A Grid is a layout component that harmonizes negative space, by controlling both the row and column alignment.
  */
 export default withSafeTypeForAs<typeof Grid, GridProps>(Grid)

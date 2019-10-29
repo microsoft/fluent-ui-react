@@ -1,3 +1,4 @@
+import { Accessibility, menuBehavior } from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -12,17 +13,22 @@ import {
   commonPropTypes,
   getKindProp,
   rtlTextContainer,
+  ShorthandFactory,
 } from '../../lib'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
-import MenuItem from './MenuItem'
-import { menuBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
+import MenuItem, { MenuItemProps } from './MenuItem'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
-
 import { ComponentVariablesObject, ComponentSlotStylesPrepared } from '../../themes/types'
-import { WithAsProp, ShorthandCollection, ShorthandValue, withSafeTypeForAs } from '../../types'
+import {
+  WithAsProp,
+  ShorthandCollection,
+  ShorthandValue,
+  withSafeTypeForAs,
+  ComponentEventHandler,
+} from '../../types'
 import MenuDivider from './MenuDivider'
+import { IconProps } from '../Icon/Icon'
 
 export type MenuShorthandKinds = 'divider' | 'item'
 
@@ -34,9 +40,8 @@ export interface MenuSlotClassNames {
 export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default menuBehavior
-   * @available menuAsToolbarBehavior, tabListBehavior
-   * */
+   * @available menuAsToolbarBehavior, tabListBehavior, tabBehavior
+   */
   accessibility?: Accessibility
 
   /** Index of the currently active item. */
@@ -52,7 +57,15 @@ export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   iconOnly?: boolean
 
   /** Shorthand array of props for Menu. */
-  items?: ShorthandCollection<MenuShorthandKinds>
+  items?: ShorthandCollection<MenuItemProps, MenuShorthandKinds>
+
+  /**
+   * Called when a panel title is clicked.
+   *
+   * @param {SyntheticEvent} event - React's original SyntheticEvent.
+   * @param {object} data - All item props.
+   */
+  onItemClick?: ComponentEventHandler<MenuItemProps>
 
   /** A menu can adjust its appearance to de-emphasize its contents. */
   pills?: boolean
@@ -79,7 +92,7 @@ export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   submenu?: boolean
 
   /** Shorthand for the submenu indicator. */
-  indicator?: ShorthandValue
+  indicator?: ShorthandValue<IconProps>
 }
 
 export interface MenuState {
@@ -96,7 +109,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
     item: `${Menu.className}__item`,
   }
 
-  static create: Function
+  static create: ShorthandFactory<MenuProps>
 
   static propTypes = {
     ...commonPropTypes.createCommon({
@@ -107,6 +120,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
     fluid: PropTypes.bool,
     iconOnly: PropTypes.bool,
     items: customPropTypes.collectionShorthandWithKindProp(['divider', 'item']),
+    onItemClick: PropTypes.func,
     pills: PropTypes.bool,
     pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
     primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
@@ -114,7 +128,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
     underlined: PropTypes.bool,
     vertical: PropTypes.bool,
     submenu: PropTypes.bool,
-    indicator: customPropTypes.itemShorthand,
+    indicator: customPropTypes.itemShorthandWithoutJSX,
   }
 
   static defaultProps = {
@@ -131,16 +145,17 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
     onClick: (e, itemProps) => {
       const { index } = itemProps
 
-      this.trySetState({ activeIndex: index })
+      this.setState({ activeIndex: index })
 
+      _.invoke(this.props, 'onItemClick', e, itemProps)
       _.invoke(predefinedProps, 'onClick', e, itemProps)
     },
     onActiveChanged: (e, props) => {
       const { index, active } = props
       if (active) {
-        this.trySetState({ activeIndex: index })
+        this.setState({ activeIndex: index })
       } else if (this.state.activeIndex === index) {
-        this.trySetState({ activeIndex: null })
+        this.setState({ activeIndex: null })
       }
       _.invoke(predefinedProps, 'onActiveChanged', e, props)
     },
@@ -242,9 +257,16 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
 Menu.create = createShorthandFactory({ Component: Menu, mappedArrayProp: 'items' })
 
 /**
- * A menu displays grouped navigation actions.
+ * A Menu is a component that offers a grouped list of choices to the user.
+ *
  * @accessibility
  * Implements ARIA [Menu](https://www.w3.org/TR/wai-aria-practices-1.1/#menu), [Toolbar](https://www.w3.org/TR/wai-aria-practices-1.1/#toolbar) or [Tabs](https://www.w3.org/TR/wai-aria-practices-1.1/#tabpanel) design pattern, depending on the behavior used.
- * For render tree customization, use [render callback argument](https://stardust-ui.github.io/react/shorthand-props#render-callback-argument).
+ * @accessibilityIssues
+ * [JAWS - navigation instruction for menubar](https://github.com/FreedomScientific/VFO-standards-support/issues/203)
+ * [JAWS - navigation instruction for menu with aria-orientation="horizontal"](https://github.com/FreedomScientific/VFO-standards-support/issues/204)
+ * [JAWS [VC] doesn't narrate menu item, when it is open from menu button](https://github.com/FreedomScientific/VFO-standards-support/issues/324)
+ * [JAWS [app mode] focus moves to second menu item, when it is open from menu button](https://github.com/FreedomScientific/VFO-standards-support/issues/325)
+ * [Enter into a tablist JAWS narrates: To switch pages, press Control+PageDown](https://github.com/FreedomScientific/VFO-standards-support/issues/337)
+ * 51114083 VoiceOver+Web narrate wrong position in menu / total count of menu items, when pseudo element ::after or ::before is used
  */
 export default withSafeTypeForAs<typeof Menu, MenuProps, 'ul'>(Menu)

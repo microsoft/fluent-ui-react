@@ -1,11 +1,10 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as ReactIs from 'react-is'
 
 import RefFindNode from './RefFindNode'
 import RefForward from './RefForward'
-import { RefProps } from './types'
+import { RefProps, refPropType } from './types'
 
 const Ref: React.FunctionComponent<RefProps> = props => {
   const { children, innerRef } = props
@@ -17,9 +16,12 @@ const Ref: React.FunctionComponent<RefProps> = props => {
 }
 
 Ref.displayName = 'Ref'
-Ref.propTypes = {
-  children: PropTypes.element.isRequired,
-  innerRef: customPropTypes.ref.isRequired as PropTypes.Validator<React.Ref<any>>,
+// TODO: use Babel plugin for this
+if (process.env.NODE_ENV !== 'production') {
+  Ref.propTypes = {
+    children: PropTypes.element.isRequired,
+    innerRef: refPropType.isRequired,
+  }
 }
 
 export default Ref

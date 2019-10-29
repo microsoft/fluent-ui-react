@@ -1,9 +1,11 @@
-import { task, src, dest, lastRun, parallel, series, watch } from 'gulp'
+import { dest, lastRun, parallel, series, src, task, watch } from 'gulp'
+import chalk from 'chalk'
 import cache from 'gulp-cache'
 import remember from 'gulp-remember'
 import fs from 'fs'
 import path from 'path'
 import rimraf from 'rimraf'
+import through2 from 'through2'
 import webpack from 'webpack'
 import WebpackDevMiddleware from 'webpack-dev-middleware'
 import WebpackHotMiddleware from 'webpack-hot-middleware'
@@ -20,17 +22,19 @@ import { getRelativePathToSourceFile } from '../plugins/util'
 import webpackPlugin from '../plugins/gulp-webpack'
 import { Server } from 'http'
 import serve, { forceClose } from '../serve'
-import OpenBrowserPlugin from '../plugins/webpack-open-browser'
 
 const { paths } = config
 const g = require('gulp-load-plugins')()
 
 const { log } = g.util
 
-const handleWatchChange = changedPath => log(`File ${changedPath} was changed, running tasks...`)
-const handleWatchUnlink = (group, changedPath) => {
-  log(`File ${changedPath} was deleted, running tasks...`)
-  remember.forget(group, changedPath)
+const logWatchAdd = filePath => log('Created', chalk.blue(path.basename(filePath)))
+const logWatchChange = filePath => log('Changed', chalk.magenta(path.basename(filePath)))
+const logWatchUnlink = filePath => log('Deleted', chalk.red(path.basename(filePath)))
+
+const handleWatchUnlink = (group, filePath) => {
+  logWatchUnlink(filePath)
+  remember.forget(group, filePath)
 }
 
 // ----------------------------------------
@@ -38,6 +42,10 @@ const handleWatchUnlink = (group, changedPath) => {
 // ----------------------------------------
 
 task('clean:cache', () => cache.clearAll())
+
+task('clean:docs:schema', cb => {
+  rimraf(paths.packages('ability-attributes', 'src/schema.ts'), cb)
+})
 
 task('clean:docs:component-menu', cb => {
   rimraf(paths.docsSrc('componentMenu.json'), cb)
@@ -65,6 +73,7 @@ task(
     'clean:docs:component-menu',
     'clean:docs:component-menu-behaviors',
     'clean:docs:dist',
+    'clean:docs:schema',
     'clean:docs:example-menus',
     'clean:docs:example-sources',
   ),
@@ -76,10 +85,10 @@ task(
 
 const componentsSrc = [
   `${paths.posix.packageSrc('react')}/components/*/[A-Z]*.tsx`,
-  `${paths.posix.packageSrc('react-component-ref')}/src/[A-Z]*.tsx`,
-  `${paths.posix.packageSrc('react')}/lib/accessibility/FocusZone/[A-Z]!(*.types).tsx`,
+  `${paths.posix.packageSrc('react-bindings')}/FocusZone/[A-Z]!(*.types).tsx`,
+  `${paths.posix.packageSrc('react-component-ref')}/[A-Z]*.tsx`,
 ]
-const behaviorSrc = [`${paths.posix.packageSrc('react')}/lib/accessibility/Behaviors/*/[a-z]*.ts`]
+const behaviorSrc = [`${paths.posix.packageSrc('accessibility')}/behaviors/*/[a-z]*Behavior.ts`]
 const examplesIndexSrc = `${paths.posix.docsSrc()}/examples/*/*/*/index.tsx`
 const examplesSrc = `${paths.posix.docsSrc()}/examples/*/*/*/!(*index|.knobs).tsx`
 const markdownSrc = [
@@ -90,14 +99,11 @@ const markdownSrc = [
   '.github/test-a-feature.md',
   'specifications/*.md',
 ]
+const schemaSrc = `${paths.posix.packages('ability-attributes')}/schema.json`
 
 task('build:docs:component-info', () =>
   src(componentsSrc, { since: lastRun('build:docs:component-info') })
-    .pipe(
-      cache(gulpReactDocgen(['DOMAttributes', 'HTMLAttributes']), {
-        name: 'componentInfo',
-      }),
-    )
+    .pipe(cache(gulpReactDocgen(['DOMAttributes', 'HTMLAttributes']), { name: 'componentInfo-1' }))
     .pipe(dest(paths.docsSrc('componentInfo'))),
 )
 
@@ -155,6 +161,16 @@ task('build:docs:toc', () =>
   ),
 )
 
+task('build:docs:schema', () =>
+  src(schemaSrc, { since: lastRun('build:docs:schema') }).pipe(
+    through2.obj((file, enc, done) => {
+      sh(`cd packages/ability-attributes && npm run schema`)
+        .then(() => done(null, file))
+        .catch(done)
+    }),
+  ),
+)
+
 task('build:docs:webpack', cb => {
   webpackPlugin(require('../../webpack.config').default, cb)
 })
@@ -163,6 +179,7 @@ task(
   'build:docs:assets',
   parallel(
     'build:docs:toc',
+    'build:docs:schema',
     series('clean:docs', parallel('build:docs:json', 'build:docs:html', 'build:docs:images')),
   ),
 )
@@ -183,15 +200,13 @@ task('deploy:docs', cb => {
 // ----------------------------------------
 
 let server: Server
-task('serve:docs', async () => {
-  const webpackConfig = require('../../webpack.config').default
 
-  webpackConfig.plugins.push(
-    new OpenBrowserPlugin({
-      host: config.server_host,
-      port: config.server_port,
-    }),
-  )
+task('serve:docs', async () => {
+  server = await serve(paths.docsDist(), config.server_host, config.server_port)
+})
+
+task('serve:docs:hot', async () => {
+  const webpackConfig = require('../../webpack.config').default
   const compiler = webpack(webpackConfig)
 
   server = await serve(paths.docsDist(), config.server_host, config.server_port, app =>
@@ -219,17 +234,24 @@ task('serve:docs:stop', () => forceClose(server))
 
 task('watch:docs', cb => {
   // rebuild component info
-  watch(componentsSrc, series('build:docs:component-info')).on('change', handleWatchChange)
+  watch(componentsSrc, series('build:docs:component-info'))
+    .on('add', logWatchAdd)
+    .on('change', logWatchChange)
+    .on('unlink', logWatchUnlink)
+
+  watch(schemaSrc, series('build:docs:schema')).on('change', logWatchChange)
 
   // rebuild example menus
   watch(examplesIndexSrc, series('build:docs:example-menu'))
-    .on('change', handleWatchChange)
-    .on('unlink', changedPath => handleWatchUnlink('example-menu', changedPath))
+    .on('add', logWatchAdd)
+    .on('change', logWatchChange)
+    .on('unlink', filePath => handleWatchUnlink('example-menu', filePath))
 
   watch(examplesSrc, series('build:docs:example-sources'))
-    .on('change', handleWatchChange)
+    .on('add', logWatchAdd)
+    .on('change', logWatchChange)
     .on('unlink', filePath => {
-      log(`File ${filePath} was deleted, running tasks...`)
+      logWatchUnlink(filePath)
 
       const sourceFilename = getRelativePathToSourceFile(filePath)
       const sourcePath = config.paths.docsSrc('exampleSources', sourceFilename)
@@ -240,14 +262,16 @@ task('watch:docs', cb => {
     })
 
   watch(behaviorSrc, series('build:docs:component-menu-behaviors'))
-    .on('change', handleWatchChange)
-    .on('unlink', changedPath => handleWatchUnlink('component-menu-behaviors', changedPath))
+    .on('add', logWatchAdd)
+    .on('change', logWatchChange)
+    .on('unlink', filePath => handleWatchUnlink('component-menu-behaviors', filePath))
 
   // rebuild images
-  watch(`${config.paths.docsSrc()}/**/*.{png,jpg,gif}`, series('build:docs:images')).on(
-    'change',
-    handleWatchChange,
-  )
+  watch(`${config.paths.docsSrc()}/**/*.{png,jpg,gif}`, series('build:docs:images'))
+    .on('add', logWatchAdd)
+    .on('change', logWatchChange)
+    .on('unlink', logWatchUnlink)
+
   cb()
 })
 
@@ -255,4 +279,4 @@ task('watch:docs', cb => {
 // Default
 // ----------------------------------------
 
-task('docs', series('build:docs:assets', 'serve:docs', 'watch:docs'))
+task('docs', series('build:docs:assets', 'serve:docs:hot', 'watch:docs'))

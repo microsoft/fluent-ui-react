@@ -1,4 +1,10 @@
-import { Ref } from '@stardust-ui/react-component-ref'
+import {
+  FocusTrapZone,
+  FocusTrapZoneProps,
+  AutoFocusZoneProps,
+  AutoFocusZone,
+} from '@stardust-ui/react-bindings'
+import cx from 'classnames'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
@@ -14,27 +20,21 @@ import {
   ContentComponentProps,
   commonPropTypes,
   rtlTextContainer,
+  ShorthandFactory,
 } from '../../lib'
-import { Accessibility } from '../../lib/accessibility/types'
-import {
-  FocusTrapZone,
-  FocusTrapZoneProps,
-  AutoFocusZoneProps,
-  AutoFocusZone,
-} from '../../lib/accessibility/FocusZone'
-import { defaultBehavior } from '../../lib/accessibility'
+import { Accessibility } from '@stardust-ui/accessibility'
 import { PopperChildrenProps } from '../../lib/positioner'
 import { WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
-import Box from '../Box/Box'
+
+export interface PopupContentSlotClassNames {
+  content: string
+}
 
 export interface PopupContentProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
-   */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /**
@@ -58,7 +58,7 @@ export interface PopupContentProps
   pointing?: boolean
 
   /** A ref to a pointer element. */
-  pointerRef?: React.Ref<Element>
+  pointerRef?: React.Ref<HTMLDivElement>
 
   /** Controls whether or not focus trap should be applied, using boolean or FocusTrapZoneProps type value. */
   trapFocus?: boolean | FocusTrapZoneProps
@@ -68,10 +68,11 @@ export interface PopupContentProps
 }
 
 class PopupContent extends UIComponent<WithAsProp<PopupContentProps>> {
-  static create: Function
+  static create: ShorthandFactory<PopupContentProps>
 
   static displayName = 'PopupContent'
   static className = 'ui-popup__content'
+  static slotClassNames: PopupContentSlotClassNames
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
@@ -82,10 +83,6 @@ class PopupContent extends UIComponent<WithAsProp<PopupContentProps>> {
     pointerRef: customPropTypes.ref,
     trapFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
     autoFocus: PropTypes.oneOfType([PropTypes.bool, PropTypes.object]),
-  }
-
-  static defaultProps = {
-    accessibility: defaultBehavior,
   }
 
   handleMouseEnter = e => {
@@ -116,20 +113,10 @@ class PopupContent extends UIComponent<WithAsProp<PopupContentProps>> {
 
     const popupContent = (
       <>
-        {pointing && (
-          <Ref innerRef={pointerRef}>
-            {Box.create({}, { defaultProps: { styles: styles.pointer } })}
-          </Ref>
-        )}
-        {Box.create(
-          {},
-          {
-            defaultProps: {
-              children: childrenExist(children) ? children : content,
-              styles: styles.content,
-            },
-          },
-        )}
+        {pointing && <div className={classes.pointer} ref={pointerRef} />}
+        <div className={cx(PopupContent.slotClassNames.content, classes.content)}>
+          {childrenExist(children) ? children : content}
+        </div>
       </>
     )
 
@@ -157,11 +144,13 @@ class PopupContent extends UIComponent<WithAsProp<PopupContentProps>> {
   }
 }
 
+PopupContent.slotClassNames = {
+  content: `${PopupContent.className}__content`,
+}
+
 PopupContent.create = createShorthandFactory({ Component: PopupContent, mappedProp: 'content' })
 
 /**
- * A PopupContent displays the content of a Popup component
- * @accessibility This is example usage of the accessibility tag.
- * This should be replaced with the actual description after the PR is merged
+ * A PopupContent displays the content of a Popup component.
  */
 export default withSafeTypeForAs<typeof PopupContent, PopupContentProps>(PopupContent)

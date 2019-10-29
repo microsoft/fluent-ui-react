@@ -1,8 +1,8 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { PopupProps } from '../../../../components/Popup/Popup'
 import { PopupVariables } from './popupVariables'
 
-const popupStyles: ComponentSlotStylesInput<PopupProps, PopupVariables> = {
+const popupStyles: ComponentSlotStylesPrepared<PopupProps, PopupVariables> = {
   root: (): ICSSInJSStyle => ({}),
 
   popup: ({ variables: v }): ICSSInJSStyle => ({

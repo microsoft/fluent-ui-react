@@ -1,7 +1,7 @@
 import { Provider, themes } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
-import { match } from 'react-router'
+import { match } from 'react-router-dom'
 import SourceRender from 'react-source-render'
 import { KnobProvider } from '@stardust-ui/docs-components'
 
@@ -23,69 +23,44 @@ type ExternalExampleLayoutProps = {
   }>
 }
 
-type ExternalExampleLayoutState = {
-  renderId: number
-  themeName: string
-}
+const ExternalExampleLayout: React.FC<ExternalExampleLayoutProps> = props => {
+  const { exampleName, rtl } = props.match.params
 
-class ExternalExampleLayout extends React.Component<
-  ExternalExampleLayoutProps,
-  ExternalExampleLayoutState
-> {
-  state = {
-    renderId: 0,
-    themeName: undefined,
-  }
+  const [error, setError] = React.useState<Error | null>(null)
+  const [renderId, setRenderId] = React.useState<number>(0)
+  const [themeName, setThemeName] = React.useState<string>()
 
-  componentDidMount() {
-    window.resetExternalLayout = () =>
-      this.setState(prevState => ({ renderId: prevState.renderId + 1 }))
+  React.useLayoutEffect(() => {
+    window.resetExternalLayout = () => setRenderId(prevNumber => prevNumber + 1)
+    window.switchTheme = setThemeName
+  }, [])
 
-    window.switchTheme = (themeName: string) => this.setState({ themeName })
-  }
+  const exampleFilename = exampleKebabNameToSourceFilename(exampleName)
+  const examplePath = _.find(
+    examplePaths,
+    path => exampleFilename === parseExamplePath(path).exampleName,
+  )
 
-  render() {
-    const { exampleName } = this.props.match.params
-    const exampleFilename = exampleKebabNameToSourceFilename(exampleName)
+  if (!examplePath) return <PageNotFound />
 
-    const examplePath = _.find(
-      examplePaths,
-      path => exampleFilename === parseExamplePath(path).exampleName,
-    )
+  const exampleSource: ExampleSource = exampleSourcesContext(examplePath)
+  const theme = (themeName && themes[themeName]) || {}
 
-    if (!examplePath) return <PageNotFound />
-
-    const exampleSource: ExampleSource = exampleSourcesContext(examplePath)
-
-    const { themeName } = this.state
-    const theme = (themeName && themes[themeName]) || {}
-
-    return (
-      <Provider
-        key={this.state.renderId}
-        theme={theme}
-        rtl={this.props.match.params.rtl === 'true'}
-      >
-        <KnobProvider>
-          <SourceRender
-            babelConfig={babelConfig}
-            source={exampleSource.js}
-            renderHtml={false}
-            resolver={importResolver}
-            unstable_hot
-          >
-            {({ element, error }) => (
-              <>
-                {element}
-                {/* This block allows to see issues with examples as visual regressions. */}
-                {error && <div style={{ fontSize: '5rem', color: 'red' }}>{error.toString()}</div>}
-              </>
-            )}
-          </SourceRender>
-        </KnobProvider>
-      </Provider>
-    )
-  }
+  return (
+    <Provider key={renderId} theme={theme} rtl={rtl === 'true'}>
+      <KnobProvider>
+        <SourceRender
+          babelConfig={babelConfig}
+          onRender={setError}
+          source={exampleSource.js}
+          resolver={importResolver}
+          hot
+        />
+        {/* This block allows to see issues with examples as visual regressions. */}
+        {error && <div style={{ fontSize: '5rem', color: 'red' }}>{error.toString()}</div>}
+      </KnobProvider>
+    </Provider>
+  )
 }
 
 export default ExternalExampleLayout

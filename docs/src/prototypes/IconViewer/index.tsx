@@ -77,7 +77,7 @@ class IconViewerExample extends React.Component<any, {}> {
               render={theme => (
                 <div>
                   <div>
-                    <Header as="h3" content="Regular" textAlign="center" />
+                    <Header as="h3" content="Regular" align="center" />
                     <Grid columns={4} styles={{ textAlign: 'center' }}>
                       {Object.keys(theme.icons)
                         .filter(name => name.startsWith(processedIconsNamePrefix))
@@ -96,7 +96,7 @@ class IconViewerExample extends React.Component<any, {}> {
                   </div>
                   <div>
                     <Divider>
-                      <Header as="h3" content="Outline" textAlign="center" />
+                      <Header as="h3" content="Outline" align="center" />
                     </Divider>
                     <Grid columns={4} styles={{ textAlign: 'center' }}>
                       {Object.keys(theme.icons)

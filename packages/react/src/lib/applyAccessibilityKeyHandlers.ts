@@ -8,7 +8,7 @@ import { AccessibilityHandlerProps, KeyboardEventHandler } from './accessibility
 // It should be applied after 'unhandledProps' because they can contain 'onKeyDown' from user and is handled by UTs in isConformant()
 const applyAccessibilityKeyHandlers = (
   keyHandlers: AccessibilityHandlerProps,
-  value: Props | ShorthandValue,
+  value: Props | ShorthandValue<Props>,
 ) => {
   const valIsPropsObject = _.isPlainObject(value)
   const valIsReactElement = React.isValidElement(value)

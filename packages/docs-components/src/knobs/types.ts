@@ -1,9 +1,10 @@
 import * as React from 'react'
+import { LogContextValue } from './KnobContexts'
 
 export type KnobDefinition = {
   content?: React.ReactNode
   name: KnobName
-  type: 'boolean' | 'range' | 'string' | 'select'
+  type: 'boolean' | 'number' | 'range' | 'string' | 'select'
   value: any
   values?: any[]
 }
@@ -12,7 +13,7 @@ export type KnobName = string
 
 export type KnobSet = Record<KnobName, KnobDefinition>
 
-export type KnobComponent = React.FunctionComponent<KnobComponentProps>
+export type KnobComponent<P = KnobComponentProps> = React.FunctionComponent<P>
 
 export type KnobComponents = {
   KnobField: KnobComponent
@@ -20,14 +21,28 @@ export type KnobComponents = {
   KnobLabel: KnobComponent
 
   KnobBoolean: KnobComponent
-  KnobRange: KnobComponent
+  KnobNumber: KnobComponent
+  KnobRange: KnobComponent<KnobRangeKnobComponentProps>
   KnobSelect: KnobComponent
   KnobString: KnobComponent
+
+  LogInspector: React.FunctionComponent<LogInspectorProps>
 }
 
 export type KnobComponentProps = KnobDefinition & {
   setValue: (value: any) => void
 }
+
+export type KnobRangeKnobComponentProps = KnobComponentProps & {
+  min: string
+  max: string
+  step: string
+  unit: string
+}
+
+export type LogInspectorProps = Pick<LogContextValue, 'clearLog' | 'items'>
+
+export type LogFormatter<T extends any[] = any[]> = (name: string, ...args: T) => string
 
 export type UseKnobOptions<T> = {
   content?: React.ReactNode

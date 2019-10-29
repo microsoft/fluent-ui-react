@@ -5,8 +5,9 @@ import {
   ComponentSlotStylesInput,
   ThemePrepared,
   Grid,
-  ShorthandValue,
   Header,
+  HeaderProps,
+  ShorthandCollection,
 } from '@stardust-ui/react'
 
 import ColorBox from './ColorBox'
@@ -14,7 +15,7 @@ import ColorBox from './ColorBox'
 type ColorVariantsProps = {
   name?: string
   themes?: ThemePrepared[]
-  headers?: ShorthandValue[]
+  headers?: ShorthandCollection<HeaderProps>
 }
 
 export const colorVariantsStyles: ComponentSlotStylesInput<ColorVariantsProps> = {

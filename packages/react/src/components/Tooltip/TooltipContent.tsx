@@ -1,4 +1,3 @@
-import { Ref } from '@stardust-ui/react-component-ref'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
@@ -13,12 +12,12 @@ import {
   ContentComponentProps,
   commonPropTypes,
   rtlTextContainer,
+  ShorthandFactory,
 } from '../../lib'
-import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+import { Accessibility } from '@stardust-ui/accessibility'
+
 import { PopperChildrenProps } from '../../lib/positioner'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
-import Box from '../Box/Box'
 
 export interface TooltipContentProps
   extends UIComponentProps,
@@ -26,22 +25,24 @@ export interface TooltipContentProps
     ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
   /** An actual placement value from Popper. */
   placement?: PopperChildrenProps['placement']
 
+  /** Defines whether tooltip is displayed. */
+  open?: boolean
+
   /** A tooltip can show a pointer to trigger. */
   pointing?: boolean
 
   /** A ref to a pointer element. */
-  pointerRef?: React.Ref<Element>
+  pointerRef?: React.Ref<HTMLDivElement>
 }
 
 class TooltipContent extends UIComponent<WithAsProp<TooltipContentProps>> {
-  static create: Function
+  static create: ShorthandFactory<TooltipContentProps>
 
   static displayName = 'TooltipContent'
   static className = 'ui-tooltip__content'
@@ -53,10 +54,6 @@ class TooltipContent extends UIComponent<WithAsProp<TooltipContentProps>> {
     pointerRef: customPropTypes.ref,
   }
 
-  static defaultProps = {
-    accessibility: defaultBehavior,
-  }
-
   renderComponent({
     accessibility,
     ElementType,
@@ -64,7 +61,7 @@ class TooltipContent extends UIComponent<WithAsProp<TooltipContentProps>> {
     unhandledProps,
     styles,
   }: RenderResultConfig<TooltipContentProps>): React.ReactNode {
-    const { children, content, pointing, pointerRef } = this.props
+    const { children, content, open, pointing, pointerRef } = this.props
 
     return (
       <ElementType
@@ -73,21 +70,9 @@ class TooltipContent extends UIComponent<WithAsProp<TooltipContentProps>> {
         {...accessibility.attributes.root}
         {...unhandledProps}
       >
-        {pointing && (
-          <Ref innerRef={pointerRef}>
-            {Box.create({}, { defaultProps: { styles: styles.pointer } })}
-          </Ref>
-        )}
+        {open && pointing && <div className={classes.pointer} ref={pointerRef} />}
 
-        {Box.create(
-          {},
-          {
-            defaultProps: {
-              children: childrenExist(children) ? children : content,
-              styles: styles.content,
-            },
-          },
-        )}
+        <div className={classes.content}>{childrenExist(children) ? children : content}</div>
       </ElementType>
     )
   }
@@ -96,8 +81,6 @@ class TooltipContent extends UIComponent<WithAsProp<TooltipContentProps>> {
 TooltipContent.create = createShorthandFactory({ Component: TooltipContent, mappedProp: 'content' })
 
 /**
- * A TooltipContent displays the content of a Tooltip component
- * @accessibility This is example usage of the accessibility tag.
- * This should be replaced with the actual description after the PR is merged
+ * A TooltipContent contains the content of a Tooltip component.
  */
 export default withSafeTypeForAs<typeof TooltipContent, TooltipContentProps>(TooltipContent)

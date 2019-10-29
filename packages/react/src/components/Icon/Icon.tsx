@@ -1,26 +1,23 @@
+import { Accessibility, iconBehavior } from '@stardust-ui/accessibility'
+import { callable } from '@stardust-ui/react-bindings'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import {
-  callable,
   UIComponent,
   createShorthandFactory,
   UIComponentProps,
   commonPropTypes,
   ColorComponentProps,
   SizeValue,
+  ShorthandFactory,
 } from '../../lib'
-import { iconBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 
 export interface IconProps extends UIComponentProps, ColorComponentProps {
-  /**
-   * Accessibility behavior if overriden by the user.
-   * @default iconBehavior
-   * */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Icon can appear with rectangular border. */
@@ -33,7 +30,7 @@ export interface IconProps extends UIComponentProps, ColorComponentProps {
   disabled?: boolean
 
   /** Name of the icon. */
-  name?: string
+  name: string
 
   /** An icon can provide an outline variant. */
   outline?: boolean
@@ -49,7 +46,7 @@ export interface IconProps extends UIComponentProps, ColorComponentProps {
 }
 
 class Icon extends UIComponent<WithAsProp<IconProps>, any> {
-  static create: Function
+  static create: ShorthandFactory<IconProps>
 
   static className = 'ui-icon'
 
@@ -64,7 +61,7 @@ class Icon extends UIComponent<WithAsProp<IconProps>, any> {
     bordered: PropTypes.bool,
     circular: PropTypes.bool,
     disabled: PropTypes.bool,
-    name: PropTypes.string,
+    name: PropTypes.string.isRequired,
     outline: PropTypes.bool,
     rotate: PropTypes.number,
     size: customPropTypes.size,
@@ -93,9 +90,9 @@ class Icon extends UIComponent<WithAsProp<IconProps>, any> {
   }
 }
 
-Icon.create = createShorthandFactory({ Component: Icon, mappedProp: 'name' })
+Icon.create = createShorthandFactory({ Component: Icon, mappedProp: 'name', allowsJSX: false })
 
 /**
- * An icon is a glyph used to represent something else.
+ * An Icon displays a pictogram with semantic meaning.
  */
 export default withSafeTypeForAs<typeof Icon, IconProps, 'span'>(Icon)

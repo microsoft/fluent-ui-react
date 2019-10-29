@@ -8,6 +8,8 @@ import DropdownSelectedItem from 'src/components/Dropdown/DropdownSelectedItem'
 import { isConformant } from 'test/specs/commonTests'
 import { findIntrinsicElement, mountWithProvider } from 'test/utils'
 import { ReactWrapper, CommonWrapper } from 'enzyme'
+import { DropdownItemProps } from 'src/components/Dropdown/DropdownItem'
+import { ShorthandValue } from 'src/types'
 
 jest.dontMock('keyboard-key')
 jest.useFakeTimers()
@@ -1380,6 +1382,77 @@ describe('Dropdown', () => {
     })
   })
 
+  describe('multiple', () => {
+    it('can be switched to "multiple"', () => {
+      const wrapper = mountWithProvider(<Dropdown items={items} value={items[0]} />)
+
+      expect(
+        findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.selectedItem}`),
+      ).toHaveLength(0)
+
+      wrapper.setProps({ multiple: true })
+      expect(
+        findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.selectedItem}`),
+      ).toHaveLength(1)
+    })
+
+    it('does not contain duplicities after an item is selected', () => {
+      const wrapper = mountWithProvider(<Dropdown multiple items={items} />)
+      const triggerButton = getTriggerButtonWrapper(wrapper)
+
+      triggerButton.simulate('click')
+      const firstItem = getItemAtIndexWrapper(wrapper)
+      firstItem.simulate('click', { nativeEvent: { stopImmediatePropagation: _.noop } })
+
+      expect(getSelectedItemAtIndexWrapper(wrapper, 0).exists()).toBe(true)
+      expect(getItemAtIndexWrapper(wrapper, items.length - 1).exists()).toBe(false)
+    })
+
+    it('does not contain duplicities when value is set', () => {
+      const items = ['James Smith']
+      const value = ['James Smith']
+      const wrapper = mountWithProvider(<Dropdown multiple items={items} value={value} />)
+      const triggerButton = getTriggerButtonWrapper(wrapper)
+
+      triggerButton.simulate('click')
+
+      expect(getSelectedItemAtIndexWrapper(wrapper, 0).exists()).toBe(true)
+      expect(getItemAtIndexWrapper(wrapper, items.length - 1).exists()).toBe(false)
+    })
+
+    it('contains "duplicates" by default', () => {
+      const items = [{ key: '1', header: 'James Smith' }]
+      const value = [{ key: '1', header: 'John Locke' }]
+
+      const wrapper = mountWithProvider(<Dropdown multiple items={items} value={value} />)
+      const triggerButton = getTriggerButtonWrapper(wrapper)
+      triggerButton.simulate('click')
+
+      expect(getSelectedItemAtIndexWrapper(wrapper, 0).exists()).toBe(true)
+      expect(getItemAtIndexWrapper(wrapper, items.length - 1).exists()).toBe(true)
+    })
+
+    it('does not contain duplicates when proper itemToValue prop is used', () => {
+      const items = [{ id: '1', header: 'James Smith' }]
+      const value = [{ id: '1', header: 'John Locke' }]
+      const itemToValue = (item: ShorthandValue<DropdownItemProps>): string => {
+        if (!item || !React.isValidElement(item)) {
+          return ''
+        }
+        return (item as any).id
+      }
+
+      const wrapper = mountWithProvider(
+        <Dropdown multiple items={items} value={value} itemToValue={itemToValue} />,
+      )
+      const triggerButton = getTriggerButtonWrapper(wrapper)
+      triggerButton.simulate('click')
+
+      expect(getSelectedItemAtIndexWrapper(wrapper, 0).exists()).toBe(true)
+      expect(getItemAtIndexWrapper(wrapper, items.length - 1).exists()).toBe(false)
+    })
+  })
+
   describe('items', () => {
     it('have onClick called when passed stop event from being propagated', () => {
       const onClick = jest.fn()
@@ -1424,6 +1497,25 @@ describe('Dropdown', () => {
         }),
       )
       expect(stopPropagation).toBeCalledTimes(1)
+    })
+  })
+
+  describe('renderSelectedItem', () => {
+    it('calls renderSelectedItem in multiple selection', () => {
+      const renderSelectedItem = jest.fn((selectedItem, props) => null)
+      const wrapper = mountWithProvider(
+        <Dropdown multiple items={items} renderSelectedItem={renderSelectedItem} />,
+      )
+      const triggerButton = getTriggerButtonWrapper(wrapper)
+
+      triggerButton.simulate('click')
+      const firstItem = getItemAtIndexWrapper(wrapper)
+      firstItem.simulate('click', { nativeEvent: { stopImmediatePropagation: _.noop } })
+      triggerButton.simulate('click')
+      const secondItem = getItemAtIndexWrapper(wrapper, 1)
+      secondItem.simulate('click', { nativeEvent: { stopImmediatePropagation: _.noop } })
+
+      expect(renderSelectedItem).toBeCalled()
     })
   })
 })

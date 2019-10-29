@@ -3,7 +3,6 @@ import { ButtonVariables } from '../../../teams/components/Button/buttonVariable
 export default (siteVars: any): Partial<ButtonVariables> => {
   return {
     color: siteVars.colors.white,
-    colorDisabled: siteVars.colors.black,
     backgroundColor: 'transparent',
     backgroundColorActive: siteVars.accessibleYellow,
     backgroundColorHover: siteVars.accessibleYellow,
@@ -12,10 +11,10 @@ export default (siteVars: any): Partial<ButtonVariables> => {
     borderColor: siteVars.colors.white,
     borderColorHover: 'transparent',
 
-    primaryColor: siteVars.colors.white,
+    primaryColor: siteVars.colors.black,
     primaryColorHover: siteVars.colors.black,
     primaryColorFocus: siteVars.colors.black,
-    primaryBackgroundColor: siteVars.colors.black,
+    primaryBackgroundColor: siteVars.colors.white,
     primaryBackgroundColorActive: siteVars.accessibleYellow,
     primaryBackgroundColorHover: siteVars.accessibleYellow,
     primaryBackgroundColorFocus: siteVars.accessibleYellow,
@@ -30,13 +29,6 @@ export default (siteVars: any): Partial<ButtonVariables> => {
     circularBorderColor: siteVars.colors.white,
     circularBorderColorHover: siteVars.colors.white,
     circularBorderColorFocus: siteVars.colors.white,
-
-    textColor: siteVars.accessibleYellow,
-    textColorHover: siteVars.accessibleYellow,
-    textPrimaryColor: siteVars.accessibleYellow,
-    textPrimaryColorHover: siteVars.accessibleYellow,
-    textSecondaryColor: siteVars.accessibleYellow,
-    textSecondaryColorHover: siteVars.accessibleYellow,
 
     boxShadow: 'none',
   }

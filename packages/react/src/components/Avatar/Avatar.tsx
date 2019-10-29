@@ -1,11 +1,10 @@
+import { Accessibility } from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import Image from '../Image/Image'
-import Label from '../Label/Label'
+import Image, { ImageProps } from '../Image/Image'
+import Label, { LabelProps } from '../Label/Label'
 import Status, { StatusProps } from '../Status/Status'
-import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import {
   createShorthandFactory,
@@ -13,20 +12,20 @@ import {
   UIComponentProps,
   commonPropTypes,
   SizeValue,
+  ShorthandFactory,
 } from '../../lib'
 
 export interface AvatarProps extends UIComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
   /** Shorthand for the image. */
-  image?: ShorthandValue
+  image?: ShorthandValue<ImageProps>
 
   /** Shorthand for the label. */
-  label?: ShorthandValue
+  label?: ShorthandValue<LabelProps>
 
   /** The name used for displaying the initials of the avatar if the image is not provided. */
   name?: string
@@ -37,12 +36,12 @@ export interface AvatarProps extends UIComponentProps {
   /** Shorthand for the status of the user. */
   status?: ShorthandValue<StatusProps>
 
-  /** Custom method for generating the initials from the name property, shown in the avatar if there is no image provided. */
+  /** Custom method for generating the initials from the name property, which is shown if no image is provided. */
   getInitials?: (name: string) => string
 }
 
 class Avatar extends UIComponent<WithAsProp<AvatarProps>, any> {
-  static create: Function
+  static create: ShorthandFactory<AvatarProps>
 
   static className = 'ui-avatar'
 
@@ -54,7 +53,7 @@ class Avatar extends UIComponent<WithAsProp<AvatarProps>, any> {
       content: false,
     }),
     name: PropTypes.string,
-    image: customPropTypes.itemShorthand,
+    image: customPropTypes.itemShorthandWithoutJSX,
     label: customPropTypes.itemShorthand,
     size: customPropTypes.size,
     status: customPropTypes.itemShorthand,
@@ -62,7 +61,6 @@ class Avatar extends UIComponent<WithAsProp<AvatarProps>, any> {
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior,
     size: 'medium',
     getInitials(name: string) {
       if (!name) {
@@ -123,6 +121,6 @@ class Avatar extends UIComponent<WithAsProp<AvatarProps>, any> {
 Avatar.create = createShorthandFactory({ Component: Avatar, mappedProp: 'name' })
 
 /**
- * An avatar is a graphic representation of user.
+ * An Avatar is a graphical representation of a user.
  */
 export default withSafeTypeForAs<typeof Avatar, AvatarProps>(Avatar)

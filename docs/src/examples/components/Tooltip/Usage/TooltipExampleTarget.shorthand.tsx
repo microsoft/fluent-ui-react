@@ -9,7 +9,7 @@ const TooltipExampleTarget = () => {
       {/* CUSTOM DOM ELEMENT is used as target for Tooltip */}
       <Tooltip
         target={target}
-        trigger={<Button icon="question" circular styles={{ cursor: 'pointer' }} />}
+        trigger={<Button icon="qna" circular styles={{ cursor: 'pointer' }} />}
         content="well, yes, I am just a garbish text ¯\_(ツ)_/¯"
         position="below"
       />

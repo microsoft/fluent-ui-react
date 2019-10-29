@@ -5,7 +5,7 @@ import { felaRenderer } from 'src/lib'
 import { ThemeInput } from 'src/themes/types'
 
 export const EmptyThemeProvider: React.FunctionComponent = ({ children }) => (
-  <ThemeProvider theme={{ renderer: felaRenderer }}>{children}</ThemeProvider>
+  <ThemeProvider theme={{ renderer: felaRenderer, target: document }}>{children}</ThemeProvider>
 )
 
 export const mountWithProvider = (node, options?, theme?: ThemeInput) => {

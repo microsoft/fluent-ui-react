@@ -7,13 +7,6 @@ import isBrowser from './isBrowser'
  * variables
  */
 
-// cache document.documentElement
-
-const docElem = isBrowser() ? document.documentElement : null
-
-// currently focused dom element
-let currentElement = null
-
 // last used input type
 let currentInput = 'initial'
 
@@ -82,15 +75,15 @@ const setUp = () => {
   // add correct mouse wheel event mapping to `inputMap`
   inputMap[detectWheel()] = 'mouse'
 
-  addListeners()
-  doUpdate()
+  addListeners(window)
+  doUpdate(window.document)
 }
 
 /*
  * events
  */
 
-const addListeners = () => {
+const addListeners = (eventTarget: Window) => {
   // `pointermove`, `MSPointerMove`, `mousemove` and mouse wheel event binding
   // can only demonstrate potential, but not actual, interaction
   // and are treated separately
@@ -98,29 +91,25 @@ const addListeners = () => {
 
   // pointer events (mouse, pen, touch)
   // @ts-ignore
-  if (window.PointerEvent) {
-    window.addEventListener('pointerdown', setInput)
+  if (eventTarget.PointerEvent) {
+    eventTarget.addEventListener('pointerdown', setInput)
     // @ts-ignore
   } else if (window.MSPointerEvent) {
-    window.addEventListener('MSPointerDown', setInput)
+    eventTarget.addEventListener('MSPointerDown', setInput)
   } else {
     // mouse events
-    window.addEventListener('mousedown', setInput, true)
+    eventTarget.addEventListener('mousedown', setInput, true)
 
     // touch events
-    if ('ontouchstart' in window) {
-      window.addEventListener('touchstart', eventBuffer, options)
-      window.addEventListener('touchend', setInput, true)
+    if ('ontouchstart' in eventTarget) {
+      eventTarget.addEventListener('touchstart', eventBuffer, options)
+      eventTarget.addEventListener('touchend', setInput, true)
     }
   }
 
   // keyboard events
-  window.addEventListener('keydown', eventBuffer, true)
-  window.addEventListener('keyup', eventBuffer, true)
-
-  // focus events
-  window.addEventListener('focusin', setElement)
-  window.addEventListener('focusout', clearElement)
+  eventTarget.addEventListener('keydown', eventBuffer, true)
+  eventTarget.addEventListener('keyup', eventBuffer, true)
 }
 
 // checks conditions before updating new input
@@ -145,37 +134,14 @@ const setInput = event => {
         window.sessionStorage.setItem('what-input', currentInput)
       } catch (e) {}
 
-      doUpdate()
+      doUpdate(event.view.document)
     }
   }
 }
 
 // updates the doc and `inputTypes` array with new input
-const doUpdate = () => {
-  docElem.setAttribute(`data-whatinput`, currentInput)
-}
-
-const setElement = event => {
-  if (!event.target.nodeName) {
-    // If nodeName is undefined, clear the element
-    // This can happen if click inside an <svg> element.
-    clearElement()
-    return
-  }
-
-  currentElement = event.target.nodeName.toLowerCase()
-  docElem.setAttribute('data-whatelement', currentElement)
-
-  if (event.target.classList && event.target.classList.length) {
-    docElem.setAttribute('data-whatclasses', event.target.classList.toString().replace(' ', ','))
-  }
-}
-
-const clearElement = () => {
-  currentElement = null
-
-  docElem.removeAttribute('data-whatelement')
-  docElem.removeAttribute('data-whatclasses')
+const doUpdate = (target: Document) => {
+  target.documentElement.setAttribute(`data-whatinput`, currentInput)
 }
 
 // buffers events that frequently also fire mouse events
@@ -232,6 +198,29 @@ const detectWheel = () => {
 // (also passes if polyfills are used)
 if (isBrowser() && 'addEventListener' in window && Array.prototype.indexOf) {
   setUp()
+}
+
+/*
+ * set up for document
+ */
+
+export const setUpWhatInput = (target: Document) => {
+  const targetWindow = target.defaultView
+  if (
+    isBrowser() &&
+    targetWindow &&
+    'addEventListener' in targetWindow &&
+    Array.prototype.indexOf
+  ) {
+    const whatInputInitialized = 'whatInputInitialized'
+    if (target[whatInputInitialized] === true) {
+      return
+    }
+    target[whatInputInitialized] = true
+
+    addListeners(targetWindow)
+    doUpdate(target)
+  }
 }
 
 export const setWhatInputSource = (newInput: 'mouse' | 'keyboard' | 'initial') => {

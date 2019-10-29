@@ -1,14 +1,12 @@
 import * as React from 'react'
 
-import BestPractices from './BestPractices'
 import Types from './Types'
-import Variations from './Variations'
+import Usage from './Usage'
 
 const StatusExamples = () => (
   <div>
-    <BestPractices />
     <Types />
-    <Variations />
+    <Usage />
   </div>
 )
 

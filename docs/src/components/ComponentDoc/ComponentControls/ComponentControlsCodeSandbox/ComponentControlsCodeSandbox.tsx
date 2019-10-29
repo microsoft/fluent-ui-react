@@ -2,7 +2,7 @@ import * as React from 'react'
 import CodeSandboxer from 'react-codesandboxer'
 
 import { ComponentSourceManagerLanguage } from 'docs/src/components/ComponentDoc/ComponentSourceManager'
-import { appTemplateJs, appTemplateTs } from './indexTemplates'
+import { appTemplate } from './indexTemplates'
 import ComponentButton from '../ComponentButton'
 import createPackageJson from './createPackageJson'
 
@@ -57,7 +57,6 @@ class ComponentControlsCodeSandbox extends React.PureComponent<
     const { examplePath, sandboxUrl } = this.state
 
     const main = exampleLanguage === 'ts' ? 'index.tsx' : 'index.js'
-    const appTemplate = exampleLanguage === 'ts' ? appTemplateTs : appTemplateJs
     const template = exampleLanguage === 'ts' ? 'create-react-app-typescript' : 'create-react-app'
 
     if (sandboxUrl) {

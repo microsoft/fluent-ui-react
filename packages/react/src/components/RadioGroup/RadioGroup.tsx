@@ -1,5 +1,6 @@
 // TODO:
 // vertical - padding variable?
+import { Accessibility, radioGroupBehavior } from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -13,21 +14,22 @@ import {
   commonPropTypes,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
+  ShorthandFactory,
 } from '../../lib'
 import RadioGroupItem, { RadioGroupItemProps } from './RadioGroupItem'
-import { radioGroupBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
-import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
+import {
+  WithAsProp,
+  ComponentEventHandler,
+  withSafeTypeForAs,
+  ShorthandCollection,
+} from '../../types'
 
 export interface RadioGroupSlotClassNames {
   item: string
 }
 
 export interface RadioGroupProps extends UIComponentProps, ChildrenComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default radioGroupBehavior
-   * */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Value of the currently checked radio item. */
@@ -44,7 +46,7 @@ export interface RadioGroupProps extends UIComponentProps, ChildrenComponentProp
   defaultCheckedValue?: number | string
 
   /** Shorthand array of props for RadioGroup. */
-  items?: ShorthandValue[]
+  items?: ShorthandCollection<RadioGroupItemProps>
 
   /** A vertical radio group displays elements vertically. */
   vertical?: boolean
@@ -59,7 +61,7 @@ class RadioGroup extends AutoControlledComponent<WithAsProp<RadioGroupProps>, an
     item: `${RadioGroup.className}__item`,
   }
 
-  static create: Function
+  static create: ShorthandFactory<RadioGroupProps>
 
   static propTypes = {
     ...commonPropTypes.createCommon({
@@ -197,15 +199,14 @@ class RadioGroup extends AutoControlledComponent<WithAsProp<RadioGroupProps>, an
     event: React.SyntheticEvent
     props: RadioGroupItemProps
   }) {
-    this.trySetState({ checkedValue })
-    this.setState({ shouldFocus })
-
+    this.setState({ checkedValue, shouldFocus })
     _.invoke(this.props, 'checkedValueChanged', event, props)
   }
 }
 
 /**
- * A radio group allows a user to select a value from a small set of options.
+ * A RadioGroup allows user to select a value from a small set of mutually exclusive options.
+ *
  * @accessibility
  * Implements [ARIA Radio Group](https://www.w3.org/TR/wai-aria-practices-1.1/#radiobutton) design pattern.
  */

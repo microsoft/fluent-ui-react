@@ -1,4 +1,4 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { TooltipContentProps } from '../../../../components/Tooltip/TooltipContent'
 import { TooltipContentVariables } from './tooltipContentVariables'
 import getPointerStyles from '../../getPointerStyles'
@@ -18,7 +18,7 @@ const getPointerOffset = (
     ? v.pointerVerticalOffset
     : v.pointerHorizontalOffset
 
-const tooltipContentStyles: ComponentSlotStylesInput<
+const tooltipContentStyles: ComponentSlotStylesPrepared<
   TooltipContentProps,
   TooltipContentVariables
 > = {
@@ -64,7 +64,7 @@ const tooltipContentStyles: ComponentSlotStylesInput<
     padding: v.padding,
 
     borderRadius: 'inherit',
-    boxShadow: `${v.boxShadowStart} ${v.boxShadowColor}, ${v.boxShadowEnd} ${v.boxShadowColor}`,
+    boxShadow: v.boxShadow,
   }),
 }
 

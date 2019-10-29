@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Avatar, Grid, SizeValue } from '@stardust-ui/react'
 
 const statusProps = {
-  icon: 'check',
+  icon: 'stardust-checkmark',
   color: 'green',
   title: 'Available',
 }

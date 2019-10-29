@@ -1,13 +1,11 @@
+import { Accessibility, treeItemBehavior } from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
-import { Ref } from '@stardust-ui/react-component-ref'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import Tree from './Tree'
+import { Ref } from '@stardust-ui/react-component-ref'
 import TreeTitle, { TreeTitleProps } from './TreeTitle'
-import { treeItemBehavior, subtreeBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
 import {
   UIComponent,
   childrenExist,
@@ -17,6 +15,7 @@ import {
   ChildrenComponentProps,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
+  ShorthandFactory,
 } from '../../lib'
 import {
   ComponentEventHandler,
@@ -24,8 +23,10 @@ import {
   ShorthandRenderFunction,
   ShorthandValue,
   withSafeTypeForAs,
+  ShorthandCollection,
 } from '../../types'
-import { getFirstFocusable } from '../../lib/accessibility/FocusZone/focusUtilities'
+import { hasSubtree } from './lib'
+import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 
 export interface TreeItemSlotClassNames {
   title: string
@@ -33,46 +34,66 @@ export interface TreeItemSlotClassNames {
 }
 
 export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default treeItemBehavior
-   */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
-  /** Only allow one subtree to be open at a time. */
-  exclusive?: boolean
+  /** Id needed to identify this item inside the Tree. */
+  id: string
 
-  /** Initial open value. */
-  defaultOpen?: boolean
-
-  /** The index of the item among its sibbling */
-  index: number
+  /** The index of the item among its siblings. Count starts at 1. */
+  index?: number
 
   /** Array of props for sub tree. */
-  items?: ShorthandValue[]
+  items?: ShorthandCollection<TreeItemProps>
+
+  /** Ref for the item DOM element. */
+  contentRef?: React.Ref<HTMLElement>
+
+  /** Level of the tree/subtree that contains this item. */
+  level?: number
 
   /** Called when a tree title is clicked. */
   onTitleClick?: ComponentEventHandler<TreeItemProps>
 
-  /** Whether or not the subtree of the item is in the open state. */
+  /** Called when the item's first child is about to be focused. */
+  onFocusFirstChild?: ComponentEventHandler<TreeItemProps>
+
+  /** Called when the item's siblings are about to be expanded. */
+  onSiblingsExpand?: ComponentEventHandler<TreeItemProps>
+
+  /** Called when the item's parent is about to be focused. */
+  onFocusParent?: ComponentEventHandler<TreeItemProps>
+
+  /** Whether or not the item is in the open state. Only makes sense if item has children items. */
   open?: boolean
 
+  /** The id of the parent tree item, if any. */
+  parent?: ShorthandValue<TreeItemProps>
+
+  /** Array with the ids of the tree item's siblings, if any. */
+  siblings?: ShorthandCollection<TreeItemProps>
+
   /**
-   * A custom render iterator for rendering each Accordion panel title.
-   * The default component, props, and children are available for each panel title.
+   * A custom render iterator for rendering each tree title.
+   * The default component, props, and children are available for each tree title.
    *
    * @param {React.ReactType} Component - The computed component for this slot.
    * @param {object} props - The computed props for this slot.
    * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
    */
-  renderItemTitle?: ShorthandRenderFunction
+  renderItemTitle?: ShorthandRenderFunction<TreeTitleProps>
 
   /** Properties for TreeTitle. */
-  title?: ShorthandValue
+  title?: ShorthandValue<TreeTitleProps>
 }
 
-class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
-  static create: Function
+export interface TreeItemState {
+  treeSize: number // size of the tree without children.
+  hasSubtree: boolean
+}
+
+class TreeItem extends UIComponent<WithAsProp<TreeItemProps>, TreeItemState> {
+  static create: ShorthandFactory<TreeItemProps>
 
   static displayName = 'TreeItem'
 
@@ -83,127 +104,142 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>> {
     subtree: `${TreeItem.className}__subtree`,
   }
 
-  static autoControlledProps = ['open']
-
   static propTypes = {
     ...commonPropTypes.createCommon({
       content: false,
     }),
-    defaultOpen: PropTypes.bool,
-    items: customPropTypes.collectionShorthand,
+    contentRef: customPropTypes.ref,
+    id: PropTypes.string.isRequired,
     index: PropTypes.number,
-    exclusive: PropTypes.bool,
+    items: customPropTypes.collectionShorthand,
+    level: PropTypes.number,
     onTitleClick: PropTypes.func,
+    onFocusFirstChild: PropTypes.func,
+    onFocusParent: PropTypes.func,
+    onSiblingsExpand: PropTypes.func,
     open: PropTypes.bool,
+    parent: customPropTypes.itemShorthand,
     renderItemTitle: PropTypes.func,
-    treeItemRtlAttributes: PropTypes.func,
+    siblings: customPropTypes.collectionShorthand,
     title: customPropTypes.itemShorthand,
   }
 
   static defaultProps = {
-    as: 'li',
-    accessibility: treeItemBehavior,
+    as: 'div',
+    accessibility: treeItemBehavior as Accessibility,
   }
 
-  itemRef = React.createRef<HTMLElement>()
-  treeRef = React.createRef<HTMLElement>()
+  state = {
+    hasSubtree: false,
+    treeSize: 0,
+  }
+
+  static getDerivedStateFromProps(props: TreeItemProps) {
+    return {
+      hasSubtree: hasSubtree(props),
+      treeSize: props.siblings.length + 1,
+    }
+  }
 
   actionHandlers = {
     performClick: e => {
       e.preventDefault()
       e.stopPropagation()
 
-      _.invoke(this.props, 'onTitleClick', e, this.props)
+      this.handleTitleClick(e)
     },
-    collapseOrReceiveFocus: e => {
-      const { items, open } = this.props
-
-      e.preventDefault()
-
-      // Focuses the title if the event comes from a child item.
-      if (e.currentTarget !== e.target && items && items.length) {
-        e.stopPropagation()
-        this.itemRef.current.focus()
-      } else if (open) {
-        e.stopPropagation()
-        _.invoke(this.props, 'onTitleClick', e, this.props)
-      }
-    },
-    expandOrPassFocus: e => {
-      const { open } = this.props
-
+    focusParent: e => {
       e.preventDefault()
       e.stopPropagation()
 
-      if (!open) {
-        _.invoke(this.props, 'onTitleClick', e, this.props)
-      } else {
-        const element = getFirstFocusable(this.treeRef.current, this.treeRef.current, true)
-        if (element) {
-          element.focus()
-        }
-      }
+      _.invoke(this.props, 'onFocusParent', e, this.props)
     },
+    collapse: e => {
+      e.preventDefault()
+      e.stopPropagation()
+
+      this.handleTitleClick(e)
+    },
+    expand: e => {
+      e.preventDefault()
+      e.stopPropagation()
+
+      this.handleTitleClick(e)
+    },
+    focusFirstChild: e => {
+      e.preventDefault()
+      e.stopPropagation()
+
+      _.invoke(this.props, 'onFocusFirstChild', e, this.props)
+    },
+    expandSiblings: e => {
+      e.preventDefault()
+      e.stopPropagation()
+
+      _.invoke(this.props, 'onSiblingsExpand', e, this.props)
+    },
+  }
+
+  handleTitleClick = e => {
+    _.invoke(this.props, 'onTitleClick', e, this.props)
   }
 
   handleTitleOverrides = (predefinedProps: TreeTitleProps) => ({
     onClick: (e, titleProps) => {
-      _.invoke(this.props, 'onTitleClick', e, this.props)
+      this.handleTitleClick(e)
       _.invoke(predefinedProps, 'onClick', e, titleProps)
     },
   })
 
-  renderContent() {
-    const { items, title, renderItemTitle, open, exclusive } = this.props
-    const hasSubtree = !!(items && items.length)
+  renderContent(accessibility: ReactAccessibilityBehavior) {
+    const { title, renderItemTitle, open, level, index } = this.props
+    const { hasSubtree, treeSize } = this.state
 
-    return (
-      <>
-        {TreeTitle.create(title, {
-          defaultProps: {
-            className: TreeItem.slotClassNames.title,
-            open,
-            hasSubtree,
-            as: hasSubtree ? 'span' : 'a',
-          },
-          render: renderItemTitle,
-          overrideProps: this.handleTitleOverrides,
-        })}
-        {hasSubtree && open && (
-          <Ref innerRef={this.treeRef}>
-            {Tree.create(items, {
-              defaultProps: {
-                accessibility: subtreeBehavior,
-                className: TreeItem.slotClassNames.subtree,
-                exclusive,
-                renderItemTitle,
-              },
-            })}
-          </Ref>
-        )}
-      </>
-    )
+    return TreeTitle.create(title, {
+      defaultProps: {
+        className: TreeItem.slotClassNames.title,
+        open,
+        hasSubtree,
+        as: hasSubtree ? 'span' : 'a',
+        level,
+        treeSize,
+        index,
+        accessibility: accessibility.childBehaviors
+          ? accessibility.childBehaviors.title
+          : undefined,
+      },
+      render: renderItemTitle,
+      overrideProps: this.handleTitleOverrides,
+    })
   }
 
-  renderComponent({ ElementType, accessibility, classes, unhandledProps, styles, variables }) {
-    const { children } = this.props
-
-    return (
-      <Ref innerRef={this.itemRef}>
-        <ElementType
-          className={classes.root}
-          {...accessibility.attributes.root}
-          {...rtlTextContainer.getAttributes({ forElements: [children] })}
-          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
-          {...unhandledProps}
-        >
-          {childrenExist(children) ? children : this.renderContent()}
-        </ElementType>
-      </Ref>
+  renderComponent({ ElementType, accessibility, classes, unhandledProps }) {
+    const { children, contentRef } = this.props
+    const element = (
+      <ElementType
+        className={classes.root}
+        {...accessibility.attributes.root}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
+        {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
+      >
+        {childrenExist(children) ? children : this.renderContent(accessibility)}
+      </ElementType>
     )
+
+    return contentRef ? <Ref innerRef={contentRef}>{element}</Ref> : element
   }
 }
 
-TreeItem.create = createShorthandFactory({ Component: TreeItem, mappedProp: 'title' })
+TreeItem.create = createShorthandFactory({
+  Component: TreeItem,
+  mappedProp: 'title',
+})
 
+/**
+ * A TreeItem renders an item of a Tree.
+ *
+ * @accessibility
+ * Implements [ARIA TreeView](https://www.w3.org/TR/wai-aria-practices-1.1/#TreeView) design pattern.
+ */
 export default withSafeTypeForAs<typeof TreeItem, TreeItemProps, 'li'>(TreeItem)

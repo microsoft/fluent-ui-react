@@ -74,9 +74,7 @@ class AsyncDropdownSearch extends React.Component<{}, SearchPageState> {
             fluid
             items={items}
             loading={loading}
-            loadingMessage={{
-              content: <Loader label="Loading..." labelPosition="end" />,
-            }}
+            loadingMessage={<Loader label="Loading..." labelPosition="end" />}
             multiple
             onSearchQueryChange={this.handleSearchQueryChange}
             onSelectedChange={this.handleSelectedChange}

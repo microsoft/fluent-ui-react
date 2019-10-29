@@ -8,7 +8,7 @@ type BorderFocusStyles = CSSBorderStyles & {
   siteVariables?: SiteVariablesPrepared
   focusInnerBorderColor?: string
   focusOuterBorderColor?: string
-  isFromKeyboard?: boolean
+  borderPadding?: React.CSSProperties['padding']
 }
 
 type BorderPseudoElementStyles = CSSBorderStyles & { borderEdgeValue: string }
@@ -43,7 +43,7 @@ const getBorderFocusStyles = (args: BorderFocusStyles): ICSSInJSStyle => {
     borderRadius = sv.borderRadius,
     focusInnerBorderColor = sv.focusInnerBorderColor || defaultColor,
     focusOuterBorderColor = sv.focusOuterBorderColor || defaultColor,
-    isFromKeyboard,
+    borderPadding,
   } = args
 
   const defaultBorderStyles: React.CSSProperties = { borderWidth, borderRadius }
@@ -51,24 +51,24 @@ const getBorderFocusStyles = (args: BorderFocusStyles): ICSSInJSStyle => {
   return {
     ':focus': {
       outline: 0,
+    },
+    ':focus-visible': {
+      borderColor: 'transparent',
 
-      ...(isFromKeyboard
-        ? {
-            borderColor: 'transparent',
+      ':before': getPseudoElementStyles({
+        borderEdgeValue: borderPadding == null ? '0' : `-${borderPadding}`,
+        borderColor: focusInnerBorderColor,
+        ...defaultBorderStyles,
+      }),
 
-            ':before': getPseudoElementStyles({
-              borderEdgeValue: '0',
-              borderColor: focusInnerBorderColor,
-              ...defaultBorderStyles,
-            }),
-
-            ':after': getPseudoElementStyles({
-              borderEdgeValue: `-${borderWidth}`,
-              borderColor: focusOuterBorderColor,
-              ...defaultBorderStyles,
-            }),
-          }
-        : {}),
+      ':after': getPseudoElementStyles({
+        borderEdgeValue:
+          borderPadding == null
+            ? `-${borderWidth}`
+            : `calc(0px - ${borderPadding} - ${borderWidth})`,
+        borderColor: focusOuterBorderColor,
+        ...defaultBorderStyles,
+      }),
     },
   }
 }

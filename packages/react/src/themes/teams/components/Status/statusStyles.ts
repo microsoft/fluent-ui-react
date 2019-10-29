@@ -21,16 +21,6 @@ const statusStyles: ComponentSelectorsAndStyles<StatusProps, StatusVariables> = 
     ],
 
     //
-    // Colors
-    //
-    [{ color: 'red' }, { backgroundColor: v.backgroundRed }],
-    [{ color: 'orange' }, { backgroundColor: v.backgroundOrange }],
-    [{ color: 'yellow' }, { backgroundColor: v.backgroundYellow }],
-    [{ color: 'green' }, { backgroundColor: v.backgroundGreen }],
-    [{ color: 'blue' }, { backgroundColor: v.backgroundBlue }],
-    [{ color: 'violet' }, { backgroundColor: v.backgroundViolet }],
-
-    //
     // States
     //
     [{ state: 'success' }, { backgroundColor: v.successBackgroundColor }],

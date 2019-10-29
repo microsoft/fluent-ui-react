@@ -1,4 +1,8 @@
-import { ComponentSlotStyle, ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import {
+  ComponentSlotStylesPrepared,
+  ICSSInJSStyle,
+  ComponentSlotStyleFunction,
+} from '../../../types'
 import {
   default as Dropdown,
   DropdownProps,
@@ -26,7 +30,7 @@ const transparentColorStyleObj: ICSSInJSStyle = {
   },
 }
 
-const getIndicatorStyles: ComponentSlotStyle<DropdownPropsAndState, DropdownVariables> = ({
+const getIndicatorStyles: ComponentSlotStyleFunction<DropdownPropsAndState, DropdownVariables> = ({
   variables: v,
 }): ICSSInJSStyle => ({
   alignItems: 'center',
@@ -56,7 +60,7 @@ const getWidth = (p: DropdownPropsAndState, v: DropdownVariables): string => {
   return v.width
 }
 
-const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVariables> = {
+const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, DropdownVariables> = {
   root: ({ props: p }): ICSSInJSStyle => ({
     ...(p.inline && { display: 'inline-flex' }),
   }),
@@ -87,10 +91,8 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
       ...(p.search && { borderBottomColor: v.borderColorFocus }),
       ...(!p.search &&
         !p.open &&
-        getBorderFocusStyles({
-          siteVariables,
-          isFromKeyboard: p.isFromKeyboard,
-        })[':focus']),
+        p.isFromKeyboard &&
+        getBorderFocusStyles({ siteVariables })[':focus-visible']),
     }),
     ...(p.inline && {
       ...transparentColorStyleObj,
@@ -117,6 +119,9 @@ const dropdownStyles: ComponentSlotStylesInput<DropdownPropsAndState, DropdownVa
       ...(p.multiple && { minWidth: 0, flex: 1 }),
       ...transparentColorStyleObj,
       ':focus': {
+        color: v.color,
+      },
+      ':focus-visible': {
         color: v.color,
         ...transparentColorStyle,
         ':after': {

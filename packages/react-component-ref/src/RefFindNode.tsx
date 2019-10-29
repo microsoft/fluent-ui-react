@@ -1,18 +1,21 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
 import handleRef from './handleRef'
-import { RefProps } from './types'
+import { RefProps, refPropType } from './types'
 
 export default class RefFindNode extends React.Component<RefProps> {
   static displayName = 'RefFindNode'
 
-  static propTypes = {
-    children: PropTypes.element.isRequired,
-    innerRef: customPropTypes.ref.isRequired as PropTypes.Validator<React.Ref<any>>,
-  }
+  // TODO: use Babel plugin for this
+  static propTypes =
+    process.env.NODE_ENV !== 'production'
+      ? {
+          children: PropTypes.element.isRequired,
+          innerRef: refPropType.isRequired,
+        }
+      : {}
 
   prevNode: Node | null = null
 

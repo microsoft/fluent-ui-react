@@ -1,12 +1,13 @@
 import * as React from 'react'
 import { Toolbar } from '@stardust-ui/react'
 
-const ToolbarExamplePopupShorthand = () => {
+const ToolbarExampleRadioGroupShorthand = () => {
   const [bulletListActive, setBulletListActive] = React.useState(false)
   const [numberListActive, setNumberListActive] = React.useState(false)
   const [toDoListActive, setToDoListActive] = React.useState(false)
   return (
     <Toolbar
+      aria-label="Toolbar can contain a radio group"
       items={[
         {
           key: 'radiogroup',
@@ -58,4 +59,4 @@ const ToolbarExamplePopupShorthand = () => {
   )
 }
 
-export default ToolbarExamplePopupShorthand
+export default ToolbarExampleRadioGroupShorthand

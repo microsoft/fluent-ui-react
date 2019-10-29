@@ -1,12 +1,13 @@
+import { AccessibilityAttributesBySlot, AccessibilityDefinition } from '@stardust-ui/accessibility'
 import * as React from 'react'
-import { AccessibilityDefinition } from './types'
 
 /*
  * Accessibility types for React implementation.
  */
 
 export interface ReactAccessibilityBehavior extends AccessibilityDefinition {
-  keyHandlers?: AccessibilityKeyHandlers
+  attributes: AccessibilityAttributesBySlot
+  keyHandlers: AccessibilityKeyHandlers
 }
 
 export type AccessibilityKeyHandlers = {

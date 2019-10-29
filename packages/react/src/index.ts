@@ -6,6 +6,7 @@ import * as themes from './themes'
 export { themes }
 export * from './themes/types'
 export * from './themes/colorUtils'
+export * from './themes/createTheme'
 
 //
 // Teams theme
@@ -49,11 +50,23 @@ export { default as ChatMessage } from './components/Chat/ChatMessage'
 export * from './components/Checkbox/Checkbox'
 export { default as Checkbox } from './components/Checkbox/Checkbox'
 
+export * from './components/Debug/Debug'
+export { default as Debug } from './components/Debug/Debug'
+
+export * from './components/Design/Design'
+export { default as Design } from './components/Design/Design'
+
+export * from './components/MenuButton/MenuButton'
+export { default as MenuButton } from './components/MenuButton/MenuButton'
+
 export * from './components/Divider/Divider'
 export { default as Divider } from './components/Divider/Divider'
 
 export * from './components/Dialog/Dialog'
 export { default as Dialog } from './components/Dialog/Dialog'
+
+export * from './components/Dialog/DialogFooter'
+export { default as DialogFooter } from './components/Dialog/DialogFooter'
 
 export * from './components/Dropdown/Dropdown'
 export { default as Dropdown } from './components/Dropdown/Dropdown'
@@ -139,6 +152,9 @@ export { default as RadioGroupItem } from './components/RadioGroup/RadioGroupIte
 export * from './components/Segment/Segment'
 export { default as Segment } from './components/Segment/Segment'
 
+export * from './components/Slider/Slider'
+export { default as Slider } from './components/Slider/Slider'
+
 export * from './components/Status/Status'
 export { default as Status } from './components/Status/Status'
 
@@ -147,6 +163,9 @@ export { default as Text } from './components/Text/Text'
 
 export * from './components/Animation/Animation'
 export { default as Animation } from './components/Animation/Animation'
+
+export * from './components/TextArea/TextArea'
+export { default as TextArea } from './components/TextArea/TextArea'
 
 export * from './components/Toolbar/Toolbar'
 export { default as Toolbar } from './components/Toolbar/Toolbar'
@@ -162,8 +181,19 @@ export * from './components/Toolbar/ToolbarMenuDivider'
 export { default as ToolbarMenuDivider } from './components/Toolbar/ToolbarMenuDivider'
 export * from './components/Toolbar/ToolbarMenuItem'
 export { default as ToolbarMenuItem } from './components/Toolbar/ToolbarMenuItem'
+export * from './components/Toolbar/ToolbarMenuRadioGroup'
+export { default as ToolbarMenuRadioGroup } from './components/Toolbar/ToolbarMenuRadioGroup'
 export * from './components/Toolbar/ToolbarRadioGroup'
 export { default as ToolbarRadioGroup } from './components/Toolbar/ToolbarRadioGroup'
+
+export * from './components/HierarchicalTree/HierarchicalTree'
+export { default as HierarchicalTree } from './components/HierarchicalTree/HierarchicalTree'
+export * from './components/HierarchicalTree/HierarchicalTreeItem'
+export { default as HierarchicalTreeItem } from './components/HierarchicalTree/HierarchicalTreeItem'
+export * from './components/HierarchicalTree/HierarchicalTreeTitle'
+export {
+  default as HierarchicalTreeTitle,
+} from './components/HierarchicalTree/HierarchicalTreeTitle'
 
 export * from './components/Tree/Tree'
 export { default as Tree } from './components/Tree/Tree'
@@ -177,6 +207,9 @@ export { default as Reaction } from './components/Reaction/Reaction'
 export * from './components/Reaction/ReactionGroup'
 export { default as ReactionGroup } from './components/Reaction/ReactionGroup'
 
+export * from './components/SplitButton/SplitButton'
+export { default as SplitButton } from './components/SplitButton/SplitButton'
+
 export * from './components/Video/Video'
 export { default as Video } from './components/Video/Video'
 
@@ -184,11 +217,6 @@ export * from './components/Tooltip/Tooltip'
 export { default as Tooltip } from './components/Tooltip/Tooltip'
 export * from './components/Tooltip/TooltipContent'
 export { default as TooltipContent } from './components/Tooltip/TooltipContent'
-
-//
-// Accessibility behaviors
-//
-export * from './lib/accessibility'
 
 //
 // Utilities
@@ -206,20 +234,23 @@ export * from './lib/positioner/types'
 import {
   getFirstTabbable,
   getLastTabbable,
+  getFirstFocusable,
+  getLastFocusable,
   getNextElement,
   getPreviousElement,
   focusAsync,
-} from './lib/accessibility/FocusZone/focusUtilities'
+} from '@stardust-ui/react-bindings'
 
 export const FocusZoneUtilities = {
   getFirstTabbable,
   getLastTabbable,
+  getFirstFocusable,
+  getLastFocusable,
   getNextElement,
   getPreviousElement,
   focusAsync,
 }
-export * from './lib/accessibility/FocusZone/FocusZone.types'
-export * from './lib/accessibility/types'
-export * from './lib/accessibility/reactTypes'
 
+export * from '@stardust-ui/accessibility'
 export * from '@stardust-ui/react-component-ref'
+export * from '@stardust-ui/react-bindings'

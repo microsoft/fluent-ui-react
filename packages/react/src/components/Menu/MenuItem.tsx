@@ -1,5 +1,7 @@
-import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
-import { Ref } from '@stardust-ui/react-component-ref'
+import { Accessibility, menuItemBehavior, submenuBehavior } from '@stardust-ui/accessibility'
+import { focusAsync } from '@stardust-ui/react-bindings'
+import { EventListener } from '@stardust-ui/react-component-event-listener'
+import { Ref, toRefObject } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import cx from 'classnames'
@@ -16,14 +18,12 @@ import {
   ContentComponentProps,
   commonPropTypes,
   isFromKeyboard,
-  rtlTextContainer,
   applyAccessibilityKeyHandlers,
+  ShorthandFactory,
 } from '../../lib'
-import Icon from '../Icon/Icon'
-import Menu from './Menu'
-import Box from '../Box/Box'
-import { menuItemBehavior, submenuBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
+import Icon, { IconProps } from '../Icon/Icon'
+import Menu, { MenuProps, MenuShorthandKinds } from './Menu'
+import Box, { BoxProps } from '../Box/Box'
 import {
   ComponentEventHandler,
   WithAsProp,
@@ -31,7 +31,6 @@ import {
   ShorthandCollection,
   withSafeTypeForAs,
 } from '../../types'
-import { focusAsync } from '../../lib/accessibility/FocusZone'
 import { Popper } from '../../lib/positioner'
 
 export interface MenuItemSlotClassNames {
@@ -45,9 +44,8 @@ export interface MenuItemProps
     ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default menuItemBehavior
    * @available menuItemAsToolbarButtonBehavior, tabBehavior
-   * */
+   */
   accessibility?: Accessibility
 
   /** A menu item can be active. */
@@ -57,7 +55,7 @@ export interface MenuItemProps
   disabled?: boolean
 
   /** Name or shorthand for Menu Item Icon */
-  icon?: ShorthandValue
+  icon?: ShorthandValue<IconProps>
 
   /** A menu may have just icons. */
   iconOnly?: boolean
@@ -115,10 +113,10 @@ export interface MenuItemProps
   vertical?: boolean
 
   /** Shorthand for the wrapper component. */
-  wrapper?: ShorthandValue
+  wrapper?: ShorthandValue<BoxProps>
 
   /** Shorthand for the submenu. */
-  menu?: ShorthandValue | ShorthandCollection
+  menu?: ShorthandValue<MenuProps> | ShorthandCollection<MenuItemProps, MenuShorthandKinds>
 
   /** Indicates if the menu inside the item is open. */
   menuOpen?: boolean
@@ -133,7 +131,7 @@ export interface MenuItemProps
   inSubmenu?: boolean
 
   /** Shorthand for the submenu indicator. */
-  indicator?: ShorthandValue
+  indicator?: ShorthandValue<IconProps>
 
   /**
    * Event for request to change 'open' value.
@@ -158,13 +156,13 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     wrapper: `${MenuItem.className}__wrapper`,
   }
 
-  static create: Function
+  static create: ShorthandFactory<MenuItemProps>
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
     active: PropTypes.bool,
     disabled: PropTypes.bool,
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     iconOnly: PropTypes.bool,
     index: PropTypes.number,
     itemPosition: PropTypes.number,
@@ -184,7 +182,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     defaultMenuOpen: PropTypes.bool,
     onActiveChanged: PropTypes.func,
     inSubmenu: PropTypes.bool,
-    indicator: customPropTypes.itemShorthand,
+    indicator: customPropTypes.itemShorthandWithoutJSX,
     onMenuOpenChange: PropTypes.func,
   }
 
@@ -199,7 +197,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
   menuRef = React.createRef<HTMLElement>()
   itemRef = React.createRef<HTMLElement>()
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps, styles }) {
+  renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, rtl }) {
     const {
       children,
       content,
@@ -213,9 +211,11 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
       indicator,
       disabled,
     } = this.props
-    const indicatorWithDefaults = indicator === undefined ? {} : indicator
-
     const { menuOpen } = this.state
+
+    const defaultIndicator = { name: vertical ? 'stardust-arrow-end' : 'stardust-arrow-down' }
+    const indicatorWithDefaults = indicator === undefined ? defaultIndicator : indicator
+    const targetRef = toRefObject(this.context.target)
 
     const menuItemInner = childrenExist(children) ? (
       children
@@ -229,18 +229,23 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
           {...accessibility.attributes.root}
           {...accessibility.keyHandlers.root}
           {...unhandledProps}
-          {...!wrapper && { onClick: this.handleClick }}
+          {...(!wrapper && { onClick: this.handleClick })}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         >
           {icon &&
             Icon.create(this.props.icon, {
-              defaultProps: { xSpacing: !!content ? 'after' : 'none' },
+              defaultProps: {
+                xSpacing: !!content ? 'after' : 'none',
+                styles: styles.icon,
+              },
             })}
-          {rtlTextContainer.createFor({ element: content })}
+          {Box.create(content, {
+            defaultProps: { as: 'span', styles: styles.content },
+          })}
           {menu &&
             Icon.create(indicatorWithDefaults, {
               defaultProps: {
-                name: vertical ? 'stardust-arrow-end' : 'stardust-arrow-down',
+                name: vertical ? 'stardust-menu-arrow-end' : 'stardust-menu-arrow-down',
                 styles: styles.indicator,
               },
             })}
@@ -252,8 +257,8 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
         <>
           <Ref innerRef={this.menuRef}>
             <Popper
-              align={vertical ? 'top' : 'start'}
-              position={vertical ? 'after' : 'below'}
+              align={vertical ? 'top' : rtl ? 'end' : 'start'}
+              position={vertical ? (rtl ? 'before' : 'after') : 'below'}
               targetRef={this.itemRef}
             >
               {Menu.create(menu, {
@@ -270,7 +275,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
               })}
             </Popper>
           </Ref>
-          <EventListener listener={this.outsideClickHandler} targetRef={documentRef} type="click" />
+          <EventListener listener={this.outsideClickHandler} targetRef={targetRef} type="click" />
         </>
       ) : null
 
@@ -311,13 +316,14 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     doNotNavigateNextParentItem: event => {
       event.stopPropagation()
     },
+    closeAllMenus: event => this.closeAllMenus(event),
   }
 
   outsideClickHandler = e => {
     if (!this.isSubmenuOpen()) return
     if (
-      !doesNodeContainClick(this.itemRef.current, e) &&
-      !doesNodeContainClick(this.menuRef.current, e)
+      !doesNodeContainClick(this.itemRef.current, e, this.context.target) &&
+      !doesNodeContainClick(this.menuRef.current, e, this.context.target)
     ) {
       this.trySetMenuOpen(false, e)
     }
@@ -327,7 +333,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     const { active, menu } = this.props
 
     if (menu) {
-      if (doesNodeContainClick(this.menuRef.current, e)) {
+      if (doesNodeContainClick(this.menuRef.current, e, this.context.target)) {
         // submenu was clicked => close it and propagate
         this.trySetMenuOpen(false, e, () => focusAsync(this.itemRef.current))
       } else {
@@ -376,10 +382,15 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     }
     const { inSubmenu } = this.props
     this.trySetMenuOpen(false, e, () => {
-      if (!inSubmenu && this.props.vertical) {
+      if (!inSubmenu) {
         focusAsync(this.itemRef.current)
       }
     })
+
+    // avoid spacebar scrolling the page
+    if (!inSubmenu) {
+      e.preventDefault()
+    }
   }
 
   closeMenu = (e: Event, forceTriggerFocus?: boolean) => {
@@ -412,7 +423,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
   }
 
   trySetMenuOpen(newValue: boolean, e: Event | React.SyntheticEvent, onStateChanged?: any) {
-    this.trySetState({ menuOpen: newValue })
+    this.setState({ menuOpen: newValue })
     // The reason why post-effect is not passed as callback to trySetState method
     // is that in 'controlled' mode the post-effect is applied before final re-rendering
     // which cause a broken behavior: for e.g. when it is needed to focus submenu trigger on ESC.
@@ -428,6 +439,6 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
 MenuItem.create = createShorthandFactory({ Component: MenuItem, mappedProp: 'content' })
 
 /**
- * A menu item is an actionable navigation item within a menu.
+ * A MenuItem is an actionable item within a Menu.
  */
 export default withSafeTypeForAs<typeof MenuItem, MenuItemProps, 'a'>(MenuItem)

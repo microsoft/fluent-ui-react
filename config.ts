@@ -9,7 +9,7 @@ const __DEV__ = env === 'development'
 const __NOW__ = !!process.env.NOW
 const __PERF__ = !!process.env.PERF
 const __PROD__ = env === 'production'
-const __BASENAME__ = __PROD__ && !__NOW__ ? '/react/' : '/'
+const __BASENAME__ = __PROD__ && !__NOW__ ? '/fluent-ui-react/' : '/'
 
 const __SKIP_ERRORS__ = !!process.env.SKIP_ERRORS
 
@@ -84,6 +84,7 @@ const config = {
     __SKIP_ERRORS__,
     'process.env': {
       NODE_ENV: JSON.stringify(env),
+      SCREENER: !!process.env.SCREENER_API_KEY,
     },
     __PATH_SEP__: JSON.stringify(path.sep),
   },

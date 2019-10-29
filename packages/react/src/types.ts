@@ -50,17 +50,17 @@ export type PropsOf<T> = T extends React.Component<infer TProps>
 // Shorthand Factories
 // ========================================================
 
-export type ShorthandRenderFunction = (
+export type ShorthandRenderFunction<P> = (
   Component: React.ReactType,
-  props: Props,
+  props: P,
 ) => React.ReactElement<any>
 
-export type ShorthandRenderer = (
-  value: ShorthandValue,
-  renderTree?: ShorthandRenderFunction,
+export type ShorthandRenderer<P> = (
+  value: ShorthandValue<P>,
+  renderTree?: ShorthandRenderFunction<P>,
 ) => React.ReactElement<any>
 
-export type ShorthandRenderCallback = (render: ShorthandRenderer) => React.ReactElement<any>
+export type ShorthandRenderCallback<P> = (render: ShorthandRenderer<P>) => React.ReactElement<any>
 
 // The ReactFragment here is replaced from the original typings with ReactNodeArray because of incorrect inheriting of the type when it is defined as {}
 type ReactNode =
@@ -71,8 +71,8 @@ type ReactNode =
   | null
   | undefined
 
-export type ShorthandValue<P = {}> = ReactNode | Props<P>
-export type ShorthandCollection<K = []> = ShorthandValue<{ kind?: K }>[]
+export type ShorthandValue<P> = ReactNode | Props<P>
+export type ShorthandCollection<P, K = never> = ShorthandValue<P & { kind?: K }>[]
 
 // ========================================================
 // Types for As prop support
@@ -157,6 +157,7 @@ export interface ProviderContextInput {
   renderer?: Renderer
   rtl?: boolean
   disableAnimations?: boolean
+  target?: Document
   theme?: ThemeInput
 }
 
@@ -164,5 +165,8 @@ export interface ProviderContextPrepared {
   renderer: Renderer
   rtl: boolean
   disableAnimations: boolean
+  target: Document
   theme: ThemePrepared
+  originalThemes: (ThemeInput | undefined)[]
+  _internal_resolvedComponentVariables: Record<string, object>
 }

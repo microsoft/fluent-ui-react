@@ -8,7 +8,7 @@ import {
   getRenderedAttribute,
 } from 'test/specs/commonTests'
 import { mountWithProvider, mountWithProviderAndGetComponent } from 'test/utils'
-import { toggleButtonBehavior } from '../../../../src/lib/accessibility'
+import { toggleButtonBehavior } from '@stardust-ui/accessibility'
 
 import Button from 'src/components/Button/Button'
 import Icon from 'src/components/Icon/Icon'
@@ -17,7 +17,10 @@ const buttonImplementsShorthandProp = implementsShorthandProp(Button)
 
 describe('Button', () => {
   isConformant(Button)
-  buttonImplementsShorthandProp('icon', Icon, { mapsValueToProp: 'name' })
+  buttonImplementsShorthandProp('icon', Icon, {
+    mapsValueToProp: 'name',
+    requiredShorthandProps: { name: 'at' },
+  })
 
   describe('accessibility', () => {
     describe('button', () => {

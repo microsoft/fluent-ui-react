@@ -1,11 +1,14 @@
+import {
+  Accessibility,
+  menuItemAsToolbarButtonBehavior,
+  tabBehavior,
+} from '@stardust-ui/accessibility'
 import * as React from 'react'
 
 import { isConformant, handlesAccessibility, getRenderedAttribute } from 'test/specs/commonTests'
 import { mountWithProviderAndGetComponent } from 'test/utils'
 import MenuItem from 'src/components/Menu/MenuItem'
 import Box from 'src/components/Box/Box'
-import { menuItemAsToolbarButtonBehavior, tabBehavior } from '../../../../src/lib/accessibility'
-import { Accessibility } from '../../../../src/lib/accessibility/types'
 
 describe('MenuItem', () => {
   isConformant(MenuItem, {

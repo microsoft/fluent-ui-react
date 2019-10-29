@@ -17,7 +17,7 @@ const avatars = {
 
 const janeAvatar = {
   image: `data:image/jpeg;base64,${avatars.ade}`,
-  status: { color: 'green', icon: 'check' },
+  status: { color: 'green', icon: 'stardust-checkmark' },
 }
 
 export interface PopoverProps {
@@ -59,37 +59,37 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
         items={[
           {
             key: 'smile',
-            icon: 'smile',
+            icon: 'emoji',
             className: 'smile-emoji',
             'aria-label': 'smile one',
           },
           {
             key: 'smile2',
-            icon: 'smile',
+            icon: 'emoji',
             className: 'smile-emoji',
             'aria-label': 'smile two',
           },
           {
             key: 'smile3',
-            icon: 'smile',
+            icon: 'emoji',
             className: 'smile-emoji',
             'aria-label': 'smile three',
           },
           {
             key: 'a',
-            icon: 'thumbs up',
+            icon: 'like',
             'aria-label': 'thumbs up',
           },
           {
             key: 'c',
-            icon: 'ellipsis horizontal',
+            icon: 'more',
             'aria-label': 'more options',
             indicator: false,
             menu: {
               pills: true,
               items: [
-                { key: 'bookmark', icon: 'folder', content: 'Save this message' },
-                { key: 'linkify', icon: 'linkify', content: 'Copy link' },
+                { key: 'bookmark', icon: 'download', content: 'Save this message' },
+                { key: 'linkify', icon: 'link', content: 'Copy link' },
                 { key: 'translate', icon: 'translate', content: 'Translate' },
               ],
             },
@@ -154,23 +154,19 @@ const ChatWithPopover = () => {
       <Chat
         items={_.times(30, i => ({
           key: `a${i}`,
-          message: {
-            content: (
-              <Chat.Message
-                actionMenu={<Popover />}
-                author="Jane Doe"
-                content={{
-                  content: (
-                    <div>
-                      <a href="/">Link</a> Hover me to see the actions <a href="/">Some Link</a>
-                    </div>
-                  ),
-                }}
-                timestamp="Yesterday, 10:15 PM"
-              />
-            ),
-          },
-          gutter: { content: <Avatar {...janeAvatar} /> },
+          message: (
+            <Chat.Message
+              actionMenu={<Popover />}
+              author="Jane Doe"
+              content={
+                <div>
+                  <a href="/">Link</a> Hover me to see the actions <a href="/">Some Link</a>
+                </div>
+              }
+              timestamp="Yesterday, 10:15 PM"
+            />
+          ),
+          gutter: <Avatar {...janeAvatar} />,
         }))}
       />
     </Provider>

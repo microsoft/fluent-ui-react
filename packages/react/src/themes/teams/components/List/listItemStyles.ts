@@ -1,21 +1,15 @@
 import { pxToRem } from '../../../../lib'
 import { screenReaderContainerStyles } from '../../../../lib/accessibility/Styles/accessibilityStyles'
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
-import {
-  default as ListItem,
-  ListItemProps,
-  ListItemState,
-} from '../../../../components/List/ListItem'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { default as ListItem, ListItemProps } from '../../../../components/List/ListItem'
 
-type ListItemPropsAndState = ListItemProps & ListItemState
-
-const truncateStyle = {
+const truncateStyle: ICSSInJSStyle = {
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
 }
 
-const selectableHoverStyle = (p: ListItemPropsAndState, v): ICSSInJSStyle => ({
+const selectableHoverStyle = (p: ListItemProps, v): ICSSInJSStyle => ({
   background: v.selectableFocusHoverBackgroundColor,
   color: v.selectableFocusHoverColor,
   cursor: 'pointer',
@@ -34,14 +28,14 @@ const selectableHoverStyle = (p: ListItemPropsAndState, v): ICSSInJSStyle => ({
   [`& .${ListItem.slotClassNames.endMedia}`]: { display: 'block', color: 'inherit' },
 })
 
-const selectableFocusStyle = (p: ListItemPropsAndState, v): ICSSInJSStyle => ({
+const selectableFocusStyle = (p: ListItemProps, v): ICSSInJSStyle => ({
   ...selectableHoverStyle(p, v),
   outline: 0,
 
-  ...(p.isFromKeyboard && {
+  ':focus-visible': {
     outline: `.2rem solid ${v.selectedFocusOutlineColor}`,
     zIndex: 1,
-  }),
+  },
 })
 
 const selectedStyle = variables => ({
@@ -49,11 +43,14 @@ const selectedStyle = variables => ({
   color: variables.selectedColor,
 })
 
-const listItemStyles: ComponentSlotStylesInput<ListItemPropsAndState, any> = {
+const listItemStyles: ComponentSlotStylesPrepared<ListItemProps, any> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    display: 'flex',
+    alignItems: 'center',
+
     minHeight: v.minHeight,
     padding: v.rootPadding,
-    ...(p.selectable && {
+    ...((p.selectable || p.navigable) && {
       position: 'relative',
 
       // hide the end media by default
@@ -67,6 +64,7 @@ const listItemStyles: ComponentSlotStylesInput<ListItemPropsAndState, any> = {
       fontWeight: 'bold',
     }),
   }),
+
   media: ({ props: p }): ICSSInJSStyle => ({
     ...(p.important && {
       '::before': {
@@ -82,36 +80,58 @@ const listItemStyles: ComponentSlotStylesInput<ListItemPropsAndState, any> = {
       marginRight: pxToRem(8),
     }),
   }),
+
   header: ({ props: p, variables: v }) => ({
+    flexGrow: 1,
     fontSize: v.headerFontSize,
     lineHeight: v.headerLineHeight,
+
     ...(p.truncateHeader && truncateStyle),
     ...((!p.content || p.headerMedia) && {
       marginRight: pxToRem(8),
     }),
   }),
+
   headerMedia: ({ variables: v }): ICSSInJSStyle => ({
+    alignSelf: 'flex-end',
+
     fontSize: v.headerMediaFontSize,
     lineHeight: v.headerMediaLineHeight,
-    alignSelf: 'flex-end',
   }),
+
   content: ({ props: p, variables: v }) => ({
+    flexGrow: 1,
     fontSize: v.contentFontSize,
     lineHeight: v.contentLineHeight,
+
     ...(p.truncateContent && truncateStyle),
     ...((!p.header || p.contentMedia) && {
       marginRight: pxToRem(8),
     }),
   }),
+
   contentMedia: ({ props: p, variables: v }) => ({
     fontSize: v.contentMediaFontSize,
     lineHeight: v.contentMediaLineHeight,
   }),
+
   endMedia: ({ props: p }) => ({
-    ...(p.selectable && { display: 'none' }),
     flexShrink: 0,
+    ...((p.selectable || p.navigable) && { display: 'none' }),
   }),
+
+  headerWrapper: () => ({
+    display: 'flex',
+  }),
+
+  contentWrapper: () => ({
+    display: 'flex',
+  }),
+
   main: () => ({
+    display: 'flex',
+    flexDirection: 'column',
+    flexGrow: 1,
     minWidth: 0, // needed for the truncate styles to work
   }),
 }

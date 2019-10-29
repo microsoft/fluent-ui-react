@@ -4,9 +4,8 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 // @ts-ignore
 import { RendererProvider, ThemeProvider, ThemeContext } from 'react-fela'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
 
-import { felaRenderer, ChildrenComponentProps } from '../../lib'
+import { ChildrenComponentProps, setUpWhatInput } from '../../lib'
 
 import {
   ThemePrepared,
@@ -34,18 +33,20 @@ export interface ProviderProps extends ChildrenComponentProps {
   renderer?: Renderer
   rtl?: boolean
   disableAnimations?: boolean
+  overwrite?: boolean
+  target?: Document
   theme?: ThemeInput
   variables?: ComponentVariablesInput
 }
 
 /**
- * The Provider passes the CSS in JS renderer and theme to your components.
+ * The Provider passes the CSS-in-JS renderer, theme styles and other settings to Stardust components.
  */
 class Provider extends React.Component<WithAsProp<ProviderProps>> {
   static displayName = 'Provider'
 
   static propTypes = {
-    as: customPropTypes.as,
+    as: PropTypes.elementType,
     variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
     theme: PropTypes.shape({
       siteVariables: PropTypes.object,
@@ -74,6 +75,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
     rtl: PropTypes.bool,
     disableAnimations: PropTypes.bool,
     children: PropTypes.node.isRequired,
+    target: PropTypes.object,
   }
 
   static defaultProps = {
@@ -84,9 +86,10 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
   static Box = ProviderBox
   static contextType = ThemeContext
 
+  outgoingContext: ProviderContextPrepared
   staticStylesRendered: boolean = false
 
-  renderStaticStyles = (mergedTheme: ThemePrepared) => {
+  renderStaticStyles = (renderer: Renderer, mergedTheme: ThemePrepared) => {
     const { siteVariables } = mergedTheme
     const { staticStyles } = this.props.theme
 
@@ -94,13 +97,13 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
 
     const renderObject = (object: StaticStyleObject) => {
       _.forEach(object, (style, selector) => {
-        felaRenderer.renderStatic(style as IStyle, selector)
+        renderer.renderStatic(style as IStyle, selector)
       })
     }
 
     staticStyles.forEach((staticStyle: StaticStyle) => {
       if (typeof staticStyle === 'string') {
-        felaRenderer.renderStatic(staticStyle)
+        renderer.renderStatic(staticStyle)
       } else if (_.isPlainObject(staticStyle)) {
         renderObject(staticStyle as StaticStyleObject)
       } else if (_.isFunction(staticStyle)) {
@@ -114,7 +117,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
     })
   }
 
-  renderFontFaces = () => {
+  renderFontFaces = (renderer: Renderer) => {
     const { fontFaces } = this.props.theme
 
     if (!fontFaces) return
@@ -124,7 +127,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
         throw new Error(`fontFaces must be objects, got: ${typeof font}`)
       }
 
-      felaRenderer.renderFont(font.name, font.paths, font.props)
+      renderer.renderFont(font.name, font.paths, font.props)
     }
 
     fontFaces.forEach((font: FontFace) => {
@@ -133,18 +136,23 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
   }
 
   componentDidMount() {
-    this.renderFontFaces()
+    this.renderFontFaces(this.outgoingContext.renderer)
+    if (this.props.target) {
+      setUpWhatInput(this.props.target)
+    }
   }
 
   render() {
     const {
       as,
-      theme,
-      rtl,
-      disableAnimations,
-      renderer,
-      variables,
       children,
+      disableAnimations,
+      overwrite,
+      renderer,
+      rtl,
+      target,
+      theme,
+      variables,
       ...unhandledProps
     } = this.props
     const inputContext: ProviderContextInput = {
@@ -152,25 +160,31 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
       rtl,
       disableAnimations,
       renderer,
+      target,
     }
+
+    const incomingContext: ProviderContextPrepared = overwrite ? {} : this.context
     // rehydration disabled to avoid leaking styles between renderers
     // https://github.com/rofrischmann/fela/blob/master/docs/api/fela-dom/rehydrate.md
-    const outgoingContext: ProviderContextPrepared = mergeContexts(this.context, inputContext)
+    this.outgoingContext = mergeContexts(incomingContext, inputContext)
 
-    this.renderStaticStylesOnce(outgoingContext.theme)
+    this.renderStaticStylesOnce(this.outgoingContext.theme)
 
     const rtlProps: { dir?: 'rtl' | 'ltr' } = {}
     // only add dir attribute for top level provider or when direction changes from parent to child
     if (
       !this.context ||
-      (this.context.rtl !== outgoingContext.rtl && _.isBoolean(outgoingContext.rtl))
+      (this.context.rtl !== this.outgoingContext.rtl && _.isBoolean(this.outgoingContext.rtl))
     ) {
-      rtlProps.dir = outgoingContext.rtl ? 'rtl' : 'ltr'
+      rtlProps.dir = this.outgoingContext.rtl ? 'rtl' : 'ltr'
     }
 
     return (
-      <RendererProvider renderer={outgoingContext.renderer} {...{ rehydrate: false }}>
-        <ThemeProvider theme={outgoingContext}>
+      <RendererProvider
+        renderer={this.outgoingContext.renderer}
+        {...{ rehydrate: false, targetDocument: this.outgoingContext.target }}
+      >
+        <ThemeProvider theme={this.outgoingContext} overwrite>
           <ProviderBox as={as} variables={variables} {...unhandledProps} {...rtlProps}>
             {children}
           </ProviderBox>
@@ -182,7 +196,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
   renderStaticStylesOnce = (mergedTheme: ThemePrepared) => {
     const { staticStyles } = this.props.theme
     if (!this.staticStylesRendered && staticStyles) {
-      this.renderStaticStyles(mergedTheme)
+      this.renderStaticStyles(this.outgoingContext.renderer, mergedTheme)
       this.staticStylesRendered = true
     }
   }

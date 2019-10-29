@@ -1,9 +1,8 @@
+import { Accessibility, statusBehavior } from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import Icon from '../Icon/Icon'
-import { statusBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
+import Icon, { IconProps } from '../Icon/Icon'
 
 import {
   UIComponent,
@@ -11,21 +10,19 @@ import {
   UIComponentProps,
   commonPropTypes,
   SizeValue,
+  ShorthandFactory,
 } from '../../lib'
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 
 export interface StatusProps extends UIComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default statusBehavior
-   */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** A custom color. */
   color?: string
 
   /** Shorthand for the icon, to provide customizing status */
-  icon?: ShorthandValue
+  icon?: ShorthandValue<IconProps>
 
   /** Size multiplier */
   size?: SizeValue
@@ -35,7 +32,7 @@ export interface StatusProps extends UIComponentProps {
 }
 
 class Status extends UIComponent<WithAsProp<StatusProps>, any> {
-  static create: Function
+  static create: ShorthandFactory<StatusProps>
 
   static className = 'ui-status'
 
@@ -47,7 +44,7 @@ class Status extends UIComponent<WithAsProp<StatusProps>, any> {
       content: false,
     }),
     color: PropTypes.string,
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     size: customPropTypes.size,
     state: PropTypes.oneOf(['success', 'info', 'warning', 'error', 'unknown']),
   }
@@ -79,6 +76,9 @@ class Status extends UIComponent<WithAsProp<StatusProps>, any> {
 Status.create = createShorthandFactory({ Component: Status, mappedProp: 'state' })
 
 /**
- * A status graphically represents someone's or something's state.
+ * A Status represents someone's or something's state.
+ *
+ * @accessibility
+ * Implements [ARIA img](https://www.w3.org/TR/wai-aria-1.1/#img) role.
  */
 export default withSafeTypeForAs<typeof Status, StatusProps, 'span'>(Status)

@@ -31,19 +31,20 @@ const setUserInputValue = (inputComp: ReactWrapper, value: string) => {
 }
 
 describe('Input', () => {
-  describe('conformance', () => {
-    isConformant(Input, {
-      eventTargets: {
-        onChange: 'input',
-        onKeyDown: 'input',
-        onKeyPress: 'input',
-        onKeyUp: 'input',
-      },
-    })
+  isConformant(Input, {
+    eventTargets: {
+      onChange: 'input',
+      onKeyDown: 'input',
+      onKeyPress: 'input',
+      onKeyUp: 'input',
+    },
   })
 
   implementsShorthandProp(Input)('input', Box, { mapsValueToProp: 'type' })
-  implementsShorthandProp(Input)('icon', Icon, { mapsValueToProp: 'name' })
+  implementsShorthandProp(Input)('icon', Icon, {
+    mapsValueToProp: 'name',
+    requiredShorthandProps: { name: 'at' },
+  })
 
   describe('wrapper', () => {
     implementsShorthandProp(Input)('wrapper', Box, { mapsValueToProp: 'children' })
@@ -63,25 +64,6 @@ describe('Input', () => {
       it(`'${attr}' is set correctly to '${testValue}'`, () => {
         expect(domNode[attr]).toEqual(testValue)
       })
-    })
-  })
-
-  describe('auto-controlled', () => {
-    it('sets input value from user when the value prop is not set (non-controlled mode)', () => {
-      const inputComp = mount(<Input />)
-      const domNode = getInputDomNode(inputComp)
-      setUserInputValue(inputComp, testValue)
-
-      expect(domNode.value).toEqual(testValue)
-    })
-
-    it('cannot set input value from user when the value prop is already set (controlled mode)', () => {
-      const controlledInputValue = 'controlled input value'
-      const inputComp = mount(<Input value={controlledInputValue} />)
-      const domNode = getInputDomNode(inputComp)
-      setUserInputValue(inputComp, testValue)
-
-      expect(domNode.value).toEqual(controlledInputValue)
     })
   })
 

@@ -5,12 +5,19 @@ import add from './add'
 import addParticipant from './addParticipant'
 import arrowUp from './arrowUp'
 import arrowDown from './arrowDown'
+import arrowLeft from './arrowLeft'
+import arrowRight from './arrowRight'
+import audioOff from './audioOff'
 import ban from './ban'
+import bell from './bell'
+import bellMute from './bellMute'
 import bold from './bold'
 import bookmark from './bookmark'
+import broadcast from './broadcast'
 import bullets from './bullets'
 import calendar from './calendar'
 import call from './call'
+import callBlocked from './callBlocked'
 import callParking from './callParking'
 import callControlRelease from './callControlRelease'
 import callControlRequest from './callControlRequest'
@@ -28,6 +35,9 @@ import callMissedLine from './callMissedLine'
 import screencast from './screencast'
 import chat from './chat'
 import chevronDown from './chevronDown'
+import chevronDownMedium from './chevronDownMedium'
+import chevronRightMedium from './chevronRightMedium'
+import clipboardCopiedTo from './clipboardCopiedTo'
 import close from './close'
 import codeSnippet from './codeSnippet'
 import filesAftereffects from './filesAftereffects'
@@ -65,6 +75,8 @@ import filesPowerPoint from './filesPowerPoint'
 import filesPowerPointBrand from './filesPowerPointBrand'
 import filesWord from './filesWord'
 import filesWordBrand from './filesWordBrand'
+import filesVisio from './filesVisio'
+import filesVisioBrand from './filesVisioBrand'
 import fontColor from './fontColor'
 import fontSize from './fontSize'
 import format from './format'
@@ -73,6 +85,7 @@ import giphy from './giphy'
 import hand from './hand'
 import highlight from './highlight'
 import horizontalRule from './horizontalRule'
+import imageUnavailable from './image-unavailable'
 import indent from './indent'
 import info from './info'
 import italic from './italic'
@@ -89,6 +102,9 @@ import messageSeen from './messageSeen'
 import mic from './mic'
 import micOff from './micOff'
 import more from './more'
+import notes from './notes'
+import notificationsMuted from './notificationsMuted'
+import oneDrive from './oneDrive'
 import microsoftStream from './microsoftStream'
 import userPhone from './userPhone'
 import speakerMute from './speakerMute'
@@ -102,10 +118,12 @@ import participantRemove from './participantRemove'
 import phoneClock from './phoneClock'
 import phoneArrow from './phoneArrow'
 import play from './play'
+import plugs from './plugs'
 import poll from './poll'
 import presenceAvailable from './presenceAvailable'
 import presenceStroke from './presenceStroke'
 import qna from './qna'
+import questionCircle from './questionCircle'
 import quote from './quote'
 import readAloud from './read-aloud'
 import redbang from './redbang'
@@ -113,8 +131,10 @@ import redo from './redo'
 import removeFormat from './removeFormat'
 import reply from './reply'
 import retry from './retry'
+import robot from './robot'
 import shareAlt from './shareAlt'
 import skypeLogo from './skypeLogo'
+import snooze from './snooze'
 import search from './search'
 import send from './send'
 import settings from './settings'
@@ -123,12 +143,16 @@ import star from './star'
 import stardustCircle from './stardustCircle'
 import sticker from './sticker'
 import strike from './strike'
+import sync from './sync'
+import tabs from './tabs'
 import table from './table'
 import tableAdd from './tableAdd'
 import tableDelete from './tableDelete'
 import teamCreate from './teamCreate'
 import teams from './teams'
 import toDoList from './toDoList'
+import thumbtack from './thumbtack'
+import thumbtackSlash from './thumbtackSlash'
 import translation from './translation'
 import trashCan from './trashCan'
 import triangleDown from './triangleDown'
@@ -141,6 +165,9 @@ import userBlur from './userBlur'
 import userFriends from './userFriends'
 import videoCameraEmphasis from './videoCameraEmphasis'
 import yammer from './yammer'
+import windowMaximize from './windowMaximize'
+import windowMinimize from './windowMinimize'
+import windowRestore from './windowRestore'
 
 export default {
   'stardust-circle': stardustCircle,
@@ -148,12 +175,20 @@ export default {
   add,
   'arrow-up': arrowUp,
   'arrow-down': arrowDown,
+  'arrow-left': arrowLeft,
+  'arrow-right': arrowRight,
+  'audio-off': audioOff,
   ban,
+  bell,
+  'bell-slash': bellMute,
+  'bell-snooze': snooze,
   bold,
   bookmark,
+  broadcast,
   bullets,
   calendar,
   call,
+  'call-blocked': callBlocked,
   'call-dialpad': callDialpad,
   'call-end': callEnd,
   'call-parking': callParking,
@@ -172,6 +207,9 @@ export default {
   'canvas-add-page': canvasAddPage,
   chat,
   'chevron-down': chevronDown,
+  'chevron-down-medium': chevronDownMedium,
+  'chevron-right-medium': chevronRightMedium,
+  'clipboard-copied-to': clipboardCopiedTo,
   close,
   'code-snippet': codeSnippet,
   'files-aftereffects': filesAftereffects,
@@ -208,6 +246,7 @@ export default {
   giphy,
   highlight,
   'horizontal-rule': horizontalRule,
+  'image-unavailable': imageUnavailable,
   indent,
   info,
   italic,
@@ -222,12 +261,13 @@ export default {
   menu,
   'message-seen': messageSeen,
   mic,
+  notes,
   'speaker-mute': speakerMute,
   hand,
   'mic-off': micOff,
   more,
-  'microsoft-stream': microsoftStream,
   'user-phone': userPhone,
+  'notifications-muted': notificationsMuted,
   'number-list': numberList,
   'open-outside': openOutside,
   outdent,
@@ -239,10 +279,12 @@ export default {
   'phone-clock': phoneClock,
   'phone-arrow': phoneArrow,
   play,
+  plugs,
   poll,
   'presence-available': presenceAvailable,
   'presence-stroke': presenceStroke,
   qna,
+  'question-circle': questionCircle,
   quote,
   'read-aloud': readAloud,
   redbang,
@@ -250,7 +292,7 @@ export default {
   'remove-format': removeFormat,
   reply,
   retry,
-  'skype-logo': skypeLogo,
+  robot,
   search,
   send,
   settings,
@@ -258,10 +300,14 @@ export default {
   star,
   sticker,
   strike,
+  sync,
+  tabs,
   table,
   'table-add': tableAdd,
   'table-delete': tableDelete,
   teams,
+  thumbtack,
+  'thumbtack-slash': thumbtackSlash,
   'to-do-list': toDoList,
   translation,
   'trash-can': trashCan,
@@ -275,16 +321,23 @@ export default {
   'user-blur': userBlur,
   'user-friends': userFriends,
   'video-camera-emphasis': videoCameraEmphasis,
-  yammer,
+  'window-maximize': windowMaximize,
+  'window-minimize': windowMinimize,
+  'window-restore': windowRestore,
 
   // Office icons
-  word: filesWord,
   excel: filesExcel,
-  powerpoint: filesPowerPoint,
-  onenote: filesOneNote,
-
-  'word-color': filesWordBrand,
   'excel-color': filesExcelBrand,
-  'powerpoint-color': filesPowerPointBrand,
+  onedrive: oneDrive,
+  onenote: filesOneNote,
   'onenote-color': filesOneNoteBrand,
+  powerpoint: filesPowerPoint,
+  'powerpoint-color': filesPowerPointBrand,
+  'skype-logo': skypeLogo,
+  'microsoft-stream': microsoftStream,
+  word: filesWord,
+  'word-color': filesWordBrand,
+  yammer,
+  visio: filesVisio,
+  'visio-color': filesVisioBrand,
 } as { [iconName: string]: TeamsSvgIconSpec }

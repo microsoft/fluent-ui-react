@@ -1,17 +1,45 @@
-import { InputVariables } from '../../../base/components/Input/inputVariables'
 import { pxToRem } from '../../../../lib'
 
-export default (siteVars): Partial<InputVariables> => ({
+export interface InputVariables {
+  backgroundColor: string
+  backgroundColorInverted: string
+  borderColor: string
+  borderRadius: string
+  borderWidth: string
+  fontColor: string
+  fontSize: string
+  iconColor: string
+  iconPosition: string
+  iconRight: string
+  iconLeft: string
+  inputPaddingWithIconAtStart: string
+  inputPaddingWithIconAtEnd: string
+  inputPadding: string
+  inputFocusBorderColor: string
+  inputFocusBorderRadius: string
+  placeholderColor: string
+}
+
+export default (siteVars): InputVariables => ({
+  iconPosition: 'absolute',
+  iconRight: pxToRem(10),
+  iconLeft: pxToRem(6),
+  inputPaddingWithIconAtStart: `${pxToRem(7)} ${pxToRem(12)} ${pxToRem(7)} ${pxToRem(24)}`,
+  inputPaddingWithIconAtEnd: `${pxToRem(7)} ${pxToRem(24)} ${pxToRem(7)} ${pxToRem(12)}`,
+
+  inputPadding: `${pxToRem(7)} ${pxToRem(12)}`,
+
   borderColor: 'transparent',
   borderRadius: `${pxToRem(3)} ${pxToRem(3)} ${pxToRem(2)} ${pxToRem(2)}`,
   borderWidth: `0 0 ${pxToRem(2)} 0`,
-  backgroundColor: siteVars.colors.grey[100],
+  backgroundColor: siteVars.colorScheme.default.background2,
+  backgroundColorInverted: siteVars.colorScheme.default.background,
 
-  fontColor: siteVars.colors.grey[500],
+  fontColor: siteVars.colorScheme.default.foreground,
   fontSize: siteVars.fontSizes.medium,
 
-  iconColor: siteVars.bodyColor,
-  inputFocusBorderColor: `transparent transparent ${siteVars.colors.brand[600]} transparent`,
+  iconColor: siteVars.colorScheme.default.foreground,
+  inputFocusBorderColor: `transparent transparent ${siteVars.colorScheme.brand.borderFocus1} transparent`,
   inputFocusBorderRadius: `${pxToRem(3)} ${pxToRem(3)} ${pxToRem(2)} ${pxToRem(2)}`,
-  placeholderColor: siteVars.colors.grey[500],
+  placeholderColor: siteVars.colorScheme.default.foreground1,
 })

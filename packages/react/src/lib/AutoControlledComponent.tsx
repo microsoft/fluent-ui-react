@@ -23,6 +23,8 @@
  *    hoisted and exposed by the HOC.
  */
 import * as _ from 'lodash'
+import * as React from 'react'
+
 import UIComponent from './UIComponent'
 
 const getDefaultPropName = prop => `default${prop[0].toUpperCase() + prop.slice(1)}`
@@ -72,7 +74,7 @@ export const getAutoControlledStateValue = (
 }
 
 export default class AutoControlledComponent<P = {}, S = {}> extends UIComponent<P, S> {
-  constructor(props, ctx) {
+  constructor(props: P, ctx: any) {
     super(props, ctx)
 
     const { autoControlledProps, getAutoControlledStateFromProps } = this.constructor as any
@@ -186,57 +188,42 @@ export default class AutoControlledComponent<P = {}, S = {}> extends UIComponent
     }
   }
 
-  static getDerivedStateFromProps(props, state) {
-    const { autoControlledProps, getAutoControlledStateFromProps } = state
-
-    // Solve the next state for autoControlledProps
-    const newStateFromProps = autoControlledProps.reduce((acc, prop) => {
-      const isNextDefined = !_.isUndefined(props[prop])
-
-      // if next is defined then use its value
-      if (isNextDefined) acc[prop] = props[prop]
-
-      return acc
-    }, {})
-
-    // Due to the inheritance of the AutoControlledComponent we should call its
-    // getAutoControlledStateFromProps() and merge it with the existing state
-    if (getAutoControlledStateFromProps) {
-      const computedState = getAutoControlledStateFromProps(props, {
-        ...state,
-        ...newStateFromProps,
-      })
-
-      // We should follow the idea of getDerivedStateFromProps() and return only modified state
-      return { ...newStateFromProps, ...computedState }
-    }
-
-    return newStateFromProps
-  }
+  static getDerivedStateFromProps: React.GetDerivedStateFromProps<any, any>
 
   /**
    * Override this method to use getDerivedStateFromProps() in child components.
    */
-  static getAutoControlledStateFromProps(props, state) {
-    return null
+  static getAutoControlledStateFromProps: React.GetDerivedStateFromProps<any, any>
+}
+
+AutoControlledComponent.getDerivedStateFromProps = function(props, state) {
+  const { autoControlledProps, getAutoControlledStateFromProps } = state
+
+  // Solve the next state for autoControlledProps
+  const newStateFromProps = autoControlledProps.reduce((acc, prop) => {
+    const isNextDefined = !_.isUndefined(props[prop])
+
+    // if next is defined then use its value
+    if (isNextDefined) acc[prop] = props[prop]
+
+    return acc
+  }, {})
+
+  // Due to the inheritance of the AutoControlledComponent we should call its
+  // getAutoControlledStateFromProps() and merge it with the existing state
+  if (getAutoControlledStateFromProps) {
+    const computedState = getAutoControlledStateFromProps(props, {
+      ...state,
+      ...newStateFromProps,
+    })
+
+    // We should follow the idea of getDerivedStateFromProps() and return only modified state
+    return { ...newStateFromProps, ...computedState }
   }
 
-  /**
-   * Safely attempt to set state for props that might be controlled by the user.
-   * Second argument is a state object that is always passed to setState.
-   * @param {object} maybeState State that corresponds to controlled props.
-   * @param {object} [state] Actual state, useful when you also need to setState.
-   * @param {object} callback Callback which is called after setState applied.
-   */
-  trySetState = (maybeState: Partial<S>, callback?: () => void) => {
-    const newState = Object.keys(maybeState).reduce((acc, prop) => {
-      // ignore props defined by the parent
-      if (this.props[prop] !== undefined) return acc
+  return newStateFromProps
+}
 
-      acc[prop] = maybeState[prop]
-      return acc
-    }, {})
-
-    if (Object.keys(newState).length > 0) this.setState(newState, callback)
-  }
+AutoControlledComponent.getAutoControlledStateFromProps = function(props, state) {
+  return null
 }

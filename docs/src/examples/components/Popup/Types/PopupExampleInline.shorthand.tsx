@@ -3,7 +3,7 @@ import { Button, Popup } from '@stardust-ui/react'
 
 const PopupExampleInline = () => (
   <Popup
-    trigger={<Button icon="expand" />}
+    trigger={<Button icon="more" />}
     content="This popup is rendered next to the trigger."
     inline
   />

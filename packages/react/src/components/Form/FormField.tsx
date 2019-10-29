@@ -1,3 +1,4 @@
+import { Accessibility } from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -9,23 +10,22 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
+  ShorthandFactory,
 } from '../../lib'
-import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
-import Text from '../Text/Text'
+import Text, { TextProps } from '../Text/Text'
 import Input from '../Input/Input'
-import Box from '../Box/Box'
+import Box, { BoxProps } from '../Box/Box'
 
 export interface FormFieldProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
   /** A control for the form field. */
-  control?: ShorthandValue
+  control?: ShorthandValue<BoxProps>
 
   /** The HTML input id. This will be set on the control element and will be use for linking it with the label for correct accessibility. */
   id?: string
@@ -34,10 +34,10 @@ export interface FormFieldProps extends UIComponentProps, ChildrenComponentProps
   inline?: boolean
 
   /** A label for the form field. */
-  label?: ShorthandValue
+  label?: ShorthandValue<TextProps>
 
   /** Text message that will be displayed below the control (can be used for error, warning, success messages). */
-  message?: ShorthandValue
+  message?: ShorthandValue<TextProps>
 
   /** The HTML input name. */
   name?: string
@@ -54,7 +54,7 @@ class FormField extends UIComponent<WithAsProp<FormFieldProps>, any> {
 
   static className = 'ui-form__field'
 
-  static create: Function
+  static create: ShorthandFactory<FormFieldProps>
 
   static propTypes = {
     ...commonPropTypes.createCommon({
@@ -71,7 +71,6 @@ class FormField extends UIComponent<WithAsProp<FormFieldProps>, any> {
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior,
     as: 'div',
     control: { as: Input },
   }
@@ -128,6 +127,6 @@ class FormField extends UIComponent<WithAsProp<FormFieldProps>, any> {
 FormField.create = createShorthandFactory({ Component: FormField, mappedProp: 'label' })
 
 /**
- * A field is a form element containing a label and an input.
+ * A FormField represents a Form element containing a label and an input.
  */
 export default withSafeTypeForAs<typeof FormField, FormFieldProps>(FormField)

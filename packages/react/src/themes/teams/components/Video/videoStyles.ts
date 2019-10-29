@@ -1,4 +1,4 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { VideoProps } from '../../../../components/Video/Video'
 import { VideoVariables } from './videoVariables'
 
@@ -9,4 +9,4 @@ export default {
     width: v.width,
     height: v.height || 'auto',
   }),
-} as ComponentSlotStylesInput<VideoProps, VideoVariables>
+} as ComponentSlotStylesPrepared<VideoProps, VideoVariables>

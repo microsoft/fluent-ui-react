@@ -23,17 +23,18 @@ const PopupExamplePosition = () => {
         align={align}
         position={position}
         unstable_pinned={unstable_pinned}
-        content={{
-          content: (
-            <p>
-              The popup is rendered {position} the trigger
-              <br />
-              aligned to the {align}.
-            </p>
-          ),
-        }}
+        content={
+          <p>
+            The popup is rendered {position} the trigger
+            <br />
+            aligned to the {align}.
+          </p>
+        }
       >
-        <Button icon={icons[position]} styles={buttonStyles} />
+        <Button
+          icon={{ name: iconNames[position], circular: true, bordered: true }}
+          styles={buttonStyles}
+        />
       </Popup>
     </Grid>
   )
@@ -56,11 +57,11 @@ const positionAndAlignValues = [
   'after-bottom',
 ]
 
-const icons: Record<Position, string> = {
-  above: 'arrow circle up',
-  below: 'arrow circle down',
-  before: 'arrow circle left',
-  after: 'arrow circle right',
+const iconNames: Record<Position, string> = {
+  above: 'arrow-up',
+  below: 'arrow-down',
+  before: 'arrow-left',
+  after: 'arrow-right',
 }
 
 const paddings: Record<string, React.CSSProperties['padding']> = {

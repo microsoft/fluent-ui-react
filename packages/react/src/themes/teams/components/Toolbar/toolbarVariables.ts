@@ -50,6 +50,7 @@ export interface ToolbarVariables {
   backgroundDisabled: string
 
   itemHeight: string
+  itemPadding: string
   borderWidth: string
   borderRadius: string
   dividerMargin: string
@@ -115,6 +116,7 @@ export default (siteVars: any): ToolbarVariables => ({
   backgroundDisabled: 'transparent',
 
   itemHeight: pxToRem(32),
+  itemPadding: '0',
   borderWidth: '2px',
   borderRadius: '50%',
   dividerMargin: `${pxToRem(10)} ${pxToRem(4)}`,

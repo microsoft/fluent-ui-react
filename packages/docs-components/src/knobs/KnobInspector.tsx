@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import KnobsContext, { KnobContextValue } from './KnobContext'
+import { KnobContext, KnobContextValue } from './KnobContexts'
 import { KnobComponent, KnobComponentProps, KnobDefinition } from './types'
 import useKnobValues from './useKnobValues'
 
@@ -28,9 +28,10 @@ const getKnobControls = (
 const getKnobComponents = (
   knobsContext: KnobContextValue,
 ): Record<KnobDefinition['type'], KnobComponent> => {
-  const { KnobBoolean, KnobRange, KnobSelect, KnobString } = knobsContext.components
+  const { KnobBoolean, KnobNumber, KnobRange, KnobSelect, KnobString } = knobsContext.components
   const components = {
     boolean: KnobBoolean,
+    number: KnobNumber,
     range: KnobRange,
     select: KnobSelect,
     string: KnobString,
@@ -52,17 +53,17 @@ type KnobInspectorProps = {
 }
 
 const KnobInspector: React.FunctionComponent<KnobInspectorProps> = props => {
-  const knobsContext = React.useContext(KnobsContext)
+  const knobContext = React.useContext(KnobContext)
 
-  const { Control, Field, Label } = getKnobControls(knobsContext)
-  const knobComponents = getKnobComponents(knobsContext)
+  const { Control, Field, Label } = getKnobControls(knobContext)
+  const knobComponents = getKnobComponents(knobContext)
   const knobValues = useKnobValues()
 
   const children =
     knobValues.length > 0 ? (
       <>
         {knobValues.map((knob: KnobDefinition) => {
-          const setValue = (value: any) => knobsContext.setKnobValue(knob.name, value)
+          const setValue = (value: any) => knobContext.setKnobValue(knob.name, value)
           const knobProps: KnobComponentProps = { ...knob, setValue }
 
           return (

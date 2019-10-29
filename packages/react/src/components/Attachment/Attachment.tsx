@@ -1,3 +1,4 @@
+import { Accessibility, attachmentBehavior } from '@stardust-ui/accessibility'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -7,41 +8,35 @@ import {
   UIComponent,
   createShorthandFactory,
   commonPropTypes,
-  isFromKeyboard,
   applyAccessibilityKeyHandlers,
+  ShorthandFactory,
 } from '../../lib'
-import Icon from '../Icon/Icon'
-import Button from '../Button/Button'
-import Text from '../Text/Text'
-import Box from '../Box/Box'
+import Icon, { IconProps } from '../Icon/Icon'
+import Button, { ButtonProps } from '../Button/Button'
+import Text, { TextProps } from '../Text/Text'
 import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
-import { Accessibility } from '../../lib/accessibility/types'
-import { attachmentBehavior } from '../../lib/accessibility'
 
 export interface AttachmentProps extends UIComponentProps, ChildrenComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default attachmentBehavior
-   */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Button shorthand for the action slot. */
-  action?: ShorthandValue
+  action?: ShorthandValue<ButtonProps>
 
   /** An Attachment can be styled to indicate possible user interaction. */
   actionable?: boolean
 
   /** A string describing the attachment. */
-  description?: ShorthandValue
+  description?: ShorthandValue<TextProps>
 
-  /** An attachment can show it is currently unable to be interacted with. */
+  /** An attachment can show that it cannot be interacted with. */
   disabled?: boolean
 
   /** The name of the attachment. */
-  header?: ShorthandValue
+  header?: ShorthandValue<TextProps>
 
   /** Shorthand for the icon. */
-  icon?: ShorthandValue
+  icon?: ShorthandValue<IconProps>
 
   /** Value indicating percent complete. */
   progress?: string | number
@@ -52,25 +47,14 @@ export interface AttachmentProps extends UIComponentProps, ChildrenComponentProp
    * @param {object} data - All props.
    */
   onClick?: ComponentEventHandler<AttachmentProps>
-
-  /**
-   * Called after user's focus.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
-   */
-  onFocus?: ComponentEventHandler<AttachmentProps>
-}
-
-export interface AttachmentState {
-  isFromKeyboard: boolean
 }
 
 export interface AttachmentSlotClassNames {
   action: string
 }
 
-class Attachment extends UIComponent<WithAsProp<AttachmentProps>, AttachmentState> {
-  static create: Function
+class Attachment extends UIComponent<WithAsProp<AttachmentProps>> {
+  static create: ShorthandFactory<AttachmentProps>
 
   static className = 'ui-attachment'
 
@@ -86,16 +70,12 @@ class Attachment extends UIComponent<WithAsProp<AttachmentProps>, AttachmentStat
     actionable: PropTypes.bool,
     description: customPropTypes.itemShorthand,
     header: customPropTypes.itemShorthand,
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     progress: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }
 
   static defaultProps = {
     accessibility: attachmentBehavior as Accessibility,
-  }
-
-  state = {
-    isFromKeyboard: false,
   }
 
   renderComponent({ ElementType, classes, unhandledProps, styles, variables, accessibility }) {
@@ -105,7 +85,6 @@ class Attachment extends UIComponent<WithAsProp<AttachmentProps>, AttachmentStat
       <ElementType
         className={classes.root}
         onClick={this.handleClick}
-        onFocus={this.handleFocus}
         {...accessibility.attributes.root}
         {...unhandledProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
@@ -134,10 +113,7 @@ class Attachment extends UIComponent<WithAsProp<AttachmentProps>, AttachmentStat
               className: Attachment.slotClassNames.action,
             },
           })}
-        {!_.isNil(progress) &&
-          Box.create('', {
-            defaultProps: { styles: styles.progress },
-          })}
+        {!_.isNil(progress) && <div className={classes.progress} />}
       </ElementType>
     )
   }
@@ -163,12 +139,6 @@ class Attachment extends UIComponent<WithAsProp<AttachmentProps>, AttachmentStat
 
     _.invoke(this.props, 'onClick', e, this.props)
   }
-
-  handleFocus = (e: React.SyntheticEvent) => {
-    this.setState({ isFromKeyboard: isFromKeyboard() })
-
-    _.invoke(this.props, 'onFocus', e, this.props)
-  }
 }
 
 Attachment.create = createShorthandFactory({ Component: Attachment, mappedProp: 'header' })
@@ -177,6 +147,6 @@ Attachment.slotClassNames = {
 }
 
 /**
- * An Attachment displays a file attachment.
+ * An Attachment represents a file or media attachment, which may contain some metadata or actions.
  */
 export default withSafeTypeForAs<typeof Attachment, AttachmentProps>(Attachment)

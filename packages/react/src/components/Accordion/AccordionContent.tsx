@@ -1,3 +1,4 @@
+import { accordionContentBehavior } from '@stardust-ui/accessibility'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
@@ -11,9 +12,9 @@ import {
   ContentComponentProps,
   commonPropTypes,
   rtlTextContainer,
+  ShorthandFactory,
 } from '../../lib'
 import { WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
-import { accordionContentBehavior } from '../../lib/accessibility'
 
 export interface AccordionContentProps
   extends UIComponentProps,
@@ -37,7 +38,7 @@ export interface AccordionContentProps
 class AccordionContent extends UIComponent<WithAsProp<AccordionContentProps>, any> {
   static displayName = 'AccordionContent'
 
-  static create: Function
+  static create: ShorthandFactory<AccordionContentProps>
 
   static className = 'ui-accordion__content'
 
@@ -80,6 +81,6 @@ AccordionContent.create = createShorthandFactory({
 })
 
 /**
- * A standard AccordionContent that is used to display content hosted in an accordion.
+ * An AccordionContent displays content hosted in an Accordion.
  */
 export default withSafeTypeForAs<typeof AccordionContent, AccordionContentProps>(AccordionContent)

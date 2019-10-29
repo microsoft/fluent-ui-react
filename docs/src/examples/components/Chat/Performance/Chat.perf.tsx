@@ -9,7 +9,7 @@ const avatars = {
 
 const janeAvatar = {
   image: `data:image/jpeg;base64,${avatars.ade}`,
-  status: { color: 'green', icon: 'check' },
+  status: { color: 'green', icon: 'stardust-checkmark' },
 }
 
 const ChatExample = () => {
@@ -28,24 +28,20 @@ const ChatExample = () => {
       }}
     >
       <Chat
-        items={_.times(30, i => ({
+        items={_.times(100, i => ({
           key: `a${i}`,
-          message: {
-            content: (
-              <Chat.Message
-                author="Jane Doe"
-                content={{
-                  content: (
-                    <div>
-                      <a href="/">Link</a> Hover me to see the actions <a href="/">Some Link</a>
-                    </div>
-                  ),
-                }}
-                timestamp="Yesterday, 10:15 PM"
-              />
-            ),
-          },
-          gutter: { content: <Avatar {...janeAvatar} /> },
+          message: (
+            <Chat.Message
+              author="Jane Doe"
+              content={
+                <div>
+                  <a href="/">Link</a> Hover me to see the actions <a href="/">Some Link</a>
+                </div>
+              }
+              timestamp="Yesterday, 10:15 PM"
+            />
+          ),
+          gutter: <Avatar {...janeAvatar} />,
         }))}
       />
     </Provider>

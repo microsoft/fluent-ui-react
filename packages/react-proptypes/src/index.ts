@@ -8,16 +8,6 @@ type ObjectOf<T> = Record<string, T>
 const typeOf = (x: any) => Object.prototype.toString.call(x)
 
 /**
- * Ensure a component can render as a give prop value.
- */
-export const as = PropTypes.oneOfType([
-  PropTypes.func,
-  PropTypes.object,
-  PropTypes.string,
-  PropTypes.symbol,
-])
-
-/**
  * Ensure a prop is a valid DOM node.
  */
 export const domNode = (props: ObjectOf<any>, propName: string) => {
@@ -411,6 +401,16 @@ export const itemShorthandWithKindProp = (kindPropValues: string[]) => {
     ]),
   ])
 }
+export const itemShorthandWithoutJSX = every([
+  disallow(['children']),
+  PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.number,
+    PropTypes.object,
+    PropTypes.string,
+    PropTypes.oneOf([false]),
+  ]),
+])
 
 /**
  * Collection shorthand ensures a prop is an array of item shorthand.
@@ -482,6 +482,8 @@ export const size = PropTypes.oneOf([
   'largest',
 ])
 
+export const align = PropTypes.oneOf(['start', 'end', 'center', 'justify'])
+
 export const animation = PropTypes.oneOfType([
   // Validator is broken in the latest @react/types
   PropTypes.shape({
@@ -496,6 +498,37 @@ export const animation = PropTypes.oneOfType([
   }) as any,
   PropTypes.string,
 ])
+
+// Heads Up!
+// Keep in sync with packages/react/src/themes/types.ts
+export const design = PropTypes.shape({
+  position: PropTypes.string,
+  display: PropTypes.string,
+
+  top: PropTypes.string,
+  right: PropTypes.string,
+  bottom: PropTypes.string,
+  left: PropTypes.string,
+
+  padding: PropTypes.string,
+  paddingTop: PropTypes.string,
+  paddingRight: PropTypes.string,
+  paddingBottom: PropTypes.string,
+  paddingLeft: PropTypes.string,
+
+  margin: PropTypes.string,
+  marginTop: PropTypes.string,
+  marginRight: PropTypes.string,
+  marginBottom: PropTypes.string,
+  marginLeft: PropTypes.string,
+
+  width: PropTypes.string,
+  height: PropTypes.string,
+  minWidth: PropTypes.string,
+  maxWidth: PropTypes.string,
+  minHeight: PropTypes.string,
+  maxHeight: PropTypes.string,
+})
 
 /** A checker that matches the React.Ref type. */
 export const ref = PropTypes.oneOfType([PropTypes.func, PropTypes.object])

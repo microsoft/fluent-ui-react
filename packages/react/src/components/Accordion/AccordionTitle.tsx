@@ -1,3 +1,4 @@
+import { accordionTitleBehavior } from '@stardust-ui/accessibility'
 import { Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
@@ -14,11 +15,11 @@ import {
   commonPropTypes,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
+  ShorthandFactory,
 } from '../../lib'
 import { WithAsProp, ComponentEventHandler, ShorthandValue, withSafeTypeForAs } from '../../types'
-import Icon from '../Icon/Icon'
+import Icon, { IconProps } from '../Icon/Icon'
 import Layout from '../Layout/Layout'
-import { accordionTitleBehavior } from '../../lib/accessibility'
 
 export interface AccordionTitleSlotClassNames {
   content: string
@@ -59,13 +60,13 @@ export interface AccordionTitleProps
   onFocus?: ComponentEventHandler<AccordionTitleProps>
 
   /** Shorthand for the active indicator. */
-  indicator?: ShorthandValue
+  indicator?: ShorthandValue<IconProps>
 }
 
 class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
   static displayName = 'AccordionTitle'
 
-  static create: Function
+  static create: ShorthandFactory<AccordionTitleProps>
 
   static className = 'ui-accordion__title'
 
@@ -106,7 +107,8 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
 
   renderComponent({ ElementType, classes, unhandledProps, styles, accessibility }) {
     const { contentRef, children, content, indicator, active } = this.props
-    const indicatorWithDefaults = indicator === undefined ? {} : indicator
+    const defaultIndicator = { name: active ? 'stardust-arrow-down' : 'stardust-arrow-end' }
+    const indicatorWithDefaults = indicator === undefined ? defaultIndicator : indicator
 
     const contentElement = (
       <Ref innerRef={contentRef}>
@@ -118,7 +120,6 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.content, unhandledProps)}
           start={Icon.create(indicatorWithDefaults, {
             defaultProps: {
-              name: active ? 'stardust-arrow-down' : 'stardust-arrow-end',
               styles: styles.indicator,
             },
           })}
@@ -148,6 +149,6 @@ AccordionTitle.slotClassNames = {
 }
 
 /**
- * A standard AccordionTitle that is used to expand or collapse content.
+ * An AccordionTitle represents the title of Accordion's item that can be interacted with to expand or collapse the item's content.
  */
 export default withSafeTypeForAs<typeof AccordionTitle, AccordionTitleProps>(AccordionTitle)

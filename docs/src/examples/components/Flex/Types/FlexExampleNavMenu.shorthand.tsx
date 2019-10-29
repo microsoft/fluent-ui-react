@@ -3,7 +3,7 @@ import { Flex, Button } from '@stardust-ui/react'
 
 const FlexExampleNavMenu = () => (
   <Flex gap="gap.small" debug>
-    <Button content="Logo" icon="chess rook" />
+    <Button content="Logo" icon="skype-logo" />
 
     <Flex.Item push>
       <Button content="Page 1" />

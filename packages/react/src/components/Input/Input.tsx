@@ -1,3 +1,4 @@
+import { Accessibility, inputBehavior } from '@stardust-ui/accessibility'
 import { handleRef, Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as React from 'react'
@@ -14,21 +15,13 @@ import {
   commonPropTypes,
   applyAccessibilityKeyHandlers,
 } from '../../lib'
-import { Accessibility } from '../../lib/accessibility/types'
-import { inputBehavior } from '../../lib/accessibility'
+import { SupportedIntrinsicInputProps } from '../../lib/htmlPropsUtils'
 import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
-import Icon from '../Icon/Icon'
-import Box from '../Box/Box'
-import { HtmlInputProps } from '../../lib/htmlPropsUtils'
+import Icon, { IconProps } from '../Icon/Icon'
+import Box, { BoxProps } from '../Box/Box'
 
 export interface InputSlotClassNames {
   input: string
-}
-
-type SupportedIntrinsicInputProps = {
-  [K in HtmlInputProps]?: K extends keyof JSX.IntrinsicElements['input']
-    ? JSX.IntrinsicElements['input'][K]
-    : any
 }
 
 export interface InputProps
@@ -37,7 +30,6 @@ export interface InputProps
     SupportedIntrinsicInputProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
@@ -51,7 +43,7 @@ export interface InputProps
   fluid?: boolean
 
   /** Optional Icon to display inside the Input. */
-  icon?: ShorthandValue
+  icon?: ShorthandValue<IconProps>
 
   /** An Input with icon can format the icon to appear at the start or at the end of the input field. */
   iconPosition?: 'start' | 'end'
@@ -60,7 +52,10 @@ export interface InputProps
   inline?: boolean
 
   /** Shorthand for the input component. */
-  input?: ShorthandValue
+  input?: ShorthandValue<BoxProps>
+
+  /** An input can have inverted colors. */
+  inverted?: boolean
 
   /**
    * Called on change.
@@ -68,7 +63,7 @@ export interface InputProps
    * @param {SyntheticEvent} event - React's original SyntheticEvent.
    * @param {object} data - All props and proposed value.
    */
-  onChange?: ComponentEventHandler<InputProps>
+  onChange?: ComponentEventHandler<InputProps & { value: string }>
 
   /** The HTML input type. */
   type?: string
@@ -77,14 +72,14 @@ export interface InputProps
   inputRef?: React.Ref<HTMLElement>
 
   /** The value of the input. */
-  value?: React.ReactText
+  value?: string | number
 
   /** Shorthand for the wrapper component. */
-  wrapper?: ShorthandValue
+  wrapper?: ShorthandValue<BoxProps>
 }
 
 export interface InputState {
-  value?: React.ReactText
+  value?: InputProps['value']
 }
 
 class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> {
@@ -103,11 +98,12 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
     clearable: PropTypes.bool,
     defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     fluid: PropTypes.bool,
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     iconPosition: PropTypes.oneOf(['start', 'end']),
     input: customPropTypes.itemShorthand,
     inputRef: customPropTypes.ref,
     inline: PropTypes.bool,
+    inverted: PropTypes.bool,
     onChange: PropTypes.func,
     type: PropTypes.string,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -195,22 +191,22 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
     },
   })
 
-  handleChange = (e: React.SyntheticEvent) => {
+  handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = _.get(e, 'target.value')
 
     _.invoke(this.props, 'onChange', e, { ...this.props, value })
 
-    this.trySetState({ value })
+    this.setState({ value })
   }
 
   handleOnClear = (e: React.SyntheticEvent) => {
     if (this.props.clearable) {
       _.invoke(this.props, 'onChange', e, { ...this.props, value: '' })
-      this.trySetState({ value: '' })
+      this.setState({ value: '' })
     }
   }
 
-  computeIcon = (): ShorthandValue => {
+  computeIcon = (): ShorthandValue<IconProps> => {
     const { clearable, icon } = this.props
     const { value } = this.state
 
@@ -227,6 +223,9 @@ Input.slotClassNames = {
 }
 
 /**
- * An input is a field used to elicit a response from a user.
+ * An Input is a field used to elicit an input from a user.
+ *
+ * @accessibility
+ * For good screen reader experience set `aria-label` or `aria-labelledby` attribute for input.
  */
 export default withSafeTypeForAs<typeof Input, InputProps, 'div'>(Input)

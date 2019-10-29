@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { Icon, Tree } from '@stardust-ui/react'
+import { Icon, HierarchicalTree } from '@stardust-ui/react'
 
 import { examplePathToHash } from 'docs/src/utils'
 
@@ -103,6 +103,6 @@ export default class ComponentSidebarSection extends React.PureComponent<any, an
       </Component>
     )
 
-    return <Tree items={items} renderItemTitle={titleRenderer} />
+    return <HierarchicalTree items={items} renderItemTitle={titleRenderer} />
   }
 }

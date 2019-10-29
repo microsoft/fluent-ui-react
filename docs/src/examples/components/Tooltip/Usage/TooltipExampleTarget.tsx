@@ -12,7 +12,7 @@ const TooltipExampleTarget = () => {
         content="well, yes, I am just a garbish text ¯\_(ツ)_/¯"
         position="below"
       >
-        <Button icon="question" circular styles={{ cursor: 'pointer' }} />
+        <Button icon="qna" circular styles={{ cursor: 'pointer' }} />
       </Tooltip>
       <div style={{ marginLeft: 10 }}>
         <Text>Could you guess what does this text means? :)</Text>

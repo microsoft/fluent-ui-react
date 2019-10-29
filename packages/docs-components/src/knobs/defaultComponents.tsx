@@ -1,5 +1,11 @@
 import * as React from 'react'
-import { KnobComponentProps, KnobComponents } from './types'
+import {
+  KnobComponentProps,
+  KnobComponents,
+  KnobRangeKnobComponentProps,
+  LogInspectorProps,
+} from './types'
+import parseValue from './lib/parseRangeValue'
 
 const KnobField: React.FunctionComponent<KnobComponentProps> = props => (
   <div
@@ -34,6 +40,16 @@ const KnobBoolean: React.FunctionComponent<KnobComponentProps> = props => (
   />
 )
 
+const KnobNumber: React.FunctionComponent<KnobComponentProps> = props => (
+  <input
+    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+      props.setValue(parseInt(e.target.value, 10))
+    }}
+    type="number"
+    value={props.value}
+  />
+)
+
 const KnobSelect: React.FunctionComponent<KnobComponentProps> = props => (
   <select
     onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -50,34 +66,19 @@ const KnobSelect: React.FunctionComponent<KnobComponentProps> = props => (
   </select>
 )
 
-const KnobRange: React.FunctionComponent<KnobComponentProps> = props => {
-  const parseValue = (parseValue: string): number => {
-    const hasDecimal = /\.\d/.test(parseValue)
-
-    return hasDecimal ? parseFloat(parseValue) : parseInt(parseValue, 10)
-  }
-  const { defaultValue, unit } = React.useMemo(
-    () => ({
-      defaultValue: parseValue(props.value),
-      unit: `${props.value}`.replace(`${parseValue(props.value)}`, ''),
-    }),
-    [],
-  )
-
-  return (
-    <input
-      type="range"
-      min="0"
-      max={defaultValue * 3}
-      step="1"
-      value={parseValue(props.value)}
-      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-        props.setValue(`${e.target.value}${unit}`)
-      }}
-      style={{ width: '100%' }}
-    />
-  )
-}
+const KnobRange: React.FunctionComponent<KnobRangeKnobComponentProps> = props => (
+  <input
+    type="range"
+    min={props.min}
+    max={props.max}
+    step={props.step}
+    value={parseValue(props.value)}
+    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+      props.setValue(`${e.target.value}${props.unit}`)
+    }}
+    style={{ width: '100%' }}
+  />
+)
 
 const KnobString: React.FunctionComponent<KnobComponentProps> = props => (
   <input
@@ -88,15 +89,60 @@ const KnobString: React.FunctionComponent<KnobComponentProps> = props => (
   />
 )
 
+const LogInspector: React.FunctionComponent<LogInspectorProps> = props => (
+  <>
+    <div style={{ display: 'flex', padding: 5 }}>
+      <div style={{ flexGrow: 1 }}>
+        Event log{' '}
+        <span
+          style={{
+            padding: 3,
+            background: '#ccc',
+            borderRadius: '4rem',
+            minWidth: '1.75rem',
+            minHeight: '1.75rem',
+            display: 'inline-block',
+            textAlign: 'center',
+          }}
+        >
+          {props.items.length}
+        </span>
+      </div>
+      <button onClick={props.clearLog} style={{ fontSize: '0.9rem' }}>
+        Clear
+      </button>
+    </div>
+    {props.items.length > 0 && (
+      <div
+        style={{
+          background: 'rgba(0, 0, 0, 0.04)',
+          display: 'flex',
+          flexDirection: 'column',
+          fontFamily: 'monospace',
+          fontSize: '0.9rem',
+          padding: 5,
+        }}
+      >
+        {props.items.map((line, index) => (
+          <div key={index}>{line}</div>
+        ))}
+      </div>
+    )}
+  </>
+)
+
 const defaultComponents: KnobComponents = {
   KnobControl,
   KnobField,
   KnobLabel,
 
   KnobBoolean,
+  KnobNumber,
   KnobRange,
   KnobSelect,
   KnobString,
+
+  LogInspector,
 }
 
 export default defaultComponents

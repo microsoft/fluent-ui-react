@@ -1,7 +1,6 @@
+import { Accessibility, menuDividerBehavior } from '@stardust-ui/accessibility'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import { Accessibility } from '../../lib/accessibility/types'
-import { menuDividerBehavior } from '../../lib/accessibility'
 
 import {
   createShorthandFactory,
@@ -12,6 +11,7 @@ import {
   ChildrenComponentProps,
   ContentComponentProps,
   rtlTextContainer,
+  ShorthandFactory,
 } from '../../lib'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
@@ -19,10 +19,7 @@ export interface MenuDividerProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default menuDividerBehavior
-   */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   vertical?: boolean
@@ -34,7 +31,7 @@ export interface MenuDividerProps
 class MenuDivider extends UIComponent<WithAsProp<MenuDividerProps>> {
   static displayName = 'MenuDivider'
 
-  static create: Function
+  static create: ShorthandFactory<MenuDividerProps>
 
   static className = 'ui-menu__divider'
 
@@ -70,6 +67,6 @@ class MenuDivider extends UIComponent<WithAsProp<MenuDividerProps>> {
 MenuDivider.create = createShorthandFactory({ Component: MenuDivider, mappedProp: 'content' })
 
 /**
- * A menu divider visually segments menu items inside menu.
+ * A MenuDivider is non-actionable element that visually segments items of Menu.
  */
 export default withSafeTypeForAs<typeof MenuDivider, MenuDividerProps, 'li'>(MenuDivider)

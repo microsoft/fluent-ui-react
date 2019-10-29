@@ -6,10 +6,10 @@ import {
   UIComponentProps,
   UIComponent,
   commonPropTypes,
+  ShorthandFactory,
 } from '../../lib'
-import { Accessibility } from '../../lib/accessibility/types'
+import { Accessibility } from '@stardust-ui/accessibility'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
-import { defaultBehavior } from '../../lib/accessibility'
 
 export interface ToolbarDividerProps
   extends UIComponentProps,
@@ -17,7 +17,6 @@ export interface ToolbarDividerProps
     ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 }
@@ -25,16 +24,12 @@ export interface ToolbarDividerProps
 class ToolbarDivider extends UIComponent<WithAsProp<ToolbarDividerProps>> {
   static displayName = 'ToolbarDivider'
 
-  static create: Function
+  static create: ShorthandFactory<ToolbarDividerProps>
 
   static className = 'ui-toolbar__divider'
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
-  }
-
-  static defaultProps = {
-    accessibility: defaultBehavior,
   }
 
   renderComponent({ ElementType, classes, unhandledProps, accessibility }) {
@@ -51,7 +46,6 @@ class ToolbarDivider extends UIComponent<WithAsProp<ToolbarDividerProps>> {
 ToolbarDivider.create = createShorthandFactory({ Component: ToolbarDivider, mappedProp: 'content' })
 
 /**
- * Toolbar divider.
- * Adds visual non-selectable separator between items.
+ * A ToolbarDivider is a non-actionable element that visually segments Toolbar items.
  */
 export default withSafeTypeForAs<typeof ToolbarDivider, ToolbarDividerProps>(ToolbarDivider)

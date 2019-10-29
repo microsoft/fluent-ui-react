@@ -1,5 +1,6 @@
 import * as React from 'react'
 import * as _ from 'lodash'
+import * as PropTypes from 'prop-types'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import { Ref } from '@stardust-ui/react-component-ref'
 
@@ -12,12 +13,16 @@ import {
   childrenExist,
   commonPropTypes,
   applyAccessibilityKeyHandlers,
+  ShorthandFactory,
 } from '../../lib'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
 import { ShorthandCollection, WithAsProp, withSafeTypeForAs } from '../../types'
-import { Accessibility } from '../../lib/accessibility/types'
-import { toolbarRadioGroupBehavior, toolbarRadioGroupItemBehavior } from '../../lib/accessibility'
+import {
+  Accessibility,
+  toolbarRadioGroupBehavior,
+  toolbarRadioGroupItemBehavior,
+} from '@stardust-ui/accessibility'
 
 import ToolbarDivider from './ToolbarDivider'
 import ToolbarItem, { ToolbarItemProps } from './ToolbarItem'
@@ -33,8 +38,11 @@ export interface ToolbarRadioGroupProps
    */
   accessibility?: Accessibility
 
+  /** Index of the currently active item. */
+  activeIndex?: number
+
   /** Shorthand array of props for ToolbarRadioGroup. */
-  items?: ShorthandCollection<ToolbarRadioGroupItemShorthandKinds>
+  items?: ShorthandCollection<ToolbarItemProps, ToolbarRadioGroupItemShorthandKinds>
 }
 
 class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> {
@@ -42,10 +50,11 @@ class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> 
 
   static className = 'ui-toolbars' // FIXME: required by getComponentInfo/isConformant. But this is group inside a toolbar not a group of toolbars
 
-  static create: Function
+  static create: ShorthandFactory<ToolbarRadioGroupProps>
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
+    activeIndex: PropTypes.number,
     items: customPropTypes.collectionShorthandWithKindProp(['divider', 'item']),
   }
 
@@ -94,7 +103,7 @@ class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> 
       nextItemToFocus.focus()
     }
 
-    if (document.activeElement === nextItemToFocus) {
+    if (this.context.target.activeElement === nextItemToFocus) {
       event.stopPropagation()
     }
     event.preventDefault()
@@ -104,7 +113,8 @@ class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> 
     variables: mergeComponentVariables(variables, predefinedProps.variables),
   })
 
-  renderItems(items, variables) {
+  renderItems(variables) {
+    const { activeIndex, items } = this.props
     const itemOverridesFn = this.handleItemOverrides(variables)
     this.itemRefs = []
 
@@ -121,6 +131,7 @@ class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> 
       const toolbarItem = ToolbarItem.create(item, {
         defaultProps: {
           accessibility: toolbarRadioGroupItemBehavior,
+          active: activeIndex === index,
         },
         overrideProps: itemOverridesFn,
       })
@@ -134,7 +145,8 @@ class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> 
   }
 
   renderComponent({ ElementType, classes, variables, accessibility, unhandledProps }) {
-    const { children, items } = this.props
+    const { children } = this.props
+
     return (
       <ElementType
         {...accessibility.attributes.root}
@@ -142,7 +154,7 @@ class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> 
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         className={classes.root}
       >
-        {childrenExist(children) ? children : this.renderItems(items, variables)}
+        {childrenExist(children) ? children : this.renderItems(variables)}
       </ElementType>
     )
   }
@@ -154,8 +166,11 @@ ToolbarRadioGroup.create = createShorthandFactory({
 })
 
 /**
- * Toolbar radiogroup groups items where only one item can be active.
- * The radiogroup does not guarantee that, it just serves accessibility purposes.
+ * A ToolbarRadioGroup renders Toolbar item as a group of mutually exclusive options.
+ * Component doesn't implement mutual exclusiveness, it just serves accessibility purposes.
+ *
+ * @accessibility
+ * Implements [ARIA RadioGroup](https://www.w3.org/TR/wai-aria-practices/#radiobutton) design pattern.
  */
 export default withSafeTypeForAs<typeof ToolbarRadioGroup, ToolbarRadioGroupProps>(
   ToolbarRadioGroup,

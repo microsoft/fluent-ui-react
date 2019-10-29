@@ -1,7 +1,9 @@
 import * as React from 'react'
+import * as ReactDOM from 'react-dom'
+import * as ReactTestUtils from 'react-dom/test-utils'
 
 import Popup, { PopupEvents } from 'src/components/Popup/Popup'
-import { domEvent, mountWithProvider } from '../../../utils'
+import { domEvent, EmptyThemeProvider, mountWithProvider } from '../../../utils'
 import * as keyboardKey from 'keyboard-key'
 import { ReactWrapper } from 'enzyme'
 
@@ -13,17 +15,28 @@ describe('Popup', () => {
     return popup.find(`div#${contentId}`)
   }
 
+  type TriggerEvent = keyboardKey | { event: 'click' | 'contextmenu' }
+
   type ExpectPopupToOpenAndCloseParams = {
     onProp: PopupEvents
-    keyboardKeyToOpen: keyboardKey
-    keyboardKeyToClose: keyboardKey
+    eventToOpen: TriggerEvent
+    eventToClose: TriggerEvent
   }
 
   const expectPopupToOpenAndClose = ({
     onProp,
-    keyboardKeyToOpen,
-    keyboardKeyToClose,
+    eventToOpen,
+    eventToClose,
   }: ExpectPopupToOpenAndCloseParams) => {
+    const openEvent = {
+      event: eventToOpen.event || 'keydown',
+      keyCode: eventToOpen.event ? undefined : eventToOpen,
+    }
+    const closeEvent = {
+      event: eventToClose.event || 'keydown',
+      keyCode: eventToClose.event ? undefined : eventToClose,
+    }
+
     const popup = mountWithProvider(
       <Popup
         trigger={<span id={triggerId}> text to trigger popup </span>}
@@ -33,12 +46,12 @@ describe('Popup', () => {
     )
     // check popup open on key press
     const popupTriggerElement = popup.find(`#${triggerId}`)
-    popupTriggerElement.simulate('keydown', { keyCode: keyboardKeyToOpen })
+    popupTriggerElement.simulate(openEvent.event, { keyCode: openEvent.keyCode })
 
     expect(getPopupContent(popup).exists()).toBe(true)
 
     // check popup closes on Esc
-    popupTriggerElement.simulate('keydown', { keyCode: keyboardKeyToClose })
+    popupTriggerElement.simulate(closeEvent.event, { keyCode: closeEvent.keyCode })
     expect(getPopupContent(popup).exists()).toBe(false)
   }
 
@@ -65,35 +78,91 @@ describe('Popup', () => {
       expect(spy).toHaveBeenCalledTimes(1)
       expect(spy.mock.calls[0][1]).toMatchObject({ open: true })
     })
+
+    test('is called on contextmenu', () => {
+      const spy = jest.fn()
+
+      mountWithProvider(<Popup trigger={<button />} content="Hi" onOpenChange={spy} on="context" />)
+        .find('button')
+        .simulate('contextmenu')
+
+      expect(spy).toHaveBeenCalledTimes(1)
+      expect(spy.mock.calls[0][1]).toMatchObject({ open: true })
+    })
+
+    // https://github.com/stardust-ui/react/pull/619
+    test('is called on contextmenu when controlled', () => {
+      const spy = jest.fn()
+
+      mountWithProvider(
+        <Popup open={false} trigger={<button />} content="Hi" onOpenChange={spy} on="context" />,
+      )
+        .find('button')
+        .simulate('contextmenu')
+
+      expect(spy).toHaveBeenCalledTimes(1)
+      expect(spy.mock.calls[0][1]).toMatchObject({ open: true })
+    })
+  })
+
+  describe('context popup', () => {
+    test(`open popup with Context event and close it with escape key`, () => {
+      expectPopupToOpenAndClose({
+        onProp: 'context',
+        eventToOpen: { event: 'contextmenu' },
+        eventToClose: keyboardKey.Escape,
+      })
+    })
+
+    test('click does not open the popup but calls its handler instead', () => {
+      const clickSpy = jest.fn()
+      const popup = mountWithProvider(
+        <Popup
+          trigger={
+            <span id={triggerId} onClick={clickSpy}>
+              {' '}
+              text to trigger popup{' '}
+            </span>
+          }
+          content={{ id: contentId }}
+          on="context"
+        />,
+      )
+      const popupTriggerElement = popup.find(`#${triggerId}`)
+      popupTriggerElement.simulate('click')
+
+      expect(getPopupContent(popup).exists()).toBe(false)
+      expect(clickSpy).toHaveBeenCalled()
+    })
   })
 
   describe('open/close popup by keyboard', () => {
     test(`toggle popup with Enter key`, () => {
       expectPopupToOpenAndClose({
         onProp: 'click',
-        keyboardKeyToOpen: keyboardKey.Enter,
-        keyboardKeyToClose: keyboardKey.Enter,
+        eventToOpen: keyboardKey.Enter,
+        eventToClose: keyboardKey.Enter,
       })
     })
     test(`toggle popup with Space key`, () => {
       expectPopupToOpenAndClose({
         onProp: 'click',
-        keyboardKeyToOpen: keyboardKey.Spacebar,
-        keyboardKeyToClose: keyboardKey.Spacebar,
+        eventToOpen: keyboardKey.Spacebar,
+        eventToClose: keyboardKey.Spacebar,
       })
     })
     test(`open popup with Enter key and close it with escape key`, () => {
       expectPopupToOpenAndClose({
         onProp: 'hover',
-        keyboardKeyToOpen: keyboardKey.Enter,
-        keyboardKeyToClose: keyboardKey.Escape,
+        eventToOpen: keyboardKey.Enter,
+        eventToClose: keyboardKey.Escape,
       })
     })
     test(`open popup with Space key and close it with escape key`, () => {
       expectPopupToOpenAndClose({
         onProp: 'hover',
-        keyboardKeyToOpen: keyboardKey.Spacebar,
-        keyboardKeyToClose: keyboardKey.Escape,
+        eventToOpen: keyboardKey.Spacebar,
+        eventToClose: keyboardKey.Escape,
       })
     })
     test(`close previous popup with Enter key`, () => {
@@ -102,41 +171,45 @@ describe('Popup', () => {
 
       const triggerId2 = 'triggerElement2'
       const contentId2 = 'contentId2'
-      const wrapper = mountWithProvider(
-        <React.Fragment>
-          <Popup
-            trigger={<span id={triggerId}>text to trigger popup</span>}
-            content={{ id: contentId }}
-            on="click"
-          />
-          <Popup
-            trigger={<span id={triggerId2}>text to trigger popup</span>}
-            content={{ id: contentId2 }}
-            on="click"
-          />
-        </React.Fragment>,
-        { attachTo },
-      )
-        // TODO: remove when typings will be updated
-        // @ts-ignore https://airbnb.io/enzyme/docs/api/ReactWrapper/getWrappingComponent.html
-        .getWrappingComponent()
 
-      expect(wrapper.find(`#${contentId}`).exists()).toBe(false)
-      expect(wrapper.find(`#${contentId2}`).exists()).toBe(false)
+      ReactTestUtils.act(() => {
+        ReactDOM.render(
+          <EmptyThemeProvider>
+            <React.Fragment>
+              <Popup
+                trigger={<span id={triggerId}>text to trigger popup</span>}
+                content={{ id: contentId }}
+                on="click"
+              />
+              <Popup
+                trigger={<span id={triggerId2}>text to trigger popup</span>}
+                content={{ id: contentId2 }}
+                on="click"
+              />
+            </React.Fragment>
+          </EmptyThemeProvider>,
+          attachTo,
+        )
+      })
 
-      domEvent.keyDown(`#${triggerId}`, { keyCode: keyboardKey.Enter })
-      wrapper.update() // as event comes outside enzyme, we should trigger update
+      expect(document.querySelector(`#${contentId}`)).toBe(null)
+      expect(document.querySelector(`#${contentId2}`)).toBe(null)
 
-      expect(wrapper.find(`#${contentId}`).exists()).toBe(true)
-      expect(wrapper.find(`#${contentId2}`).exists()).toBe(false)
+      ReactTestUtils.act(() => {
+        domEvent.keyDown(`#${triggerId}`, { keyCode: keyboardKey.Enter })
+      })
 
-      domEvent.keyDown(`#${triggerId2}`, { keyCode: keyboardKey.Enter })
-      wrapper.update()
+      expect(document.querySelector(`#${contentId}`)).toBeDefined()
+      expect(document.querySelector(`#${contentId2}`)).toBe(null)
 
-      expect(wrapper.find(`#${contentId}`).exists()).toBe(false)
-      expect(wrapper.find(`#${contentId2}`).exists()).toBe(true)
+      ReactTestUtils.act(() => {
+        domEvent.keyDown(`#${triggerId2}`, { keyCode: keyboardKey.Enter })
+      })
 
-      wrapper.unmount()
+      expect(document.querySelector(`#${contentId}`)).toBe(null)
+      expect(document.querySelector(`#${contentId2}`)).toBeDefined()
+
+      ReactDOM.unmountComponentAtNode(attachTo)
       document.body.removeChild(attachTo)
     })
   })
