@@ -32,7 +32,7 @@ const attachmentStyles: ComponentSlotStylesPrepared<AttachmentProps, AttachmentV
       cursor: 'pointer',
 
       ':hover': {
-        background: siteVariables.colorScheme.default.backgroundHover1,
+        background: v.backgroundColorHover,
         color: v.textColorHover,
       },
     }),
