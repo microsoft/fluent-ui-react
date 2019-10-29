@@ -26,9 +26,7 @@ const toolbarItemStyles: ComponentSlotStylesPrepared<ToolbarItemProps, ToolbarVa
       color: v.foreground || colors.foreground1,
       cursor: 'pointer',
 
-      ':focus': {
-        ...borderFocusStyles[':focus'],
-      },
+      ':focus': borderFocusStyles[':focus'],
 
       ...(p.active && {
         color: v.foregroundActive || colors.foregroundActive,
@@ -42,9 +40,7 @@ const toolbarItemStyles: ComponentSlotStylesPrepared<ToolbarItemProps, ToolbarVa
         ...getIconFillOrOutlineStyles({ outline: false }),
       },
 
-      ':focus-visible': {
-        ...borderFocusStyles[':focus-visible'],
-      },
+      ':focus-visible': borderFocusStyles[':focus-visible'],
 
       ...(p.disabled && {
         color: v.foregroundDisabled || colors.foregroundDisabled1,

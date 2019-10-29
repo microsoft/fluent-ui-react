@@ -33,9 +33,7 @@ const toolbarMenuItemStyles = {
         backgroundColor: v.menuItemBackgroundHover || colors.menuItemBackgroundHover,
       },
 
-      ':focus-visible': {
-        ...borderFocusStyles[':focus-visible'],
-      },
+      ':focus-visible': borderFocusStyles[':focus-visible'],
 
       ...(p.disabled && {
         cursor: 'default',

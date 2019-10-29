@@ -52,9 +52,7 @@ const listItemStyles: ComponentSlotStylesPrepared<ListItemProps, any> = {
         [`& .${ListItem.slotClassNames.endMedia}`]: { display: 'none' },
 
         '&:hover': selectableHoverStyle(p, v),
-        ':focus': {
-          ...borderFocusStyles[':focus'],
-        },
+        ':focus': borderFocusStyles[':focus'],
         ':focus-visible': {
           ...borderFocusStyles[':focus-visible'],
           zIndex: 1,

@@ -37,13 +37,9 @@ const toolbarCustomItemStyles: ComponentSlotStylesPrepared<
           paddingBottom: v.customItemVerticalPadding,
         }),
 
-      ':focus': {
-        ...borderFocusStyles[':focus'],
-      },
+      ':focus': borderFocusStyles[':focus'],
 
-      ':focus-visible': {
-        ...borderFocusStyles[':focus-visible'],
-      },
+      ':focus-visible': borderFocusStyles[':focus-visible'],
     }
   },
 }
