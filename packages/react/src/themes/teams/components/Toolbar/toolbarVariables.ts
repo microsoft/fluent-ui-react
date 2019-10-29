@@ -18,8 +18,6 @@ export const toolbarColorAreas = stringLiteralsArray(
   // custom
   'menuItemForegroundHover',
   'menuItemBackgroundHover',
-  'menuItemForegroundFocus',
-  'menuItemBackgroundFocus',
 )
 
 export type ToolbarColorSchemeMapping = TeamsSchemeMappingWithAreas<
@@ -58,8 +56,6 @@ export interface ToolbarVariables {
   menuItemForeground: string
   menuItemForegroundHover: string
   menuItemBackgroundHover: string
-  menuItemBackgroundFocus: string
-  menuItemForegroundFocus: string
   menuItemForegroundDisabled: string
   menuItemBackgroundDisabled: string
   menuItemPadding: string
@@ -75,16 +71,12 @@ export default (siteVars: any): ToolbarVariables => ({
   colorScheme: pickValuesFromColorScheme(
     extendColorScheme(siteVars.colorScheme, {
       default: {
-        borderFocus: siteVars.colorScheme.brand.borderFocus1,
         foregroundHover: siteVars.colorScheme.brand.foregroundHover,
         backgroundHover: 'transparent',
-        backgroundFocus: 'transparent',
         foregroundActive: siteVars.colorScheme.brand.foregroundActive,
 
         menuItemForegroundHover: siteVars.colorScheme.default.foregroundHover,
         menuItemBackgroundHover: siteVars.colorScheme.default.backgroundHover,
-        menuItemForegroundFocus: siteVars.colorScheme.default.foregroundHover,
-        menuItemBackgroundFocus: siteVars.colorScheme.default.backgroundHover,
       },
     }),
     toolbarColorAreas,
@@ -119,8 +111,6 @@ export default (siteVars: any): ToolbarVariables => ({
   menuItemForeground: undefined,
   menuItemForegroundHover: undefined,
   menuItemBackgroundHover: undefined,
-  menuItemForegroundFocus: undefined,
-  menuItemBackgroundFocus: undefined,
   menuItemForegroundDisabled: undefined,
   menuItemBackgroundDisabled: 'transparent',
   menuItemPadding: `${pxToRem(9)} ${pxToRem(16)}`,
