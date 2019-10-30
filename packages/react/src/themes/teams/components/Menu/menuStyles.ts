@@ -4,7 +4,7 @@ import { MenuProps, MenuState } from '../../../../components/Menu/Menu'
 import { MenuVariables } from './menuVariables'
 import { backportComponentStyle } from '../../../../lib/resolveComponentRules'
 
-type MenuPropsAndState = MenuProps & MenuState & { root?: any; divider?: any }
+type MenuPropsAndState = MenuProps & MenuState
 
 const menuStyles: ComponentSelectorsAndStyles<MenuPropsAndState, MenuVariables> = v => {
   return {
