@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import { pxToRem } from '../../../../lib'
+import { pxToRem, createAnimationStyles } from '../../../../lib'
 import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import Loader from '../../../../components/Loader/Loader'
 import { ButtonProps } from '../../../../components/Button/Button'
@@ -8,7 +8,8 @@ import getBorderFocusStyles from '../../getBorderFocusStyles'
 import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 
 const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = {
-  root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
+  root: ({ props: p, variables: v, theme }): ICSSInJSStyle => {
+    const { siteVariables } = theme
     const { borderWidth } = siteVariables
 
     const borderFocusStyles = getBorderFocusStyles({
@@ -55,6 +56,7 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         },
 
         ':active': {
+          ...createAnimationStyles('scaleDownSoft', theme),
           color: v.colorActive,
           backgroundColor: v.backgroundColorActive,
           borderColor: v.borderColorActive,
@@ -131,6 +133,7 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
           boxShadow: v.primaryBoxShadow,
 
           ':active': {
+            ...createAnimationStyles('scaleDownSoft', theme),
             backgroundColor: v.primaryBackgroundColorActive,
             boxShadow: 'none',
           },
@@ -154,6 +157,7 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         cursor: 'default',
         color: v.colorDisabled,
         boxShadow: 'none',
+        pointerEvents: 'none',
         ':hover': {
           color: v.colorDisabled,
         },
