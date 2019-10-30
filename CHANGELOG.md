@@ -18,6 +18,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### Features
+- Add bounce animation to button clicks in Teams theme @notandrew ([#1724](https://github.com/stardust-ui/react/pull/1724))
 - Add `inverted` prop and style for `Button` for Teams theme @notandrew ([#2076](https://github.com/stardust-ui/react/pull/2076))
 
 <!--------------------------------[ v0.40.2 ]------------------------------- -->
