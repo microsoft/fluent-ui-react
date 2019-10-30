@@ -38,6 +38,7 @@ export interface ButtonVariables {
   invertedColor: string
   invertedColorHover: string
   invertedColorFocus: string
+  invertedColorFocusVisible: string
   invertedBackgroundColor: string
   invertedBackgroundColorActive: string
   invertedBackgroundColorHover: string
@@ -108,6 +109,7 @@ export default (siteVars: any): ButtonVariables => ({
   invertedColor: siteVars.colors.white,
   invertedColorHover: siteVars.colors.white,
   invertedColorFocus: siteVars.colors.white,
+  invertedColorFocusVisible: siteVars.colors.white,
   invertedBackgroundColor: 'transparent',
   invertedBackgroundColorActive: siteVars.colors.silver[700],
   invertedBackgroundColorHover: siteVars.colors.silver[800],
