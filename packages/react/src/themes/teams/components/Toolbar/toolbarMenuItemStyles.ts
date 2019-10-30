@@ -12,6 +12,7 @@ const toolbarMenuItemStyles = {
     })
 
     return {
+      position: 'relative',
       color: v.menuItemForeground || colors.foreground1,
       borderWidth: v.menuBorderWidth,
       backgroundColor: 'transparent',
@@ -22,7 +23,6 @@ const toolbarMenuItemStyles = {
       maxWidth: '100%',
       padding: v.menuItemPadding,
       cursor: 'pointer',
-      position: 'relative',
 
       ':focus': {
         outline: 0,
@@ -47,15 +47,15 @@ const toolbarMenuItemStyles = {
   },
 
   activeIndicator: ({ variables: v }): ICSSInJSStyle => ({
-    float: 'right',
-    position: 'fixed',
+    position: 'absolute',
     right: pxToRem(7),
+    top: pxToRem(7),
   }),
 
   submenuIndicator: ({ variables: v }): ICSSInJSStyle => ({
-    float: 'right',
-    position: 'fixed',
+    position: 'absolute',
     right: pxToRem(7),
+    top: pxToRem(7),
   }),
 
   wrapper: () => ({
