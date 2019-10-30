@@ -98,6 +98,13 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
       { preventOverflow: { padding: 0 } },
       { flip: { padding: 0, flipVariationsByContent: true } },
       /**
+       * This prevents blurrines in chrome, when the coordinates are odd numbers
+       * alternative would be to use `fn`, call _PopperJS.default.Defaults.modifiers.computeStyle.fn(data, options)
+       * and manipulate the computeed style or ask popper to fix it
+       * but since there is presumably only handful of poppers displayed on the page, the performance impact should be minimal
+       */
+      { computeStyle: { gpuAcceleration: false } },
+      /**
        * When the popper box is placed in the context of a scrollable element, we need to set
        * preventOverflow.escapeWithReference to true and flip.boundariesElement to 'scrollParent' (default is 'viewport')
        * so that the popper box will stick with the targetRef when we scroll targetRef out of the viewport.

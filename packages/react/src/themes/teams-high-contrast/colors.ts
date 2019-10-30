@@ -226,7 +226,7 @@ export const colorScheme: ColorSchemeMapping = {
     foreground2: colors.black,
 
     background: colors.white,
-    background1: colors.white,
+    background1: colors.black,
     background2: colors.black,
     background3: accessibleYellow,
 
