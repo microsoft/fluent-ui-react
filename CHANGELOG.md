@@ -31,6 +31,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Features
 - Add `menu` prop on `ToolbarMenuItem` component @mnajdova ([#1984](https://github.com/stardust-ui/react/pull/1984))
+- Add `unstable_overflow` to `ChatMessage` to provide more flexible position in overflow containers @layershifter ([#2050](https://github.com/stardust-ui/react/pull/2050))
 
 ### Documentation
 - Editor Toolbar prototype: Fix overflow menu overflowing in Portal window @miroslavstastny ([#2053](https://github.com/stardust-ui/react/pull/2053))
