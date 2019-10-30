@@ -1,13 +1,20 @@
 import { ICSSInJSStyle } from '../../../types'
 import { getColorScheme } from '../../colors'
 import { pxToRem } from '../../../../lib'
+import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 const toolbarMenuItemStyles = {
-  root: ({ props: p, variables: v }): ICSSInJSStyle => {
+  root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
     const colors = getColorScheme(v.colorScheme)
+    const borderFocusStyles = getBorderFocusStyles({
+      siteVariables,
+      borderRadius: 0,
+    })
 
     return {
+      position: 'relative',
       color: v.menuItemForeground || colors.foreground1,
+      borderWidth: v.menuBorderWidth,
       backgroundColor: 'transparent',
       borderColor: 'transparent',
       display: 'flex',
@@ -26,10 +33,7 @@ const toolbarMenuItemStyles = {
         backgroundColor: v.menuItemBackgroundHover || colors.menuItemBackgroundHover,
       },
 
-      ':focus-visible': {
-        color: v.menuItemForegroundFocus || colors.menuItemForegroundFocus,
-        backgroundColor: v.menuItemBackgroundFocus || colors.menuItemBackgroundFocus,
-      },
+      ':focus-visible': borderFocusStyles[':focus-visible'],
 
       ...(p.disabled && {
         cursor: 'default',
@@ -43,9 +47,15 @@ const toolbarMenuItemStyles = {
   },
 
   activeIndicator: ({ variables: v }): ICSSInJSStyle => ({
-    float: 'right',
-    position: 'fixed',
+    position: 'absolute',
     right: pxToRem(7),
+    top: pxToRem(7),
+  }),
+
+  submenuIndicator: ({ variables: v }): ICSSInJSStyle => ({
+    position: 'absolute',
+    right: pxToRem(7),
+    top: pxToRem(7),
   }),
 
   wrapper: () => ({

@@ -34,6 +34,7 @@ describe('getKeyDownHandlers', () => {
       expect(keyHandlers.hasOwnProperty(partElementName)).toBeTruthy()
       expect(keyHandlers[partElementName].hasOwnProperty('onKeyDown')).toBeTruthy()
     })
+
     test('for few component elements', () => {
       const actions = {
         testAction: () => {},
@@ -54,6 +55,7 @@ describe('getKeyDownHandlers', () => {
       expect(keyHandlers[partElementName].hasOwnProperty('onKeyDown')).toBeTruthy()
       expect(keyHandlers[anotherPartName].hasOwnProperty('onKeyDown')).toBeTruthy()
     })
+
     test('when there is 1 common action and few others that are not common', () => {
       const actions = {
         uncommonAction: () => {},
@@ -71,6 +73,7 @@ describe('getKeyDownHandlers', () => {
       expect(keyHandlers.hasOwnProperty(partElementName)).toBeTruthy()
       expect(keyHandlers[partElementName].hasOwnProperty('onKeyDown')).toBeTruthy()
     })
+
     test('and action should be invoked if keydown event has keycode mapped to that action', () => {
       const actions = {
         testAction: jest.fn(),
@@ -92,6 +95,34 @@ describe('getKeyDownHandlers', () => {
       expect(actions.testAction).toHaveBeenCalled()
       expect(actions.otherAction).toHaveBeenCalled()
       expect(actions.anotherTestAction).not.toHaveBeenCalled()
+    })
+
+    test('should ignore actions with no keyCombinations', () => {
+      const actions = {
+        testAction: jest.fn(),
+        actionFalse: jest.fn(),
+        actionNull: jest.fn(),
+        actionEmpty: jest.fn(),
+      }
+
+      actionsDefinition[partElementName].actionFalse = {
+        keyCombinations: false,
+      }
+      actionsDefinition[partElementName].actionNull = {
+        keyCombinations: null,
+      }
+      actionsDefinition[partElementName].actionEmpty = {
+        keyCombinations: [],
+      }
+
+      const keyHandlers = getKeyDownHandlers(actions, actionsDefinition)
+
+      keyHandlers[partElementName] &&
+        keyHandlers[partElementName]['onKeyDown'](eventArg(testKeyCode))
+      expect(actions.testAction).toHaveBeenCalled()
+      expect(actions.actionFalse).not.toHaveBeenCalled()
+      expect(actions.actionNull).not.toHaveBeenCalled()
+      expect(actions.actionEmpty).not.toHaveBeenCalled()
     })
 
     describe('with respect of RTL', () => {
@@ -132,6 +163,38 @@ describe('getKeyDownHandlers', () => {
         expect(actions.actionOnLeftArrow).not.toHaveBeenCalled()
         expect(actions.actionOnRightArrow).toHaveBeenCalled()
       })
+
+      test('should ignore actions with no keyCombinations', () => {
+        const actions = {
+          actionOnRightArrow: jest.fn(),
+          actionFalse: jest.fn(),
+          actionNull: jest.fn(),
+          actionEmpty: jest.fn(),
+        }
+
+        actionsDefinition[partElementName].actionOnRightArrow = {
+          keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
+        }
+
+        actionsDefinition[partElementName].actionFalse = {
+          keyCombinations: false,
+        }
+        actionsDefinition[partElementName].actionNull = {
+          keyCombinations: null,
+        }
+        actionsDefinition[partElementName].actionEmpty = {
+          keyCombinations: [],
+        }
+
+        const keyHandlers = getKeyDownHandlers(actions, actionsDefinition, true)
+
+        keyHandlers[partElementName] &&
+          keyHandlers[partElementName]['onKeyDown'](eventArg(keyboardKey.ArrowLeft))
+        expect(actions.actionOnRightArrow).toHaveBeenCalled()
+        expect(actions.actionFalse).not.toHaveBeenCalled()
+        expect(actions.actionNull).not.toHaveBeenCalled()
+        expect(actions.actionEmpty).not.toHaveBeenCalled()
+      })
     })
   })
 
@@ -142,17 +205,43 @@ describe('getKeyDownHandlers', () => {
       const keyHandlers = getKeyDownHandlers(actions, actionsDefinition)
       expect(keyHandlers.hasOwnProperty(partElementName)).toBeFalsy()
     })
-    test("when acessibility's actionsDefinition is null", () => {
+
+    test("when accessibility's actionsDefinition is null", () => {
       const actions = { otherAction: () => {} }
       const keyHandlers = getKeyDownHandlers(actions, null)
 
       expect(keyHandlers.hasOwnProperty(partElementName)).toBeFalsy()
     })
+
     test('there are not common actions and actions definition', () => {
       const actions = { otherAction: () => {} }
       const keyHandlers = getKeyDownHandlers(actions, actionsDefinition)
 
       expect(keyHandlers.hasOwnProperty(partElementName)).toBeFalsy()
+    })
+
+    test('when action definition has no keyCombinations', () => {
+      const actions = {
+        testAction: () => {},
+        actionFalse: () => {},
+        actionNull: () => {},
+        actionEmpty: () => {},
+      }
+
+      actionsDefinition.anotherPart = {
+        actionFalse: {
+          keyCombinations: false,
+        },
+        actionNull: {
+          keyCombinations: null,
+        },
+        actionEmpty: {
+          keyCombinations: [],
+        },
+      }
+
+      const keyHandlers = getKeyDownHandlers(actions, actionsDefinition)
+      expect(keyHandlers.hasOwnProperty('anotherPart')).toBeFalsy()
     })
   })
 })
