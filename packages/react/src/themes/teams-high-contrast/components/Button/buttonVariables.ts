@@ -15,6 +15,14 @@ export default (siteVars: any): Partial<ButtonVariables> & ButtonHighContrastVar
     primaryBackgroundColorActive: siteVars.colors.white,
     primaryBackgroundColorFocus: siteVars.accessibleCyan,
 
+    invertedColor: siteVars.colors.white,
+    invertedColorHover: siteVars.colors.black,
+    invertedColorFocus: siteVars.colors.black,
+    invertedBackgroundColorActive: siteVars.accessibleYellow,
+    invertedBackgroundColorHover: siteVars.accessibleYellow,
+    invertedBorderColor: siteVars.colors.white,
+    invertedBorderColorHover: 'transparent',
+
     boxShadow: 'none',
     primaryBoxShadow: 'none',
   }

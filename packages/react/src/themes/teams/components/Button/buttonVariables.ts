@@ -35,6 +35,16 @@ export interface ButtonVariables {
   primaryBackgroundColorDisabled: string
   primaryBorderColor: string
 
+  invertedColor: string
+  invertedColorHover: string
+  invertedColorFocus: string
+  invertedBackgroundColor: string
+  invertedBackgroundColorActive: string
+  invertedBackgroundColorHover: string
+  invertedBackgroundColorFocus: string
+  invertedBorderColor: string
+  invertedBorderColorHover: string
+
   circularBorderRadius: string
 
   textColor: string
@@ -94,6 +104,16 @@ export default (siteVars: any): ButtonVariables => ({
   primaryBackgroundColorHover: siteVars.colorScheme.brand.backgroundHover,
   primaryBackgroundColorDisabled: siteVars.colorScheme.default.backgroundDisabled,
   primaryBorderColor: 'transparent',
+
+  invertedColor: siteVars.colors.white,
+  invertedColorHover: siteVars.colors.white,
+  invertedColorFocus: siteVars.colors.white,
+  invertedBackgroundColor: 'transparent',
+  invertedBackgroundColorActive: siteVars.colors.silver[700],
+  invertedBackgroundColorHover: siteVars.colors.silver[800],
+  invertedBackgroundColorFocus: siteVars.colors.silver[700],
+  invertedBorderColor: siteVars.colors.silver[600],
+  invertedBorderColorHover: siteVars.colors.silver[600],
 
   circularBorderRadius: pxToRem(999),
 

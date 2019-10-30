@@ -149,6 +149,33 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
           },
         }),
 
+      ...(p.inverted && {
+        outline: 0,
+        color: v.invertedColor,
+        backgroundColor: v.invertedBackgroundColor,
+        borderColor: v.invertedBorderColor,
+
+        ':hover': {
+          color: v.invertedColorHover,
+          backgroundColor: v.invertedBackgroundColorHover,
+          borderColor: v.invertedBorderColorHover,
+        },
+
+        ':focus': {
+          ...borderFocusStyles[':focus'],
+          boxShadow: 'none',
+          color: v.invertedColorHover,
+          ':active': {
+            backgroundColor: v.invertedBackgroundColorActive,
+          },
+        },
+        ':focus-visible': {
+          ...borderFocusStyles[':focus-visible'],
+          color: v.invertedColorHover,
+          backgroundColor: v.invertedBackgroundColorActive,
+        },
+      }),
+
       // Overrides for "disabled" buttons
       ...(p.disabled && {
         cursor: 'default',
