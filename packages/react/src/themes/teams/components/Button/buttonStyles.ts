@@ -133,6 +133,7 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
           boxShadow: v.primaryBoxShadow,
 
           ':active': {
+            ...createAnimationStyles('scaleDownSoft', theme),
             backgroundColor: v.primaryBackgroundColorActive,
             boxShadow: 'none',
           },
