@@ -23,7 +23,6 @@ const toolbarMenuItemStyles = {
       maxWidth: '100%',
       padding: v.menuItemPadding,
       cursor: 'pointer',
-      position: 'relative',
 
       ':focus': {
         outline: 0,
