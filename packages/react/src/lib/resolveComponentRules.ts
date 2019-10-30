@@ -1,4 +1,4 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../themes/types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../themes/types'
 
 export function isObject(item): boolean {
   return typeof item === 'object' && !Array.isArray(item) && item !== null
@@ -31,9 +31,8 @@ const reduceSelectorStyleTuples = (props, tuples: [object, ICSSInJSStyle][]): IC
     if (Array.isArray(selector)) {
       selector.forEach(sel => (isMatch(props, sel) ? deepMergeObjects(acc, style) : acc))
       return acc
-    } 
-      return isMatch(props, selector) ? deepMergeObjects(acc, style) : acc
-    
+    }
+    return isMatch(props, selector) ? deepMergeObjects(acc, style) : acc
   }, {})
 }
 
@@ -47,7 +46,7 @@ const resolveComponentRules = (rules, props = {}): ICSSInJSStyle => {
 
 // TODO: temporary during migration to selector/style tuple styles
 // Backports selector/style tuple styles to previous signature
-export const backportComponentStyle = (selectorStyleFunc): ComponentSlotStylesInput => {
+export const backportComponentStyle = (selectorStyleFunc): ComponentSlotStylesPrepared => {
   if (typeof selectorStyleFunc !== 'function') {
     return selectorStyleFunc
   }
