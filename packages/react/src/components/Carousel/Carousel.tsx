@@ -1,5 +1,5 @@
 import * as customPropTypes from '@stardust-ui/react-proptypes'
-import { tabListBehavior, carouselBehavior } from '@stardust-ui/accessibility'
+import { carouselBehavior } from '@stardust-ui/accessibility'
 import * as React from 'react'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -15,14 +15,13 @@ import {
   childrenExist,
   ChildrenComponentProps,
   getOrGenerateIdFromShorthand,
-  SizeValue,
 } from '../../lib'
 import { WithAsProp, withSafeTypeForAs, ShorthandCollection, ShorthandValue } from '../../types'
 import Button, { ButtonProps } from '../Button/Button'
 import CarouselItem, { CarouselItemProps } from './CarouselItem'
-import Menu, { MenuProps } from '../Menu/Menu'
 import Text from '../Text/Text'
-import { MenuItemProps } from '../Menu/MenuItem'
+import CarouselNavigation, { CarouselNavigationProps } from './CarouselNavigation'
+import { CarouselNavigationItemProps } from './CarouselNavigationItem'
 
 export interface CarouselProps extends UIComponentProps, ChildrenComponentProps {
   /**
@@ -41,6 +40,11 @@ export interface CarouselProps extends UIComponentProps, ChildrenComponentProps 
 
   /** Shorthand array of props for CarouselItem. */
   items?: ShorthandCollection<CarouselItemProps>
+
+  /** Shorthand array of props for the buttons of the tabs navigation. */
+  navigation?:
+    | ShorthandValue<CarouselNavigationProps>
+    | ShorthandCollection<CarouselNavigationItemProps>
 
   /**
    * A Carousel can position its navigation to the bottom by default,
@@ -68,9 +72,6 @@ export interface CarouselProps extends UIComponentProps, ChildrenComponentProps 
    * fade their appearance or just hide and show without any animation.
    */
   slideTransition?: 'translate' | 'fade' | 'display'
-
-  /** Shorthand array of props for the buttons of the tabs navigation. */
-  tabList?: ShorthandValue<MenuProps> | ShorthandCollection<MenuItemProps>
 }
 
 export interface CarouselState {
@@ -96,7 +97,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
     items: customPropTypes.collectionShorthand,
     paddleNext: customPropTypes.itemShorthand,
     paddlePrevious: customPropTypes.itemShorthand,
-    tabList: PropTypes.oneOfType([
+    navigation: PropTypes.oneOfType([
       customPropTypes.collectionShorthand,
       customPropTypes.itemShorthand,
     ]),
@@ -122,22 +123,22 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
     moveNextAndFocusContainerIfLast: e => {
       e.preventDefault()
       const { activeIndex } = this.state
-      const { cyclical, items, tabList } = this.props
+      const { cyclical, items, navigation } = this.props
 
       this.handleNext(e, false)
 
-      if (!tabList && activeIndex >= items.length - 2 && !cyclical) {
+      if (!navigation && activeIndex >= items.length - 2 && !cyclical) {
         this.paddlePreviousRef.current.focus()
       }
     },
     movePreviousAndFocusContainerIfFirst: e => {
       e.preventDefault()
       const { activeIndex } = this.state
-      const { cyclical, tabList } = this.props
+      const { cyclical, navigation } = this.props
 
       this.handlePrevious(e, false)
 
-      if (!tabList && activeIndex <= 1 && !cyclical) {
+      if (!navigation && activeIndex <= 1 && !cyclical) {
         this.paddleNextRef.current.focus()
       }
     },
@@ -316,29 +317,22 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
   }
 
   renderNavigation = styles => {
-    const { tabList, items } = this.props
+    const { navigation, items } = this.props
 
     if (!items || !items.length) {
       return null
     }
 
-    const { activeIndex, itemIds } = this.state
+    const { activeIndex } = this.state
 
-    return tabList ? (
-      Menu.create(tabList, {
+    return navigation ? (
+      CarouselNavigation.create(navigation, {
         defaultProps: {
-          accessibility: tabListBehavior,
           iconOnly: true,
           activeIndex,
-          styles: styles.navigationContainer,
-          items: _.times(items.length, index => ({
-            key: index,
-            icon: { name: 'stardust-circle', size: 'smallest' as SizeValue },
-            'aria-controls': itemIds[index],
-          })),
         },
-        overrideProps: (predefinedProps: MenuItemProps) => ({
-          onItemClick: (e: React.SyntheticEvent, itemProps: MenuItemProps) => {
+        overrideProps: (predefinedProps: CarouselNavigationItemProps) => ({
+          onItemClick: (e: React.SyntheticEvent, itemProps: CarouselNavigationItemProps) => {
             const { index } = itemProps
 
             this.setActiveIndex(index, true)
@@ -348,6 +342,28 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
         }),
       })
     ) : (
+      // Menu.create(tabList, {
+      //   defaultProps: {
+      //     accessibility: tabListBehavior,
+      //     iconOnly: true,
+      //     activeIndex,
+      //     styles: styles.navigationContainer,
+      //     items: _.times(items.length, index => ({
+      //       key: index,
+      //       icon: { name: 'stardust-circle', size: 'smallest' as SizeValue },
+      //       'aria-controls': itemIds[index],
+      //     })),
+      //   },
+      //   overrideProps: (predefinedProps: MenuItemProps) => ({
+      //     onItemClick: (e: React.SyntheticEvent, itemProps: MenuItemProps) => {
+      //       const { index } = itemProps
+
+      //       this.setActiveIndex(index, true)
+
+      //       _.invoke(predefinedProps, 'onClick', e, itemProps)
+      //     },
+      //   }),
+      // })
       <Text content={`${activeIndex + 1} of ${items.length}`} />
     )
   }

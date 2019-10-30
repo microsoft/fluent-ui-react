@@ -102,3 +102,4 @@ export { default as SplitButton } from './components/SplitButton/splitButtonVari
 
 export { default as Carousel } from './components/Carousel/carouselVariables'
 export { default as CarouselItem } from './components/Carousel/carouselItemVariables'
+export { default as CarouselNavigation } from './components/Carousel/carouselNavigationVariables'

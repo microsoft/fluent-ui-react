@@ -116,3 +116,7 @@ export { default as TooltipContent } from './components/Tooltip/tooltipContentSt
 
 export { default as Carousel } from './components/Carousel/carouselStyles'
 export { default as CarouselItem } from './components/Carousel/carouselItemStyles'
+export { default as CarouselNavigation } from './components/Carousel/carouselNavigationStyles'
+export {
+  default as CarouselNavigationItem,
+} from './components/Carousel/carouselNavigationItemStyles'

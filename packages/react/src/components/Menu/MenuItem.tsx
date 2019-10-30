@@ -233,7 +233,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         >
           {icon &&
-            Icon.create(this.props.icon, {
+            Icon.create(icon, {
               defaultProps: {
                 xSpacing: !!content ? 'after' : 'none',
                 styles: styles.icon,
