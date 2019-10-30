@@ -102,6 +102,8 @@ export interface ChatMessageProps
 
   /** A message can format the reactions group to appear at the start or the end of the message. */
   reactionGroupPosition?: 'start' | 'end'
+
+  id?: string
 }
 
 export interface ChatMessageState {

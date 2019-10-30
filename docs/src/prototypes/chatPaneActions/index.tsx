@@ -47,6 +47,7 @@ const actionMenu = (
   showPopover: EventSource,
   setShowPopover: React.Dispatch<React.SetStateAction<EventSource>>,
   buttonRef: React.MutableRefObject<HTMLElement>,
+  messageId: string,
 ) => {
   console.log(`show popover variable: ${showPopover}`)
   return render =>
@@ -71,15 +72,30 @@ const actionMenu = (
                 styles={{ opacity: 0, width: '0px', height: '0px' }}
               />
             </Ref>
-            {!!showPopover && <C {...props} />}
+            {!!showPopover && (
+              <div onFocus={e => handleFocusInToolbar(e, messageId)}>
+                {' '}
+                <C {...props} />{' '}
+              </div>
+            )}
           </div>
         ) : (
-          <C {...props} />
+          <div onFocus={e => handleFocusInToolbar(e, messageId)}>
+            {' '}
+            <C {...props} />{' '}
+          </div>
         ),
     )
 }
 
+const handleFocusInToolbar = (e, messageId) => {
+  console.log(`going to remove "aria-labelledby" attr on messageId is: ${messageId}`)
+  document.querySelector(`#${messageId}`).removeAttribute('aria-labelledby')
+  e.stopPropagation()
+}
+
 const CustomMessage = (props: ChatMessageProps) => {
+  const messageId = props.id
   const [showPopover, setShowPopover] = React.useState<EventSource>(null)
   const [triggerEvent, setTriggerEvent] = React.useState<EventSource>(null)
   const buttonRef = React.useRef<HTMLElement>()
@@ -141,15 +157,26 @@ const CustomMessage = (props: ChatMessageProps) => {
         role="group"
         aria-roledescription="message" // this needs to be translated
         {...props}
-        onFocus={e => show('focus', e)}
+        onFocus={e => handleFocusOnMessage(show, e, messageId)}
         onBlur={handleBlur}
         onMouseEnter={e => show('mouse', e)}
         onMouseLeave={() => hide('mouse')}
-        actionMenu={actionMenu(showPopover, setShowPopover, buttonRef)}
+        actionMenu={actionMenu(showPopover, setShowPopover, buttonRef, messageId)}
       />
     </Ref>
   )
 }
+
+const handleFocusOnMessage = (show, e, messageId) => {
+  show('focus', e)
+  if (!document.querySelector(`#${messageId}`).hasAttribute('aria-labelledby')) {
+    console.log(`going to add "aria-labelledby" attr on messageId is: ${messageId}`)
+    document.querySelector(`#${messageId}`).setAttribute('aria-labelledby', messageId)
+  } else {
+    console.log(`"aria-labelledby" attr on messageId: ${messageId} exists`)
+  }
+}
+
 const ChatPaneActions = () => {
   return (
     <div>
@@ -158,10 +185,17 @@ const ChatPaneActions = () => {
           key: `a${i}`,
           message: (
             <CustomMessage
+              id={`message-${i}`}
+              aria-labelledby={`message-conent-${i}`}
               author="Jane Doe"
               content={
-                <div>
-                  <a href="/">Link</a> Hover me to see the actions <a href="/">Some Link</a>
+                <div id={`message-conent-${i}`}>
+                  {`${i}: `}
+                  Stardust UI provides extensible vanilla JavaScript solutions to component state,
+                  styling, and accessibility. These powerful features are exposed behind simple APIs
+                  based on natural language. Stardust UI React is being built as an exemplar of the
+                  Stardust UI design language, component specifications, and utilities.
+                  <a href="/">Link</a>Hover me to see the actions <a href="/">Some Link</a>
                 </div>
               }
               timestamp="Yesterday, 10:15 PM"
