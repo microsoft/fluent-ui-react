@@ -239,6 +239,7 @@ export const colorScheme: ColorSchemeMapping<ColorScheme, TeamsColorNames> = {
 
     foregroundHover: colors.grey[750],
     foregroundHover1: colors.white,
+    foregroundHover2: colors.white,
 
     backgroundHover: colors.grey[100],
     backgroundHover1: colors.grey[150],

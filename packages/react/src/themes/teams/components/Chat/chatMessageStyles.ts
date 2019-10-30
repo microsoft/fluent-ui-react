@@ -62,6 +62,10 @@ const chatMessageStyles: ComponentSlotStylesPrepared<
         [`> .${ChatMessage.slotClassNames.actionMenu}`]: {
           opacity: 1,
           width: 'auto',
+
+          '[x-out-of-boundaries]': {
+            opacity: 0,
+          },
         },
       },
     }),
@@ -105,6 +109,10 @@ const chatMessageStyles: ComponentSlotStylesPrepared<
       opacity: v.showActionMenu ? 1 : 0,
       width: v.showActionMenu ? 'auto' : 0,
     }),
+
+    '[x-out-of-boundaries]': {
+      opacity: 0,
+    },
   }),
   author: ({ props: p, variables: v }): ICSSInJSStyle => ({
     ...((p.mine || p.attached === 'bottom' || p.attached === true) && screenReaderContainerStyles),
