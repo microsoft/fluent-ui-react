@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.40.2 ]------------------------------- -->
+## [v0.40.2](https://github.com/stardust-ui/react/tree/v0.40.2) (2019-10-30)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.40.1...v0.40.2)
+
 ### Fixes
 - Update `call-missed-line` icon in Teams theme @codepretty ([#2059](https://github.com/stardust-ui/react/pull/2059))
 - Show debug panel correctly for components with no owner @miroslavstastny ([#2055](https://github.com/stardust-ui/react/pull/2055))
