@@ -69,6 +69,11 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
   const destroyInstance = React.useCallback(() => {
     if (popperRef.current) {
       popperRef.current.destroy()
+      if (popperRef.current.popper) {
+        // Popper keeps a reference to the DOM node, which needs to be cleaned up
+        // temporarily fix it here until fixed properly in popper
+        popperRef.current.popper = null
+      }
       popperRef.current = null
     }
   }, [])

@@ -27,6 +27,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fixing a core keydown disconnect issue @dzearing ([#2056](https://github.com/stardust-ui/react/pull/2056))
 - Fix blurry content of Popup @jurokapsiar ([#2067](https://github.com/stardust-ui/react/pull/2067))
 - MenuButton: do not force pinned in MenuButton @jurokapsiar ([#2066](https://github.com/stardust-ui/react/pull/2066))
+- Clean up popper element reference after destroy @jurokapsiar ([#2062](https://github.com/stardust-ui/react/pull/2062))
 
 ### Features
 - Add `menu` prop on `ToolbarMenuItem` component @mnajdova ([#1984](https://github.com/stardust-ui/react/pull/1984))
