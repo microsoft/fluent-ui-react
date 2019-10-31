@@ -239,6 +239,7 @@ export const colorScheme: ColorSchemeMapping<ColorScheme, TeamsColorNames> = {
 
     foregroundHover: colors.grey[750],
     foregroundHover1: colors.white,
+    foregroundHover2: colors.white,
 
     backgroundHover: colors.grey[100],
     backgroundHover1: colors.grey[150],
@@ -454,7 +455,10 @@ export const colorScheme: ColorSchemeMapping<ColorScheme, TeamsColorNames> = {
   silver: createColorScheme({
     foreground: colors.white,
     foreground1: colors.silver[200],
+    foregroundHover: colors.white,
+    foregroundPressed: colors.white,
     border: colors.silver[600],
+    background: 'transparent',
     backgroundHover: colors.silver[800],
     borderHover: colors.silver[600],
     backgroundPressed: colors.silver[700],
