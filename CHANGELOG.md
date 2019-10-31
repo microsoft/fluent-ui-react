@@ -16,7 +16,7 @@
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-### BREAKING CHANGES
+### Fixes
 - Update Silver color scheme, changing `backgroundHover` and `backgroundPressed` for high-contrast theme
 
 ### Features
