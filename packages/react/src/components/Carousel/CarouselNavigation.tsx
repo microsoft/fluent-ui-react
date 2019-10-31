@@ -41,6 +41,18 @@ export interface CarouselNavigationProps extends UIComponentProps, ChildrenCompo
    * @param {object} data - All item props.
    */
   onItemClick?: ComponentEventHandler<CarouselNavigationItemProps>
+
+  /** The carousel navigation can have primary type. */
+  primary?: boolean
+
+  /** The carousel navigation can have secondary type. */
+  secondary?: boolean
+
+  /** Carousel navigation items can by highlighted using underline. */
+  underlined?: boolean
+
+  /** A vertical carousel navigation displays elements vertically. */
+  vertical?: boolean
 }
 
 class CarouselNavigation extends UIComponent<WithAsProp<CarouselNavigationProps>> {
@@ -58,6 +70,10 @@ class CarouselNavigation extends UIComponent<WithAsProp<CarouselNavigationProps>
     iconOnly: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     onItemClick: PropTypes.func,
+    primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
+    secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
+    underlined: PropTypes.bool,
+    vertical: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -77,13 +93,17 @@ class CarouselNavigation extends UIComponent<WithAsProp<CarouselNavigationProps>
     variables: ComponentVariablesObject,
     accessibility: ReactAccessibilityBehavior,
   ) => {
-    const { iconOnly, items } = this.props
+    const { iconOnly, items, primary, secondary, underlined, vertical } = this.props
 
     return _.map(items, (item, index) =>
       CarouselNavigationItem.create(item, {
         defaultProps: {
           iconOnly,
           index,
+          primary,
+          secondary,
+          underlined,
+          vertical,
         },
         overrideProps: this.handleItemOverrides,
       }),

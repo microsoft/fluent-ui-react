@@ -342,28 +342,6 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
         }),
       })
     ) : (
-      // Menu.create(tabList, {
-      //   defaultProps: {
-      //     accessibility: tabListBehavior,
-      //     iconOnly: true,
-      //     activeIndex,
-      //     styles: styles.navigationContainer,
-      //     items: _.times(items.length, index => ({
-      //       key: index,
-      //       icon: { name: 'stardust-circle', size: 'smallest' as SizeValue },
-      //       'aria-controls': itemIds[index],
-      //     })),
-      //   },
-      //   overrideProps: (predefinedProps: MenuItemProps) => ({
-      //     onItemClick: (e: React.SyntheticEvent, itemProps: MenuItemProps) => {
-      //       const { index } = itemProps
-
-      //       this.setActiveIndex(index, true)
-
-      //       _.invoke(predefinedProps, 'onClick', e, itemProps)
-      //     },
-      //   }),
-      // })
       <Text content={`${activeIndex + 1} of ${items.length}`} />
     )
   }

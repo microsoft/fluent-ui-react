@@ -46,6 +46,18 @@ export interface CarouselNavigationItemProps
    */
   onClick?: ComponentEventHandler<CarouselNavigationItemProps>
 
+  /** The carousel navigation item can have primary type. */
+  primary?: boolean
+
+  /** The carousel navigation item can have secondary type. */
+  secondary?: boolean
+
+  /** Carousel navigation items can by highlighted using underline. */
+  underlined?: boolean
+
+  /** A vertical carousel navigation displays elements vertically. */
+  vertical?: boolean
+
   /** Shorthand for the wrapper component. */
   wrapper?: ShorthandValue<BoxProps>
 }
@@ -74,6 +86,10 @@ class CarouselNavigationItem extends UIComponent<
     iconOnly: PropTypes.bool,
     index: PropTypes.number,
     onClick: PropTypes.func,
+    primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
+    secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
+    underlined: PropTypes.bool,
+    vertical: PropTypes.bool,
     wrapper: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
   }
 
