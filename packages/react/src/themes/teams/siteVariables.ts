@@ -55,6 +55,7 @@ export const fontWeightBold = 700
 //
 // LINE HEIGHTS
 //
+export const lineHeightDefault = 1
 export const lineHeightSmaller = 1.2
 export const lineHeightSmall = 1.3333
 export const lineHeightMedium = 1.4286
