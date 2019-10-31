@@ -149,6 +149,8 @@ export const UNSAFE_typed = <TComponentType>(componentType: TComponentType) => {
   }
 }
 
+export type PerformanceStats = Record<string, { count: number; ms: number }>
+
 // ========================================================
 // Provider's context
 // ========================================================
@@ -159,6 +161,7 @@ export interface ProviderContextInput {
   disableAnimations?: boolean
   target?: Document
   theme?: ThemeInput
+  performanceStats?: PerformanceStats
 }
 
 export interface ProviderContextPrepared {
@@ -167,6 +170,6 @@ export interface ProviderContextPrepared {
   disableAnimations: boolean
   target: Document
   theme: ThemePrepared
-  originalThemes: (ThemeInput | undefined)[]
+  performanceStats: PerformanceStats | undefined
   _internal_resolvedComponentVariables: Record<string, object>
 }

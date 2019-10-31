@@ -26,6 +26,7 @@ import {
   ProviderContextInput,
   ProviderContextPrepared,
   withSafeTypeForAs,
+  PerformanceStats,
 } from '../../types'
 import mergeContexts from '../../lib/mergeProviderContexts'
 
@@ -37,6 +38,7 @@ export interface ProviderProps extends ChildrenComponentProps {
   target?: Document
   theme?: ThemeInput
   variables?: ComponentVariablesInput
+  statsRef?: React.Ref<PerformanceStats>
 }
 
 /**
@@ -76,6 +78,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
     disableAnimations: PropTypes.bool,
     children: PropTypes.node.isRequired,
     target: PropTypes.object,
+    statsRef: PropTypes.any,
   }
 
   static defaultProps = {
@@ -153,14 +156,23 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
       target,
       theme,
       variables,
+      statsRef,
       ...unhandledProps
     } = this.props
+
+    const performanceStats = statsRef ? {} : undefined
+
+    if (statsRef) {
+      statsRef['current'] = performanceStats
+    }
+
     const inputContext: ProviderContextInput = {
       theme,
       rtl,
       disableAnimations,
       renderer,
       target,
+      performanceStats,
     }
 
     const incomingContext: ProviderContextPrepared = overwrite ? {} : this.context
