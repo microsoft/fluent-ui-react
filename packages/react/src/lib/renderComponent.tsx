@@ -175,8 +175,11 @@ const renderComponent = <P extends {}>(
     renderer = null,
     rtl = false,
     theme = emptyTheme,
+    performanceStats = undefined,
     _internal_resolvedComponentVariables: resolvedComponentVariables = {},
   } = context || {}
+
+  const startTime = performanceStats ? performance.now() : 0
 
   const ElementType = getElementType(props) as React.ReactType<P>
   const stateAndProps = { ...state, ...props }
@@ -296,11 +299,28 @@ const renderComponent = <P extends {}>(
     })
   }
 
+  let result
   if (accessibility.focusZone) {
-    return renderWithFocusZone(render, accessibility.focusZone, resolvedConfig)
+    result = renderWithFocusZone(render, accessibility.focusZone, resolvedConfig)
+  } else {
+    result = render(resolvedConfig)
   }
 
-  return render(resolvedConfig)
+  if (performanceStats) {
+    const duration = performance.now() - startTime
+
+    if (performanceStats[displayName]) {
+      performanceStats[displayName].count++
+      performanceStats[displayName].ms += duration
+    } else {
+      performanceStats[displayName] = {
+        count: 1,
+        ms: duration,
+      }
+    }
+  }
+
+  return result
 }
 
 export default renderComponent

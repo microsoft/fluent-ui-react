@@ -53,8 +53,8 @@ const mergeProviderContexts = (
     },
     rtl: false,
     disableAnimations: false,
-    originalThemes: [],
     target: document, // eslint-disable-line no-undef
+    performanceStats: undefined,
     _internal_resolvedComponentVariables: {},
     renderer: undefined,
   }
@@ -84,11 +84,7 @@ const mergeProviderContexts = (
         acc.disableAnimations = mergedDisableAnimations
       }
 
-      const contextOriginalThemes = (next as ProviderContextPrepared).originalThemes
-        ? (next as ProviderContextPrepared).originalThemes
-        : [next.theme]
-
-      acc.originalThemes = [...acc.originalThemes, ...contextOriginalThemes]
+      acc.performanceStats = next.performanceStats || acc.performanceStats
 
       return acc
     },
