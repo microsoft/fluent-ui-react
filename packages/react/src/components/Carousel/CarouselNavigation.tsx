@@ -23,6 +23,7 @@ import {
 import CarouselNavigationItem, { CarouselNavigationItemProps } from './CarouselNavigationItem'
 import { ComponentVariablesObject } from '../../themes/types'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
+import { mergeComponentVariables } from '../../lib/mergeThemes'
 
 export interface CarouselNavigationProps extends UIComponentProps, ChildrenComponentProps {
   /** Index of the currently active item. */
@@ -81,11 +82,12 @@ class CarouselNavigation extends UIComponent<WithAsProp<CarouselNavigationProps>
     as: 'ul',
   }
 
-  handleItemOverrides = predefinedProps => ({
+  handleItemOverrides = variables => predefinedProps => ({
     onClick: (e, itemProps) => {
       _.invoke(this.props, 'onItemClick', e, itemProps)
       _.invoke(predefinedProps, 'onClick', e, itemProps)
     },
+    variables: mergeComponentVariables(variables, predefinedProps.variables),
   })
 
   renderItems = (
@@ -108,7 +110,7 @@ class CarouselNavigation extends UIComponent<WithAsProp<CarouselNavigationProps>
             ? accessibility.childBehaviors.item
             : undefined,
         },
-        overrideProps: this.handleItemOverrides,
+        overrideProps: this.handleItemOverrides(variables),
       }),
     )
   }
