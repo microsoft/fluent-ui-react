@@ -374,7 +374,8 @@
           "rel": "@tabbable"
         },
         {
-          "rel": "@disabled"
+          "rel": "@disabled",
+          "overridable": "disabled"
         },
         {
           "ref": "$hasPopup",
@@ -476,6 +477,40 @@
               "ref": "$tabindex"
             }
           ]
+        }
+      }
+    },
+    "LoadingButton": {
+      "inherits": "Button",
+      "parameters": [
+        {
+          "overrides": "disabled",
+          "rel": "@disabled"
+        }
+      ],
+      "tags": {
+        "<button>": {
+          "parameters": {
+            "@disabled": {
+              "optional": true,
+              "name": "disabled",
+              "attributes": [
+                {
+                  "name": "aria-disabled",
+                  "value": [
+                    {
+                      "parameter": true,
+                      "attribute": "true"
+                    },
+                    {
+                      "parameter": false,
+                      "attribute": [false, "false"]
+                    }
+                  ]
+                }
+              ]
+            }
+          }
         }
       }
     },
