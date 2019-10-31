@@ -3,6 +3,7 @@ import * as React from 'react'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import cx from 'classnames'
+import { Accessibility, tabBehavior } from '@stardust-ui/accessibility'
 
 import {
   childrenExist,
@@ -15,6 +16,7 @@ import {
   ContentComponentProps,
   applyAccessibilityKeyHandlers,
   SizeValue,
+  isFromKeyboard,
   UIComponent,
 } from '../../lib'
 import { withSafeTypeForAs, WithAsProp, ShorthandValue, ComponentEventHandler } from '../../types'
@@ -25,10 +27,17 @@ export interface CarouselNavigationItemSlotClassNames {
   wrapper: string
 }
 
+export interface CarouselNavigationItemState {
+  isFromKeyboard: boolean
+}
+
 export interface CarouselNavigationItemProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps {
+  /** A menu item can be active. */
+  active?: boolean
+
   /** Name or shorthand for Carousel Navigation Item Icon */
   icon?: ShorthandValue<IconProps>
 
@@ -82,6 +91,7 @@ class CarouselNavigationItem extends UIComponent<
 
   static propTypes = {
     ...commonPropTypes.createCommon(),
+    active: PropTypes.bool,
     icon: customPropTypes.itemShorthandWithoutJSX,
     iconOnly: PropTypes.bool,
     index: PropTypes.number,
@@ -94,6 +104,7 @@ class CarouselNavigationItem extends UIComponent<
   }
 
   static defaultProps = {
+    accessibility: tabBehavior as Accessibility,
     as: 'a',
     icon: { name: 'stardust-circle', size: 'smallest' as SizeValue },
     wrapper: { as: 'li' },
@@ -103,11 +114,13 @@ class CarouselNavigationItem extends UIComponent<
     const { children, content, icon, wrapper } = this.props
     const elementInner = (
       <ElementType
+        className={classes.root}
+        onBlur={this.handleBlur}
+        onFocus={this.handleFocus}
         {...accessibility.attributes.root}
         {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...(!wrapper && { onClick: this.handleClick })}
         {...unhandledProps}
-        className={classes.root}
       >
         {icon &&
           Icon.create(icon, {
@@ -129,9 +142,8 @@ class CarouselNavigationItem extends UIComponent<
             ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, wrapper),
           },
           overrideProps: () => ({
-            children: <>{elementInner}</>,
+            children: elementInner,
             onClick: this.handleClick,
-            onBlur: this.handleWrapperBlur,
           }),
         })
       : elementInner
@@ -143,7 +155,17 @@ class CarouselNavigationItem extends UIComponent<
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  handleWrapperBlur = e => {}
+  handleBlur = (e: React.SyntheticEvent) => {
+    this.setState({ isFromKeyboard: false })
+
+    _.invoke(this.props, 'onBlur', e, this.props)
+  }
+
+  handleFocus = (e: React.SyntheticEvent) => {
+    this.setState({ isFromKeyboard: isFromKeyboard() })
+
+    _.invoke(this.props, 'onFocus', e, this.props)
+  }
 }
 
 CarouselNavigationItem.create = createShorthandFactory({

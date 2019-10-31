@@ -2,21 +2,50 @@ import { CarouselNavigationProps } from '../../../../components/Carousel/Carouse
 import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { CarouselNavigationVariables } from './carouselNavigationVariables'
 import { pxToRem } from '../../../../lib'
+import { getColorScheme } from '../../colors'
 
 const carouselNavigationStyles: ComponentSlotStylesPrepared<
   CarouselNavigationProps,
   CarouselNavigationVariables
 > = {
-  root: ({ variables: v }): ICSSInJSStyle => ({
-    display: 'flex',
-    justifyContent: 'center',
-    minHeight: pxToRem(24),
-    margin: 0,
-    padding: 0,
-    color: v.color,
-    backgroundColor: v.backgroundColor || 'inherit',
-    listStyleType: 'none',
-  }),
+  root: ({ props: p, variables: v }): ICSSInJSStyle => {
+    const { iconOnly, primary, underlined, vertical } = p
+    const colors = getColorScheme(v.colorScheme, null, primary)
+
+    return {
+      display: 'flex',
+      minHeight: pxToRem(24),
+      margin: 0,
+      padding: 0,
+      color: v.color,
+      backgroundColor: v.backgroundColor || 'inherit',
+      listStyleType: 'none',
+      justifyContent: 'center',
+      ...(iconOnly && { alignItems: 'center' }),
+      ...(vertical && {
+        flexDirection: 'column',
+        backgroundColor: v.verticalBackgroundColor,
+        width: 'fit-content',
+        padding: `${pxToRem(8)} 0`,
+        ...(iconOnly && {
+          display: 'inline-block',
+          width: 'auto',
+        }),
+      }),
+      ...(!iconOnly &&
+        !vertical &&
+        !underlined && {
+          // primary has hardcoded grey border color
+          border: `${v.borderWidth} solid ${
+            primary ? v.primaryBorderColor : v.borderColor || colors.border
+          }`,
+          borderRadius: pxToRem(4),
+        }),
+      ...(underlined && {
+        borderBottom: `${v.underlinedBottomBorderWidth} solid ${v.underlinedBorderColor}`,
+      }),
+    }
+  },
 }
 
 export default carouselNavigationStyles

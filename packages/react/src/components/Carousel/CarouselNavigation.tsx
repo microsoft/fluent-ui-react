@@ -21,7 +21,7 @@ import {
   ComponentEventHandler,
 } from '../../types'
 import CarouselNavigationItem, { CarouselNavigationItemProps } from './CarouselNavigationItem'
-import { ComponentSlotStylesPrepared, ComponentVariablesObject } from '../../themes/types'
+import { ComponentVariablesObject } from '../../themes/types'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 
 export interface CarouselNavigationProps extends UIComponentProps, ChildrenComponentProps {
@@ -89,21 +89,24 @@ class CarouselNavigation extends UIComponent<WithAsProp<CarouselNavigationProps>
   })
 
   renderItems = (
-    styles: ComponentSlotStylesPrepared,
     variables: ComponentVariablesObject,
     accessibility: ReactAccessibilityBehavior,
   ) => {
-    const { iconOnly, items, primary, secondary, underlined, vertical } = this.props
+    const { activeIndex, iconOnly, items, primary, secondary, underlined, vertical } = this.props
 
     return _.map(items, (item, index) =>
       CarouselNavigationItem.create(item, {
         defaultProps: {
+          active: index === activeIndex,
           iconOnly,
           index,
           primary,
           secondary,
           underlined,
           vertical,
+          accessibility: accessibility.childBehaviors
+            ? accessibility.childBehaviors.item
+            : undefined,
         },
         overrideProps: this.handleItemOverrides,
       }),
@@ -119,7 +122,7 @@ class CarouselNavigation extends UIComponent<WithAsProp<CarouselNavigationProps>
         {...unhandledProps}
         className={classes.root}
       >
-        {childrenExist(children) ? children : this.renderItems(styles, variables, accessibility)}
+        {childrenExist(children) ? children : this.renderItems(variables, accessibility)}
       </ElementType>
     )
   }
