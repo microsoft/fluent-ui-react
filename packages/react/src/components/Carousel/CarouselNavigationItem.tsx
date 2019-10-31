@@ -166,6 +166,10 @@ class CarouselNavigationItem extends UIComponent<
 
     _.invoke(this.props, 'onFocus', e, this.props)
   }
+
+  actionHandlers = {
+    performClick: event => !event.defaultPrevented && this.handleClick(event),
+  }
 }
 
 CarouselNavigationItem.create = createShorthandFactory({
