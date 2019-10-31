@@ -110,10 +110,8 @@ export default (siteVars: any): ButtonVariables => ({
   invertedColorHover: siteVars.colors.white,
   invertedColorFocus: siteVars.colors.white,
   invertedColorFocusVisible: siteVars.colors.white,
-  invertedBackgroundColor: 'transparent',
   invertedBackgroundColorActive: siteVars.colors.silver[700],
   invertedBackgroundColorHover: siteVars.colors.silver[800],
-  invertedBackgroundColorFocus: siteVars.colors.silver[700],
   invertedBorderColor: siteVars.colors.silver[600],
   invertedBorderColorHover: siteVars.colors.silver[600],
 

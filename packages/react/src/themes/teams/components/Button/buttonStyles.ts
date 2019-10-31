@@ -153,7 +153,6 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         }),
 
       ...(p.inverted && {
-        outline: 0,
         color: v.invertedColor,
         backgroundColor: v.invertedBackgroundColor,
         borderColor: v.invertedBorderColor,
