@@ -35,16 +35,14 @@ export interface ButtonVariables {
   primaryBackgroundColorDisabled: string
   primaryBorderColor: string
 
-  invertedColor: string
-  invertedColorHover: string
-  invertedColorFocus: string
-  invertedColorFocusVisible: string
-  invertedBackgroundColor: string
-  invertedBackgroundColorActive: string
-  invertedBackgroundColorHover: string
-  invertedBackgroundColorFocus: string
-  invertedBorderColor: string
-  invertedBorderColorHover: string
+  secondaryAltColor: string
+  secondaryAltColorHover: string
+  secondaryAltColorFocus: string
+  secondaryAltColorFocusVisible: string
+  secondaryAltBackgroundColorActive: string
+  secondaryAltBackgroundColorHover: string
+  secondaryAltBorderColor: string
+  secondaryAltBorderColorHover: string
 
   circularBorderRadius: string
 
@@ -106,14 +104,14 @@ export default (siteVars: any): ButtonVariables => ({
   primaryBackgroundColorDisabled: siteVars.colorScheme.default.backgroundDisabled,
   primaryBorderColor: 'transparent',
 
-  invertedColor: siteVars.colors.white,
-  invertedColorHover: siteVars.colors.white,
-  invertedColorFocus: siteVars.colors.white,
-  invertedColorFocusVisible: siteVars.colors.white,
-  invertedBackgroundColorActive: siteVars.colors.silver[700],
-  invertedBackgroundColorHover: siteVars.colors.silver[800],
-  invertedBorderColor: siteVars.colors.silver[600],
-  invertedBorderColorHover: siteVars.colors.silver[600],
+  secondaryAltColor: siteVars.colors.white,
+  secondaryAltColorHover: siteVars.colors.white,
+  secondaryAltColorFocus: siteVars.colors.white,
+  secondaryAltColorFocusVisible: siteVars.colors.white,
+  secondaryAltBackgroundColorActive: siteVars.colors.silver[700],
+  secondaryAltBackgroundColorHover: siteVars.colors.silver[800],
+  secondaryAltBorderColor: siteVars.colors.silver[600],
+  secondaryAltBorderColorHover: siteVars.colors.silver[600],
 
   circularBorderRadius: pxToRem(999),
 

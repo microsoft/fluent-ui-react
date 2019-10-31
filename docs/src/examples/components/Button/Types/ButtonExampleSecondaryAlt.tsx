@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Button, Flex } from '@stardust-ui/react'
 
-const ButtonExampleInverted = () => (
+const ButtonExampleSecondaryAlt = () => (
   <Flex
     gap="gap.smaller"
     styles={({ theme: { siteVariables } }) => ({
@@ -9,8 +9,8 @@ const ButtonExampleInverted = () => (
       padding: '20px',
     })}
   >
-    <Button inverted content="inverted" />
+    <Button secondaryAlt content="Secondary Alt" />
   </Flex>
 )
 
-export default ButtonExampleInverted
+export default ButtonExampleSecondaryAlt

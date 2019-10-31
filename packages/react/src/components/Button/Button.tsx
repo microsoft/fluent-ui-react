@@ -77,8 +77,8 @@ export interface ButtonProps
   /** A button can emphasize that it represents an alternative action. */
   secondary?: boolean
 
-  /** Inverted buttons are meant to be shown on dark backgrounds */
-  inverted?: boolean
+  /** A button that represents an alternative action and also has contrast against dark backgrounds */
+  secondaryAlt?: boolean
 
   /** A button can be sized. */
   size?: SizeValue

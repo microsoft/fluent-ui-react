@@ -152,20 +152,19 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
           },
         }),
 
-      ...(p.inverted && {
-        color: v.invertedColor,
-        backgroundColor: v.invertedBackgroundColor,
-        borderColor: v.invertedBorderColor,
+      ...(p.secondaryAlt && {
+        color: v.secondaryAltColor,
+        borderColor: v.secondaryAltBorderColor,
 
         ':active': {
-          color: v.invertedColorHover,
-          backgroundColor: v.invertedBackgroundColorActive,
+          color: v.secondaryAltColorHover,
+          backgroundColor: v.secondaryAltBackgroundColorActive,
         },
 
         ':hover': {
-          color: v.invertedColorHover,
-          backgroundColor: v.invertedBackgroundColorHover,
-          borderColor: v.invertedBorderColorHover,
+          color: v.secondaryAltColorHover,
+          backgroundColor: v.secondaryAltBackgroundColorHover,
+          borderColor: v.secondaryAltBorderColorHover,
         },
 
         ':focus': {
@@ -175,8 +174,8 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
 
         ':focus-visible': {
           ...borderFocusStyles[':focus-visible'],
-          color: v.invertedColorFocusVisible,
-          backgroundColor: v.invertedBackgroundColorActive,
+          color: v.secondaryAltColorFocusVisible,
+          backgroundColor: v.secondaryAltBackgroundColorActive,
         },
       }),
 
