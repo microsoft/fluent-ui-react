@@ -93,6 +93,20 @@ const scaleAnimations = {
     timingFunction: easeIn,
     fillMode: 'forwards',
   },
+  scaleDownSoft: {
+    keyframe: {
+      '0%': {
+        transform: 'scale(1)',
+      },
+      '100%': {
+        transform: 'scale(.96)',
+      },
+    },
+    duration: '100ms',
+    timingFunction: 'cubic-bezier(.78, 0, .22, 1)',
+    fillMode: 'both',
+  },
+
   // Bounce in w/ fade --Useful for explicity grabbing the users attention.
   bounceEnterFast: {
     keyframe: {
