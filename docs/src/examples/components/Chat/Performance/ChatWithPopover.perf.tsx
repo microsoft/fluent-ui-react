@@ -5,6 +5,7 @@ import {
   Menu,
   Provider,
   menuAsToolbarBehavior,
+  PerformanceStats,
 } from '@stardust-ui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -102,10 +103,40 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
     )
   }
 }
-
+// ///////////////////
 const ChatWithPopover = () => {
+  const performanceStats = React.useRef<PerformanceStats>()
+
+  React.useEffect(() => {
+    performance.measure('CUSTOM', 'render-custom-toolbar')
+    const totals = _.reduce(
+      performanceStats.current,
+      (acc, next) => {
+        acc.count += next.count
+        acc.msTotal += next.msTotal
+        return acc
+      },
+      { count: 0, msTotal: 0 },
+    )
+    // Add averages to stats:
+    // { Button: { total, min, max, [avg] } }
+    const statsWithAverage = _.mapValues(performanceStats.current, (stats, displayName) => ({
+      ...stats,
+      msTotal: +stats.msTotal.toFixed(3),
+      msMin: +stats.msMin.toFixed(3),
+      msMax: +stats.msMax.toFixed(3),
+      msAvg: +(stats.msTotal / stats.count).toFixed(3),
+    }))
+
+    console.log(`Rendered ${totals.count} Stardust components in ${totals.msTotal} ms`)
+    console.table(statsWithAverage)
+  }, [])
+
+  performance.mark('render-custom-toolbar')
+
   return (
     <Provider
+      statsRef={performanceStats}
       theme={{
         componentStyles: {
           ChatMessage: {

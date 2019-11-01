@@ -149,7 +149,15 @@ export const UNSAFE_typed = <TComponentType>(componentType: TComponentType) => {
   }
 }
 
-export type PerformanceStats = Record<string, { count: number; ms: number }>
+export type PerformanceStats = Record<
+  string,
+  {
+    count: number
+    msTotal: number
+    msMin: number
+    msMax: number
+  }
+>
 
 // ========================================================
 // Provider's context

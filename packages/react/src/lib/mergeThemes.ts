@@ -57,8 +57,27 @@ export const mergeComponentStyles__PROD = (
       const originalTarget = partStylesPrepared[partName]
       const originalSource = partStyle
 
+      // if there is no source, merging is a no-op
+      if (
+        typeof originalSource === 'undefined' ||
+        originalSource === null ||
+        // empty plain object
+        Object.getOwnPropertyNames(originalSource).length === 0
+      ) {
+        return
+      }
+
+      // no target means source doesn't need to merge onto anything
+      // just ensure source is callable (prepared format)
+      if (typeof originalTarget === 'undefined') {
+        partStylesPrepared[partName] = callable(originalSource)
+        return
+      }
+
+      // We have both target and source, replace with merge fn
       partStylesPrepared[partName] = styleParam => {
-        return _.merge(callable(originalTarget)(styleParam), callable(originalSource)(styleParam))
+        // originalTarget is always prepared, fn is guaranteed
+        return _.merge(originalTarget(styleParam), callable(originalSource)(styleParam))
       }
     })
 

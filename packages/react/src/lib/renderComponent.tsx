@@ -1,14 +1,13 @@
 import {
-  AccessibilityDefinition,
-  FocusZoneMode,
-  FocusZoneDefinition,
   Accessibility,
+  AccessibilityDefinition,
+  FocusZoneDefinition,
+  FocusZoneMode,
 } from '@stardust-ui/accessibility'
 import {
-  callable,
   FocusZone,
-  FocusZoneProps,
   FOCUSZONE_WRAP_ATTRIBUTE,
+  FocusZoneProps,
   getElementType,
   getUnhandledProps,
 } from '@stardust-ui/react-bindings'
@@ -18,16 +17,17 @@ import * as _ from 'lodash'
 
 import logProviderMissingWarning from './providerMissingHandler'
 import {
-  ComponentStyleFunctionParam,
-  ComponentVariablesObject,
   ComponentSlotClasses,
   ComponentSlotStylesPrepared,
+  ComponentStyleFunctionParam,
+  ComponentVariablesObject,
+  ICSSInJSStyle,
   PropsWithVarsAndStyles,
   State,
   ThemePrepared,
 } from '../themes/types'
 import { Props, ProviderContextPrepared } from '../types'
-import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/reactTypes'
+import { AccessibilityActionHandlers, ReactAccessibilityBehavior } from './accessibility/reactTypes'
 import getKeyDownHandlers from './getKeyDownHandlers'
 import { emptyTheme, mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import createAnimationStyles from './createAnimationStyles'
@@ -185,9 +185,9 @@ const renderComponent = <P extends {}>(
   const stateAndProps = { ...state, ...props }
 
   // Resolve variables for this component, cache the result in provider
-  if (!resolvedComponentVariables[displayName]) {
+  if (!resolvedComponentVariables[displayName] && theme.componentVariables[displayName]) {
     resolvedComponentVariables[displayName] =
-      callable(theme.componentVariables[displayName])(theme.siteVariables) || {} // component variables must not be undefined/null (see mergeComponentVariables contract)
+      theme.componentVariables[displayName](theme.siteVariables) || {} // component variables must not be undefined/null (see mergeComponentVariables contract)
   }
 
   // Merge inline variables on top of cached variables
@@ -237,12 +237,12 @@ const renderComponent = <P extends {}>(
     displayName, // does not affect styles, only used by useEnhancedRenderer in docs
   }
 
-  const resolvedStyles: ComponentSlotStylesPrepared = {}
+  const resolvedStyles: ICSSInJSStyle = {}
   const resolvedStylesDebug: { [key: string]: { styles: Object }[] } = {}
   const classes: ComponentSlotClasses = {}
 
   Object.keys(mergedStyles).forEach(slotName => {
-    resolvedStyles[slotName] = callable(mergedStyles[slotName])(styleParam)
+    resolvedStyles[slotName] = mergedStyles[slotName](styleParam)
 
     if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
       resolvedStylesDebug[slotName] = resolvedStyles[slotName]['_debug']
@@ -250,7 +250,7 @@ const renderComponent = <P extends {}>(
     }
 
     if (renderer) {
-      classes[slotName] = renderer.renderRule(callable(resolvedStyles[slotName]), felaParam)
+      classes[slotName] = renderer.renderRule(() => resolvedStyles[slotName], felaParam)
     }
   })
 
@@ -311,11 +311,15 @@ const renderComponent = <P extends {}>(
 
     if (performanceStats[displayName]) {
       performanceStats[displayName].count++
-      performanceStats[displayName].ms += duration
+      performanceStats[displayName].msTotal += duration
+      performanceStats[displayName].msMin = Math.min(duration, performanceStats[displayName].msMin)
+      performanceStats[displayName].msMax = Math.max(duration, performanceStats[displayName].msMax)
     } else {
       performanceStats[displayName] = {
         count: 1,
-        ms: duration,
+        msTotal: duration,
+        msMin: duration,
+        msMax: duration,
       }
     }
   }

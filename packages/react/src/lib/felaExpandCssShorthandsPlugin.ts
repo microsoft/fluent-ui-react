@@ -7,6 +7,7 @@ import * as _memoize from 'fast-memoize'
 const memoize = (_memoize as any).default || _memoize
 
 // _.camelCase is quite fast, but we are running it for the same values many times
+// https://jsperf.com/js-camelcase/25
 const camelCase = memoize(_.camelCase)
 
 const handledCssPropsMap = {
@@ -24,6 +25,28 @@ const handledCssPropsMap = {
   borderRadius: 'border-radius',
   background: 'background',
   outline: 'outline',
+
+  // SHORTHAND PROPERTIES NOT SUPPORTED:
+  // https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties#See_also
+  //
+  // animation: 'animation',
+  // columnRule: 'column-rule',
+  // columns: 'columns',
+  // flex: 'flex',
+  // flexFlow: 'flex-flow',
+  // grid: 'grid',
+  // gridArea: 'grid-area',
+  // gridColumn: 'grid-column',
+  // gridRow: 'grid-row',
+  // gridTemplate: 'grid-template',
+  // listStyle: 'list-style',
+  // offset: 'offset',
+  // overflow: 'overflow',
+  // placeContent: 'place-content',
+  // placeItems: 'place-items',
+  // placeSelf: 'place-self',
+  // textDecoration: 'text-decoration',
+  // transition: 'transition',
 }
 
 export default () => {
