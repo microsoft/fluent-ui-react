@@ -5,9 +5,9 @@ import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 const Variations = () => (
   <ExampleSection title="Variations">
     <ComponentExample
-      title="Cyclical"
-      description="A Carousel's items navigation can be cyclical."
-      examplePath="components/Carousel/Variations/CarouselCyclicalExample"
+      title="Circular"
+      description="A Carousel's items navigation can be circular."
+      examplePath="components/Carousel/Variations/CarouselCircularExample"
     />
   </ExampleSection>
 )

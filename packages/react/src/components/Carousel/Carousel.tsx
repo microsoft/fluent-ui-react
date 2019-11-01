@@ -7,7 +7,6 @@ import { Ref } from '@stardust-ui/react-component-ref'
 
 import {
   UIComponentProps,
-  UIComponent,
   createShorthandFactory,
   ShorthandFactory,
   commonPropTypes,
@@ -15,6 +14,7 @@ import {
   childrenExist,
   ChildrenComponentProps,
   getOrGenerateIdFromShorthand,
+  AutoControlledComponent,
 } from '../../lib'
 import { WithAsProp, withSafeTypeForAs, ShorthandCollection, ShorthandValue } from '../../types'
 import Button, { ButtonProps } from '../Button/Button'
@@ -23,18 +23,32 @@ import Text from '../Text/Text'
 import CarouselNavigation, { CarouselNavigationProps } from './CarouselNavigation'
 import { CarouselNavigationItemProps } from './CarouselNavigationItem'
 
+export interface CarouselSlotClassNames {
+  itemsContainer: string
+  paddleNext: string
+  paddlePrevious: string
+  pagination: string
+}
+
 export interface CarouselProps extends UIComponentProps, ChildrenComponentProps {
+  /** Index of the currently active item. */
+  activeIndex?: number | string
+
   /**
    * Sets the aria-roledescription attribute.
    */
   ariaRoleDescription?: string
 
-  /** Specifies if the process of switching slides is cyclical. */
-  cyclical?: boolean
+  /** Specifies if the process of switching slides is circular. */
+  circular?: boolean
+
+  /** Initial activeIndex value. */
+  defaultActiveIndex?: number | string
 
   /**
    * Message generator for item position in the carousel. Used to generate
-   * individual i11y messages for items, such as "1 of 4".
+   * individual i11y messages for items, such as "1 of 4", and for the
+   * pagination footer, in case there are no navigation tabs.
    */
   getItemPositionText?: (index: number, size: number) => string
 
@@ -80,19 +94,28 @@ export interface CarouselState {
   itemIds: string[]
 }
 
-class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
+class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, CarouselState> {
   static create: ShorthandFactory<CarouselProps>
 
   static displayName = 'Carousel'
 
   static className = 'ui-carousel'
 
+  static slotClassNames: CarouselSlotClassNames = {
+    itemsContainer: `${Carousel.className}__itemscontainer`,
+    paddleNext: `${Carousel.className}__paddlenext`,
+    paddlePrevious: `${Carousel.className}__paddleprevious`,
+    pagination: `${Carousel.className}__pagination`,
+  }
+
   static propTypes = {
     ...commonPropTypes.createCommon({
       content: false,
     }),
+    activeIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     ariaRoleDescription: PropTypes.string,
-    cyclical: PropTypes.bool,
+    circular: PropTypes.bool,
+    defaultActiveIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     getItemPositionText: PropTypes.func,
     items: customPropTypes.collectionShorthand,
     paddleNext: customPropTypes.itemShorthand,
@@ -103,12 +126,28 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
     ]),
   }
 
+  static autoControlledProps = ['activeIndex']
+
   static defaultProps = {
     accessibility: carouselBehavior,
     as: 'div',
     paddlePrevious: {},
     paddleNext: {},
-    tabList: {},
+  }
+
+  static getAutoControlledStateFromProps(props: CarouselProps, state: CarouselState) {
+    const { items } = props
+    const { itemIds } = state
+
+    if (!items) {
+      return state
+    }
+
+    return {
+      itemIds: items.map((item, index) =>
+        getOrGenerateIdFromShorthand('carousel-slide-', item, itemIds[index]),
+      ),
+    }
   }
 
   actionHandlers = {
@@ -123,44 +162,31 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
     showNextSlideByPaddlePress: e => {
       e.preventDefault()
       const { activeIndex } = this.state
-      const { cyclical, items, navigation } = this.props
+      const { circular, items, navigation } = this.props
 
       this.showNextSlide(e, false)
 
       // if 'next' paddle will disappear, will focus 'previous' one.
-      if (!navigation && activeIndex >= items.length - 2 && !cyclical) {
+      if (!navigation && activeIndex >= items.length - 2 && !circular) {
         this.paddlePreviousRef.current.focus()
       }
     },
     showPreviousSlideByPaddlePress: e => {
       e.preventDefault()
       const { activeIndex } = this.state
-      const { cyclical, navigation } = this.props
+      const { circular, navigation } = this.props
 
       this.showPreviousSlide(e, false)
 
       // if 'previous' paddle will disappear, will focus 'next' one.
-      if (!navigation && activeIndex <= 1 && !cyclical) {
+      if (!navigation && activeIndex <= 1 && !circular) {
         this.paddleNextRef.current.focus()
       }
     },
   }
 
-  state = {
-    activeIndex: 0,
-    ariaLiveOn: false,
-    itemIds: [] as string[],
-  }
-
-  static getDerivedStateFromProps(props: CarouselProps, state: CarouselState) {
-    const { items } = props
-    const { itemIds } = state
-
-    return {
-      itemIds: items.map((item, index) =>
-        getOrGenerateIdFromShorthand('carousel-slide-', item, itemIds[index]),
-      ),
-    }
+  getInitialAutoControlledState(): CarouselState {
+    return { activeIndex: 0, ariaLiveOn: false, itemIds: [] as string[] }
   }
 
   itemRefs = [] as React.RefObject<HTMLElement>[]
@@ -172,19 +198,19 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
   }, 400)
 
   setActiveIndex(index: number, focusItem: boolean): void {
-    const { cyclical, items } = this.props
+    const { circular, items } = this.props
     const lastItemIndex = items.length - 1
     let activeIndex = index
 
     if (index < 0) {
-      if (!cyclical) {
+      if (!circular) {
         return
       }
       activeIndex = lastItemIndex
     }
 
     if (index > lastItemIndex) {
-      if (!cyclical) {
+      if (!circular) {
         return
       }
       activeIndex = 0
@@ -212,6 +238,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
     return (
       <div style={styles.itemsContainerWrapper} {...accessibility.attributes.itemsContainerWrapper}>
         <div
+          className={Carousel.slotClassNames.itemsContainer}
           aria-roledescription={ariaRoleDescription}
           style={styles.itemsContainer}
           {...accessibility.attributes.itemsContainer}
@@ -250,7 +277,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
     this.setActiveIndex(this.state.activeIndex + 1, focusItem)
   }
 
-  renderControls = (accessibility, styles) => {
+  renderPaddles = (accessibility, styles) => {
     const { paddlePrevious, paddleNext } = this.props
 
     return (
@@ -258,10 +285,11 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
         <Ref innerRef={this.paddlePreviousRef}>
           {Button.create(paddlePrevious, {
             defaultProps: {
-              ...accessibility.attributes.paddlePrevious,
+              className: Carousel.slotClassNames.paddlePrevious,
               iconOnly: true,
               icon: 'stardust-chevron-left',
               styles: styles.paddlePrevious,
+              ...accessibility.attributes.paddlePrevious,
               ...applyAccessibilityKeyHandlers(
                 accessibility.keyHandlers.paddlePrevious,
                 paddlePrevious,
@@ -289,10 +317,11 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
         <Ref innerRef={this.paddleNextRef}>
           {Button.create(paddleNext, {
             defaultProps: {
-              ...accessibility.attributes.paddleNext,
+              className: Carousel.slotClassNames.paddleNext,
               iconOnly: true,
               icon: 'stardust-chevron-right',
               styles: styles.paddleNext,
+              ...accessibility.attributes.paddleNext,
               ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.paddleNext, paddleNext),
             },
             overrideProps: (predefinedProps: ButtonProps) => ({
@@ -319,7 +348,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
   }
 
   renderNavigation = () => {
-    const { navigation, items } = this.props
+    const { getItemPositionText, navigation, items } = this.props
 
     if (!items || !items.length) {
       return null
@@ -344,7 +373,10 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
         }),
       })
     ) : (
-      <Text content={`${activeIndex + 1} of ${items.length}`} />
+      <Text
+        className={Carousel.slotClassNames.pagination}
+        content={getItemPositionText(activeIndex, items.length)}
+      />
     )
   }
 
@@ -362,7 +394,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
         ) : (
           <>
             {this.renderContent(accessibility, styles, unhandledProps)}
-            {this.renderControls(accessibility, styles)}
+            {this.renderPaddles(accessibility, styles)}
             {this.renderNavigation()}
           </>
         )}

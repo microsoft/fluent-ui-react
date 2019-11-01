@@ -29,14 +29,14 @@ const carouselStyles: ComponentSlotStylesPrepared<
     top: pxToRem(-v.height / 2 - v.paddleNextSize / 2),
     left: pxToRem(v.width - 2 * v.paddleNextSize),
     ...(p.items !== undefined && {
-      visibility: !p.cyclical && p.activeIndex === p.items.length - 1 ? 'hidden' : 'visible',
+      visibility: !p.circular && p.activeIndex === p.items.length - 1 ? 'hidden' : 'visible',
     }),
   }),
   paddlePrevious: ({ props: p, variables: v }): ICSSInJSStyle => ({
     height: pxToRem(v.paddlePreviousSize),
     top: pxToRem(-v.height / 2 - v.paddlePreviousSize / 2),
     ...(p.items !== undefined && {
-      visibility: !p.cyclical && p.activeIndex === 0 ? 'hidden' : 'visible',
+      visibility: !p.circular && p.activeIndex === 0 ? 'hidden' : 'visible',
     }),
   }),
 }

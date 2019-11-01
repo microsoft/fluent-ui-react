@@ -32,7 +32,7 @@ const carouselItems = [
 
 const CarouselExample = () => (
   <Carousel
-    cyclical
+    circular
     ariaRoleDescription="carousel"
     navigation={{
       'aria-label': 'people portraits',
