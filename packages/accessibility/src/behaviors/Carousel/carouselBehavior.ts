@@ -16,7 +16,7 @@ const carouselBehavior: Accessibility<CarouselBehaviorProps> = props => ({
     itemsContainerWrapper: {
       'aria-live': props.ariaLiveOn ? 'polite' : 'off',
     },
-    ...(props.tabList && {
+    ...(props.navigation && {
       paddleNext: {
         tabIndex: -1,
         'aria-hidden': 'true',
@@ -30,20 +30,20 @@ const carouselBehavior: Accessibility<CarouselBehaviorProps> = props => ({
 
   keyActions: {
     itemsContainer: {
-      moveNext: {
+      showNextSlideByKeyboardNavigation: {
         keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
       },
-      movePrevious: {
+      showPreviousSlideByKeyboardNavigation: {
         keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
       },
     },
     paddleNext: {
-      moveNextAndFocusContainerIfLast: {
+      showNextSlideByPaddlePress: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },
     },
     paddlePrevious: {
-      movePreviousAndFocusContainerIfFirst: {
+      showPreviousSlideByPaddlePress: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },
     },
@@ -52,7 +52,7 @@ const carouselBehavior: Accessibility<CarouselBehaviorProps> = props => ({
 
 export type CarouselBehaviorProps = {
   /** Element type. */
-  tabList: Object | Object[]
+  navigation: Object | Object[]
   ariaLiveOn: boolean
 }
 

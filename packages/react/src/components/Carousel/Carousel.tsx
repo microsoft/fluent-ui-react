@@ -112,32 +112,34 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
   }
 
   actionHandlers = {
-    moveNext: e => {
+    showNextSlideByKeyboardNavigation: e => {
       e.preventDefault()
-      this.handleNext(e, true)
+      this.showNextSlide(e, true)
     },
-    movePrevious: e => {
+    showPreviousSlideByKeyboardNavigation: e => {
       e.preventDefault()
-      this.handlePrevious(e, true)
+      this.showPreviousSlide(e, true)
     },
-    moveNextAndFocusContainerIfLast: e => {
+    showNextSlideByPaddlePress: e => {
       e.preventDefault()
       const { activeIndex } = this.state
       const { cyclical, items, navigation } = this.props
 
-      this.handleNext(e, false)
+      this.showNextSlide(e, false)
 
+      // if 'next' paddle will disappear, will focus 'previous' one.
       if (!navigation && activeIndex >= items.length - 2 && !cyclical) {
         this.paddlePreviousRef.current.focus()
       }
     },
-    movePreviousAndFocusContainerIfFirst: e => {
+    showPreviousSlideByPaddlePress: e => {
       e.preventDefault()
       const { activeIndex } = this.state
       const { cyclical, navigation } = this.props
 
-      this.handlePrevious(e, false)
+      this.showPreviousSlide(e, false)
 
+      // if 'previous' paddle will disappear, will focus 'next' one.
       if (!navigation && activeIndex <= 1 && !cyclical) {
         this.paddleNextRef.current.focus()
       }
@@ -240,11 +242,11 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
     )
   }
 
-  handlePrevious = (e: React.SyntheticEvent, focusItem: boolean) => {
+  showPreviousSlide = (e: React.SyntheticEvent, focusItem: boolean) => {
     this.setActiveIndex(this.state.activeIndex - 1, focusItem)
   }
 
-  handleNext = (e: React.SyntheticEvent, focusItem: boolean) => {
+  showNextSlide = (e: React.SyntheticEvent, focusItem: boolean) => {
     this.setActiveIndex(this.state.activeIndex + 1, focusItem)
   }
 
@@ -268,7 +270,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
             overrideProps: (predefinedProps: ButtonProps) => ({
               onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
                 _.invoke(predefinedProps, 'onClick', e, buttonProps)
-                this.handlePrevious(e, false)
+                this.showPreviousSlide(e, false)
               },
               onBlur: (e: React.FocusEvent, buttonProps: ButtonProps) => {
                 if (e.relatedTarget !== this.paddleNextRef.current) {
@@ -296,7 +298,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
             overrideProps: (predefinedProps: ButtonProps) => ({
               onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
                 _.invoke(predefinedProps, 'onClick', e, buttonProps)
-                this.handleNext(e, false)
+                this.showNextSlide(e, false)
               },
               onBlur: (e: React.FocusEvent, buttonProps: ButtonProps) => {
                 if (e.relatedTarget !== this.paddlePreviousRef.current) {
@@ -316,7 +318,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
     )
   }
 
-  renderNavigation = styles => {
+  renderNavigation = () => {
     const { navigation, items } = this.props
 
     if (!items || !items.length) {
@@ -361,7 +363,7 @@ class Carousel extends UIComponent<WithAsProp<CarouselProps>, CarouselState> {
           <>
             {this.renderContent(accessibility, styles, unhandledProps)}
             {this.renderControls(accessibility, styles)}
-            {this.renderNavigation(styles)}
+            {this.renderNavigation()}
           </>
         )}
       </ElementType>
