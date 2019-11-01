@@ -103,7 +103,6 @@ const carouselNavigationItemStyles: ComponentSlotStylesPrepared<
   wrapper: ({ props, variables: v, theme }): ICSSInJSStyle => {
     const {
       active,
-      disabled,
       iconOnly,
       isFromKeyboard,
       pills,
@@ -204,13 +203,6 @@ const carouselNavigationItemStyles: ComponentSlotStylesPrepared<
             }),
           }),
       },
-
-      ...(disabled && {
-        color: v.colorDisabled || colors.foregroundDisabled,
-        ':hover': {
-          // empty - overwrite all existing hover styles
-        },
-      }),
     }
   },
 

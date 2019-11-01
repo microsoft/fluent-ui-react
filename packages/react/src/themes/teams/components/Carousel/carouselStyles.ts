@@ -39,10 +39,6 @@ const carouselStyles: ComponentSlotStylesPrepared<
       visibility: !p.cyclical && p.activeIndex === 0 ? 'hidden' : 'visible',
     }),
   }),
-  navigationContainer: (): ICSSInJSStyle => ({
-    display: 'flex',
-    justifyContent: 'center',
-  }),
 }
 
 export default carouselStyles

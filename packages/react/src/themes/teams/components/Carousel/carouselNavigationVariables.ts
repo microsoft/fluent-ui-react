@@ -26,7 +26,6 @@ export interface CarouselNavigationVariables {
   backgroundColorActive: string
 
   borderColor: string
-  borderColorHover: string
   borderColorActive: string
   borderColorFocus: string
 
@@ -34,28 +33,20 @@ export interface CarouselNavigationVariables {
   colorActive: string
   iconOnlyColorActive: string
 
-  colorFocus: string
   underlinedBorderColor: string
 
-  colorDisabled: string
   lineHeightBase: string
   horizontalPadding: string
 
   verticalBackgroundColor: string
   verticalItemPadding: string
-  verticalBoxShadow: string
-  verticalDividerMargin: string
   verticalItemBorderWidth: string
   verticalItemBorderColor: string
-  verticalPointingBorderColor: string
   verticalBackgroundColorFocus: string
-
-  pointingIndicatorBackgroundColor: string
 
   underlinedBottomBorderWidth: string
   primaryBorderColor: string
 
-  dividerHeight: string
   borderWidth: string
 }
 
@@ -84,11 +75,8 @@ export default (siteVars: any): CarouselNavigationVariables => {
     ),
     color: siteVars.colors.grey[500],
     colorActive: siteVars.colors.black,
-    colorFocus: siteVars.colors.white,
-    colorDisabled: undefined,
 
     borderColor: undefined,
-    borderColorHover: undefined,
     borderColorActive: undefined,
     borderColorFocus: siteVars.colors.white,
 
@@ -108,19 +96,12 @@ export default (siteVars: any): CarouselNavigationVariables => {
 
     verticalBackgroundColor: siteVars.colors.white,
     verticalItemPadding: `${pxToRem(7)} ${pxToRem(14)}`,
-    verticalBoxShadow: siteVars.shadowLevel3,
-    verticalDividerMargin: `${pxToRem(8)} 0`,
     verticalItemBorderWidth: pxToRem(2),
     verticalItemBorderColor: 'transparent',
-    verticalPointingBorderColor: siteVars.colorScheme.brand.borderActive,
     verticalBackgroundColorFocus: siteVars.colors.grey[150],
-
-    pointingIndicatorBackgroundColor: siteVars.colors.brand[600],
-
     underlinedBottomBorderWidth: pxToRem(2),
     primaryBorderColor: siteVars.colorScheme.default.border2,
 
-    dividerHeight: pxToRem(1),
     borderWidth: pxToRem(1),
   }
 }
