@@ -1,3 +1,4 @@
+import * as React from 'react'
 import { teamsIconClassNames } from './components/Icon/svg'
 
 const getIconFillOrOutlineStyles = ({ outline }: { outline: boolean }): React.CSSProperties => ({

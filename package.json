@@ -56,6 +56,7 @@
   "devDependencies": {
     "@babel/register": "^7.4.4",
     "@babel/standalone": "^7.3.2",
+    "@microsoft/api-extractor": "^7.5.2",
     "@mdx-js/loader": "^1.0.21",
     "@types/babel__traverse": "^7.0.4",
     "@types/color": "^3.0.0",
@@ -124,7 +125,7 @@
     "react-document-title": "^2.0.3",
     "react-dom": "^16.8.6",
     "react-element-to-jsx-string": "^14.0.2",
-    "react-hot-loader": "^4.8.2",
+    "react-hot-loader": "^4.12.15",
     "react-markdown": "^4.0.8",
     "react-router-dom": "^5.0.1",
     "react-source-render": "4.0.0-1",
