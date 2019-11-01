@@ -1,4 +1,9 @@
-import { Accessibility, AriaRole, FocusZoneMode } from '@stardust-ui/accessibility'
+import {
+  Accessibility,
+  AriaRole,
+  FocusZoneMode,
+  FocusZoneDefinition,
+} from '@stardust-ui/accessibility'
 import { FocusZone, FOCUSZONE_WRAP_ATTRIBUTE } from '@stardust-ui/react-bindings'
 import * as React from 'react'
 import * as keyboardKey from 'keyboard-key'
@@ -31,20 +36,18 @@ const TestBehavior: Accessibility = (props: any) => ({
 
 /**
  * Assert Component handles accessibility attributes correctly.
- * @param {React.Component|Function} Component A component that should conform.
- * @param {Object} [options={}]
- * @param {Object} [options.requiredProps={}] Props required to render Component without errors or warnings.
- * @param {string} [options.defaultRootRole=''] Default root role rendered when no override provided
- * @param {string} [options.partSelector=''] Selector to scope the test to a part
- * @param {FocusZoneDefinition} [options.focusZoneDefinition={}] FocusZone definition
+ * @param Component - A component that should conform.
  */
 export default (
-  Component,
+  Component: React.ComponentType<any>,
   options: {
-    requiredProps?: any
+    /** Props required to render Component without errors or warnings */
+    requiredProps?: { [key: string]: any }
+    /** Default root role rendered when no override provided */
     defaultRootRole?: string
+    /** Selector to scope the test to a part */
     partSelector?: string
-    focusZoneDefinition?: any
+    focusZoneDefinition?: FocusZoneDefinition
     usesWrapperSlot?: boolean
   } = {},
 ) => {
@@ -52,7 +55,7 @@ export default (
     requiredProps = {},
     defaultRootRole,
     partSelector = '',
-    focusZoneDefinition = {},
+    focusZoneDefinition = {} as FocusZoneDefinition,
     usesWrapperSlot = false,
   } = options
 
