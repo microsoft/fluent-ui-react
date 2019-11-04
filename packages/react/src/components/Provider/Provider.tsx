@@ -167,7 +167,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
         this.telemetry = new Telemetry()
       }
 
-      telemetryRef.current = this.telemetry
+      telemetryRef['current'] = this.telemetry
     } else if (this.telemetry) {
       delete this.telemetry
     }

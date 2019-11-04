@@ -209,7 +209,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     const { unstable_overflow: overflow } = this.props
     const { messageNode } = this.state
 
-    const actionMenuElement = Menu.create(actionMenu, {
+    const actionMenuElement = actionMenu && Menu.create(actionMenu, {
       defaultProps: {
         [IS_FOCUSABLE_ATTRIBUTE]: true,
         accessibility: menuAsToolbarBehavior,
@@ -281,14 +281,14 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     } = this.props
     const childrenPropExists = childrenExist(children)
     const className = childrenPropExists ? cx(classes.root, classes.content) : classes.root
-    const badgeElement = Label.create(badge, {
+    const badgeElement = badge && Label.create(badge, {
       defaultProps: {
         className: ChatMessage.slotClassNames.badge,
         styles: styles.badge,
       },
     })
 
-    const reactionGroupElement = Reaction.Group.create(reactionGroup, {
+    const reactionGroupElement = reactionGroup && Reaction.Group.create(reactionGroup, {
       defaultProps: {
         className: ChatMessage.slotClassNames.reactionGroup,
         styles: styles.reactionGroup,
@@ -297,7 +297,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
 
     const actionMenuElement = this.renderActionMenu(actionMenu, styles)
 
-    const authorElement = Text.create(author, {
+    const authorElement = author && Text.create(author, {
       defaultProps: {
         size: 'small',
         styles: styles.author,
@@ -305,7 +305,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
       },
     })
 
-    const timestampElement = Text.create(timestamp, {
+    const timestampElement = timestamp && Text.create(timestamp, {
       defaultProps: {
         size: 'small',
         styles: styles.timestamp,
@@ -314,7 +314,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
       },
     })
 
-    const messageContent = Box.create(content, {
+    const messageContent = content && Box.create(content, {
       defaultProps: {
         className: ChatMessage.slotClassNames.content,
         styles: styles.content,

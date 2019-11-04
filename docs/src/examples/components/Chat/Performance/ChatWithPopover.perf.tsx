@@ -108,7 +108,7 @@ const ChatWithPopover = () => {
   const telemetryRef = React.useRef<Telemetry>()
 
   React.useEffect(() => {
-    performance.measure('CUSTOM', 'render-custom-toolbar')
+    performance.measure('ChatWithPopover', 'chat-with-popover')
     const telemetry = telemetryRef.current
     const totals = _.reduce(
       telemetry.performance,
@@ -127,13 +127,14 @@ const ChatWithPopover = () => {
       msMin: +stats.msMin.toFixed(3),
       msMax: +stats.msMax.toFixed(3),
       msAvg: +(stats.msTotal / stats.count).toFixed(3),
+      weight: +(stats.msTotal / totals.msTotal * 100).toFixed(2)
     }))
 
     console.log(`Rendered ${totals.count} Stardust components in ${totals.msTotal} ms`)
     console.table(statsWithAverage)
   }, [])
 
-  performance.mark('render-custom-toolbar')
+  performance.mark('chat-with-popover')
 
   return (
     <Provider

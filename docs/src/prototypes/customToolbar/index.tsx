@@ -81,13 +81,13 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
       telemetry.performance,
       (acc, next) => {
         acc.count += next.count
-        acc.ms += next.ms
+        acc.msTotal += next.msTotal
         return acc
       },
-      { count: 0, ms: 0 },
+      { count: 0, msTotal: 0 },
     )
 
-    console.log(`Rendered ${totals.count} Stardust components in ${totals.ms} ms`)
+    console.log(`Rendered ${totals.count} Stardust components in ${totals.msTotal} ms`)
     console.table(telemetry.performance)
   })
 

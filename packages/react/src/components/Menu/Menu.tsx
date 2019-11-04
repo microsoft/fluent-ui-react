@@ -159,11 +159,11 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
       }
       _.invoke(predefinedProps, 'onActiveChanged', e, props)
     },
-    variables: mergeComponentVariables(variables, predefinedProps.variables),
+    // variables: mergeComponentVariables(variables, predefinedProps.variables),
   })
 
   handleDividerOverrides = variables => predefinedProps => ({
-    variables: mergeComponentVariables(variables, predefinedProps.variables),
+    // variables: mergeComponentVariables(variables, predefinedProps.variables),
   })
 
   renderItems = (

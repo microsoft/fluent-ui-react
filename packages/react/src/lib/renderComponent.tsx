@@ -186,9 +186,10 @@ const renderComponent = <P extends {}>(
   const stateAndProps = { ...state, ...props }
 
   // Resolve variables for this component, cache the result in provider
-  if (!resolvedComponentVariables[displayName] && theme.componentVariables[displayName]) {
-    resolvedComponentVariables[displayName] =
-      theme.componentVariables[displayName](theme.siteVariables) || {} // component variables must not be undefined/null (see mergeComponentVariables contract)
+  if (!resolvedComponentVariables[displayName]) {
+    resolvedComponentVariables[displayName] = theme.componentVariables[displayName]
+      ? theme.componentVariables[displayName](theme.siteVariables)
+      : {} // component variables must not be undefined/null (see mergeComponentVariables contract)
   }
 
   // Merge inline variables on top of cached variables
@@ -242,17 +243,79 @@ const renderComponent = <P extends {}>(
   const resolvedStylesDebug: { [key: string]: { styles: Object }[] } = {}
   const classes: ComponentSlotClasses = {}
 
+  // const debug = (...args) => displayName !== 'ProviderBox' && console.debug(displayName, ...args)
+
+  let slots = []
+  let computedStyles = []
+  let cachedStyles = []
+  let computedClasses = []
+  let cachedClasses = []
+
   Object.keys(mergedStyles).forEach(slotName => {
-    resolvedStyles[slotName] = mergedStyles[slotName](styleParam)
+    slots.push(slotName)
+    // resolve/render slot styles once and cache
+    const cacheKey = slotName + '__return'
 
-    if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
-      resolvedStylesDebug[slotName] = resolvedStyles[slotName]['_debug']
-      delete resolvedStyles[slotName]['_debug']
-    }
+    Object.defineProperty(resolvedStyles, slotName, {
+      enumerable: false,
+      configurable: false,
+      set(val) {
+        resolvedStyles[cacheKey] = val
+        // debug('SET STYLE', slotName, val)
+        return true
+      },
+      get() {
+        if (resolvedStyles[cacheKey]) {
+          // debug('=> CACHED STYLE', slotName)
+          cachedStyles.push(slotName)
+          return resolvedStyles[cacheKey]
+        }
 
-    if (renderer) {
-      classes[slotName] = renderer.renderRule(() => resolvedStyles[slotName], felaParam)
-    }
+        // debug('NOT CACHED STYLE', slotName)
+        // resolve/render slot styles once and cache
+        resolvedStyles[cacheKey] = mergedStyles[slotName](styleParam)
+
+        if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
+          resolvedStylesDebug[slotName] = resolvedStyles[slotName]['_debug']
+          delete resolvedStyles[slotName]['_debug']
+        }
+
+        // debug('=> COMPUTED STYLE', slotName)
+        computedStyles.push(slotName)
+        return resolvedStyles[cacheKey]
+      },
+    })
+
+    Object.defineProperty(classes, slotName, {
+      enumerable: false,
+      configurable: false,
+      set(val) {
+        classes[cacheKey] = val
+        // debug('SET CLASS', slotName, val)
+        return true
+      },
+      get() {
+        if (classes[cacheKey]) {
+          // debug('=> CACHED CLASS', slotName)
+          cachedClasses.push(slotName)
+          return classes[cacheKey]
+        }
+
+        // debug('NOT CACHED CLASS', slotName)
+        // this resolves the getter magic
+        const styleObj = resolvedStyles[slotName]
+
+        // fela throws on returning undefined, always return object
+        if (renderer && styleObj) {
+          // debug('...RENDER CLASSES TO HEAD')
+          computedClasses.push(slotName)
+          classes[cacheKey] = renderer.renderRule(() => styleObj, felaParam)
+        }
+
+        // debug('=> COMPUTED CLASS', slotName)
+        return classes[cacheKey]
+      },
+    })
   })
 
   classes.root = cx(className, classes.root, props.className)
@@ -266,6 +329,13 @@ const renderComponent = <P extends {}>(
     accessibility,
     rtl,
     theme,
+  }
+
+  let result
+  if (accessibility.focusZone) {
+    result = renderWithFocusZone(render, accessibility.focusZone, resolvedConfig)
+  } else {
+    result = render(resolvedConfig)
   }
 
   // conditionally add sources for evaluating debug information to component
@@ -300,13 +370,6 @@ const renderComponent = <P extends {}>(
     })
   }
 
-  let result
-  if (accessibility.focusZone) {
-    result = renderWithFocusZone(render, accessibility.focusZone, resolvedConfig)
-  } else {
-    result = render(resolvedConfig)
-  }
-
   if (telemetry && telemetry.enabled) {
     const duration = performance.now() - startTime
 
@@ -331,6 +394,15 @@ const renderComponent = <P extends {}>(
       }
     }
   }
+
+  // LOG AFTER render, so lazy styles/vars can be evaluated and counted
+  // debug(displayName, {
+  //   slots,
+  //   computedStyles,
+  //   cachedStyles,
+  //   computedClasses,
+  //   cachedClasses,
+  // })
 
   return result
 }
