@@ -34,7 +34,7 @@ import createAnimationStyles from './createAnimationStyles'
 import { isEnabled as isDebugEnabled } from './debug/debugEnabled'
 import { DebugData } from './debug/debugData'
 import withDebugId from './withDebugId'
-import PerformanceStats from './PerformanceStats'
+import Telemetry from './Telemetry'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
@@ -176,11 +176,11 @@ const renderComponent = <P extends {}>(
     renderer = null,
     rtl = false,
     theme = emptyTheme,
-    performanceStats = undefined as PerformanceStats,
+    telemetry = undefined as Telemetry,
     _internal_resolvedComponentVariables: resolvedComponentVariables = {},
   } = context || {}
 
-  const startTime = performanceStats && performanceStats.enabled ? performance.now() : 0
+  const startTime = telemetry && telemetry.enabled ? performance.now() : 0
 
   const ElementType = getElementType(props) as React.ReactType<P>
   const stateAndProps = { ...state, ...props }
@@ -307,14 +307,14 @@ const renderComponent = <P extends {}>(
     result = render(resolvedConfig)
   }
 
-  if (performanceStats && performanceStats.enabled) {
+  if (telemetry && telemetry.enabled) {
     const duration = performance.now() - startTime
 
-    if (performanceStats.stats[displayName]) {
-      performanceStats.stats[displayName].count++
-      performanceStats.stats[displayName].ms += duration
+    if (telemetry.performance[displayName]) {
+      telemetry.performance[displayName].count++
+      telemetry.performance[displayName].ms += duration
     } else {
-      performanceStats.stats[displayName] = {
+      telemetry.performance[displayName] = {
         count: 1,
         ms: duration,
       }

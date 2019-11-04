@@ -7,7 +7,7 @@ import {
   useSelectKnob,
   KnobInspector,
 } from '@stardust-ui/docs-components'
-import { Provider, Flex, themes, mergeThemes, PerformanceStats } from '@stardust-ui/react'
+import { Provider, Flex, themes, mergeThemes, Telemetry } from '@stardust-ui/react'
 
 import { darkThemeOverrides } from './darkThemeOverrides'
 import { highContrastThemeOverrides } from './highContrastThemeOverrides'
@@ -57,7 +57,9 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
   const [chatHasNotification] = useBooleanKnob({ name: 'chatHasNotification', initialValue: false })
   const [currentSlide, setCurrentSlide] = React.useState(23)
   const totalSlides = 34
-  const [perfEnabled] = useBooleanKnob({ name: 'perfEnabled', initialValue: true })
+
+  const [telemetryEnabled] = useBooleanKnob({ name: 'telemetryEnabled', initialValue: true })
+  const telemetryRef = React.useRef<Telemetry>()
 
   let theme = {}
   if (themeName === 'teamsDark') {
@@ -66,19 +68,17 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
     theme = mergeThemes(themes.teamsHighContrast, darkThemeOverrides, highContrastThemeOverrides)
   }
 
-  const perfStats = React.useRef<PerformanceStats>()
-
   React.useEffect(() => {
     performance.measure('render-custom-toolbar', 'render-custom-toolbar')
-    const telemetry = perfStats.current
-    if (!perfEnabled || !telemetry) {
+    const telemetry = telemetryRef.current
+    if (!telemetryEnabled || !telemetry) {
       return
     }
 
     telemetry.enabled = false
 
     const totals = _.reduce(
-      telemetry.stats,
+      telemetry.performance,
       (acc, next) => {
         acc.count += next.count
         acc.ms += next.ms
@@ -88,12 +88,12 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
     )
 
     console.log(`Rendered ${totals.count} Stardust components in ${totals.ms} ms`)
-    console.table(telemetry.stats)
+    console.table(telemetry.performance)
   })
 
-  if (perfStats.current) {
-    perfStats.current.enabled = perfEnabled
-    perfStats.current.reset()
+  if (telemetryRef.current) {
+    telemetryRef.current.enabled = telemetryEnabled
+    telemetryRef.current.reset()
   }
   performance.mark('render-custom-toolbar')
 
@@ -104,7 +104,7 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
           <KnobInspector />
         </KnobsSnippet>
 
-        <Provider theme={theme} rtl={rtl} {...(perfEnabled ? { statsRef: perfStats } : undefined)}>
+        <Provider theme={theme} rtl={rtl} {...(telemetryEnabled ? { telemetryRef } : undefined)}>
           <Flex
             hAlign="center"
             styles={{

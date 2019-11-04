@@ -1,15 +1,15 @@
 type ComponentPerfStats = { count: number; ms: number }
 
-export default class PerformanceStats {
-  stats: Record<string, ComponentPerfStats>
+export default class Telemetry {
+  performance: Record<string, ComponentPerfStats>
   enabled: boolean
 
   constructor() {
-    this.stats = {}
+    this.performance = {}
     this.enabled = true
   }
 
   reset() {
-    this.stats = {}
+    this.performance = {}
   }
 }
