@@ -9,7 +9,7 @@ const items = [
 
 const MenuExamplePointing = () => (
   <div>
-    <Menu defaultActiveIndex={2} items={items} pointing primary />
+    <Menu defaultActiveIndex={2} items={items} pointing="end" primary />
     <br />
     <Menu defaultActiveIndex={0} items={items} pointing="start" primary />
   </div>
