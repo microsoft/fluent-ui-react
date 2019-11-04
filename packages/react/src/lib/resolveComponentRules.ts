@@ -22,14 +22,19 @@ export function deepMergeObjects(target: object, source: object): object {
 
 const isMatch = (props, selector): boolean => {
   if (selector === null) return true
-
-  return Object.keys(selector).every(k => props[k] === selector[k])
+  return Object.keys(selector).every(
+    k => props[k] === selector[k] || (props[k] === undefined && !!props[k] === !!selector[k]),
+  )
 }
 
 const reduceSelectorStyleTuples = (props, tuples: [object, ICSSInJSStyle][]): ICSSInJSStyle => {
   return tuples.reduce((acc, [selector, style]) => {
     if (Array.isArray(selector)) {
-      selector.forEach(sel => (isMatch(props, sel) ? deepMergeObjects(acc, style) : acc))
+      for (let i = 0; i < selector.length; i++) {
+        if (isMatch(props, selector[i])) {
+          return deepMergeObjects(acc, style)
+        }
+      }
       return acc
     }
     return isMatch(props, selector) ? deepMergeObjects(acc, style) : acc

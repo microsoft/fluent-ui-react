@@ -12,8 +12,6 @@ const menuStyles: ComponentSelectorsAndStyles<MenuPropsAndState, MenuVariables> 
       [
         null,
         {
-          // TODO: add for different colors - primary or not primary...
-          // const colors = getColorScheme(v.colorScheme, null, primary)
           display: 'flex',
           minHeight: pxToRem(24),
           margin: 0,
@@ -52,7 +50,8 @@ const menuStyles: ComponentSelectorsAndStyles<MenuPropsAndState, MenuVariables> 
           { pills: false, iconOnly: false, underlined: false, vertical: false, primary: true },
         ],
         {
-          border: `${v.borderWidth} solid ${v.primaryBorderColor /* || colors.border */}`,
+          border: `${v.borderWidth} solid ${v.primaryBorderColor ||
+            (v.colorScheme && v.colorScheme.brand && v.colorScheme.brand.border)}`,
           borderRadius: pxToRem(4),
         },
       ],
@@ -62,8 +61,8 @@ const menuStyles: ComponentSelectorsAndStyles<MenuPropsAndState, MenuVariables> 
           { pills: false, iconOnly: false, underlined: false, vertical: false, primary: true },
         ],
         {
-          // colors.border ?!
-          border: `${v.borderWidth} solid ${v.primaryBorderColor /* || colors.border */}`,
+          border: `${v.borderWidth} solid ${v.primaryBorderColor ||
+            (v.colorScheme && v.colorScheme.brand && v.colorScheme.brand.border)}`,
           borderRadius: pxToRem(4),
         },
       ],
@@ -73,8 +72,8 @@ const menuStyles: ComponentSelectorsAndStyles<MenuPropsAndState, MenuVariables> 
           { pills: false, iconOnly: false, underlined: false, vertical: false, primary: false },
         ],
         {
-          // colors.border ?!
-          border: `${v.borderWidth} solid ${v.borderColor /* || colors.border */}`,
+          border: `${v.borderWidth} solid ${v.borderColor ||
+            (v.colorScheme && v.colorScheme.default && v.colorScheme.default.border)}`,
           borderRadius: pxToRem(4),
         },
       ],
