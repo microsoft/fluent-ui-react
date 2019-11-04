@@ -4,6 +4,7 @@
 
 import * as React from 'react'
 import { ThemeInput, Renderer, ThemePrepared } from './themes/types'
+import Telemetry from './lib/Telemetry'
 
 export type Extendable<T, V = any> = T & {
   [key: string]: V
@@ -169,7 +170,7 @@ export interface ProviderContextInput {
   disableAnimations?: boolean
   target?: Document
   theme?: ThemeInput
-  performanceStats?: PerformanceStats
+  telemetry?: Telemetry
 }
 
 export interface ProviderContextPrepared {
@@ -178,6 +179,6 @@ export interface ProviderContextPrepared {
   disableAnimations: boolean
   target: Document
   theme: ThemePrepared
-  performanceStats: PerformanceStats | undefined
+  telemetry: Telemetry | undefined
   _internal_resolvedComponentVariables: Record<string, object>
 }

@@ -12,7 +12,7 @@ import {
   SizeValue,
   ShorthandValue,
   Provider,
-  PerformanceStats,
+  Telemetry,
 } from '@stardust-ui/react'
 
 const tooltips = {
@@ -244,26 +244,30 @@ const layouts: Record<CustomToolbarProps['layout'], CustomToolbarLayout> = {
 
 const CustomToolbar: React.FunctionComponent<CustomToolbarProps> = props => {
   const { layout = 'standard' } = props
-  const performanceStats = React.useRef<PerformanceStats>()
+  const telemetryRef = React.useRef<Telemetry>()
+  const telemetry = telemetryRef.current
+
   React.useEffect(() => {
     performance.measure('CUSTOM', 'render-custom-toolbar')
     const totals = _.reduce(
-      performanceStats.current,
+      telemetry.performance,
       (acc, next) => {
         acc.count += next.count
         acc.msTotal += next.msTotal
+        acc.msMin = Math.min(acc.msMin, next.msMin)
+        acc.msMax = Math.max(acc.msMax, next.msMax)
         return acc
       },
-      { count: 0, msTotal: 0 },
+      { count: 0, msTotal: 0, msMin: Infinity, msMax: 0 },
     )
     console.log(`Rendered ${totals.count} Stardust components in ${totals.msTotal} ms`)
-    console.table(performanceStats.current)
+    console.table(telemetry.performance)
   }, [])
 
   performance.mark('render-custom-toolbar')
 
   return (
-    <Provider statsRef={performanceStats}>
+    <Provider telemetryRef={telemetryRef}>
       <Toolbar variables={{ isCt: true }} items={layouts[layout](props)} />
     </Provider>
   )

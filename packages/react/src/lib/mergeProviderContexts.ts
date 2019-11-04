@@ -54,7 +54,7 @@ const mergeProviderContexts = (
     rtl: false,
     disableAnimations: false,
     target: document, // eslint-disable-line no-undef
-    performanceStats: undefined,
+    telemetry: undefined,
     _internal_resolvedComponentVariables: {},
     renderer: undefined,
   }
@@ -84,7 +84,7 @@ const mergeProviderContexts = (
         acc.disableAnimations = mergedDisableAnimations
       }
 
-      acc.performanceStats = next.performanceStats || acc.performanceStats
+      acc.telemetry = next.telemetry || acc.telemetry
 
       return acc
     },

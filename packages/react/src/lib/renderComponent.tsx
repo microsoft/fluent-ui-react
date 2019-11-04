@@ -34,6 +34,7 @@ import createAnimationStyles from './createAnimationStyles'
 import { isEnabled as isDebugEnabled } from './debug/debugEnabled'
 import { DebugData } from './debug/debugData'
 import withDebugId from './withDebugId'
+import Telemetry from './Telemetry'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
@@ -175,11 +176,11 @@ const renderComponent = <P extends {}>(
     renderer = null,
     rtl = false,
     theme = emptyTheme,
-    performanceStats = undefined,
+    telemetry = undefined as Telemetry,
     _internal_resolvedComponentVariables: resolvedComponentVariables = {},
   } = context || {}
 
-  const startTime = performanceStats ? performance.now() : 0
+  const startTime = telemetry && telemetry.enabled ? performance.now() : 0
 
   const ElementType = getElementType(props) as React.ReactType<P>
   const stateAndProps = { ...state, ...props }
@@ -306,16 +307,23 @@ const renderComponent = <P extends {}>(
     result = render(resolvedConfig)
   }
 
-  if (performanceStats) {
+  if (telemetry && telemetry.enabled) {
     const duration = performance.now() - startTime
 
-    if (performanceStats[displayName]) {
-      performanceStats[displayName].count++
-      performanceStats[displayName].msTotal += duration
-      performanceStats[displayName].msMin = Math.min(duration, performanceStats[displayName].msMin)
-      performanceStats[displayName].msMax = Math.max(duration, performanceStats[displayName].msMax)
+    if (telemetry.performance[displayName]) {
+      telemetry.performance[displayName].count++
+      telemetry.performance[displayName].msTotal += duration
+      telemetry.performance[displayName].msTotal += duration
+      telemetry.performance[displayName].msMin = Math.min(
+        duration,
+        telemetry.performance[displayName].msMin,
+      )
+      telemetry.performance[displayName].msMax = Math.max(
+        duration,
+        telemetry.performance[displayName].msMax,
+      )
     } else {
-      performanceStats[displayName] = {
+      telemetry.performance[displayName] = {
         count: 1,
         msTotal: duration,
         msMin: duration,

@@ -1,11 +1,12 @@
 import { IStyle } from 'fela'
 import * as _ from 'lodash'
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 // @ts-ignore
 import { RendererProvider, ThemeProvider, ThemeContext } from 'react-fela'
 
-import { ChildrenComponentProps, setUpWhatInput } from '../../lib'
+import { ChildrenComponentProps, setUpWhatInput, Telemetry } from '../../lib'
 
 import {
   ThemePrepared,
@@ -26,7 +27,6 @@ import {
   ProviderContextInput,
   ProviderContextPrepared,
   withSafeTypeForAs,
-  PerformanceStats,
 } from '../../types'
 import mergeContexts from '../../lib/mergeProviderContexts'
 
@@ -38,7 +38,7 @@ export interface ProviderProps extends ChildrenComponentProps {
   target?: Document
   theme?: ThemeInput
   variables?: ComponentVariablesInput
-  statsRef?: React.Ref<PerformanceStats>
+  telemetryRef?: React.Ref<Telemetry>
 }
 
 /**
@@ -78,7 +78,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
     disableAnimations: PropTypes.bool,
     children: PropTypes.node.isRequired,
     target: PropTypes.object,
-    statsRef: PropTypes.any,
+    telemetryRef: customPropTypes.ref,
   }
 
   static defaultProps = {
@@ -91,6 +91,8 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
 
   outgoingContext: ProviderContextPrepared
   staticStylesRendered: boolean = false
+
+  telemetry: Telemetry
 
   renderStaticStyles = (renderer: Renderer, mergedTheme: ThemePrepared) => {
     const { siteVariables } = mergedTheme
@@ -156,14 +158,18 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
       target,
       theme,
       variables,
-      statsRef,
+      telemetryRef,
       ...unhandledProps
     } = this.props
 
-    const performanceStats = statsRef ? {} : undefined
+    if (telemetryRef) {
+      if (!this.telemetry) {
+        this.telemetry = new Telemetry()
+      }
 
-    if (statsRef) {
-      statsRef['current'] = performanceStats
+      telemetryRef.current = this.telemetry
+    } else if (this.telemetry) {
+      delete this.telemetry
     }
 
     const inputContext: ProviderContextInput = {
@@ -172,7 +178,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
       disableAnimations,
       renderer,
       target,
-      performanceStats,
+      telemetry: this.telemetry,
     }
 
     const incomingContext: ProviderContextPrepared = overwrite ? {} : this.context
