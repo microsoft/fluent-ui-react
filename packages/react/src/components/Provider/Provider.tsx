@@ -26,9 +26,9 @@ import {
   ProviderContextInput,
   ProviderContextPrepared,
   withSafeTypeForAs,
-  PerformanceStats,
 } from '../../types'
 import mergeContexts from '../../lib/mergeProviderContexts'
+import PerformanceStats from '../../lib/PerformanceStats'
 
 export interface ProviderProps extends ChildrenComponentProps {
   renderer?: Renderer
@@ -91,6 +91,8 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
 
   outgoingContext: ProviderContextPrepared
   staticStylesRendered: boolean = false
+
+  performanceStats: PerformanceStats
 
   renderStaticStyles = (renderer: Renderer, mergedTheme: ThemePrepared) => {
     const { siteVariables } = mergedTheme
@@ -160,10 +162,14 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
       ...unhandledProps
     } = this.props
 
-    const performanceStats = statsRef ? {} : undefined
-
     if (statsRef) {
-      statsRef['current'] = performanceStats
+      if (!this.performanceStats) {
+        this.performanceStats = new PerformanceStats()
+      }
+
+      statsRef['current'] = this.performanceStats
+    } else if (this.performanceStats) {
+      delete this.performanceStats
     }
 
     const inputContext: ProviderContextInput = {
@@ -172,7 +178,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
       disableAnimations,
       renderer,
       target,
-      performanceStats,
+      performanceStats: this.performanceStats,
     }
 
     const incomingContext: ProviderContextPrepared = overwrite ? {} : this.context

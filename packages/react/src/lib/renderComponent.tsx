@@ -34,6 +34,7 @@ import createAnimationStyles from './createAnimationStyles'
 import { isEnabled as isDebugEnabled } from './debug/debugEnabled'
 import { DebugData } from './debug/debugData'
 import withDebugId from './withDebugId'
+import PerformanceStats from './PerformanceStats'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
@@ -175,11 +176,11 @@ const renderComponent = <P extends {}>(
     renderer = null,
     rtl = false,
     theme = emptyTheme,
-    performanceStats = undefined,
+    performanceStats = undefined as PerformanceStats,
     _internal_resolvedComponentVariables: resolvedComponentVariables = {},
   } = context || {}
 
-  const startTime = performanceStats ? performance.now() : 0
+  const startTime = performanceStats && performanceStats.enabled ? performance.now() : 0
 
   const ElementType = getElementType(props) as React.ReactType<P>
   const stateAndProps = { ...state, ...props }
@@ -306,14 +307,14 @@ const renderComponent = <P extends {}>(
     result = render(resolvedConfig)
   }
 
-  if (performanceStats) {
+  if (performanceStats && performanceStats.enabled) {
     const duration = performance.now() - startTime
 
-    if (performanceStats[displayName]) {
-      performanceStats[displayName].count++
-      performanceStats[displayName].ms += duration
+    if (performanceStats.stats[displayName]) {
+      performanceStats.stats[displayName].count++
+      performanceStats.stats[displayName].ms += duration
     } else {
-      performanceStats[displayName] = {
+      performanceStats.stats[displayName] = {
         count: 1,
         ms: duration,
       }

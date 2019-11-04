@@ -11,8 +11,6 @@ import {
   ToolbarItemShorthandKinds,
   SizeValue,
   ShorthandValue,
-  Provider,
-  PerformanceStats,
 } from '@stardust-ui/react'
 
 const tooltips = {
@@ -244,29 +242,8 @@ const layouts: Record<CustomToolbarProps['layout'], CustomToolbarLayout> = {
 
 const CustomToolbar: React.FunctionComponent<CustomToolbarProps> = props => {
   const { layout = 'standard' } = props
-  const performanceStats = React.useRef<PerformanceStats>()
-  React.useEffect(() => {
-    performance.measure('CUSTOM', 'render-custom-toolbar')
-    const totals = _.reduce(
-      performanceStats.current,
-      (acc, next) => {
-        acc.count += next.count
-        acc.ms += next.ms
-        return acc
-      },
-      { count: 0, ms: 0 },
-    )
-    console.log(`Rendered ${totals.count} Stardust components in ${totals.ms} ms`)
-    console.table(performanceStats.current)
-  }, [])
 
-  performance.mark('render-custom-toolbar')
-
-  return (
-    <Provider statsRef={performanceStats}>
-      <Toolbar variables={{ isCt: true }} items={layouts[layout](props)} />
-    </Provider>
-  )
+  return <Toolbar variables={{ isCt: true }} items={layouts[layout](props)} />
 }
 
 export default CustomToolbar

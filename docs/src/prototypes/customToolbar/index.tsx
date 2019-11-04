@@ -7,7 +7,7 @@ import {
   useSelectKnob,
   KnobInspector,
 } from '@stardust-ui/docs-components'
-import { Provider, Flex, themes, mergeThemes } from '@stardust-ui/react'
+import { Provider, Flex, themes, mergeThemes, PerformanceStats } from '@stardust-ui/react'
 
 import { darkThemeOverrides } from './darkThemeOverrides'
 import { highContrastThemeOverrides } from './highContrastThemeOverrides'
@@ -57,6 +57,7 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
   const [chatHasNotification] = useBooleanKnob({ name: 'chatHasNotification', initialValue: false })
   const [currentSlide, setCurrentSlide] = React.useState(23)
   const totalSlides = 34
+  const [perfEnabled] = useBooleanKnob({ name: 'perfEnabled', initialValue: true })
 
   let theme = {}
   if (themeName === 'teamsDark') {
@@ -65,6 +66,37 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
     theme = mergeThemes(themes.teamsHighContrast, darkThemeOverrides, highContrastThemeOverrides)
   }
 
+  const perfStats = React.useRef<PerformanceStats>()
+
+  React.useEffect(() => {
+    performance.measure('render-custom-toolbar', 'render-custom-toolbar')
+    const telemetry = perfStats.current
+    if (!perfEnabled || !telemetry) {
+      return
+    }
+
+    telemetry.enabled = false
+
+    const totals = _.reduce(
+      telemetry.stats,
+      (acc, next) => {
+        acc.count += next.count
+        acc.ms += next.ms
+        return acc
+      },
+      { count: 0, ms: 0 },
+    )
+
+    console.log(`Rendered ${totals.count} Stardust components in ${totals.ms} ms`)
+    console.table(telemetry.stats)
+  })
+
+  if (perfStats.current) {
+    perfStats.current.enabled = perfEnabled
+    perfStats.current.reset()
+  }
+  performance.mark('render-custom-toolbar')
+
   return (
     <div style={{ height: '100vh' }}>
       <Flex column fill>
@@ -72,7 +104,7 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
           <KnobInspector />
         </KnobsSnippet>
 
-        <Provider theme={theme} rtl={rtl}>
+        <Provider theme={theme} rtl={rtl} {...(perfEnabled ? { statsRef: perfStats } : undefined)}>
           <Flex
             hAlign="center"
             styles={{

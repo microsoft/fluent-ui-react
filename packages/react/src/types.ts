@@ -4,6 +4,7 @@
 
 import * as React from 'react'
 import { ThemeInput, Renderer, ThemePrepared } from './themes/types'
+import PerformanceStats from './lib/PerformanceStats'
 
 export type Extendable<T, V = any> = T & {
   [key: string]: V
@@ -148,8 +149,6 @@ export const UNSAFE_typed = <TComponentType>(componentType: TComponentType) => {
       (componentType as any) as UNSAFE_TypedComponent<TComponentType, TProps>,
   }
 }
-
-export type PerformanceStats = Record<string, { count: number; ms: number }>
 
 // ========================================================
 // Provider's context
