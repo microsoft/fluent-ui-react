@@ -19,12 +19,24 @@ const menuDividerStyles: ComponentSelectorsAndStyles<MenuDividerProps, MenuVaria
           textAlign: 'center',
         },
       ],
-      [{ content: false, vertical: true, primary: true }, { borderTop: primaryBorderColor }],
-      [{ content: false, vertical: true, primary: false }, { borderTop: defaultBorderColor }],
+      [
+        { content: false, vertical: true, primary: true },
+        { borderTop: `1px solid ${primaryBorderColor}` },
+      ],
+      [
+        { content: false, vertical: true, primary: false },
+        { borderTop: `1px solid ${defaultBorderColor}` },
+      ],
       [{ content: false, vertical: false }, { alignSelf: 'stretch' }],
       [{ content: false, vertical: true, inSubmenu: true }, { margin: '8px 0' }],
-      [{ content: false, vertical: false, primary: true }, { borderLeft: primaryBorderColor }],
-      [{ content: false, vertical: false, primary: false }, { borderLeft: defaultBorderColor }],
+      [
+        { content: false, vertical: false, primary: true },
+        { borderLeft: `1px solid ${primaryBorderColor}` },
+      ],
+      [
+        { content: false, vertical: false, primary: false },
+        { borderLeft: `1px solid ${defaultBorderColor}` },
+      ],
     ],
   }
 }
