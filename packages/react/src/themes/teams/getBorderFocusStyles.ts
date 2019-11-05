@@ -1,11 +1,11 @@
 import * as React from 'react'
 
-import { ICSSInJSStyle, SiteVariablesPrepared } from '../types'
+import { ICSSInJSStyle } from '../types'
 
 type CSSBorderStyles = Pick<React.CSSProperties, 'borderWidth' | 'borderRadius'>
 
 type BorderFocusStyles = CSSBorderStyles & {
-  siteVariables?: SiteVariablesPrepared
+  siteVariables?: object
   focusInnerBorderColor?: string
   focusOuterBorderColor?: string
   borderPadding?: React.CSSProperties['padding']

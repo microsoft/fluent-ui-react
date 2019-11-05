@@ -20,6 +20,11 @@ export interface SliderVariables {
 
   trackColor: string
   disabledTrackColor: string
+
+  focusBorderWidth: string
+  focusBorderRadius: string
+  focusInnerBorderColor: string
+  focusOuterBorderColor: string
 }
 export default (siteVars: SiteVariablesPrepared): SliderVariables => {
   const { colorScheme } = siteVars
@@ -43,5 +48,10 @@ export default (siteVars: SiteVariablesPrepared): SliderVariables => {
 
     trackColor: colorScheme.brand.foregroundActive,
     disabledTrackColor: colorScheme.default.foregroundDisabled1,
+
+    focusBorderWidth: siteVars.borderWidth,
+    focusBorderRadius: siteVars.borderRadius,
+    focusInnerBorderColor: siteVars.focusInnerBorderColor,
+    focusOuterBorderColor: siteVars.focusOuterBorderColor,
   }
 }
