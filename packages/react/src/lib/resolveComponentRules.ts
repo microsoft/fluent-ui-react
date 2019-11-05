@@ -23,7 +23,10 @@ export function deepMergeObjects(target: object, source: object): object {
 const isMatch = (props, selector): boolean => {
   if (selector === null) return true
   return Object.keys(selector).every(
-    k => props[k] === selector[k] || (props[k] === undefined && !!props[k] === !!selector[k]),
+    k =>
+      props[k] === selector[k] ||
+      ((typeof selector[k] === 'boolean' || props[k] === undefined) &&
+        !!props[k] === !!selector[k]),
   )
 }
 

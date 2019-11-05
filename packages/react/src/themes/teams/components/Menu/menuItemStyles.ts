@@ -152,7 +152,7 @@ const updatedMenuItemStyles: ComponentSelectorsAndStyles<MenuItemProps, MenuVari
       [
         [
           { active: true, pointing: 'start', vertical: false, primary: true },
-          { active: true, pointing: true, vertical: false, primary: true },
+          // { active: true, pointing: true, vertical: false, primary: true },
         ],
         {
           '::after': {
@@ -212,7 +212,7 @@ const updatedMenuItemStyles: ComponentSelectorsAndStyles<MenuItemProps, MenuVari
         },
       ],
       [
-        { iconOnly: true },
+        { iconOnly: true, disabled: false },
         {
           display: 'flex',
           ':hover': {
@@ -238,7 +238,11 @@ const updatedMenuItemStyles: ComponentSelectorsAndStyles<MenuItemProps, MenuVari
         },
       ],
       [
-        { iconOnly: false, isFromKeyboard: true, primary: true },
+        [
+          { iconOnly: false, isFromKeyboard: true, primary: true, active: false },
+          { iconOnly: false, isFromKeyboard: true, primary: true, underlined: true },
+          { iconOnly: false, isFromKeyboard: true, primary: true, vertical: true },
+        ],
         {
           color: v.colorScheme && v.colorScheme.brand && v.colorScheme.brand.foregroundFocus,
           background:
@@ -247,7 +251,11 @@ const updatedMenuItemStyles: ComponentSelectorsAndStyles<MenuItemProps, MenuVari
         },
       ],
       [
-        { iconOnly: false, isFromKeyboard: true, primary: false },
+        [
+          { iconOnly: false, isFromKeyboard: true, primary: false, active: false },
+          { iconOnly: false, isFromKeyboard: true, primary: false, underlined: true },
+          { iconOnly: false, isFromKeyboard: true, primary: false, vertical: true },
+        ],
         {
           color: v.colorActive,
           background:
@@ -255,16 +263,8 @@ const updatedMenuItemStyles: ComponentSelectorsAndStyles<MenuItemProps, MenuVari
             (v.colorScheme && v.colorScheme.default && v.colorScheme.default.backgroundFocus),
         },
       ],
-
       [
-        { iconOnly: false, isFromKeyboard: true, active: true, underlined: false, vertical: false },
-        {
-          color: 'inherit',
-          backgroundColor: 'inherit',
-        },
-      ],
-      [
-        { iconOnly: false, underlined: true },
+        { iconOnly: false, underlined: true, disabled: false },
         {
           ':hover': {
             color: v.colorActive,
@@ -272,7 +272,7 @@ const updatedMenuItemStyles: ComponentSelectorsAndStyles<MenuItemProps, MenuVari
         },
       ],
       [
-        { iconOnly: false, underlined: false, primary: true },
+        { iconOnly: false, underlined: false, primary: true, active: false, disabled: false },
         {
           ':hover': {
             color: v.colorScheme && v.colorScheme.brand && v.colorScheme.brand.foregroundHover,
@@ -283,25 +283,13 @@ const updatedMenuItemStyles: ComponentSelectorsAndStyles<MenuItemProps, MenuVari
         },
       ],
       [
-        { iconOnly: false, underlined: false, primary: false },
+        { iconOnly: false, underlined: false, primary: false, active: false, disabled: false },
         {
           ':hover': {
             color: v.colorScheme && v.colorScheme.default && v.colorScheme.default.foregroundHover,
             background:
               v.backgroundColorHover ||
               (v.colorScheme && v.colorScheme.default && v.colorScheme.default.backgroundHover),
-          },
-        },
-      ],
-      [
-        { iconOnly: false, active: true, underlined: false, vertical: false },
-        {
-          // ':hover': {
-          // if (active && !underlined && !vertical) return {} //:(
-          // },
-          ':hover': {
-            color: 'inherit',
-            backgroundColor: 'inherit',
           },
         },
       ],
@@ -367,7 +355,6 @@ const updatedMenuItemStyles: ComponentSelectorsAndStyles<MenuItemProps, MenuVari
           border: '1px solid transparent',
         },
       ],
-      // TODO: this was spread on different placed across the file :\
       [
         { iconOnly: true },
         {
@@ -377,6 +364,11 @@ const updatedMenuItemStyles: ComponentSelectorsAndStyles<MenuItemProps, MenuVari
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+        },
+      ],
+      [
+        { iconOnly: true, disabled: false },
+        {
           ':hover': {
             ...getIconFillOrOutlineStyles({ outline: false }),
           },
@@ -399,13 +391,13 @@ const updatedMenuItemStyles: ComponentSelectorsAndStyles<MenuItemProps, MenuVari
         },
       ],
       [
-        { underlined: false, pointing: false, vertical: true },
+        { underlined: false, pointing: false, vertical: true, iconOnly: false },
         {
           padding: v.verticalItemPadding,
         },
       ],
       [
-        { underlined: false, vertical: false },
+        { underlined: false, vertical: false, iconOnly: false },
         {
           padding: v.horizontalPadding,
         },
@@ -435,21 +427,25 @@ const updatedMenuItemStyles: ComponentSelectorsAndStyles<MenuItemProps, MenuVari
         },
       ],
       [
-        { primary: true, active: false, underlined: true },
+        { primary: true, active: false, underlined: true, disabled: false },
         {
-          ...underlinedItem(
-            v.underlinedBorderColor ||
-              (v.colorScheme && v.colorScheme.brand && v.colorScheme.brand.backgroundActive),
-          ),
+          ':hover': {
+            ...underlinedItem(
+              v.underlinedBorderColor ||
+                (v.colorScheme && v.colorScheme.brand && v.colorScheme.brand.backgroundActive),
+            ),
+          },
         },
       ],
       [
-        { primary: false, active: false, underlined: true },
+        { primary: false, active: false, underlined: true, disabled: false },
         {
-          ...underlinedItem(
-            v.backgroundColorActive ||
-              (v.colorScheme && v.colorScheme.default && v.colorScheme.default.backgroundActive),
-          ),
+          ':hover': {
+            ...underlinedItem(
+              v.backgroundColorActive ||
+                (v.colorScheme && v.colorScheme.default && v.colorScheme.default.backgroundActive),
+            ),
+          },
         },
       ],
       [
@@ -496,7 +492,7 @@ const updatedMenuItemStyles: ComponentSelectorsAndStyles<MenuItemProps, MenuVari
         },
       ],
       [
-        { primary: true, active: false, underlined: true },
+        { primary: true, active: false, underlined: true, disabled: false },
         {
           ':hover': {
             ...underlinedItem(
@@ -507,7 +503,7 @@ const updatedMenuItemStyles: ComponentSelectorsAndStyles<MenuItemProps, MenuVari
         },
       ],
       [
-        { primary: false, active: false, underlined: true },
+        { primary: false, active: false, underlined: true, disabled: false },
         {
           ':hover': {
             ...underlinedItem(
@@ -521,10 +517,6 @@ const updatedMenuItemStyles: ComponentSelectorsAndStyles<MenuItemProps, MenuVari
         { disabled: true },
         {
           cursor: 'default',
-          ':hover': {
-            // reset all existing hover styles
-            color: 'inherit', // :/
-          },
         },
       ],
     ],
@@ -543,11 +535,38 @@ const updatedMenuItemStyles: ComponentSelectorsAndStyles<MenuItemProps, MenuVari
         [{ inSubmenu: true }, { vertical: true }],
         {
           width: 'max-content',
-          // TODO: check if is defined
-          // const widthAdjust = (p.icon ? 26 : 0) + (p.menu ? 16 : 0)
-          // minWidth: pxToRem(46 - widthAdjust),
-          // maxWidth: pxToRem(262 - widthAdjust),
           marginRight: pxToRem(16),
+        },
+      ],
+      [
+        [{ inSubmenu: true, icon: true, menu: true }, { vertical: true, icon: true, menu: true }],
+        {
+          minWidth: pxToRem(46 - 26 - 16),
+          maxWidth: pxToRem(262 - 26 - 16),
+        },
+      ],
+      [
+        [{ inSubmenu: true, icon: true, menu: false }, { vertical: true, icon: true, menu: false }],
+        {
+          minWidth: pxToRem(46 - 26),
+          maxWidth: pxToRem(262 - 26),
+        },
+      ],
+      [
+        [{ inSubmenu: true, icon: false, menu: true }, { vertical: true, icon: false, menu: true }],
+        {
+          minWidth: pxToRem(46 - 16),
+          maxWidth: pxToRem(262 - 16),
+        },
+      ],
+      [
+        [
+          { inSubmenu: true, icon: false, menu: false },
+          { vertical: true, icon: false, menu: false },
+        ],
+        {
+          minWidth: pxToRem(46),
+          maxWidth: pxToRem(262),
         },
       ],
     ],
