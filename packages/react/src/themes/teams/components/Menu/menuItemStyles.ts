@@ -150,10 +150,7 @@ const updatedMenuItemStyles: ComponentSelectorsAndStyles<MenuItemProps, MenuVari
         },
       ],
       [
-        [
-          { active: true, pointing: 'start', vertical: false, primary: true },
-          // { active: true, pointing: true, vertical: false, primary: true },
-        ],
+        [{ active: true, pointing: 'start', vertical: false, primary: true }],
         {
           '::after': {
             top: '-1px',
