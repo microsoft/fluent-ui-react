@@ -69,13 +69,69 @@ const avatarStyles: ComponentSelectorsAndStyles<AvatarProps, AvatarVariables> = 
     //
     // Sizes
     //
-    [{ size: 'smallest' }, { width: v.smallest, height: v.smallest, lineHeight: v.smallest }],
-    [{ size: 'smaller' }, { width: v.smaller, height: v.smaller, lineHeight: v.smaller }],
-    [{ size: 'small' }, { width: v.small, height: v.small, lineHeight: v.small }],
-    [{ size: 'medium' }, { width: v.medium, height: v.medium, lineHeight: v.medium }],
-    [{ size: 'large' }, { width: v.large, height: v.large, lineHeight: v.large }],
-    [{ size: 'larger' }, { width: v.larger, height: v.larger, lineHeight: v.larger }],
-    [{ size: 'largest' }, { width: v.largest, height: v.largest, lineHeight: v.largest }],
+    [
+      { size: 'smallest' },
+      {
+        fontSize: `calc(${v.smallest} / 2.333)`,
+        width: v.smallest,
+        height: v.smallest,
+        lineHeight: v.smallest,
+      },
+    ],
+    [
+      { size: 'smaller' },
+      {
+        fontSize: `calc(${v.smaller} / 2.333)`,
+        width: v.smaller,
+        height: v.smaller,
+        lineHeight: v.smaller,
+      },
+    ],
+    [
+      { size: 'small' },
+      {
+        fontSize: `calc(${v.small} / 2.333)`,
+        width: v.small,
+        height: v.small,
+        lineHeight: v.small,
+      },
+    ],
+    [
+      { size: 'medium' },
+      {
+        fontSize: `calc(${v.medium} / 2.333)`,
+        width: v.medium,
+        height: v.medium,
+        lineHeight: v.medium,
+      },
+    ],
+    [
+      { size: 'large' },
+      {
+        fontSize: `calc(${v.large} / 2.333)`,
+        width: v.large,
+        height: v.large,
+        lineHeight: v.large,
+      },
+    ],
+    [
+      { size: 'larger' },
+      {
+        fontSize: `calc(${v.larger} / 2.333)`,
+        width: v.larger,
+        height: v.larger,
+        lineHeight: v.larger,
+      },
+    ],
+    [
+      { size: 'largest' },
+      {
+        fontSize: `calc(${v.largest} / 2.333)`,
+        width: v.largest,
+        height: v.largest,
+        lineHeight: v.largest,
+      },
+    ],
   ],
 
   // ----------------------------------------
