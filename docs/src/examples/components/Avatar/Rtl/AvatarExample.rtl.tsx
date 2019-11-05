@@ -5,7 +5,7 @@ const AvatarExampleRtl = () => (
   <Avatar
     name="جون دو"
     status={{
-      color: 'green',
+      styles: { backgroundColor: 'green' },
       icon: 'stardust-checkmark',
     }}
   />

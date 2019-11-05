@@ -3,7 +3,7 @@ import { Avatar, Grid, SizeValue } from '@stardust-ui/react'
 
 const statusProps = {
   icon: 'stardust-checkmark',
-  color: 'green',
+  styles: { backgroundColor: 'green' },
   title: 'Available',
 }
 

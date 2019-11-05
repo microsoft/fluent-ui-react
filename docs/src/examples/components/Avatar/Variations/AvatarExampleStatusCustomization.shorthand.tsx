@@ -5,7 +5,7 @@ const defaultAvatar = (
   <Avatar
     image={{ src: 'public/images/avatar/small/matt.jpg', alt: 'Profile picture of Matt' }}
     status={{
-      color: 'green',
+      styles: { backgroundColor: 'green' },
       icon: 'stardust-checkmark',
       title: 'Available',
     }}
@@ -22,7 +22,7 @@ const AvatarExampleStatusCustomizationShorthand = () => (
     <Avatar
       image={{ src: 'public/images/avatar/small/matt.jpg', alt: 'Profile picture of Matt' }}
       status={{
-        color: 'green',
+        styles: { backgroundColor: 'green' },
         icon: 'stardust-checkmark',
         title: 'Available',
       }}
@@ -34,7 +34,7 @@ const AvatarExampleStatusCustomizationShorthand = () => (
       image={{ src: 'public/images/avatar/small/matt.jpg', alt: 'Profile picture of Matt' }}
       size="larger"
       status={{
-        color: 'green',
+        styles: { backgroundColor: 'green' },
         icon: 'stardust-checkmark',
         title: 'Available',
       }}
@@ -44,7 +44,7 @@ const AvatarExampleStatusCustomizationShorthand = () => (
     <Avatar
       image={{ src: 'public/images/avatar/small/matt.jpg', alt: 'Profile picture of Matt' }}
       status={{
-        color: 'green',
+        styles: { backgroundColor: 'green' },
         icon: 'stardust-checkmark',
         title: 'Available',
         size: 'larger',
@@ -56,7 +56,7 @@ const AvatarExampleStatusCustomizationShorthand = () => (
       image={{ src: 'public/images/avatar/small/matt.jpg', alt: 'Profile picture of Matt' }}
       size="larger"
       status={{
-        color: 'green',
+        styles: { backgroundColor: 'green' },
         icon: 'stardust-checkmark',
         title: 'Available',
         size: 'medium',

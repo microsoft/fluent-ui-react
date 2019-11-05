@@ -7,7 +7,11 @@ const AvatarExampleGetInitialsShorthand = () => (
   <Avatar
     name="John Doe"
     getInitials={getInitials}
-    status={{ color: 'green', icon: 'stardust-checkmark', title: 'Available' }}
+    status={{
+      styles: { backgroundColor: 'green' },
+      icon: 'stardust-checkmark',
+      title: 'Available',
+    }}
   />
 )
 

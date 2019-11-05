@@ -1,7 +1,11 @@
 import * as React from 'react'
 import { Avatar } from '@stardust-ui/react'
 
-const status = { color: 'green', icon: 'stardust-checkmark', title: 'Available' }
+const status = {
+  styles: { backgroundColor: 'green' },
+  icon: 'stardust-checkmark',
+  title: 'Available',
+}
 
 const AvatarExampleExcludedInitialsShorthand = () => (
   <div>
