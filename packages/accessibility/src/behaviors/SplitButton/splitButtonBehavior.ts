@@ -12,6 +12,7 @@ import menuButtonBehavior from '../MenuButton/menuButtonBehavior'
 const splitButtonBehavior: Accessibility = props => {
   const splitButtonMenuButtonBehavior = props => {
     const menuButtonBehaviorData = menuButtonBehavior(props)
+    menuButtonBehaviorData.attributes.trigger['aria-haspopup'] = undefined
 
     return _.merge(menuButtonBehaviorData, {
       keyActions: {
@@ -25,6 +26,8 @@ const splitButtonBehavior: Accessibility = props => {
             keyCombinations: [
               { keyCode: keyboardKey.Escape },
               { keyCode: keyboardKey.ArrowUp, altKey: true },
+              { keyCode: keyboardKey.Tab, shiftKey: false },
+              { keyCode: keyboardKey.Tab, shiftKey: true },
             ],
           },
         },

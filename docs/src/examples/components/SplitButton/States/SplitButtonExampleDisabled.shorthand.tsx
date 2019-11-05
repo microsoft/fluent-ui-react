@@ -8,7 +8,11 @@ const SplitButtonExampleDisabledShorthand = () => (
       { key: 'group', content: 'New group message' },
       { key: 'channel', content: 'New channel message' },
     ]}
-    button="New conversation"
+    button={{
+      content: 'New conversation',
+      'aria-roledescription': 'splitbutton',
+    }}
+    toggleButton={{ 'aria-label': 'more options' }}
   />
 )
 
