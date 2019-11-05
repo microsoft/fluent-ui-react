@@ -1,32 +1,32 @@
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { ComponentSelectorsAndStyles } from '../../../types'
 import { MenuDividerProps } from '../../../../components/Menu/MenuDivider'
 import { MenuVariables } from './menuVariables'
-import { getColorScheme } from '../../colors'
+import { backportComponentStyle } from '../../../../lib/resolveComponentRules'
 
-const menuDividerStyles: ComponentSlotStylesPrepared<MenuDividerProps, MenuVariables> = {
-  root: ({ props: p, variables: v }): ICSSInJSStyle => {
-    const colors = getColorScheme(v.colorScheme, null, p.primary)
-    const borderColor = p.primary ? v.primaryBorderColor : v.borderColor || colors.border
-    const borderType = p.vertical ? 'borderTop' : 'borderLeft'
-
-    return p.content
-      ? {
+const menuDividerStyles: ComponentSelectorsAndStyles<MenuDividerProps, MenuVariables> = v => {
+  const primaryBorderColor =
+    v.primaryBorderColor || (v.colorScheme && v.colorScheme.brand && v.colorScheme.brand.border)
+  const defaultBorderColor =
+    v.borderColor || (v.colorScheme && v.colorScheme.default && v.colorScheme.default.border)
+  return {
+    root: [
+      [
+        { content: true },
+        {
           display: 'flex',
           justifyContent: 'center',
           flexDirection: 'column',
           textAlign: 'center',
-        }
-      : {
-          [borderType]: `1px solid ${borderColor}`,
-          ...(!p.vertical && {
-            alignSelf: 'stretch',
-          }),
-          ...(p.vertical &&
-            p.inSubmenu && {
-              margin: '8px 0',
-            }),
-        }
-  },
+        },
+      ],
+      [{ content: false, vertical: true, primary: true }, { borderTop: primaryBorderColor }],
+      [{ content: false, vertical: true, primary: false }, { borderTop: defaultBorderColor }],
+      [{ content: false, vertical: false }, { alignSelf: 'stretch' }],
+      [{ content: false, vertical: true, inSubmenu: true }, { margin: '8px 0' }],
+      [{ content: false, vertical: false, primary: true }, { borderLeft: primaryBorderColor }],
+      [{ content: false, vertical: false, primary: false }, { borderLeft: defaultBorderColor }],
+    ],
+  }
 }
 
-export default menuDividerStyles
+export default backportComponentStyle(menuDividerStyles)
