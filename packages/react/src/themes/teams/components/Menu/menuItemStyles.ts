@@ -219,17 +219,6 @@ const menuItemStyles: ComponentSelectorsAndStyles<MenuItemProps, MenuVariables> 
       },
     ],
     [
-      { iconOnly: false, isFromKeyboard: true, vertical: true, primary: false },
-      {
-        border: `solid 1px ${v.borderColorFocus}`,
-        outline: `solid 1px ${v.outlineColorFocus}`,
-        margin: pxToRem(1),
-        background:
-          v.verticalBackgroundColorFocus ||
-          (v.colorScheme && v.colorScheme.default && v.colorScheme.default.backgroundFocus),
-      },
-    ],
-    [
       [
         { iconOnly: false, isFromKeyboard: true, primary: true, active: false },
         { iconOnly: false, isFromKeyboard: true, primary: true, underlined: true },
@@ -252,6 +241,17 @@ const menuItemStyles: ComponentSelectorsAndStyles<MenuItemProps, MenuVariables> 
         color: v.colorActive,
         background:
           v.backgroundColorFocus ||
+          (v.colorScheme && v.colorScheme.default && v.colorScheme.default.backgroundFocus),
+      },
+    ],
+    [
+      { iconOnly: false, isFromKeyboard: true, vertical: true, primary: false },
+      {
+        border: `solid 1px ${v.borderColorFocus}`,
+        outline: `solid 1px ${v.outlineColorFocus}`,
+        margin: pxToRem(1),
+        background:
+          v.verticalBackgroundColorFocus ||
           (v.colorScheme && v.colorScheme.default && v.colorScheme.default.backgroundFocus),
       },
     ],
