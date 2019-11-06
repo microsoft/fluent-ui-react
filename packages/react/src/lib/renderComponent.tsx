@@ -245,11 +245,11 @@ const renderComponent = <P extends {}>(
 
   // const debug = (...args) => displayName !== 'ProviderBox' && console.debug(displayName, ...args)
 
-  let slots = []
-  let computedStyles = []
-  let cachedStyles = []
-  let computedClasses = []
-  let cachedClasses = []
+  const slots = []
+  const computedStyles = []
+  const cachedStyles = []
+  const computedClasses = []
+  const cachedClasses = []
 
   Object.keys(mergedStyles).forEach(slotName => {
     slots.push(slotName)

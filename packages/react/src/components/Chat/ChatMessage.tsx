@@ -209,14 +209,16 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     const { unstable_overflow: overflow } = this.props
     const { messageNode } = this.state
 
-    const actionMenuElement = actionMenu && Menu.create(actionMenu, {
-      defaultProps: {
-        [IS_FOCUSABLE_ATTRIBUTE]: true,
-        accessibility: menuAsToolbarBehavior,
-        className: ChatMessage.slotClassNames.actionMenu,
-        styles: styles.actionMenu,
-      },
-    })
+    const actionMenuElement =
+      actionMenu &&
+      Menu.create(actionMenu, {
+        defaultProps: {
+          [IS_FOCUSABLE_ATTRIBUTE]: true,
+          accessibility: menuAsToolbarBehavior,
+          className: ChatMessage.slotClassNames.actionMenu,
+          styles: styles.actionMenu,
+        },
+      })
 
     if (!actionMenuElement) {
       return actionMenuElement
@@ -281,45 +283,55 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     } = this.props
     const childrenPropExists = childrenExist(children)
     const className = childrenPropExists ? cx(classes.root, classes.content) : classes.root
-    const badgeElement = badge && Label.create(badge, {
-      defaultProps: {
-        className: ChatMessage.slotClassNames.badge,
-        styles: styles.badge,
-      },
-    })
+    const badgeElement =
+      badge &&
+      Label.create(badge, {
+        defaultProps: {
+          className: ChatMessage.slotClassNames.badge,
+          styles: styles.badge,
+        },
+      })
 
-    const reactionGroupElement = reactionGroup && Reaction.Group.create(reactionGroup, {
-      defaultProps: {
-        className: ChatMessage.slotClassNames.reactionGroup,
-        styles: styles.reactionGroup,
-      },
-    })
+    const reactionGroupElement =
+      reactionGroup &&
+      Reaction.Group.create(reactionGroup, {
+        defaultProps: {
+          className: ChatMessage.slotClassNames.reactionGroup,
+          styles: styles.reactionGroup,
+        },
+      })
 
     const actionMenuElement = this.renderActionMenu(actionMenu, styles)
 
-    const authorElement = author && Text.create(author, {
-      defaultProps: {
-        size: 'small',
-        styles: styles.author,
-        className: ChatMessage.slotClassNames.author,
-      },
-    })
+    const authorElement =
+      author &&
+      Text.create(author, {
+        defaultProps: {
+          size: 'small',
+          styles: styles.author,
+          className: ChatMessage.slotClassNames.author,
+        },
+      })
 
-    const timestampElement = timestamp && Text.create(timestamp, {
-      defaultProps: {
-        size: 'small',
-        styles: styles.timestamp,
-        timestamp: true,
-        className: ChatMessage.slotClassNames.timestamp,
-      },
-    })
+    const timestampElement =
+      timestamp &&
+      Text.create(timestamp, {
+        defaultProps: {
+          size: 'small',
+          styles: styles.timestamp,
+          timestamp: true,
+          className: ChatMessage.slotClassNames.timestamp,
+        },
+      })
 
-    const messageContent = content && Box.create(content, {
-      defaultProps: {
-        className: ChatMessage.slotClassNames.content,
-        styles: styles.content,
-      },
-    })
+    const messageContent =
+      content &&
+      Box.create(content, {
+        defaultProps: {
+          className: ChatMessage.slotClassNames.content,
+          styles: styles.content,
+        },
+      })
 
     return (
       <Ref innerRef={this.handleMessageRef}>

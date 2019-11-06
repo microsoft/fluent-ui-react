@@ -95,7 +95,7 @@ We currently process all slot styles because we don't know which slots will be u
 Example, MenuItem computes styles for:
   - wrapper
   - root
-  - content
+  - content 
   - icon
   - menu
   - indicator
@@ -207,5 +207,6 @@ Note, the plugin doesn't operate on the properties in the styles for the perf ex
 |-------------|-------|-------|-------|--------------|
 | First load: | 482ms | 510ms | 520ms | -30ms, -6%   |
 | Hot reload: | 288ms | 302ms | 356ms | -8ms, -3%    |
+
 
 
