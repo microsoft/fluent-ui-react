@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Provider, Flex, StatusProps, WithAsProp, Extendable } from '@stardust-ui/react'
-import Avatar from './Avatar'
+import Avatar from './CustomAvatar'
 import themeOverrides from './themeOverrides'
 
 const statusProps: Extendable<WithAsProp<StatusProps>> = {
