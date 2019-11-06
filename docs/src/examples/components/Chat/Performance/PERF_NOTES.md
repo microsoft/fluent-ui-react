@@ -1,12 +1,23 @@
-## MacOS Catalina Investigations
 
-no plugins:             439, 448, 442, 445, 450, 474, 500, 609
-no expand:                                                            664, 668, 672, 691, 693, 710
-skip unused slot styles:                                                                                 763, 764, 765, 772, 776, 779, 782, 799
-after restart:                                                                                                                                             834, 850, 863, 868, 877, 884, 888
-before restart:                                                                                                                                                                            891, 895, 909, 926, 926, 928, 941, 955
+### ChatWithPopover.perf
+
+|             |  MIN  |  AVG  |  MAX  |
+|-------------|-------|-------|-------|
+| First load: | 530ms | 540ms | 600ms |
+| Hot reload: | 302ms | 310ms | 385ms |
+
+MORE TIMES
+no plugins:        219, 221, 222, 224, 225, 237, 250, 304
+no expand:                                                  332, 334, 336, 345, 346, 355
+skip unused slot styles:                                                                    381, 382, 382, 386, 388, 389, 391, 399
+baseline:                                                                                                                             417, 425, 431, 434, 438, 442, 444
 
 ### Optimize: Replace renderComponent get classes loop with lazy styles/classes
+
+|             |  MIN  |  AVG  |  MAX  | AVG DIFF     |
+|-------------|-------|-------|-------|--------------|
+| First load: | 367ms | 383ms | 416ms | -157ms, -29% |
+| Hot reload: | 207ms | 216ms | 239ms | -94ms,  -30% |
 
 Now evaluation of classes and styles is deferred until accessed.
 Prevents unnecessary computation and writing of styles/classes.
@@ -18,7 +29,16 @@ Components had to be refactored from `Button.create(button, { styles: styles.but
 This could be done automatically if the factory `defaultProps` (or entire options) were lazily evaluated as an arrow fn.
 
 ```typescript jsx
+  // const debug = (...args) => displayName !== 'ProviderBox' && console.debug(displayName, ...args)
+
+  const slots = []
+  const computedStyles = []
+  const cachedStyles = []
+  const computedClasses = []
+  const cachedClasses = []
+
   Object.keys(mergedStyles).forEach(slotName => {
+    slots.push(slotName)
     // resolve/render slot styles once and cache
     const cacheKey = slotName + '__return'
 
@@ -27,13 +47,17 @@ This could be done automatically if the factory `defaultProps` (or entire option
       configurable: false,
       set(val) {
         resolvedStyles[cacheKey] = val
+        // debug('SET STYLE', slotName, val)
         return true
       },
       get() {
         if (resolvedStyles[cacheKey]) {
+          // debug('=> CACHED STYLE', slotName)
+          cachedStyles.push(slotName)
           return resolvedStyles[cacheKey]
         }
 
+        // debug('NOT CACHED STYLE', slotName)
         // resolve/render slot styles once and cache
         resolvedStyles[cacheKey] = mergedStyles[slotName](styleParam)
 
@@ -42,6 +66,8 @@ This could be done automatically if the factory `defaultProps` (or entire option
           delete resolvedStyles[slotName]['_debug']
         }
 
+        // debug('=> COMPUTED STYLE', slotName)
+        computedStyles.push(slotName)
         return resolvedStyles[cacheKey]
       },
     })
@@ -51,21 +77,28 @@ This could be done automatically if the factory `defaultProps` (or entire option
       configurable: false,
       set(val) {
         classes[cacheKey] = val
+        // debug('SET CLASS', slotName, val)
         return true
       },
       get() {
         if (classes[cacheKey]) {
+          // debug('=> CACHED CLASS', slotName)
+          cachedClasses.push(slotName)
           return classes[cacheKey]
         }
 
+        // debug('NOT CACHED CLASS', slotName)
         // this resolves the getter magic
         const styleObj = resolvedStyles[slotName]
 
         // fela throws on returning undefined, always return object
         if (renderer && styleObj) {
+          // debug('...RENDER CLASSES TO HEAD')
+          computedClasses.push(slotName)
           classes[cacheKey] = renderer.renderRule(() => styleObj, felaParam)
         }
 
+        // debug('=> COMPUTED CLASS', slotName)
         return classes[cacheKey]
       },
     })
@@ -82,20 +115,13 @@ skip unused styles:        1.6/29  1.6/30  1.5/29  1.5/28  1.6/29
 diff:                       .4/5    .4/5    .5/5    .5/6    .4/6
 with renderComponent hack: 1.6/32  1.5/31  1.6/31  1.6/33  1.6/32  1.6/32
 
-### ChatWithPopover.perf
-
-|             |  MIN  |  AVG  |  MAX  |
-|-------------|-------|-------|-------|
-| First load: | 530ms | 540ms | 600ms |
-| Hot reload: | 302ms | 310ms | 385ms |
-
 #### Investigate: Do not unnecessarily compute styles for slots
 
 We currently process all slot styles because we don't know which slots will be used.
 Example, MenuItem computes styles for:
   - wrapper
   - root
-  - content
+  - content 
   - icon
   - menu
   - indicator
@@ -207,5 +233,6 @@ Note, the plugin doesn't operate on the properties in the styles for the perf ex
 |-------------|-------|-------|-------|--------------|
 | First load: | 482ms | 510ms | 520ms | -30ms, -6%   |
 | Hot reload: | 288ms | 302ms | 356ms | -8ms, -3%    |
+
 
 

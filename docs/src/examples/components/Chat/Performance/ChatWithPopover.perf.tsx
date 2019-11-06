@@ -103,7 +103,7 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
     )
   }
 }
-// ///////////////////
+// ///////////
 const ChatWithPopover = () => {
   const telemetryRef = React.useRef<Telemetry>()
 
@@ -127,7 +127,7 @@ const ChatWithPopover = () => {
       msMin: +stats.msMin.toFixed(3),
       msMax: +stats.msMax.toFixed(3),
       msAvg: +(stats.msTotal / stats.count).toFixed(3),
-      weight: +(stats.msTotal / totals.msTotal * 100).toFixed(2)
+      weight: +((stats.msTotal / totals.msTotal) * 100).toFixed(2),
     }))
 
     console.log(`Rendered ${totals.count} Stardust components in ${totals.msTotal} ms`)
