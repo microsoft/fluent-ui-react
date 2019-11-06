@@ -5,7 +5,6 @@ const Avatar = (props: AvatarProps & { hexagonal?: boolean }) => {
   const { hexagonal, variables: propVariables, ...rest } = props
   const variables = siteVars => {
     return {
-      ...callable(propVariables)(siteVars),
       ...(hexagonal && {
         // these values are defined for the medium size avatar,
         // but can be exptended if we need to support different
@@ -17,6 +16,7 @@ const Avatar = (props: AvatarProps & { hexagonal?: boolean }) => {
         avatarBorderColor: '',
         avatarBorderWidth: 0,
       }),
+      ...callable(propVariables)(siteVars),
     }
   }
   return <StardustAvatar {...rest} variables={variables} />
