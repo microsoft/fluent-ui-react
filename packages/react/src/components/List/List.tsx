@@ -12,13 +12,17 @@ import {
   commonPropTypes,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
+  createShorthandFactory,
+  ShorthandFactory,
 } from '../../lib'
 import ListItem, { ListItemProps } from './ListItem'
+import Box, { BoxProps } from '../Box/Box'
 import {
   WithAsProp,
   ComponentEventHandler,
   withSafeTypeForAs,
   ShorthandCollection,
+  ShorthandValue,
 } from '../../types'
 
 export interface ListSlotClassNames {
@@ -62,6 +66,9 @@ export interface ListProps extends UIComponentProps, ChildrenComponentProps {
 
   /** A horizontal list displays elements horizontally. */
   horizontal?: boolean
+
+  /** An optional conainer that wraps items or children if they are present. */
+  container?: ShorthandValue<BoxProps>
 }
 
 export interface ListState {
@@ -81,6 +88,7 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
     ...commonPropTypes.createCommon({
       content: false,
     }),
+    container: customPropTypes.itemShorthand,
     debug: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     selectable: customPropTypes.every([customPropTypes.disallow(['navigable']), PropTypes.bool]),
@@ -116,6 +124,8 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
     'variables',
   ]
 
+  static create: ShorthandFactory<ListProps>
+
   handleItemOverrides = (predefinedProps: ListItemProps) => {
     const { selectable } = this.props
 
@@ -135,7 +145,15 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
   }
 
   renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
-    const { children } = this.props
+    const { children, container, items } = this.props
+
+    const hasContent = childrenExist(children) || (items && items.length > 0)
+    const containerContent = childrenExist(children) ? children : this.renderItems()
+
+    const maybeWrappedContent =
+      hasContent && container
+        ? Box.create(container, { overrideProps: { children: containerContent } })
+        : containerContent
 
     return (
       <ElementType
@@ -145,7 +163,7 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         className={classes.root}
       >
-        {childrenExist(children) ? children : this.renderItems()}
+        {maybeWrappedContent}
       </ElementType>
     )
   }
@@ -175,6 +193,8 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
     })
   }
 }
+
+List.create = createShorthandFactory({ Component: List, mappedArrayProp: 'items' })
 
 /**
  * A List displays a group of related sequential items.
