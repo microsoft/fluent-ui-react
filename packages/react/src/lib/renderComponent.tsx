@@ -22,6 +22,7 @@ import {
   ComponentVariablesObject,
   ComponentSlotClasses,
   ComponentSlotStylesPrepared,
+  ICSSInJSStyle,
   PropsWithVarsAndStyles,
   State,
   ThemePrepared,
@@ -238,21 +239,69 @@ const renderComponent = <P extends {}>(
     displayName, // does not affect styles, only used by useEnhancedRenderer in docs
   }
 
-  const resolvedStyles: ComponentSlotStylesPrepared = {}
+  const resolvedStyles: ICSSInJSStyle = {}
   const resolvedStylesDebug: { [key: string]: { styles: Object }[] } = {}
   const classes: ComponentSlotClasses = {}
 
+  const computedStyles = []
+  const cachedStyles = []
+  const computedClasses = []
+  const cachedClasses = []
+
   Object.keys(mergedStyles).forEach(slotName => {
-    resolvedStyles[slotName] = callable(mergedStyles[slotName])(styleParam)
+    // resolve/render slot styles once and cache
+    const cacheKey = `${slotName}__return`
 
-    if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
-      resolvedStylesDebug[slotName] = resolvedStyles[slotName]['_debug']
-      delete resolvedStyles[slotName]['_debug']
-    }
+    Object.defineProperty(resolvedStyles, slotName, {
+      enumerable: false,
+      configurable: false,
+      set(val) {
+        resolvedStyles[cacheKey] = val
+        return true
+      },
+      get() {
+        if (resolvedStyles[cacheKey]) {
+          cachedStyles.push(slotName)
+          return resolvedStyles[cacheKey]
+        }
 
-    if (renderer) {
-      classes[slotName] = renderer.renderRule(callable(resolvedStyles[slotName]), felaParam)
-    }
+        // resolve/render slot styles once and cache
+        resolvedStyles[cacheKey] = mergedStyles[slotName](styleParam)
+
+        if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
+          resolvedStylesDebug[slotName] = resolvedStyles[slotName]['_debug']
+          delete resolvedStyles[slotName]['_debug']
+        }
+
+        computedStyles.push(slotName)
+        return resolvedStyles[cacheKey]
+      },
+    })
+
+    Object.defineProperty(classes, slotName, {
+      enumerable: false,
+      configurable: false,
+      set(val) {
+        classes[cacheKey] = val
+        return true
+      },
+      get() {
+        if (classes[cacheKey]) {
+          cachedClasses.push(slotName)
+          return classes[cacheKey]
+        }
+
+        // this resolves the getter magic
+        const styleObj = resolvedStyles[slotName]
+
+        if (renderer && styleObj) {
+          computedClasses.push(slotName)
+          classes[cacheKey] = renderer.renderRule(() => styleObj, felaParam)
+        }
+
+        return classes[cacheKey]
+      },
+    })
   })
 
   classes.root = cx(className, classes.root, props.className)
@@ -266,6 +315,13 @@ const renderComponent = <P extends {}>(
     accessibility,
     rtl,
     theme,
+  }
+
+  let result
+  if (accessibility.focusZone) {
+    result = renderWithFocusZone(render, accessibility.focusZone, resolvedConfig)
+  } else {
+    result = render(resolvedConfig)
   }
 
   // conditionally add sources for evaluating debug information to component
@@ -298,13 +354,6 @@ const renderComponent = <P extends {}>(
         return true
       }),
     })
-  }
-
-  let result
-  if (accessibility.focusZone) {
-    result = renderWithFocusZone(render, accessibility.focusZone, resolvedConfig)
-  } else {
-    result = render(resolvedConfig)
   }
 
   if (telemetry && telemetry.enabled) {
