@@ -155,16 +155,14 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
       ...(p.secondaryAlt && {
         color: v.secondaryAltColor,
         borderColor: v.secondaryAltBorderColor,
+        backgroundColor: 'transparent',
 
         ':active': {
-          color: v.secondaryAltColorHover,
           backgroundColor: v.secondaryAltBackgroundColorActive,
         },
 
         ':hover': {
-          color: v.secondaryAltColorHover,
           backgroundColor: v.secondaryAltBackgroundColorHover,
-          borderColor: v.secondaryAltBorderColorHover,
         },
 
         ':focus': {
@@ -174,7 +172,6 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
 
         ':focus-visible': {
           ...borderFocusStyles[':focus-visible'],
-          color: v.secondaryAltColorFocusVisible,
           backgroundColor: v.secondaryAltBackgroundColorActive,
         },
       }),

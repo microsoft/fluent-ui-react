@@ -3,6 +3,9 @@ import { ButtonVariables } from '../../../teams/components/Button/buttonVariable
 export interface ButtonHighContrastVariables {
   backgroundColorFocus: string
   primaryBackgroundColorFocus: string
+  secondaryAltColorHover: string
+  secondaryAltBorderColorHover: string
+  secondaryAltColorFocusVisible: string
 }
 
 export default (siteVars: any): Partial<ButtonVariables> & ButtonHighContrastVariables => {
@@ -17,7 +20,6 @@ export default (siteVars: any): Partial<ButtonVariables> & ButtonHighContrastVar
 
     secondaryAltColor: siteVars.colors.white,
     secondaryAltColorHover: siteVars.colors.black,
-    secondaryAltColorFocus: siteVars.colors.white,
     secondaryAltColorFocusVisible: siteVars.colors.black,
     secondaryAltBackgroundColorActive: siteVars.accessibleYellow,
     secondaryAltBackgroundColorHover: siteVars.accessibleYellow,

@@ -36,13 +36,9 @@ export interface ButtonVariables {
   primaryBorderColor: string
 
   secondaryAltColor: string
-  secondaryAltColorHover: string
-  secondaryAltColorFocus: string
-  secondaryAltColorFocusVisible: string
   secondaryAltBackgroundColorActive: string
   secondaryAltBackgroundColorHover: string
   secondaryAltBorderColor: string
-  secondaryAltBorderColorHover: string
 
   circularBorderRadius: string
 
@@ -105,13 +101,9 @@ export default (siteVars: any): ButtonVariables => ({
   primaryBorderColor: 'transparent',
 
   secondaryAltColor: siteVars.colors.white,
-  secondaryAltColorHover: siteVars.colors.white,
-  secondaryAltColorFocus: siteVars.colors.white,
-  secondaryAltColorFocusVisible: siteVars.colors.white,
   secondaryAltBackgroundColorActive: siteVars.colors.silver[700],
   secondaryAltBackgroundColorHover: siteVars.colors.silver[800],
   secondaryAltBorderColor: siteVars.colors.silver[600],
-  secondaryAltBorderColorHover: siteVars.colors.silver[600],
 
   circularBorderRadius: pxToRem(999),
 

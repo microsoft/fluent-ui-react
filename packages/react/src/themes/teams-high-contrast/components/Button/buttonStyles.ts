@@ -36,6 +36,22 @@ const buttonStyles: ComponentSlotStylesPrepared<
             },
           },
         }),
+
+      ...(p.secondaryAlt && {
+        ':active': {
+          color: v.secondaryAltColorHover,
+        },
+
+        ':hover': {
+          color: v.secondaryAltColorHover,
+          borderColor: v.secondaryAltBorderColorHover,
+        },
+
+        ':focus-visible': {
+          backgroundColorFocus: siteVariables.accessibleCyan,
+          color: v.secondaryAltColorFocusVisible,
+        },
+      }),
     }
   },
 }

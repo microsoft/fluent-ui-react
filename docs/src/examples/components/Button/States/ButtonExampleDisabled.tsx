@@ -8,6 +8,9 @@ const ButtonExampleDisabled = () => (
       <Button disabled primary>
         Primary
       </Button>
+      <Button disabled secondaryAlt>
+        <Text content="Secondary Alt" />
+      </Button>
       <Button disabled icon iconPosition="before" primary>
         <Icon name="emoji" xSpacing="after" />
         <Text content="Click me" />

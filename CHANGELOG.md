@@ -22,7 +22,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Features
 - Add bounce animation to button clicks in Teams theme @notandrew ([#1724](https://github.com/stardust-ui/react/pull/1724))
-- Add `inverted` prop and style for `Button` for Teams theme @notandrew ([#2076](https://github.com/stardust-ui/react/pull/2076))
+- Add `secondaryAlt` prop and style for `Button` for Teams theme @notandrew ([#2076](https://github.com/stardust-ui/react/pull/2076))
 - Update Silver color scheme, adding `foregroundHover`, `foregroundPressed` and `background` definitions @pompomon ([#2078](https://github.com/microsoft/fluent-ui-react/pull/2078))
 
 <!--------------------------------[ v0.40.2 ]------------------------------- -->
