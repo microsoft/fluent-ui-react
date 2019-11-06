@@ -1,4 +1,9 @@
-type ComponentPerfStats = { count: number; ms: number }
+type ComponentPerfStats = {
+  count: number
+  msTotal: number
+  msMin: number
+  msMax: number
+}
 
 export default class Telemetry {
   performance: Record<string, ComponentPerfStats>

@@ -312,11 +312,21 @@ const renderComponent = <P extends {}>(
 
     if (telemetry.performance[displayName]) {
       telemetry.performance[displayName].count++
-      telemetry.performance[displayName].ms += duration
+      telemetry.performance[displayName].msTotal += duration
+      telemetry.performance[displayName].msMin = Math.min(
+        duration,
+        telemetry.performance[displayName].msMin,
+      )
+      telemetry.performance[displayName].msMax = Math.max(
+        duration,
+        telemetry.performance[displayName].msMax,
+      )
     } else {
       telemetry.performance[displayName] = {
         count: 1,
-        ms: duration,
+        msTotal: duration,
+        msMin: duration,
+        msMax: duration,
       }
     }
   }
