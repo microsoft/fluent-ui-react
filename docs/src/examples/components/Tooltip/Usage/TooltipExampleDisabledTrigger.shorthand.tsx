@@ -5,7 +5,7 @@ const TooltipExampleDisabledTrigger = () => {
   return (
     <Tooltip
       trigger={
-        <div style={{ width: 'fit-content' }}>
+        <div style={{ display: 'inline-block' }}>
           <Button disabled content="Hover me" />
         </div>
       }
