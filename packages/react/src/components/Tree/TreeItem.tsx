@@ -77,9 +77,9 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
    * A custom render iterator for rendering each tree title.
    * The default component, props, and children are available for each tree title.
    *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   * @param Component - The computed component for this slot.
+   * @param props - The computed props for this slot.
+   * @param children - The computed children for this slot.
    */
   renderItemTitle?: ShorthandRenderFunction<TreeTitleProps>
 

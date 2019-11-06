@@ -86,20 +86,20 @@ export type ShorthandFactory<P> = (
 // Factory Creators
 // ============================================================
 /**
- * @param {Object} config Options passed to factory
- * @param {React.ElementType} config.Component A ReactClass or string
- * @param {string} config.mappedProp A function that maps a primitive value to the Component props
- * @param {string} config.mappedArrayProp A function that maps an array value to the Component props
- * @param {string} config.allowsJSX Indicates if factory supports React Elements
- * @returns {function} A shorthand factory function waiting for `val` and `defaultProps`.
+ * @param config - Options passed to factory
+ * @returns A shorthand factory function waiting for `val` and `defaultProps`.
  */
 export function createShorthandFactory<
   TStringElement extends keyof JSX.IntrinsicElements,
   P
 >(config: {
+  /** A ReactClass or string */
   Component: TStringElement
+  /** A function that maps a primitive value to the Component props */
   mappedProp?: keyof PropsOf<TStringElement>
+  /** A function that maps an array value to the Component props */
   mappedArrayProp?: keyof PropsOf<TStringElement>
+  /** Indicates if factory supports React Elements */
   allowsJSX?: boolean
 }): ShorthandFactory<P>
 export function createShorthandFactory<

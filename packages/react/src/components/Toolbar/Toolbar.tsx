@@ -85,8 +85,8 @@ export interface ToolbarProps
 
   /**
    * Event for request to change 'overflowOpen' value.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onOverflowOpenChange?: ComponentEventHandler<ToolbarProps>
 

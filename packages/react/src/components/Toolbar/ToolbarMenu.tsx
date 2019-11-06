@@ -41,8 +41,8 @@ export interface ToolbarMenuProps
   /**
    * Called on item click.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All item props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All item props.
    */
   onItemClick?: ComponentEventHandler<ToolbarMenuItemProps>
 

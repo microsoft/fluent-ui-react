@@ -39,15 +39,15 @@ export interface PopupContentProps
 
   /**
    * Called after user's mouse enter.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onMouseEnter?: ComponentEventHandler<PopupContentProps>
 
   /**
    * Called after user's mouse leave.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onMouseLeave?: ComponentEventHandler<PopupContentProps>
 

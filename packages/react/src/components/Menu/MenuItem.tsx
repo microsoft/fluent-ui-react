@@ -72,22 +72,22 @@ export interface MenuItemProps
   /**
    * Called on click.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onClick?: ComponentEventHandler<MenuItemProps>
 
   /**
    * Called after user's focus.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onFocus?: ComponentEventHandler<MenuItemProps>
 
   /**
    * Called after item blur.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onBlur?: ComponentEventHandler<MenuItemProps>
 
@@ -135,8 +135,8 @@ export interface MenuItemProps
 
   /**
    * Event for request to change 'open' value.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onMenuOpenChange?: ComponentEventHandler<MenuItemProps>
 }

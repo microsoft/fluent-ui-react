@@ -43,8 +43,8 @@ export interface AttachmentProps extends UIComponentProps, ChildrenComponentProp
 
   /**
    * Called after user's click.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onClick?: ComponentEventHandler<AttachmentProps>
 }

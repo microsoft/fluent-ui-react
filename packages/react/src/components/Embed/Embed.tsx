@@ -41,16 +41,16 @@ export interface EmbedProps extends UIComponentProps {
 
   /**
    * Event for request to change 'active' value.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onActiveChanged?: ComponentEventHandler<EmbedProps>
 
   /**
    * Called when is clicked.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All item props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All item props.
    */
   onClick?: ComponentEventHandler<EmbedProps>
 

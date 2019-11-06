@@ -62,8 +62,8 @@ export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Called when a panel title is clicked.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All item props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All item props.
    */
   onItemClick?: ComponentEventHandler<MenuItemProps>
 

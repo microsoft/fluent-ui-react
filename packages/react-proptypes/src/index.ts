@@ -23,7 +23,7 @@ export const domNode = (props: ObjectOf<any>, propName: string) => {
  * Similar to PropTypes.oneOf but shows closest matches.
  * Word order is ignored allowing `left chevron` to match `chevron left`.
  * Useful for very large lists of options (e.g. Icon name, Flag name, etc.)
- * @param {string[]} suggestions An array of allowed values.
+ * @param suggestions - An array of allowed values.
  */
 export const suggest = (suggestions: string[]) => {
   if (!Array.isArray(suggestions)) {
@@ -115,7 +115,7 @@ export const never = (props: ObjectOf<any>, propName: string, componentName: str
 
 /**
  * Disallow other props from being defined with this prop.
- * @param {string[]} disallowedProps An array of props that cannot be used with this prop.
+ * @param disallowedProps - An array of props that cannot be used with this prop.
  */
 export const disallow = (disallowedProps: string[]) => (
   props: ObjectOf<any>,
@@ -158,7 +158,7 @@ export const disallow = (disallowedProps: string[]) => (
 
 /**
  * Ensure a prop adherers to multiple prop type validators.
- * @param {function[]} validators An array of propType functions.
+ * @param validators - An array of propType functions.
  */
 export const every = (validators: Function[]) => (
   props: ObjectOf<any>,
@@ -191,7 +191,7 @@ export const every = (validators: Function[]) => (
 
 /**
  * Ensure a prop adherers to at least one of the given prop type validators.
- * @param {function[]} validators An array of propType functions.
+ * @param validators - An array of propType functions.
  */
 export const some = (validators: Function[]) => (
   props: ObjectOf<any>,
@@ -231,8 +231,8 @@ export const some = (validators: Function[]) => (
 
 /**
  * Ensure a validator passes only when a component has a given propsShape.
- * @param {object} propsShape An object describing the prop shape.
- * @param {function} validator A propType function.
+ * @param propsShape - An object describing the prop shape.
+ * @param validator - A propType function.
  */
 export const givenProps = (propsShape: Record<string, any>, validator: Function) => (
   props: ObjectOf<any>,
@@ -291,7 +291,7 @@ export const givenProps = (propsShape: Record<string, any>, validator: Function)
 
 /**
  * Define prop dependencies by requiring other props.
- * @param {string[]} requiredProps An array of required prop names.
+ * @param requiredProps - An array of required prop names.
  */
 export const demand = (requiredProps: string[]) => (
   props: ObjectOf<any>,
@@ -324,7 +324,7 @@ export const demand = (requiredProps: string[]) => (
 
 /**
  * Ensure an multiple prop contains a string with only possible values.
- * @param {string[]} possible An array of possible values to prop.
+ * @param possible - An array of possible values to prop.
  */
 export const multipleProp = (possible: string[]) => (
   props: ObjectOf<string | false>,
@@ -425,10 +425,10 @@ export const collectionShorthandWithKindProp = (kindPropValues: string[]) => {
 
 /**
  * Show a deprecated warning for component props with a help message and optional validator.
- * @param {string} help A help message to display with the deprecation warning.
- * @param {function} [validator] A propType function.
+ * @param help - A help message to display with the deprecation warning.
+ * @param validator - A propType function.
  */
-export const deprecate = (help: string, validator: Function) => (
+export const deprecate = (help: string, validator?: Function) => (
   props: ObjectOf<any>,
   propName: string,
   componentName: string,

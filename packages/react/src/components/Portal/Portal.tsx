@@ -31,14 +31,14 @@ export interface PortalProps extends ChildrenComponentProps, ContentComponentPro
   /**
    * Called when the portal is mounted on the DOM.
    *
-   * @param {object} data - All props.
+   * @param data - All props.
    */
   onMount?: (props: PortalProps) => void
 
   /**
    * Called when the portal is unmounted from the DOM.
    *
-   * @param {object} data - All props.
+   * @param data - All props.
    */
   onUnmount?: (props: PortalProps) => void
 
@@ -60,14 +60,14 @@ export interface PortalProps extends ChildrenComponentProps, ContentComponentPro
   /**
    * Called when trigger node was clicked.
    *
-   * @param {object} data - All props.
+   * @param data - All props.
    */
   onTriggerClick?: (e: React.MouseEvent) => void
 
   /**
    * Called when `click` event was invoked outside portal or trigger nodes.
    *
-   * @param {object} data - All props.
+   * @param data - All props.
    */
   onOutsideClick?: (e: React.MouseEvent) => void
 }

@@ -70,22 +70,22 @@ export interface DialogProps
 
   /**
    * Called after a user clicks the cancel button.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onCancel?: ComponentEventHandler<DialogProps>
 
   /**
    * Called after a user clicks the confirm button.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onConfirm?: ComponentEventHandler<DialogProps>
 
   /**
    * Called after a user opens the dialog.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onOpen?: ComponentEventHandler<DialogProps>
 

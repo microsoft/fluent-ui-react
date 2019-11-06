@@ -49,8 +49,8 @@ export interface ListProps extends UIComponentProps, ChildrenComponentProps {
 
   /**
    * Event for request to change 'selectedIndex' value.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onSelectedIndexChange?: ComponentEventHandler<ListProps>
 

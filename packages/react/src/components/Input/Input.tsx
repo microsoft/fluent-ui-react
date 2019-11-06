@@ -60,8 +60,8 @@ export interface InputProps
   /**
    * Called on change.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onChange?: ComponentEventHandler<InputProps & { value: string }>
 

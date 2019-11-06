@@ -39,8 +39,8 @@ export interface FormProps extends UIComponentProps, ChildrenComponentProps {
 
   /**
    * The HTML form submit handler.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onSubmit?: ComponentEventHandler<FormProps>
 }

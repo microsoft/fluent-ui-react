@@ -6,9 +6,8 @@ import parseExamplePath from './parseExamplePath'
  *
  * Typical Hash structure   ${pathname}-${section}-${exampleName}
  * shorten to new structure ${section} -          -${exampleName without "component-example"}
- * @param {string} examplePath
  */
-const examplePathToHash = examplePath => {
+const examplePathToHash = (examplePath: string) => {
   const { displayName, section, exampleName } = parseExamplePath(examplePath)
 
   // ButtonExample => Button

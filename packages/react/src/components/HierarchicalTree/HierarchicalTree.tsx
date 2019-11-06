@@ -49,16 +49,16 @@ export interface HierarchicalTreeProps extends UIComponentProps, ChildrenCompone
   /**
    * A custom render function for the title slot.
    *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   * @param Component - The computed component for this slot.
+   * @param props - The computed props for this slot.
+   * @param children - The computed children for this slot.
    */
   renderItemTitle?: ShorthandRenderFunction<HierarchicalTreeTitleProps>
 
   /** Called when activeIndex changes.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onActiveIndexChange?: ComponentEventHandler<HierarchicalTreeProps>
 }

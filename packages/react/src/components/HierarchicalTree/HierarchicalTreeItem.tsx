@@ -60,9 +60,9 @@ export interface HierarchicalTreeItemProps extends UIComponentProps, ChildrenCom
    * A custom render iterator for rendering each Accordion panel title.
    * The default component, props, and children are available for each panel title.
    *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   * @param Component - The computed component for this slot.
+   * @param props - The computed props for this slot.
+   * @param children - The computed children for this slot.
    */
   renderItemTitle?: ShorthandRenderFunction<HierarchicalTreeTitleProps>
 

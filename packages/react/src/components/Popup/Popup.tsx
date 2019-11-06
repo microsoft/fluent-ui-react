@@ -84,8 +84,8 @@ export interface PopupProps
 
   /**
    * Event for request to change 'open' value.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onOpenChange?: ComponentEventHandler<PopupProps>
 
@@ -94,7 +94,7 @@ export interface PopupProps
 
   /**
    * Function to render popup content.
-   * @param {Function} updatePosition - function to request popup position update.
+   * @param updatePosition - function to request popup position update.
    */
   renderContent?: (updatePosition: Function) => ShorthandValue<PopupContentProps>
 
