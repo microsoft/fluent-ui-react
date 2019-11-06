@@ -65,11 +65,8 @@ class Chat extends UIComponent<WithAsProp<ChatProps>, any> {
       >
         {childrenExist(children)
           ? children
-          : _.map(
-              items,
-              item =>
-                item &&
-                ChatItem.create(item, { defaultProps: { className: Chat.slotClassNames.item } }),
+          : _.map(items, item =>
+              ChatItem.create(item, { defaultProps: { className: Chat.slotClassNames.item } }),
             )}
       </ElementType>
     )

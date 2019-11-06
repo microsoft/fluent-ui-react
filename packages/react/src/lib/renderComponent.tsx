@@ -1,13 +1,14 @@
 import {
-  Accessibility,
   AccessibilityDefinition,
-  FocusZoneDefinition,
   FocusZoneMode,
+  FocusZoneDefinition,
+  Accessibility,
 } from '@stardust-ui/accessibility'
 import {
+  callable,
   FocusZone,
-  FOCUSZONE_WRAP_ATTRIBUTE,
   FocusZoneProps,
+  FOCUSZONE_WRAP_ATTRIBUTE,
   getElementType,
   getUnhandledProps,
 } from '@stardust-ui/react-bindings'
@@ -17,24 +18,22 @@ import * as _ from 'lodash'
 
 import logProviderMissingWarning from './providerMissingHandler'
 import {
-  ComponentSlotClasses,
-  ComponentSlotStylesPrepared,
   ComponentStyleFunctionParam,
   ComponentVariablesObject,
-  ICSSInJSStyle,
+  ComponentSlotClasses,
+  ComponentSlotStylesPrepared,
   PropsWithVarsAndStyles,
   State,
   ThemePrepared,
 } from '../themes/types'
 import { Props, ProviderContextPrepared } from '../types'
-import { AccessibilityActionHandlers, ReactAccessibilityBehavior } from './accessibility/reactTypes'
+import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/reactTypes'
 import getKeyDownHandlers from './getKeyDownHandlers'
 import { emptyTheme, mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import createAnimationStyles from './createAnimationStyles'
 import { isEnabled as isDebugEnabled } from './debug/debugEnabled'
 import { DebugData } from './debug/debugData'
 import withDebugId from './withDebugId'
-import Telemetry from './Telemetry'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
@@ -176,20 +175,16 @@ const renderComponent = <P extends {}>(
     renderer = null,
     rtl = false,
     theme = emptyTheme,
-    telemetry = undefined as Telemetry,
     _internal_resolvedComponentVariables: resolvedComponentVariables = {},
   } = context || {}
-
-  const startTime = telemetry && telemetry.enabled ? performance.now() : 0
 
   const ElementType = getElementType(props) as React.ReactType<P>
   const stateAndProps = { ...state, ...props }
 
   // Resolve variables for this component, cache the result in provider
   if (!resolvedComponentVariables[displayName]) {
-    resolvedComponentVariables[displayName] = theme.componentVariables[displayName]
-      ? theme.componentVariables[displayName](theme.siteVariables)
-      : {} // component variables must not be undefined/null (see mergeComponentVariables contract)
+    resolvedComponentVariables[displayName] =
+      callable(theme.componentVariables[displayName])(theme.siteVariables) || {} // component variables must not be undefined/null (see mergeComponentVariables contract)
   }
 
   // Merge inline variables on top of cached variables
@@ -239,83 +234,21 @@ const renderComponent = <P extends {}>(
     displayName, // does not affect styles, only used by useEnhancedRenderer in docs
   }
 
-  const resolvedStyles: ICSSInJSStyle = {}
+  const resolvedStyles: ComponentSlotStylesPrepared = {}
   const resolvedStylesDebug: { [key: string]: { styles: Object }[] } = {}
   const classes: ComponentSlotClasses = {}
 
-  // const debug = (...args) => displayName !== 'ProviderBox' && console.debug(displayName, ...args)
-
-  const slots = []
-  const computedStyles = []
-  const cachedStyles = []
-  const computedClasses = []
-  const cachedClasses = []
-
   Object.keys(mergedStyles).forEach(slotName => {
-    slots.push(slotName)
-    // resolve/render slot styles once and cache
-    const cacheKey = `${slotName}__return`
+    resolvedStyles[slotName] = callable(mergedStyles[slotName])(styleParam)
 
-    Object.defineProperty(resolvedStyles, slotName, {
-      enumerable: false,
-      configurable: false,
-      set(val) {
-        resolvedStyles[cacheKey] = val
-        // debug('SET STYLE', slotName, val)
-        return true
-      },
-      get() {
-        if (resolvedStyles[cacheKey]) {
-          // debug('=> CACHED STYLE', slotName)
-          cachedStyles.push(slotName)
-          return resolvedStyles[cacheKey]
-        }
+    if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
+      resolvedStylesDebug[slotName] = resolvedStyles[slotName]['_debug']
+      delete resolvedStyles[slotName]['_debug']
+    }
 
-        // debug('NOT CACHED STYLE', slotName)
-        // resolve/render slot styles once and cache
-        resolvedStyles[cacheKey] = mergedStyles[slotName](styleParam)
-
-        if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
-          resolvedStylesDebug[slotName] = resolvedStyles[slotName]['_debug']
-          delete resolvedStyles[slotName]['_debug']
-        }
-
-        // debug('=> COMPUTED STYLE', slotName)
-        computedStyles.push(slotName)
-        return resolvedStyles[cacheKey]
-      },
-    })
-
-    Object.defineProperty(classes, slotName, {
-      enumerable: false,
-      configurable: false,
-      set(val) {
-        classes[cacheKey] = val
-        // debug('SET CLASS', slotName, val)
-        return true
-      },
-      get() {
-        if (classes[cacheKey]) {
-          // debug('=> CACHED CLASS', slotName)
-          cachedClasses.push(slotName)
-          return classes[cacheKey]
-        }
-
-        // debug('NOT CACHED CLASS', slotName)
-        // this resolves the getter magic
-        const styleObj = resolvedStyles[slotName]
-
-        // fela throws on returning undefined, always return object
-        if (renderer && styleObj) {
-          // debug('...RENDER CLASSES TO HEAD')
-          computedClasses.push(slotName)
-          classes[cacheKey] = renderer.renderRule(() => styleObj, felaParam)
-        }
-
-        // debug('=> COMPUTED CLASS', slotName)
-        return classes[cacheKey]
-      },
-    })
+    if (renderer) {
+      classes[slotName] = renderer.renderRule(callable(resolvedStyles[slotName]), felaParam)
+    }
   })
 
   classes.root = cx(className, classes.root, props.className)
@@ -329,13 +262,6 @@ const renderComponent = <P extends {}>(
     accessibility,
     rtl,
     theme,
-  }
-
-  let result
-  if (accessibility.focusZone) {
-    result = renderWithFocusZone(render, accessibility.focusZone, resolvedConfig)
-  } else {
-    result = render(resolvedConfig)
   }
 
   // conditionally add sources for evaluating debug information to component
@@ -370,42 +296,11 @@ const renderComponent = <P extends {}>(
     })
   }
 
-  if (telemetry && telemetry.enabled) {
-    const duration = performance.now() - startTime
-
-    if (telemetry.performance[displayName]) {
-      telemetry.performance[displayName].count++
-      telemetry.performance[displayName].msTotal += duration
-      telemetry.performance[displayName].msMin = Math.min(
-        duration,
-        telemetry.performance[displayName].msMin,
-      )
-      telemetry.performance[displayName].msMax = Math.max(
-        duration,
-        telemetry.performance[displayName].msMax,
-      )
-      telemetry.performance[displayName]['all'].push(duration)
-    } else {
-      telemetry.performance[displayName] = {
-        count: 1,
-        msTotal: duration,
-        msMin: duration,
-        msMax: duration,
-        all: [duration],
-      }
-    }
+  if (accessibility.focusZone) {
+    return renderWithFocusZone(render, accessibility.focusZone, resolvedConfig)
   }
 
-  // LOG AFTER render, so lazy styles/vars can be evaluated and counted
-  // debug(displayName, {
-  //   slots,
-  //   computedStyles,
-  //   cachedStyles,
-  //   computedClasses,
-  //   cachedClasses,
-  // })
-
-  return result
+  return render(resolvedConfig)
 }
 
 export default renderComponent

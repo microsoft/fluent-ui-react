@@ -107,14 +107,12 @@ class ChatItem extends UIComponent<WithAsProp<ChatItemProps>, any> {
 
   setAttachedPropValueForChatMessage = styles => {
     const { message, attached } = this.props
-    const messageElement =
-      message &&
-      Box.create(message, {
-        defaultProps: {
-          className: ChatItem.slotClassNames.message,
-          styles: styles.message,
-        },
-      })
+    const messageElement = Box.create(message, {
+      defaultProps: {
+        className: ChatItem.slotClassNames.message,
+        styles: styles.message,
+      },
+    })
 
     // the element is ChatMessage
     if (ChatMessage.isTypeOfElement(messageElement)) {
