@@ -19,7 +19,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixes
 - Update Silver color scheme, changing `backgroundHover` and `backgroundPressed` for high-contrast theme @pompomon ([#2078](https://github.com/microsoft/fluent-ui-react/pull/2078))
 - Updating the `attachment` component styles to match Teams theme @notandrew ([#2012](https://github.com/stardust-ui/react/pull/2012))
-- Removed `shadowLevel1Dark` in Teams themes and changed `shadowLevel1Darker` to have correct opacity @bcalvery ([]())
+- Removed `shadowLevel1Dark` in Teams themes and changed `shadowLevel1Darker` to have correct opacity @bcalvery ([#2098](https://github.com/microsoft/fluent-ui-react/pull/2098
+))
 
 ### Features
 - Add bounce animation to button clicks in Teams theme @notandrew ([#1724](https://github.com/stardust-ui/react/pull/1724))
