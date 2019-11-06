@@ -22,8 +22,8 @@ export interface TextAreaProps extends UIComponentProps, ChildrenComponentProps 
   /**
    * Called on change.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onChange?: ComponentEventHandler<TextAreaProps>
 

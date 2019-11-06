@@ -3,8 +3,8 @@ import * as React from 'react'
 /**
  * The function that correctly handles passing refs.
  *
- * @param ref An ref object or function
- * @param node A node that should be passed by ref
+ * @param ref - An ref object or function
+ * @param node - A node that should be passed by ref
  */
 const handleRef = <N>(ref: React.Ref<N> | undefined, node: N) => {
   if (process.env.NODE_ENV !== 'production') {

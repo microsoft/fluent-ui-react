@@ -5,17 +5,16 @@ import * as _ from 'lodash'
  *
  * @see https://github.com/Semantic-Org/Semantic-UI-React/pull/2384
  *
- * @param {object} node A DOM node.
- * @param {Event} e A SyntheticEvent or DOM Event.
- * @param {Document} target A target document.
- * @returns {boolean}
+ * @param node - A DOM node.
+ * @param e - A SyntheticEvent or DOM Event.
+ * @param target - A target document.
  */
 const doesNodeContainClick = (
   node: HTMLElement,
   e: MouseEvent,
   // eslint-disable-next-line no-undef
   target: Document = document,
-) => {
+): boolean => {
   if (_.some([e, node], _.isNil)) return false
 
   // if there is an e.target and it is in the document, use a simple node.contains() check
