@@ -69,13 +69,20 @@ describe('mergeComponentStyles', () => {
       expect(merged).toHaveProperty('icon')
     })
 
-    test('component part objects are converted to functions', () => {
+    test('converts merged component parts to functions', () => {
       const target = { root: {} }
       const source = { root: {} }
 
       const merged = mergeComponentStyles(target, source)
 
       expect(merged.root).toBeInstanceOf(Function)
+    })
+
+    test('converts target only component parts to functions', () => {
+      const target = { root: {} }
+
+      const merged = mergeComponentStyles(target)
+
       expect(merged.root).toBeInstanceOf(Function)
     })
 

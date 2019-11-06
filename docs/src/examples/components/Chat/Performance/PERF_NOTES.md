@@ -1,4 +1,3 @@
-
 ### ChatWithPopover.perf
 
 |             |  MIN  |  AVG  |  MAX  |
