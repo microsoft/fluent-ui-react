@@ -571,9 +571,9 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   trySetOpen(newValue: boolean, eventArgs: any) {
     const isOpenedByRightClick = newValue && isRightClick(eventArgs)
 
-    // when new state 'open' === 'true', save the last focused element
+    this.updateTriggerFocusableDomElement()
+
     if (newValue) {
-      this.updateTriggerFocusableDomElement()
       this.updateContextPosition(isOpenedByRightClick && eventArgs.nativeEvent)
     }
     this.setState({ open: newValue, isOpenedByRightClick })

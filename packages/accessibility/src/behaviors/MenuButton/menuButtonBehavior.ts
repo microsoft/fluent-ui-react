@@ -26,7 +26,7 @@ const menuButtonBehavior: Accessibility<MenuButtonBehaviorProps> = props => {
         role: 'none',
       },
       trigger: {
-        'aria-controls': props.menuId,
+        'aria-controls': props.open ? props.menuId : undefined,
         'aria-expanded': props.open || undefined,
         'aria-haspopup': props.contextMenu ? undefined : 'true',
         id: props.triggerId,
