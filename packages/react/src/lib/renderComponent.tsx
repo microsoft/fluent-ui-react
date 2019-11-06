@@ -254,7 +254,7 @@ const renderComponent = <P extends {}>(
   Object.keys(mergedStyles).forEach(slotName => {
     slots.push(slotName)
     // resolve/render slot styles once and cache
-    const cacheKey = slotName + '__return'
+    const cacheKey = `${slotName}__return`
 
     Object.defineProperty(resolvedStyles, slotName, {
       enumerable: false,
@@ -376,7 +376,6 @@ const renderComponent = <P extends {}>(
     if (telemetry.performance[displayName]) {
       telemetry.performance[displayName].count++
       telemetry.performance[displayName].msTotal += duration
-      telemetry.performance[displayName].msTotal += duration
       telemetry.performance[displayName].msMin = Math.min(
         duration,
         telemetry.performance[displayName].msMin,
@@ -385,12 +384,14 @@ const renderComponent = <P extends {}>(
         duration,
         telemetry.performance[displayName].msMax,
       )
+      telemetry.performance[displayName]['all'].push(duration)
     } else {
       telemetry.performance[displayName] = {
         count: 1,
         msTotal: duration,
         msMin: duration,
         msMax: duration,
+        all: [duration],
       }
     }
   }

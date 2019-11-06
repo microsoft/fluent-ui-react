@@ -157,6 +157,7 @@ export type PerformanceStats = Record<
     msTotal: number
     msMin: number
     msMax: number
+    all: number[]
   }
 >
 
