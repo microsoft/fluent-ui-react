@@ -29,8 +29,7 @@ export const shadowLevel1 = '0 .2rem .4rem -.075rem rgba(0, 0, 0, .1)'
 export const shadowLevel2 = '0 .4rem .7rem -.1rem rgba(0, 0, 0, .1)'
 export const shadowLevel3 = '0 .8rem 1rem -.2rem rgba(0, 0, 0, .1)'
 export const shadowLevel4 = '0 1.6rem 1.8rem -.4rem rgba(0, 0, 0, .1)'
-export const shadowLevel1Dark = '0 .2rem .4rem -.075rem rgba(0, 0, 0, .25)'
-export const shadowLevel1Darker = '0 .2rem .4rem -.075rem rgba(0, 0, 0, .5)'
+export const shadowLevel1Darker = '0 .2rem .4rem -.075rem rgba(0, 0, 0, .25)'
 
 //
 // FONT SIZES
