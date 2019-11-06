@@ -1,23 +1,23 @@
 import { callable } from '@stardust-ui/react-bindings'
 import * as _ from 'lodash'
 import {
-  ComponentVariablesInput,
-  ComponentVariablesPrepared,
+  ComponentSlotStyle,
   ComponentSlotStylesInput,
   ComponentSlotStylesPrepared,
+  ComponentVariablesInput,
+  ComponentVariablesPrepared,
   FontFace,
   SiteVariablesInput,
   SiteVariablesPrepared,
+  StaticStyle,
+  ThemeAnimation,
   ThemeComponentStylesInput,
   ThemeComponentStylesPrepared,
   ThemeComponentVariablesInput,
   ThemeComponentVariablesPrepared,
+  ThemeIcons,
   ThemeInput,
   ThemePrepared,
-  StaticStyle,
-  ThemeIcons,
-  ComponentSlotStyle,
-  ThemeAnimation,
 } from '../themes/types'
 import toCompactArray from './toCompactArray'
 import deepmerge from './deepmerge'
@@ -57,8 +57,26 @@ export const mergeComponentStyles__PROD = (
       const originalTarget = partStylesPrepared[partName]
       const originalSource = partStyle
 
+      // if there is no source, merging is a no-op, skip it
+      if (
+        typeof originalSource === 'undefined' ||
+        originalSource === null ||
+        (typeof originalSource === 'object' && Object.keys(originalSource).length === 0)
+      ) {
+        return
+      }
+
+      // no target means source doesn't need to merge onto anything
+      // just ensure source is callable (prepared format)
+      if (typeof originalTarget === 'undefined') {
+        partStylesPrepared[partName] = callable(originalSource)
+        return
+      }
+
+      // We have both target and source, replace with merge fn
       partStylesPrepared[partName] = styleParam => {
-        return _.merge(callable(originalTarget)(styleParam), callable(originalSource)(styleParam))
+        // originalTarget is always prepared, fn is guaranteed
+        return _.merge(originalTarget(styleParam), callable(partStyle)(styleParam))
       }
     })
 
@@ -81,9 +99,33 @@ export const mergeComponentStyles__DEV = (
       const originalTarget = partStylesPrepared[partName]
       const originalSource = partStyle
 
+      // if there is no source, merging is a no-op, skip it
+      if (
+        typeof originalSource === 'undefined' ||
+        originalSource === null ||
+        (typeof originalSource === 'object' && Object.keys(originalSource).length === 0)
+      ) {
+        return
+      }
+
+      // no target means source doesn't need to merge onto anything
+      // just ensure source is callable (prepared format) and has debugId
+      if (typeof originalTarget === 'undefined') {
+        partStylesPrepared[partName] = styleParam => {
+          const { _debug = undefined, ...sourceStyles } = callable(originalSource)(styleParam)
+
+          sourceStyles._debug = _debug || [{ styles: sourceStyles, debugId: stylesByPart._debugId }]
+
+          return sourceStyles
+        }
+
+        return
+      }
+
+      // We have both target and source, replace with merge fn
       partStylesPrepared[partName] = styleParam => {
-        const { _debug: targetDebug = [], ...targetStyles } =
-          callable(originalTarget)(styleParam) || {}
+        // originalTarget is always prepared, fn is guaranteed, _debug always exists
+        const { _debug: targetDebug, ...targetStyles } = originalTarget(styleParam)
         const { _debug: sourceDebug = undefined, ...sourceStyles } =
           callable(originalSource)(styleParam) || {}
 

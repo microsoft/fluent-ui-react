@@ -59,9 +59,19 @@ describe('mergeComponentStyles', () => {
       expect(() => mergeComponentStyles(stylesWithUndefined, styles)).not.toThrow()
     })
 
-    test('component parts are merged', () => {
+    test('component parts without styles are not merged', () => {
       const target = { root: {} }
       const source = { icon: {} }
+
+      const merged = mergeComponentStyles(target, source)
+
+      expect(merged).not.toHaveProperty('root')
+      expect(merged).not.toHaveProperty('icon')
+    })
+
+    test('component parts with style properties are merged', () => {
+      const target = { root: { color: 'red' } }
+      const source = { icon: { color: 'red' } }
 
       const merged = mergeComponentStyles(target, source)
 
@@ -70,8 +80,8 @@ describe('mergeComponentStyles', () => {
     })
 
     test('converts merged component parts to functions', () => {
-      const target = { root: {} }
-      const source = { root: {} }
+      const target = { root: { color: 'red' } }
+      const source = { root: { color: 'red' } }
 
       const merged = mergeComponentStyles(target, source)
 
@@ -79,7 +89,7 @@ describe('mergeComponentStyles', () => {
     })
 
     test('converts target only component parts to functions', () => {
-      const target = { root: {} }
+      const target = { root: { color: 'red' } }
 
       const merged = mergeComponentStyles(target)
 
