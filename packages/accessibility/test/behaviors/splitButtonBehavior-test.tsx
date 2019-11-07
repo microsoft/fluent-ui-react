@@ -2,8 +2,8 @@ import { splitButtonBehavior } from '@stardust-ui/accessibility'
 import * as keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
 
-function verifyKeys(supportedKeys, obtainedKeys) {
-  obtainedKeys.forEach(keyCombination => {
+function verifyKeys(supportedKeys, keysFromBehavior) {
+  keysFromBehavior.forEach(keyCombination => {
     const keyCombinationFound = _.find(supportedKeys, keyCombination)
     expect(keyCombinationFound).toEqual(keyCombination)
   })
@@ -28,16 +28,16 @@ describe('SplitButtonBehavior.ts', () => {
       { keyCode: keyboardKey.Tab, shiftKey: false },
       { keyCode: keyboardKey.Tab, shiftKey: true },
     ]
-    const obtainedKeys = splitButtonBehavior(property)['childBehaviors']['menuButton'](property)
+    const keysFromBehavior = splitButtonBehavior(property)['childBehaviors']['menuButton'](property)
       .keyActions.popup.closeAndFocusTrigger.keyCombinations
-    verifyKeys(supportedKeys, obtainedKeys)
+    verifyKeys(supportedKeys, keysFromBehavior)
   })
 
   test('open menu with alt + arrow down ', () => {
     const property = {}
     const supportedKeys = [{ altKey: true, keyCode: keyboardKey.ArrowDown }]
-    const obtainedKeys = splitButtonBehavior(property)['childBehaviors']['menuButton'](property)
+    const keysFromBehavior = splitButtonBehavior(property)['childBehaviors']['menuButton'](property)
       .keyActions.trigger.open.keyCombinations
-    verifyKeys(supportedKeys, obtainedKeys)
+    verifyKeys(supportedKeys, keysFromBehavior)
   })
 })
