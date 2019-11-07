@@ -8,6 +8,7 @@ export default {
   }: ComponentStyleFunctionParam<TableCellProps, TeamsTableVariables>): ICSSInJSStyle => {
     return {
       boxSizing: 'border-box',
+      display: 'flex',
       flexFlow: 'row nowrap',
       flexGrow: 1,
       flexBasis: 0,
@@ -20,7 +21,14 @@ export default {
         borderColor: v.cellBorderFocusColor,
       },
       padding: v.cellPadding,
-
+      height: '100%',
+    }
+  },
+  content: ({
+    variables: v,
+  }: ComponentStyleFunctionParam<TableCellProps, TeamsTableVariables>): ICSSInJSStyle => {
+    return {
+      alignSelf: 'center',
       ...(v.cellContentOverflow === 'ellipsis' && {
         display: 'block',
         overflow: 'hidden',
