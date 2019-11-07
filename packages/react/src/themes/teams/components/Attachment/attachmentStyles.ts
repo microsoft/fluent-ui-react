@@ -50,7 +50,6 @@ const attachmentStyles: ComponentSlotStylesPrepared<AttachmentProps, AttachmentV
 
   description: ({ variables: v }): ICSSInJSStyle => ({
     display: 'block',
-    opacity: 0.5,
     fontSize: v.descriptionFontSize,
     fontWeight: v.descriptionFontWeight,
     lineHeight: v.descriptionLineHeight,

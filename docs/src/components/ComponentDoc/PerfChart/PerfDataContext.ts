@@ -2,6 +2,7 @@ import * as React from 'react'
 
 export type PerfSample = {
   build: number
+  tag?: string
   ts: string
   performance: Record<
     string,
