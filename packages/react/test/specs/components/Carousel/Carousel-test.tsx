@@ -1,7 +1,11 @@
 import * as React from 'react'
+import * as _ from 'lodash'
 
 import { isConformant } from 'test/specs/commonTests'
 import Carousel, { CarouselProps } from 'src/components/Carousel/Carousel'
+import CarouselItem from 'src/components/Carousel/CarouselItem'
+import CarouselNavigation from 'src/components/Carousel/CarouselNavigation'
+import CarouselNavigationItem from 'src/components/Carousel/CarouselNavigationItem'
 import Text from 'src/components/Text/Text'
 import { ReactWrapper, CommonWrapper } from 'enzyme'
 import { findIntrinsicElement, mountWithProvider } from 'test/utils'
@@ -47,6 +51,16 @@ const getPaddlePreviousWrapper = (wrapper: ReactWrapper): CommonWrapper =>
   findIntrinsicElement(wrapper, `.${Carousel.slotClassNames.paddlePrevious}`)
 const getPaginationWrapper = (wrapper: ReactWrapper): CommonWrapper =>
   findIntrinsicElement(wrapper, `.${Carousel.slotClassNames.pagination}`)
+const getNavigationNavigationWrapper = (wrapper: ReactWrapper): CommonWrapper =>
+  findIntrinsicElement(wrapper, `.${CarouselNavigation.className}`)
+const getNavigationNavigationItemAtIndexWrapper = (
+  wrapper: ReactWrapper,
+  index: number,
+): CommonWrapper => findIntrinsicElement(wrapper, `.${CarouselNavigationItem.className}`).at(index)
+const getItemAtIndexWrapper = (wrapper: ReactWrapper, index: number): CommonWrapper =>
+  findIntrinsicElement(wrapper, `.${CarouselItem.className}`).at(index)
+
+jest.useFakeTimers()
 
 describe('Carousel', () => {
   isConformant(Carousel)
@@ -160,6 +174,45 @@ describe('Carousel', () => {
 
       expect(wrapper.exists(`.${Carousel.slotClassNames.paddlePrevious}`))
       expect(wrapper.exists(`.${Carousel.slotClassNames.paddleNext}`))
+    })
+  })
+
+  describe('navigation', () => {
+    const navigation = {
+      items: _.times(items.length, index => ({ key: index, icon: { name: 'stardust-circle' } })),
+    }
+
+    afterEach(() => {
+      jest.runAllTimers()
+    })
+
+    it('should not show pagination if prop is passed', () => {
+      const wrapper = renderCarousel({ navigation })
+      const navigationWrapper = getNavigationNavigationWrapper(wrapper)
+      const paginationWrapper = getPaginationWrapper(wrapper)
+
+      expect(paginationWrapper.length).toBe(0)
+      expect(navigationWrapper.getDOMNode().children.length).toBe(4)
+    })
+
+    it('should show the appropriate slide when clicked', () => {
+      const wrapper = renderCarousel({ navigation })
+      const secondNavigationItemWrapper = getNavigationNavigationItemAtIndexWrapper(wrapper, 1)
+
+      secondNavigationItemWrapper.simulate('click')
+      jest.runAllTimers()
+
+      expect(wrapper.state('activeIndex')).toEqual(1)
+    })
+
+    it('should focus the appropriate slide after timeout when clicked', () => {
+      const wrapper = renderCarousel({ navigation })
+      const secondNavigationItemWrapper = getNavigationNavigationItemAtIndexWrapper(wrapper, 1)
+      const secondItemWrapper = getItemAtIndexWrapper(wrapper, 1)
+
+      secondNavigationItemWrapper.simulate('click')
+
+      expect(document.activeElement).toEqual(secondItemWrapper.getDOMNode())
     })
   })
 })

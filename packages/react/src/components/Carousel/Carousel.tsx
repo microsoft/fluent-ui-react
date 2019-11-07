@@ -15,6 +15,7 @@ import {
   ChildrenComponentProps,
   getOrGenerateIdFromShorthand,
   AutoControlledComponent,
+  debounce,
 } from '../../lib'
 import { WithAsProp, withSafeTypeForAs, ShorthandCollection, ShorthandValue } from '../../types'
 import Button, { ButtonProps } from '../Button/Button'
@@ -28,6 +29,7 @@ export interface CarouselSlotClassNames {
   paddleNext: string
   paddlePrevious: string
   pagination: string
+  navigation: string
 }
 
 export interface CarouselProps extends UIComponentProps, ChildrenComponentProps {
@@ -106,6 +108,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
     paddleNext: `${Carousel.className}__paddlenext`,
     paddlePrevious: `${Carousel.className}__paddleprevious`,
     pagination: `${Carousel.className}__pagination`,
+    navigation: `${Carousel.className}__navigation`,
   }
 
   static propTypes = {
@@ -197,7 +200,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
   paddleNextRef = React.createRef<HTMLElement>()
   paddlePreviousRef = React.createRef<HTMLElement>()
 
-  focusItemAtIndex = _.debounce((index: number) => {
+  focusItemAtIndex = debounce((index: number) => {
     this.itemRefs[index].current.focus()
   }, 400)
 
@@ -360,6 +363,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
     return navigation ? (
       CarouselNavigation.create(navigation, {
         defaultProps: {
+          className: Carousel.slotClassNames.navigation,
           iconOnly: true,
           activeIndex,
         },
