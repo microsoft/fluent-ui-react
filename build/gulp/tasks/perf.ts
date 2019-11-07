@@ -100,10 +100,13 @@ const createMarkdownTable = (
 
   return markdownTable([
     ['Example', ...fieldLabels],
-    ..._.map(exampleMeasures, (exampleMeasure, exampleName) => [
-      exampleName,
-      ...fieldValues[exampleName],
-    ]),
+    ..._.sortBy(
+      _.map(exampleMeasures, (exampleMeasure, exampleName) => [
+        exampleName,
+        ...fieldValues[exampleName],
+      ]),
+      row => row[2],
+    ),
   ])
 }
 
@@ -117,7 +120,7 @@ task('perf:build', cb => {
 
 task('perf:run', async () => {
   const measures: ProfilerMeasureCycle[] = []
-  const times = Number(argv.times as string) || DEFAULT_RUN_TIMES
+  const times = (argv.times as string) || DEFAULT_RUN_TIMES
   const filter = argv.filter
 
   const bar = process.env.CI
@@ -168,5 +171,5 @@ task('perf:serve:stop', cb => {
   if (server) server.close(cb)
 })
 
-task('perf', series('perf:clean', 'perf:build', 'perf:serve', 'perf:run', 'perf:serve:stop'))
+task('perf', series(/* 'perf:clean', 'perf:build', */ 'perf:serve', 'perf:run', 'perf:serve:stop'))
 task('perf:debug', series('perf:clean', 'perf:build', 'perf:serve'))
