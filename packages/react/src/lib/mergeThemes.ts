@@ -76,7 +76,7 @@ export const mergeComponentStyles__PROD = (
       // We have both target and source, replace with merge fn
       partStylesPrepared[partName] = styleParam => {
         // originalTarget is always prepared, fn is guaranteed
-        return _.merge(originalTarget(styleParam), callable(partStyle)(styleParam))
+        return _.merge(originalTarget(styleParam), callable(originalSource)(styleParam))
       }
     })
 
@@ -112,7 +112,7 @@ export const mergeComponentStyles__DEV = (
       // just ensure source is callable (prepared format) and has debugId
       if (typeof originalTarget === 'undefined') {
         partStylesPrepared[partName] = styleParam => {
-          const { _debug = undefined, ...sourceStyles } = callable(originalSource)(styleParam)
+          const { _debug = undefined, ...sourceStyles } = callable(originalSource)(styleParam) || {}
 
           sourceStyles._debug = _debug || [{ styles: sourceStyles, debugId: stylesByPart._debugId }]
 
