@@ -1,6 +1,5 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
 import { carouselItemBehavior } from '@stardust-ui/accessibility'
 
 import {
@@ -42,8 +41,6 @@ class CarouselItem extends UIComponent<WithAsProp<CarouselItemProps>> {
     ...commonPropTypes.createCommon(),
     active: PropTypes.bool,
     itemPositionText: PropTypes.string,
-    renderItemSlide: PropTypes.func,
-    slide: customPropTypes.itemShorthand,
   }
 
   static defaultProps = {

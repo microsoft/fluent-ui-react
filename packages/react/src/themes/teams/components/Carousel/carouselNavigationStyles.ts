@@ -21,7 +21,9 @@ const carouselNavigationStyles: ComponentSlotStylesPrepared<
       backgroundColor: v.backgroundColor || 'inherit',
       listStyleType: 'none',
       justifyContent: 'center',
+
       ...(iconOnly && { alignItems: 'center' }),
+
       ...(vertical && {
         flexDirection: 'column',
         backgroundColor: v.verticalBackgroundColor,
@@ -32,6 +34,7 @@ const carouselNavigationStyles: ComponentSlotStylesPrepared<
           width: 'auto',
         }),
       }),
+
       ...(!iconOnly &&
         !vertical &&
         !underlined && {
@@ -41,6 +44,7 @@ const carouselNavigationStyles: ComponentSlotStylesPrepared<
           }`,
           borderRadius: pxToRem(4),
         }),
+
       ...(underlined && {
         borderBottom: `${v.underlinedBottomBorderWidth} solid ${v.underlinedBorderColor}`,
       }),
