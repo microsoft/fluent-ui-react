@@ -9,6 +9,7 @@ export {
 } from './exampleContexts'
 export { default as exampleKebabNameToSourceFilename } from './exampleKebabNameToSourceFilename'
 export { default as examplePathToHash } from './examplePathToHash'
+export { default as fetchPerfStats } from './fetchPerfStats'
 export { default as getComponentGroup } from './getComponentGroup'
 export { default as getComponentPathname } from './getComponentPathname'
 export { default as getFormattedHash } from './getFormattedHash'

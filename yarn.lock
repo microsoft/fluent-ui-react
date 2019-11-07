@@ -11320,6 +11320,13 @@ punycode@^2.1.0, punycode@^2.1.1:
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
 
+puppeteer-cluster@^0.17.0:
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/puppeteer-cluster/-/puppeteer-cluster-0.17.0.tgz#92f26918e946fecec1e053ad162021138c093d71"
+  integrity sha512-FV+VAWsjBTGF40vu1F11gerurzbI2DnkS4jGnuAxeRuD0plC9xLWUvKc4VrYmtrbjlNt19y1r6SZ1Cp+ONIHXQ==
+  dependencies:
+    debug "^4.1.1"
+
 puppeteer@^1.11.0:
   version "1.11.0"
   resolved "https://registry.yarnpkg.com/puppeteer/-/puppeteer-1.11.0.tgz#63cdbe12b07275cd6e0b94bce41f3fcb20305770"

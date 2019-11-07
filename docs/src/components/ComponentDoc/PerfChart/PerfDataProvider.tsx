@@ -1,6 +1,6 @@
 import * as React from 'react'
 import PerfDataContext from './PerfDataContext'
-import config from '../../../config'
+import { fetchPerfStats } from '../../../utils'
 
 /**
  * Fetches data from network and stores them to context.
@@ -21,8 +21,7 @@ const PerfDataProvider: React.FC = ({ children }) => {
       setError(new Error('Stats data not available in production'))
       setLoading(false)
     } else {
-      fetch(config.getStatsUri)
-        .then(response => response.json())
+      fetchPerfStats()
         .then(responseJson => {
           setData(responseJson)
           setLoading(false)

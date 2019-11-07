@@ -1,12 +1,13 @@
 import express from 'express'
 import fs from 'fs'
+import path from 'path'
 import { series, task } from 'gulp'
 import _ from 'lodash'
 import ProgressBar from 'progress'
-import puppeteer from 'puppeteer'
 import rimraf from 'rimraf'
 import { argv } from 'yargs'
 import markdownTable from 'markdown-table'
+import { Cluster } from 'puppeteer-cluster'
 
 import {
   MeasuredValues,
@@ -22,7 +23,7 @@ import { safeLaunchOptions } from 'build/puppeteer.config'
 const { paths } = config
 const { colors, log } = require('gulp-load-plugins')().util
 
-const DEFAULT_RUN_TIMES = 10
+const DEFAULT_RUN_TIMES = 100
 let server
 
 const floor = (value: number) => _.floor(value, 2)
@@ -116,40 +117,40 @@ task('perf:build', cb => {
 
 task('perf:run', async () => {
   const measures: ProfilerMeasureCycle[] = []
-  const times = (argv.times as string) || DEFAULT_RUN_TIMES
+  const times = Number(argv.times as string) || DEFAULT_RUN_TIMES
   const filter = argv.filter
 
   const bar = process.env.CI
     ? { tick: _.noop }
     : new ProgressBar(':bar :current/:total', { total: times })
 
-  let browser
+  const cluster = await Cluster.launch({
+    concurrency: Cluster.CONCURRENCY_CONTEXT,
+    maxConcurrency: 10,
+    puppeteerOptions: safeLaunchOptions(),
+  })
 
-  try {
-    browser = await puppeteer.launch(safeLaunchOptions())
+  await cluster.task(async ({ page }) => {
+    await page.goto(`http://${config.server_host}:${config.perf_port}`)
 
-    for (let i = 0; i < times; i++) {
-      const page = await browser.newPage()
-      await page.goto(`http://${config.server_host}:${config.perf_port}`)
+    const measuresFromStep = await page.evaluate(filter => window.runMeasures(filter), filter)
+    measures.push(measuresFromStep)
+    bar.tick()
 
-      const measuresFromStep = await page.evaluate(filter => window.runMeasures(filter), filter)
-      measures.push(measuresFromStep)
-      bar.tick()
+    await page.close()
+  })
 
-      await page.close()
-    }
-  } finally {
-    if (browser) {
-      await browser.close()
-    }
-  }
+  _.times(times, () => cluster.queue(null))
+
+  await cluster.idle() // resolved when the queue becomes empty
+  await cluster.close()
 
   const resultsFile = paths.perfDist('result.json')
   const perExamplePerfMeasures = sumByExample(measures)
 
   fs.writeFileSync(resultsFile, JSON.stringify(perExamplePerfMeasures, null, 2))
 
-  log(colors.green('Results are written to "%s"'), resultsFile)
+  log(colors.green('Results are written to "%s"'), path.relative(paths.base(), resultsFile))
   console.log('\n# Measures\n')
   console.log(createMarkdownTable(perExamplePerfMeasures))
 })
