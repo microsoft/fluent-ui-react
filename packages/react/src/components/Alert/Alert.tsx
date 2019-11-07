@@ -180,18 +180,18 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
     const bodyContent = (
       <>
         {Text.create(header, {
-          defaultProps: {
+          defaultProps: () => ({
             className: Alert.slotClassNames.header,
             styles: styles.header,
             ...accessibility.attributes.header,
-          },
+          }),
         })}
         {Box.create(content, {
-          defaultProps: {
+          defaultProps: () => ({
             className: Alert.slotClassNames.content,
             styles: styles.content,
             ...accessibility.attributes.content,
-          },
+          }),
         })}
       </>
     )
@@ -199,38 +199,38 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
     return (
       <>
         {Icon.create(icon, {
-          defaultProps: {
+          defaultProps: () => ({
             className: Alert.slotClassNames.icon,
             styles: styles.icon,
-          },
+          }),
         })}
         {Box.create(body, {
-          defaultProps: {
+          defaultProps: () => ({
             id: this.state.bodyId,
             className: Alert.slotClassNames.body,
             ...accessibility.attributes.body,
             styles: styles.body,
-          },
+          }),
           overrideProps: {
             children: bodyContent,
           },
         })}
 
         {ButtonGroup.create(actions, {
-          defaultProps: {
+          defaultProps: () => ({
             className: Alert.slotClassNames.actions,
             styles: styles.actions,
-          },
+          }),
         })}
         {dismissible &&
           Button.create(dismissAction, {
-            defaultProps: {
+            defaultProps: () => ({
               iconOnly: true,
               text: true,
               className: Alert.slotClassNames.dismissAction,
               styles: styles.dismissAction,
               ...accessibility.attributes.dismissAction,
-            },
+            }),
             overrideProps: this.handleDismissOverrides,
           })}
       </>

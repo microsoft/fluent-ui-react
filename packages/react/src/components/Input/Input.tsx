@@ -141,7 +141,7 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
     const [htmlInputProps, restProps] = partitionHTMLProps(unhandledProps)
 
     return Box.create(wrapper, {
-      defaultProps: {
+      defaultProps: () => ({
         ...accessibility.attributes.root,
         className: cx(Input.className, className),
         children: (
@@ -153,7 +153,7 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
               }}
             >
               {Box.create(input || type, {
-                defaultProps: {
+                defaultProps: () => ({
                   ...htmlInputProps,
                   as: 'input',
                   type,
@@ -162,21 +162,21 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
                   styles: styles.input,
                   onChange: this.handleChange,
                   ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.input, htmlInputProps),
-                },
+                }),
               })}
             </Ref>
             {Icon.create(this.computeIcon(), {
-              defaultProps: {
+              defaultProps: () => ({
                 styles: styles.icon,
                 variables: variables.icon,
-              },
+              }),
               overrideProps: this.handleIconOverrides,
             })}
           </>
         ),
         styles: styles.root,
         ...restProps,
-      },
+      }),
       overrideProps: {
         as: (wrapper && (wrapper as any).as) || ElementType,
       },

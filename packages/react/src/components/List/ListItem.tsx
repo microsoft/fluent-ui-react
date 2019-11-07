@@ -119,40 +119,40 @@ class ListItem extends UIComponent<WithAsProp<ListItemProps>> {
     const { endMedia, media, content, contentMedia, header, headerMedia } = this.props
 
     const contentElement = Box.create(content, {
-      defaultProps: {
+      defaultProps: () => ({
         className: ListItem.slotClassNames.content,
         styles: styles.content,
-      },
+      }),
     })
     const contentMediaElement = Box.create(contentMedia, {
-      defaultProps: {
+      defaultProps: () => ({
         className: ListItem.slotClassNames.contentMedia,
         styles: styles.contentMedia,
-      },
+      }),
     })
     const headerElement = Box.create(header, {
-      defaultProps: {
+      defaultProps: () => ({
         className: ListItem.slotClassNames.header,
         styles: styles.header,
-      },
+      }),
     })
     const headerMediaElement = Box.create(headerMedia, {
-      defaultProps: {
+      defaultProps: () => ({
         className: ListItem.slotClassNames.headerMedia,
         styles: styles.headerMedia,
-      },
+      }),
     })
     const endMediaElement = Box.create(endMedia, {
-      defaultProps: {
+      defaultProps: () => ({
         className: ListItem.slotClassNames.endMedia,
         styles: styles.endMedia,
-      },
+      }),
     })
     const mediaElement = Box.create(media, {
-      defaultProps: {
+      defaultProps: () => ({
         className: ListItem.slotClassNames.media,
         styles: styles.media,
-      },
+      }),
     })
 
     return (
