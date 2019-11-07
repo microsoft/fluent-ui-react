@@ -14,12 +14,23 @@ import { Accessibility } from '../../types'
  */
 const popupBehavior: Accessibility<PopupBehaviorProps> = props => {
   const onAsArray = _.isArray(props.on) ? props.on : [props.on]
+  const tabbableTriggerProps = props.tabbableTrigger
+    ? { tabIndex: getAriaAttributeFromProps('tabIndex', props, 0) }
+    : undefined
+
+  if (tabbableTriggerProps) {
+    tabbableTriggerProps['aria-haspopup'] = 'true'
+
+    if (process.env.NODE_ENV !== 'production') {
+      // Override the default trigger's accessibility schema class.
+      tabbableTriggerProps['data-aa-class'] = 'PopupButton'
+    }
+  }
+
   return {
     attributes: {
       trigger: {
-        ...(props.tabbableTrigger
-          ? { tabIndex: getAriaAttributeFromProps('tabIndex', props, 0) }
-          : undefined),
+        ...tabbableTriggerProps,
         'aria-disabled': props.disabled,
       },
       popup: {

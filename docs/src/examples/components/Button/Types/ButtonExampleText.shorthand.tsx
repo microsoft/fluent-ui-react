@@ -9,7 +9,7 @@ const ButtonExampleTextShorthand = () => (
     <Button icon="call-video" text content="A text button with an icon" />
     <br />
     <br />
-    <Button icon="team-create" text iconOnly />
+    <Button icon="team-create" text iconOnly title="Create" />
     <br />
     <br />
     <Button icon="call-video" text disabled content="A disabled text button with an icon" />

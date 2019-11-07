@@ -2206,19 +2206,26 @@ abbrev@1:
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
   integrity sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==
 
-ability-attributes-generator@^0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/ability-attributes-generator/-/ability-attributes-generator-0.0.5.tgz#bb3ab4afad5f3a10fb1ebb1fb138efc6e3e9d488"
-  integrity sha512-YJg/3m/sMjTKp4BaBxBguefpvjIoNxTALAJuIPjMbalrBtCDQ4epIm7t6+opmag1k2L2OPC7kWWV2bBTP/4UTA==
+ability-attributes-generator@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/ability-attributes-generator/-/ability-attributes-generator-0.0.8.tgz#e2065ed6978ed2acd350aa90cad2fcb86882a978"
+  integrity sha512-GN7lfbyOnpYXBEH2BT6e9gsXwna3v+nOfojzHTKJKuo6HiT8seCSLxqWGbxLW/RMNacqIjJ2OA04d4ufzPx9yw==
   dependencies:
-    ability-attributes "^0.0.5"
-    ajv "^6.10.0"
+    ability-attributes "^0.0.8"
+    ajv "^6.10.2"
     commander "^2.20.0"
 
-ability-attributes@^0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/ability-attributes/-/ability-attributes-0.0.5.tgz#9496e904b2701fbe98f487411d1cbdf6ab86137f"
-  integrity sha512-H4i+hTuIEiTh6dsFGCG+h0G7nnJdTdb0mr3q35+XgATRlEWJwUie8SsDZhq7dKzc2UrgS1goVoYwMuHOWDHq2g==
+ability-attributes-js-constraints@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/ability-attributes-js-constraints/-/ability-attributes-js-constraints-0.0.8.tgz#f954ae16a90c92bc2d25a7e20c1ec292749658e0"
+  integrity sha512-+TjS0GcQnFaX0thTs+sXiGtNelPcy6odeN8hKntd1KxsnFtqyrC3l2i55s+z3rRzei6BvkoSHvkKEOjk0E5UjA==
+
+ability-attributes@^0.0.8:
+  version "0.0.8"
+  resolved "https://registry.yarnpkg.com/ability-attributes/-/ability-attributes-0.0.8.tgz#b7fca379a5ba5147e4e867ba80187142db4d49ce"
+  integrity sha512-GU2Gd1nAUzvTEu4+615DKCf7OkWf+rL5kLmsi3Fg+nY7fhjrMT1ZwsU8MJ8hqilipspq1Q2yIuUYj4q8l2W8nQ==
+  dependencies:
+    ability-attributes-js-constraints "^0.0.8"
 
 accepts@~1.3.5, accepts@~1.3.7:
   version "1.3.7"
@@ -2316,7 +2323,7 @@ ajv@^5.1.0:
     fast-json-stable-stringify "^2.0.0"
     json-schema-traverse "^0.3.0"
 
-ajv@^6.1.0, ajv@^6.10.0, ajv@^6.5.5, ajv@^6.9.1:
+ajv@^6.1.0, ajv@^6.10.2, ajv@^6.5.5, ajv@^6.9.1:
   version "6.10.2"
   resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.10.2.tgz#d3cea04d6b017b2894ad69040fec8b623eb4bd52"
   integrity sha512-TXtUUEYHuaTEbLZWIKUr5pmBuhDLy+8KYtPYdcV8qC+pOZL+NKqYwvWSRrVXHn+ZmRRAu8vJTAznH7Oag6RVRw==
@@ -9402,6 +9409,11 @@ markdown-table@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/markdown-table/-/markdown-table-0.4.0.tgz#890c2c1b3bfe83fb00e4129b8e4cfe645270f9d1"
   integrity sha1-iQwsGzv+g/sA5BKbjkz+ZFJw+dE=
+
+markdown-table@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/markdown-table/-/markdown-table-1.1.3.tgz#9fcb69bcfdb8717bfd0398c6ec2d93036ef8de60"
+  integrity sha512-1RUZVgQlpJSPWYbFSpmudq5nHY1doEIv89gBtF0s4gW1GF2XorxcA/70M5vq7rLv0a6mhOUccRsqkwhwLCIQ2Q==
 
 markdown-to-ast@~3.4.0:
   version "3.4.0"

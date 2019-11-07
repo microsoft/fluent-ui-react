@@ -23,6 +23,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Features
 - Add bounce animation to button clicks in Teams theme @notandrew ([#1724](https://github.com/stardust-ui/react/pull/1724))
 - Update Silver color scheme, adding `foregroundHover`, `foregroundPressed` and `background` definitions @pompomon ([#2078](https://github.com/microsoft/fluent-ui-react/pull/2078))
+- Expanding experimental accessibility schema to more components @mshoho ([#2052](https://github.com/stardust-ui/react/pull/2052))
+
+### Performance
+- Add rendering performance telemetry @miroslavstastny ([#2079](https://github.com/microsoft/fluent-ui-react/pull/2079))
 
 <!--------------------------------[ v0.40.2 ]------------------------------- -->
 ## [v0.40.2](https://github.com/stardust-ui/react/tree/v0.40.2) (2019-10-30)
