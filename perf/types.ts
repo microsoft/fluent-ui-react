@@ -4,7 +4,7 @@ declare global {
   }
 }
 
-export type MeasuredValues = 'actualTime' | 'baseTime'
+export type MeasuredValues = 'actualTime'
 
 export type ProfilerMeasure = { [key in MeasuredValues]: number } & {
   exampleIndex: number
@@ -13,24 +13,17 @@ export type ProfilerMeasure = { [key in MeasuredValues]: number } & {
   commitTime: number
 }
 
-export type ProfilerMeasureWithBaseline = ProfilerMeasure & {
-  baseline: Record<MeasuredValues, number>
-}
-
-export type ProfilerMeasureCycle = Record<string, ProfilerMeasureWithBaseline>
+export type ProfilerMeasureCycle = Record<string, ProfilerMeasure>
 
 export type PerExamplePerfMeasures = Record<string, Record<MeasuredValues, ReducedMeasures>>
 
 export type ReducedMeasures = {
   avg: number
-  avgNormalized: number
   median: number
-  medianNormalized: number
   min: number
   max: number
   values: {
     exampleIndex: number
     value: number
-    baseline: number
   }[]
 }

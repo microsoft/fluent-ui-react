@@ -34,6 +34,7 @@ import createAnimationStyles from './createAnimationStyles'
 import { isEnabled as isDebugEnabled } from './debug/debugEnabled'
 import { DebugData } from './debug/debugData'
 import withDebugId from './withDebugId'
+import Telemetry from './Telemetry'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
@@ -178,8 +179,11 @@ const renderComponent = <P extends {}>(
     renderer = null,
     rtl = false,
     theme = emptyTheme,
+    telemetry = undefined as Telemetry,
     _internal_resolvedComponentVariables: resolvedComponentVariables = {},
   } = context || {}
+
+  const startTime = telemetry && telemetry.enabled ? performance.now() : 0
 
   const ElementType = getElementType(props) as React.ReactType<P>
   const stateAndProps = { ...state, ...props }
@@ -299,11 +303,38 @@ const renderComponent = <P extends {}>(
     })
   }
 
+  let result
   if (accessibility.focusZone) {
-    return renderWithFocusZone(render, accessibility.focusZone, resolvedConfig)
+    result = renderWithFocusZone(render, accessibility.focusZone, resolvedConfig)
+  } else {
+    result = render(resolvedConfig)
   }
 
-  return render(resolvedConfig)
+  if (telemetry && telemetry.enabled) {
+    const duration = performance.now() - startTime
+
+    if (telemetry.performance[displayName]) {
+      telemetry.performance[displayName].count++
+      telemetry.performance[displayName].msTotal += duration
+      telemetry.performance[displayName].msMin = Math.min(
+        duration,
+        telemetry.performance[displayName].msMin,
+      )
+      telemetry.performance[displayName].msMax = Math.max(
+        duration,
+        telemetry.performance[displayName].msMax,
+      )
+    } else {
+      telemetry.performance[displayName] = {
+        count: 1,
+        msTotal: duration,
+        msMin: duration,
+        msMax: duration,
+      }
+    }
+  }
+
+  return result
 }
 
 export default renderComponent
