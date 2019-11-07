@@ -39,6 +39,7 @@ import chevronDownMedium from './chevronDownMedium'
 import chevronRightMedium from './chevronRightMedium'
 import clipboardCopiedTo from './clipboardCopiedTo'
 import close from './close'
+import closedCaptions from './closedCaptions'
 import codeSnippet from './codeSnippet'
 import filesAftereffects from './filesAftereffects'
 import filesCode from './filesCode'
@@ -211,6 +212,7 @@ export default {
   'chevron-right-medium': chevronRightMedium,
   'clipboard-copied-to': clipboardCopiedTo,
   close,
+  'closed-captions': closedCaptions,
   'code-snippet': codeSnippet,
   'files-aftereffects': filesAftereffects,
   'files-code': filesCode,
