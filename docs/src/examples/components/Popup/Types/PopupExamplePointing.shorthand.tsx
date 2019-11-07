@@ -18,6 +18,7 @@ const PopupWithButton = props => (
       <Button
         icon={props.icon}
         styles={{ padding: props.padding, height: '64px', minWidth: '64px' }}
+        title="Show popup"
       />
     }
   />
