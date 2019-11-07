@@ -4,10 +4,10 @@ import path from 'path'
 import { series, task } from 'gulp'
 import _ from 'lodash'
 import ProgressBar from 'progress'
+import puppeteer from 'puppeteer'
 import rimraf from 'rimraf'
 import { argv } from 'yargs'
 import markdownTable from 'markdown-table'
-import { Cluster } from 'puppeteer-cluster'
 
 import {
   MeasuredValues,
@@ -81,31 +81,19 @@ const sumByExample = (measures: ProfilerMeasureCycle[]): PerExamplePerfMeasures 
   }))
 }
 
-type NumberPropertyNames<T> = { [K in keyof T]: T[K] extends number ? K : never }[keyof T]
-
-const createMarkdownTable = (
-  perExamplePerfMeasures: PerExamplePerfMeasures,
-  metricName: MeasuredValues = 'actualTime',
-  fields: NumberPropertyNames<ReducedMeasures>[] = ['min', 'avg', 'median', 'max'],
-) => {
-  const exampleMeasures = _.mapValues(
-    perExamplePerfMeasures,
-    exampleMeasure => exampleMeasure[metricName],
-  )
-
-  const fieldLabels: string[] = _.map(fields, _.startCase)
-  const fieldValues = _.mapValues(exampleMeasures, exampleMeasure =>
-    _.flatMap(fields, field => exampleMeasure[field]),
-  )
-
+const createMarkdownTable = (perExamplePerfMeasures: PerExamplePerfMeasures) => {
   return markdownTable([
-    ['Example', ...fieldLabels],
+    ['Filename', 'min', 'avg', 'median', 'max'],
     ..._.sortBy(
-      _.map(exampleMeasures, (exampleMeasure, exampleName) => [
+      _.map(perExamplePerfMeasures, (measure, exampleName) => [
         exampleName,
-        ...fieldValues[exampleName],
+        measure.actualTime.min,
+        measure.actualTime.avg,
+        measure.actualTime.median,
+        measure.actualTime.max,
       ]),
-      row => row[2],
+      // sort by 'median'
+      row => -row[3],
     ),
   ])
 }
@@ -127,26 +115,56 @@ task('perf:run', async () => {
     ? { tick: _.noop }
     : new ProgressBar(':bar :current/:total', { total: times })
 
-  const cluster = await Cluster.launch({
-    concurrency: Cluster.CONCURRENCY_CONTEXT,
-    maxConcurrency: 10,
-    puppeteerOptions: safeLaunchOptions(),
-  })
+  // /////////////////////////////////////////////////////
+  // Loop
+  let browser
 
-  await cluster.task(async ({ page }) => {
-    await page.goto(`http://${config.server_host}:${config.perf_port}`)
+  try {
+    browser = await puppeteer.launch(safeLaunchOptions())
 
-    const measuresFromStep = await page.evaluate(filter => window.runMeasures(filter), filter)
-    measures.push(measuresFromStep)
-    bar.tick()
+    for (let i = 0; i < times; i++) {
+      const page = await browser.newPage()
+      await page.goto(`http://${config.server_host}:${config.perf_port}`)
 
-    await page.close()
-  })
+      const measuresFromStep = await page.evaluate(filter => window.runMeasures(filter), filter)
+      measures.push(measuresFromStep)
+      bar.tick()
 
-  _.times(times, () => cluster.queue(null))
+      await page.close()
+    }
+  } finally {
+    if (browser) {
+      await browser.close()
+    }
+  }
 
-  await cluster.idle() // resolved when the queue becomes empty
-  await cluster.close()
+  // /////////////////////////////////////////////////////
+  // TODO: Cluster
+  //       Replace Loop above with this.
+  //       We need tick measures to get rid of additional ms due to CPU load of cluster.
+  //
+  // import { Cluster } from 'puppeteer-cluster'
+  //
+  // const cluster = await Cluster.launch({
+  //   concurrency: Cluster.CONCURRENCY_CONTEXT,
+  //   maxConcurrency: 10,
+  //   puppeteerOptions: safeLaunchOptions(),
+  // })
+  //
+  // await cluster.task(async ({ page }) => {
+  //   await page.goto(`http://${config.server_host}:${config.perf_port}`)
+  //
+  //   const measuresFromStep = await page.evaluate(filter => window.runMeasures(filter), filter)
+  //   measures.push(measuresFromStep)
+  //   bar.tick()
+  //
+  //   await page.close()
+  // })
+  //
+  // _.times(times, () => cluster.queue(null))
+  //
+  // await cluster.idle() // resolved when the queue becomes empty
+  // await cluster.close()
 
   const resultsFile = paths.perfDist('result.json')
   const perExamplePerfMeasures = sumByExample(measures)
@@ -171,5 +189,5 @@ task('perf:serve:stop', cb => {
   if (server) server.close(cb)
 })
 
-task('perf', series(/* 'perf:clean', 'perf:build', */ 'perf:serve', 'perf:run', 'perf:serve:stop'))
+task('perf', series('perf:clean', 'perf:build', 'perf:serve', 'perf:run', 'perf:serve:stop'))
 task('perf:debug', series('perf:clean', 'perf:build', 'perf:serve'))
