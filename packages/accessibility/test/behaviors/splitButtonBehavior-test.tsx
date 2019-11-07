@@ -20,7 +20,7 @@ describe('SplitButtonBehavior.ts', () => {
     ).toBe(undefined)
   })
 
-  test('close menu and focus trigger with different keys', () => {
+  test('close menu with different keys', () => {
     const property = {}
     const supportedKeys = [
       { keyCode: keyboardKey.Escape },
