@@ -69,7 +69,7 @@ export interface CarouselProps extends UIComponentProps, ChildrenComponentProps 
   /** A Carousel's paddles may fade away when mouse is not hovering the code. */
   paddlesFade?: boolean
 
-  /** Shorthand for the button that navigates to the next item. */
+  /** Shorthand for the paddle that navigates to the next item. */
   paddleNext?: ShorthandValue<ButtonProps>
 
   /**
@@ -78,7 +78,7 @@ export interface CarouselProps extends UIComponentProps, ChildrenComponentProps 
    */
   paddlesPosition?: 'inside' | 'outside' | 'inline'
 
-  /** Shorthand for the button that navigates to the previous item. */
+  /** Shorthand for the paddle that navigates to the previous item. */
   paddlePrevious?: ShorthandValue<ButtonProps>
 
   /**
@@ -118,12 +118,16 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
     defaultActiveIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     getItemPositionText: PropTypes.func,
     items: customPropTypes.collectionShorthand,
-    paddleNext: customPropTypes.itemShorthand,
-    paddlePrevious: customPropTypes.itemShorthand,
     navigation: PropTypes.oneOfType([
       customPropTypes.collectionShorthand,
       customPropTypes.itemShorthand,
     ]),
+    navigationPosition: PropTypes.string,
+    paddlesFade: PropTypes.bool,
+    paddleNext: customPropTypes.itemShorthand,
+    paddlesPosition: PropTypes.string,
+    paddlePrevious: customPropTypes.itemShorthand,
+    slideTransition: PropTypes.string,
   }
 
   static autoControlledProps = ['activeIndex']
@@ -140,7 +144,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
     const { itemIds } = state
 
     if (!items) {
-      return state
+      return null
     }
 
     return {
@@ -229,10 +233,6 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
     const { ariaRoleDescription, getItemPositionText, items } = this.props
     const { activeIndex, itemIds } = this.state
 
-    if (!items) {
-      return null
-    }
-
     this.itemRefs = []
 
     return (
@@ -247,23 +247,24 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
             unhandledProps,
           )}
         >
-          {items.map((item, index) => {
-            const itemRef = React.createRef<HTMLElement>()
-            this.itemRefs.push(itemRef)
-            return (
-              <Ref innerRef={itemRef}>
-                {CarouselItem.create(item, {
-                  defaultProps: {
-                    active: activeIndex === index,
-                    id: itemIds[index],
-                    ...(getItemPositionText && {
-                      itemPositionText: getItemPositionText(index, items.length),
-                    }),
-                  },
-                })}
-              </Ref>
-            )
-          })}
+          {items &&
+            items.map((item, index) => {
+              const itemRef = React.createRef<HTMLElement>()
+              this.itemRefs.push(itemRef)
+              return (
+                <Ref innerRef={itemRef}>
+                  {CarouselItem.create(item, {
+                    defaultProps: {
+                      active: activeIndex === index,
+                      id: itemIds[index],
+                      ...(getItemPositionText && {
+                        itemPositionText: getItemPositionText(index, items.length),
+                      }),
+                    },
+                  })}
+                </Ref>
+              )
+            })}
         </div>
       </div>
     )
