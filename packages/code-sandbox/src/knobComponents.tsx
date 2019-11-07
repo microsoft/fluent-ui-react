@@ -6,7 +6,7 @@ const knobComponents: Partial<KnobComponents> = {
   KnobBoolean: props => (
     <Checkbox
       checked={props.value}
-      title={'Toggle'}
+      title="Toggle"
       onChange={(e, data) => {
         props.setValue(data.checked)
       }}
