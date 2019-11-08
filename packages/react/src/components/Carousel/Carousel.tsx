@@ -255,7 +255,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
               const itemRef = React.createRef<HTMLElement>()
               this.itemRefs.push(itemRef)
               return (
-                <Ref innerRef={itemRef}>
+                <Ref key={item['key'] || index} innerRef={itemRef}>
                   {CarouselItem.create(item, {
                     defaultProps: {
                       active: activeIndex === index,

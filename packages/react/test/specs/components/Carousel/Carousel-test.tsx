@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as _ from 'lodash'
 
 import { isConformant } from 'test/specs/commonTests'
 import Carousel, { CarouselProps } from 'src/components/Carousel/Carousel'
@@ -179,7 +178,7 @@ describe('Carousel', () => {
 
   describe('navigation', () => {
     const navigation = {
-      items: _.times(items.length, index => ({ key: index, icon: { name: 'stardust-circle' } })),
+      items: items.map(item => ({ key: item.key, icon: { name: 'stardust-circle' } })),
     }
 
     afterEach(() => {
