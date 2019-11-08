@@ -1,7 +1,6 @@
 import { pxToRem } from '../../../../lib'
 
 export interface TeamsTableVariables {
-  viewMode: 'default' | 'compact'
   color: string
   hoverColor: string
   backgroundColor: string
@@ -23,12 +22,10 @@ export interface TeamsTableVariables {
   rowPadding: string
   headerFontSize: string
   bodyFontSize: string
-  cellContentOverflow: 'none' | 'ellipsis'
 }
 
 export default (siteVariables): Partial<TeamsTableVariables> => {
   return {
-    viewMode: 'default',
     color: siteVariables.colorScheme.default.foreground,
     hoverColor: siteVariables.colorScheme.default.foregroundHover,
     backgroundColor: siteVariables.colorScheme.default.background,
@@ -40,7 +37,6 @@ export default (siteVariables): Partial<TeamsTableVariables> => {
     rowPadding: '0',
     headerFontSize: pxToRem(12),
     bodyFontSize: pxToRem(13),
-    cellContentOverflow: 'ellipsis',
     borderWidth: pxToRem(1),
     headerBorderColor: siteVariables.colorScheme.default.backgroundHover1,
     headerBorderHoverColor: 'transparent',

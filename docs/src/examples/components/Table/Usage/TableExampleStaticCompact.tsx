@@ -45,12 +45,7 @@ const rowsPlain = [
 ]
 
 const StaticTableCompact = () => (
-  <Table
-    variables={{ viewMode: 'compact' }}
-    header={header}
-    rows={rowsPlain}
-    aria-label="Compact view static table"
-  />
+  <Table compact header={header} rows={rowsPlain} aria-label="Compact view static table" />
 )
 
 export default StaticTableCompact

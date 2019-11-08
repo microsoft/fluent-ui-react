@@ -16,10 +16,6 @@ import TableCell, { TableCellProps } from './TableCell'
 import { WithAsProp, ShorthandCollection } from '../../types'
 import { Accessibility } from '@stardust-ui/accessibility'
 
-export interface TableHeaderProps extends UIComponentProps {
-  items: ShorthandCollection<TableCellProps>
-}
-
 export interface TableSlotClassNames {
   header: string
 }
@@ -31,12 +27,17 @@ export interface TableProps extends UIComponentProps, ChildrenComponentProps {
   accessibility?: Accessibility
 
   /** The columns of the Table with a space-separated list of values.
-   * The values represent the track size, and the space between them represents the Table line. */
-  header?: TableHeaderProps
+   */
+  header?: TableRowProps
 
   /** The rows of the Table with a space-separated list of values.
-   * The values represent the track size, and the space between them represents the Table line. */
+   */
   rows?: ShorthandCollection<TableCellProps>
+
+  /**
+   * Render table in compact mode
+   */
+  compact?: boolean
 }
 
 const handleVariablesOverrides = variables => predefinedProps => ({
@@ -73,28 +74,21 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
     ]),
     header: customPropTypes.itemShorthand,
     rows: customPropTypes.collectionShorthand,
+    compact: PropTypes.bool,
   }
 
   static defaultProps = {
     as: 'div',
   }
 
-  constructor(props, context) {
-    super(props, context)
-
-    const { rows, header } = this.props
-    this.rowsCount = (rows ? rows.length : 0) + (header ? 1 : 0)
-    this.columsCount = header && (header as TableRowProps).items.length
-  }
-
   renderRows(variables: ComponentVariablesObject) {
-    const { rows } = this.props
+    const { rows, compact } = this.props
 
     return _.map(rows, (row: TableRowProps, index: number) => {
       const props = {
         ...row,
-        rowIndex: this.props.header ? index + 1 : index,
         role: 'rowgroup',
+        compact,
       } as TableRowProps
       const overrideProps = handleVariablesOverrides(variables)
       return TableRow.create(row, { defaultProps: props, overrideProps })
@@ -102,15 +96,16 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
   }
 
   renderHeader(variables: ComponentVariablesObject) {
-    const header = this.props.header as TableRowProps
+    const { header, compact } = this.props
     if (!header) {
       return null
     }
+
     const headerRowProps = {
       ...header,
-      rowIndex: 0,
       role: 'rowgroup',
       isHeader: true,
+      compact,
     } as TableRowProps
 
     const overrideProps = handleVariablesOverrides(variables)

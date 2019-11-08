@@ -4,7 +4,7 @@ import { TableRowProps } from '../../../../components/Table/TableRow'
 
 export default {
   root: ({
-    props: { isHeader },
+    props: { isHeader, compact },
     variables: v,
   }: ComponentStyleFunctionParam<TableRowProps, TeamsTableVariables>): ICSSInJSStyle => {
     return {
@@ -41,7 +41,7 @@ export default {
           border: v.headerBorderFocusColor,
         },
       }),
-      ...(v.viewMode === 'compact' && {
+      ...(compact && {
         height: v.compactRowHeight,
       }),
     }

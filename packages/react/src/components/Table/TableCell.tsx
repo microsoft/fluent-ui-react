@@ -28,9 +28,9 @@ export interface TableCellProps
   accessibility?: Accessibility
 
   /**
-   * Cell's index in the row
+   * Truncate cell's content
    */
-  cellIndex?: number
+  truncateContent?: boolean
 }
 
 export interface TableCellSlotClassNames {
@@ -63,12 +63,12 @@ class TableCell extends UIComponent<WithAsProp<any>, any> {
         customPropTypes.nodeContent,
       ]),
     ]),
-    isHeader: PropTypes.bool,
-    cellIndex: PropTypes.number,
+    truncateContent: PropTypes.bool,
   }
 
   static defaultProps = {
     as: 'div',
+    truncateContent: true,
   }
 
   renderComponent({

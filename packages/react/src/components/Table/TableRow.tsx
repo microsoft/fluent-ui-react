@@ -22,11 +22,20 @@ export interface TableRowProps extends UIComponentProps {
    * */
   accessibility?: Accessibility
 
+  /**
+   * Row cells
+   */
   items?: ShorthandCollection<TableCellProps>
 
+  /**
+   * Is the row a table header
+   */
   isHeader?: boolean
 
-  rowIndex?: number
+  /**
+   * Render table in compact mode
+   */
+  compact?: boolean
 }
 
 const handleVariablesOverrides = variables => predefinedProps => ({
@@ -55,8 +64,8 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
       ]),
     ]),
     items: customPropTypes.collectionShorthand,
-    rowIndex: PropTypes.number,
     isHeader: PropTypes.bool,
+    compact: PropTypes.bool,
   }
 
   static defaultProps = {
@@ -69,7 +78,6 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
     return _.map(items, (item: TableCellProps, index: number) => {
       const cellProps = {
         ...item,
-        cellIndex: index,
         ...(isHeader && {
           role: 'columnheader',
         }),

@@ -98,4 +98,26 @@ describe('Table', () => {
       expect(tableRows.length).toBe(0)
     })
   })
+
+  describe('compact', () => {
+    describe('render compact rows when enabled', () => {
+      const table = mountWithProviderAndGetComponent(Table, <Table rows={rows} compact />)
+        .find('.ui-table')
+        .hostNodes()
+
+      const tableRows = table.find(TableRow)
+      expect(tableRows.first().props().compact).toBeTruthy()
+      expect(tableRows.last().props().compact).toBeTruthy()
+    })
+
+    describe('does not render compact rows when disabled', () => {
+      const table = mountWithProviderAndGetComponent(Table, <Table rows={rows} />)
+        .find('.ui-table')
+        .hostNodes()
+
+      const tableRows = table.find(TableRow)
+      expect(tableRows.first().props().compact).toBeFalsy()
+      expect(tableRows.last().props().compact).toBeFalsy()
+    })
+  })
 })

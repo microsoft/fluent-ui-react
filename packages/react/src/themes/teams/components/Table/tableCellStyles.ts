@@ -25,11 +25,11 @@ export default {
     }
   },
   content: ({
-    variables: v,
+    props: { truncateContent },
   }: ComponentStyleFunctionParam<TableCellProps, TeamsTableVariables>): ICSSInJSStyle => {
     return {
       alignSelf: 'center',
-      ...(v.cellContentOverflow === 'ellipsis' && {
+      ...(truncateContent && {
         display: 'block',
         overflow: 'hidden',
         textOverflow: 'ellipsis',
