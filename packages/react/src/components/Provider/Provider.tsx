@@ -1,5 +1,6 @@
 import { IStyle } from 'fela'
 import * as _ from 'lodash'
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 // @ts-ignore
@@ -28,6 +29,7 @@ import {
   withSafeTypeForAs,
 } from '../../types'
 import mergeContexts from '../../lib/mergeProviderContexts'
+import Telemetry from '../../lib/Telemetry'
 
 export interface ProviderProps extends ChildrenComponentProps {
   renderer?: Renderer
@@ -37,6 +39,7 @@ export interface ProviderProps extends ChildrenComponentProps {
   target?: Document
   theme?: ThemeInput
   variables?: ComponentVariablesInput
+  telemetryRef?: React.Ref<Telemetry>
 }
 
 /**
@@ -76,6 +79,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
     disableAnimations: PropTypes.bool,
     children: PropTypes.node.isRequired,
     target: PropTypes.object,
+    telemetryRef: customPropTypes.ref,
   }
 
   static defaultProps = {
@@ -88,6 +92,8 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
 
   outgoingContext: ProviderContextPrepared
   staticStylesRendered: boolean = false
+
+  telemetry: Telemetry
 
   renderStaticStyles = (renderer: Renderer, mergedTheme: ThemePrepared) => {
     const { siteVariables } = mergedTheme
@@ -153,14 +159,27 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
       target,
       theme,
       variables,
+      telemetryRef,
       ...unhandledProps
     } = this.props
+
+    if (telemetryRef) {
+      if (!this.telemetry) {
+        this.telemetry = new Telemetry()
+      }
+
+      telemetryRef['current'] = this.telemetry
+    } else if (this.telemetry) {
+      delete this.telemetry
+    }
+
     const inputContext: ProviderContextInput = {
       theme,
       rtl,
       disableAnimations,
       renderer,
       target,
+      telemetry: this.telemetry,
     }
 
     const incomingContext: ProviderContextPrepared = overwrite ? {} : this.context

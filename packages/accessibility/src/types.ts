@@ -128,7 +128,15 @@ export interface AriaRelationshipAttributes {
   'aria-rowspan'?: number
 }
 
-export interface AccessibilityAttributes extends AriaWidgetAttributes, AriaRelationshipAttributes {
+export interface ElementStateAttributes {
+  disabled?: boolean
+  checked?: boolean
+}
+
+export interface AccessibilityAttributes
+  extends AriaWidgetAttributes,
+    AriaRelationshipAttributes,
+    ElementStateAttributes {
   role?: AriaRole
   tabIndex?: number
   id?: string
