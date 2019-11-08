@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { isConformant } from 'test/specs/commonTests'
+import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
 import { mountWithProviderAndGetComponent } from 'test/utils'
 import TableCell from 'src/components/Table/TableCell'
 
@@ -7,6 +7,10 @@ import TableRow from 'src/components/Table/TableRow'
 
 describe('TableRow', () => {
   isConformant(TableRow)
+
+  describe('accessiblity', () => {
+    handlesAccessibility(TableRow)
+  })
 
   const items = [
     { content: '1', key: '1-1' },

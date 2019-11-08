@@ -1,11 +1,17 @@
 import { ComponentStyleFunctionParam, ICSSInJSStyle } from '../../../types'
 import { TeamsTableVariables } from './tableVariables'
 import { TableCellProps } from '../../../../components/Table/TableCell'
+import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 export default {
   root: ({
     variables: v,
+    theme: { siteVariables },
   }: ComponentStyleFunctionParam<TableCellProps, TeamsTableVariables>): ICSSInJSStyle => {
+    const borderFocusStyles = getBorderFocusStyles({
+      siteVariables,
+    })
+
     return {
       boxSizing: 'border-box',
       display: 'flex',
@@ -17,9 +23,8 @@ export default {
       borderWidth: v.borderWidth,
       borderStyle: 'solid',
       borderColor: 'transparent',
-      ':focus': {
-        borderColor: v.cellBorderFocusColor,
-      },
+      ':focus': borderFocusStyles[':focus'],
+      ':focus-visible': borderFocusStyles[':focus-visible'],
       padding: v.cellPadding,
       height: '100%',
     }

@@ -1,10 +1,14 @@
 import * as React from 'react'
-import { isConformant } from 'test/specs/commonTests'
+import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
 import { mountWithProviderAndGetComponent } from 'test/utils'
 import TableCell from 'src/components/Table/TableCell'
 
 describe('TableCell', () => {
   isConformant(TableCell)
+
+  describe('accessiblity', () => {
+    handlesAccessibility(TableCell)
+  })
 
   it('renders as `div`', () => {
     const tableCell = mountWithProviderAndGetComponent(

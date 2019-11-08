@@ -1,12 +1,18 @@
 import { ComponentStyleFunctionParam, ICSSInJSStyle } from '../../../types'
 import { TeamsTableVariables } from './tableVariables'
 import { TableRowProps } from '../../../../components/Table/TableRow'
+import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 export default {
   root: ({
     props: { isHeader, compact },
     variables: v,
+    theme: { siteVariables },
   }: ComponentStyleFunctionParam<TableRowProps, TeamsTableVariables>): ICSSInJSStyle => {
+    const borderFocusStyles = getBorderFocusStyles({
+      siteVariables,
+    })
+
     return {
       boxSizing: 'border-box',
       display: 'flex',
@@ -27,18 +33,13 @@ export default {
         backgroundColor: v.backgroundHoverColor,
         borderColor: v.rowBorderHoverColor,
       },
-      ':focus': {
-        borderColor: v.rowBorderFocusColor,
-        outline: 0,
-      },
+      ':focus': borderFocusStyles[':focus'],
+      ':focus-visible': borderFocusStyles[':focus-visible'],
       ...(isHeader && {
         fontSize: v.headerFontSize,
         ':hover': {
           color: v.color,
           backgroundColor: v.backgroundColor,
-        },
-        ':focus': {
-          border: v.headerBorderFocusColor,
         },
       }),
       ...(compact && {
