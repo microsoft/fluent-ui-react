@@ -14,7 +14,6 @@ export default {
     })
 
     return {
-      boxSizing: 'border-box',
       display: 'flex',
       flexDirection: 'row',
       alignItems: 'center',

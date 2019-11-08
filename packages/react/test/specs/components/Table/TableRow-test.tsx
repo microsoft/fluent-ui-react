@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
+import { isConformant, handlesAccessibility, getRenderedAttribute } from 'test/specs/commonTests'
 import { mountWithProviderAndGetComponent } from 'test/utils'
 import TableCell from 'src/components/Table/TableCell'
 
@@ -64,8 +64,8 @@ describe('TableRow', () => {
 
       const tableCells = tableRow.find(TableCell)
       expect(tableCells.length).toBe(4)
-      expect(tableCells.first().props().role).toBe('columnheader')
-      expect(tableCells.last().props().role).toBe('columnheader')
+      expect(getRenderedAttribute(tableCells.first(), 'role', '')).toBe('columnheader')
+      expect(getRenderedAttribute(tableCells.last(), 'role', '')).toBe('columnheader')
     })
 
     describe('not render columnheader cells when is false', () => {
@@ -78,8 +78,8 @@ describe('TableRow', () => {
 
       const tableCells = tableRow.find(TableCell)
       expect(tableCells.length).toBe(4)
-      expect(tableCells.first().props().role).not.toBe('columnheader')
-      expect(tableCells.last().props().role).not.toBe('columnheader')
+      expect(getRenderedAttribute(tableCells.first(), 'role', '')).not.toBe('columnheader')
+      expect(getRenderedAttribute(tableCells.last(), 'role', '')).not.toBe('columnheader')
     })
   })
 })

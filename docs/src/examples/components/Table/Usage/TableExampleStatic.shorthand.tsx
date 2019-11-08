@@ -17,7 +17,6 @@ const rowsPlain = [
       { content: '1', key: '1-1' },
       {
         content: 'Roman van von der Longername',
-
         key: '1-2',
       },
       { content: 'None', key: '1-3' },

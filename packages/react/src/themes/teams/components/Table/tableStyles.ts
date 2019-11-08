@@ -10,7 +10,6 @@ export default {
       display: 'flex',
       flexDirection: 'column',
       background: v.backgroundColor,
-      boxSizing: 'border-box',
     }
   },
 }

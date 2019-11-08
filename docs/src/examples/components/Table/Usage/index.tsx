@@ -16,9 +16,9 @@ const Usage = () => (
       examplePath="components/Table/Usage/TableExampleStaticCompact"
     />
     <ComponentExample
-      title="Static no content truncation"
-      description="Static table with no conteent truncation"
-      examplePath="components/Table/Usage/TableExampleStaticNoTextOverflow"
+      title="Content truncation"
+      description="Static table with content truncation"
+      examplePath="components/Table/Usage/TableExampleStaticTruncate"
     />
     <ComponentExample
       title="Static headless"

@@ -17,8 +17,7 @@ const rowsPlain = [
       { content: '1', key: '1-1' },
       {
         content: 'Roman van von der Longername',
-        truncateContent: false,
-
+        truncateContent: true,
         key: '1-2',
       },
       { content: 'None', key: '1-3' },
@@ -40,7 +39,7 @@ const rowsPlain = [
       { content: '3', key: '3-1' },
       { content: 'Ali', key: '3-2' },
       { content: 'None', key: '3-3' },
-      { content: '30000000000000 years', truncateContent: false, key: '3-4' },
+      { content: '30000000000000 years', truncateContent: true, key: '3-4' },
     ],
   },
 ]

@@ -8,13 +8,15 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   UIComponent,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
 import { ComponentVariablesObject } from '../../themes/types'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 import TableRow, { TableRowProps } from './TableRow'
 import TableCell, { TableCellProps } from './TableCell'
 import { WithAsProp, ShorthandCollection } from '../../types'
-import { Accessibility } from '@stardust-ui/accessibility'
+import { Accessibility, tableBehavior } from '@stardust-ui/accessibility'
+import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 
 export interface TableSlotClassNames {
   header: string
@@ -58,9 +60,6 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
     header: `${Table.className}__header`,
   }
 
-  rowsCount: number
-  columsCount: number
-
   static propTypes = {
     ...commonPropTypes.createCommon({
       content: false,
@@ -79,15 +78,16 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
 
   static defaultProps = {
     as: 'div',
+    accessibility: tableBehavior as Accessibility,
   }
 
-  renderRows(variables: ComponentVariablesObject) {
+  renderRows(accessibility: ReactAccessibilityBehavior, variables: ComponentVariablesObject) {
     const { rows, compact } = this.props
 
     return _.map(rows, (row: TableRowProps, index: number) => {
       const props = {
         ...row,
-        role: 'rowgroup',
+        role: accessibility.attributes.row.role,
         compact,
       } as TableRowProps
       const overrideProps = handleVariablesOverrides(variables)
@@ -95,7 +95,7 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
     })
   }
 
-  renderHeader(variables: ComponentVariablesObject) {
+  renderHeader(accessibility: ReactAccessibilityBehavior, variables: ComponentVariablesObject) {
     const { header, compact } = this.props
     if (!header) {
       return null
@@ -103,7 +103,7 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
 
     const headerRowProps = {
       ...header,
-      role: 'rowgroup',
+      role: accessibility.attributes.row.role,
       isHeader: true,
       compact,
     } as TableRowProps
@@ -129,14 +129,14 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
       <ElementType
         className={classes.root}
         {...accessibility.attributes.root}
-        {...accessibility.keyHandlers.root}
         {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
         {/* <thead> */}
-        {this.renderHeader(variables)}
+        {this.renderHeader(accessibility, variables)}
         {/* </thead> */}
         {/* <tbody> */}
-        {this.renderRows(variables)}
+        {this.renderRows(accessibility, variables)}
         {/* </tbody> */}
       </ElementType>
     )

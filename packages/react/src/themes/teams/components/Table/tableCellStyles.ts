@@ -13,7 +13,6 @@ export default {
     })
 
     return {
-      boxSizing: 'border-box',
       display: 'flex',
       flexFlow: 'row nowrap',
       flexGrow: 1,

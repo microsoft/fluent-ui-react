@@ -1,7 +1,6 @@
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import cx from 'classnames'
 import {
   UIComponent,
   childrenExist,
@@ -12,15 +11,16 @@ import {
   ContentComponentProps,
   ShorthandFactory,
   createShorthandFactory,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
-
-import { WithAsProp } from '../../types'
-import { Accessibility } from '@stardust-ui/accessibility'
+import Box, { BoxProps } from '../Box/Box'
+import { WithAsProp, ShorthandValue } from '../../types'
+import { Accessibility, tableCellBehavior } from '@stardust-ui/accessibility'
 
 export interface TableCellProps
   extends UIComponentProps,
     ChildrenComponentProps,
-    ContentComponentProps<React.ReactNode | React.ReactNode[]> {
+    ContentComponentProps<ShorthandValue<BoxProps>> {
   /**
    * Accessibility behavior if overridden by the user.
    * @available TableCellBehavior
@@ -68,27 +68,36 @@ class TableCell extends UIComponent<WithAsProp<any>, any> {
 
   static defaultProps = {
     as: 'div',
-    truncateContent: true,
+    accessibility: tableCellBehavior as Accessibility,
   }
 
   renderComponent({
     accessibility,
     ElementType,
+    styles,
     classes,
     unhandledProps,
   }: RenderResultConfig<any>): React.ReactNode {
     const { children, content } = this.props
+    const hasChildren = childrenExist(children)
 
     return (
-      <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
-        <div className={cx(TableCell.slotClassNames.content, classes.content)}>
-          {childrenExist(children) ? children : content}
-        </div>
+      <ElementType
+        className={classes.root}
+        {...accessibility.attributes.root}
+        {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
+      >
+        {hasChildren
+          ? children
+          : Box.create(!hasChildren && content, {
+              defaultProps: { as: 'div', styles: styles.content },
+            })}
       </ElementType>
     )
   }
 }
 
-TableCell.create = createShorthandFactory({ Component: TableCell })
+TableCell.create = createShorthandFactory({ Component: TableCell, mappedProp: 'content' })
 
 export default TableCell

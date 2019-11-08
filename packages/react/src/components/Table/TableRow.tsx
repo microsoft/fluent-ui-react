@@ -10,9 +10,10 @@ import {
   commonPropTypes,
   ShorthandFactory,
   createShorthandFactory,
+  applyAccessibilityKeyHandlers,
 } from '../../lib'
 import { ShorthandCollection, WithAsProp } from '../../types'
-import { Accessibility } from '@stardust-ui/accessibility'
+import { Accessibility, tableHeaderCellBehavior } from '@stardust-ui/accessibility'
 import { ComponentVariablesObject } from '../../themes/types'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
@@ -79,7 +80,7 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
       const cellProps = {
         ...item,
         ...(isHeader && {
-          role: 'columnheader',
+          accessibility: tableHeaderCellBehavior,
         }),
       }
       const overrideProps = handleVariablesOverrides(variables)
@@ -98,8 +99,8 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
       <ElementType
         className={classes.root}
         {...accessibility.attributes.root}
-        {...accessibility.keyHandlers.root}
         {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
         {this.renderCells(variables)}
       </ElementType>

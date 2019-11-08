@@ -9,7 +9,7 @@ describe('Table', () => {
   isConformant(Table)
 
   describe('accessiblity', () => {
-    handlesAccessibility(Table)
+    handlesAccessibility(Table, { defaultRootRole: 'table' })
   })
 
   const header = {

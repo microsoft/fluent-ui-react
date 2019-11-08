@@ -7,7 +7,7 @@ describe('TableCell', () => {
   isConformant(TableCell)
 
   describe('accessiblity', () => {
-    handlesAccessibility(TableCell)
+    handlesAccessibility(TableCell, { defaultRootRole: 'cell' })
   })
 
   it('renders as `div`', () => {
