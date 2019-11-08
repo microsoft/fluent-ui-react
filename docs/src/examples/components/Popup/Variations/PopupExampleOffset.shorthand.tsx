@@ -10,6 +10,7 @@ const renderButton = () => (
       rotate: -45,
     }}
     styles={{ height: '80px', minWidth: '80px', padding: 0 }}
+    title="Show popup"
   />
 )
 
