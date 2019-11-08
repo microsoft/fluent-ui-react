@@ -161,12 +161,12 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
         maybeSelectableItemProps.selected = index === selectedIndex
       }
 
-      const itemProps = {
+      const itemProps = () => ({
         className: List.slotClassNames.item,
         ..._.pick(this.props, List.itemProps),
         ...maybeSelectableItemProps,
         index,
-      }
+      })
 
       return ListItem.create(item, {
         defaultProps: itemProps,
