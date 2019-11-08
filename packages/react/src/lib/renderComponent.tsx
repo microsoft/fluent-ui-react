@@ -22,7 +22,6 @@ import {
   ComponentVariablesObject,
   ComponentSlotClasses,
   ComponentSlotStylesPrepared,
-  ICSSInJSStyle,
   PropsWithVarsAndStyles,
   State,
   ThemePrepared,
@@ -36,6 +35,7 @@ import { isEnabled as isDebugEnabled } from './debug/debugEnabled'
 import { DebugData } from './debug/debugData'
 import withDebugId from './withDebugId'
 import Telemetry from './Telemetry'
+import resolveStylesAndClasses from './resolveStyles'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
@@ -156,89 +156,6 @@ const renderWithFocusZone = <P extends {}>(
   return render(config)
 }
 
-// Both resolvedStyles and classes are objects of getters with lazy evaluation
-const resolveStylesAndClasses = (
-  mergedStyles,
-  styleParam,
-  renderer,
-  felaParam,
-): {
-  resolvedStyles: ICSSInJSStyle
-  resolvedStylesDebug: { [key: string]: { styles: Object }[] }
-  classes: ComponentSlotClasses
-} => {
-  const resolvedStyles = {}
-  const resolvedStylesDebug = {}
-  const classes = {}
-
-  const computedStyles = []
-  const cachedStyles = []
-  const computedClasses = []
-  const cachedClasses = []
-
-  Object.keys(mergedStyles).forEach(slotName => {
-    // resolve/render slot styles once and cache
-    const cacheKey = `${slotName}__return`
-
-    Object.defineProperty(resolvedStyles, slotName, {
-      enumerable: false,
-      configurable: false,
-      set(val) {
-        resolvedStyles[cacheKey] = val
-        return true
-      },
-      get() {
-        if (resolvedStyles[cacheKey]) {
-          cachedStyles.push(slotName)
-          return resolvedStyles[cacheKey]
-        }
-
-        // resolve/render slot styles once and cache
-        resolvedStyles[cacheKey] = mergedStyles[slotName](styleParam)
-
-        if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
-          resolvedStylesDebug[slotName] = resolvedStyles[slotName]['_debug']
-          delete resolvedStyles[slotName]['_debug']
-        }
-
-        computedStyles.push(slotName)
-        return resolvedStyles[cacheKey]
-      },
-    })
-
-    Object.defineProperty(classes, slotName, {
-      enumerable: false,
-      configurable: false,
-      set(val) {
-        classes[cacheKey] = val
-        return true
-      },
-      get() {
-        if (classes[cacheKey]) {
-          cachedClasses.push(slotName)
-          return classes[cacheKey]
-        }
-
-        // this resolves the getter magic
-        const styleObj = resolvedStyles[slotName]
-
-        if (renderer && styleObj) {
-          computedClasses.push(slotName)
-          classes[cacheKey] = renderer.renderRule(() => styleObj, felaParam)
-        }
-
-        return classes[cacheKey]
-      },
-    })
-  })
-
-  return {
-    resolvedStyles,
-    resolvedStylesDebug,
-    classes,
-  }
-}
-
 const renderComponent = <P extends {}>(
   config: RenderConfig<P>,
   context?: ProviderContextPrepared,
@@ -328,7 +245,7 @@ const renderComponent = <P extends {}>(
   const { resolvedStyles, resolvedStylesDebug, classes } = resolveStylesAndClasses(
     mergedStyles,
     styleParam,
-    renderer,
+    renderer && renderer.renderRule,
     felaParam,
   )
 
