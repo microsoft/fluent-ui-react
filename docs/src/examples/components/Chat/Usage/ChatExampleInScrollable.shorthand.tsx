@@ -1,4 +1,4 @@
-import { useRangeKnob } from '@stardust-ui/docs-components'
+import { useBooleanKnob, useRangeKnob } from '@stardust-ui/docs-components'
 import { Avatar, Chat, ChatItemProps, ShorthandCollection } from '@stardust-ui/react'
 import * as React from 'react'
 
@@ -17,6 +17,7 @@ const actionItems = [
 
 const ChatExampleInScrollableShorthand = () => {
   const [actionCount] = useRangeKnob({ name: 'actionCount', initialValue: 7, min: 1, max: 10 })
+  const [overflow] = useBooleanKnob({ name: 'overflow', initialValue: true })
   const [height] = useRangeKnob({
     name: 'height',
     initialValue: '400px',
@@ -47,6 +48,7 @@ const ChatExampleInScrollableShorthand = () => {
           content="Hello"
           mine
           timestamp="Yesterday, 10:15 PM"
+          unstable_overflow={overflow}
         />
       ),
       key: 'message-1',
@@ -62,6 +64,7 @@ const ChatExampleInScrollableShorthand = () => {
           content="I'm back!"
           mine
           timestamp="Yesterday, 10:15 PM"
+          unstable_overflow={overflow}
         />
       ),
     },
@@ -73,6 +76,7 @@ const ChatExampleInScrollableShorthand = () => {
           author="Jane Doe"
           content="Hi"
           timestamp="Yesterday, 10:15 PM"
+          unstable_overflow={overflow}
         />
       ),
       key: 'message-3',
@@ -80,7 +84,7 @@ const ChatExampleInScrollableShorthand = () => {
   ]
 
   return (
-    <div style={{ height, width, overflow: 'scroll' }}>
+    <div style={{ height, width, overflow: 'scroll', margin: 50 }}>
       <Chat items={items} styles={{ minHeight: '100%' }} />
     </div>
   )

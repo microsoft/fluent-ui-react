@@ -9,11 +9,13 @@ const actions = (
         icon: 'stardust-checkmark',
         iconOnly: true,
         text: true,
+        title: 'Check',
       },
       {
         icon: 'stardust-close',
         iconOnly: true,
         text: true,
+        title: 'Close',
       },
     ]}
   />

@@ -35,6 +35,7 @@ const ToolbarExampleActionPopupInMenu = () => {
         {
           icon: 'more',
           active: menuOpen,
+          title: 'More',
           menu: [
             {
               content: 'Open Popup',
