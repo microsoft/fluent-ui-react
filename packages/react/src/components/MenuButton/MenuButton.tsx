@@ -256,10 +256,10 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
     }
 
     const content = Menu.create(menu, {
-      defaultProps: {
+      defaultProps: () => ({
         ...accessibility.attributes.menu,
         vertical: true,
-      },
+      }),
       overrideProps: this.handleMenuOverrides,
     })
 

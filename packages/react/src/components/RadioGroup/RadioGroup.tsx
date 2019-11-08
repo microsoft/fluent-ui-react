@@ -178,11 +178,11 @@ class RadioGroup extends AutoControlledComponent<WithAsProp<RadioGroupProps>, an
 
     return _.map(items, (item, index) =>
       RadioGroupItem.create(item, {
-        defaultProps: {
+        defaultProps: () => ({
           className: RadioGroup.slotClassNames.item,
           vertical,
           ...(index === 0 && isNoneValueSelected && { tabIndex: 0 }),
-        },
+        }),
         overrideProps: this.handleItemOverrides,
       }),
     )

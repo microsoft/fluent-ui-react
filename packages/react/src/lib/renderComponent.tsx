@@ -35,6 +35,7 @@ import { isEnabled as isDebugEnabled } from './debug/debugEnabled'
 import { DebugData } from './debug/debugData'
 import withDebugId from './withDebugId'
 import Telemetry from './Telemetry'
+import resolveStylesAndClasses from './resolveStylesAndClasses'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
@@ -238,22 +239,11 @@ const renderComponent = <P extends {}>(
     displayName, // does not affect styles, only used by useEnhancedRenderer in docs
   }
 
-  const resolvedStyles: ComponentSlotStylesPrepared = {}
-  const resolvedStylesDebug: { [key: string]: { styles: Object }[] } = {}
-  const classes: ComponentSlotClasses = {}
-
-  Object.keys(mergedStyles).forEach(slotName => {
-    resolvedStyles[slotName] = callable(mergedStyles[slotName])(styleParam)
-
-    if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
-      resolvedStylesDebug[slotName] = resolvedStyles[slotName]['_debug']
-      delete resolvedStyles[slotName]['_debug']
-    }
-
-    if (renderer) {
-      classes[slotName] = renderer.renderRule(callable(resolvedStyles[slotName]), felaParam)
-    }
-  })
+  const { resolvedStyles, resolvedStylesDebug, classes } = resolveStylesAndClasses(
+    mergedStyles,
+    styleParam,
+    renderer ? style => renderer.renderRule(() => style, felaParam) : undefined,
+  )
 
   classes.root = cx(className, classes.root, props.className)
 
@@ -266,6 +256,13 @@ const renderComponent = <P extends {}>(
     accessibility,
     rtl,
     theme,
+  }
+
+  let result
+  if (accessibility.focusZone) {
+    result = renderWithFocusZone(render, accessibility.focusZone, resolvedConfig)
+  } else {
+    result = render(resolvedConfig)
   }
 
   // conditionally add sources for evaluating debug information to component
@@ -294,13 +291,6 @@ const renderComponent = <P extends {}>(
         return true
       }),
     })
-  }
-
-  let result
-  if (accessibility.focusZone) {
-    result = renderWithFocusZone(render, accessibility.focusZone, resolvedConfig)
-  } else {
-    result = render(resolvedConfig)
   }
 
   if (telemetry && telemetry.enabled) {
