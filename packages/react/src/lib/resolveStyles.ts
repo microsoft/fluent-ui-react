@@ -6,7 +6,6 @@ const resolveStylesAndClasses = (
   mergedStyles: ComponentSlotStylesPrepared,
   styleParam,
   renderStyles,
-  renderStylesParam,
 ): {
   resolvedStyles: ICSSInJSStyle
   resolvedStylesDebug: { [key: string]: { styles: Object }[] }
@@ -15,11 +14,6 @@ const resolveStylesAndClasses = (
   const resolvedStyles = {}
   const resolvedStylesDebug = {}
   const classes = {}
-
-  const computedStyles = []
-  const cachedStyles = []
-  const computedClasses = []
-  const cachedClasses = []
 
   Object.keys(mergedStyles).forEach(slotName => {
     // resolve/render slot styles once and cache
@@ -34,7 +28,6 @@ const resolveStylesAndClasses = (
       },
       get() {
         if (resolvedStyles[cacheKey]) {
-          cachedStyles.push(slotName)
           return resolvedStyles[cacheKey]
         }
 
@@ -46,7 +39,6 @@ const resolveStylesAndClasses = (
           delete resolvedStyles[slotName]['_debug']
         }
 
-        computedStyles.push(slotName)
         return resolvedStyles[cacheKey]
       },
     })
@@ -60,7 +52,6 @@ const resolveStylesAndClasses = (
       },
       get() {
         if (classes[cacheKey]) {
-          cachedClasses.push(slotName)
           return classes[cacheKey]
         }
 
@@ -68,8 +59,7 @@ const resolveStylesAndClasses = (
         const styleObj = resolvedStyles[slotName]
 
         if (renderStyles && styleObj) {
-          computedClasses.push(slotName)
-          classes[cacheKey] = renderStyles(() => styleObj, renderStylesParam)
+          classes[cacheKey] = renderStyles(styleObj)
         }
 
         return classes[cacheKey]

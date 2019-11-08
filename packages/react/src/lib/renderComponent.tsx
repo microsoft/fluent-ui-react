@@ -245,8 +245,7 @@ const renderComponent = <P extends {}>(
   const { resolvedStyles, resolvedStylesDebug, classes } = resolveStylesAndClasses(
     mergedStyles,
     styleParam,
-    renderer && renderer.renderRule,
-    felaParam,
+    renderer ? style => renderer.renderRule(() => style, felaParam) : undefined,
   )
 
   classes.root = cx(className, classes.root, props.className)
