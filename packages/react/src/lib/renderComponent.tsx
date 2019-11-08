@@ -279,11 +279,7 @@ const renderComponent = <P extends {}>(
         resolvedVariables._debug,
         variables => !_.isEmpty(variables.resolved),
       ),
-      componentStyles: _.mapValues(resolvedStylesDebug, v =>
-        _.filter(v, v => {
-          return !_.isEmpty(v.styles)
-        }),
-      ),
+      componentStyles: resolvedStylesDebug,
       siteVariables: _.filter(theme.siteVariables._debug, siteVars => {
         if (_.isEmpty(siteVars) || _.isEmpty(siteVars.resolved)) {
           return false
