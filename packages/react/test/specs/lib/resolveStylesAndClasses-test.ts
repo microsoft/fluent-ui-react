@@ -1,4 +1,4 @@
-import resolveStylesAndClasses from 'src/lib/resolveStyles'
+import resolveStylesAndClasses from 'src/lib/resolveStylesAndClasses'
 import { ComponentSlotStylesPrepared } from 'src/themes/types'
 
 describe('resolveStylesAndClasses', () => {
@@ -38,7 +38,7 @@ describe('resolveStylesAndClasses', () => {
     expect(renderStyles).not.toBeCalled()
   })
 
-  test('renders classes', () => {
+  test('renders classes when slot classes getter is accessed', () => {
     const renderStyles = jest.fn().mockReturnValue('a')
     const { classes } = resolveStylesAndClasses(componentStyles, styleParam, renderStyles)
 

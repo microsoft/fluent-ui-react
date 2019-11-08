@@ -35,7 +35,7 @@ import { isEnabled as isDebugEnabled } from './debug/debugEnabled'
 import { DebugData } from './debug/debugData'
 import withDebugId from './withDebugId'
 import Telemetry from './Telemetry'
-import resolveStylesAndClasses from './resolveStyles'
+import resolveStylesAndClasses from './resolveStylesAndClasses'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
