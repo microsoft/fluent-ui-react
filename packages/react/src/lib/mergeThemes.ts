@@ -113,12 +113,12 @@ export const mergeComponentStyles__DEV = (
       if (typeof originalTarget === 'undefined') {
         partStylesPrepared[partName] = styleParam => {
           // originalTarget is always prepared, fn is guaranteed, _debug always exists
-          const { _debug = [], ...styles } = callable(originalSource)(styleParam) || {}
+          const { _debug = undefined, ...styles } = callable(originalSource)(styleParam) || {}
 
-          // new object required to prevent circular JSON
+          // new object required to prevent circular JSON structure error in <Debug />
           return {
             ...styles,
-            _debug: _debug.concat({ styles: { ...styles }, debugId: stylesByPart._debugId }),
+            _debug: _debug || [{ styles: { ...styles }, debugId: stylesByPart._debugId }],
           }
         }
 
