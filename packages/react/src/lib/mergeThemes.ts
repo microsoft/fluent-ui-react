@@ -109,14 +109,17 @@ export const mergeComponentStyles__DEV = (
       }
 
       // no target means source doesn't need to merge onto anything
-      // just ensure source is callable (prepared format) and has debugId
+      // just ensure source is callable (prepared format) and has _debug
       if (typeof originalTarget === 'undefined') {
         partStylesPrepared[partName] = styleParam => {
-          const { _debug = undefined, ...sourceStyles } = callable(originalSource)(styleParam) || {}
+          // originalTarget is always prepared, fn is guaranteed, _debug always exists
+          const { _debug = [], ...styles } = callable(originalSource)(styleParam) || {}
 
-          sourceStyles._debug = _debug || [{ styles: sourceStyles, debugId: stylesByPart._debugId }]
-
-          return sourceStyles
+          // new object required to prevent circular JSON
+          return {
+            ...styles,
+            _debug: _debug.concat({ styles: { ...styles }, debugId: stylesByPart._debugId }),
+          }
         }
 
         return
@@ -125,7 +128,8 @@ export const mergeComponentStyles__DEV = (
       // We have both target and source, replace with merge fn
       partStylesPrepared[partName] = styleParam => {
         // originalTarget is always prepared, fn is guaranteed, _debug always exists
-        const { _debug: targetDebug, ...targetStyles } = originalTarget(styleParam)
+        const { _debug: targetDebug = [], ...targetStyles } =
+          callable(originalTarget)(styleParam) || {}
         const { _debug: sourceDebug = undefined, ...sourceStyles } =
           callable(originalSource)(styleParam) || {}
 
