@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.40.3 ]------------------------------- -->
+## [v0.40.3](https://github.com/stardust-ui/react/tree/v0.40.3) (2019-11-08)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.40.2...v0.40.3)
+
 ### Performance
 - Add rendering performance telemetry @miroslavstastny ([#2079](https://github.com/microsoft/fluent-ui-react/pull/2079))
 - Skip empty frames in mergeThemes @levithomason @miroslavstastny ([#2095](https://github.com/microsoft/fluent-ui-react/pull/2095))
