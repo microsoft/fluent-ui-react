@@ -40,7 +40,8 @@ const Avatar = (props: AvatarProps & { hexagonal?: boolean }) => {
         }
       />
     )
-  }  return <StardustAvatar {...rest} />
+  }
+  return <StardustAvatar {...rest} />
 }
 
 export default Avatar
