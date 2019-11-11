@@ -166,6 +166,16 @@ describe('Tree', () => {
       checkOpenTitles(wrapper, ['1', '11', '12', '121', '2', '3'])
     })
 
+    it('should have multiple items on the same level expanded based on their expanded prop', () => {
+      const itemsClone = JSON.parse(JSON.stringify(items))
+      itemsClone[0]['expanded'] = true
+      itemsClone[0]['items'][1]['expanded'] = true
+      itemsClone[1]['expanded'] = true
+      const wrapper = mountWithProvider(<Tree items={itemsClone} />)
+
+      checkOpenTitles(wrapper, ['1', '11', '12', '121', '2', '21', '22', '3'])
+    })
+
     it('should have expanded prop from items overriden by controlling activeItemIds', () => {
       const itemsClone = JSON.parse(JSON.stringify(items))
       itemsClone[0]['expanded'] = true
