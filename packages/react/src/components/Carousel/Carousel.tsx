@@ -288,7 +288,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
       <>
         <Ref innerRef={this.paddlePreviousRef}>
           {Button.create(paddlePrevious, {
-            defaultProps: {
+            defaultProps: () => ({
               className: Carousel.slotClassNames.paddlePrevious,
               iconOnly: true,
               icon: 'stardust-chevron-left',
@@ -298,7 +298,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
                 accessibility.keyHandlers.paddlePrevious,
                 paddlePrevious,
               ),
-            },
+            }),
             overrideProps: (predefinedProps: ButtonProps) => ({
               onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
                 _.invoke(predefinedProps, 'onClick', e, buttonProps)
@@ -320,14 +320,14 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
         </Ref>
         <Ref innerRef={this.paddleNextRef}>
           {Button.create(paddleNext, {
-            defaultProps: {
+            defaultProps: () => ({
               className: Carousel.slotClassNames.paddleNext,
               iconOnly: true,
               icon: 'stardust-chevron-right',
               styles: styles.paddleNext,
               ...accessibility.attributes.paddleNext,
               ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.paddleNext, paddleNext),
-            },
+            }),
             overrideProps: (predefinedProps: ButtonProps) => ({
               onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
                 _.invoke(predefinedProps, 'onClick', e, buttonProps)

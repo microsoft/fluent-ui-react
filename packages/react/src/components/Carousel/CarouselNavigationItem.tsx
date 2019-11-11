@@ -135,11 +135,11 @@ class CarouselNavigationItem extends UIComponent<
     )
     const element = wrapper
       ? Box.create(wrapper, {
-          defaultProps: {
+          defaultProps: () => ({
             className: cx(CarouselNavigationItem.slotClassNames.wrapper, classes.wrapper),
             ...accessibility.attributes.wrapper,
             ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, wrapper),
-          },
+          }),
           overrideProps: () => ({
             children: elementInner,
             onClick: this.handleClick,
