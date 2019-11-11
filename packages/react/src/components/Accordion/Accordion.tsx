@@ -258,7 +258,7 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
 
       children.push(
         AccordionTitle.create(title, {
-          defaultProps: {
+          defaultProps: () => ({
             className: Accordion.slotClassNames.title,
             active,
             index,
@@ -266,19 +266,19 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
             canBeCollapsed,
             id: titleId,
             accordionContentId: contentId,
-          },
+          }),
           overrideProps: this.handleTitleOverrides,
           render: renderPanelTitle,
         }),
       )
       children.push(
         AccordionContent.create(content, {
-          defaultProps: {
+          defaultProps: () => ({
             className: Accordion.slotClassNames.content,
             active,
             id: contentId,
             accordionTitleId: titleId,
-          },
+          }),
           render: renderPanelContent,
         }),
       )

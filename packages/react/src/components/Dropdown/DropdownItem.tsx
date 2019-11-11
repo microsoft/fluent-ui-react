@@ -108,32 +108,32 @@ class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
         styles={styles.root}
         onClick={this.handleClick}
         header={Box.create(header, {
-          defaultProps: {
+          defaultProps: () => ({
             className: DropdownItem.slotClassNames.header,
             styles: styles.header,
-          },
+          }),
         })}
         media={Image.create(image, {
-          defaultProps: {
+          defaultProps: () => ({
             avatar: true,
             className: DropdownItem.slotClassNames.image,
             styles: styles.image,
-          },
+          }),
         })}
         content={Box.create(content, {
-          defaultProps: {
+          defaultProps: () => ({
             className: DropdownItem.slotClassNames.content,
             styles: styles.content,
-          },
+          }),
         })}
         endMedia={
           selected &&
           checkable && {
             content: Icon.create(checkableIndicator, {
-              defaultProps: {
+              defaultProps: () => ({
                 className: DropdownItem.slotClassNames.checkableIndicator,
                 styles: styles.checkableIndicator,
-              },
+              }),
             }),
             styles: styles.endMedia,
           }

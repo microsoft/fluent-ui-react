@@ -275,7 +275,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
           const isSubtree = hasSubtree(item)
           const isSubtreeOpen = isSubtree && this.isActiveItem(item['id'])
           const renderedItem = TreeItem.create(item, {
-            defaultProps: {
+            defaultProps: () => ({
               accessibility: accessibility.childBehaviors
                 ? accessibility.childBehaviors.item
                 : undefined,
@@ -285,7 +285,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
               key: item['id'],
               contentRef: elementRef,
               ...restItemForRender,
-            },
+            }),
             overrideProps: this.handleTreeItemOverrides,
           })
 
@@ -340,5 +340,8 @@ Tree.create = createShorthandFactory({
  *
  * @accessibility
  * Implements [ARIA TreeView](https://www.w3.org/TR/wai-aria-practices-1.1/#TreeView) design pattern.
+ * @accessibilityIssues
+ * [Treeview - JAWS doesn't narrate position for each tree item](https://github.com/FreedomScientific/VFO-standards-support/issues/338)
  */
+
 export default withSafeTypeForAs<typeof Tree, TreeProps, 'ul'>(Tree)
