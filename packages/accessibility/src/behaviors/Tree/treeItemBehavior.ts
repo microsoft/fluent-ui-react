@@ -12,6 +12,7 @@ import treeTitleBehavior from './treeTitleBehavior'
  *
  * @specification
  * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'root'.
+ * Triggers 'expandSiblings' action with '*' on 'root'.
  * Triggers 'focusParent' action with 'ArrowLeft' on 'root', when has a closed subtree.
  * Triggers 'collapse' action with 'ArrowLeft' on 'root', when has an opened subtree.
  * Triggers 'expand' action with 'ArrowRight' on 'root', when has a closed subtree.
