@@ -16,6 +16,7 @@
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
 ### Fixes
 - Update Silver color scheme, changing `backgroundHover` and `backgroundPressed` for high-contrast theme @pompomon ([#2078](https://github.com/microsoft/fluent-ui-react/pull/2078))
 - Updating the `attachment` component styles to match Teams theme @notandrew ([#2012](https://github.com/stardust-ui/react/pull/2012))
@@ -26,11 +27,17 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Expanding experimental accessibility schema to more components @mshoho ([#2052](https://github.com/stardust-ui/react/pull/2052))
 - `Carousel` component @silviuavram ([#1979](https://github.com/microsoft/fluent-ui-react/pull/1979))
 
-### Performance
-- Add rendering performance telemetry @miroslavstastny ([#2079](https://github.com/microsoft/fluent-ui-react/pull/2079))
-
 ### Documentation
 - Add usage example for `Tooltip` on disabled elements @mnajdova ([#2091](https://github.com/microsoft/fluent-ui-react/pull/2091))
+
+<!--------------------------------[ v0.40.3 ]------------------------------- -->
+## [v0.40.3](https://github.com/stardust-ui/react/tree/v0.40.3) (2019-11-08)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.40.2...v0.40.3)
+
+### Performance
+- Add rendering performance telemetry @miroslavstastny ([#2079](https://github.com/microsoft/fluent-ui-react/pull/2079))
+- Skip empty frames in mergeThemes @levithomason @miroslavstastny ([#2095](https://github.com/microsoft/fluent-ui-react/pull/2095))
+- Lazily evaluate styles and classes @levithomason @miroslavstastny ([#2097](https://github.com/microsoft/fluent-ui-react/pull/2097))
 
 <!--------------------------------[ v0.40.2 ]------------------------------- -->
 ## [v0.40.2](https://github.com/stardust-ui/react/tree/v0.40.2) (2019-10-30)

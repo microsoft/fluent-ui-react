@@ -100,16 +100,16 @@ class Label extends UIComponent<WithAsProp<LabelProps>, any> {
     }
 
     const imageElement = Image.create(image, {
-      defaultProps: {
+      defaultProps: () => ({
         styles: styles.image,
         variables: variables.image,
-      },
+      }),
     })
     const iconElement = Icon.create(icon, {
-      defaultProps: {
+      defaultProps: () => ({
         styles: styles.icon,
         variables: variables.icon,
-      },
+      }),
       overrideProps: this.handleIconOverrides,
     })
 

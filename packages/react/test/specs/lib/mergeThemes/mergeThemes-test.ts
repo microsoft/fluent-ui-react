@@ -171,24 +171,42 @@ describe('mergeThemes', () => {
       expect(merged.componentStyles).toHaveProperty('Icon')
     })
 
-    test('component parts are merged', () => {
+    test('component parts without styles are not merged', () => {
       const target = { componentStyles: { Button: { root: {} } } }
       const source = { componentStyles: { Button: { icon: {} } } }
 
       const merged = mergeThemes(target, source)
 
-      expect(merged.componentStyles.Button).toHaveProperty('root')
-      expect(merged.componentStyles.Button).toHaveProperty('icon')
+      expect(merged.componentStyles.Button).not.toHaveProperty('root')
+      expect(merged.componentStyles.Button).not.toHaveProperty('icon')
     })
 
-    test('component part objects are converted to functions', () => {
-      const target = { componentStyles: { Button: { root: {} } } }
-      const source = { componentStyles: { Icon: { root: {} } } }
+    test('component parts with style properties are merged', () => {
+      const target = { componentStyles: { Button: { root: { color: 'red' } } } }
+      const source = { componentStyles: { Icon: { root: { color: 'red' } } } }
+
+      const merged = mergeThemes(target, source)
+
+      expect(merged.componentStyles.Button).toHaveProperty('root')
+      expect(merged.componentStyles.Icon).toHaveProperty('root')
+    })
+
+    test('converts merged component parts to functions', () => {
+      const target = { componentStyles: { Button: { root: { color: 'red' } } } }
+      const source = { componentStyles: { Icon: { root: { color: 'red' } } } }
 
       const merged = mergeThemes(target, source)
 
       expect(merged.componentStyles.Button.root).toBeInstanceOf(Function)
       expect(merged.componentStyles.Icon.root).toBeInstanceOf(Function)
+    })
+
+    test('converts target only component parts to functions', () => {
+      const target = { componentStyles: { Button: { root: { color: 'red' } } } }
+
+      const merged = mergeThemes(target)
+
+      expect(merged.componentStyles.Button.root).toBeInstanceOf(Function)
     })
 
     test('component part styles are deeply merged', () => {

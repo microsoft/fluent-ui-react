@@ -74,16 +74,16 @@ class Reaction extends UIComponent<WithAsProp<ReactionProps>> {
         ) : (
           <>
             {Icon.create(icon, {
-              defaultProps: {
+              defaultProps: () => ({
                 className: Reaction.slotClassNames.icon,
                 styles: styles.icon,
-              },
+              }),
             })}
             {Box.create(content, {
-              defaultProps: {
+              defaultProps: () => ({
                 className: Reaction.slotClassNames.content,
                 styles: styles.content,
-              },
+              }),
             })}
           </>
         )}

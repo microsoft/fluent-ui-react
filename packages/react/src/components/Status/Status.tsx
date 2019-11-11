@@ -61,12 +61,12 @@ class Status extends UIComponent<WithAsProp<StatusProps>, any> {
     return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
         {Icon.create(icon, {
-          defaultProps: {
+          defaultProps: () => ({
             size: 'smallest',
             styles: styles.icon,
             variables: variables.icon,
             xSpacing: 'none',
-          },
+          }),
         })}
       </ElementType>
     )
