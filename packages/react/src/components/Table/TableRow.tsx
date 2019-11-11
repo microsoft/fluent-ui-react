@@ -36,7 +36,7 @@ export interface TableRowProps extends UIComponentProps {
   /**
    * Is the row a table header
    */
-  isHeader?: boolean
+  header?: boolean
 
   /**
    * Render table in compact mode
@@ -70,7 +70,7 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
       ]),
     ]),
     items: customPropTypes.collectionShorthand,
-    isHeader: PropTypes.bool,
+    header: PropTypes.bool,
     compact: PropTypes.bool,
   }
 
@@ -80,12 +80,11 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
   }
 
   renderCells(variables: ComponentVariablesObject) {
-    const { items, isHeader } = this.props
+    const { items, header } = this.props
 
     return _.map(items, (item: TableCellProps, index: number) => {
       const cellProps = {
-        ...item,
-        ...(isHeader && {
+        ...(header && {
           accessibility: tableHeaderCellBehavior as Accessibility,
         }),
       }
@@ -118,6 +117,6 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
   }
 }
 
-TableRow.create = createShorthandFactory({ Component: TableRow })
+TableRow.create = createShorthandFactory({ Component: TableRow, mappedArrayProp: 'items' })
 
 export default TableRow

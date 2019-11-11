@@ -3,7 +3,7 @@ import { Table, tableHeaderCellBehavior } from '@stardust-ui/react'
 
 const StaticTable = () => (
   <Table aria-label="table">
-    <Table.Row isHeader={true}>
+    <Table.Row header>
       <Table.Cell content="id" key="id" accessibility={tableHeaderCellBehavior} />
       <Table.Cell content="Name" key="name" accessibility={tableHeaderCellBehavior} />
       <Table.Cell content="Picture" key="pic" accessibility={tableHeaderCellBehavior} />

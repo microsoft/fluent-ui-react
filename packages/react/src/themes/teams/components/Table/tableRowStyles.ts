@@ -5,7 +5,7 @@ import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 export default {
   root: ({
-    props: { isHeader, compact },
+    props: { header, compact },
     variables: v,
     theme: { siteVariables },
   }: ComponentStyleFunctionParam<TableRowProps, TeamsTableVariables>): ICSSInJSStyle => {
@@ -34,7 +34,7 @@ export default {
       },
       ':focus': borderFocusStyles[':focus'],
       ':focus-visible': borderFocusStyles[':focus-visible'],
-      ...(isHeader && {
+      ...(header && {
         fontSize: v.headerFontSize,
         ':hover': {
           color: v.color,

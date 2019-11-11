@@ -53,12 +53,9 @@ describe('TableRow', () => {
     })
   })
 
-  describe('isHeader', () => {
+  describe('header', () => {
     it('render columnheader role when is true', () => {
-      const tableRow = mountWithProviderAndGetComponent(
-        TableRow,
-        <TableRow items={items} isHeader={true} />,
-      )
+      const tableRow = mountWithProviderAndGetComponent(TableRow, <TableRow items={items} header />)
         .find('.ui-table__row')
         .hostNodes()
 
@@ -69,10 +66,7 @@ describe('TableRow', () => {
     })
 
     it('not render columnheader cells when is false', () => {
-      const tableRow = mountWithProviderAndGetComponent(
-        TableRow,
-        <TableRow items={items} isHeader={false} />,
-      )
+      const tableRow = mountWithProviderAndGetComponent(TableRow, <TableRow items={items} />)
         .find('.ui-table__row')
         .hostNodes()
 

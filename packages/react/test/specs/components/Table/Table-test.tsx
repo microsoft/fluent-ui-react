@@ -130,7 +130,7 @@ describe('Table', () => {
       const table = mountWithProviderAndGetComponent(
         Table,
         <Table aria-label="table">
-          <Table.Row isHeader={true}>
+          <Table.Row header>
             <Table.Cell content="id" key="id" />
             <Table.Cell content="Name" key="name" />
             <Table.Cell content="Picture" key="pic" />
