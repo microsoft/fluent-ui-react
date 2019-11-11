@@ -153,7 +153,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     if (!activeItemIds && items) {
       activeItemIds = prevState.activeItemIds
 
-      const expandedItemsGenerator = items =>
+      const expandedItemsGenerator = (items, acc = activeItemIds) =>
         _.reduce(
           items,
           (acc, item) => {
@@ -162,12 +162,12 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
             }
 
             if (item['items']) {
-              return [...acc, expandedItemsGenerator(item['items'])]
+              return expandedItemsGenerator(item['items'], acc)
             }
 
             return acc
           },
-          activeItemIds,
+          acc,
         )
 
       expandedItemsGenerator(items)
