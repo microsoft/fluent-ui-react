@@ -174,6 +174,26 @@ describe('Carousel', () => {
       expect(wrapper.exists(`.${Carousel.slotClassNames.paddlePrevious}`))
       expect(wrapper.exists(`.${Carousel.slotClassNames.paddleNext}`))
     })
+
+    it('next should be focused on last slide transition if pagination and not circular', () => {
+      const wrapper = renderCarousel({ defaultActiveIndex: 1 })
+      const paddleNext = getPaddleNextWrapper(wrapper)
+      const paddlePrevios = getPaddlePreviousWrapper(wrapper)
+
+      paddlePrevios.simulate('keydown', { key: 'Enter' })
+
+      expect(document.activeElement).toEqual(paddleNext.getDOMNode())
+    })
+
+    it('previous should be focused on first slide transition if pagination and not circular', () => {
+      const wrapper = renderCarousel({ defaultActiveIndex: 2 })
+      const paddleNext = getPaddleNextWrapper(wrapper)
+      const paddlePrevios = getPaddlePreviousWrapper(wrapper)
+
+      paddleNext.simulate('keydown', { key: 'Enter' })
+
+      expect(document.activeElement).toEqual(paddlePrevios.getDOMNode())
+    })
   })
 
   describe('navigation', () => {
