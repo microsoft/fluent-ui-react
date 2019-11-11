@@ -257,13 +257,13 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
               return (
                 <Ref key={item['key'] || index} innerRef={itemRef}>
                   {CarouselItem.create(item, {
-                    defaultProps: {
+                    defaultProps: () => ({
                       active: activeIndex === index,
                       id: itemIds[index],
                       ...(getItemPositionText && {
                         itemPositionText: getItemPositionText(index, items.length),
                       }),
-                    },
+                    }),
                   })}
                 </Ref>
               )
@@ -362,11 +362,11 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
 
     return navigation ? (
       CarouselNavigation.create(navigation, {
-        defaultProps: {
+        defaultProps: () => ({
           className: Carousel.slotClassNames.navigation,
           iconOnly: true,
           activeIndex,
-        },
+        }),
         overrideProps: (predefinedProps: CarouselNavigationItemProps) => ({
           onItemClick: (e: React.SyntheticEvent, itemProps: CarouselNavigationItemProps) => {
             const { index } = itemProps

@@ -122,15 +122,14 @@ class CarouselNavigationItem extends UIComponent<
         {...(!wrapper && { onClick: this.handleClick })}
         {...unhandledProps}
       >
-        {icon &&
-          Icon.create(icon, {
-            defaultProps: {
-              xSpacing: !!content ? 'after' : 'none',
-              styles: styles.icon,
-            },
-          })}
+        {Icon.create(icon, {
+          defaultProps: () => ({
+            xSpacing: !!content ? 'after' : 'none',
+            styles: styles.icon,
+          }),
+        })}
         {Box.create(content, {
-          defaultProps: { as: 'span', styles: styles.content },
+          defaultProps: () => ({ as: 'span', styles: styles.content }),
         })}
       </ElementType>
     )

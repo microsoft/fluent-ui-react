@@ -98,7 +98,7 @@ class CarouselNavigation extends UIComponent<WithAsProp<CarouselNavigationProps>
 
     return _.map(items, (item, index) =>
       CarouselNavigationItem.create(item, {
-        defaultProps: {
+        defaultProps: () => ({
           active: index === activeIndex,
           iconOnly,
           index,
@@ -109,7 +109,7 @@ class CarouselNavigation extends UIComponent<WithAsProp<CarouselNavigationProps>
           accessibility: accessibility.childBehaviors
             ? accessibility.childBehaviors.item
             : undefined,
-        },
+        }),
         overrideProps: this.handleItemOverrides(variables),
       }),
     )
