@@ -90,7 +90,7 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
         }),
       }
       const overrideProps = handleVariablesOverrides(variables)
-      return TableCell.create(item, { defaultProps: cellProps, overrideProps })
+      return TableCell.create(item, { defaultProps: () => cellProps, overrideProps })
     })
   }
 

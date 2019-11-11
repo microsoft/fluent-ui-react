@@ -92,7 +92,7 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
         compact,
       } as TableRowProps
       const overrideProps = handleVariablesOverrides(variables)
-      return TableRow.create(row, { defaultProps: props, overrideProps })
+      return TableRow.create(row, { defaultProps: () => props, overrideProps })
     })
   }
 
@@ -112,9 +112,9 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
     const overrideProps = handleVariablesOverrides(variables)
 
     return TableRow.create(headerRowProps, {
-      defaultProps: {
+      defaultProps: () => ({
         className: Table.slotClassNames.header,
-      },
+      }),
       overrideProps,
     })
   }
