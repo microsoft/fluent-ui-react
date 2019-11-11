@@ -46,6 +46,7 @@ import CopyToClipboardPrototype from './prototypes/CopyToClipboard'
 import ParticipantsListPrototype from './prototypes/ParticipantsList'
 import CustomScrollbarPrototype from './prototypes/customScrollbar'
 import EditorToolbarPrototype from './prototypes/EditorToolbar'
+import HexagonalAvatarPrototype from './prototypes/hexagonalAvatar'
 
 const Routes = () => (
   <BrowserRouter basename={__BASENAME__}>
@@ -77,6 +78,7 @@ const Routes = () => (
           <Route exact path="/icon-viewer" component={IconViewerPrototype} />
           <Route exact path="/prototype-alerts" component={AlertsPrototype} />
           <Route exact path="/prototype-editor-toolbar" component={EditorToolbarPrototype} />
+          <Route exact path="/prototype-hexagonal-avatar" component={HexagonalAvatarPrototype} />
           <Route
             exact
             path="/prototype-nested-popups-and-dialogs"

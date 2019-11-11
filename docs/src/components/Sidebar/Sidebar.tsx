@@ -365,6 +365,15 @@ class Sidebar extends React.Component<any, any> {
         title: { content: 'Copy to Clipboard', as: NavLink, to: '/prototype-copy-to-clipboard' },
         public: true,
       },
+      {
+        key: 'hexagonal-avatar',
+        title: {
+          content: 'Hexagonal Avatar',
+          as: NavLink,
+          to: '/prototype-hexagonal-avatar',
+        },
+        public: true,
+      },
     ]
 
     const componentTreeSection = {
