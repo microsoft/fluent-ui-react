@@ -139,9 +139,6 @@ export { default as PopupContent } from './components/Popup/PopupContent'
 export * from './components/Portal/Portal'
 export { default as Portal } from './components/Portal/Portal'
 
-export * from './components/Portal/PortalInner'
-export { default as PortalInner } from './components/Portal/PortalInner'
-
 export * from './components/Provider/Provider'
 export { default as Provider } from './components/Provider/Provider'
 export * from './components/Provider/ProviderConsumer'
