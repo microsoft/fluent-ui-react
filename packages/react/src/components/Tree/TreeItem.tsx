@@ -137,7 +137,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>, TreeItemState> {
   static getDerivedStateFromProps(props: TreeItemProps) {
     return {
       hasSubtree: hasSubtree(props),
-      treeSize: props.siblings.length + 1,
+      treeSize: props.siblings ? props.siblings.length + 1 : 0,
     }
   }
 

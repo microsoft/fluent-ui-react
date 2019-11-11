@@ -189,7 +189,7 @@ function testMethodConditionallyAddAttribute(
 
 // Example: Adds attribute 'aria-disabled=true' to 'trigger' slot if 'disabled' property is true. Does not set the attribute otherwise.
 definitions.push({
-  regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w-]+)' slot if '([\w-]+)' property is true\. Does not set the attribute otherwise\./g,
+  regexp: /Adds attribute '([\w-]+)=([\w\d-]+)' to '([\w-]+)' slot if '([\w-]+)' property is true\. Does not set the attribute otherwise\./g,
   testMethod: (parameters: TestMethod) => {
     const [
       attributeToBeAdded,

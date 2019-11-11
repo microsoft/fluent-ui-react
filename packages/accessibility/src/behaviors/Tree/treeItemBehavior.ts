@@ -11,6 +11,11 @@ import treeTitleBehavior from './treeTitleBehavior'
  * Adds 'tabIndex' as '-1' if the item is not a leaf.
  *
  * @specification
+ * Adds attribute 'aria-expanded=true' based on the property 'expanded' if the component has 'hasSubtree' property.
+ * Adds attribute 'tabIndex=-1' to 'root' slot if 'hasSubtree' property is true. Does not set the attribute otherwise.
+ * Adds attribute 'aria-setsize=3' based on the property 'treeSize' if the component has 'hasSubtree' property.
+ * Adds attribute 'aria-posinset=2' based on the property 'index' if the component has 'hasSubtree' property.
+ * Adds attribute 'aria-level=1' based on the property 'level' if the component has 'hasSubtree' property.
  * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'root'.
  * Triggers 'expandSiblings' action with '*' on 'root'.
  * Triggers 'focusParent' action with 'ArrowLeft' on 'root', when has a closed subtree.
