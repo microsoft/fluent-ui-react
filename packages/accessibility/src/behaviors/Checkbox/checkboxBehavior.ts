@@ -1,5 +1,6 @@
 import * as keyboardKey from 'keyboard-key'
 import { Accessibility } from '../../types'
+import { IS_FOCUSABLE_ATTRIBUTE } from '../..'
 
 /**
  * @specification
@@ -7,6 +8,7 @@ import { Accessibility } from '../../types'
  * Adds attribute 'aria-checked=true' based on the property 'checked'.
  * Adds attribute 'aria-disabled=true' based on the property 'disabled'.
  * Adds attribute 'tabIndex=0' to 'root' slot.
+ * Adds attribute 'data-is-focusable=true' to 'root' slot.
  */
 const checkboxBehavior: Accessibility<CheckboxBehaviorProps> = props => ({
   attributes: {
@@ -15,6 +17,7 @@ const checkboxBehavior: Accessibility<CheckboxBehaviorProps> = props => ({
       'aria-disabled': props.disabled,
       role: 'checkbox',
       tabIndex: 0,
+      [IS_FOCUSABLE_ATTRIBUTE]: true,
     },
   },
   keyActions: {
