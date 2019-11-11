@@ -74,3 +74,7 @@ export { default as treeItemAsListItemBehavior } from './Tree/treeItemAsListItem
 export {
   default as treeTitleAsListItemTitleBehavior,
 } from './Tree/treeTitleAsListItemTitleBehavior'
+export { default as tableBehavior } from './Table/tableBehavior'
+export { default as tableRowBehavior } from './Table/tableRowBehavior'
+export { default as tableCellBehavior } from './Table/tableCellBehavior'
+export { default as tableHeaderCellBehavior } from './Table/tableHeaderCellBehavior'
