@@ -32,8 +32,7 @@ export default {
         backgroundColor: v.backgroundHoverColor,
         borderColor: v.rowBorderHoverColor,
       },
-      ':focus': borderFocusStyles[':focus'],
-      ':focus-visible': borderFocusStyles[':focus-visible'],
+      ...borderFocusStyles,
       ...(header && {
         fontSize: v.headerFontSize,
         ':hover': {

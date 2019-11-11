@@ -22,8 +22,7 @@ export default {
       borderWidth: v.borderWidth,
       borderStyle: 'solid',
       borderColor: 'transparent',
-      ':focus': borderFocusStyles[':focus'],
-      ':focus-visible': borderFocusStyles[':focus-visible'],
+      ...borderFocusStyles,
       padding: v.cellPadding,
       height: '100%',
     }

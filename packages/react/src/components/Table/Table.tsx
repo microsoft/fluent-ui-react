@@ -14,8 +14,8 @@ import {
 import { ComponentVariablesObject } from '../../themes/types'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 import TableRow, { TableRowProps } from './TableRow'
-import TableCell, { TableCellProps } from './TableCell'
-import { WithAsProp, ShorthandCollection } from '../../types'
+import TableCell from './TableCell'
+import { WithAsProp, ShorthandCollection, ShorthandValue } from '../../types'
 import { Accessibility, tableBehavior } from '@stardust-ui/accessibility'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 
@@ -31,11 +31,11 @@ export interface TableProps extends UIComponentProps, ChildrenComponentProps {
 
   /** The columns of the Table with a space-separated list of values.
    */
-  header?: TableRowProps
+  header?: ShorthandValue<TableRowProps>
 
   /** The rows of the Table with a space-separated list of values.
    */
-  rows?: ShorthandCollection<TableCellProps>
+  rows?: ShorthandCollection<TableRowProps>
 
   /**
    * Render table in compact mode
