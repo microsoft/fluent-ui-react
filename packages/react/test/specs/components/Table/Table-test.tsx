@@ -64,7 +64,7 @@ describe('Table', () => {
   })
 
   describe('header', () => {
-    describe('render children', () => {
+    it('render children', () => {
       const table = mountWithProviderAndGetComponent(Table, <Table header={header} />)
         .find('.ui-table')
         .hostNodes()
@@ -73,7 +73,7 @@ describe('Table', () => {
       expect(tableHeader.length).toBe(1)
     })
 
-    describe('does not render empty children', () => {
+    it('does not render empty children', () => {
       const table = mountWithProviderAndGetComponent(Table, <Table />)
         .find('.ui-table')
         .hostNodes()
@@ -84,7 +84,7 @@ describe('Table', () => {
   })
 
   describe('rows', () => {
-    describe('render children', () => {
+    it('render children', () => {
       const table = mountWithProviderAndGetComponent(Table, <Table rows={rows} />)
         .find('.ui-table')
         .hostNodes()
@@ -93,7 +93,7 @@ describe('Table', () => {
       expect(tableRows.length).toBe(3)
     })
 
-    describe('does not render empty children', () => {
+    it('does not render empty children', () => {
       const table = mountWithProviderAndGetComponent(Table, <Table />)
         .find('.ui-table')
         .hostNodes()
@@ -104,7 +104,7 @@ describe('Table', () => {
   })
 
   describe('compact', () => {
-    describe('render compact rows when enabled', () => {
+    it('render compact rows when enabled', () => {
       const table = mountWithProviderAndGetComponent(Table, <Table rows={rows} compact />)
         .find('.ui-table')
         .hostNodes()
@@ -114,7 +114,7 @@ describe('Table', () => {
       expect(tableRows.last().props().compact).toBeTruthy()
     })
 
-    describe('does not render compact rows when disabled', () => {
+    it('does not render compact rows when disabled', () => {
       const table = mountWithProviderAndGetComponent(Table, <Table rows={rows} />)
         .find('.ui-table')
         .hostNodes()
@@ -122,6 +122,45 @@ describe('Table', () => {
       const tableRows = table.find(TableRow)
       expect(tableRows.first().props().compact).toBeFalsy()
       expect(tableRows.last().props().compact).toBeFalsy()
+    })
+  })
+
+  describe('children', () => {
+    it('are rendered when specified', () => {
+      const table = mountWithProviderAndGetComponent(
+        Table,
+        <Table aria-label="table">
+          <Table.Row isHeader={true}>
+            <Table.Cell content="id" key="id" />
+            <Table.Cell content="Name" key="name" />
+            <Table.Cell content="Picture" key="pic" />
+            <Table.Cell content="Age" key="age" />
+          </Table.Row>
+          <Table.Row key="1">
+            <Table.Cell content="1" key="1-1" />
+            <Table.Cell content="Roman van von der Longername" key="1-2" />
+            <Table.Cell content="None" key="1-3" />
+            <Table.Cell content="30 years" key="1-4" />
+          </Table.Row>
+          <Table.Row key="2">
+            <Table.Cell content="2" key="1-1" />
+            <Table.Cell content="Alex" key="1-2" />
+            <Table.Cell content="None" key="1-3" />
+            <Table.Cell content="1 year" key="1-4" />
+          </Table.Row>
+          <Table.Row key="3">
+            <Table.Cell content="3" key="1-1" />
+            <Table.Cell content="Ali" key="1-2" />
+            <Table.Cell content="None" key="1-3" />
+            <Table.Cell content="30000000000000 years" key="1-4" />
+          </Table.Row>
+        </Table>,
+      )
+        .find('.ui-table')
+        .hostNodes()
+
+      const tableRows = table.find(TableRow)
+      expect(tableRows.length).toBe(4)
     })
   })
 })

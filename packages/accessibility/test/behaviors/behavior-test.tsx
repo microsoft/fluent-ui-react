@@ -69,6 +69,7 @@ import {
   tableBehavior,
   tableCellBehavior,
   tableHeaderCellBehavior,
+  tableRowBehavior,
 } from '@stardust-ui/accessibility'
 import { TestHelper } from './testHelper'
 import definitions from './testDefinitions'
@@ -142,5 +143,6 @@ testHelper.addBehavior('treeTitleAsListItemTitleBehavior', treeTitleAsListItemTi
 testHelper.addBehavior('tableBehavior', tableBehavior)
 testHelper.addBehavior('tableCellBehavior', tableCellBehavior)
 testHelper.addBehavior('tableHeaderCellBehavior', tableHeaderCellBehavior)
+testHelper.addBehavior('tableRowBehavior', tableRowBehavior)
 
 testHelper.run(behaviorMenuItems)

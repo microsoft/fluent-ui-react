@@ -11,9 +11,14 @@ import {
   ShorthandFactory,
   createShorthandFactory,
   applyAccessibilityKeyHandlers,
+  childrenExist,
 } from '../../lib'
 import { ShorthandCollection, WithAsProp } from '../../types'
-import { Accessibility, tableHeaderCellBehavior } from '@stardust-ui/accessibility'
+import {
+  Accessibility,
+  tableHeaderCellBehavior,
+  tableRowBehavior,
+} from '@stardust-ui/accessibility'
 import { ComponentVariablesObject } from '../../themes/types'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
@@ -71,6 +76,7 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
 
   static defaultProps = {
     as: 'div',
+    accessibility: tableRowBehavior as Accessibility,
   }
 
   renderCells(variables: ComponentVariablesObject) {
@@ -80,7 +86,7 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
       const cellProps = {
         ...item,
         ...(isHeader && {
-          accessibility: tableHeaderCellBehavior,
+          accessibility: tableHeaderCellBehavior as Accessibility,
         }),
       }
       const overrideProps = handleVariablesOverrides(variables)
@@ -95,6 +101,9 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
     variables,
     unhandledProps,
   }: RenderResultConfig<any>): React.ReactNode {
+    const { children } = this.props
+    const hasChildren = childrenExist(children)
+
     return (
       <ElementType
         className={classes.root}
@@ -102,7 +111,8 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
         {...unhandledProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
-        {this.renderCells(variables)}
+        {hasChildren && children}
+        {!hasChildren && this.renderCells(variables)}
       </ElementType>
     )
   }

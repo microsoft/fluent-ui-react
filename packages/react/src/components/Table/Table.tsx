@@ -9,6 +9,7 @@ import {
   commonPropTypes,
   UIComponent,
   applyAccessibilityKeyHandlers,
+  childrenExist,
 } from '../../lib'
 import { ComponentVariablesObject } from '../../themes/types'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
@@ -125,6 +126,9 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
     variables,
     unhandledProps,
   }: RenderResultConfig<any>): React.ReactNode {
+    const { children } = this.props
+    const hasChildren = childrenExist(children)
+
     return (
       <ElementType
         className={classes.root}
@@ -132,11 +136,12 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
         {...unhandledProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
+        {hasChildren && children}
         {/* <thead> */}
-        {this.renderHeader(accessibility, variables)}
+        {!hasChildren && this.renderHeader(accessibility, variables)}
         {/* </thead> */}
         {/* <tbody> */}
-        {this.renderRows(accessibility, variables)}
+        {!hasChildren && this.renderRows(accessibility, variables)}
         {/* </tbody> */}
       </ElementType>
     )

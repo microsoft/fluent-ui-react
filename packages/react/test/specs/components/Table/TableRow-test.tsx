@@ -9,7 +9,7 @@ describe('TableRow', () => {
   isConformant(TableRow)
 
   describe('accessiblity', () => {
-    handlesAccessibility(TableRow)
+    handlesAccessibility(TableRow, { defaultRootRole: 'row' })
   })
 
   const items = [
@@ -32,7 +32,7 @@ describe('TableRow', () => {
   })
 
   describe('items', () => {
-    describe('render children', () => {
+    it('render children', () => {
       const tableRow = mountWithProviderAndGetComponent(TableRow, <TableRow items={items} />)
         .find('.ui-table__row')
         .hostNodes()
@@ -43,7 +43,7 @@ describe('TableRow', () => {
       expect(tableCells.last().props().content).toBe('30 years')
     })
 
-    describe('does not render empty children', () => {
+    it('does not render empty children', () => {
       const tableRow = mountWithProviderAndGetComponent(TableRow, <TableRow items={[]} />)
         .find('.ui-table__row')
         .hostNodes()
@@ -54,7 +54,7 @@ describe('TableRow', () => {
   })
 
   describe('isHeader', () => {
-    describe('render columnheader role when is true', () => {
+    it('render columnheader role when is true', () => {
       const tableRow = mountWithProviderAndGetComponent(
         TableRow,
         <TableRow items={items} isHeader={true} />,
@@ -68,7 +68,7 @@ describe('TableRow', () => {
       expect(getRenderedAttribute(tableCells.last(), 'role', '')).toBe('columnheader')
     })
 
-    describe('not render columnheader cells when is false', () => {
+    it('not render columnheader cells when is false', () => {
       const tableRow = mountWithProviderAndGetComponent(
         TableRow,
         <TableRow items={items} isHeader={false} />,
