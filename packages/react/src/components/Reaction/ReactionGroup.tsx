@@ -67,9 +67,9 @@ class ReactionGroup extends UIComponent<WithAsProp<ReactionGroupProps>> {
       <ElementType {...unhandledProps} className={classes.root}>
         {_.map(items, reaction =>
           Reaction.create(reaction, {
-            defaultProps: {
+            defaultProps: () => ({
               styles: styles.reaction,
-            },
+            }),
           }),
         )}
       </ElementType>

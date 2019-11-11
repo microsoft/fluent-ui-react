@@ -12,7 +12,7 @@ import { consoleUtil } from 'test/utils'
 
 type ShorthandConfig = {
   Component?: React.ReactType
-  defaultProps?: Props
+  defaultProps?: () => Props
   mappedProp?: string
   mappedArrayProp?: string
   overrideProps?: Props & ((props: Props) => Props) | Props
@@ -67,7 +67,9 @@ const itReturnsNull = valueOrRenderCallback => {
 const itReturnsNullGivenDefaultProps = valueOrRenderCallback => {
   test('returns null given defaultProps object', () => {
     consoleUtil.disableOnce()
-    expect(getShorthand({ valueOrRenderCallback, defaultProps: { 'data-foo': 'foo' } })).toBe(null)
+    expect(
+      getShorthand({ valueOrRenderCallback, defaultProps: () => ({ 'data-foo': 'foo' }) }),
+    ).toBe(null)
   })
 }
 
@@ -79,12 +81,15 @@ const itReturnsAValidElement = valueOrRenderCallback => {
 
 const itAppliesDefaultProps = (valueOrRenderCallback: ShorthandValue<Props>) => {
   test('applies defaultProps', () => {
-    const defaultProps = { some: 'defaults' }
+    const defaultPropsValue = { some: 'defaults' }
     const expectedResult = isValuePrimitive(valueOrRenderCallback)
-      ? { ...defaultProps, children: valueOrRenderCallback }
-      : defaultProps
+      ? { ...defaultPropsValue, children: valueOrRenderCallback }
+      : defaultPropsValue
 
-    testCreateShorthand({ valueOrRenderCallback, defaultProps }, expectedResult)
+    testCreateShorthand(
+      { valueOrRenderCallback, defaultProps: () => defaultPropsValue },
+      expectedResult,
+    )
   })
 }
 
@@ -103,7 +108,7 @@ const itMergesClassNames = (
   shorthandConfig: { valueOrRenderCallback?: ShorthandValue<Props>; mappedProp?: string },
 ) => {
   test(`merges defaultProps className and ${classNameSource} className`, () => {
-    const defaultProps = { className: 'default' }
+    const defaultProps = () => ({ className: 'default' })
     const overrideProps = { className: 'override' }
 
     let expectedClassNames = 'default override'
@@ -143,7 +148,7 @@ const mappedProps = {
 
 const itOverridesDefaultPropsWithFalseyProps = (propsSource, shorthandConfig) => {
   test(`overrides defaultProps with falsey ${propsSource} props`, () => {
-    const defaultProps = { undef: '-', nil: '-', zero: '-', empty: '-' }
+    const defaultProps = () => ({ undef: '-', nil: '-', zero: '-', empty: '-' })
     const expectedProps = { undef: undefined, nil: null, zero: 0, empty: '' }
 
     testCreateShorthand({ defaultProps, ...shorthandConfig }, expectedProps)
@@ -225,9 +230,9 @@ describe('factories', () => {
           getShorthand({
             valueOrRenderCallback,
             Component: 'div',
-            defaultProps: {
+            defaultProps: () => ({
               baz: 'original',
-            },
+            }),
             overrideProps: {
               baz: 'overriden',
             },
@@ -281,12 +286,12 @@ describe('factories', () => {
       test('deep merges styles prop onto defaultProps styles', () => {
         expect.assertions(1)
 
-        const defaultProps = {
+        const defaultProps = () => ({
           styles: {
             color: 'override me',
             ':hover': { color: 'blue' },
           },
-        }
+        })
         const props = {
           styles: { color: 'black' },
         }
@@ -346,12 +351,12 @@ describe('factories', () => {
       test('deep merges styles prop as function onto defaultProps styles', () => {
         expect.assertions(1)
 
-        const defaultProps = {
+        const defaultProps = () => ({
           styles: () => ({
             color: 'override me',
             ':hover': { color: 'blue' },
           }),
-        }
+        })
         const props = {
           styles: { color: 'black' },
         }
@@ -411,10 +416,10 @@ describe('factories', () => {
 
     describe('defaultProps', () => {
       test('can be an object', () => {
-        const defaultProps = { 'data-some': 'defaults' }
+        const defaultPropsValue = { 'data-some': 'defaults' }
         testCreateShorthand(
-          { defaultProps, valueOrRenderCallback: 'foo' },
-          { ...defaultProps, children: 'foo' },
+          { defaultProps: () => defaultPropsValue, valueOrRenderCallback: 'foo' },
+          { ...defaultPropsValue, children: 'foo' },
         )
       })
     })
@@ -532,20 +537,32 @@ describe('factories', () => {
       })
 
       test("is called with the user's element's and default props", () => {
-        const defaultProps = { 'data-some': 'defaults' }
+        const defaultPropsValue = { 'data-some': 'defaults' }
         const overrideProps = jest.fn(() => ({}))
 
-        shallow(getShorthand({ defaultProps, overrideProps, valueOrRenderCallback: <div /> }))
-        expect(overrideProps).toHaveBeenCalledWith(defaultProps)
+        shallow(
+          getShorthand({
+            defaultProps: () => defaultPropsValue,
+            overrideProps,
+            valueOrRenderCallback: <div />,
+          }),
+        )
+        expect(overrideProps).toHaveBeenCalledWith(defaultPropsValue)
       })
 
       test("is called with the user's props object", () => {
-        const defaultProps = { 'data-some': 'defaults' }
+        const defaultPropsValue = { 'data-some': 'defaults' }
         const overrideProps = jest.fn(() => ({}))
         const userProps = { 'data-user': 'props' }
 
-        shallow(getShorthand({ defaultProps, overrideProps, valueOrRenderCallback: userProps }))
-        expect(overrideProps).toHaveBeenCalledWith({ ...defaultProps, ...userProps })
+        shallow(
+          getShorthand({
+            defaultProps: () => defaultPropsValue,
+            overrideProps,
+            valueOrRenderCallback: userProps,
+          }),
+        )
+        expect(overrideProps).toHaveBeenCalledWith({ ...defaultPropsValue, ...userProps })
       })
     })
 
@@ -587,7 +604,7 @@ describe('factories', () => {
       )
       itOverridesDefaultProps(
         'mappedProp',
-        { some: 'defaults', overridden: null },
+        () => ({ some: 'defaults', overridden: null }),
         { some: 'defaults', overridden: <div /> },
         {
           valueOrRenderCallback: <div />,
@@ -615,7 +632,7 @@ describe('factories', () => {
 
       itOverridesDefaultProps(
         'mappedProp',
-        { some: 'defaults', overridden: 'false' },
+        () => ({ some: 'defaults', overridden: 'false' }),
         { some: 'defaults', overridden: 'true' },
         {
           valueOrRenderCallback: 'true',
@@ -633,7 +650,7 @@ describe('factories', () => {
           describe(`'${as}' as 'as' prop to defaultProps`, () => {
             test(`overrides ${mappedProp} and ${testMsg}`, () => {
               testCreateShorthand(
-                { mappedProp, valueOrRenderCallback: value, defaultProps: { as } },
+                { mappedProp, valueOrRenderCallback: value, defaultProps: () => ({ as }) },
                 { as, [mappedProps[as]]: value },
               )
             })
@@ -654,7 +671,7 @@ describe('factories', () => {
                 {
                   mappedProp,
                   valueOrRenderCallback: value,
-                  defaultProps: { as: 'overriden' },
+                  defaultProps: () => ({ as: 'overriden' }),
                   overrideProps: { as },
                 },
                 { as, [mappedProps[as]]: value },
@@ -670,7 +687,11 @@ describe('factories', () => {
         describe(`and an unsupported tag as 'as' prop to defaultProps`, () => {
           test(testMsg, () => {
             testCreateShorthand(
-              { mappedProp, valueOrRenderCallback: value, defaultProps: { as: 'unsupported' } },
+              {
+                mappedProp,
+                valueOrRenderCallback: value,
+                defaultProps: () => ({ as: 'unsupported' }),
+              },
               { as: 'unsupported', [mappedProp]: value },
             )
           })
@@ -691,7 +712,7 @@ describe('factories', () => {
               {
                 mappedProp,
                 valueOrRenderCallback: value,
-                defaultProps: { as: 'div' },
+                defaultProps: () => ({ as: 'div' }),
                 overrideProps: { as: 'unsupported' },
               },
               { as: 'unsupported', [mappedProp]: value },
@@ -706,7 +727,7 @@ describe('factories', () => {
         describe(`and an unsupported tag as 'as' prop to defaultProps`, () => {
           test(testMsg, () => {
             testCreateShorthand(
-              { valueOrRenderCallback: value, defaultProps: { as: 'unsupported' } },
+              { valueOrRenderCallback: value, defaultProps: () => ({ as: 'unsupported' }) },
               { as: 'unsupported', children: value },
             )
           })
@@ -726,7 +747,7 @@ describe('factories', () => {
             testCreateShorthand(
               {
                 valueOrRenderCallback: value,
-                defaultProps: { as: 'div' },
+                defaultProps: () => ({ as: 'div' }),
                 overrideProps: { as: 'unsupported' },
               },
               { as: 'unsupported', children: value },
@@ -746,7 +767,7 @@ describe('factories', () => {
 
       itOverridesDefaultProps(
         'props object',
-        { some: 'defaults', overridden: false },
+        () => ({ some: 'defaults', overridden: false }),
         { some: 'defaults', overridden: true },
         {
           valueOrRenderCallback: { overridden: true },
@@ -771,7 +792,7 @@ describe('factories', () => {
               {
                 mappedArrayProp,
                 valueOrRenderCallback: value,
-                defaultProps: { as: 'unsupported' },
+                defaultProps: () => ({ as: 'unsupported' }),
               },
               { as: 'unsupported', [mappedArrayProp]: value },
             )
@@ -782,7 +803,7 @@ describe('factories', () => {
 
     describe('style', () => {
       test('merges style prop', () => {
-        const defaultProps = { style: { left: 5 } }
+        const defaultProps = () => ({ style: { left: 5 } })
         const userProps = { style: { bottom: 5 } }
         const overrideProps = { style: { right: 5 } }
 
@@ -794,7 +815,7 @@ describe('factories', () => {
       })
 
       test('merges style prop and handles override by userProps', () => {
-        const defaultProps = { style: { left: 10, bottom: 5 } }
+        const defaultProps = () => ({ style: { left: 10, bottom: 5 } })
         const userProps = { style: { bottom: 10 } }
 
         expect(
@@ -818,7 +839,7 @@ describe('factories', () => {
       })
 
       test('merges style prop from defaultProps and overrideProps', () => {
-        const defaultProps = { style: { left: 10, bottom: 5 } }
+        const defaultProps = () => ({ style: { left: 10, bottom: 5 } })
         const overrideProps = { style: { bottom: 10 } }
 
         expect(
