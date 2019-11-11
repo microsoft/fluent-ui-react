@@ -239,6 +239,7 @@ const renderComponent = <P extends {}>(
   const direction = rtl ? 'rtl' : 'ltr'
   const felaParam = {
     theme: { direction },
+    disableAnimations,
     displayName, // does not affect styles, only used by useEnhancedRenderer in docs
   }
 
