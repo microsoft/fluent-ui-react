@@ -19,7 +19,7 @@ class PopupExample extends React.Component {
           content="well, yes, I am just a garbish text ¯\_(ツ)_/¯"
           position="below"
         >
-          <Button icon="qna" circular styles={{ cursor: 'pointer' }} />
+          <Button icon="qna" circular styles={{ cursor: 'pointer' }} title="Q&amp;A" />
         </Popup>
 
         <div style={{ marginLeft: 10 }}>
