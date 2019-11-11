@@ -142,6 +142,8 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
     paddleNext: {},
   }
 
+  static Item = CarouselItem
+
   static getAutoControlledStateFromProps(props: CarouselProps, state: CarouselState) {
     const { items } = props
     const { itemIds } = state

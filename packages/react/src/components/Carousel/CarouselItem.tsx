@@ -16,6 +16,10 @@ import {
 import { screenReaderContainerStyles } from '../../lib/accessibility/Styles/accessibilityStyles'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
+export interface CarouselItemSlotClassNames {
+  itemPositionContainer: string
+}
+
 export interface CarouselItemProps
   extends UIComponentProps,
     ChildrenComponentProps,
@@ -48,6 +52,10 @@ class CarouselItem extends UIComponent<WithAsProp<CarouselItemProps>> {
     accessibility: carouselItemBehavior,
   }
 
+  static slotClassNames: CarouselItemSlotClassNames = {
+    itemPositionContainer: `${CarouselItem.className}__itemPositionContainer`,
+  }
+
   renderComponent({ ElementType, classes, styles, accessibility, unhandledProps }) {
     const { children, content, itemPositionText } = this.props
     return (
@@ -57,7 +65,12 @@ class CarouselItem extends UIComponent<WithAsProp<CarouselItemProps>> {
         {...unhandledProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
-        <div style={screenReaderContainerStyles}>{itemPositionText}</div>
+        <div
+          className={CarouselItem.slotClassNames.itemPositionContainer}
+          style={screenReaderContainerStyles}
+        >
+          {itemPositionText}
+        </div>
         {childrenExist(children) ? children : content}
       </ElementType>
     )

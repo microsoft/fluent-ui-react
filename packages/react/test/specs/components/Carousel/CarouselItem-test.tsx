@@ -1,0 +1,30 @@
+import * as React from 'react'
+
+import { isConformant } from 'test/specs/commonTests'
+import CarouselItem, { CarouselItemProps } from 'src/components/Carousel/CarouselItem'
+import { ReactWrapper, CommonWrapper } from 'enzyme'
+import { findIntrinsicElement, mountWithProvider } from 'test/utils'
+
+function renderCarouselItem(props?: CarouselItemProps): ReactWrapper {
+  return mountWithProvider(<CarouselItem {...props} />)
+}
+
+const getItemPositionContainer = (wrapper: ReactWrapper): CommonWrapper =>
+  findIntrinsicElement(wrapper, `.${CarouselItem.slotClassNames.itemPositionContainer}`)
+
+describe('CarouselItem', () => {
+  isConformant(CarouselItem)
+
+  describe('itemPositionText', () => {
+    it('is added inside the item along with the content', () => {
+      const wrapper = renderCarouselItem({ itemPositionText: 'test-position' })
+      const itemPositionContainer = getItemPositionContainer(wrapper)
+
+      expect(itemPositionContainer.getDOMNode().textContent).toEqual('test-position')
+    })
+  })
+
+  describe('rest', () => {
+    // id generation. plus tests for navigation. TODO.
+  })
+})
