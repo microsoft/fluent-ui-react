@@ -125,7 +125,7 @@ describe('Carousel', () => {
       expect(pagination.getDOMNode().textContent).toBe(`4 of ${items.length}`)
     })
 
-    it('should increase at arrow right', () => {
+    it('should increment at arrow right', () => {
       const wrapper = renderCarousel({ circular: true })
       const pagination = getPaginationWrapper(wrapper)
       const itemsContainer = getItemsContainer(wrapper)
@@ -135,7 +135,7 @@ describe('Carousel', () => {
       expect(pagination.getDOMNode().textContent).toBe(`2 of ${items.length}`)
     })
 
-    it('should decrease at arrow left', () => {
+    it('should decrement at arrow left', () => {
       const wrapper = renderCarousel({ circular: true, defaultActiveIndex: 3 })
       const pagination = getPaginationWrapper(wrapper)
       const itemsContainer = getItemsContainer(wrapper)
@@ -194,23 +194,15 @@ describe('Carousel', () => {
       expect(navigationWrapper.getDOMNode().children.length).toBe(4)
     })
 
-    it('should show the appropriate slide when clicked', () => {
-      const wrapper = renderCarousel({ navigation })
-      const secondNavigationItemWrapper = getNavigationNavigationItemAtIndexWrapper(wrapper, 1)
-
-      secondNavigationItemWrapper.simulate('click')
-      jest.runAllTimers()
-
-      expect(wrapper.state('activeIndex')).toEqual(1)
-    })
-
-    it('should focus the appropriate slide after timeout when clicked', () => {
+    it('should show and focus the appropriate slide when clicked', () => {
       const wrapper = renderCarousel({ navigation })
       const secondNavigationItemWrapper = getNavigationNavigationItemAtIndexWrapper(wrapper, 1)
       const secondItemWrapper = getItemAtIndexWrapper(wrapper, 1)
 
       secondNavigationItemWrapper.simulate('click')
+      jest.runAllTimers()
 
+      expect(wrapper.state('activeIndex')).toEqual(1)
       expect(document.activeElement).toEqual(secondItemWrapper.getDOMNode())
     })
   })
