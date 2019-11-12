@@ -108,12 +108,12 @@ class ToolbarMenuRadioGroup extends UIComponent<WithAsProp<ToolbarMenuRadioGroup
       >
         {_.map(items, (item, index) =>
           ToolbarMenuItem.create(item, {
-            defaultProps: {
+            defaultProps: () => ({
               accessibility: toolbarMenuItemRadioBehavior,
               as: 'li',
               active: activeIndex === index,
               index,
-            },
+            }),
             overrideProps: this.handleItemOverrides(variables),
           }),
         )}
@@ -121,13 +121,13 @@ class ToolbarMenuRadioGroup extends UIComponent<WithAsProp<ToolbarMenuRadioGroup
     )
 
     return Box.create(wrapper, {
-      defaultProps: {
+      defaultProps: () => ({
         as: 'li',
         className: ToolbarMenuRadioGroup.slotClassNames.wrapper,
         styles: styles.wrapper,
         ...accessibility.attributes.wrapper,
         ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, wrapper),
-      },
+      }),
       overrideProps: {
         children: content,
       },

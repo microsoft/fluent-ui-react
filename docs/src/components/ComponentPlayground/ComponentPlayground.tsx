@@ -28,6 +28,7 @@ const unsupportedComponents = [
   'Provider',
   'RadioGroup',
   'SplitButton',
+  'Table',
   'Toolbar',
   'Ref',
 ]

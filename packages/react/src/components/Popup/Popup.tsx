@@ -494,7 +494,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     const targetRef = toRefObject(mountDocument || this.context.target)
 
     const popupContent = Popup.Content.create(content || {}, {
-      defaultProps: {
+      defaultProps: () => ({
         ...(rtl && { dir: 'rtl' }),
         ...accessibility.attributes.popup,
         ...accessibility.keyHandlers.popup,
@@ -505,7 +505,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
         pointerRef: this.pointerTargetRef,
         trapFocus,
         autoFocus,
-      },
+      }),
       overrideProps: this.getContentProps,
     })
 

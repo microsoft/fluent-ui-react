@@ -133,22 +133,22 @@ class DropdownSelectedItem extends UIComponent<WithAsProp<DropdownSelectedItemPr
     const { active, header, icon, image } = this.props
 
     const contentElement = Box.create(header, {
-      defaultProps: {
+      defaultProps: () => ({
         as: 'span',
         className: DropdownSelectedItem.slotClassNames.header,
         styles: styles.header,
-      },
+      }),
     })
     const renderIcon = _.isNil(icon)
       ? icon
       : render =>
           render(icon, (ComponentType, props) =>
             Icon.create(icon, {
-              defaultProps: {
+              defaultProps: () => ({
                 'aria-label': `Remove ${header} from selection.`, // TODO: Extract this in a behaviour.
                 className: DropdownSelectedItem.slotClassNames.icon,
                 styles: styles.icon,
-              },
+              }),
               overrideProps: this.handleIconOverrides(props),
             }),
           )
@@ -157,11 +157,11 @@ class DropdownSelectedItem extends UIComponent<WithAsProp<DropdownSelectedItemPr
       : render =>
           render(image, (ComponentType, props) =>
             Image.create(image, {
-              defaultProps: {
+              defaultProps: () => ({
                 avatar: true,
                 className: DropdownSelectedItem.slotClassNames.image,
                 styles: styles.image,
-              },
+              }),
               overrideProps: props,
             }),
           )
