@@ -26,7 +26,7 @@ import {
   ShorthandValue,
 } from '../../types'
 import { hasSubtree, removeItemAtIndex } from './lib'
-import { TreeTitleProps } from './TreeTitle'
+import TreeTitle, { TreeTitleProps } from './TreeTitle'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 
 export interface TreeSlotClassNames {
@@ -113,6 +113,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
   static autoControlledProps = ['activeItemIds']
 
   static Item = TreeItem
+  static Title = TreeTitle
 
   // memoize this function if performance issue occurs.
   static getItemsForRender = (itemsFromProps: ShorthandCollection<TreeItemProps>) => {
