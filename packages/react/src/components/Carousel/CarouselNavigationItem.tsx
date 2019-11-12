@@ -2,7 +2,6 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
-import cx from 'classnames'
 import { Accessibility, tabBehavior } from '@stardust-ui/accessibility'
 
 import {
@@ -21,7 +20,7 @@ import {
 } from '../../lib'
 import { withSafeTypeForAs, WithAsProp, ShorthandValue, ComponentEventHandler } from '../../types'
 import Icon, { IconProps } from '../Icon/Icon'
-import Box, { BoxProps } from '../Box/Box'
+import Box from '../Box/Box'
 
 export interface CarouselNavigationItemSlotClassNames {
   wrapper: string
@@ -66,9 +65,6 @@ export interface CarouselNavigationItemProps
 
   /** A vertical carousel navigation displays elements vertically. */
   vertical?: boolean
-
-  /** Shorthand for the wrapper component. */
-  wrapper?: ShorthandValue<BoxProps>
 }
 
 export interface CarouselNavigationItemState {
@@ -81,11 +77,7 @@ class CarouselNavigationItem extends UIComponent<
 > {
   static displayName = 'CarouselNavigationItem'
 
-  static className = 'ui-carouselnavigation__item'
-
-  static slotClassNames: CarouselNavigationItemSlotClassNames = {
-    wrapper: `${CarouselNavigationItem.className}__wrapper`,
-  }
+  static className = 'ui-carousel__navigationitem'
 
   static create: ShorthandFactory<CarouselNavigationItemProps>
 
@@ -100,26 +92,28 @@ class CarouselNavigationItem extends UIComponent<
     secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
     underlined: PropTypes.bool,
     vertical: PropTypes.bool,
-    wrapper: PropTypes.oneOfType([PropTypes.node, PropTypes.object]),
   }
 
   static defaultProps = {
     accessibility: tabBehavior as Accessibility,
     as: 'a',
     icon: { name: 'stardust-circle', size: 'smallest' as SizeValue },
-    wrapper: { as: 'li' },
   }
 
   renderComponent({ ElementType, classes, accessibility, styles, variables, unhandledProps }) {
-    const { children, content, icon, wrapper } = this.props
-    const elementInner = (
+    const { children, content, icon } = this.props
+
+    return childrenExist(children) ? (
+      children
+    ) : (
       <ElementType
         className={classes.root}
         onBlur={this.handleBlur}
         onFocus={this.handleFocus}
+        onClick={this.handleClick}
         {...accessibility.attributes.root}
         {...rtlTextContainer.getAttributes({ forElements: [children] })}
-        {...(!wrapper && { onClick: this.handleClick })}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         {...unhandledProps}
       >
         {Icon.create(icon, {
@@ -133,21 +127,6 @@ class CarouselNavigationItem extends UIComponent<
         })}
       </ElementType>
     )
-    const element = wrapper
-      ? Box.create(wrapper, {
-          defaultProps: () => ({
-            className: cx(CarouselNavigationItem.slotClassNames.wrapper, classes.wrapper),
-            ...accessibility.attributes.wrapper,
-            ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, wrapper),
-          }),
-          overrideProps: () => ({
-            children: elementInner,
-            onClick: this.handleClick,
-          }),
-        })
-      : elementInner
-
-    return childrenExist(children) ? children : element
   }
 
   handleClick = (e: Event | React.SyntheticEvent) => {
@@ -176,6 +155,9 @@ CarouselNavigationItem.create = createShorthandFactory({
   mappedArrayProp: 'content',
 })
 
-export default withSafeTypeForAs<typeof CarouselNavigationItem, CarouselNavigationItemProps, 'ul'>(
+/**
+ * A CarouselItem is an actionable item within a Carousel.
+ */
+export default withSafeTypeForAs<typeof CarouselNavigationItem, CarouselNavigationItemProps, 'li'>(
   CarouselNavigationItem,
 )

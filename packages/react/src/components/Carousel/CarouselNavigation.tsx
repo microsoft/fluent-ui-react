@@ -59,7 +59,7 @@ export interface CarouselNavigationProps extends UIComponentProps, ChildrenCompo
 class CarouselNavigation extends UIComponent<WithAsProp<CarouselNavigationProps>> {
   static displayName = 'CarouselNavigation'
 
-  static className = 'ui-carouselnavigation'
+  static className = 'ui-carousel__navigation'
 
   static create: ShorthandFactory<CarouselNavigationProps>
 
@@ -119,10 +119,10 @@ class CarouselNavigation extends UIComponent<WithAsProp<CarouselNavigationProps>
     const { children } = this.props
     return (
       <ElementType
+        className={classes.root}
         {...accessibility.attributes.root}
         {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
-        className={classes.root}
       >
         {childrenExist(children) ? children : this.renderItems(variables, accessibility)}
       </ElementType>
@@ -135,6 +135,9 @@ CarouselNavigation.create = createShorthandFactory({
   mappedArrayProp: 'items',
 })
 
+/**
+ * A Carousel navigation helps switching between Carousel items.
+ */
 export default withSafeTypeForAs<typeof CarouselNavigation, CarouselNavigationProps, 'ul'>(
   CarouselNavigation,
 )

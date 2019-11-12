@@ -85,4 +85,4 @@ CarouselItem.create = createShorthandFactory({ Component: CarouselItem, mappedPr
  * @accessibility
  * Implements [ARIA Carousel](https://www.w3.org/WAI/tutorials/carousels/structure/) design pattern.
  */
-export default withSafeTypeForAs<typeof CarouselItem, CarouselItemProps, 'li'>(CarouselItem)
+export default withSafeTypeForAs<typeof CarouselItem, CarouselItemProps, 'div'>(CarouselItem)

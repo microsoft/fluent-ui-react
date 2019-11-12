@@ -22,7 +22,7 @@ import Button, { ButtonProps } from '../Button/Button'
 import CarouselItem, { CarouselItemProps } from './CarouselItem'
 import Text from '../Text/Text'
 import CarouselNavigation, { CarouselNavigationProps } from './CarouselNavigation'
-import { CarouselNavigationItemProps } from './CarouselNavigationItem'
+import CarouselNavigationItem, { CarouselNavigationItemProps } from './CarouselNavigationItem'
 
 export interface CarouselSlotClassNames {
   itemsContainer: string
@@ -143,6 +143,8 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
   }
 
   static Item = CarouselItem
+  static Navigation = CarouselNavigation
+  static NavigationItem = CarouselNavigationItem
 
   static getAutoControlledStateFromProps(props: CarouselProps, state: CarouselState) {
     const { items } = props
