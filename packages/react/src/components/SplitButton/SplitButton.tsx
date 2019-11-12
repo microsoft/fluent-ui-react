@@ -125,7 +125,7 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
 
   static defaultProps = {
     accessibility: splitButtonBehavior,
-    as: 'span',
+    as: 'div',
     toggleButton: {},
   }
 
@@ -174,7 +174,7 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
     const { button, disabled, menu, primary, secondary, toggleButton } = this.props
     const trigger = Button.create(button, {
       defaultProps: () => ({
-        styles: styles.button,
+        styles: styles.menuButton,
         primary,
         secondary,
         disabled,
@@ -202,9 +202,10 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
         )}
         {Button.create(toggleButton, {
           defaultProps: () => ({
+            styles: styles.toggleButton,
             className: SplitButton.slotClassNames.toggleButton,
             disabled,
-            icon: 'stardust-arrow-down',
+            icon: 'chevron-down-medium',
             iconOnly: true,
             primary,
             secondary,
