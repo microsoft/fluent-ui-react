@@ -11,6 +11,7 @@ import felaExpandCssShorthandsPlugin from './felaExpandCssShorthandsPlugin'
 import felaFocusVisibleEnhancer from './felaFocusVisibleEnhancer'
 import felaInvokeKeyframesPlugin from './felaInvokeKeyframesPlugin'
 import felaSanitizeCss from './felaSanitizeCssPlugin'
+import monolithic from 'fela-monolithic'
 
 let felaDevMode = false
 
@@ -52,7 +53,7 @@ const filterClassName = (className: string): boolean =>
 const rendererConfig = {
   devMode: felaDevMode,
   filterClassName,
-  enhancers: [felaFocusVisibleEnhancer],
+  enhancers: [felaFocusVisibleEnhancer, monolithic()],
   plugins: [
     felaDisableAnimationsPlugin(),
 

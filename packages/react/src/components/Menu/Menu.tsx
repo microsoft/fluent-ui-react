@@ -3,6 +3,8 @@ import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import { useValueAndKey, useKeyOnly } from '../../lib/classNameBuilders'
+import cx from 'classnames'
 
 import {
   AutoControlledComponent,
@@ -19,7 +21,7 @@ import { mergeComponentVariables } from '../../lib/mergeThemes'
 
 import MenuItem, { MenuItemProps } from './MenuItem'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
-import { ComponentVariablesObject, ComponentSlotStylesPrepared } from '../../themes/types'
+import { ComponentVariablesObject } from '../../themes/types'
 import {
   WithAsProp,
   ShorthandCollection,
@@ -167,7 +169,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
   })
 
   renderItems = (
-    styles: ComponentSlotStylesPrepared,
+    propsClasses: string,
     variables: ComponentVariablesObject,
     accessibility: ReactAccessibilityBehavior,
   ) => {
@@ -198,11 +200,10 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
       if (kind === 'divider') {
         return MenuDivider.create(item, {
           defaultProps: {
-            className: Menu.slotClassNames.divider,
+            className: cx(Menu.slotClassNames.divider, propsClasses),
             primary,
             secondary,
             vertical,
-            styles: styles.divider,
             inSubmenu: submenu,
             accessibility: accessibility.childBehaviors
               ? accessibility.childBehaviors.divider
@@ -216,7 +217,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
 
       return MenuItem.create(item, {
         defaultProps: {
-          className: Menu.slotClassNames.item,
+          className: cx(Menu.slotClassNames.item, propsClasses),
           iconOnly,
           pills,
           pointing,
@@ -240,15 +241,27 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
   }
 
   renderComponent({ ElementType, classes, accessibility, styles, variables, unhandledProps }) {
-    const { children } = this.props
+    const { children, primary, iconOnly, vertical, pills, pointing, underlined } = this.props
+
+    const propClasses = cx(
+      useKeyOnly(primary, 'primary'),
+      useKeyOnly(iconOnly, 'iconOnly'),
+      useKeyOnly(vertical, 'vertical'),
+      useKeyOnly(pills, 'pills'),
+      useKeyOnly(underlined, 'underlined'),
+      useValueAndKey(pointing, 'pointing'),
+    )
+
     return (
       <ElementType
         {...accessibility.attributes.root}
         {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
-        className={classes.root}
+        className={cx(Menu.className, propClasses)}
       >
-        {childrenExist(children) ? children : this.renderItems(styles, variables, accessibility)}
+        {childrenExist(children)
+          ? children
+          : this.renderItems(propClasses, variables, accessibility)}
       </ElementType>
     )
   }

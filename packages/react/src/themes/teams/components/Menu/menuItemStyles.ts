@@ -3,7 +3,7 @@ import { ICSSInJSStyle, ComponentSelectorsAndStyles } from '../../../types'
 import { MenuVariables } from './menuVariables'
 import { MenuItemProps } from '../../../../components/Menu/MenuItem'
 import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
-import { backportComponentStyle } from '../../../../lib/resolveComponentRules'
+// import { backportComponentStyle } from '../../../../lib/resolveComponentRules'
 
 export const underlinedItem = (color: string): ICSSInJSStyle => ({
   paddingBottom: 0,
@@ -570,7 +570,7 @@ const menuItemStyles: ComponentSelectorsAndStyles<MenuItemProps, MenuVariables> 
       },
     ],
   ],
-  menu: [[null, { zIndex: 1000 }]],
+  submenu: [[null, { zIndex: 1000 }]],
   indicator: [
     [
       null,
@@ -594,4 +594,6 @@ const menuItemStyles: ComponentSelectorsAndStyles<MenuItemProps, MenuVariables> 
   ],
 })
 
-export default backportComponentStyle(menuItemStyles)
+export default menuItemStyles
+
+// export default backportComponentStyle(menuItemStyles)

@@ -1,6 +1,8 @@
 import { Accessibility, menuDividerBehavior } from '@stardust-ui/accessibility'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
+import cx from 'classnames'
+import { useKeyOnly } from '../../lib/classNameBuilders'
 
 import {
   createShorthandFactory,
@@ -49,14 +51,22 @@ class MenuDivider extends UIComponent<WithAsProp<MenuDividerProps>> {
   }
 
   renderComponent({ ElementType, classes, unhandledProps, accessibility }) {
-    const { children, content } = this.props
+    const { children, content, primary, secondary, vertical, inSubmenu } = this.props
+
+    const propClasses = cx(
+      useKeyOnly(primary, 'primary'),
+      useKeyOnly(secondary, 'secondary'),
+      useKeyOnly(vertical, 'vertical'),
+      useKeyOnly(inSubmenu, 'inSubmenu'),
+      useKeyOnly(content, 'content'),
+    )
 
     return (
       <ElementType
         {...accessibility.attributes.root}
         {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
         {...unhandledProps}
-        className={classes.root}
+        className={cx(MenuDivider.className, propClasses)}
       >
         {childrenExist(children) ? children : content}
       </ElementType>

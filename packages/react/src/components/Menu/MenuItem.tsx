@@ -7,6 +7,7 @@ import * as _ from 'lodash'
 import cx from 'classnames'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import { useValueAndKey, useKeyOnly } from '../../lib/classNameBuilders'
 
 import {
   AutoControlledComponent,
@@ -36,6 +37,9 @@ import { Popper } from '../../lib/positioner'
 export interface MenuItemSlotClassNames {
   wrapper: string
   submenu: string
+  indicator: string
+  icon: string
+  content: string
 }
 
 export interface MenuItemProps
@@ -154,6 +158,9 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
   static slotClassNames: MenuItemSlotClassNames = {
     submenu: `${MenuItem.className}__submenu`,
     wrapper: `${MenuItem.className}__wrapper`,
+    indicator: `${MenuItem.className}__indicator`,
+    icon: `${MenuItem.className}__icon`,
+    content: `${MenuItem.className}__content`,
   }
 
   static create: ShorthandFactory<MenuItemProps>
@@ -201,15 +208,20 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     const {
       children,
       content,
-      icon,
+      icon, //
       wrapper,
       menu,
-      primary,
+      primary, //
       secondary,
-      active,
-      vertical,
+      active, //
+      vertical, //
       indicator,
-      disabled,
+      disabled, //
+      iconOnly, //
+      pointing,
+      pills,
+      underlined,
+      inSubmenu,
     } = this.props
     const { menuOpen } = this.state
 
@@ -217,12 +229,24 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     const indicatorWithDefaults = indicator === undefined ? defaultIndicator : indicator
     const targetRef = toRefObject(this.context.target)
 
+    const propClasses = cx(
+      useKeyOnly(primary, 'primary'),
+      useKeyOnly(iconOnly, 'iconOnly'),
+      useKeyOnly(disabled, 'disabled'),
+      useKeyOnly(vertical, 'vertical'),
+      useKeyOnly(active, 'active'),
+      useKeyOnly(pills, 'pills'),
+      useKeyOnly(underlined, 'underlined'),
+      useKeyOnly(inSubmenu, 'inSubmenu'),
+      useValueAndKey(pointing, 'pointing'),
+    )
+
     const menuItemInner = childrenExist(children) ? (
       children
     ) : (
       <Ref innerRef={this.itemRef}>
         <ElementType
-          className={classes.root}
+          className={cx(MenuItem.className, propClasses)}
           disabled={disabled}
           onBlur={this.handleBlur}
           onFocus={this.handleFocus}
@@ -236,17 +260,21 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
             Icon.create(this.props.icon, {
               defaultProps: {
                 xSpacing: !!content ? 'after' : 'none',
-                styles: styles.icon,
+                className: cx(MenuItem.slotClassNames.icon, propClasses),
               },
             })}
           {Box.create(content, {
-            defaultProps: { as: 'span', styles: styles.content },
+            defaultProps: {
+              as: 'span',
+              className: cx(MenuItem.slotClassNames.content, propClasses),
+            },
           })}
           {menu &&
             Icon.create(indicatorWithDefaults, {
               defaultProps: {
+                className: cx(MenuItem.slotClassNames.indicator, propClasses),
                 name: vertical ? 'stardust-menu-arrow-end' : 'stardust-menu-arrow-down',
-                styles: styles.indicator,
+                // styles: styles.indicator,
               },
             })}
         </ElementType>
@@ -264,7 +292,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
               {Menu.create(menu, {
                 defaultProps: {
                   accessibility: submenuBehavior,
-                  className: MenuItem.slotClassNames.submenu,
+                  className: cx(MenuItem.slotClassNames.submenu, propClasses),
                   vertical: true,
                   primary,
                   secondary,
@@ -282,7 +310,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     if (wrapper) {
       return Box.create(wrapper, {
         defaultProps: {
-          className: cx(MenuItem.slotClassNames.wrapper, classes.wrapper),
+          className: cx(MenuItem.slotClassNames.wrapper, propClasses),
           ...accessibility.attributes.wrapper,
           ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, wrapper),
         },

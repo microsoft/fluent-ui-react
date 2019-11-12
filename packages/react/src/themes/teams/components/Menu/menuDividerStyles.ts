@@ -1,7 +1,7 @@
 import { ComponentSelectorsAndStyles } from '../../../types'
 import { MenuDividerProps } from '../../../../components/Menu/MenuDivider'
 import { MenuVariables } from './menuVariables'
-import { backportComponentStyle } from '../../../../lib/resolveComponentRules'
+// import { backportComponentStyle } from '../../../../lib/resolveComponentRules'
 
 const menuDividerStyles: ComponentSelectorsAndStyles<MenuDividerProps, MenuVariables> = v => {
   const primaryBorderColor =
@@ -41,4 +41,4 @@ const menuDividerStyles: ComponentSelectorsAndStyles<MenuDividerProps, MenuVaria
   }
 }
 
-export default backportComponentStyle(menuDividerStyles)
+export default menuDividerStyles

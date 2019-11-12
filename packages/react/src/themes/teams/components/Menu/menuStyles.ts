@@ -2,7 +2,7 @@ import { pxToRem } from '../../../../lib'
 import { ComponentSelectorsAndStyles } from '../../../types'
 import { MenuProps, MenuState } from '../../../../components/Menu/Menu'
 import { MenuVariables } from './menuVariables'
-import { backportComponentStyle } from '../../../../lib/resolveComponentRules'
+// import { backportComponentStyle } from '../../../../lib/resolveComponentRules'
 
 type MenuPropsAndState = MenuProps & MenuState
 
@@ -97,4 +97,5 @@ const menuStyles: ComponentSelectorsAndStyles<MenuPropsAndState, MenuVariables> 
   }
 }
 
-export default backportComponentStyle(menuStyles)
+export default menuStyles
+// export default backportComponentStyle(menuStyles)
