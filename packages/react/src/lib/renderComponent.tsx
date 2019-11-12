@@ -176,13 +176,15 @@ const renderComponent = <P extends {}>(
     rtl = false,
     theme = emptyTheme,
     _internal_resolvedComponentVariables: resolvedComponentVariables = {},
+    _internal_resolvedComponentStyles: resolvedComponentStyles = {},
   } = context || {}
 
   const ElementType = getElementType(props) as React.ReactType<P>
   const stateAndProps = { ...state, ...props }
-
+  let variablesUpdated = false
   // Resolve variables for this component, cache the result in provider
   if (!resolvedComponentVariables[displayName]) {
+    variablesUpdated = true
     resolvedComponentVariables[displayName] =
       callable(theme.componentVariables[displayName])(theme.siteVariables) || {} // component variables must not be undefined/null (see mergeComponentVariables contract)
   }
@@ -255,9 +257,13 @@ const renderComponent = <P extends {}>(
     classes.root = cx(className, classes.root, props.className)
   }
 
-  if (theme.componentSelectorStyles && theme.componentSelectorStyles[displayName]) {
+  if (
+    (!resolvedComponentStyles[displayName] || variablesUpdated) &&
+    theme.componentSelectorStyles &&
+    theme.componentSelectorStyles[displayName]
+  ) {
+    resolvedComponentStyles[displayName] = true // add flag that the styles were written in the head
     const rules = theme.componentSelectorStyles[displayName](resolvedVariables)
-
     const selectorObjectToCssSelector = (obj, baseClassName) => {
       let cssSelector = baseClassName || ''
       Object.keys(obj).forEach(key => {
@@ -298,13 +304,16 @@ const renderComponent = <P extends {}>(
     }
 
     // TODO: fix className resolution
-    const baseClassName =
+    let baseClassName =
       displayName === 'Menu'
         ? 'ui-menu'
         : displayName === 'MenuItem'
         ? 'ui-menu__item'
         : 'ui-menu__divider'
 
+    if (theme.name) {
+      baseClassName = `${theme.name}.${baseClassName}`
+    }
     const stylesheet = generateStylesheetObject(rules, baseClassName)
 
     Object.keys(stylesheet).forEach(slot => {

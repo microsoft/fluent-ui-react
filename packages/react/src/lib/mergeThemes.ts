@@ -18,6 +18,7 @@ import {
   ThemeIcons,
   ComponentSlotStyle,
   ThemeAnimation,
+  ComponentSelectorsAndStyles,
 } from '../themes/types'
 import toCompactArray from './toCompactArray'
 import deepmerge from './deepmerge'
@@ -41,6 +42,40 @@ export const emptyTheme: ThemePrepared = {
 // ----------------------------------------
 // Component level merge functions
 // ----------------------------------------
+interface ThemeComponentSelectorStyle {
+  Menu: ComponentSelectorsAndStyles
+  MenuItem: ComponentSelectorsAndStyles
+  MenuDivider: ComponentSelectorsAndStyles
+}
+const mergeComponentSelectorStyles = (
+  ...sources: ThemeComponentSelectorStyle[]
+): ThemeComponentSelectorStyle => {
+  const initial: ThemeComponentSelectorStyle = {
+    Menu: v => ({}),
+    MenuItem: v => ({}),
+    MenuDivider: v => ({}),
+  }
+  return sources.reduce<ThemeComponentSelectorStyle>((acc, next) => {
+    if (next) {
+      Object.keys(next).forEach(compName => {
+        const originalTarget = acc[compName] || {}
+        const originalSource = next[compName] || {}
+        acc[compName] = v => {
+          const targetResult = callable(originalTarget)(v)
+          const sourceResult = callable(originalSource)(v)
+          Object.keys(sourceResult).forEach(key => {
+            targetResult[key] =
+              targetResult[key] && Array.isArray(targetResult[key])
+                ? targetResult[key].concat(sourceResult[key])
+                : sourceResult[key]
+          })
+          return targetResult
+        }
+      })
+    }
+    return acc
+  }, initial)
+}
 
 /**
  * Merges a single component's styles (keyed by component part) with another component's styles.
@@ -328,11 +363,12 @@ const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
 
       acc.animations = mergeAnimations(acc.animations, next.animations)
 
-      // TODO: fix overriding of componentSelectorStyles
-      if (next.componentSelectorStyles) {
-        acc.componentSelectorStyles = next.componentSelectorStyles
-      }
+      acc.componentSelectorStyles = mergeComponentSelectorStyles(
+        acc.componentSelectorStyles,
+        next.componentSelectorStyles,
+      )
 
+      acc.name = next.name || acc.name
       return acc
     },
     // .reduce() will modify "emptyTheme" object, so we should clone it before actual usage

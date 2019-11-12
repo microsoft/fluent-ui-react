@@ -2,7 +2,6 @@ import { ComponentSelectorsAndStyles } from '../../../types'
 import { MenuVariables } from '../../../teams/components/Menu/menuVariables'
 import { MenuItemProps } from '../../../../components/Menu/MenuItem'
 import { underlinedItem } from '../../../teams/components/Menu/menuItemStyles'
-import { backportComponentStyle } from '../../../../lib/resolveComponentRules'
 
 const menuItemStyles: ComponentSelectorsAndStyles<MenuItemProps, MenuVariables> = v => ({
   wrapper: [
@@ -112,4 +111,4 @@ const menuItemStyles: ComponentSelectorsAndStyles<MenuItemProps, MenuVariables> 
   ],
 })
 
-export default backportComponentStyle(menuItemStyles)
+export default menuItemStyles

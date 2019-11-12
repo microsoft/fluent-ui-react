@@ -52,6 +52,7 @@ const icons: ThemeIcons = {
 
 const teamsTheme: ThemePrepared = createTheme(
   {
+    name: 'teams-light',
     siteVariables,
     componentVariables,
     componentStyles,

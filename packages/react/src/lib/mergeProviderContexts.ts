@@ -56,6 +56,7 @@ const mergeProviderContexts = (
     originalThemes: [],
     target: document, // eslint-disable-line no-undef
     _internal_resolvedComponentVariables: {},
+    _internal_resolvedComponentStyles: {},
     renderer: undefined,
   }
 

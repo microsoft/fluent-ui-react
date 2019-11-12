@@ -8,6 +8,7 @@ export default mergeThemes(
   teams,
   createTheme(
     {
+      name: 'teams-dark',
       siteVariables,
       componentVariables,
     },

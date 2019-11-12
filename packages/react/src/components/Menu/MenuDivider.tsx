@@ -50,10 +50,11 @@ class MenuDivider extends UIComponent<WithAsProp<MenuDividerProps>> {
     inSubmenu: PropTypes.bool,
   }
 
-  renderComponent({ ElementType, classes, unhandledProps, accessibility }) {
+  renderComponent({ ElementType, classes, unhandledProps, accessibility, theme }) {
     const { children, content, primary, secondary, vertical, inSubmenu } = this.props
 
     const propClasses = cx(
+      theme.name,
       useKeyOnly(primary, 'primary'),
       useKeyOnly(secondary, 'secondary'),
       useKeyOnly(vertical, 'vertical'),

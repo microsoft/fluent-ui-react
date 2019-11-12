@@ -240,10 +240,19 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
     })
   }
 
-  renderComponent({ ElementType, classes, accessibility, styles, variables, unhandledProps }) {
+  renderComponent({
+    ElementType,
+    classes,
+    accessibility,
+    styles,
+    variables,
+    unhandledProps,
+    theme,
+  }) {
     const { children, primary, iconOnly, vertical, pills, pointing, underlined } = this.props
 
     const propClasses = cx(
+      theme.name, // UGLY
       useKeyOnly(primary, 'primary'),
       useKeyOnly(iconOnly, 'iconOnly'),
       useKeyOnly(vertical, 'vertical'),

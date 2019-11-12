@@ -259,7 +259,6 @@ export type ComponentVariablesObject = any
 
 export type ComponentVariablesPrepared = (
   siteVariables?: SiteVariablesPrepared,
-  props?: any, // TODO: REMOVE THIS CRUFT
 ) => ComponentVariablesObject
 
 // TODO: Make this generic
@@ -428,6 +427,7 @@ export interface ThemeAnimation<KP = {}> {
 // Theme
 // ========================================================
 export interface ThemeInput {
+  name?: string
   siteVariables?: SiteVariablesInput
   componentVariables?: ThemeComponentVariablesInput
   componentStyles?: ThemeComponentStylesInput
@@ -451,6 +451,7 @@ export interface ThemeInput {
 // As a theme cascades down the tree and is merged with the previous theme on
 // context, the resulting theme takes this shape.
 export interface ThemePrepared {
+  name?: string
   siteVariables: SiteVariablesPrepared
   componentVariables: { [key in keyof ThemeComponentVariablesPrepared]: ComponentVariablesPrepared }
   componentStyles: { [key in keyof ThemeComponentStylesPrepared]: ComponentSlotStylesPrepared }
