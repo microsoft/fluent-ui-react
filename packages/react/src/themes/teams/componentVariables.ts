@@ -106,3 +106,7 @@ export { default as CarouselNavigation } from './components/Carousel/carouselNav
 export {
   default as CarouselNavigationItem,
 } from './components/Carousel/carouselNavigationItemVariables'
+
+export { default as Table } from './components/Table/tableVariables'
+export { default as TableRow } from './components/Table/tableRowVariables'
+export { default as TableCell } from './components/Table/tableCellVariables'

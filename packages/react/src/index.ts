@@ -227,6 +227,13 @@ export { default as CarouselNavigation } from './components/Carousel/CarouselNav
 export * from './components/Carousel/CarouselNavigationItem'
 export { default as CarouselNavigationItem } from './components/Carousel/CarouselNavigationItem'
 
+export * from './components/Table/Table'
+export { default as Table } from './components/Table/Table'
+export * from './components/Table/TableRow'
+export { default as TableRow } from './components/Table/TableRow'
+export * from './components/Table/TableCell'
+export { default as TableCell } from './components/Table/TableCell'
+
 //
 // Utilities
 //

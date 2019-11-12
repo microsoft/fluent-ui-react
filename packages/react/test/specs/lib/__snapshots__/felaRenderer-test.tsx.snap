@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CSS fallback values are rendered 1`] = `
+exports[`felaRenderer CSS fallback values are rendered 1`] = `
 ".a {
   color: red;
   color: blue;
@@ -11,7 +11,16 @@ exports[`CSS fallback values are rendered 1`] = `
 "
 `;
 
-exports[`array returned by keyframe results in CSS fallback values 1`] = `
+exports[`felaRenderer animations are not applied if animations are disabled 1`] = `
+"
+
+<div className=ui-provider__box dir=ltr>
+  <div className=ui-box />
+</div>;
+"
+`;
+
+exports[`felaRenderer array returned by keyframe results in CSS fallback values 1`] = `
 "@-webkit-keyframes k1 {
   0% {
     color: blue;
@@ -59,7 +68,7 @@ exports[`array returned by keyframe results in CSS fallback values 1`] = `
 "
 `;
 
-exports[`basic styles are rendered 1`] = `
+exports[`felaRenderer basic styles are rendered 1`] = `
 ".a {
   color: red;
 }
@@ -69,7 +78,7 @@ exports[`basic styles are rendered 1`] = `
 "
 `;
 
-exports[`keyframe colors are rendered 1`] = `
+exports[`felaRenderer keyframe colors are rendered 1`] = `
 "@-webkit-keyframes k1 {
   from {
     color: red;
@@ -108,7 +117,7 @@ exports[`keyframe colors are rendered 1`] = `
 "
 `;
 
-exports[`marginLeft is rendered into marginRight due to RTL 1`] = `
+exports[`felaRenderer marginLeft is rendered into marginRight due to RTL 1`] = `
 ".a {
   margin-right: 10px;
 }

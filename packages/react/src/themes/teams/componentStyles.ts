@@ -120,3 +120,7 @@ export { default as CarouselNavigation } from './components/Carousel/carouselNav
 export {
   default as CarouselNavigationItem,
 } from './components/Carousel/carouselNavigationItemStyles'
+
+export { default as Table } from './components/Table/tableStyles'
+export { default as TableRow } from './components/Table/tableRowStyles'
+export { default as TableCell } from './components/Table/tableCellStyles'
