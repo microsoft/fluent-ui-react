@@ -7,12 +7,14 @@ import RefForward from './RefForward'
 import { RefProps, refPropType } from './types'
 
 const Ref: React.FunctionComponent<RefProps> = props => {
-  const { children, innerRef } = props
+  const { children, innerRef, ...rest } = props
 
   const child = React.Children.only(children)
   const ElementType = ReactIs.isForwardRef(child) ? RefForward : RefFindNode
+  const childWithProps =
+    child && rest && Object.keys(rest).length > 0 ? React.cloneElement(child, rest) : child
 
-  return <ElementType innerRef={innerRef}>{child}</ElementType>
+  return <ElementType innerRef={innerRef}>{childWithProps}</ElementType>
 }
 
 Ref.displayName = 'Ref'
