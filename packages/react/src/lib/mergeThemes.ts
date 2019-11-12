@@ -328,6 +328,11 @@ const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
 
       acc.animations = mergeAnimations(acc.animations, next.animations)
 
+      // TODO: fix overriding of componentSelectorStyles
+      if (next.componentSelectorStyles) {
+        acc.componentSelectorStyles = next.componentSelectorStyles
+      }
+
       return acc
     },
     // .reduce() will modify "emptyTheme" object, so we should clone it before actual usage

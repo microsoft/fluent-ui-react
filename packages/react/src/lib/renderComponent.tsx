@@ -35,13 +35,6 @@ import { isEnabled as isDebugEnabled } from './debug/debugEnabled'
 import { DebugData } from './debug/debugData'
 import withDebugId from './withDebugId'
 
-import menuStyles from '../themes/teams/components/Menu/menuStyles'
-import menuItemStyles from '../themes/teams/components/Menu/menuItemStyles'
-import menuDividerStyles from '../themes/teams/components/Menu/menuDividerStyles'
-// import { MenuVariables } from '../themes/teams/components/Menu/menuVariables'
-import menuVariables from '../themes/teams/components/Menu/menuVariables'
-import * as siteVariables from '../themes/teams/siteVariables'
-
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
   classes: ComponentSlotClasses
@@ -206,14 +199,6 @@ const renderComponent = <P extends {}>(
     ? createAnimationStyles(props.animation, context.theme)
     : {}
 
-  // Resolve styles using resolved variables, merge results, allow props.styles to override
-  const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
-    theme.componentStyles[displayName],
-    withDebugId({ root: props.design }, 'props.design'),
-    withDebugId({ root: props.styles }, 'props.styles'),
-    withDebugId({ root: animationCSSProp }, 'props.animation'),
-  )
-
   const accessibility: ReactAccessibilityBehavior = getAccessibility(
     displayName,
     stateAndProps,
@@ -241,90 +226,93 @@ const renderComponent = <P extends {}>(
     displayName, // does not affect styles, only used by useEnhancedRenderer in docs
   }
 
+  const classes: ComponentSlotClasses = {}
   const resolvedStyles: ComponentSlotStylesPrepared = {}
   const resolvedStylesDebug: { [key: string]: { styles: Object }[] } = {}
-  const classes: ComponentSlotClasses = {}
 
-  Object.keys(mergedStyles).forEach(slotName => {
-    resolvedStyles[slotName] = callable(mergedStyles[slotName])(styleParam)
+  if (!(theme.componentSelectorStyles && theme.componentSelectorStyles[displayName])) {
+    // Resolve styles using resolved variables, merge results, allow props.styles to override
+    const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
+      theme.componentStyles[displayName],
+      withDebugId({ root: props.design }, 'props.design'),
+      withDebugId({ root: props.styles }, 'props.styles'),
+      withDebugId({ root: animationCSSProp }, 'props.animation'),
+    )
 
-    if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
-      resolvedStylesDebug[slotName] = resolvedStyles[slotName]['_debug']
-      delete resolvedStyles[slotName]['_debug']
-    }
+    Object.keys(mergedStyles).forEach(slotName => {
+      resolvedStyles[slotName] = callable(mergedStyles[slotName])(styleParam)
 
-    if (renderer) {
-      classes[slotName] = renderer.renderRule(callable(resolvedStyles[slotName]), felaParam)
-    }
-  })
+      if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
+        resolvedStylesDebug[slotName] = resolvedStyles[slotName]['_debug']
+        delete resolvedStyles[slotName]['_debug']
+      }
 
-  classes.root = cx(className, classes.root, props.className)
-
-  const menuResolvedVariables = menuVariables(siteVariables)
-  const menuRules = menuStyles(menuResolvedVariables)
-  const menuItemRules = menuItemStyles(menuResolvedVariables)
-  const menuDividerRules = menuDividerStyles(menuResolvedVariables)
-
-  const selectorObjectToCssSelector = (obj, baseClassName) => {
-    let cssSelector = baseClassName || ''
-    Object.keys(obj).forEach(key => {
-      if (obj[key] === true) {
-        cssSelector += `.${key}`
-      } else if (obj[key] === false) {
-        cssSelector += `:not(.${key})`
-      } else {
-        cssSelector += `.${key}--${obj[key]}`
+      if (renderer) {
+        classes[slotName] = renderer.renderRule(callable(resolvedStyles[slotName]), felaParam)
       }
     })
-    return cssSelector
+
+    classes.root = cx(className, classes.root, props.className)
   }
 
-  const generateStylesheetObject = (rules, base) => {
-    return Object.keys(rules).reduce((accR, next) => {
-      const tuples = rules[next]
-      const baseClassName = next === 'root' ? base : `${base}__${next}`
-      const result = tuples.reduce((acc, [selector, style]) => {
-        if (Array.isArray(selector)) {
-          for (let i = 0; i < selector.length; i++) {
-            acc[selectorObjectToCssSelector(selector[i] || {}, baseClassName)] = {
-              ...style,
-              className: selectorObjectToCssSelector(selector[i] || {}, baseClassName),
+  if (theme.componentSelectorStyles && theme.componentSelectorStyles[displayName]) {
+    const rules = theme.componentSelectorStyles[displayName](resolvedVariables)
+
+    const selectorObjectToCssSelector = (obj, baseClassName) => {
+      let cssSelector = baseClassName || ''
+      Object.keys(obj).forEach(key => {
+        if (obj[key] === true) {
+          cssSelector += `.${key}`
+        } else if (obj[key] === false) {
+          cssSelector += `:not(.${key})`
+        } else {
+          cssSelector += `.${key}--${obj[key]}`
+        }
+      })
+      return cssSelector
+    }
+
+    const generateStylesheetObject = (rules, base) => {
+      return Object.keys(rules).reduce((accR, next) => {
+        const tuples = rules[next]
+        const baseClassName = next === 'root' ? base : `${base}__${next}`
+        const result = tuples.reduce((acc, [selector, style]) => {
+          if (Array.isArray(selector)) {
+            for (let i = 0; i < selector.length; i++) {
+              acc[selectorObjectToCssSelector(selector[i] || {}, baseClassName)] = {
+                ...style,
+                className: selectorObjectToCssSelector(selector[i] || {}, baseClassName),
+              }
             }
+            return acc
+          }
+          acc[selectorObjectToCssSelector(selector || {}, baseClassName)] = {
+            ...style,
+            className: selectorObjectToCssSelector(selector || {}, baseClassName),
           }
           return acc
-        }
-        acc[selectorObjectToCssSelector(selector || {}, baseClassName)] = {
-          ...style,
-          className: selectorObjectToCssSelector(selector || {}, baseClassName),
-        }
-        return acc
+        }, {})
+        accR[next] = result
+        return accR
       }, {})
-      accR[next] = result
-      return accR
-    }, {})
+    }
+
+    // TODO: fix className resolution
+    const baseClassName =
+      displayName === 'Menu'
+        ? 'ui-menu'
+        : displayName === 'MenuItem'
+        ? 'ui-menu__item'
+        : 'ui-menu__divider'
+
+    const stylesheet = generateStylesheetObject(rules, baseClassName)
+
+    Object.keys(stylesheet).forEach(slot => {
+      Object.keys(stylesheet[slot]).forEach(selector => {
+        renderer.renderRule(() => stylesheet[slot][selector], felaParam)
+      })
+    })
   }
-
-  const menuStylesheet = generateStylesheetObject(menuRules, 'ui-menu')
-  const menuItemStylesheet = generateStylesheetObject(menuItemRules, 'ui-menu__item')
-  const menuDividerStylesheets = generateStylesheetObject(menuDividerRules, 'ui-menu__divider')
-
-  Object.keys(menuStylesheet).forEach(key => {
-    Object.keys(menuStylesheet[key]).forEach(key1 => {
-      renderer.renderRule(() => menuStylesheet[key][key1], felaParam)
-    })
-  })
-
-  Object.keys(menuItemStylesheet).forEach(key => {
-    Object.keys(menuItemStylesheet[key]).forEach(key1 => {
-      renderer.renderRule(() => menuItemStylesheet[key][key1], felaParam)
-    })
-  })
-
-  Object.keys(menuDividerStylesheets).forEach(key => {
-    Object.keys(menuDividerStylesheets[key]).forEach(key1 => {
-      renderer.renderRule(() => menuDividerStylesheets[key][key1], felaParam)
-    })
-  })
 
   const resolvedConfig: RenderResultConfig<P> = {
     ElementType,

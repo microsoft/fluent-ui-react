@@ -431,6 +431,11 @@ export interface ThemeInput {
   siteVariables?: SiteVariablesInput
   componentVariables?: ThemeComponentVariablesInput
   componentStyles?: ThemeComponentStylesInput
+  componentSelectorStyles?: {
+    Menu: ComponentSelectorsAndStyles
+    MenuItem: ComponentSelectorsAndStyles
+    MenuDivider: ComponentSelectorsAndStyles
+  }
   fontFaces?: FontFaces
   staticStyles?: StaticStyles
   icons?: ThemeIcons
@@ -449,6 +454,11 @@ export interface ThemePrepared {
   siteVariables: SiteVariablesPrepared
   componentVariables: { [key in keyof ThemeComponentVariablesPrepared]: ComponentVariablesPrepared }
   componentStyles: { [key in keyof ThemeComponentStylesPrepared]: ComponentSlotStylesPrepared }
+  componentSelectorStyles?: {
+    Menu: ComponentSelectorsAndStyles
+    MenuItem: ComponentSelectorsAndStyles
+    MenuDivider: ComponentSelectorsAndStyles
+  }
   icons: ThemeIcons
   fontFaces: FontFaces
   staticStyles: StaticStyles
