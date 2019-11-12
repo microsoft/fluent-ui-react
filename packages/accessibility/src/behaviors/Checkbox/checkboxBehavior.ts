@@ -1,6 +1,6 @@
 import * as keyboardKey from 'keyboard-key'
 import { Accessibility } from '../../types'
-import { IS_FOCUSABLE_ATTRIBUTE } from '../..'
+import { IS_FOCUSABLE_ATTRIBUTE } from '../../attributes'
 
 /**
  * @specification
