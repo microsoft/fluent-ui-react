@@ -99,3 +99,7 @@ export { default as Tooltip } from './components/Tooltip/tooltipVariables'
 export { default as TooltipContent } from './components/Tooltip/tooltipContentVariables'
 
 export { default as SplitButton } from './components/SplitButton/splitButtonVariables'
+
+export { default as Table } from './components/Table/tableVariables'
+export { default as TableRow } from './components/Table/tableRowVariables'
+export { default as TableCell } from './components/Table/tableCellVariables'

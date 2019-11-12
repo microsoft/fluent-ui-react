@@ -173,13 +173,13 @@ class HierarchicalTree extends AutoControlledComponent<
 
     return _.map(items, (item: ShorthandValue<HierarchicalTreeItemProps>, index: number) =>
       HierarchicalTreeItem.create(item, {
-        defaultProps: {
+        defaultProps: () => ({
           className: HierarchicalTree.slotClassNames.item,
           index,
           exclusive,
           renderItemTitle,
           open: exclusive ? index === activeIndex : _.includes(activeIndexes, index),
-        },
+        }),
         overrideProps: this.handleTreeItemOverrides,
       }),
     )

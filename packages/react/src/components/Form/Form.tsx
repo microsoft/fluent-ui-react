@@ -99,7 +99,7 @@ class Form extends UIComponent<WithAsProp<FormProps>, any> {
   renderFields = () => {
     const { fields } = this.props
     return _.map(fields, field =>
-      FormField.create(field, { defaultProps: { className: Form.slotClassNames.field } }),
+      FormField.create(field, { defaultProps: () => ({ className: Form.slotClassNames.field }) }),
     )
   }
 }

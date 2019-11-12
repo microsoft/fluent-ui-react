@@ -142,10 +142,10 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
     const { label, labelPosition, icon, toggle } = this.props
 
     const labelElement = Text.create(label, {
-      defaultProps: {
+      defaultProps: () => ({
         styles: styles.label,
         className: Checkbox.slotClassNames.label,
-      },
+      }),
     })
 
     return (
@@ -160,13 +160,13 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
       >
         {labelPosition === 'start' && labelElement}
         {Icon.create(icon, {
-          defaultProps: {
+          defaultProps: () => ({
             outline: toggle && !this.state.checked,
             size: toggle ? 'medium' : 'smaller',
             className: Checkbox.slotClassNames.indicator,
             name: toggle ? 'stardust-circle' : 'stardust-checkmark',
             styles: toggle ? styles.toggle : styles.checkbox,
-          },
+          }),
         })}
         {labelPosition === 'end' && labelElement}
       </ElementType>
