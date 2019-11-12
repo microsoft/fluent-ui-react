@@ -167,7 +167,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
             return ToolbarRadioGroup.create(item, { overrideProps: itemOverridesFn })
           case 'toggle':
             return ToolbarItem.create(item, {
-              defaultProps: { accessibility: toggleButtonBehavior },
+              defaultProps: () => ({ accessibility: toggleButtonBehavior }),
               overrideProps: itemOverridesFn,
             })
           case 'custom':
@@ -471,9 +471,9 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
     return (
       <Ref innerRef={this.overflowItemRef}>
         {ToolbarItem.create(overflowItem, {
-          defaultProps: {
+          defaultProps: () => ({
             icon: { name: 'more', outline: true },
-          },
+          }),
           overrideProps: {
             menu: this.props.overflowOpen ? this.getOverflowItems() : [],
             menuOpen: this.props.overflowOpen,

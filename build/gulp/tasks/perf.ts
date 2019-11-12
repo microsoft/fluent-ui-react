@@ -1,18 +1,18 @@
 import express from 'express'
 import fs from 'fs'
-import { task, series } from 'gulp'
+import { series, task } from 'gulp'
 import _ from 'lodash'
 import ProgressBar from 'progress'
 import puppeteer from 'puppeteer'
 import rimraf from 'rimraf'
 import { argv } from 'yargs'
+import markdownTable from 'markdown-table'
 
 import {
   MeasuredValues,
   PerExamplePerfMeasures,
   ProfilerMeasure,
   ProfilerMeasureCycle,
-  ProfilerMeasureWithBaseline,
   ReducedMeasures,
 } from '../../../perf/types'
 import config from '../../../config'
@@ -36,49 +36,28 @@ const computeMeasureMedian = (measures: number[]) => {
   return (values[lowMiddle] + values[highMiddle]) / 2
 }
 
-// This is a hardcoded constant which makes normalized results comparable with real render times.
-// By running baseline test on multiple machines, we found out the baseline example takes ~15/7 ms to render in average.
-// So if we divide render times by baseline times we must multiply them back by the fixed coefficient to get comparable numbers.
-const NORMALIZATION_COEFFICIENT: Record<MeasuredValues, number> = {
-  actualTime: 15,
-  baseTime: 7,
-}
-
-const normalizeMeasure = (measure: ProfilerMeasureWithBaseline, key: MeasuredValues): number =>
-  (measure[key] * NORMALIZATION_COEFFICIENT[key]) / measure.baseline[key]
-
-const reduceMeasures = (
-  measures: ProfilerMeasureWithBaseline[],
-  key: MeasuredValues,
-): ReducedMeasures => {
+const reduceMeasures = (measures: ProfilerMeasure[], key: MeasuredValues): ReducedMeasures => {
   if (measures.length === 0) throw new Error('`measures` are empty')
 
   let min = measures[0][key]
   let max = measures[0][key]
   let sum = measures[0][key]
-  let sumNormalized = normalizeMeasure(measures[0], key)
 
   for (let i = 1; i < measures.length; i++) {
     if (measures[i][key] < min) min = measures[i][key]
     if (measures[i][key] > max) max = measures[i][key]
 
     sum += measures[i][key]
-    sumNormalized += normalizeMeasure(measures[i], key)
   }
 
   return {
     avg: floor(sum / measures.length),
-    avgNormalized: floor(sumNormalized / measures.length),
     median: floor(computeMeasureMedian(_.map(measures, measure => measure[key]))),
-    medianNormalized: floor(
-      computeMeasureMedian(_.map(measures, measure => normalizeMeasure(measure, key))),
-    ),
     min: floor(min),
     max: floor(max),
     values: _.map(measures, measure => ({
       exampleIndex: measure.exampleIndex,
       value: measure[key],
-      baseline: measure.baseline[key],
     })),
   }
 }
@@ -96,59 +75,35 @@ const sumByExample = (measures: ProfilerMeasureCycle[]): PerExamplePerfMeasures 
     {},
   )
 
-  return _.mapValues(perExampleMeasures, (profilerMeasures: ProfilerMeasureWithBaseline[]) => ({
+  return _.mapValues(perExampleMeasures, (profilerMeasures: ProfilerMeasure[]) => ({
     actualTime: reduceMeasures(profilerMeasures, 'actualTime'),
-    baseTime: reduceMeasures(profilerMeasures, 'baseTime'),
   }))
 }
-
-const getPercentDiff = (minValue: number, actualValue: number): number =>
-  _.round((actualValue / minValue) * 100 - 100, 2)
 
 type NumberPropertyNames<T> = { [K in keyof T]: T[K] extends number ? K : never }[keyof T]
 
 const createMarkdownTable = (
   perExamplePerfMeasures: PerExamplePerfMeasures,
   metricName: MeasuredValues = 'actualTime',
-  fields: NumberPropertyNames<ReducedMeasures>[] = [
-    'avg',
-    'avgNormalized',
-    'median',
-    'medianNormalized',
-  ],
+  fields: NumberPropertyNames<ReducedMeasures>[] = ['min', 'avg', 'median', 'max'],
 ) => {
   const exampleMeasures = _.mapValues(
     perExamplePerfMeasures,
     exampleMeasure => exampleMeasure[metricName],
   )
 
-  const fieldLabels: string[] = _.flatMap(fields, field => [
-    _.startCase(field),
-    `${_.startCase(field)} diff`,
-  ])
-  const minFieldValues: Record<string, number> = _.zipObject(
-    fields,
-    _.map(fields, fieldName => _.min(_.map(exampleMeasures, fieldName))),
-  )
+  const fieldLabels: string[] = _.map(fields, _.startCase)
   const fieldValues = _.mapValues(exampleMeasures, exampleMeasure =>
-    _.flatMap(fields, field => {
-      const minValue = minFieldValues[field]
-      const value = exampleMeasure[field]
-      const percentDiff =
-        minValue === value ? `**${value}**` : `+${getPercentDiff(minValue, value)}%`
-      return [value, percentDiff]
-    }),
+    _.flatMap(fields, field => exampleMeasure[field]),
   )
 
-  return [
-    `| Example | ${fieldLabels.join(' | ')} |`,
-    `| --- | ${_.map(fieldLabels, () => ' --- ').join(' | ')} |`,
-    ..._.map(
-      exampleMeasures,
-      (exampleMeasure, exampleName) =>
-        `| ${exampleName} | ${fieldValues[exampleName].join(' | ')} |`,
-    ),
-  ].join('\n')
+  return markdownTable([
+    ['Example', ...fieldLabels],
+    ..._.map(exampleMeasures, (exampleMeasure, exampleName) => [
+      exampleName,
+      ...fieldValues[exampleName],
+    ]),
+  ])
 }
 
 task('perf:clean', cb => {

@@ -120,16 +120,16 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
 
         case 'toggle':
           return ToolbarMenuItem.create(item, {
-            defaultProps: { accessibility: toolbarMenuItemCheckboxBehavior },
+            defaultProps: () => ({ accessibility: toolbarMenuItemCheckboxBehavior }),
             overrideProps: itemOverridesFn,
           })
 
         default:
           return ToolbarMenuItem.create(item, {
-            defaultProps: {
+            defaultProps: () => ({
               submenuIndicator,
               inSubmenu: submenu,
-            },
+            }),
             overrideProps: itemOverridesFn,
           })
       }

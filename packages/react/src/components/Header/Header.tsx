@@ -84,12 +84,12 @@ class Header extends UIComponent<WithAsProp<HeaderProps>, any> {
         {rtlTextContainer.createFor({ element: contentElement, condition: !!description })}
         {!hasChildren &&
           HeaderDescription.create(description, {
-            defaultProps: {
+            defaultProps: () => ({
               className: Header.slotClassNames.description,
               variables: {
                 ...(v.descriptionColor && { color: v.descriptionColor }),
               },
-            },
+            }),
           })}
       </ElementType>
     )
