@@ -167,24 +167,24 @@ class HierarchicalTreeItem extends UIComponent<WithAsProp<HierarchicalTreeItemPr
     return (
       <>
         {HierarchicalTreeTitle.create(title, {
-          defaultProps: {
+          defaultProps: () => ({
             className: HierarchicalTreeItem.slotClassNames.title,
             open,
             hasSubtree,
             as: hasSubtree ? 'span' : 'a',
-          },
+          }),
           render: renderItemTitle,
           overrideProps: this.handleTitleOverrides,
         })}
         {hasSubtree && open && (
           <Ref innerRef={this.treeRef}>
             {HierarchicalTree.create(items, {
-              defaultProps: {
+              defaultProps: () => ({
                 accessibility: hierarchicalSubtreeBehavior,
                 className: HierarchicalTreeItem.slotClassNames.subtree,
                 exclusive,
                 renderItemTitle,
-              },
+              }),
             })}
           </Ref>
         )}

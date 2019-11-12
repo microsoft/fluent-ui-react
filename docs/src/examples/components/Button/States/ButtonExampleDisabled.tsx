@@ -15,7 +15,7 @@ const ButtonExampleDisabled = () => (
         <Icon name="emoji" xSpacing="after" />
         <Text content="Click me" />
       </Button>
-      <Button disabled circular>
+      <Button disabled circular title="Translation">
         <Icon name="translation" xSpacing="none" />
       </Button>
       <Button disabled text>

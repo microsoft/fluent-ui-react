@@ -196,7 +196,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>, TreeItemState> {
     const { hasSubtree, treeSize } = this.state
 
     return TreeTitle.create(title, {
-      defaultProps: {
+      defaultProps: () => ({
         className: TreeItem.slotClassNames.title,
         open,
         hasSubtree,
@@ -207,7 +207,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>, TreeItemState> {
         accessibility: accessibility.childBehaviors
           ? accessibility.childBehaviors.title
           : undefined,
-      },
+      }),
       render: renderItemTitle,
       overrideProps: this.handleTitleOverrides,
     })

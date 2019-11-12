@@ -129,10 +129,10 @@ class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> 
       }
 
       const toolbarItem = ToolbarItem.create(item, {
-        defaultProps: {
+        defaultProps: () => ({
           accessibility: toolbarRadioGroupItemBehavior,
           active: activeIndex === index,
-        },
+        }),
         overrideProps: itemOverridesFn,
       })
 
