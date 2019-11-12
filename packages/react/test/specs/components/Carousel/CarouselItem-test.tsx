@@ -15,16 +15,16 @@ const getItemPositionContainer = (wrapper: ReactWrapper): CommonWrapper =>
 describe('CarouselItem', () => {
   isConformant(CarouselItem)
 
-  describe('itemPositionText', () => {
-    it('is added inside the item along with the content', () => {
-      const wrapper = renderCarouselItem({ itemPositionText: 'test-position' })
-      const itemPositionContainer = getItemPositionContainer(wrapper)
+  it('itemPositionText is added inside the item along with the content', () => {
+    const wrapper = renderCarouselItem({ itemPositionText: 'test-position' })
+    const itemPositionContainer = getItemPositionContainer(wrapper)
 
-      expect(itemPositionContainer.getDOMNode().textContent).toEqual('test-position')
-    })
+    expect(itemPositionContainer.getDOMNode().textContent).toEqual('test-position')
   })
 
-  describe('rest', () => {
-    // id generation. plus tests for navigation. TODO.
+  it('id is replaced with the one passed as prop', () => {
+    const wrapper = renderCarouselItem({ id: 'bla-bla' } as any)
+
+    expect(wrapper.getDOMNode().getAttribute('id')).toEqual('bla-bla')
   })
 })

@@ -154,7 +154,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
 
     return {
       itemIds: items.map((item, index) =>
-        getOrGenerateIdFromShorthand('carousel-slide-', item, itemIds[index]),
+        getOrGenerateIdFromShorthand('carousel-item-', item, itemIds[index]),
       ),
     }
   }

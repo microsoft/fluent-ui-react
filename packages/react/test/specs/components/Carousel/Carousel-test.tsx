@@ -12,22 +12,18 @@ import { findIntrinsicElement, mountWithProvider } from 'test/utils'
 const items = [
   {
     key: 'item1',
-    id: 'item1',
     content: <Text content={'item1'} />,
   },
   {
     key: 'item2',
-    id: 'item2',
     content: <Text content={'item2'} />,
   },
   {
     key: 'item3',
-    id: 'item3',
     content: <Text content={'item3'} />,
   },
   {
     key: 'item4',
-    id: 'item4',
     content: <Text content={'item4'} />,
   },
 ]
@@ -63,6 +59,16 @@ jest.useFakeTimers()
 
 describe('Carousel', () => {
   isConformant(Carousel)
+
+  it('id for items is generated if not passed as prop', () => {
+    const wrapper = renderCarousel()
+
+    expect(
+      getItemAtIndexWrapper(wrapper, 0)
+        .getDOMNode()
+        .getAttribute('id'),
+    ).toMatch(/carousel-item-(\d)+/)
+  })
 
   describe('activeIndex', () => {
     it('should increase at paddle next press', () => {
