@@ -17,12 +17,12 @@ class MSTeamsLogo extends React.Component<LogoProps, any> {
           return (
             <div style={style}>
               {Icon.create(icon, {
-                defaultProps: {
+                defaultProps: () => ({
                   variables: { color: siteVariables.colors.brand[600] },
                   size: 'largest',
                   xSpacing: 'after',
                   styles: { verticalAlign: 'middle' },
-                },
+                }),
               })}
               <Text
                 styles={{

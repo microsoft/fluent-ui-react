@@ -70,10 +70,10 @@ class EmployeeCard extends React.Component<Extendable<EmployeeCardProps>, any> {
           )}
         </div>
         {Avatar.create(avatar, {
-          defaultProps: {
+          defaultProps: () => ({
             size: 'largest',
             name: `${firstName} ${lastName}`,
-          },
+          }),
         })}
       </Grid>
     )

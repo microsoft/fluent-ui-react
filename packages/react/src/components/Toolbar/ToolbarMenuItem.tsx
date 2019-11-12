@@ -300,21 +300,23 @@ class ToolbarMenuItem extends AutoControlledComponent<
           children
         ) : (
           <>
-            {Icon.create(icon, { defaultProps: { xSpacing: !!content ? 'after' : 'none' } })}
+            {Icon.create(icon, {
+              defaultProps: () => ({ xSpacing: !!content ? 'after' : 'none' }),
+            })}
             {content}
             {active &&
               Icon.create(activeIndicator, {
-                defaultProps: {
+                defaultProps: () => ({
                   className: ToolbarMenuItem.slotClassNames.activeIndicator,
                   styles: styles.activeIndicator,
-                },
+                }),
               })}
             {menu &&
               Icon.create(submenuIndicator, {
-                defaultProps: {
+                defaultProps: () => ({
                   name: 'stardust-menu-arrow-end',
                   styles: styles.submenuIndicator,
-                },
+                }),
               })}
           </>
         )}
@@ -325,12 +327,12 @@ class ToolbarMenuItem extends AutoControlledComponent<
 
     if (popup && !hasChildren) {
       return Popup.create(popup, {
-        defaultProps: {
+        defaultProps: () => ({
           trapFocus: true,
           onOpenChange: e => {
             e.stopPropagation()
           },
-        },
+        }),
         overrideProps: {
           trigger: elementType,
           children: undefined, // force-reset `children` defined for `Popup` as it collides with the `trigger`
@@ -353,12 +355,12 @@ class ToolbarMenuItem extends AutoControlledComponent<
               >
                 <Popper align="top" position={rtl ? 'before' : 'after'} targetRef={this.itemRef}>
                   {ToolbarMenu.create(menu, {
-                    defaultProps: {
+                    defaultProps: () => ({
                       className: ToolbarMenuItem.slotClassNames.submenu,
                       styles: styles.menu,
                       submenu: true,
                       submenuIndicator,
-                    },
+                    }),
                     overrideProps: this.handleMenuOverrides(getRefs),
                   })}
                 </Popper>
@@ -378,11 +380,11 @@ class ToolbarMenuItem extends AutoControlledComponent<
     }
 
     return Box.create(wrapper, {
-      defaultProps: {
+      defaultProps: () => ({
         className: cx(ToolbarMenuItem.slotClassNames.wrapper, classes.wrapper),
         ...accessibility.attributes.wrapper,
         ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, wrapper),
-      },
+      }),
       overrideProps: () => ({
         children: (
           <>
