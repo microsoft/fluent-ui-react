@@ -261,18 +261,18 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       overrideProps: this.handleCancelButtonOverrides,
     })
     const confirmElement = Button.create(confirmButton, {
-      defaultProps: {
+      defaultProps: () => ({
         primary: true,
-      },
+      }),
       overrideProps: this.handleConfirmButtonOverrides,
     })
 
     const dialogActions =
       (cancelElement || confirmElement) &&
       ButtonGroup.create(actions, {
-        defaultProps: {
+        defaultProps: () => ({
           styles: styles.actions,
-        },
+        }),
         overrideProps: {
           content: (
             <Flex gap="gap.smaller">
@@ -294,29 +294,29 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.popup, unhandledProps)}
         >
           {Header.create(header, {
-            defaultProps: {
+            defaultProps: () => ({
               as: 'h2',
               className: Dialog.slotClassNames.header,
               styles: styles.header,
               ...accessibility.attributes.header,
-            },
+            }),
           })}
           {Button.create(headerAction, {
-            defaultProps: {
+            defaultProps: () => ({
               className: Dialog.slotClassNames.headerAction,
               styles: styles.headerAction,
               text: true,
               iconOnly: true,
               ...accessibility.attributes.headerAction,
-            },
+            }),
           })}
 
           {Box.create(content, {
-            defaultProps: {
+            defaultProps: () => ({
               styles: styles.content,
               className: Dialog.slotClassNames.content,
               ...accessibility.attributes.content,
-            },
+            }),
           })}
 
           {DialogFooter.create(footer, {
@@ -355,10 +355,10 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
                 }}
               >
                 {Box.create(overlay, {
-                  defaultProps: {
+                  defaultProps: () => ({
                     className: Dialog.slotClassNames.overlay,
                     styles: styles.overlay,
-                  },
+                  }),
                   overrideProps: { content: dialogContent },
                 })}
               </Ref>
