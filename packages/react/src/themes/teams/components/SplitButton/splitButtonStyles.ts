@@ -15,6 +15,9 @@ const splitButtonStyles = {
     borderTopLeftRadius: '0',
     borderBottomLeftRadius: '0',
     borderColor: p.primary ? v.borderColorPrimary : v.borderColor,
+    ':active': {
+      animationName: '0',
+    },
   }),
 
   root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
