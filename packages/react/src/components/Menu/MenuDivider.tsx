@@ -67,7 +67,7 @@ class MenuDivider extends UIComponent<WithAsProp<MenuDividerProps>> {
         {...accessibility.attributes.root}
         {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
         {...unhandledProps}
-        className={cx(MenuDivider.className, propClasses)}
+        className={cx(MenuDivider.className, propClasses, classes.root)}
       >
         {childrenExist(children) ? children : content}
       </ElementType>

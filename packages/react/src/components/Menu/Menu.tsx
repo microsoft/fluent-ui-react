@@ -240,15 +240,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
     })
   }
 
-  renderComponent({
-    ElementType,
-    classes,
-    accessibility,
-    styles,
-    variables,
-    unhandledProps,
-    theme,
-  }) {
+  renderComponent({ ElementType, classes, accessibility, variables, unhandledProps, theme }) {
     const { children, primary, iconOnly, vertical, pills, pointing, underlined } = this.props
 
     const propClasses = cx(
@@ -266,7 +258,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
         {...accessibility.attributes.root}
         {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...unhandledProps}
-        className={cx(Menu.className, propClasses)}
+        className={cx(Menu.className, propClasses, classes.root)}
       >
         {childrenExist(children)
           ? children

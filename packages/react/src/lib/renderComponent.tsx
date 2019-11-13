@@ -321,6 +321,16 @@ const renderComponent = <P extends {}>(
         renderer.renderRule(() => stylesheet[slot][selector], felaParam)
       })
     })
+
+    const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
+      withDebugId({ root: props.design }, 'props.design'),
+      withDebugId({ root: props.styles }, 'props.styles'),
+      withDebugId({ root: animationCSSProp }, 'props.animation'),
+    )
+
+    resolvedStyles['root'] = callable(mergedStyles['root'])(styleParam)
+    classes['root'] = renderer.renderRule(callable(resolvedStyles['root']), felaParam)
+    classes.root = cx(className, classes.root, props.className)
   }
 
   const resolvedConfig: RenderResultConfig<P> = {

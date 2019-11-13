@@ -247,7 +247,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     ) : (
       <Ref innerRef={this.itemRef}>
         <ElementType
-          className={cx(MenuItem.className, propClasses)}
+          className={cx(MenuItem.className, propClasses, classes.root)}
           disabled={disabled}
           onBlur={this.handleBlur}
           onFocus={this.handleFocus}
