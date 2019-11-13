@@ -204,7 +204,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
   menuRef = React.createRef<HTMLElement>()
   itemRef = React.createRef<HTMLElement>()
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, rtl, theme }) {
+  renderComponent({ ElementType, classes, accessibility, unhandledProps, rtl, theme }) {
     const {
       children,
       content,
@@ -295,7 +295,6 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
                   vertical: true,
                   primary,
                   secondary,
-                  styles: styles.menu,
                   submenu: true,
                   indicator,
                 }),

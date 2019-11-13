@@ -250,20 +250,6 @@ const renderComponent = <P extends {}>(
       withDebugId({ root: animationCSSProp }, 'props.animation'),
     )
 
-    // Object.keys(mergedStyles).forEach(slotName => {
-    //   resolvedStyles[slotName] = callable(mergedStyles[slotName])(styleParam)
-
-    //   if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
-    //     resolvedStylesDebug[slotName] = resolvedStyles[slotName]['_debug']
-    //     delete resolvedStyles[slotName]['_debug']
-    //   }
-
-    //   if (renderer) {
-    //     classes[slotName] = renderer.renderRule(callable(resolvedStyles[slotName]), felaParam)
-    //   }
-    // })
-
-    // classes.root = cx(className, classes.root, props.className)
     const result = resolveStylesAndClasses(
       mergedStyles,
       styleParam,
@@ -273,6 +259,8 @@ const renderComponent = <P extends {}>(
     classes = result.classes
     resolvedStyles = result.resolvedStyles
     resolvedStylesDebug = result.resolvedStylesDebug
+
+    classes.root = cx(className, classes.root, props.className)
   }
 
   if (
@@ -340,15 +328,19 @@ const renderComponent = <P extends {}>(
       })
     })
 
-    const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
-      withDebugId({ root: props.design }, 'props.design'),
-      withDebugId({ root: props.styles }, 'props.styles'),
-      withDebugId({ root: animationCSSProp }, 'props.animation'),
-    )
+    if (props.design || props.style || animationCSSProp) {
+      const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
+        withDebugId({ root: props.design }, 'props.design'),
+        withDebugId({ root: props.styles }, 'props.styles'),
+        withDebugId({ root: animationCSSProp }, 'props.animation'),
+      )
 
-    resolvedStyles['root'] = callable(mergedStyles['root'])(styleParam)
-    classes['root'] = renderer.renderRule(callable(resolvedStyles['root']), felaParam)
-    classes.root = cx(className, classes.root, props.className)
+      if (mergedStyles.root) {
+        resolvedStyles = { root: callable(mergedStyles['root'])(styleParam) }
+        const classesRoot = renderer.renderRule(callable(resolvedStyles['root']), felaParam)
+        classes.root = cx(className, classesRoot, props.className)
+      }
+    }
   }
 
   const resolvedConfig: RenderResultConfig<P> = {
