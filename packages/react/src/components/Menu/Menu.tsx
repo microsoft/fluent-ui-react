@@ -199,7 +199,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
 
       if (kind === 'divider') {
         return MenuDivider.create(item, {
-          defaultProps: {
+          defaultProps: () => ({
             className: cx(Menu.slotClassNames.divider, propsClasses),
             primary,
             secondary,
@@ -208,7 +208,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
             accessibility: accessibility.childBehaviors
               ? accessibility.childBehaviors.divider
               : undefined,
-          },
+          }),
           overrideProps: overrideDividerProps,
         })
       }
@@ -216,7 +216,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
       itemPosition++
 
       return MenuItem.create(item, {
-        defaultProps: {
+        defaultProps: () => ({
           className: cx(Menu.slotClassNames.item, propsClasses),
           iconOnly,
           pills,
@@ -234,7 +234,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
           accessibility: accessibility.childBehaviors
             ? accessibility.childBehaviors.item
             : undefined,
-        },
+        }),
         overrideProps: overrideItemProps,
       })
     })

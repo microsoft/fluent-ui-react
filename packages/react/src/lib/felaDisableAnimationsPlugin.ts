@@ -24,6 +24,10 @@ export default () => {
       return Object.keys(styles).reduce((acc, cssPropertyName) => {
         const cssPropertyValue = styles[cssPropertyName]
 
+        if (animationProps.indexOf(cssPropertyName) !== -1) {
+          return acc
+        }
+
         if (typeof cssPropertyValue === 'object') {
           return {
             ...acc,
@@ -31,9 +35,6 @@ export default () => {
           }
         }
 
-        if (animationProps.indexOf(cssPropertyName) !== -1) {
-          return acc
-        }
         return { ...acc, [cssPropertyName]: styles[cssPropertyName] }
       }, {})
     }

@@ -257,26 +257,24 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
           {...(!wrapper && { onClick: this.handleClick })}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         >
-          {icon &&
-            Icon.create(this.props.icon, {
-              defaultProps: {
-                xSpacing: !!content ? 'after' : 'none',
-                className: cx(MenuItem.slotClassNames.icon, propClasses),
-              },
-            })}
+          {Icon.create(icon, {
+            defaultProps: () => ({
+              xSpacing: !!content ? 'after' : 'none',
+              className: cx(MenuItem.slotClassNames.icon, propClasses),
+            }),
+          })}
           {Box.create(content, {
-            defaultProps: {
+            defaultProps: () => ({
               as: 'span',
               className: cx(MenuItem.slotClassNames.content, propClasses),
-            },
+            }),
           })}
           {menu &&
             Icon.create(indicatorWithDefaults, {
-              defaultProps: {
+              defaultProps: () => ({
                 className: cx(MenuItem.slotClassNames.indicator, propClasses),
                 name: vertical ? 'stardust-menu-arrow-end' : 'stardust-menu-arrow-down',
-                // styles: styles.indicator,
-              },
+              }),
             })}
         </ElementType>
       </Ref>
@@ -291,7 +289,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
               targetRef={this.itemRef}
             >
               {Menu.create(menu, {
-                defaultProps: {
+                defaultProps: () => ({
                   accessibility: submenuBehavior,
                   className: cx(MenuItem.slotClassNames.submenu, propClasses),
                   vertical: true,
@@ -300,7 +298,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
                   styles: styles.menu,
                   submenu: true,
                   indicator,
-                },
+                }),
               })}
             </Popper>
           </Ref>
@@ -310,11 +308,11 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
 
     if (wrapper) {
       return Box.create(wrapper, {
-        defaultProps: {
+        defaultProps: () => ({
           className: cx(MenuItem.slotClassNames.wrapper, propClasses),
           ...accessibility.attributes.wrapper,
           ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, wrapper),
-        },
+        }),
         overrideProps: () => ({
           children: (
             <>

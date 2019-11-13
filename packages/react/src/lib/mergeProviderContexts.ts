@@ -53,8 +53,8 @@ const mergeProviderContexts = (
     },
     rtl: false,
     disableAnimations: false,
-    originalThemes: [],
     target: document, // eslint-disable-line no-undef
+    telemetry: undefined,
     _internal_resolvedComponentVariables: {},
     _internal_resolvedComponentStyles: {},
     renderer: undefined,
@@ -85,11 +85,7 @@ const mergeProviderContexts = (
         acc.disableAnimations = mergedDisableAnimations
       }
 
-      const contextOriginalThemes = (next as ProviderContextPrepared).originalThemes
-        ? (next as ProviderContextPrepared).originalThemes
-        : [next.theme]
-
-      acc.originalThemes = [...acc.originalThemes, ...contextOriginalThemes]
+      acc.telemetry = next.telemetry || acc.telemetry
 
       return acc
     },

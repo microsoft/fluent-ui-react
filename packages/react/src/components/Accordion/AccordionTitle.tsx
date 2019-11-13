@@ -119,9 +119,9 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
           {...accessibility.attributes.content}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.content, unhandledProps)}
           start={Icon.create(indicatorWithDefaults, {
-            defaultProps: {
+            defaultProps: () => ({
               styles: styles.indicator,
-            },
+            }),
           })}
           main={rtlTextContainer.createFor({ element: content })}
         />

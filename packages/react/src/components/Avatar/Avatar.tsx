@@ -91,27 +91,27 @@ class Avatar extends UIComponent<WithAsProp<AvatarProps>, any> {
     return (
       <ElementType {...accessibility.attributes.root} {...unhandledProps} className={classes.root}>
         {Image.create(image, {
-          defaultProps: {
+          defaultProps: () => ({
             fluid: true,
             avatar: true,
             title: name,
             styles: styles.image,
-          },
+          }),
         })}
         {!image &&
           Label.create(label || {}, {
-            defaultProps: {
+            defaultProps: () => ({
               content: getInitials(name),
               circular: true,
               title: name,
               styles: styles.label,
-            },
+            }),
           })}
         {Status.create(status, {
-          defaultProps: {
+          defaultProps: () => ({
             size,
             styles: styles.status,
-          },
+          }),
         })}
       </ElementType>
     )

@@ -283,13 +283,13 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     }
 
     const tooltipContent = Tooltip.Content.create(content, {
-      defaultProps: {
+      defaultProps: () => ({
         ...tooltipContentAttributes,
         open: this.state.open,
         placement,
         pointing,
         pointerRef: this.pointerTargetRef,
-      },
+      }),
       overrideProps: this.getContentProps,
     })
 

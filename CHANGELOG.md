@@ -18,15 +18,52 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### Fixes
+- Update Silver color scheme, changing `backgroundHover` and `backgroundPressed` for high-contrast theme @pompomon ([#2078](https://github.com/microsoft/fluent-ui-react/pull/2078))
+- Updating the `attachment` component styles to match Teams theme @notandrew ([#2012](https://github.com/stardust-ui/react/pull/2012))
+- Honor `disableAnimations` prop in `Provider` @miroslavstastny ([#2087](https://github.com/microsoft/fluent-ui-react/pull/2087))
+- Allow focusing radio and checkbox in the focus zone @jurokapsiar ([#2103](https://github.com/microsoft/fluent-ui-react/pull/2103))
+- Apply unhandled props of `Ref` to the children if used @jurokapsiar ([#2105](https://github.com/microsoft/fluent-ui-react/pull/2105))
+- Add necessary `-ms-grid-` styles to `Layout` for IE11 @jurokapsiar ([#2106](https://github.com/microsoft/fluent-ui-react/pull/2106))
+
+### Features
+- Add `Table` component base implementation @pompomon ([#2099](https://github.com/microsoft/fluent-ui-react/pull/2099))
+- Add bounce animation to button clicks in Teams theme @notandrew ([#1724](https://github.com/stardust-ui/react/pull/1724))
+- Update Silver color scheme, adding `foregroundHover`, `foregroundPressed` and `background` definitions @pompomon ([#2078](https://github.com/microsoft/fluent-ui-react/pull/2078))
+- Expanding experimental accessibility schema to more components @mshoho ([#2052](https://github.com/stardust-ui/react/pull/2052))
+
+### Documentation
+- Add usage example for `Tooltip` on disabled elements @mnajdova ([#2091](https://github.com/microsoft/fluent-ui-react/pull/2091))
+- Prototype for hexgonal avatars @mnajdova ([#2093](https://github.com/microsoft/fluent-ui-react/pull/2093))
+
+<!--------------------------------[ v0.40.3 ]------------------------------- -->
+## [v0.40.3](https://github.com/stardust-ui/react/tree/v0.40.3) (2019-11-08)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.40.2...v0.40.3)
+
+### Performance
+- Add rendering performance telemetry @miroslavstastny ([#2079](https://github.com/microsoft/fluent-ui-react/pull/2079))
+- Skip empty frames in mergeThemes @levithomason @miroslavstastny ([#2095](https://github.com/microsoft/fluent-ui-react/pull/2095))
+- Lazily evaluate styles and classes @levithomason @miroslavstastny ([#2097](https://github.com/microsoft/fluent-ui-react/pull/2097))
+
+<!--------------------------------[ v0.40.2 ]------------------------------- -->
+## [v0.40.2](https://github.com/stardust-ui/react/tree/v0.40.2) (2019-10-30)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.40.1...v0.40.2)
+
+### Fixes
 - Update `call-missed-line` icon in Teams theme @codepretty ([#2059](https://github.com/stardust-ui/react/pull/2059))
 - Show debug panel correctly for components with no owner @miroslavstastny ([#2055](https://github.com/stardust-ui/react/pull/2055))
+- Update `listItem`, `button`, `toolbar`, `toolbarMenu` to use `getBorderFocusStyles` in the Teams theme @bcalvery ([#2011](https://github.com/stardust-ui/react/pull/2011))
 - Correctly handle empty key actions in RTL @miroslavstastny ([#2060](https://github.com/stardust-ui/react/pull/2060))
 - Accessibility improvements for `tree` and `splitButton` @kolaps33 ([#2032](https://github.com/stardust-ui/react/pull/2032))
 - Update color scheme values in Teams theme @codepretty ([#2063](https://github.com/stardust-ui/react/pull/2063))
 - Fixing a core keydown disconnect issue @dzearing ([#2056](https://github.com/stardust-ui/react/pull/2056))
+- Fix blurry content of Popup @jurokapsiar ([#2067](https://github.com/stardust-ui/react/pull/2067))
+- MenuButton: do not force pinned in MenuButton @jurokapsiar ([#2066](https://github.com/stardust-ui/react/pull/2066))
+- Clean up popper element reference after destroy @jurokapsiar ([#2062](https://github.com/stardust-ui/react/pull/2062))
 
 ### Features
 - Add `menu` prop on `ToolbarMenuItem` component @mnajdova ([#1984](https://github.com/stardust-ui/react/pull/1984))
+- Add `unstable_overflow` to `ChatMessage` to provide more flexible position in overflow containers @layershifter ([#2050](https://github.com/stardust-ui/react/pull/2050))
+- Add `foregroundHover2` to Teams theme @miroslavstastny ([#2071](https://github.com/stardust-ui/react/pull/2071))
 
 ### Documentation
 - Editor Toolbar prototype: Fix overflow menu overflowing in Portal window @miroslavstastny ([#2053](https://github.com/stardust-ui/react/pull/2053))
