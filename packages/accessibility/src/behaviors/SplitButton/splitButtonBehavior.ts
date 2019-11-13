@@ -7,7 +7,7 @@ import menuButtonBehavior from '../MenuButton/menuButtonBehavior'
 /**
  * @description
  * Adds attribute 'tabIndex=-1' based on the property 'open' to 'trigger' slot.
- * Adds attribute 'aria-controls=menu-id' based on the property 'menuId' to 'trigger' slot.
+ * Adds attribute 'aria-controls=menu-id' based on the property 'open' to 'trigger' slot.
  * Adds attribute 'aria-expanded=true' based on the property 'open' to 'trigger' slot.
  * Adds attribute 'id=trigger-id' based on the property 'triggerId' to 'trigger' slot.
  * Adds attribute 'id=menu-id' based on the property 'menuId' to 'menu' slot.
