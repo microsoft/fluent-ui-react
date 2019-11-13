@@ -10,9 +10,7 @@ describe('MenuButton', () => {
   isConformant(MenuButton)
 
   describe('accessibility', () => {
-    handlesAccessibility(MenuButton, {
-      defaultRootRole: 'none',
-    })
+    handlesAccessibility(MenuButton)
 
     describe('onOpenChange', () => {
       test('is called on click', () => {
@@ -73,27 +71,23 @@ describe('MenuButton', () => {
       })
 
       test('menu id is used', () => {
+        const menuId = 'test-id'
         const menuButton = mountWithProvider(
-          <MenuButton trigger={<button />} menu={{ ...mockMenu, id: 'test-id' }} />,
+          <MenuButton trigger={<button />} menu={{ ...mockMenu, id: menuId }} />,
         )
-        const button = menuButton.find('button')
-        button.simulate('click')
-        const menu = menuButton.find('ul')
-        const menuId = menu.prop('id')
+        menuButton.find('button').simulate('click')
 
-        expect(menuId).toEqual('test-id')
-        expect(button.prop('aria-controls')).toEqual(menuId)
+        expect(menuButton.find('ul').prop('id')).toEqual(menuId)
+        expect(menuButton.find('button').prop('aria-controls')).toEqual(menuId)
       })
 
       test('menu id is generated if not provided', () => {
         const menuButton = mountWithProvider(<MenuButton trigger={<button />} menu={mockMenu} />)
-        const button = menuButton.find('button')
-        button.simulate('click')
-        const menu = menuButton.find('ul')
-        const menuId = menu.prop('id')
+        menuButton.find('button').simulate('click')
+        const menuId = menuButton.find('ul').prop('id')
 
         expect(menuId).toMatch(/menubutton-menu-\d+/)
-        expect(button.prop('aria-controls')).toEqual(menuId)
+        expect(menuButton.find('button').prop('aria-controls')).toEqual(menuId)
       })
     })
   })
