@@ -39,6 +39,11 @@ const buttonStyles: ComponentSlotStylesPrepared<
 
       // Overrides for "secondary alt" buttons
       ...(p.secondaryAlt && {
+        ...(p.disabled && {
+          color: v.colorDisabled,
+          background: v.backgroundColorDisabled,
+        }),
+
         ':active': {
           color: v.secondaryAltPressedColor,
         },
