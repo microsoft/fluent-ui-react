@@ -9,7 +9,6 @@ import popupBehavior, { PopupBehaviorProps } from '../Popup/popupBehavior'
  * Implements ARIA [MenuButton](https://www.w3.org/TR/wai-aria-practices/#menubutton) design pattern.
  *
  * @specification
- * Adds role='none'.
  * Adds attribute 'aria-haspopup=true' to 'trigger' slot if 'contextMenu' property is not set.
  * Adds attribute 'tabIndex=-1' based on the property 'open' to 'trigger' slot.
  * Adds attribute 'aria-controls=menu-id' based on the property 'menuId' to 'trigger' slot.
@@ -22,9 +21,6 @@ const menuButtonBehavior: Accessibility<MenuButtonBehaviorProps> = props => {
   const behavior = popupBehavior(props)
   return _.merge(behavior, {
     attributes: {
-      root: {
-        role: 'none',
-      },
       trigger: {
         'aria-controls': props.menuId,
         'aria-expanded': props.open || undefined,
