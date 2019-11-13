@@ -158,6 +158,7 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         backgroundColor: siteVariables.colorScheme.silver.background,
 
         ':active': {
+          ...createAnimationStyles('scaleDownSoft', theme),
           backgroundColor: siteVariables.colorScheme.silver.backgroundPressed,
         },
 
