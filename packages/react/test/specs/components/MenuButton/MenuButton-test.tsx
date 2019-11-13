@@ -10,9 +10,7 @@ describe('MenuButton', () => {
   isConformant(MenuButton)
 
   describe('accessibility', () => {
-    handlesAccessibility(MenuButton, {
-      defaultRootRole: 'none',
-    })
+    handlesAccessibility(MenuButton)
 
     describe('onOpenChange', () => {
       test('is called on click', () => {
