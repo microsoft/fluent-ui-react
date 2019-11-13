@@ -35,11 +35,6 @@ export interface ButtonVariables {
   primaryBackgroundColorDisabled: string
   primaryBorderColor: string
 
-  secondaryAltColor: string
-  secondaryAltBackgroundColorActive: string
-  secondaryAltBackgroundColorHover: string
-  secondaryAltBorderColor: string
-
   circularBorderRadius: string
 
   textColor: string
@@ -99,11 +94,6 @@ export default (siteVars: any): ButtonVariables => ({
   primaryBackgroundColorHover: siteVars.colorScheme.brand.backgroundHover,
   primaryBackgroundColorDisabled: siteVars.colorScheme.default.backgroundDisabled,
   primaryBorderColor: 'transparent',
-
-  secondaryAltColor: siteVars.colors.white,
-  secondaryAltBackgroundColorActive: siteVars.colors.silver[700],
-  secondaryAltBackgroundColorHover: siteVars.colors.silver[800],
-  secondaryAltBorderColor: siteVars.colors.silver[600],
 
   circularBorderRadius: pxToRem(999),
 

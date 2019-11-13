@@ -40,17 +40,15 @@ const buttonStyles: ComponentSlotStylesPrepared<
       // Overrides for "secondary alt" buttons
       ...(p.secondaryAlt && {
         ':active': {
-          color: v.secondaryAltColorHover,
+          color: v.secondaryAltPressedColor,
         },
 
         ':hover': {
-          color: v.secondaryAltColorHover,
-          borderColor: v.secondaryAltBorderColorHover,
+          color: v.secondaryAltPressedColor,
         },
 
         ':focus-visible': {
-          backgroundColor: siteVariables.accessibleCyan,
-          color: v.secondaryAltColorFocusVisible,
+          color: v.secondaryAltPressedColor,
         },
       }),
     }

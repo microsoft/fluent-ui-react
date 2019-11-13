@@ -3,9 +3,7 @@ import { ButtonVariables } from '../../../teams/components/Button/buttonVariable
 export interface ButtonHighContrastVariables {
   backgroundColorFocus: string
   primaryBackgroundColorFocus: string
-  secondaryAltColorHover: string
-  secondaryAltBorderColorHover: string
-  secondaryAltColorFocusVisible: string
+  secondaryAltPressedColor: string
 }
 
 export default (siteVars: any): Partial<ButtonVariables> & ButtonHighContrastVariables => {
@@ -18,13 +16,7 @@ export default (siteVars: any): Partial<ButtonVariables> & ButtonHighContrastVar
     primaryBackgroundColorActive: siteVars.colors.white,
     primaryBackgroundColorFocus: siteVars.accessibleCyan,
 
-    secondaryAltColor: siteVars.colors.white,
-    secondaryAltColorHover: siteVars.colors.black,
-    secondaryAltColorFocusVisible: siteVars.colors.black,
-    secondaryAltBackgroundColorActive: siteVars.accessibleYellow,
-    secondaryAltBackgroundColorHover: siteVars.accessibleYellow,
-    secondaryAltBorderColor: siteVars.colors.white,
-    secondaryAltBorderColorHover: 'transparent',
+    secondaryAltPressedColor: siteVars.colors.black,
 
     boxShadow: 'none',
     primaryBoxShadow: 'none',

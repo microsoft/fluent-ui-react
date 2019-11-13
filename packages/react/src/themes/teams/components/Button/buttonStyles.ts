@@ -153,16 +153,16 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         }),
 
       ...(p.secondaryAlt && {
-        color: v.secondaryAltColor,
-        borderColor: v.secondaryAltBorderColor,
-        backgroundColor: 'transparent',
+        color: siteVariables.colorScheme.silver.foreground,
+        borderColor: siteVariables.colorScheme.silver.borderColor,
+        backgroundColor: siteVariables.colorScheme.silver.background,
 
         ':active': {
-          backgroundColor: v.secondaryAltBackgroundColorActive,
+          backgroundColor: siteVariables.colorScheme.silver.backgroundPressed,
         },
 
         ':hover': {
-          backgroundColor: v.secondaryAltBackgroundColorHover,
+          backgroundColor: siteVariables.colorScheme.silver.backgroundHover,
         },
 
         ':focus': {
@@ -172,8 +172,13 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
 
         ':focus-visible': {
           ...borderFocusStyles[':focus-visible'],
-          backgroundColor: v.secondaryAltBackgroundColorActive,
+          backgroundColor: siteVariables.colorScheme.silver.backgroundPressed,
         },
+
+        ...(p.disabled && {
+          color: siteVariables.colorScheme.silver.foregroundDisabled,
+          background: siteVariables.colorScheme.silver.backgroundDisabled,
+        }),
       }),
 
       // Overrides for "disabled" buttons
