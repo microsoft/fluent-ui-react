@@ -77,7 +77,7 @@ describe('MenuButton', () => {
         )
         menuButton.find('button').simulate('click')
 
-        expect(menuButton.find('ul').prop('id')).toEqual('test-id')
+        expect(menuButton.find('ul').prop('id')).toEqual(menuId)
         expect(menuButton.find('button').prop('aria-controls')).toEqual(menuId)
       })
 
