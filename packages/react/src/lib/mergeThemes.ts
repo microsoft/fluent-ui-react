@@ -47,6 +47,37 @@ interface ThemeComponentSelectorStyle {
   MenuItem: ComponentSelectorsAndStyles
   MenuDivider: ComponentSelectorsAndStyles
 }
+
+// TODO: refactor this..
+const transformStyleArrayToMap = (arr, map, keys) => {
+  if (!arr) {
+    return { keys, map }
+  }
+  for (let i = 0; i < arr.length; i++) {
+    const [selector, style] = arr[i]
+    if (Array.isArray(selector)) {
+      for (let j = 0; j < selector.length; j++) {
+        const key = selector[j] === null ? true : selector[j]
+        if (keys.indexOf(key) === -1) {
+          keys.push(key)
+        }
+        map.set(key, map.get(key) ? _.merge(map.get(key), style) : style)
+      }
+    } else {
+      const key = selector === null ? true : selector
+      if (keys.indexOf(key) === -1) {
+        keys.push(key)
+      }
+      map.set(key, map.get(key) ? _.merge(map.get(key), style) : style)
+    }
+  }
+
+  return {
+    keys,
+    map,
+  }
+}
+
 const mergeComponentSelectorStyles = (
   ...sources: ThemeComponentSelectorStyle[]
 ): ThemeComponentSelectorStyle => {
@@ -64,10 +95,18 @@ const mergeComponentSelectorStyles = (
           const targetResult = callable(originalTarget)(v)
           const sourceResult = callable(originalSource)(v)
           Object.keys(sourceResult).forEach(key => {
-            targetResult[key] =
-              targetResult[key] && Array.isArray(targetResult[key])
-                ? targetResult[key].concat(sourceResult[key])
-                : sourceResult[key]
+            const transformedArray = []
+
+            const { map, keys } = transformStyleArrayToMap(targetResult[key], new Map(), [])
+            const { keys: keysFinal } = transformStyleArrayToMap(sourceResult[key], map, keys)
+            for (let k = 0; k < keysFinal.length; k++) {
+              transformedArray.push([
+                keysFinal[k] === true ? null : keysFinal[k],
+                map.get(keysFinal[k]),
+              ])
+            }
+
+            targetResult[key] = transformedArray
           })
           return targetResult
         }
