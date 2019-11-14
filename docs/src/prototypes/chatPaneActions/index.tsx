@@ -141,7 +141,7 @@ const CustomMessage = (props: ChatMessageProps) => {
         role="group"
         aria-roledescription="message" // this needs to be translated
         {...props}
-        onFocus={e => show('focus', e)}
+        onFocus={e => handleFocusOnMessage(show, e)}
         onBlur={handleBlur}
         onMouseEnter={e => show('mouse', e)}
         onMouseLeave={() => hide('mouse')}
@@ -150,6 +150,12 @@ const CustomMessage = (props: ChatMessageProps) => {
     </Ref>
   )
 }
+
+const handleFocusOnMessage = (show, e) => {
+  console.log(`onFocus called on message`)
+  show('focus', e)
+}
+
 const ChatPaneActions = () => {
   return (
     <div>
@@ -159,9 +165,15 @@ const ChatPaneActions = () => {
           message: (
             <CustomMessage
               author="Jane Doe"
+              aria-labelledby={`message-conent-${i}`}
               content={
-                <div>
-                  <a href="/">Link</a> Hover me to see the actions <a href="/">Some Link</a>
+                <div id={`message-conent-${i}`}>
+                  {`${i}: `}
+                  Stardust UI provides extensible vanilla JavaScript solutions to component state,
+                  styling, and accessibility. These powerful features are exposed behind simple APIs
+                  based on natural language. Stardust UI React is being built as an exemplar of the
+                  Stardust UI design language, component specifications, and utilities.
+                  <a href="/">Link</a>Hover me to see the actions <a href="/">Some Link</a>
                 </div>
               }
               timestamp="Yesterday, 10:15 PM"
