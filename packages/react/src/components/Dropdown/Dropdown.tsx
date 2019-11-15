@@ -703,34 +703,29 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
           positioningDependencies={[items.length]}
         >
           {List.create(list, {
-            defaultProps: {
+            defaultProps: () => ({
               className: Dropdown.slotClassNames.itemsList,
               ...accessibilityMenuProps,
               styles: styles.list,
               items,
               tabIndex: search ? undefined : -1, // needs to be focused when trigger button is activated.
               'aria-hidden': !open,
-            },
-            overrideProps: {
-              onFocus: this.handleListFocus,
-              onBlur: this.handleListBlur,
-            },
+            }),
+
+            overrideProps: (predefinedProps: ListProps) => ({
+              onFocus: (e: React.SyntheticEvent<HTMLElement>, listProps: IconProps) => {
+                this.handleTriggerButtonOrListFocus()
+                _.invoke(predefinedProps, 'onClick', e, listProps)
+              },
+              onBlur: (e: React.SyntheticEvent<HTMLElement>, listProps: IconProps) => {
+                this.handleListBlur(e)
+                _.invoke(predefinedProps, 'onBlur', e, listProps)
+              },
+            }),
           })}
         </Popper>
       </Ref>
     )
-  }
-
-  handleListFocus = (e: React.SyntheticEvent) => {
-    const { list } = this.props
-    this.handleTriggerButtonOrListFocus()
-    _.invoke(list, 'onFocus', e, list)
-  }
-
-  handleListBlur = (e: React.SyntheticEvent) => {
-    const { list } = this.props
-    this.handleListBlur(e)
-    _.invoke(list, 'onBlur', e, list)
   }
 
   renderItems(
