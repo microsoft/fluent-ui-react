@@ -40,6 +40,7 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
     rtl,
     targetRef,
     unstable_pinned,
+    ...rest
   } = props
 
   const proposedPlacement = getPlacement({ align, position, rtl })
@@ -174,6 +175,8 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
           placement: computedPlacement,
           scheduleUpdate,
         })
+      : children && rest && Object.keys(rest).length > 0
+      ? React.cloneElement(React.Children.only(children as React.ReactElement<any>), rest)
       : children
 
   return <Ref innerRef={contentRef}>{React.Children.only(child) as React.ReactElement}</Ref>

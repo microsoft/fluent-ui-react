@@ -1,7 +1,7 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import cx from 'classnames'
-// import * as _ from 'lodash'
+import * as _ from 'lodash'
 
 import {
   UIComponent,
@@ -10,8 +10,14 @@ import {
   commonPropTypes,
   ChildrenComponentProps,
   ShorthandFactory,
+  normalizeAnimationDuration,
 } from '../../lib'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
+
+export const ANIMATION_TYPE = {
+  ENTERING: 'show',
+  EXITING: 'hide',
+}
 
 export interface AnimationProps
   extends StyledComponentProps,
@@ -41,7 +47,7 @@ export interface AnimationProps
   direction?: string
 
   /** Specifies how long an animation should take to complete. */
-  duration?: string
+  duration?: string | { hide: string; show: string }
 
   /**
    * Specifies a style for the target element when the animation is not playing (i.e. before it starts, after it ends, or both).
@@ -92,11 +98,6 @@ export interface AnimationProps
   unmountOnHide?: boolean
 }
 
-// const TRANSITION_TYPE = {
-//   ENTERING: 'show',
-//   EXITING: 'hide',
-// }
-
 class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
   static create: ShorthandFactory<AnimationProps>
 
@@ -120,7 +121,13 @@ class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
     name: PropTypes.string,
     delay: PropTypes.string,
     direction: PropTypes.string,
-    duration: PropTypes.string,
+    duration: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.shape({
+        hide: PropTypes.string,
+        show: PropTypes.string,
+      }),
+    ]),
     fillMode: PropTypes.string,
     iterationCount: PropTypes.string,
     keyframeParams: PropTypes.object,
@@ -130,6 +137,14 @@ class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
     mountOnShow: PropTypes.bool,
     transitionOnMount: PropTypes.bool,
     unmountOnHide: PropTypes.bool,
+  }
+
+  static defaultProps = {
+    duration: 500,
+    visible: true,
+    mountOnShow: true,
+    transitionOnMount: false,
+    unmountOnHide: false,
   }
 
   nextStatus
@@ -210,14 +225,17 @@ class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
 
     this.nextStatus = null
     this.setState({ status, animating: true }, () => {
-      // const durationType = TRANSITION_TYPE[status]
-      // const durationValue = normalizeTransitionDuration(duration, durationType)
+      const durationType = ANIMATION_TYPE[status]
+      const durationValue = normalizeAnimationDuration(duration, durationType)
 
-      // 123s
-      const durationValue = parseInt(duration.slice(0, -1), 10)
+      const durationValueNumber = _.endsWith(durationValue, 'ms')
+        ? parseInt(durationValue.slice(0, -2), 10)
+        : _.endsWith(durationValue, 's')
+        ? parseInt(durationValue.slice(0, -1), 10) * 1000
+        : parseInt(durationValue, 10)
 
       // _.invoke(this.props, 'onStart', null, { ...this.props, status })
-      this.timeoutId = setTimeout(this.handleComplete, durationValue * 1000)
+      this.timeoutId = setTimeout(this.handleComplete, durationValueNumber)
     })
   }
 
