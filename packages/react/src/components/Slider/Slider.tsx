@@ -192,7 +192,7 @@ class Slider extends AutoControlledComponent<WithAsProp<SliderProps>, SliderStat
             }}
           >
             {Box.create(input || type, {
-              defaultProps: {
+              defaultProps: () => ({
                 ...htmlInputProps,
                 ...accessibility.attributes.input,
                 className: Slider.slotClassNames.input,
@@ -204,7 +204,7 @@ class Slider extends AutoControlledComponent<WithAsProp<SliderProps>, SliderStat
                 value,
                 styles: styles.input,
                 ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.input, htmlInputProps),
-              },
+              }),
               overrideProps: this.handleInputOverrides,
             })}
           </Ref>

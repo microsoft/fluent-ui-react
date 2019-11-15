@@ -14,8 +14,6 @@ Current perf examples measure performance of a single component. At the moment t
 ### Getting the numbers
 To get a performance number, [Puppeteer](https://github.com/GoogleChrome/puppeteer) is used to render a performance example in headless Chrome and measure the **first render time**.
 
-In order to make the measures independent on the test machine's performance and load the measures are normalized (see [#1280](https://github.com/stardust-ui/react/pull/1280) for details). Before rendering each example, a baseline example which is supposed to have constant render time is measured and then the real example measure is normalized by this. However, actual measurements show that the normalized results are quite similar to the plain ones. 
-
 To stabilize the numbers, the example is rendered 50 times and median value is used.
 
 ## Workflow

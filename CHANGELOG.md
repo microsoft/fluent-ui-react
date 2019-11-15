@@ -17,6 +17,37 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixes
+- Update Silver color scheme, changing `backgroundHover` and `backgroundPressed` for high-contrast theme @pompomon ([#2078](https://github.com/microsoft/fluent-ui-react/pull/2078))
+- Updating the `attachment` component styles to match Teams theme @notandrew ([#2012](https://github.com/stardust-ui/react/pull/2012))
+- Removed `shadowLevel1Darker` in Teams themes and changed all references to `shadowLevel1Dark` affecting `Button` and `ChatMessage` variables files @bcalvery ([#2098](https://github.com/microsoft/fluent-ui-react/pull/2098))
+- Honor `disableAnimations` prop in `Provider` @miroslavstastny ([#2087](https://github.com/microsoft/fluent-ui-react/pull/2087))
+- `Dialog` content should have 100% width @jurokapsiar ([#2104](https://github.com/microsoft/fluent-ui-react/pull/2104))
+- Allow focusing radio and checkbox in the focus zone @jurokapsiar ([#2103](https://github.com/microsoft/fluent-ui-react/pull/2103))
+- Apply unhandled props of `Ref` to the children if used @jurokapsiar ([#2105](https://github.com/microsoft/fluent-ui-react/pull/2105))
+- Add necessary `-ms-grid-` styles to `Layout` for IE11 @jurokapsiar ([#2106](https://github.com/microsoft/fluent-ui-react/pull/2106))
+- Accessibility `splitButton` & `menuButton` - screen reader fixes @kolaps33 ([#2090](https://github.com/microsoft/fluent-ui-react/pull/2090))
+- Accessibility `menuButton` add aria-controls attribute based on `open` prop @kolaps33 ([#2107](https://github.com/microsoft/fluent-ui-react/pull/2107))
+
+### Features
+- Add `Table` component base implementation @pompomon ([#2099](https://github.com/microsoft/fluent-ui-react/pull/2099))
+- Add bounce animation to button clicks in Teams theme @notandrew ([#1724](https://github.com/stardust-ui/react/pull/1724))
+- Update Silver color scheme, adding `foregroundHover`, `foregroundPressed` and `background` definitions @pompomon ([#2078](https://github.com/microsoft/fluent-ui-react/pull/2078))
+- Expanding experimental accessibility schema to more components @mshoho ([#2052](https://github.com/stardust-ui/react/pull/2052))
+
+### Documentation
+- Add usage example for `Tooltip` on disabled elements @mnajdova ([#2091](https://github.com/microsoft/fluent-ui-react/pull/2091))
+- Prototype for hexgonal avatars @mnajdova ([#2093](https://github.com/microsoft/fluent-ui-react/pull/2093))
+
+<!--------------------------------[ v0.40.3 ]------------------------------- -->
+## [v0.40.3](https://github.com/stardust-ui/react/tree/v0.40.3) (2019-11-08)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.40.2...v0.40.3)
+
+### Performance
+- Add rendering performance telemetry @miroslavstastny ([#2079](https://github.com/microsoft/fluent-ui-react/pull/2079))
+- Skip empty frames in mergeThemes @levithomason @miroslavstastny ([#2095](https://github.com/microsoft/fluent-ui-react/pull/2095))
+- Lazily evaluate styles and classes @levithomason @miroslavstastny ([#2097](https://github.com/microsoft/fluent-ui-react/pull/2097))
+
 <!--------------------------------[ v0.40.2 ]------------------------------- -->
 ## [v0.40.2](https://github.com/stardust-ui/react/tree/v0.40.2) (2019-10-30)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.40.1...v0.40.2)

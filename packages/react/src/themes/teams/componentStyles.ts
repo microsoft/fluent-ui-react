@@ -113,3 +113,7 @@ export { default as Video } from './components/Video/videoStyles'
 
 export { default as Tooltip } from './components/Tooltip/tooltipStyles'
 export { default as TooltipContent } from './components/Tooltip/tooltipContentStyles'
+
+export { default as Table } from './components/Table/tableStyles'
+export { default as TableRow } from './components/Table/tableRowStyles'
+export { default as TableCell } from './components/Table/tableCellStyles'

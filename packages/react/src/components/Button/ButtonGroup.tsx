@@ -76,10 +76,10 @@ class ButtonGroup extends UIComponent<WithAsProp<ButtonGroupProps>, any> {
       <ElementType {...unhandledProps} className={classes.root}>
         {_.map(buttons, (button, idx) =>
           Button.create(button, {
-            defaultProps: {
+            defaultProps: () => ({
               circular,
               styles: this.getStyleForButtonIndex(styles, idx === 0, idx === buttons.length - 1),
-            },
+            }),
           }),
         )}
       </ElementType>

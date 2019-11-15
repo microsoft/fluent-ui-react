@@ -103,7 +103,7 @@ export default (siteVars: any): ButtonVariables => ({
   textPrimaryColorHover: siteVars.colorScheme.brand.foreground1,
   textColorDisabled: siteVars.colorScheme.brand.foregroundDisabled1,
 
-  primaryBoxShadow: siteVars.shadowLevel1Darker,
+  primaryBoxShadow: siteVars.shadowLevel1Dark,
   boxShadow: siteVars.shadowLevel1,
 
   loaderBorderSize: pxToRem(2),

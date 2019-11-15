@@ -14,7 +14,7 @@ const ButtonExampleText = () => (
     </Button>
     <br />
     <br />
-    <Button text iconOnly>
+    <Button text iconOnly title="Video Call">
       <Icon name="call-video" />
     </Button>
     <br />

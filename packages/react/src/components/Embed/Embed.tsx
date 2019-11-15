@@ -167,7 +167,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
         {active && (
           <>
             {Video.create(video, {
-              defaultProps: {
+              defaultProps: () => ({
                 autoPlay: true,
                 controls: false,
                 loop: true,
@@ -178,15 +178,15 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
                   width: variables.width,
                   height: variables.height,
                 },
-              },
+              }),
             })}
             {iframe && (
               <Ref innerRef={this.frameRef}>
                 {Box.create(iframe, {
-                  defaultProps: {
+                  defaultProps: () => ({
                     as: 'iframe',
                     styles: styles.iframe,
-                  },
+                  }),
                   overrideProps: this.handleFrameOverrides,
                 })}
               </Ref>
@@ -197,13 +197,13 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
         {placeholderVisible && placeholderElement}
         {controlVisible &&
           Icon.create(control, {
-            defaultProps: {
+            defaultProps: () => ({
               className: Embed.slotClassNames.control,
               circular: true,
               name: active ? 'stardust-pause' : 'stardust-play',
               size: 'largest',
               styles: styles.control,
-            },
+            }),
           })}
       </ElementType>
     )
