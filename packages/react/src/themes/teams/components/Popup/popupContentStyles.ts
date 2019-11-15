@@ -9,8 +9,7 @@ const popupContentStyles: ComponentSlotStylesPrepared<PopupContentProps, PopupCo
     borderRadius: v.borderRadius,
     boxShadow: v.boxShadow,
 
-    width: 'fit-content',
-    display: 'block',
+    display: 'table',
     ...(p.pointing && getPointerStyles(v.pointerOffset, v.pointerMargin, rtl, p.placement).root),
   }),
 

@@ -9,6 +9,7 @@ const tooltipStyles: ComponentSlotStylesPrepared<TooltipProps, TooltipVariables>
     ...(!p.open && {
       opacity: 0,
     }),
+    display: 'table',
     zIndex: v.zIndex,
     position: 'absolute',
     textAlign: 'left',
