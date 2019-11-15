@@ -19,6 +19,11 @@ export const ANIMATION_TYPE = {
   EXITING: 'hide',
 }
 
+export interface AnimationState {
+  status: 'ENTERED' | 'ENTERING' | 'EXITED' | 'EXITING' | 'UNMOUNTED'
+  animation: boolean
+}
+
 export interface AnimationProps
   extends StyledComponentProps,
     ChildrenComponentProps<React.ReactChild> {
@@ -96,6 +101,38 @@ export interface AnimationProps
 
   /** Unmount the component (remove it from the DOM) when it is not shown. */
   unmountOnHide?: boolean
+
+  /**
+   * Callback on each transition that changes visibility to shown.
+   *
+   * @param {null}
+   * @param {object} data - All props with status.
+   */
+  onComplete?: (e: null, props: AnimationState & AnimationProps) => void
+
+  /**
+   * Callback on each transition that changes visibility to hidden.
+   *
+   * @param {null}
+   * @param {object} data - All props with status.
+   */
+  onHide?: (e: null, props: AnimationState & AnimationProps) => void
+
+  /**
+   * Callback on each transition that changes visibility to shown.
+   *
+   * @param {null}
+   * @param {object} data - All props with status.
+   */
+  onShow?: (e: null, props: AnimationState & AnimationProps) => void
+
+  /**
+   * Callback on animation start.
+   *
+   * @param {null}
+   * @param {object} data - All props with status.
+   */
+  onStart?: (e: null, props: AnimationState & AnimationProps) => void
 }
 
 class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
@@ -137,6 +174,10 @@ class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
     mountOnShow: PropTypes.bool,
     transitionOnMount: PropTypes.bool,
     unmountOnHide: PropTypes.bool,
+    onComplete: PropTypes.func,
+    onHide: PropTypes.func,
+    onShow: PropTypes.func,
+    onStart: PropTypes.func,
   }
 
   static defaultProps = {
@@ -234,7 +275,7 @@ class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
         ? parseInt(durationValue.slice(0, -1), 10) * 1000
         : parseInt(durationValue, 10)
 
-      // _.invoke(this.props, 'onStart', null, { ...this.props, status })
+      _.invoke(this.props, 'onStart', null, { ...this.props, status })
       this.timeoutId = setTimeout(this.handleComplete, durationValueNumber)
     })
   }
@@ -256,9 +297,9 @@ class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
   }
 
   handleComplete = () => {
-    // const { status: current } = this.state
+    const { status: current } = this.state
 
-    // _.invoke(this.props, 'onComplete', null, { ...this.props, status: current })
+    _.invoke(this.props, 'onComplete', null, { ...this.props, status: current })
 
     if (this.nextStatus) {
       this.handleStart()
@@ -266,10 +307,10 @@ class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
     }
 
     const status = this.computeCompletedStatus()
-    // const callback = current === Animation.ENTERING ? 'onShow' : 'onHide'
+    const callback = current === Animation.ENTERING ? 'onShow' : 'onHide'
 
     this.setState({ status, animating: false }, () => {
-      // _.invoke(this.props, callback, null, { ...this.props, status })
+      _.invoke(this.props, callback, null, { ...this.props, status })
     })
   }
 
