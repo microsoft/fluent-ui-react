@@ -275,7 +275,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
           const isSubtree = hasSubtree(item)
           const isSubtreeOpen = isSubtree && this.isActiveItem(item['id'])
           const renderedItem = TreeItem.create(item, {
-            defaultProps: {
+            defaultProps: () => ({
               accessibility: accessibility.childBehaviors
                 ? accessibility.childBehaviors.item
                 : undefined,
@@ -285,7 +285,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
               key: item['id'],
               contentRef: elementRef,
               ...restItemForRender,
-            },
+            }),
             overrideProps: this.handleTreeItemOverrides,
           })
 

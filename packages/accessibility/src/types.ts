@@ -29,11 +29,13 @@ export type AriaWidgetRole =
   | 'none'
 
 export type AriaCompositeRole =
+  | 'cell'
   | 'combobox'
   | 'grid'
   | 'row'
   | 'gridcell'
   | 'rowheader'
+  | 'rowgroup'
   | 'columnheader'
   | 'listbox'
   | 'option'
@@ -41,6 +43,7 @@ export type AriaCompositeRole =
   | 'menubar'
   | 'radiogroup'
   | 'radio'
+  | 'table'
   | 'tablist'
   | 'tab'
   | 'tabpanel'

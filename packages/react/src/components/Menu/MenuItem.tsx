@@ -234,22 +234,21 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
           {...(!wrapper && { onClick: this.handleClick })}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         >
-          {icon &&
-            Icon.create(this.props.icon, {
-              defaultProps: {
-                xSpacing: !!content ? 'after' : 'none',
-                styles: styles.icon,
-              },
-            })}
+          {Icon.create(icon, {
+            defaultProps: () => ({
+              xSpacing: !!content ? 'after' : 'none',
+              styles: styles.icon,
+            }),
+          })}
           {Box.create(content, {
-            defaultProps: { as: 'span', styles: styles.content },
+            defaultProps: () => ({ as: 'span', styles: styles.content }),
           })}
           {menu &&
             Icon.create(indicatorWithDefaults, {
-              defaultProps: {
+              defaultProps: () => ({
                 name: vertical ? 'stardust-menu-arrow-end' : 'stardust-menu-arrow-down',
                 styles: styles.indicator,
-              },
+              }),
             })}
         </ElementType>
       </Ref>
@@ -273,7 +272,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
               targetRef={this.itemRef}
             >
               {Menu.create(menu, {
-                defaultProps: {
+                defaultProps: () => ({
                   accessibility: submenuBehavior,
                   className: MenuItem.slotClassNames.submenu,
                   vertical: true,
@@ -283,7 +282,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
                   // styles: mergeStyles(styles.menu, styles),
                   submenu: true,
                   indicator,
-                },
+                }),
               })}
             </Popper>
           </Ref>
@@ -297,11 +296,11 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
 
     if (wrapper) {
       return Box.create(wrapper, {
-        defaultProps: {
+        defaultProps: () => ({
           className: cx(MenuItem.slotClassNames.wrapper, classes.wrapper),
           ...accessibility.attributes.wrapper,
           ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, wrapper),
-        },
+        }),
         overrideProps: () => ({
           children: (
             <>
