@@ -331,6 +331,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       // targets DropdownItem shorthand objects
       return (item as any).header || String(item)
     },
+    list: {},
     position: 'below',
     toggleIndicator: {},
     triggerButton: {},
@@ -701,21 +702,35 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
           unstable_pinned={unstable_pinned}
           positioningDependencies={[items.length]}
         >
-          {List.create(list || {}, {
-            overrideProps: {
+          {List.create(list, {
+            defaultProps: {
               className: Dropdown.slotClassNames.itemsList,
               ...accessibilityMenuProps,
               styles: styles.list,
               items,
               tabIndex: search ? undefined : -1, // needs to be focused when trigger button is activated.
               'aria-hidden': !open,
-              onFocus: this.handleTriggerButtonOrListFocus,
+            },
+            overrideProps: {
+              onFocus: this.handleListFocus,
               onBlur: this.handleListBlur,
             },
           })}
         </Popper>
       </Ref>
     )
+  }
+
+  handleListFocus = (e: React.SyntheticEvent) => {
+    const { list } = this.props
+    this.handleTriggerButtonOrListFocus()
+    _.invoke(list, 'onFocus', e, list)
+  }
+
+  handleListBlur = (e: React.SyntheticEvent) => {
+    const { list } = this.props
+    this.handleListBlur(e)
+    _.invoke(list, 'onBlur', e, list)
   }
 
   renderItems(
