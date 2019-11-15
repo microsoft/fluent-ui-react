@@ -42,6 +42,7 @@ import ListItem, { ListItemProps } from '../List/ListItem'
 import Icon, { IconProps } from '../Icon/Icon'
 import Portal from '../Portal/Portal'
 import { ALIGNMENTS, POSITIONS, Popper, PositioningProps } from '../../lib/positioner'
+import Box, { BoxProps } from '../Box/Box'
 
 export interface DropdownSlotClassNames {
   clearIndicator: string
@@ -196,6 +197,9 @@ export interface DropdownProps
    */
   renderSelectedItem?: ShorthandRenderFunction<DropdownSelectedItemProps>
 
+  /** A slot for dropdown list scroll container. */
+  scrollContainer?: ShorthandValue<BoxProps>
+
   /** A dropdown can have a search field instead of trigger button. Can receive a custom search function that will replace the default equivalent. */
   search?:
     | boolean
@@ -295,6 +299,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     renderItem: PropTypes.func,
     renderSelectedItem: PropTypes.func,
     search: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
+    scrollContainer: customPropTypes.shorthandAllowingChildren,
     searchQuery: PropTypes.string,
     searchInput: customPropTypes.itemShorthand,
     toggleIndicator: customPropTypes.itemShorthandWithoutJSX,
@@ -655,7 +660,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     getInputProps: (options?: GetInputPropsOptions) => any,
     rtl: boolean,
   ) {
-    const { align, offset, position, search, unstable_pinned } = this.props
+    const { align, offset, position, search, unstable_pinned, scrollContainer } = this.props
     const { open } = this.state
     const items = open ? this.renderItems(styles, variables, getItemProps, highlightedIndex) : []
     const { innerRef, ...accessibilityMenuProps } = getMenuProps(
@@ -680,35 +685,48 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       }
     }
 
-    return (
+    const list = (
       <Ref
         innerRef={(listElement: HTMLElement) => {
           handleRef(this.listRef, listElement)
           handleRef(innerRef, listElement)
         }}
       >
-        <Popper
-          align={align}
-          position={position}
-          offset={offset}
-          rtl={rtl}
-          enabled={open}
-          targetRef={this.containerRef}
-          unstable_pinned={unstable_pinned}
-          positioningDependencies={[items.length]}
-        >
-          <List
-            className={Dropdown.slotClassNames.itemsList}
-            {...accessibilityMenuProps}
-            styles={styles.list}
-            tabIndex={search ? undefined : -1} // needs to be focused when trigger button is activated.
-            aria-hidden={!open}
-            onFocus={this.handleTriggerButtonOrListFocus}
-            onBlur={this.handleListBlur}
-            items={items}
-          />
-        </Popper>
+        <List
+          className={Dropdown.slotClassNames.itemsList}
+          {...accessibilityMenuProps}
+          styles={styles.list}
+          tabIndex={search ? undefined : -1} // needs to be focused when trigger button is activated.
+          aria-hidden={!open}
+          onFocus={this.handleTriggerButtonOrListFocus}
+          onBlur={this.handleListBlur}
+          items={items}
+        />
       </Ref>
+    )
+
+    const listInScrollContainer =
+      items && items.length > 0 && scrollContainer
+        ? Box.create(scrollContainer, {
+            overrideProps: {
+              children: list,
+            },
+          })
+        : list
+
+    return (
+      <Popper
+        align={align}
+        position={position}
+        offset={offset}
+        rtl={rtl}
+        enabled={open}
+        targetRef={this.containerRef}
+        unstable_pinned={unstable_pinned}
+        positioningDependencies={[items.length]}
+      >
+        {listInScrollContainer}
+      </Popper>
     )
   }
 
