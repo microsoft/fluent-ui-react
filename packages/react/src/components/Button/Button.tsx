@@ -149,7 +149,7 @@ class Button extends UIComponent<WithAsProp<ButtonProps>> {
         {!hasChildren && loading && this.renderLoader(variables, styles)}
         {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables, styles)}
         {Box.create(!hasChildren && content, {
-          defaultProps: { as: 'span', styles: styles.content },
+          defaultProps: () => ({ as: 'span', styles: styles.content }),
         })}
         {!hasChildren && iconPosition === 'after' && this.renderIcon(variables, styles)}
       </ElementType>
@@ -160,11 +160,11 @@ class Button extends UIComponent<WithAsProp<ButtonProps>> {
     const { icon, iconPosition, content } = this.props
 
     return Icon.create(icon, {
-      defaultProps: {
+      defaultProps: () => ({
         styles: styles.icon,
         xSpacing: !content ? 'none' : iconPosition === 'after' ? 'before' : 'after',
         variables: variables.icon,
-      },
+      }),
     })
   }
 
@@ -172,10 +172,10 @@ class Button extends UIComponent<WithAsProp<ButtonProps>> {
     const { loader } = this.props
 
     return Loader.create(loader || {}, {
-      defaultProps: {
+      defaultProps: () => ({
         role: undefined,
         styles: styles.loader,
-      },
+      }),
     })
   }
 

@@ -257,9 +257,9 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
 
     if (popup) {
       return Popup.create(popup, {
-        defaultProps: {
+        defaultProps: () => ({
           trapFocus: true,
-        },
+        }),
         overrideProps: {
           trigger: itemElement,
           children: undefined, // force-reset `children` defined for `Popup` as it collides with the `trigger`
@@ -278,11 +278,11 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
 
       if (wrapper) {
         return Box.create(wrapper, {
-          defaultProps: {
+          defaultProps: () => ({
             className: cx(ToolbarItem.slotClassNames.wrapper, classes.wrapper),
             ...accessibility.attributes.wrapper,
             ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, wrapper),
-          },
+          }),
           overrideProps: predefinedProps => ({
             children: contentElement,
             onClick: e => {

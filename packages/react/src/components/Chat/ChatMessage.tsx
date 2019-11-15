@@ -210,12 +210,12 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     const { messageNode } = this.state
 
     const actionMenuElement = Menu.create(actionMenu, {
-      defaultProps: {
+      defaultProps: () => ({
         [IS_FOCUSABLE_ATTRIBUTE]: true,
         accessibility: menuAsToolbarBehavior,
         className: ChatMessage.slotClassNames.actionMenu,
         styles: styles.actionMenu,
-      },
+      }),
     })
 
     if (!actionMenuElement) {
@@ -282,43 +282,43 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     const childrenPropExists = childrenExist(children)
     const className = childrenPropExists ? cx(classes.root, classes.content) : classes.root
     const badgeElement = Label.create(badge, {
-      defaultProps: {
+      defaultProps: () => ({
         className: ChatMessage.slotClassNames.badge,
         styles: styles.badge,
-      },
+      }),
     })
 
     const reactionGroupElement = Reaction.Group.create(reactionGroup, {
-      defaultProps: {
+      defaultProps: () => ({
         className: ChatMessage.slotClassNames.reactionGroup,
         styles: styles.reactionGroup,
-      },
+      }),
     })
 
     const actionMenuElement = this.renderActionMenu(actionMenu, styles)
 
     const authorElement = Text.create(author, {
-      defaultProps: {
+      defaultProps: () => ({
         size: 'small',
         styles: styles.author,
         className: ChatMessage.slotClassNames.author,
-      },
+      }),
     })
 
     const timestampElement = Text.create(timestamp, {
-      defaultProps: {
+      defaultProps: () => ({
         size: 'small',
         styles: styles.timestamp,
         timestamp: true,
         className: ChatMessage.slotClassNames.timestamp,
-      },
+      }),
     })
 
     const messageContent = Box.create(content, {
-      defaultProps: {
+      defaultProps: () => ({
         className: ChatMessage.slotClassNames.content,
         styles: styles.content,
-      },
+      }),
     })
 
     return (

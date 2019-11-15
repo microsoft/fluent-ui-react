@@ -173,12 +173,12 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
   }: RenderResultConfig<MenuButtonProps>): React.ReactNode {
     const { button, disabled, menu, primary, secondary, toggleButton } = this.props
     const trigger = Button.create(button, {
-      defaultProps: {
+      defaultProps: () => ({
         styles: styles.button,
         primary,
         secondary,
         disabled,
-      },
+      }),
       overrideProps: this.handleMenuButtonTriggerOverrides,
     })
 
@@ -187,7 +187,7 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
         {MenuButton.create(
           {},
           {
-            defaultProps: {
+            defaultProps: () => ({
               accessibility: accessibility.childBehaviors
                 ? accessibility.childBehaviors.menuButton
                 : undefined,
@@ -196,12 +196,12 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
               on: [],
               open: this.state.open,
               trigger,
-            },
+            }),
             overrideProps: this.handleMenuButtonOverrides,
           },
         )}
         {Button.create(toggleButton, {
-          defaultProps: {
+          defaultProps: () => ({
             className: SplitButton.slotClassNames.toggleButton,
             disabled,
             icon: 'stardust-arrow-down',
@@ -209,7 +209,7 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
             primary,
             secondary,
             ...accessibility.attributes.toggleButton,
-          },
+          }),
           overrideProps: (predefinedProps: ButtonProps) => ({
             onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
               _.invoke(predefinedProps, 'onClick', e, buttonProps)
