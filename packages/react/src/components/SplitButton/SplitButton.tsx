@@ -84,6 +84,9 @@ export interface SplitButtonProps
   /** A split button can be formatted to show different levels of emphasis. */
   secondary?: boolean
 
+  /** A split button can be small */
+  small?: boolean
+
   /** Shorthand for the toggle button. */
   toggleButton?: ShorthandValue<ButtonProps>
 }

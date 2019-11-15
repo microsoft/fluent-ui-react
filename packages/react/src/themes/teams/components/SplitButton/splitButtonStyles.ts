@@ -1,10 +1,18 @@
 import { ICSSInJSStyle } from '../../../types'
+import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 
 const splitButtonStyles = {
-  menuButton: ({ variables: v }): ICSSInJSStyle => ({
+  menuButton: ({ props: p, variables: v }): ICSSInJSStyle => ({
     borderTopRightRadius: '0',
     borderBottomRightRadius: '0',
     borderRightWidth: '0',
+
+    ...(p.small && {
+      height: v.smallDimension,
+      padding: v.smallPadding,
+      minWidth: v.smallMinWidth,
+      boxShadow: v.smallBoxShadow,
+    }),
 
     ':active': {
       animationName: '0',
@@ -15,6 +23,15 @@ const splitButtonStyles = {
     borderTopLeftRadius: '0',
     borderBottomLeftRadius: '0',
     borderColor: p.primary ? v.borderColorPrimary : v.borderColor,
+    ...getIconFillOrOutlineStyles({ outline: true }),
+
+    ...(p.small && {
+      height: v.smallDimension,
+      width: v.smallDimension,
+      minWidth: v.smallMinWidth,
+      boxShadow: v.smallBoxShadow,
+    }),
+
     ':active': {
       animationName: '0',
     },
