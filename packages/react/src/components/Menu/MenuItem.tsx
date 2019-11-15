@@ -21,11 +21,9 @@ import {
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
 } from '../../lib'
-
 import Icon, { IconProps } from '../Icon/Icon'
 import Menu, { MenuProps, MenuShorthandKinds } from './Menu'
 import Box, { BoxProps } from '../Box/Box'
-import Animation from '../Animation/Animation'
 import {
   ComponentEventHandler,
   WithAsProp,
@@ -253,18 +251,9 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
         </ElementType>
       </Ref>
     )
-
-    const submenuVisible = menu && active && menuOpen
-
-    const maybeSubmenu = (
-      <>
-        <Animation
-          visible={submenuVisible}
-          duration={'1s'}
-          name={submenuVisible ? 'fadeEnterFast' : 'fadeExitSlow'}
-          mountOnShow
-          unmountOnHide
-        >
+    const maybeSubmenu =
+      menu && active && menuOpen ? (
+        <>
           <Ref innerRef={this.menuRef}>
             <Popper
               align={vertical ? 'top' : rtl ? 'end' : 'start'}
@@ -279,20 +268,15 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
                   primary,
                   secondary,
                   styles: styles.menu,
-                  // styles: mergeStyles(styles.menu, styles),
                   submenu: true,
                   indicator,
                 }),
               })}
             </Popper>
           </Ref>
-        </Animation>
-
-        {submenuVisible && (
           <EventListener listener={this.outsideClickHandler} targetRef={targetRef} type="click" />
-        )}
-      </>
-    )
+        </>
+      ) : null
 
     if (wrapper) {
       return Box.create(wrapper, {
