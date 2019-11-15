@@ -275,6 +275,9 @@ export default () => (
       <NavLink to="accessibility">Accessibility guide</NavLink> section.
     </p>
 
-    <GuidesNavigationFooter previous={{ name: 'Layout', url: 'layout' }} />
+    <GuidesNavigationFooter
+      previous={{ name: 'Layout', url: 'layout' }}
+      next={{ name: 'Performance', url: 'performance' }}
+    />
   </DocPage>
 )
