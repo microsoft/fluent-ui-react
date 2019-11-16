@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Flex, Grid, Ref, Segment } from '@stardust-ui/react'
+import { Button, Flex, Grid, Ref, Segment } from '@fluentui/react'
 
 type RefExampleState = {
   isMounted: boolean

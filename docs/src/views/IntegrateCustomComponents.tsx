@@ -6,7 +6,7 @@ import {
   createComponent,
   ComponentSlotStyle,
   ComponentVariablesInput,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 
 import DocPage from '../components/DocPage/DocPage'
 import ExampleSnippet from '../components/ExampleSnippet/ExampleSnippet'
@@ -43,7 +43,7 @@ export default () => (
     </p>
     <ExampleSnippet
       value={`
-        import { createComponent } from '@stardust-ui/react'
+        import { createComponent } from '@fluentui/react'
 
         const StyledButton = createComponent({
           displayName: 'StyledButton',
@@ -256,7 +256,7 @@ export default () => (
     </p>
     <ExampleSnippet
       value={`
-        import { createComponent, buttonBehavior } from '@stardust-ui/react'
+        import { createComponent, buttonBehavior } from '@fluentui/react'
 
         const StyledButton = createComponent({
           displayName: 'StyledButton',

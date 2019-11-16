@@ -1,6 +1,6 @@
-import { createCallbackLogFormatter } from '@stardust-ui/code-sandbox'
-import { useBooleanKnob, useLogKnob } from '@stardust-ui/docs-components'
-import { Button, Header, Portal } from '@stardust-ui/react'
+import { createCallbackLogFormatter } from '@fluentui/code-sandbox'
+import { useBooleanKnob, useLogKnob } from '@fluentui/docs-components'
+import { Button, Header, Portal } from '@fluentui/react'
 import * as React from 'react'
 
 const PortalExampleOpen = () => {

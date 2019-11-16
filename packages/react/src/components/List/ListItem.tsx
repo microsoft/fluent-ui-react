@@ -1,4 +1,4 @@
-import { Accessibility, listItemBehavior } from '@stardust-ui/accessibility'
+import { Accessibility, listItemBehavior } from '@fluentui/accessibility'
 import cx from 'classnames'
 import * as React from 'react'
 import * as _ from 'lodash'

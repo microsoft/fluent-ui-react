@@ -1,4 +1,4 @@
-import { IS_FOCUSABLE_ATTRIBUTE } from '@stardust-ui/accessibility'
+import { IS_FOCUSABLE_ATTRIBUTE } from '@fluentui/accessibility'
 
 export const IS_VISIBLE_ATTRIBUTE = 'data-is-visible'
 export const FOCUSZONE_ID_ATTRIBUTE = 'data-focuszone-id'

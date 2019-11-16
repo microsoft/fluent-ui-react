@@ -1,4 +1,4 @@
-import { chatMessageBehavior, Accessibility, FocusZoneTabbableElements } from '@stardust-ui/react'
+import { chatMessageBehavior, Accessibility, FocusZoneTabbableElements } from '@fluentui/react'
 import * as keyboardKey from 'keyboard-key'
 
 const threadedMessageBehavior: Accessibility = props => {

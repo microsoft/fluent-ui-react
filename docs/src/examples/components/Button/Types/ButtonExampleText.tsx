@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Text, Icon } from '@stardust-ui/react'
+import { Button, Text, Icon } from '@fluentui/react'
 
 const ButtonExampleText = () => (
   <div>

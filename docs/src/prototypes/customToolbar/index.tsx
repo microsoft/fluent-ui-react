@@ -1,13 +1,13 @@
 import * as _ from 'lodash'
 import * as React from 'react'
-import { KnobsSnippet } from '@stardust-ui/code-sandbox'
+import { KnobsSnippet } from '@fluentui/code-sandbox'
 import {
   KnobProvider,
   useBooleanKnob,
   useSelectKnob,
   KnobInspector,
-} from '@stardust-ui/docs-components'
-import { Provider, Flex, themes, mergeThemes, Telemetry } from '@stardust-ui/react'
+} from '@fluentui/docs-components'
+import { Provider, Flex, themes, mergeThemes, Telemetry } from '@fluentui/react'
 
 import { darkThemeOverrides } from './darkThemeOverrides'
 import { highContrastThemeOverrides } from './highContrastThemeOverrides'

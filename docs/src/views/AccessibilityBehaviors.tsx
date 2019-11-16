@@ -1,6 +1,6 @@
-import { CodeSnippet } from '@stardust-ui/docs-components'
+import { CodeSnippet } from '@fluentui/docs-components'
 import * as React from 'react'
-import { Header } from '@stardust-ui/react'
+import { Header } from '@fluentui/react'
 import DocPage from '../components/DocPage'
 import { code, link } from '../utils/helpers'
 import { Link } from 'react-router-dom'

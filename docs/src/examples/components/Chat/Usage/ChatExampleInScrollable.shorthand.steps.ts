@@ -1,4 +1,4 @@
-import { ChatItem, ChatMessage } from '@stardust-ui/react'
+import { ChatItem, ChatMessage } from '@fluentui/react'
 
 const selectors = {
   item: (itemIndex: number) =>

@@ -2,7 +2,7 @@ import {
   FocusZoneDirection,
   FocusZoneProperties,
   FocusZoneTabbableElements,
-} from '@stardust-ui/accessibility'
+} from '@fluentui/accessibility'
 import * as React from 'react'
 
 import FocusZone from './FocusZone'

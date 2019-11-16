@@ -1,5 +1,5 @@
-import { CodeSnippet, KnobComponents } from '@stardust-ui/docs-components'
-import { Button, Checkbox, Label, Segment, Text } from '@stardust-ui/react'
+import { CodeSnippet, KnobComponents } from '@fluentui/docs-components'
+import { Button, Checkbox, Label, Segment, Text } from '@fluentui/react'
 import * as React from 'react'
 
 const knobComponents: Partial<KnobComponents> = {

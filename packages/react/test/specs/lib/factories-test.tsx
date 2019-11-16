@@ -1,4 +1,4 @@
-import { callable } from '@stardust-ui/react-bindings'
+import { callable } from '@fluentui/react-bindings'
 import * as React from 'react'
 import * as _ from 'lodash'
 import { shallow } from 'enzyme'

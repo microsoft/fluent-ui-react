@@ -1,4 +1,4 @@
-import { Portal, Tooltip, createComponent, TooltipProps } from '@stardust-ui/react'
+import { Portal, Tooltip, createComponent, TooltipProps } from '@fluentui/react'
 import * as React from 'react'
 
 type NotificationProps = {

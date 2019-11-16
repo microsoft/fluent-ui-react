@@ -1,4 +1,4 @@
-import { handleRef } from '@stardust-ui/react-component-ref'
+import { handleRef } from '@fluentui/react-component-ref'
 import * as React from 'react'
 
 describe('handleRef', () => {

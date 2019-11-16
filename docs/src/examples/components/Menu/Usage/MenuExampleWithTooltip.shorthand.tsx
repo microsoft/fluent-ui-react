@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Menu, Tooltip } from '@stardust-ui/react'
+import { Menu, Tooltip } from '@fluentui/react'
 
 const items = [
   { key: 'editorials', content: 'Editorials', tooltip: 'Click for opening Editorials' },

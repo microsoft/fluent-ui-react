@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Flex, Header, Text } from '@stardust-ui/react'
+import { Flex, Header, Text } from '@fluentui/react'
 
 const titleStyle = {
   margin: 0,

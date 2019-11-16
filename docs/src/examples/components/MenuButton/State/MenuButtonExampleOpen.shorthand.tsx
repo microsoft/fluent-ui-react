@@ -1,6 +1,6 @@
-import { useBooleanKnob } from '@stardust-ui/docs-components'
+import { useBooleanKnob } from '@fluentui/docs-components'
 import * as React from 'react'
-import { Button, MenuButton } from '@stardust-ui/react'
+import { Button, MenuButton } from '@fluentui/react'
 
 const MenuButtonOpenExample = () => {
   const [open, setOpen] = useBooleanKnob({ name: 'open' })

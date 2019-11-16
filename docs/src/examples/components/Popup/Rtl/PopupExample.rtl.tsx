@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Popup, Text } from '@stardust-ui/react'
+import { Button, Popup, Text } from '@fluentui/react'
 
 const PopupExampleRtl = () => (
   <Popup

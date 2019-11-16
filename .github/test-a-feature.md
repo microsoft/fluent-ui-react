@@ -135,7 +135,7 @@ This default test only checks the rendering for the component in its initial sta
 #### Example for a test file:
 
 ```tsx
-import { Dropdown } from '@stardust-ui/react'
+import { Dropdown } from '@fluentui/react'
 
 const config: ScreenerTestsConfig = {
   themes: ['teams', 'teamsDark', 'teamsHighContrast'],

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Tooltip } from '@stardust-ui/react'
+import { Button, Tooltip } from '@fluentui/react'
 
 const TooltipExampleDisabledTrigger = () => {
   return (

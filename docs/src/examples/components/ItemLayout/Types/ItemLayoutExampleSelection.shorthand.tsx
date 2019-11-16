@@ -1,4 +1,4 @@
-import { ItemLayout, Image } from '@stardust-ui/react'
+import { ItemLayout, Image } from '@fluentui/react'
 import * as React from 'react'
 
 const ItemLayoutExampleSelectionShorthand = () => {

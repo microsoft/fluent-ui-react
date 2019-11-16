@@ -8,7 +8,7 @@ import {
   commonPropTypes,
   ShorthandFactory,
 } from '../../lib'
-import { Accessibility } from '@stardust-ui/accessibility'
+import { Accessibility } from '@fluentui/accessibility'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface ToolbarMenuDividerProps

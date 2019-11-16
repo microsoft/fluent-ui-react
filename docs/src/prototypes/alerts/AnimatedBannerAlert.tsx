@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Alert, Animation, AlertProps } from '@stardust-ui/react'
+import { Alert, Animation, AlertProps } from '@fluentui/react'
 
 interface AnimatedBannerAlertProps extends AlertProps {
   open?: boolean

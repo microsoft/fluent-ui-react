@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Popup, Segment } from '@stardust-ui/react'
+import { Button, Popup, Segment } from '@fluentui/react'
 
 class AsyncDataLoader extends React.Component<any, any> {
   state = {

@@ -1,4 +1,4 @@
-import { AccessibilityAttributesBySlot, AccessibilityDefinition } from '@stardust-ui/accessibility'
+import { AccessibilityAttributesBySlot, AccessibilityDefinition } from '@fluentui/accessibility'
 import * as React from 'react'
 
 /*

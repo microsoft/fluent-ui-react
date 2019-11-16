@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Label, Provider } from '@stardust-ui/react'
+import { Label, Provider } from '@fluentui/react'
 import * as _ from 'lodash'
 
 const LabelExampleColor = () => (

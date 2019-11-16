@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { List, Image } from '@stardust-ui/react'
+import { List, Image } from '@fluentui/react'
 
 const ListExampleSelectable = () => (
   <List selectable>

@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import { Accessibility } from '@stardust-ui/accessibility'
+import { Accessibility } from '@fluentui/accessibility'
 
 interface FilteredSpecification {
   behaviorName: string

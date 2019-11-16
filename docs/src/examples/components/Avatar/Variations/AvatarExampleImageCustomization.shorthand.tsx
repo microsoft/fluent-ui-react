@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Avatar, Icon } from '@stardust-ui/react'
+import { Avatar, Icon } from '@fluentui/react'
 
 const AvatarExampleImageCustomizationShorthand = () => (
   <>

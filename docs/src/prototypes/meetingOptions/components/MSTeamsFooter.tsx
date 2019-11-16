@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Divider, Layout } from '@stardust-ui/react'
+import { Divider, Layout } from '@fluentui/react'
 
 export default props => {
   return (

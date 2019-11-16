@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Toolbar, Button, ToolbarMenu } from '@stardust-ui/react'
+import { Toolbar, Button, ToolbarMenu } from '@fluentui/react'
 
 export const selectors = {
   beforeToolbarId: 'before',

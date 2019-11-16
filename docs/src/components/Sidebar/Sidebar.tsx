@@ -10,7 +10,7 @@ import {
   Flex,
   Box,
   HierarchicalTreeTitleProps,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 import { ShorthandValue } from '../../../../packages/react/src/types'
 import Logo from 'docs/src/components/Logo/Logo'
 import { getComponentPathname } from 'docs/src/utils'

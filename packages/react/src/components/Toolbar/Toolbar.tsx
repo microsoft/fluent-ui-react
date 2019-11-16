@@ -3,13 +3,13 @@ import {
   toolbarBehavior,
   toggleButtonBehavior,
   IS_FOCUSABLE_ATTRIBUTE,
-} from '@stardust-ui/accessibility'
+} from '@fluentui/accessibility'
 import * as React from 'react'
 import * as _ from 'lodash'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
-import { Ref, toRefObject } from '@stardust-ui/react-component-ref'
-import { EventListener } from '@stardust-ui/react-component-event-listener'
+import { Ref, toRefObject } from '@fluentui/react-component-ref'
+import { EventListener } from '@fluentui/react-component-event-listener'
 
 import {
   childrenExist,

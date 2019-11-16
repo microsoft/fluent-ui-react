@@ -1,11 +1,11 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
-import { Accessibility, toolbarItemBehavior } from '@stardust-ui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
+import { Accessibility, toolbarItemBehavior } from '@fluentui/accessibility'
 import cx from 'classnames'
-import { Ref, toRefObject } from '@stardust-ui/react-component-ref'
-import { EventListener } from '@stardust-ui/react-component-event-listener'
+import { Ref, toRefObject } from '@fluentui/react-component-ref'
+import { EventListener } from '@fluentui/react-component-event-listener'
 
 import {
   UIComponent,
@@ -35,12 +35,8 @@ import Box, { BoxProps } from '../Box/Box'
 import Popup, { PopupProps } from '../Popup/Popup'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 import { ToolbarMenuItemProps } from '../Toolbar/ToolbarMenuItem'
-import { ToolbarItemShorthandKinds } from '@stardust-ui/react'
-import {
-  GetRefs,
-  NodeRef,
-  Unstable_NestingAuto,
-} from '@stardust-ui/react-component-nesting-registry'
+import { ToolbarItemShorthandKinds } from '@fluentui/react'
+import { GetRefs, NodeRef, Unstable_NestingAuto } from '@fluentui/react-component-nesting-registry'
 
 export interface ToolbarItemProps
   extends UIComponentProps,

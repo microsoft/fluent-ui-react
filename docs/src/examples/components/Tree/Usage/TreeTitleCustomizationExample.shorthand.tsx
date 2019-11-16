@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Icon, Tree } from '@stardust-ui/react'
+import { Icon, Tree } from '@fluentui/react'
 
 const items = [
   {

@@ -1,4 +1,4 @@
-import { menuButtonBehavior } from '@stardust-ui/accessibility'
+import { menuButtonBehavior } from '@fluentui/accessibility'
 
 const mockedMenuId = 'anyMenuId'
 

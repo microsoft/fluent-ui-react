@@ -70,7 +70,7 @@ import {
   tableCellBehavior,
   tableHeaderCellBehavior,
   tableRowBehavior,
-} from '@stardust-ui/accessibility'
+} from '@fluentui/accessibility'
 import { TestHelper } from './testHelper'
 import definitions from './testDefinitions'
 

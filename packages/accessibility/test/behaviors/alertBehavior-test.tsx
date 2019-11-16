@@ -1,4 +1,4 @@
-import { alertBehavior } from '@stardust-ui/accessibility'
+import { alertBehavior } from '@fluentui/accessibility'
 
 describe('AlertBehavior.ts', () => {
   test('use alertWarningBehavior if warning prop is defined', () => {
