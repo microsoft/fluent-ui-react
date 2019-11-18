@@ -76,10 +76,6 @@ export interface AnimationProps
    */
   timingFunction?: string
 
-  /**
-   * Newly added props for removing/adding elements in DOM
-   */
-
   /** Show the component; triggers the enter or exit animation. */
   visible?: boolean
 
@@ -92,14 +88,25 @@ export interface AnimationProps
   /** Unmount the component (remove it from the DOM) when it is not shown. */
   unmountOnExit?: boolean
 
+  /** The duration of the transition, in milliseconds. */
   timeout?: number | { enter?: number; exit?: number; appear?: number }
 
+  /** Callback fired before the "entering" status is applied. An extra parameter isAppearing is supplied to indicate if the enter stage is occurring on the initial mount. */
   onEnter?: (node: HTMLElement, isAppearing: boolean) => void
+
+  /** Callback fired after the "entering" status is applied. An extra parameter isAppearing is supplied to indicate if the enter stage is occurring on the initial mount. */
   onEntering?: (node: HTMLElement, isAppearing: boolean) => void
+
+  /** Callback fired after the "entered" status is applied. An extra parameter isAppearing is supplied to indicate if the enter stage is occurring on the initial mount. */
   onEntered?: (node: HTMLElement, isAppearing: boolean) => void
 
+  /** Callback fired before the "exiting" status is applied. */
   onExit?: (node: HTMLElement) => void
+
+  /** Callback fired after the "exiting" status is applied. */
   onExiting?: (node: HTMLElement) => void
+
+  /** Callback fired after the "exited" status is applied. */
   onExited?: (node: HTMLElement) => void
 }
 
