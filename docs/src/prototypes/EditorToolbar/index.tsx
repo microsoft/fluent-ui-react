@@ -39,7 +39,12 @@ const EditorToolbarInWindowPrototype = () => {
       {open && (
         <PortalWindow onClose={() => setOpen(false)}>
           {externalDocument => (
-            <Provider rtl={rtl} theme={themes.teams} target={externalDocument}>
+            <Provider
+              rtl={rtl}
+              theme={themes.teams}
+              styles={{ overflow: 'hidden', height: 'inherit', width: 'inherit' }}
+              target={externalDocument}
+            >
               <EditorToolbar {...state} dispatch={dispatch} />
             </Provider>
           )}

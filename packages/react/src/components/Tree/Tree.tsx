@@ -26,7 +26,7 @@ import {
   ShorthandValue,
 } from '../../types'
 import { hasSubtree, removeItemAtIndex } from './lib'
-import { TreeTitleProps } from './TreeTitle'
+import TreeTitle, { TreeTitleProps } from './TreeTitle'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 
 export interface TreeSlotClassNames {
@@ -37,13 +37,13 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
   /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
-  /** Ids of opened items. */
+  /** Ids of expanded items. */
   activeItemIds?: string[]
 
   /** Initial activeItemIds value. */
   defaultActiveItemIds?: string[]
 
-  /** Only allow one subtree to be open at a time. */
+  /** Only allow one subtree to be expanded at a time. */
   exclusive?: boolean
 
   /** Shorthand array of props for Tree. */
@@ -112,6 +112,9 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
 
   static autoControlledProps = ['activeItemIds']
 
+  static Item = TreeItem
+  static Title = TreeTitle
+
   // memoize this function if performance issue occurs.
   static getItemsForRender = (itemsFromProps: ShorthandCollection<TreeItemProps>) => {
     const itemsForRenderGenerator = (
@@ -146,9 +149,35 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
   }
 
   static getAutoControlledStateFromProps(nextProps: TreeProps, prevState: TreeState) {
-    const itemsForRender = Tree.getItemsForRender(nextProps.items)
+    const { items } = nextProps
+    const itemsForRender = Tree.getItemsForRender(items)
+    let { activeItemIds } = nextProps
+
+    if (!activeItemIds && items) {
+      activeItemIds = prevState.activeItemIds
+
+      const expandedItemsGenerator = (items, acc = activeItemIds) =>
+        _.reduce(
+          items,
+          (acc, item) => {
+            if (item['expanded'] && acc.indexOf(item['id']) === -1) {
+              acc.push(item['id'])
+            }
+
+            if (item['items']) {
+              return expandedItemsGenerator(item['items'], acc)
+            }
+
+            return acc
+          },
+          acc,
+        )
+
+      expandedItemsGenerator(items)
+    }
 
     return {
+      activeItemIds,
       itemsForRender,
     }
   }
@@ -273,26 +302,26 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
           const itemForRender = itemsForRender[item['id']]
           const { elementRef, ...restItemForRender } = itemForRender
           const isSubtree = hasSubtree(item)
-          const isSubtreeOpen = isSubtree && this.isActiveItem(item['id'])
+          const isSubtreeExpanded = isSubtree && this.isActiveItem(item['id'])
           const renderedItem = TreeItem.create(item, {
-            defaultProps: {
+            defaultProps: () => ({
               accessibility: accessibility.childBehaviors
                 ? accessibility.childBehaviors.item
                 : undefined,
               className: Tree.slotClassNames.item,
-              open: isSubtreeOpen,
+              expanded: isSubtreeExpanded,
               renderItemTitle,
               key: item['id'],
               contentRef: elementRef,
               ...restItemForRender,
-            },
+            }),
             overrideProps: this.handleTreeItemOverrides,
           })
 
           return [
             ...renderedItems,
             renderedItem,
-            ...(isSubtreeOpen ? renderItems(item['items']) : ([] as any)),
+            ...(isSubtreeExpanded ? renderItems(item['items']) : ([] as any)),
           ]
         },
         [],
@@ -340,5 +369,8 @@ Tree.create = createShorthandFactory({
  *
  * @accessibility
  * Implements [ARIA TreeView](https://www.w3.org/TR/wai-aria-practices-1.1/#TreeView) design pattern.
+ * @accessibilityIssues
+ * [Treeview - JAWS doesn't narrate position for each tree item](https://github.com/FreedomScientific/VFO-standards-support/issues/338)
  */
+
 export default withSafeTypeForAs<typeof Tree, TreeProps, 'ul'>(Tree)

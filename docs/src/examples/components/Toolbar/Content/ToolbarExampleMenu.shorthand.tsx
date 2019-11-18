@@ -15,11 +15,13 @@ const ToolbarExampleMenuShorthand = () => {
 
   return (
     <Toolbar
+      aria-label="Toolbar can contain a menu"
       items={[
         {
           key: 'more',
           icon: 'more',
           active: menuOpen,
+          title: 'More',
           menu: {
             items: [
               { key: 'play', content: 'Play', icon: 'play' },

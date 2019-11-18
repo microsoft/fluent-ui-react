@@ -64,8 +64,8 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
   /** Called when the item's parent is about to be focused. */
   onFocusParent?: ComponentEventHandler<TreeItemProps>
 
-  /** Whether or not the item is in the open state. Only makes sense if item has children items. */
-  open?: boolean
+  /** Whether or not the item is in the expanded state. Only makes sense if item has children items. */
+  expanded?: boolean
 
   /** The id of the parent tree item, if any. */
   parent?: ShorthandValue<TreeItemProps>
@@ -117,7 +117,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>, TreeItemState> {
     onFocusFirstChild: PropTypes.func,
     onFocusParent: PropTypes.func,
     onSiblingsExpand: PropTypes.func,
-    open: PropTypes.bool,
+    expanded: PropTypes.bool,
     parent: customPropTypes.itemShorthand,
     renderItemTitle: PropTypes.func,
     siblings: customPropTypes.collectionShorthand,
@@ -137,7 +137,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>, TreeItemState> {
   static getDerivedStateFromProps(props: TreeItemProps) {
     return {
       hasSubtree: hasSubtree(props),
-      treeSize: props.siblings.length + 1,
+      treeSize: props.siblings ? props.siblings.length + 1 : 1,
     }
   }
 
@@ -192,13 +192,13 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>, TreeItemState> {
   })
 
   renderContent(accessibility: ReactAccessibilityBehavior) {
-    const { title, renderItemTitle, open, level, index } = this.props
+    const { title, renderItemTitle, expanded, level, index } = this.props
     const { hasSubtree, treeSize } = this.state
 
     return TreeTitle.create(title, {
-      defaultProps: {
+      defaultProps: () => ({
         className: TreeItem.slotClassNames.title,
-        open,
+        expanded,
         hasSubtree,
         as: hasSubtree ? 'span' : 'a',
         level,
@@ -207,7 +207,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>, TreeItemState> {
         accessibility: accessibility.childBehaviors
           ? accessibility.childBehaviors.title
           : undefined,
-      },
+      }),
       render: renderItemTitle,
       overrideProps: this.handleTitleOverrides,
     })

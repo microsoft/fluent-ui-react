@@ -3,8 +3,9 @@ import { Button, Text, Toolbar } from '@stardust-ui/react'
 
 const ToolbarExampleCustomContentShorthand = () => (
   <Toolbar
+    aria-label="Toolbar can contain custom content"
     items={[
-      { key: 'bold', icon: 'bold' },
+      { key: 'bold', icon: 'bold', title: 'Bold' },
       {
         key: 'custom-text',
         content: <Text content="Text" />,

@@ -22,6 +22,8 @@ export { default as iconBehavior } from './Icon/iconBehavior'
 export { default as tabBehavior } from './Tab/tabBehavior'
 export { default as tabListBehavior } from './Tab/tabListBehavior'
 export { default as menuAsToolbarBehavior } from './Toolbar/menuAsToolbarBehavior'
+export { default as toolbarMenuBehavior } from './Toolbar/toolbarMenuBehavior'
+export { default as toolbarMenuItemBehavior } from './Toolbar/toolbarMenuItemBehavior'
 export {
   default as menuItemAsToolbarButtonBehavior,
 } from './Toolbar/menuItemAsToolbarButtonBehavior'
@@ -72,3 +74,7 @@ export { default as treeItemAsListItemBehavior } from './Tree/treeItemAsListItem
 export {
   default as treeTitleAsListItemTitleBehavior,
 } from './Tree/treeTitleAsListItemTitleBehavior'
+export { default as tableBehavior } from './Table/tableBehavior'
+export { default as tableRowBehavior } from './Table/tableRowBehavior'
+export { default as tableCellBehavior } from './Table/tableCellBehavior'
+export { default as tableHeaderCellBehavior } from './Table/tableHeaderCellBehavior'

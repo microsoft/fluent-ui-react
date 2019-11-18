@@ -49,7 +49,7 @@ export default (siteVars): ChatMessageVariables => ({
   linkColor: siteVars.colorScheme.brand.foreground1,
   linkColorMine: siteVars.colorScheme.brand.foreground2,
   border: 'none',
-  badgeShadow: siteVars.shadowLevel1Darker,
+  badgeShadow: siteVars.shadowLevel1Dark,
   isImportant: false,
   hasMention: false,
   hasMentionColor: siteVars.colors.orange[300],

@@ -16,11 +16,13 @@ const ToolbarExampleMenuItemToggle = () => {
 
   return (
     <Toolbar
+      aria-label="Toolbar can contain toggle items in a menu"
       items={[
         {
           key: 'more',
           active: menuOpen,
           icon: 'more',
+          title: 'More',
           menu: [
             {
               key: 'bold',
