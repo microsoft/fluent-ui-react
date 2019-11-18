@@ -1,5 +1,5 @@
 import * as customPropTypes from '@stardust-ui/react-proptypes'
-import { carouselBehavior } from '@stardust-ui/accessibility'
+import { Accessibility, carouselBehavior } from '@stardust-ui/accessibility'
 import * as React from 'react'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -29,7 +29,6 @@ import CarouselItem, { CarouselItemProps } from './CarouselItem'
 import Text from '../Text/Text'
 import CarouselNavigation, { CarouselNavigationProps } from './CarouselNavigation'
 import CarouselNavigationItem, { CarouselNavigationItemProps } from './CarouselNavigationItem'
-import { Accessibility } from 'packages/accessibility/src'
 
 export interface CarouselSlotClassNames {
   itemsContainer: string
