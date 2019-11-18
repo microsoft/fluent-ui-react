@@ -1,28 +1,22 @@
 import * as React from 'react'
 import { Carousel, Image } from '@stardust-ui/react'
 
-const imageAltTags = {
-  ade: 'Portrait of Ade',
-  elliot: 'Portrait of Elliot',
-  kristy: 'Portrait of Kristy',
-  nan: 'Portrait of Nan',
-}
 const carouselItems = [
   {
     key: 'ade',
-    content: <Image src="public/images/avatar/large/ade.jpg" fluid alt={imageAltTags.ade} />,
+    content: <Image src="public/images/avatar/large/ade.jpg" fluid alt={'Portrait of Ade'} />,
   },
   {
     key: 'elliot',
-    content: <Image src="public/images/avatar/large/elliot.jpg" fluid alt={imageAltTags.elliot} />,
+    content: <Image src="public/images/avatar/large/elliot.jpg" fluid alt={'Portrait of Elliot'} />,
   },
   {
     key: 'kristy',
-    content: <Image src="public/images/avatar/large/kristy.png" fluid alt={imageAltTags.kristy} />,
+    content: <Image src="public/images/avatar/large/kristy.png" fluid alt={'Portrait of Kristy'} />,
   },
   {
     key: 'nan',
-    content: <Image src="public/images/avatar/large/nan.jpg" fluid alt={imageAltTags.nan} />,
+    content: <Image src="public/images/avatar/large/nan.jpg" fluid alt={'Portrait of Nan'} />,
   },
 ]
 

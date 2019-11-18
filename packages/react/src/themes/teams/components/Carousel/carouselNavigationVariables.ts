@@ -33,8 +33,6 @@ export interface CarouselNavigationVariables {
   colorActive: string
   iconOnlyColorActive: string
 
-  underlinedBorderColor: string
-
   lineHeightBase: string
   horizontalPadding: string
 
@@ -44,7 +42,6 @@ export interface CarouselNavigationVariables {
   verticalItemBorderColor: string
   verticalBackgroundColorFocus: string
 
-  underlinedBottomBorderWidth: string
   primaryBorderColor: string
 
   borderWidth: string
@@ -89,8 +86,6 @@ export default (siteVars: any): CarouselNavigationVariables => {
 
     iconOnlyColorActive: siteVars.colors.brand[600],
 
-    underlinedBorderColor: siteVars.colors.grey[200],
-
     lineHeightBase: siteVars.lineHeightMedium,
     horizontalPadding: `${pxToRem(14)} ${pxToRem(18)}`,
 
@@ -99,7 +94,6 @@ export default (siteVars: any): CarouselNavigationVariables => {
     verticalItemBorderWidth: pxToRem(2),
     verticalItemBorderColor: 'transparent',
     verticalBackgroundColorFocus: siteVars.colors.grey[150],
-    underlinedBottomBorderWidth: pxToRem(2),
     primaryBorderColor: siteVars.colorScheme.default.border2,
 
     borderWidth: pxToRem(1),

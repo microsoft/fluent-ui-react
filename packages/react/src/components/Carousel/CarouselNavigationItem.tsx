@@ -15,7 +15,6 @@ import {
   ContentComponentProps,
   applyAccessibilityKeyHandlers,
   SizeValue,
-  isFromKeyboard,
   UIComponent,
 } from '../../lib'
 import { withSafeTypeForAs, WithAsProp, ShorthandValue, ComponentEventHandler } from '../../types'
@@ -24,10 +23,6 @@ import Box from '../Box/Box'
 
 export interface CarouselNavigationItemSlotClassNames {
   wrapper: string
-}
-
-export interface CarouselNavigationItemState {
-  isFromKeyboard: boolean
 }
 
 export interface CarouselNavigationItemProps
@@ -60,21 +55,11 @@ export interface CarouselNavigationItemProps
   /** The carousel navigation item can have secondary type. */
   secondary?: boolean
 
-  /** Carousel navigation items can by highlighted using underline. */
-  underlined?: boolean
-
   /** A vertical carousel navigation displays elements vertically. */
   vertical?: boolean
 }
 
-export interface CarouselNavigationItemState {
-  activeIndex?: number | string
-}
-
-class CarouselNavigationItem extends UIComponent<
-  WithAsProp<CarouselNavigationItemProps>,
-  CarouselNavigationItemState
-> {
+class CarouselNavigationItem extends UIComponent<WithAsProp<CarouselNavigationItemProps>> {
   static displayName = 'CarouselNavigationItem'
 
   static className = 'ui-carousel__navigationitem'
@@ -90,7 +75,6 @@ class CarouselNavigationItem extends UIComponent<
     onClick: PropTypes.func,
     primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
     secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
-    underlined: PropTypes.bool,
     vertical: PropTypes.bool,
   }
 
@@ -134,14 +118,10 @@ class CarouselNavigationItem extends UIComponent<
   }
 
   handleBlur = (e: React.SyntheticEvent) => {
-    this.setState({ isFromKeyboard: false })
-
     _.invoke(this.props, 'onBlur', e, this.props)
   }
 
   handleFocus = (e: React.SyntheticEvent) => {
-    this.setState({ isFromKeyboard: isFromKeyboard() })
-
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 

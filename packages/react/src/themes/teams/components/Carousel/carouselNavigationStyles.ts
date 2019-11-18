@@ -9,7 +9,7 @@ const carouselNavigationStyles: ComponentSlotStylesPrepared<
   CarouselNavigationVariables
 > = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
-    const { iconOnly, primary, underlined, vertical } = p
+    const { iconOnly, primary, vertical } = p
     const colors = getColorScheme(v.colorScheme, null, primary)
 
     return {
@@ -36,18 +36,13 @@ const carouselNavigationStyles: ComponentSlotStylesPrepared<
       }),
 
       ...(!iconOnly &&
-        !vertical &&
-        !underlined && {
+        !vertical && {
           // primary has hardcoded grey border color
           border: `${v.borderWidth} solid ${
             primary ? v.primaryBorderColor : v.borderColor || colors.border
           }`,
           borderRadius: pxToRem(4),
         }),
-
-      ...(underlined && {
-        borderBottom: `${v.underlinedBottomBorderWidth} solid ${v.underlinedBorderColor}`,
-      }),
     }
   },
 }

@@ -49,9 +49,6 @@ export interface CarouselNavigationProps extends UIComponentProps, ChildrenCompo
   /** The carousel navigation can have secondary type. */
   secondary?: boolean
 
-  /** Carousel navigation items can by highlighted using underline. */
-  underlined?: boolean
-
   /** A vertical carousel navigation displays elements vertically. */
   vertical?: boolean
 }
@@ -73,7 +70,6 @@ class CarouselNavigation extends UIComponent<WithAsProp<CarouselNavigationProps>
     onItemClick: PropTypes.func,
     primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
     secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
-    underlined: PropTypes.bool,
     vertical: PropTypes.bool,
   }
 
@@ -94,7 +90,7 @@ class CarouselNavigation extends UIComponent<WithAsProp<CarouselNavigationProps>
     variables: ComponentVariablesObject,
     accessibility: ReactAccessibilityBehavior,
   ) => {
-    const { activeIndex, iconOnly, items, primary, secondary, underlined, vertical } = this.props
+    const { activeIndex, iconOnly, items, primary, secondary, vertical } = this.props
 
     return _.map(items, (item, index) =>
       CarouselNavigationItem.create(item, {
@@ -104,7 +100,6 @@ class CarouselNavigation extends UIComponent<WithAsProp<CarouselNavigationProps>
           index,
           primary,
           secondary,
-          underlined,
           vertical,
           accessibility: accessibility.childBehaviors
             ? accessibility.childBehaviors.item

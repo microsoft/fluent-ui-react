@@ -10,7 +10,7 @@ function renderCarouselItem(props?: CarouselItemProps): ReactWrapper {
 }
 
 const getItemPositionContainer = (wrapper: ReactWrapper): CommonWrapper =>
-  findIntrinsicElement(wrapper, `.${CarouselItem.slotClassNames.itemPositionContainer}`)
+  findIntrinsicElement(wrapper, `.${CarouselItem.slotClassNames.itemPositionText}`)
 
 describe('CarouselItem', () => {
   isConformant(CarouselItem)

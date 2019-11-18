@@ -91,26 +91,6 @@ describe('Carousel', () => {
       expect(pagination.getDOMNode().textContent).toBe(`3 of ${items.length}`)
     })
 
-    it('should not increase at paddle next press if last and not circular', () => {
-      const wrapper = renderCarousel({ defaultActiveIndex: 3 })
-      const paddleNext = getPaddleNextWrapper(wrapper)
-      const pagination = getPaginationWrapper(wrapper)
-
-      paddleNext.simulate('click')
-
-      expect(pagination.getDOMNode().textContent).toBe(`4 of ${items.length}`)
-    })
-
-    it('should not decrese at paddle previous press if first and not circular', () => {
-      const wrapper = renderCarousel()
-      const paddlePrevious = getPaddlePreviousWrapper(wrapper)
-      const pagination = getPaginationWrapper(wrapper)
-
-      paddlePrevious.simulate('click')
-
-      expect(pagination.getDOMNode().textContent).toBe(`1 of ${items.length}`)
-    })
-
     it('should wrap at paddle next press if last and circular', () => {
       const wrapper = renderCarousel({ circular: true, defaultActiveIndex: 3 })
       const paddleNext = getPaddleNextWrapper(wrapper)
@@ -149,6 +129,26 @@ describe('Carousel', () => {
       itemsContainer.simulate('keydown', { key: 'ArrowLeft' })
 
       expect(pagination.getDOMNode().textContent).toBe(`3 of ${items.length}`)
+    })
+
+    it('should not increment at arrow right if last and not circular', () => {
+      const wrapper = renderCarousel({ defaultActiveIndex: 3 })
+      const pagination = getPaginationWrapper(wrapper)
+      const itemsContainer = getItemsContainer(wrapper)
+
+      itemsContainer.simulate('keydown', { key: 'ArrowRight' })
+
+      expect(pagination.getDOMNode().textContent).toBe(`4 of ${items.length}`)
+    })
+
+    it('should not decrement at arrow left if first and not circular', () => {
+      const wrapper = renderCarousel()
+      const pagination = getPaginationWrapper(wrapper)
+      const itemsContainer = getItemsContainer(wrapper)
+
+      itemsContainer.simulate('keydown', { key: 'ArrowLeft' })
+
+      expect(pagination.getDOMNode().textContent).toBe(`1 of ${items.length}`)
     })
   })
 
@@ -211,13 +211,23 @@ describe('Carousel', () => {
       jest.runAllTimers()
     })
 
-    it('should not show pagination if prop is passed', () => {
+    it('should not show pagination if navigation prop is passed', () => {
       const wrapper = renderCarousel({ navigation })
       const navigationWrapper = getNavigationNavigationWrapper(wrapper)
       const paginationWrapper = getPaginationWrapper(wrapper)
 
-      expect(paginationWrapper.length).toBe(0)
+      expect(paginationWrapper.exists()).toBe(false)
+      expect(navigationWrapper.exists()).toBe(true)
       expect(navigationWrapper.getDOMNode().children.length).toBe(4)
+    })
+
+    it('should show pagination if navigation prop is not passed', () => {
+      const wrapper = renderCarousel()
+      const navigationWrapper = getNavigationNavigationWrapper(wrapper)
+      const paginationWrapper = getPaginationWrapper(wrapper)
+
+      expect(paginationWrapper.exists()).toBe(true)
+      expect(navigationWrapper.exists()).toBe(false)
     })
 
     it('should show and focus the appropriate slide when clicked', () => {

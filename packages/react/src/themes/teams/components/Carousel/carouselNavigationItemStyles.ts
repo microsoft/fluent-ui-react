@@ -1,8 +1,5 @@
 import { pxToRem } from '../../../../lib'
-import {
-  CarouselNavigationItemProps,
-  CarouselNavigationItemState,
-} from '../../../../components/Carousel/CarouselNavigationItem'
+import { CarouselNavigationItemProps } from '../../../../components/Carousel/CarouselNavigationItem'
 import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { CarouselNavigationVariables } from './carouselNavigationVariables'
 import { getColorScheme } from '../../colors'
@@ -18,23 +15,14 @@ export const underlinedItem = (color: string): ICSSInJSStyle => ({
   transition: 'color .1s ease',
 })
 
-type CarouselNavigationItemPropsAndState = CarouselNavigationItemProps & CarouselNavigationItemState
+type CarouselNavigationItemPropsAndState = CarouselNavigationItemProps
 
 const carouselNavigationItemStyles: ComponentSlotStylesPrepared<
   CarouselNavigationItemPropsAndState,
   CarouselNavigationVariables
 > = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
-    const {
-      active,
-      iconOnly,
-      isFromKeyboard,
-      pointing,
-      primary,
-      underlined,
-      vertical,
-      disabled,
-    } = p
+    const { active, iconOnly, primary, vertical } = p
 
     const colors = getColorScheme(v.colorScheme, null, primary)
 
@@ -44,20 +32,11 @@ const carouselNavigationItemStyles: ComponentSlotStylesPrepared<
       cursor: 'pointer',
       whiteSpace: 'nowrap',
 
-      ...(pointing &&
-        vertical && {
-          border: '1px solid transparent',
-        }),
-
       ...(iconOnly && {
         border: `${pxToRem(2)} solid transparent`,
       }),
 
-      ...(underlined
-        ? { padding: `${pxToRem(4)} 0` }
-        : pointing && vertical
-        ? { padding: `${pxToRem(8)} ${pxToRem(18)}` }
-        : vertical
+      ...(vertical
         ? { padding: v.verticalItemPadding }
         : {
             padding: v.horizontalPadding,
@@ -72,50 +51,26 @@ const carouselNavigationItemStyles: ComponentSlotStylesPrepared<
       }),
 
       // active styles
-      ...(active && {
-        ...(iconOnly && {
+      ...(active &&
+        iconOnly && {
           color: v.iconOnlyColorActive,
           ...getIconFillOrOutlineStyles({ outline: false }),
         }),
 
-        ...(primary
-          ? {
-              ...(underlined && {
-                color: colors.borderActive,
-                ...underlinedItem(v.borderColorActive || colors.borderActive),
-              }),
-            }
-          : underlined && {
-              fontWeight: 700,
-              ...underlinedItem(v.colorActive),
-            }),
-      }),
-
       // focus styles
-      ...(isFromKeyboard && {
+      ':focus-visible': {
         ...(iconOnly && {
           borderRadius: '50%',
           borderColor: v.iconOnlyColorActive,
           ...getIconFillOrOutlineStyles({ outline: false }),
         }),
+      },
 
-        ...(primary
-          ? {
-              ...(iconOnly && {
-                color: 'inherit',
-                borderColor: v.borderColorActive || colors.borderActive,
-              }),
-
-              ...(underlined && { color: 'inherit' }),
-
-              ...(underlined && active && underlinedItem(colors.foregroundActive)),
-            }
-          : {
-              ...(underlined && { fontWeight: 700 }),
-
-              ...(underlined && active && underlinedItem(v.colorActive)),
-            }),
-      }),
+      ...(iconOnly &&
+        primary && {
+          color: 'inherit',
+          borderColor: v.borderColorActive || colors.borderActive,
+        }),
 
       ':focus': {
         outline: 0,
@@ -127,25 +82,8 @@ const carouselNavigationItemStyles: ComponentSlotStylesPrepared<
 
         ...(iconOnly && getIconFillOrOutlineStyles({ outline: false })),
 
-        ...(primary
-          ? {
-              ...(iconOnly && { color: 'inherit' }),
-              ...(!active &&
-                underlined &&
-                underlinedItem(v.underlinedBorderColor || colors.backgroundActive)),
-            }
-          : !active &&
-            underlined &&
-            underlinedItem(v.backgroundColorActive || colors.backgroundActive)),
+        ...(primary && iconOnly && { color: 'inherit' }),
       },
-
-      ...(disabled && {
-        cursor: 'default',
-        ':hover': {
-          // reset all existing hover styles
-          color: 'inherit',
-        },
-      }),
     }
   },
 

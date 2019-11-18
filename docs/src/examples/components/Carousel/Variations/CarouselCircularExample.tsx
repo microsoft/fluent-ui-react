@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Carousel, Image, SizeValue } from '@stardust-ui/react'
+import { Carousel, Image } from '@stardust-ui/react'
 
 const imageAltTags = {
   ade: 'Portrait of Ade',
@@ -40,7 +40,6 @@ const CarouselExample = () => (
         key: index,
         'aria-controls': item.id,
         'aria-label': imageAltTags[item.id],
-        icon: { name: 'stardust-circle', size: 'smallest' as SizeValue },
       })),
     }}
     items={carouselItems}
