@@ -21,18 +21,26 @@ const AnimationExampleIterationCount = () => (
       <Text content="2 iterations" />
       <Text content="5 iterations" />
       <Text content="Infinite" />
-      <Animation name="spinner" iterationCount="1">
-        <Icon name="mention" circular bordered />
-      </Animation>
-      <Animation name="spinner" iterationCount="2">
-        <Icon name="mention" circular bordered />
-      </Animation>
-      <Animation name="spinner" iterationCount="5">
-        <Icon name="mention" circular bordered />
-      </Animation>
-      <Animation name="spinner" iterationCount="infinite">
-        <Icon name="mention" circular bordered />
-      </Animation>
+      <div>
+        <Animation name="spinner" iterationCount="1">
+          <Icon name="mention" circular bordered />
+        </Animation>
+      </div>
+      <div>
+        <Animation name="spinner" iterationCount="2">
+          <Icon name="mention" circular bordered />
+        </Animation>
+      </div>
+      <div>
+        <Animation name="spinner" iterationCount="5">
+          <Icon name="mention" circular bordered />
+        </Animation>
+      </div>
+      <div>
+        <Animation name="spinner" iterationCount="infinite">
+          <Icon name="mention" circular bordered />
+        </Animation>
+      </div>
     </Grid>
   </Provider>
 )

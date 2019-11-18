@@ -254,16 +254,17 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     )
     const submenuVisible = menu && active && menuOpen
 
+    // TODO: allow the users to define these via props
     const maybeSubmenu = menu ? (
       <>
-        <Animation
-          visible={submenuVisible}
-          duration={'1s'}
-          name={submenuVisible ? 'fadeEnterFast' : 'fadeExitSlow'}
-          mountOnShow
-          unmountOnHide
-        >
-          <Ref innerRef={this.menuRef}>
+        <Ref innerRef={this.menuRef}>
+          <Animation
+            visible={submenuVisible}
+            timeout={2000}
+            mountOnEnter
+            unmountOnExit
+            name={submenuVisible ? 'fadeEnterSlow' : 'fadeExitSlow'}
+          >
             <Popper
               align={vertical ? 'top' : rtl ? 'end' : 'start'}
               position={vertical ? (rtl ? 'before' : 'after') : 'below'}
@@ -277,15 +278,13 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
                   primary,
                   secondary,
                   styles: styles.menu,
-                  // styles: mergeStyles(styles.menu, styles),
                   submenu: true,
                   indicator,
                 }),
               })}
             </Popper>
-          </Ref>
-        </Animation>
-
+          </Animation>
+        </Ref>
         {submenuVisible && (
           <EventListener listener={this.outsideClickHandler} targetRef={targetRef} type="click" />
         )}

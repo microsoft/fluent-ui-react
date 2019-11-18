@@ -1,7 +1,7 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import cx from 'classnames'
-import * as _ from 'lodash'
+import { Transition } from 'react-transition-group'
 
 import {
   UIComponent,
@@ -10,19 +10,8 @@ import {
   commonPropTypes,
   ChildrenComponentProps,
   ShorthandFactory,
-  normalizeAnimationDuration,
 } from '../../lib'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
-
-export const ANIMATION_TYPE = {
-  ENTERING: 'show',
-  EXITING: 'hide',
-}
-
-export interface AnimationState {
-  status: 'ENTERED' | 'ENTERING' | 'EXITED' | 'EXITING' | 'UNMOUNTED'
-  animation: boolean
-}
 
 export interface AnimationProps
   extends StyledComponentProps,
@@ -52,7 +41,7 @@ export interface AnimationProps
   direction?: string
 
   /** Specifies how long an animation should take to complete. */
-  duration?: string | { hide: string; show: string }
+  duration?: string
 
   /**
    * Specifies a style for the target element when the animation is not playing (i.e. before it starts, after it ends, or both).
@@ -90,49 +79,31 @@ export interface AnimationProps
    */
   timingFunction?: string
 
+  /**
+   * Newly added props for removing/adding elements in DOM
+   */
+
   /** Show the component; triggers the enter or exit animation. */
   visible?: boolean
 
-  /** Wait until the first "enter" transition to mount the component (add it to the DOM). */
-  mountOnShow?: boolean
-
   /** Run the enter animation when the component mounts, if it is initially shown. */
-  transitionOnMount?: boolean
+  appear?: boolean
+
+  /** Wait until the first "enter" transition to mount the component (add it to the DOM). */
+  mountOnEnter?: boolean
 
   /** Unmount the component (remove it from the DOM) when it is not shown. */
-  unmountOnHide?: boolean
+  unmountOnExit?: boolean
 
-  /**
-   * Callback on each transition that changes visibility to shown.
-   *
-   * @param {null}
-   * @param {object} data - All props with status.
-   */
-  onComplete?: (e: null, props: AnimationState & AnimationProps) => void
+  timeout?: number | { enter?: number; exit?: number; appear?: number }
 
-  /**
-   * Callback on each transition that changes visibility to hidden.
-   *
-   * @param {null}
-   * @param {object} data - All props with status.
-   */
-  onHide?: (e: null, props: AnimationState & AnimationProps) => void
+  onEnter?: (node: HTMLElement, isAppearing: boolean) => void
+  onEntering?: (node: HTMLElement, isAppearing: boolean) => void
+  onEntered?: (node: HTMLElement, isAppearing: boolean) => void
 
-  /**
-   * Callback on each transition that changes visibility to shown.
-   *
-   * @param {null}
-   * @param {object} data - All props with status.
-   */
-  onShow?: (e: null, props: AnimationState & AnimationProps) => void
-
-  /**
-   * Callback on animation start.
-   *
-   * @param {null}
-   * @param {object} data - All props with status.
-   */
-  onStart?: (e: null, props: AnimationState & AnimationProps) => void
+  onExit?: (node: HTMLElement) => void
+  onExiting?: (node: HTMLElement) => void
+  onExited?: (node: HTMLElement) => void
 }
 
 class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
@@ -141,12 +112,6 @@ class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
   static className = 'ui-animation'
 
   static displayName = 'Animation'
-
-  static ENTERED = 'ENTERED'
-  static ENTERING = 'ENTERING'
-  static EXITED = 'EXITED'
-  static EXITING = 'EXITING'
-  static UNMOUNTED = 'UNMOUNTED'
 
   static propTypes = {
     ...commonPropTypes.createCommon({
@@ -158,184 +123,68 @@ class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
     name: PropTypes.string,
     delay: PropTypes.string,
     direction: PropTypes.string,
-    duration: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.shape({
-        hide: PropTypes.string,
-        show: PropTypes.string,
-      }),
-    ]),
+    duration: PropTypes.string,
     fillMode: PropTypes.string,
     iterationCount: PropTypes.string,
     keyframeParams: PropTypes.object,
     playState: PropTypes.string,
     timingFunction: PropTypes.string,
     visible: PropTypes.bool,
-    mountOnShow: PropTypes.bool,
-    transitionOnMount: PropTypes.bool,
-    unmountOnHide: PropTypes.bool,
-    onComplete: PropTypes.func,
-    onHide: PropTypes.func,
-    onShow: PropTypes.func,
-    onStart: PropTypes.func,
+    mountOnEnter: PropTypes.bool,
+    appear: PropTypes.bool,
+    unmountOnExit: PropTypes.bool,
+    timeout: PropTypes.oneOf([
+      PropTypes.number,
+      PropTypes.shape({
+        appear: PropTypes.number,
+        enter: PropTypes.number,
+        exit: PropTypes.number,
+      }),
+    ]),
   }
 
-  static defaultProps = {
-    duration: 500,
-    visible: true,
-    mountOnShow: true,
-    transitionOnMount: false,
-    unmountOnHide: false,
-  }
+  renderComponent({ ElementType, classes, unhandledProps }) {
+    const {
+      children,
+      mountOnEnter,
+      unmountOnExit,
+      timeout,
+      appear,
+      visible,
+      onEnter,
+      onEntering,
+      onEntered,
+      onExit,
+      onExited,
+      onExiting,
+    } = this.props
 
-  nextStatus
-  timeoutId
-
-  constructor(props, state) {
-    super(props, state)
-
-    const { initial: status, next } = this.computeInitialStatuses()
-    this.nextStatus = next
-    this.state = { status }
-  }
-
-  computeInitialStatuses = () => {
-    const { visible, mountOnShow, transitionOnMount, unmountOnHide } = this.props
-
-    if (visible) {
-      if (transitionOnMount) {
-        return {
-          initial: Animation.EXITED,
-          next: Animation.ENTERING,
-        }
-      }
-      return { initial: Animation.ENTERED }
-    }
-
-    if (mountOnShow || unmountOnHide) return { initial: Animation.UNMOUNTED }
-    return { initial: Animation.EXITED }
-  }
-
-  componentDidMount() {
-    this.updateStatus()
-  }
-
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (
-      this.props.name !== nextProps.name ||
-      this.props.visible !== nextProps.visible ||
-      this.props.mountOnShow !== nextProps.visible ||
-      this.props.transitionOnMount !== nextProps.transitionOnMount ||
-      this.props.unmountOnHide !== nextProps.unmountOnHide
-    ) {
-      const { current: status, next } = this.computeStatuses(nextProps)
-
-      this.nextStatus = next
-      if (status) this.setState({ status })
-    }
-  }
-
-  componentDidUpdate() {
-    this.updateStatus()
-  }
-
-  componentWillUnmount() {
-    clearTimeout(this.timeoutId)
-  }
-
-  renderComponent({ ElementType, styles, classes, unhandledProps }) {
-    const { children } = this.props
-    const { status } = this.state
-
-    if (status === Animation.UNMOUNTED) return null
     const child =
       childrenExist(children) && (React.Children.only(children) as React.ReactElement<any>)
     const result = child
       ? React.cloneElement(child, {
-          className: cx(child.props.className, classes.children),
           ...unhandledProps,
+          className: cx(classes.root, child.props.className),
         })
       : ''
 
-    return <ElementType className={classes.root}>{result}</ElementType>
-  }
-
-  handleStart = () => {
-    const { duration } = this.props
-    const status = this.nextStatus
-
-    this.nextStatus = null
-    this.setState({ status, animating: true }, () => {
-      const durationType = ANIMATION_TYPE[status]
-      const durationValue = normalizeAnimationDuration(duration, durationType)
-
-      const durationValueNumber = _.endsWith(durationValue, 'ms')
-        ? parseInt(durationValue.slice(0, -2), 10)
-        : _.endsWith(durationValue, 's')
-        ? parseInt(durationValue.slice(0, -1), 10) * 1000
-        : parseInt(durationValue, 10)
-
-      _.invoke(this.props, 'onStart', null, { ...this.props, status })
-      this.timeoutId = setTimeout(this.handleComplete, durationValueNumber)
-    })
-  }
-
-  computeStatuses = props => {
-    const { status } = this.state
-    const { visible } = props
-
-    if (visible) {
-      return {
-        current: status === Animation.UNMOUNTED && Animation.EXITED,
-        next: status !== Animation.ENTERING && status !== Animation.ENTERED && Animation.ENTERING,
-      }
-    }
-
-    return {
-      next: (status === Animation.ENTERING || status === Animation.ENTERED) && Animation.EXITING,
-    }
-  }
-
-  handleComplete = () => {
-    const { status: current } = this.state
-
-    _.invoke(this.props, 'onComplete', null, { ...this.props, status: current })
-
-    if (this.nextStatus) {
-      this.handleStart()
-      return
-    }
-
-    const status = this.computeCompletedStatus()
-    const callback = current === Animation.ENTERING ? 'onShow' : 'onHide'
-
-    this.setState({ status, animating: false }, () => {
-      _.invoke(this.props, callback, null, { ...this.props, status })
-    })
-  }
-
-  updateStatus = () => {
-    const { animating } = this.state
-
-    if (this.nextStatus) {
-      this.nextStatus = this.computeNextStatus()
-      if (!animating) this.handleStart()
-    }
-  }
-
-  computeNextStatus = () => {
-    const { animating, status } = this.state
-
-    if (animating) return status === Animation.ENTERING ? Animation.EXITING : Animation.ENTERING
-    return status === Animation.ENTERED ? Animation.EXITING : Animation.ENTERING
-  }
-
-  computeCompletedStatus = () => {
-    const { unmountOnHide } = this.props
-    const { status } = this.state
-
-    if (status === Animation.ENTERING) return Animation.ENTERED
-    return unmountOnHide ? Animation.UNMOUNTED : Animation.EXITED
+    return (
+      <Transition
+        in={visible}
+        appear={appear}
+        mountOnEnter={mountOnEnter}
+        unmountOnExit={unmountOnExit}
+        timeout={timeout}
+        onEnter={onEnter}
+        onEntering={onEntering}
+        onEntered={onEntered}
+        onExit={onExit}
+        onExiting={onExiting}
+        onExited={onExited}
+      >
+        {state => result}
+      </Transition>
+    )
   }
 }
 

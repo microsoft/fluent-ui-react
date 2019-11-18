@@ -21,18 +21,26 @@ const AnimationExampleDirection = () => (
       <Text content="Reverse" />
       <Text content="Alternate" />
       <Text content="Alternate reverse" />
-      <Animation name="spinner">
-        <Icon name="mention" circular bordered />
-      </Animation>
-      <Animation name="spinner" direction="reverse">
-        <Icon name="mention" circular bordered />
-      </Animation>
-      <Animation name="spinner" direction="alternate">
-        <Icon name="mention" circular bordered />
-      </Animation>
-      <Animation name="spinner" direction="alternate-reverse">
-        <Icon name="mention" circular bordered />
-      </Animation>
+      <div>
+        <Animation name="spinner">
+          <Icon name="mention" circular bordered />
+        </Animation>
+      </div>
+      <div>
+        <Animation name="spinner" direction="reverse">
+          <Icon name="mention" circular bordered />
+        </Animation>
+      </div>
+      <div>
+        <Animation name="spinner" direction="alternate">
+          <Icon name="mention" circular bordered />
+        </Animation>
+      </div>
+      <div>
+        <Animation name="spinner" direction="alternate-reverse">
+          <Icon name="mention" circular bordered />
+        </Animation>
+      </div>
     </Grid>
   </Provider>
 )

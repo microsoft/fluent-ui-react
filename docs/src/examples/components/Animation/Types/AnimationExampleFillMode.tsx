@@ -17,18 +17,26 @@ const AnimationExampleFillMode = () => (
       <Text content="Forwards" />
       <Text content="Backwards" />
       <Text content="Both" />
-      <Animation name="colorChanger" fillMode="none" delay="3s" iterationCount="1">
-        <Icon name="mention" circular bordered />
-      </Animation>
-      <Animation name="colorChanger" fillMode="forwards" delay="3s" iterationCount="1">
-        <Icon name="mention" circular bordered />
-      </Animation>
-      <Animation name="colorChanger" fillMode="backwards" delay="3s" iterationCount="1">
-        <Icon name="mention" circular bordered />
-      </Animation>
-      <Animation name="colorChanger" fillMode="both" delay="3s" iterationCount="1">
-        <Icon name="mention" circular bordered />
-      </Animation>
+      <div>
+        <Animation name="colorChanger" fillMode="none" delay="3s" iterationCount="1">
+          <Icon name="mention" circular bordered />
+        </Animation>
+      </div>
+      <div>
+        <Animation name="colorChanger" fillMode="forwards" delay="3s" iterationCount="1">
+          <Icon name="mention" circular bordered />
+        </Animation>
+      </div>
+      <div>
+        <Animation name="colorChanger" fillMode="backwards" delay="3s" iterationCount="1">
+          <Icon name="mention" circular bordered />
+        </Animation>
+      </div>
+      <div>
+        <Animation name="colorChanger" fillMode="both" delay="3s" iterationCount="1">
+          <Icon name="mention" circular bordered />
+        </Animation>
+      </div>
     </Grid>
   </Provider>
 )
