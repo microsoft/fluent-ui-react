@@ -21,7 +21,7 @@ const hasAddedLinesAfterVersionInChangelog = async (danger): Promise<boolean> =>
 
 const getMalformedChangelogEntries = async (danger): Promise<string[]> => {
   // +- description @githubname ([#DDDD](https://github.com/stardust-ui/react/pull/DDDD))
-  const validEntry = /^\+- .*@\S+ \(\[#(\d+)]\(https:\/\/github\.com\/(?:stardust-ui\/react|stardust-ui\/react-old|microsoft\/fluent-ui-react)\/pull\/\1\)\)$/
+  const validEntry = /^\+- .*@\S+ \(\[#(\d+)]\(https:\/\/github\.com\/(?:stardust-ui\/react|microsoft\/fluent-ui-react)\/pull\/\1\)\)$/
 
   const addedLines = await getAddedLinesFromChangelog(danger)
 
