@@ -212,7 +212,6 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
             iconOnly: true,
             primary,
             secondary,
-            ...accessibility.attributes.toggleButton,
           }),
           overrideProps: (predefinedProps: ButtonProps) => ({
             onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
