@@ -590,7 +590,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Features
 - Add default child a11y behavior to `Menu` related behaviors @silviuavram ([#1282](https://github.com/stardust-ui/react/pull/1282))
-- `Ref` component extracted to a `@fluentui/react-component-ref` @layershifter ([#1281](https://github.com/stardust-ui/react/pull/1281))
+- `Ref` component extracted to a `@stardust-ui/react-component-ref` @layershifter ([#1281](https://github.com/stardust-ui/react/pull/1281))
 - added `isRefObject()`, `toRefObject()` utils for React refs @layershifter ([#1281](https://github.com/stardust-ui/react/pull/1281))
 - Add new callings icons in Teams theme @codepretty ([#1264](https://github.com/stardust-ui/react/pull/1264))
 - Add default aria-labelledby and aria-describedby to Dialog @silviuavram ([#1298](https://github.com/stardust-ui/react/pull/1298))
@@ -1515,7 +1515,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `descriptionColor` to Header @kuzhelov ([#78](https://github.com/stardust-ui/react/pull/78))
 - Add accessibility behavior description @kolaps33 ([#74](https://github.com/stardust-ui/react/pull/74))
 - Add strict null checks for generated TS types @smykhailov ([#108](https://github.com/stardust-ui/react/pull/108))
-- Export themes at `@fluentui/react/themes` @levithomason ([#145](https://github.com/stardust-ui/react/pull/145))
+- Export themes at `@stardust-ui/react/themes` @levithomason ([#145](https://github.com/stardust-ui/react/pull/145))
 - Add support for Menu `vertical pointing` prop @miroslavstastny ([#123](https://github.com/stardust-ui/react/pull/123))
 
 ### Documentation
@@ -1647,9 +1647,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix down doc site, bad links, and bad image src paths @levithomason ([#77](https://github.com/stardust-ui/react-old/pulls/77))
 - Add JSX and HTML code preview and card view for component examples in the doc site @Bugaa92 ([#62](https://github.com/stardust-ui/react-old/pull/62))
 - Add shorthand examples for the Label component @mnajdova ([#99](https://github.com/stardust-ui/react-old/pull/99))
-- Replace `stardust` imports with `@fluentui/react-old` to reflect the new npm package @davezuko ([#115](https://github.com/stardust-ui/react-old/pull/115))
+- Replace `stardust` imports with `@stardust-ui/react-old` to reflect the new npm package @davezuko ([#115](https://github.com/stardust-ui/react-old/pull/115]))
 - Further improve code edit experience @levithomason ([#100](https://github.com/stardust-ui/react-old/pulls/100))
-- Improve general clarity in README @davezuko ([#118](https://github.com/stardust-ui/react-old/pull/118))
+- Improve general clarity in README @davezuko ([#118](https://github.com/stardust-ui/react-old/pull/118]))
 
 <!--------------------------------[ v0.2.0 ]------------------------------- -->
 ## [v0.2.0](https://github.com/stardust-ui/react-old/tree/v0.2.0) (2018-07-10)
