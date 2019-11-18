@@ -98,7 +98,7 @@ export default (siteVars: any): ButtonVariables => ({
   circularBorderRadius: pxToRem(999),
 
   textColor: siteVars.colorScheme.default.foreground1,
-  textColorHover: siteVars.colorScheme.brand.foreground1,
+  textColorHover: siteVars.colorScheme.brand.foreground1, // todo: semantically this should be a hover token, should match same hover color token as hyperlinks
   textPrimaryColor: siteVars.colorScheme.brand.foreground,
   textPrimaryColorHover: siteVars.colorScheme.brand.foreground1,
   textColorDisabled: siteVars.colorScheme.brand.foregroundDisabled1,

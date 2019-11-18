@@ -101,7 +101,7 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         borderColor: 'transparent',
         padding: `0 ${pxToRem(8)}`,
 
-        // by default icons should always be outline, but filled on hover/focus
+        // by default icons should always be outline and filled only on hover
         ...getIconFillOrOutlineStyles({ outline: true }),
 
         ':hover': {
@@ -116,7 +116,6 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
 
         ':focus-visible': {
           ...borderFocusStyles[':focus-visible'],
-          ...getIconFillOrOutlineStyles({ outline: false }),
         },
 
         ...(p.primary && {
