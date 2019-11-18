@@ -1,19 +1,18 @@
 import * as React from 'react'
 import { Provider, Animation, Icon, Button } from '@stardust-ui/react'
 import { useLogKnob } from '@stardust-ui/docs-components'
-import { createCallbackLogFormatter } from '@stardust-ui/code-sandbox'
 import { easeEasy } from 'src/themes/teams/animations/timingFunctions'
 
 const AnimationExampleVisible = () => {
   const [visible, setVisible] = React.useState(false)
 
-  const onComplete = useLogKnob('onComplete', () => {}, createCallbackLogFormatter(['status']))
+  const onEnter = useLogKnob('onEnter', () => {})
+  const onEntering = useLogKnob('onEntering', () => {})
+  const onEntered = useLogKnob('onEntered', () => {})
 
-  const onShow = useLogKnob('onShow', () => {}, createCallbackLogFormatter(['status']))
-
-  const onHide = useLogKnob('onHide', () => {}, createCallbackLogFormatter(['status']))
-
-  const onStart = useLogKnob('onStart', () => {}, createCallbackLogFormatter(['status']))
+  const onExit = useLogKnob('onExit', () => {})
+  const onExiting = useLogKnob('onExiting', () => {})
+  const onExited = useLogKnob('onExited', () => {})
 
   return (
     <Provider
@@ -40,20 +39,22 @@ const AnimationExampleVisible = () => {
         },
       }}
     >
-      <Button onClick={() => setVisible(!visible)}>{visible ? 'Hide' : 'Show'}</Button>
+      <Button onClick={() => setVisible(!visible)}>{visible ? 'Hide' : 'Show'}</Button>&emsp;
       <Animation
         visible={visible}
-        duration={{
-          show: '1s',
-          hide: '2s',
+        timeout={{
+          enter: 1000,
+          exit: 2000,
         }}
-        onComplete={onComplete}
-        onShow={onShow}
-        onHide={onHide}
-        onStart={onStart}
+        onEnter={onEnter}
+        onEntering={onEntering}
+        onEntered={onEntered}
+        onExit={onExit}
+        onExiting={onExiting}
+        onExited={onExited}
         name={visible ? 'fadeEnterSlow' : 'fadeExitSlow'}
-        mountOnShow
-        unmountOnHide
+        mountOnEnter
+        unmountOnExit
       >
         <Icon name="mention" circular bordered />
       </Animation>
