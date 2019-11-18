@@ -29,6 +29,7 @@ import CarouselItem, { CarouselItemProps } from './CarouselItem'
 import Text from '../Text/Text'
 import CarouselNavigation, { CarouselNavigationProps } from './CarouselNavigation'
 import CarouselNavigationItem, { CarouselNavigationItemProps } from './CarouselNavigationItem'
+import { Accessibility } from 'packages/accessibility/src'
 
 export interface CarouselSlotClassNames {
   itemsContainer: string
@@ -39,6 +40,12 @@ export interface CarouselSlotClassNames {
 }
 
 export interface CarouselProps extends UIComponentProps, ChildrenComponentProps {
+  /**
+   * Accessibility behavior if overridden by the user.
+   * @available menuAsToolbarBehavior, tabListBehavior, tabBehavior
+   */
+  accessibility?: Accessibility
+
   /** Index of the currently active item. */
   activeIndex?: number | string
 
@@ -141,7 +148,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
   static autoControlledProps = ['activeIndex']
 
   static defaultProps = {
-    accessibility: carouselBehavior,
+    accessibility: carouselBehavior as Accessibility,
     paddlePrevious: {},
     paddleNext: {},
   }
