@@ -16,9 +16,6 @@ import { WithAsProp, withSafeTypeForAs } from '../../types'
 export interface AnimationProps
   extends StyledComponentProps,
     ChildrenComponentProps<React.ReactChild> {
-  /** An element type to render as (string or function). */
-  as?: any
-
   /** Additional CSS class name(s) to apply.  */
   className?: string
 
@@ -117,6 +114,7 @@ class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
     ...commonPropTypes.createCommon({
       accessibility: false,
       animated: false,
+      as: false,
       content: false,
       children: 'element',
     }),

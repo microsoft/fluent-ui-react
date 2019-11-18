@@ -27,6 +27,7 @@ export interface Conformant {
   exportedAtTopLevel?: boolean
   rendersPortal?: boolean
   wrapperComponent?: React.ReactType
+  handlesAsProp?: boolean
 }
 
 /**
@@ -47,6 +48,7 @@ export default (Component, options: Conformant = {}) => {
     requiredProps = {},
     rendersPortal = false,
     wrapperComponent = null,
+    handlesAsProp = true,
   } = options
   const { throwError } = helpers('isConformant', Component)
 
@@ -185,7 +187,7 @@ export default (Component, options: Conformant = {}) => {
     expect(component.find(props).length).toBeGreaterThan(1)
   })
 
-  if (!rendersPortal) {
+  if (!rendersPortal && handlesAsProp) {
     describe('"as" prop (common)', () => {
       test('renders the component as HTML tags or passes "as" to the next component', () => {
         // silence element nesting warnings
