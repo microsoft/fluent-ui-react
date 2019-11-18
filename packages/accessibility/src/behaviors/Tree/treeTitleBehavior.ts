@@ -4,11 +4,12 @@ import { IS_FOCUSABLE_ATTRIBUTE } from '../../attributes'
 import { Accessibility } from '../../types'
 
 /**
- * @description
- * Adds role 'treeitem' if the title is a leaf node inside the tree.
- * Adds 'tabIndex' as '-1' if the title is a leaf node inside the tree.
- *
  * @specification
+ * Adds attribute 'tabIndex=-1' to 'root' slot if 'hasSubtree' property is false or undefined. Does not set the attribute if true.
+ * Adds attribute 'role=treeitem' to 'root' slot if 'hasSubtree' property is false or undefined. Does not set the attribute if true.
+ * Adds attribute 'aria-setsize=3' based on the property 'treeSize' if the component has 'hasSubtree' property false or undefined. Does not set anything if true..
+ * Adds attribute 'aria-posinset=2' based on the property 'index' if the component has 'hasSubtree' property false or undefined. Does not set anything if true..
+ * Adds attribute 'aria-level=1' based on the property 'level' if the component has 'hasSubtree' property false or undefined. Does not set anything if true..
  * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'root'.
  */
 const treeTitleBehavior: Accessibility<TreeTitleBehavior> = props => ({
