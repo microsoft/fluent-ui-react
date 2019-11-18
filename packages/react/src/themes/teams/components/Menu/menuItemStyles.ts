@@ -1,9 +1,8 @@
 import { pxToRem } from '../../../../lib'
 import { ICSSInJSStyle, ComponentSelectorsAndStyles } from '../../../types'
 import { MenuVariables } from './menuVariables'
-import { MenuItemProps } from '../../../../components/Menu/MenuItem'
+import MenuItem, { MenuItemProps } from '../../../../components/Menu/MenuItem'
 import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
-// import { backportComponentStyle } from '../../../../lib/resolveComponentRules'
 
 export const underlinedItem = (color: string): ICSSInJSStyle => ({
   paddingBottom: 0,
@@ -335,6 +334,86 @@ const menuItemStyles: ComponentSelectorsAndStyles<MenuItemProps, MenuVariables> 
         ':hover': {
           color: 'inherit',
         },
+        [`& .${MenuItem.slotClassNames.indicator}`]: {
+          position: 'relative',
+          float: 'right',
+          left: pxToRem(12),
+          userSelect: 'none',
+          marginRight: pxToRem(4),
+        },
+        [`& .${MenuItem.slotClassNames.submenu}`]: { zIndex: 1000 },
+        [`& .${MenuItem.slotClassNames.content}`]: {
+          whiteSpace: 'normal',
+          lineHeight: 1.5,
+          marginTop: pxToRem(-4),
+          marginBottom: pxToRem(-4),
+          display: 'inline-block',
+        },
+      },
+    ],
+    [
+      { iconOnly: false },
+      {
+        [`& .${MenuItem.slotClassNames.icon}`]: {
+          // reduce margins so text has the dominant influence on the vertical height
+          marginTop: 0,
+          marginBottom: pxToRem(-8),
+          verticalAlign: 'top',
+        },
+      },
+    ],
+    [
+      { inSubmenu: true },
+      {
+        [`& .${MenuItem.slotClassNames.indicator}`]: {
+          position: 'absolute',
+          top: pxToRem(6),
+          right: pxToRem(2),
+          left: 'unset',
+        },
+      },
+    ],
+    [
+      [{ inSubmenu: true }, { vertical: true }],
+      {
+        [`& .${MenuItem.slotClassNames.content}`]: {
+          width: 'max-content',
+          marginRight: pxToRem(16),
+        },
+      },
+    ],
+    [
+      [{ inSubmenu: true, icon: true, menu: true }, { vertical: true, icon: true, menu: true }],
+      {
+        [`& .${MenuItem.slotClassNames.content}`]: {
+          minWidth: pxToRem(46 - 26 - 16),
+          maxWidth: pxToRem(262 - 26 - 16),
+        },
+      },
+    ],
+    [
+      [{ inSubmenu: true, icon: true, menu: false }, { vertical: true, icon: true, menu: false }],
+      {
+        [`& .${MenuItem.slotClassNames.content}`]: {
+          minWidth: pxToRem(46 - 26),
+          maxWidth: pxToRem(262 - 26),
+        },
+      },
+    ],
+    [
+      [{ inSubmenu: true, icon: false, menu: true }, { vertical: true, icon: false, menu: true }],
+      {
+        minWidth: pxToRem(46 - 16),
+        maxWidth: pxToRem(262 - 16),
+      },
+    ],
+    [
+      [{ inSubmenu: true, icon: false, menu: false }, { vertical: true, icon: false, menu: false }],
+      {
+        [`& .${MenuItem.slotClassNames.content}`]: {
+          minWidth: pxToRem(46),
+          maxWidth: pxToRem(262),
+        },
       },
     ],
     [
@@ -512,88 +591,6 @@ const menuItemStyles: ComponentSelectorsAndStyles<MenuItemProps, MenuVariables> 
       },
     ],
   ],
-  content: [
-    [
-      null,
-      {
-        whiteSpace: 'normal',
-        lineHeight: 1.5,
-        marginTop: pxToRem(-4),
-        marginBottom: pxToRem(-4),
-        display: 'inline-block',
-      },
-    ],
-    [
-      [{ inSubmenu: true }, { vertical: true }],
-      {
-        width: 'max-content',
-        marginRight: pxToRem(16),
-      },
-    ],
-    [
-      [{ inSubmenu: true, icon: true, menu: true }, { vertical: true, icon: true, menu: true }],
-      {
-        minWidth: pxToRem(46 - 26 - 16),
-        maxWidth: pxToRem(262 - 26 - 16),
-      },
-    ],
-    [
-      [{ inSubmenu: true, icon: true, menu: false }, { vertical: true, icon: true, menu: false }],
-      {
-        minWidth: pxToRem(46 - 26),
-        maxWidth: pxToRem(262 - 26),
-      },
-    ],
-    [
-      [{ inSubmenu: true, icon: false, menu: true }, { vertical: true, icon: false, menu: true }],
-      {
-        minWidth: pxToRem(46 - 16),
-        maxWidth: pxToRem(262 - 16),
-      },
-    ],
-    [
-      [{ inSubmenu: true, icon: false, menu: false }, { vertical: true, icon: false, menu: false }],
-      {
-        minWidth: pxToRem(46),
-        maxWidth: pxToRem(262),
-      },
-    ],
-  ],
-  icon: [
-    [
-      { iconOnly: false },
-      {
-        // reduce margins so text has the dominant influence on the vertical height
-        marginTop: 0,
-        marginBottom: pxToRem(-8),
-        verticalAlign: 'top',
-      },
-    ],
-  ],
-  submenu: [[null, { zIndex: 1000 }]],
-  indicator: [
-    [
-      null,
-      {
-        position: 'relative',
-        float: 'right',
-        left: pxToRem(12),
-        userSelect: 'none',
-        marginRight: pxToRem(4),
-      },
-    ],
-    [
-      { inSubmenu: true },
-      {
-        position: 'absolute',
-        top: pxToRem(6),
-        right: pxToRem(2),
-        left: 'unset',
-      },
-    ],
-  ],
 })
 
 export default menuItemStyles
-
-// export default backportComponentStyle(menuItemStyles)

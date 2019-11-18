@@ -260,19 +260,19 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
           {Icon.create(icon, {
             defaultProps: () => ({
               xSpacing: !!content ? 'after' : 'none',
-              className: cx(MenuItem.slotClassNames.icon, propClasses),
+              className: MenuItem.slotClassNames.icon,
             }),
           })}
           {Box.create(content, {
             defaultProps: () => ({
               as: 'span',
-              className: cx(MenuItem.slotClassNames.content, propClasses),
+              className: MenuItem.slotClassNames.content,
             }),
           })}
           {menu &&
             Icon.create(indicatorWithDefaults, {
               defaultProps: () => ({
-                className: cx(MenuItem.slotClassNames.indicator, propClasses),
+                className: MenuItem.slotClassNames.indicator,
                 name: vertical ? 'stardust-menu-arrow-end' : 'stardust-menu-arrow-down',
               }),
             })}
@@ -291,7 +291,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
               {Menu.create(menu, {
                 defaultProps: () => ({
                   accessibility: submenuBehavior,
-                  className: cx(MenuItem.slotClassNames.submenu, propClasses),
+                  className: MenuItem.slotClassNames.submenu,
                   vertical: true,
                   primary,
                   secondary,
