@@ -133,7 +133,7 @@ class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
     mountOnEnter: PropTypes.bool,
     appear: PropTypes.bool,
     unmountOnExit: PropTypes.bool,
-    timeout: PropTypes.oneOf([
+    timeout: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.shape({
         appear: PropTypes.number,
@@ -141,6 +141,10 @@ class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
         exit: PropTypes.number,
       }),
     ]),
+  }
+
+  static defaultProps = {
+    timeout: 0,
   }
 
   renderComponent({ ElementType, classes, unhandledProps }) {
