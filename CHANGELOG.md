@@ -18,6 +18,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### Fixes
+- Fixing `iconOnly` `text` button styles in Teams theme @codepretty ([#2118](https://github.com/microsoft/fluent-ui-react/pull/2118))
 - Update Silver color scheme, changing `backgroundHover` and `backgroundPressed` for high-contrast theme @pompomon ([#2078](https://github.com/microsoft/fluent-ui-react/pull/2078))
 - Updating the `attachment` component styles to match Teams theme @notandrew ([#2012](https://github.com/stardust-ui/react/pull/2012))
 - Removed `shadowLevel1Darker` in Teams themes and changed all references to `shadowLevel1Dark` affecting `Button` and `ChatMessage` variables files @bcalvery ([#2098](https://github.com/microsoft/fluent-ui-react/pull/2098))

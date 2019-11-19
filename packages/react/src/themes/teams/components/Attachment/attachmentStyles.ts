@@ -2,7 +2,6 @@ import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { AttachmentProps } from '../../../../components/Attachment/Attachment'
 import { AttachmentVariables } from './attachmentVariables'
 import { pxToRem } from '../../../../lib'
-import Icon from '../../../../components/Icon/Icon'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 
@@ -68,19 +67,12 @@ const attachmentStyles: ComponentSlotStylesPrepared<AttachmentProps, AttachmentV
     })
 
     return {
-      [`& .${Icon.className}`]: {
-        color: v.textColor, // this breaks the color change on hover
-      },
-
       ...getIconFillOrOutlineStyles({ outline: true }),
 
       ':hover': iconFilledStyles,
 
       ':focus': borderFocusStyles[':focus'],
-      ':focus-visible': {
-        ...iconFilledStyles,
-        ...borderFocusStyles[':focus-visible'],
-      },
+      ':focus-visible': borderFocusStyles[':focus-visible'],
     }
   },
 
