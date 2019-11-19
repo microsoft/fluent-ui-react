@@ -5,6 +5,7 @@ import * as componentStyles from './componentStyles'
 import teams from '../teams'
 import { createTheme } from '../createTheme'
 import menuItemStyles from './components/Menu/menuItemStyles'
+import menuItemWrapperStyles from './components/Menu/menuItemWrapperStyles'
 
 export default mergeThemes(
   teams,
@@ -18,6 +19,7 @@ export default mergeThemes(
         Menu: v => ({}),
         MenuItem: menuItemStyles,
         MenuDivider: v => ({}),
+        MenuItemWrapper: menuItemWrapperStyles,
       },
     },
     'teams-high-contrast',

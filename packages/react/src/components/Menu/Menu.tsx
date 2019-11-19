@@ -31,6 +31,7 @@ import {
 } from '../../types'
 import MenuDivider from './MenuDivider'
 import { IconProps } from '../Icon/Icon'
+import MenuItemWrapper from './MenuItemWrapper'
 
 export type MenuShorthandKinds = 'divider' | 'item'
 
@@ -142,6 +143,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
 
   static Item = MenuItem
   static Divider = MenuDivider
+  static ItemWrapper = MenuItemWrapper
 
   handleItemOverrides = variables => predefinedProps => ({
     onClick: (e, itemProps) => {

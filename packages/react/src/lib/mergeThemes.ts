@@ -46,6 +46,7 @@ interface ThemeComponentSelectorStyle {
   Menu: ComponentSelectorsAndStyles
   MenuItem: ComponentSelectorsAndStyles
   MenuDivider: ComponentSelectorsAndStyles
+  MenuItemWrapper: ComponentSelectorsAndStyles
 }
 
 // TODO: refactor this..
@@ -85,6 +86,7 @@ const mergeComponentSelectorStyles = (
     Menu: v => ({}),
     MenuItem: v => ({}),
     MenuDivider: v => ({}),
+    MenuItemWrapper: v => ({}),
   }
   return sources.reduce<ThemeComponentSelectorStyle>((acc, next) => {
     if (next) {

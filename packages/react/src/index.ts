@@ -130,6 +130,8 @@ export * from './components/Menu/MenuItem'
 export { default as MenuItem } from './components/Menu/MenuItem'
 export * from './components/Menu/MenuDivider'
 export { default as MenuDivider } from './components/Menu/MenuDivider'
+export * from './components/Menu/MenuItemWrapper'
+export { default as MenuItemWrapper } from './components/Menu/MenuItemWrapper'
 
 export * from './components/Popup/Popup'
 export { default as Popup } from './components/Popup/Popup'

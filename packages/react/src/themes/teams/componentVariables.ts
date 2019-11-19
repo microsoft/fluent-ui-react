@@ -57,6 +57,7 @@ export { default as ListItem } from './components/List/listItemVariables'
 export { default as Menu } from './components/Menu/menuVariables'
 export { default as MenuItem } from './components/Menu/menuItemVariables'
 export { default as MenuDivider } from './components/Menu/menuDividerVariables'
+export { default as MenuItemWrapper } from './components/Menu/menuItemWrapperVariables'
 
 export { default as Popup } from './components/Popup/popupVariables'
 export { default as PopupContent } from './components/Popup/popupContentVariables'

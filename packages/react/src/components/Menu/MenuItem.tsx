@@ -24,7 +24,7 @@ import {
 } from '../../lib'
 import Icon, { IconProps } from '../Icon/Icon'
 import Menu, { MenuProps, MenuShorthandKinds } from './Menu'
-import Box, { BoxProps } from '../Box/Box'
+import Box from '../Box/Box'
 import {
   ComponentEventHandler,
   WithAsProp,
@@ -33,6 +33,7 @@ import {
   withSafeTypeForAs,
 } from '../../types'
 import { Popper } from '../../lib/positioner'
+import { MenuItemWrapperProps } from './MenuItemWrapper'
 
 export interface MenuItemSlotClassNames {
   wrapper: string
@@ -117,7 +118,7 @@ export interface MenuItemProps
   vertical?: boolean
 
   /** Shorthand for the wrapper component. */
-  wrapper?: ShorthandValue<BoxProps>
+  wrapper?: ShorthandValue<MenuItemWrapperProps>
 
   /** Shorthand for the submenu. */
   menu?: ShorthandValue<MenuProps> | ShorthandCollection<MenuItemProps, MenuShorthandKinds>
@@ -196,7 +197,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
   static defaultProps = {
     as: 'a',
     accessibility: menuItemBehavior as Accessibility,
-    wrapper: { as: 'li' },
+    wrapper: {},
   }
 
   static autoControlledProps = ['menuOpen']
@@ -306,9 +307,18 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
       ) : null
 
     if (wrapper) {
-      return Box.create(wrapper, {
+      return Menu.ItemWrapper.create(wrapper, {
         defaultProps: () => ({
-          className: cx(MenuItem.slotClassNames.wrapper, propClasses),
+          active,
+          disabled,
+          iconOnly,
+          pills,
+          pointing,
+          primary,
+          secondary,
+          underlined,
+          vertical,
+          inSubmenu,
           ...accessibility.attributes.wrapper,
           ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, wrapper),
         }),

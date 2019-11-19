@@ -315,6 +315,8 @@ const renderComponent = <P extends {}>(
         ? 'ui-menu'
         : displayName === 'MenuItem'
         ? 'ui-menu__item'
+        : displayName === 'MenuItemWrapper'
+        ? 'ui-menu__item__wrapper'
         : 'ui-menu__divider'
 
     if (theme.name) {

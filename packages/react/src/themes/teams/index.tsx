@@ -14,6 +14,7 @@ import { createTheme } from '../createTheme'
 import menuStyles from './components/Menu/menuStyles'
 import menuItemStyles from './components/Menu/menuItemStyles'
 import menuDividerStyles from './components/Menu/menuDividerStyles'
+import menuItemWrapperStyles from './components/Menu/menuItemWrapperStyles'
 
 const declareSvg = (svgIcon: SvgIconSpec): ThemeIconSpec => ({
   isSvg: true,
@@ -60,6 +61,7 @@ const teamsTheme: ThemePrepared = createTheme(
       Menu: menuStyles,
       MenuItem: menuItemStyles,
       MenuDivider: menuDividerStyles,
+      MenuItemWrapper: menuItemWrapperStyles,
     },
     fontFaces,
     staticStyles,

@@ -435,6 +435,7 @@ export interface ThemeInput {
     Menu: ComponentSelectorsAndStyles
     MenuItem: ComponentSelectorsAndStyles
     MenuDivider: ComponentSelectorsAndStyles
+    MenuItemWrapper: ComponentSelectorsAndStyles
   }
   fontFaces?: FontFaces
   staticStyles?: StaticStyles
@@ -459,6 +460,7 @@ export interface ThemePrepared {
     Menu: ComponentSelectorsAndStyles
     MenuItem: ComponentSelectorsAndStyles
     MenuDivider: ComponentSelectorsAndStyles
+    MenuItemWrapper: ComponentSelectorsAndStyles
   }
   icons: ThemeIcons
   fontFaces: FontFaces
