@@ -4,15 +4,13 @@ export const meta = {
   title: 'Design Principles',
   next: { name: 'Shorthand Props', url: '/shorthand-props' },
 }
+
 <Flex column hAlign="center" padding="padding.medium">
-
-<Text size='large' color='gray'>
-  Stardust uses some unique component patterns.
-  These patterns are the result of a great amount thought, debate, and vetting.
-
-This page gives you the assumptions and reasoning we've used that drives our design decisions.
-
-</Text>
+  <Text size="large" color="gray">
+    Stardust uses some unique component patterns. These patterns are the result of a great amount
+    thought, debate, and vetting. This page gives you the assumptions and reasoning we've used that
+    drives our design decisions.
+  </Text>
 </Flex>
 
 ## TODO
@@ -33,7 +31,7 @@ Example, a Dropdown should open when clicked without requiring the dev to wire t
 Components should give up control to the dev if the dev passes props.
 Example, a Dropdown should never change the `open` state if a dev has explicitly an `open` value.
 
-Components should resume automatic control of state if the dev removes props. 
+Components should resume automatic control of state if the dev removes props.
 Example, a Dropdown should automatically open and close when appropriate if the dev removes the `open`.
 
 ### Component Anatomies
@@ -43,11 +41,13 @@ Standardized component anatomies are at the core of the Stardust's approach to c
 Component anatomies provide a consistent and predictable interface that allows us to create reusable and generic abstractions.
 
 #### Slots
+
 There is one slot for each part in a component's anatomy.
 Example, an Dialog contains a `header` part, a `content` part, and a `footer` part (among others).
 There is then one prop for each of these slots in the Dialog's API.
- 
+
 #### State, style, accessibility
+
 Props containing state information
 
 ### Automatic Accessibility
@@ -60,7 +60,7 @@ Example, a Checkbox should automatically add and remove `aria-checked` when the 
 #### Keyboard Navigation
 
 Components should be keyboard navigable by default.
-Example, 
+Example,
 
 ### Framework Agnostic
 
@@ -79,7 +79,7 @@ Although this doc site is about React components, the internals of these compone
 
 UI designs change very often.
 When a component design changes it almost never requires a functional change to the component.
-Yet, with traditional component architectures often times design changes are not possible to implement and require rewriting the component. 
+Yet, with traditional component architectures often times design changes are not possible to implement and require rewriting the component.
 
 Stardust components do not dictate any theme or style.
 Any component can be styled in anyway allowing full reuse of the functional accessibility

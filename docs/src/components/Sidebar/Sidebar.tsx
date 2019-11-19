@@ -156,6 +156,15 @@ class Sidebar extends React.Component<any, any> {
             },
           },
           {
+            key: 'literate-component',
+            title: {
+              as: NavLink,
+              content: 'Literate Component',
+              activeClassName: 'active',
+              to: '/literate-component',
+            },
+          },
+          {
             key: 'composition',
             title: {
               as: NavLink,

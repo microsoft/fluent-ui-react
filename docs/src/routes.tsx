@@ -8,7 +8,8 @@ import DocsBehaviorRoot from './components/DocsBehaviorRoot'
 import MarkdownPage from 'docs/src/components/MarkdownPage'
 
 import * as Composition from './pages/Composition.mdx'
-import * as DesignPrinciples from './pages/Design Principles.md'
+import * as DesignPrinciples from './pages/DesignPrinciples.mdx'
+import * as LiterateComponent from './pages/LiterateComponent.mdx'
 import * as Layout from './pages/Layout.mdx'
 import Accessibility from './views/Accessibility'
 import Colors from './views/Colors'
@@ -107,6 +108,9 @@ const Routes = () => (
           </Route>
           <Route exact path="/design-principles">
             <MarkdownPage page={DesignPrinciples} />
+          </Route>
+          <Route exact path="/literate-component">
+            <MarkdownPage page={LiterateComponent} />
           </Route>
           <Route exact path="/colors" component={Colors} />
           <Route exact path="/color-palette" component={ColorPalette} />

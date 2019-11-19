@@ -1,15 +1,118 @@
-# Component Walk-through
+import { CodeSnippet } from '@stardust-ui/docs-components'
 
-This is a line-by-line expose of the thinking behind the current component design decisions.
-The goal is to  
+export const meta = {
+  title: 'Literate Component',
+  previous: { url: '/design-principles', name: 'Design Principles' },
+  next: { url: '/quick-start', name: 'Quick Start' },
+}
 
-```typescript jsx
+# Literate Component
+
+Inspired by [literate programming](https://en.wikipedia.org/wiki/Literate_programming), this is a line-by-line explanation of the thinking behind the current component design patterns.
+Some of these patterns have ideas or philosophies behind them that would be considered "sacred" in a sense, while others were scheduled for change.
+The code is just a side effect of what is important, the reasons behind the code.
+
+The goal of this exercise is to make those reasons known.
+Once the reasoning is known, we can converge our philosophies and generate a new code pattern from that.
+
+This is a literate walk through of `Button.tsx`. A code snippet is shown first, then the comments.
+
+---
+
+```
 import { Accessibility, buttonBehavior } from '@stardust-ui/accessibility'
+```
+
+**WHY**
+
+A library cannot successfully satisfy everyone's needs simultaneously.
+Components should be completely configurable, including how they deal with accessibility concerns.
+
+**HOW**
+
+An accessibility definition is passed in to each component.
+This is opposed to being hard coded, where consumers do not have any ability to change the accessibility behavior.
+The accessibility definition includes `role`/`aria` props, key actions, and focus handling.
+See /packages/accessibility/src/behaviors for a list of accessibility definitions.
+
+**SUCCESSES**
+
+Accessibility behavior can be _overridden_ and/or _replaced_ from the outside.
+Changing accessibility behavior does not require component code changes.
+Accessibility implementations can be shared across components, apps, and frameworks.
+
+**PROBLEMS**
+
+- Currently, this is not a truly _extensible_ pattern.
+  Only slots with known accessibility definitions are receiving accessibility props.
+  If a user adds accessibility info to a slot that didn't originally have an accessibility definition, it will not be applied.
+  This is solvable by a conformance test ensuring all slots are receiving injected accessibility info.
+
+- Key actions are not _extensible_ as they require event handlers to be defined in the component it self, such as a click handler.
+  This means a code update would be required if you were extend the accessibility abstraction to handle a new event that was not already provided.
+
+```
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
-import * as React from 'react'
-import * as _ from 'lodash'
+```
 
+**WHY**
+
+TypeScript cannot perform runtime checks.
+Not all users use TypeScript, but they should still have some type check assistance.
+A canonical list list of props a component accepts is needed to pass unhandled props to the underlying DOM.
+More helpful validators can be created than TS offers, such as suggesting "similar" enum values when a user passes the wrong value (`customPropTypes.suggest()`).
+Instead of ignoring non-TS users, instead of degrading the dev experience, and instead of maintaining another list of props for passing unhandled props through, we use propTypes.
+
+**HOW**
+
+Custom prop type validators are used in addition to React's PropTypes validators to give helpful runtime checks that TS can't provide.
+The keys of propTypes are used as the SSOT for defining what props a component knows about, all others are passed through.
+
+**SUCCESSES**
+
+- Less code to maintain for spreading unhandled props.
+- Powerful runtime helpers for devs, like shorthand validation messages and suggested enum values.
+
+**PROBLEMS**
+
+- A previous feature was lost, wrapping and removing propTypes in production.
+  Currently, the production bundle includes propTypes.
+  A build step should wrap these in dead code elimination checks.
+  That build step needs to also write the keys of propTypes to an array that is still available at runtime so the component can determine which user props need to be passed through.
+
+- Component code requires a special build-time AST transform to generate the actual component code.
+  This makes components look cleaner to maintainers than it really is.
+  It also makes the component code less portable since it requires proprietary steps to build and bundle.
+
+```
+import * as React from 'react'
+```
+
+Nothing much to say here :)
+
+```
+import * as _ from 'lodash'
+```
+
+**WHY**
+
+Many utilities are needed in any sizable project.
+
+**HOW**
+
+Use lodash.
+
+**SUCCESSES**
+
+- We use `babel-plugin-lodash` to automatically transform lodash imports to cherry pick only the methods used in the file.
+- We used to use `lodash-webpack-plugin` to automatically trim the size and features of lodash down to a more modest size.
+
+**PROBLEMS**
+
+- Even though you can slim lodash down, it is still likely duplicated code since consumers likely install their own version of lodash. We don't use a peer dep so it is bundled twice.
+
+```
 import {
   UIComponent,
   childrenExist,
@@ -23,12 +126,28 @@ import {
   SizeValue,
   ShorthandFactory,
 } from '../../lib'
+```
+
+**WHY**
+
+**HOW**
+
+**SUCCESSES**
+
+**PROBLEMS**
+
+```
 import Icon, { IconProps } from '../Icon/Icon'
 import Box, { BoxProps } from '../Box/Box'
 import Loader, { LoaderProps } from '../Loader/Loader'
-import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import ButtonGroup from './ButtonGroup'
+```
 
+```
+import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
+```
+
+```
 export interface ButtonProps
   extends UIComponentProps,
     ContentComponentProps<ShorthandValue<BoxProps>>,
@@ -86,14 +205,25 @@ export interface ButtonProps
   /** A button can be sized. */
   size?: SizeValue
 }
+```
 
+```
 class Button extends UIComponent<WithAsProp<ButtonProps>> {
+```
+
+```
   static create: ShorthandFactory<ButtonProps>
+```
 
+```
   static displayName = 'Button'
+```
 
+```
   static className = 'ui-button'
+```
 
+```
   static propTypes = {
     ...commonPropTypes.createCommon({
       content: 'shorthand',
@@ -113,22 +243,30 @@ class Button extends UIComponent<WithAsProp<ButtonProps>> {
     secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
     size: customPropTypes.size,
   }
+```
 
+```
   static defaultProps = {
     as: 'button',
     accessibility: buttonBehavior as Accessibility,
     size: 'medium',
   }
+```
 
+```
   static Group = ButtonGroup
+```
 
+```
   actionHandlers = {
     performClick: event => {
       event.preventDefault()
       this.handleClick(event)
     },
   }
+```
 
+```
   renderComponent({
     ElementType,
     classes,
@@ -137,18 +275,35 @@ class Button extends UIComponent<WithAsProp<ButtonProps>> {
     styles,
     unhandledProps,
   }): React.ReactNode {
-    const { children, content, disabled, iconPosition, loading } = this.props
-    const hasChildren = childrenExist(children)
+```
 
+```
+    const { children, content, disabled, iconPosition, loading } = this.props
+```
+
+```
+    const hasChildren = childrenExist(children)
+```
+
+```
     return (
       <ElementType
         className={classes.root}
         disabled={disabled}
         onClick={this.handleClick}
         onFocus={this.handleFocus}
+```
+
+```
         {...accessibility.attributes.root}
         {...rtlTextContainer.getAttributes({ forElements: [children] })}
+```
+
+```
         {...unhandledProps}
+```
+
+```
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
         {hasChildren && children}
@@ -161,7 +316,9 @@ class Button extends UIComponent<WithAsProp<ButtonProps>> {
       </ElementType>
     )
   }
+```
 
+```
   renderIcon = (variables, styles) => {
     const { icon, iconPosition, content } = this.props
 
@@ -173,7 +330,9 @@ class Button extends UIComponent<WithAsProp<ButtonProps>> {
       },
     })
   }
+```
 
+```
   renderLoader = (variables, styles) => {
     const { loader } = this.props
 
@@ -184,7 +343,9 @@ class Button extends UIComponent<WithAsProp<ButtonProps>> {
       },
     })
   }
+```
 
+```
   handleClick = (e: React.SyntheticEvent) => {
     const { disabled } = this.props
 
@@ -195,14 +356,20 @@ class Button extends UIComponent<WithAsProp<ButtonProps>> {
 
     _.invoke(this.props, 'onClick', e, this.props)
   }
+```
 
+```
   handleFocus = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 }
+```
 
+```
 Button.create = createShorthandFactory({ Component: Button, mappedProp: 'content' })
+```
 
+```
 /**
  * A Button enables users to take an action, such as submitting a form, opening a dialog, etc.
  *
