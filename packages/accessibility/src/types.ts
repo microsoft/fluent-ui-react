@@ -98,6 +98,7 @@ export interface AriaWidgetAttributes {
   'aria-invalid'?: boolean | 'false' | 'true' | 'grammar' | 'spelling'
   'aria-label'?: string
   'aria-level'?: number
+  'aria-live'?: 'polite' | 'off' | 'assertive'
   'aria-modal'?: boolean
   'aria-multiline'?: boolean | 'false' | 'true'
   'aria-multiselectable'?: boolean | 'false' | 'true'

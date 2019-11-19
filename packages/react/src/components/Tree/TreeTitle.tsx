@@ -42,7 +42,7 @@ export interface TreeTitleProps
   onClick?: ComponentEventHandler<TreeTitleProps>
 
   /** Whether or not the subtree of the title is in the open state. */
-  open?: boolean
+  expanded?: boolean
 
   /** Size of the tree containing this title without any children. */
   treeSize?: number
@@ -61,7 +61,7 @@ class TreeTitle extends UIComponent<WithAsProp<TreeTitleProps>> {
     index: PropTypes.number,
     level: PropTypes.number,
     onClick: PropTypes.func,
-    open: PropTypes.bool,
+    expanded: PropTypes.bool,
     treeSize: PropTypes.number,
   }
 

@@ -42,3 +42,4 @@ export { commonPropTypes }
 
 export { default as withDebugId } from './withDebugId'
 export { default as Telemetry } from './Telemetry'
+export { default as debounce } from './debounce'
