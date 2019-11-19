@@ -2,6 +2,7 @@ import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { AttachmentProps } from '../../../../components/Attachment/Attachment'
 import { AttachmentVariables } from './attachmentVariables'
 import { pxToRem } from '../../../../lib'
+import Icon from '../../../../components/Icon/Icon'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 
@@ -60,16 +61,22 @@ const attachmentStyles: ComponentSlotStylesPrepared<AttachmentProps, AttachmentV
   }),
 
   action: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
-    const iconFilledStyles = getIconFillOrOutlineStyles({ outline: false })
     const borderFocusStyles = getBorderFocusStyles({
       siteVariables,
       borderRadius: v.borderRadius,
     })
 
     return {
+      [`& .${Icon.className}`]: {
+        color: v.textColor, // this breaks the color change on hover
+      },
+
       ...getIconFillOrOutlineStyles({ outline: true }),
 
-      ':hover': iconFilledStyles,
+      ':hover': {
+        ...getIconFillOrOutlineStyles({ outline: false }),
+        color: v.textColorHover,
+      },
 
       ':focus': borderFocusStyles[':focus'],
       ':focus-visible': borderFocusStyles[':focus-visible'],
