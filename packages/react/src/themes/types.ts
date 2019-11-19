@@ -576,6 +576,8 @@ export type RequiredIconNames =
   | 'stardust-arrow-down'
   | 'stardust-pause'
   | 'stardust-play'
+  | 'stardust-chevron-start'
+  | 'stardust-chevron-end'
 
 export type ThemeIcons = Partial<Record<RequiredIconNames, ThemeIconSpec>> & {
   [iconName: string]: ThemeIconSpec
