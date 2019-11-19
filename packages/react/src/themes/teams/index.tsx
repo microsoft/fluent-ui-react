@@ -45,8 +45,6 @@ const icons: ThemeIcons = {
   'stardust-menu-arrow-end': themeIcons['chevron-right-medium'],
   'stardust-pause': themeIcons['pause'],
   'stardust-play': themeIcons['play'],
-  'stardust-chevron-start': themeIcons['chevron-start'],
-  'stardust-chevron-end': themeIcons['chevron-end'],
 }
 
 const teamsTheme: ThemePrepared = createTheme(
