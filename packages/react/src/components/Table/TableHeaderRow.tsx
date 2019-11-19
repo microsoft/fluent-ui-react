@@ -1,8 +1,8 @@
-import * as customPropTypes from '@fluentui/react-proptypes'
+import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 import * as React from 'react'
-import TableCell, { TableCellProps } from './TableCell'
+import TableHeaderCell, { TableHeaderCellProps } from './TableHeaderCell'
 import {
   UIComponent,
   RenderResultConfig,
@@ -14,11 +14,11 @@ import {
   childrenExist,
 } from '../../lib'
 import { ShorthandCollection, WithAsProp } from '../../types'
-import { Accessibility, tableRowBehavior } from '@fluentui/accessibility'
+import { Accessibility, tableRowBehavior } from '@stardust-ui/accessibility'
 import { ComponentVariablesObject } from '../../themes/types'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 
-export interface TableRowProps extends UIComponentProps {
+export interface TableHeaderRowProps extends UIComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    * */
@@ -27,7 +27,7 @@ export interface TableRowProps extends UIComponentProps {
   /**
    * Row cells
    */
-  items?: ShorthandCollection<TableCellProps>
+  items?: ShorthandCollection<TableHeaderCellProps>
 
   /**
    * Render table in compact mode
@@ -42,12 +42,12 @@ const handleVariablesOverrides = variables => predefinedProps => ({
 /**
  * Component represents a single row in a tabular structure
  */
-class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
+class TableHeaderRow extends UIComponent<WithAsProp<TableHeaderRowProps>, any> {
   static displayName = 'TableRow'
 
   static className = 'ui-table__row'
 
-  static create: ShorthandFactory<TableRowProps>
+  static create: ShorthandFactory<TableHeaderRowProps>
 
   static propTypes = {
     ...commonPropTypes.createCommon({
@@ -73,10 +73,10 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
   renderCells(variables: ComponentVariablesObject) {
     const { items } = this.props
 
-    return _.map(items, (item: TableCellProps, index: number) => {
+    return _.map(items, (item: TableHeaderCellProps, index: number) => {
       const cellProps = {}
       const overrideProps = handleVariablesOverrides(variables)
-      return TableCell.create(item, { defaultProps: () => cellProps, overrideProps })
+      return TableHeaderCell.create(item, { defaultProps: () => cellProps, overrideProps })
     })
   }
 
@@ -104,6 +104,9 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
   }
 }
 
-TableRow.create = createShorthandFactory({ Component: TableRow, mappedArrayProp: 'items' })
+TableHeaderRow.create = createShorthandFactory({
+  Component: TableHeaderRow,
+  mappedArrayProp: 'items',
+})
 
-export default TableRow
+export default TableHeaderRow

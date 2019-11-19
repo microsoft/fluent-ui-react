@@ -18,6 +18,7 @@ import TableCell from './TableCell'
 import { WithAsProp, ShorthandCollection, ShorthandValue } from '../../types'
 import { Accessibility, tableBehavior } from '@fluentui/accessibility'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
+import TableHeaderRow, { TableHeaderRowProps } from './TableHeaderRow'
 
 export interface TableSlotClassNames {
   header: string
@@ -90,6 +91,7 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
         role: accessibility.attributes.row.role,
         compact,
       } as TableRowProps
+
       const overrideProps = handleVariablesOverrides(variables)
       return TableRow.create(row, { defaultProps: () => props, overrideProps })
     })
@@ -103,14 +105,12 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
 
     const headerRowProps = {
       role: accessibility.attributes.row.role,
-      header: true,
       compact,
       className: Table.slotClassNames.header,
-    } as TableRowProps
+    } as TableHeaderRowProps
 
     const overrideProps = handleVariablesOverrides(variables)
-
-    return TableRow.create(header, {
+    return TableHeaderRow.create(header, {
       defaultProps: () => headerRowProps,
       overrideProps,
     })
