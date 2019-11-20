@@ -153,6 +153,6 @@
     "webpack-hot-middleware": "^2.24.3"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*", "scripts"
   ]
 }
