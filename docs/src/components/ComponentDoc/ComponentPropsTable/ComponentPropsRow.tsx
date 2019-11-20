@@ -75,7 +75,7 @@ const ComponentPropsRow: React.FunctionComponent<ComponentPropsRowProps> = props
             {type.value}
           </code>
         ))}
-        {/* TODO change these according to the react-docgen-typescript generated json */}
+        {/* TODO make this work with typescript types */}
         {/* <ComponentPropFunctionSignature name={name} tags={tags} /> */}
       </td>
     </tr>
