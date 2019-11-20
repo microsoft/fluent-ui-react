@@ -14,6 +14,7 @@ const unsupportedComponents = [
   'Accordion',
   'Animation',
   'Box',
+  'Carousel',
   'Chat',
   'Dropdown',
   'Flex',
