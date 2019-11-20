@@ -27,8 +27,8 @@ export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponent
 
   /**
    * Called after radio item checked state is changed.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   checkedChanged?: ComponentEventHandler<RadioGroupItemProps>
 
@@ -49,8 +49,8 @@ export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponent
 
   /**
    * Called after radio item is clicked.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onClick?: ComponentEventHandler<RadioGroupItemProps>
 

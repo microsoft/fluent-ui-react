@@ -7,9 +7,9 @@ export interface RefProps {
   /**
    * Called when a child component will be mounted or updated.
    *
-   * @param {HTMLElement} node - Referred node.
+   * @param node - Referred node.
    */
-  innerRef: React.Ref<any>
+  innerRef: React.Ref<HTMLElement>
 }
 
 /** A checker that matches the React.Ref type. */

@@ -14,14 +14,14 @@ export interface PortalInnerProps extends ChildrenComponentProps {
   /**
    * Called when the portal is mounted on the DOM
    *
-   * @param {object} data - All props.
+   * @param data - All props.
    */
   onMount?: (props: PortalInnerProps) => void
 
   /**
    * Called when the portal is unmounted from the DOM
    *
-   * @param {object} data - All props.
+   * @param data - All props.
    */
   onUnmount?: (props: PortalInnerProps) => void
 }
