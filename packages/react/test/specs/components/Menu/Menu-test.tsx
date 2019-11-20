@@ -11,7 +11,7 @@ import {
   menuAsToolbarBehavior,
   tabListBehavior,
   tabBehavior,
-} from '@stardust-ui/accessibility'
+} from '@fluentui/accessibility'
 import { ReactWrapper } from 'enzyme'
 import * as keyboardKey from 'keyboard-key'
 

@@ -1,5 +1,5 @@
-import { handleRef, Ref } from '@stardust-ui/react-component-ref'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { handleRef, Ref } from '@fluentui/react-component-ref'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'

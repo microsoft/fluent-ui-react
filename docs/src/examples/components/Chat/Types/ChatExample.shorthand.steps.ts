@@ -1,4 +1,4 @@
-import { ChatMessage } from '@stardust-ui/react'
+import { ChatMessage } from '@fluentui/react'
 
 const selectors = {
   message: `.${ChatMessage.className}`,

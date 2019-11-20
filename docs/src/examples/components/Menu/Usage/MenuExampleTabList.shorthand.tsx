@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Menu, tabListBehavior } from '@stardust-ui/react'
+import { Menu, tabListBehavior } from '@fluentui/react'
 
 const items = [
   { key: 'editorials', content: 'Editorials' },

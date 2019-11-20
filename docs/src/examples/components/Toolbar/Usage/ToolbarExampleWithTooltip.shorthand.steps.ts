@@ -1,4 +1,4 @@
-import { Toolbar } from '@stardust-ui/react'
+import { Toolbar } from '@fluentui/react'
 
 const selectors = {
   item: (itemIndex: number) =>

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { FontWeightProperty } from 'csstype'
-import { Dropdown, DropdownItemProps, Provider } from '@stardust-ui/react'
+import { Dropdown, DropdownItemProps, Provider } from '@fluentui/react'
 
 import { MentionsContainerProps } from './MentionsEditor'
 

@@ -35,6 +35,8 @@ import callMissedLine from './callMissedLine'
 import screencast from './screencast'
 import chat from './chat'
 import chevronDown from './chevronDown'
+import chevronStart from './chevronStart'
+import chevronEnd from './chevronEnd'
 import chevronDownMedium from './chevronDownMedium'
 import chevronRightMedium from './chevronRightMedium'
 import clipboardCopiedTo from './clipboardCopiedTo'
@@ -207,6 +209,8 @@ export default {
   'canvas-add-page': canvasAddPage,
   chat,
   'chevron-down': chevronDown,
+  'stardust-chevron-start': chevronStart,
+  'stardust-chevron-end': chevronEnd,
   'chevron-down-medium': chevronDownMedium,
   'chevron-right-medium': chevronRightMedium,
   'clipboard-copied-to': clipboardCopiedTo,

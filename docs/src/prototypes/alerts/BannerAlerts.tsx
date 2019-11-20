@@ -8,7 +8,7 @@ import {
   RadioGroupItemProps,
   Header,
   Button,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 
 import AnimatedBannerAlert from './AnimatedBannerAlert'
 import ComposeMessage from '../chatPane/composeMessage'

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { List, Status } from '@stardust-ui/react'
+import { List, Status } from '@fluentui/react'
 
 const items = [
   {

@@ -2,10 +2,10 @@ import {
   Accessibility,
   hierarchicalTreeItemBehavior,
   hierarchicalSubtreeBehavior,
-} from '@stardust-ui/accessibility'
-import { getFirstFocusable } from '@stardust-ui/react-bindings'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
-import { Ref } from '@stardust-ui/react-component-ref'
+} from '@fluentui/accessibility'
+import { getFirstFocusable } from '@fluentui/react-bindings'
+import * as customPropTypes from '@fluentui/react-proptypes'
+import { Ref } from '@fluentui/react-component-ref'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'

@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import ComponentBestPractices from 'docs/src/components/ComponentBestPractices'
 import { link, code } from '../../../../utils/helpers'
-import { Text } from '@stardust-ui/react'
+import { Text } from '@fluentui/react'
 
 const doList = [
   'Provide label by using `aria-label`, or `aria-labelledby` prop.',

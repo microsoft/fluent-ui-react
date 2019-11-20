@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import { Box, Flex, RadioGroup, Text } from '@stardust-ui/react'
+import { Box, Flex, RadioGroup, Text } from '@fluentui/react'
 import { PerfChart, usePerfData } from 'docs/src/components/ComponentDoc/PerfChart'
 import * as React from 'react'
 import { PerfData, PerfSample } from 'docs/src/components/ComponentDoc/PerfChart/PerfDataContext'

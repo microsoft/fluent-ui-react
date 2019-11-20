@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Form, Button, Checkbox } from '@stardust-ui/react'
+import { Form, Button, Checkbox } from '@fluentui/react'
 
 const fields = [
   {

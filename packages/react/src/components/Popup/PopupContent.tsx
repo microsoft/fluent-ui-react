@@ -3,12 +3,12 @@ import {
   FocusTrapZoneProps,
   AutoFocusZoneProps,
   AutoFocusZone,
-} from '@stardust-ui/react-bindings'
+} from '@fluentui/react-bindings'
 import cx from 'classnames'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import * as customPropTypes from '@fluentui/react-proptypes'
 
 import {
   childrenExist,
@@ -22,7 +22,7 @@ import {
   rtlTextContainer,
   ShorthandFactory,
 } from '../../lib'
-import { Accessibility } from '@stardust-ui/accessibility'
+import { Accessibility } from '@fluentui/accessibility'
 import { PopperChildrenProps } from '../../lib/positioner'
 import { WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 

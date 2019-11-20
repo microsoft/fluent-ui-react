@@ -1,4 +1,4 @@
-import { accordionContentBehavior } from '@stardust-ui/accessibility'
+import { accordionContentBehavior } from '@fluentui/accessibility'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'

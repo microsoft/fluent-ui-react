@@ -1,4 +1,4 @@
-import { ThemeInput, ChatItem, Input, Icon, Button, pxToRem } from '@stardust-ui/react'
+import { ThemeInput, ChatItem, Input, Icon, Button, pxToRem } from '@fluentui/react'
 import classNames from './classNames'
 
 const customizedTheme: ThemeInput = {

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Button, Grid, Tooltip, Alignment, Position } from '@stardust-ui/react'
-import { useSelectKnob } from '@stardust-ui/docs-components'
+import { Button, Grid, Tooltip, Alignment, Position } from '@fluentui/react'
+import { useSelectKnob } from '@fluentui/docs-components'
 
 const TooltipExamplePosition = () => {
   const [positionAndAlign] = useSelectKnob({

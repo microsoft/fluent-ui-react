@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { SplitButton } from '@stardust-ui/react'
+import { SplitButton } from '@fluentui/react'
 
 const SplitButtonExampleDisabledShorthand = () => (
   <SplitButton
@@ -8,7 +8,11 @@ const SplitButtonExampleDisabledShorthand = () => (
       { key: 'group', content: 'New group message' },
       { key: 'channel', content: 'New channel message' },
     ]}
-    button="New conversation"
+    button={{
+      content: 'New conversation',
+      'aria-roledescription': 'splitbutton',
+    }}
+    toggleButton={{ 'aria-label': 'more options' }}
   />
 )
 

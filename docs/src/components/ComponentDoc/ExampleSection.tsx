@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Grid, Header } from '@stardust-ui/react'
+import { Grid, Header } from '@fluentui/react'
 
 import { Extendable } from 'src/types'
 

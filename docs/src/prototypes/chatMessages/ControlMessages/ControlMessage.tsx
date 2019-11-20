@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Ref, ChatMessageProps, Chat, Icon } from '@stardust-ui/react'
+import { Ref, ChatMessageProps, Chat, Icon } from '@fluentui/react'
 
 interface ControlMessageProps {
   focused?: boolean

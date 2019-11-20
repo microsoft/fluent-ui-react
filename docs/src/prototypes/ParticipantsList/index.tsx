@@ -1,5 +1,5 @@
 import React from 'react'
-import { List, Avatar, Flex, Text, MenuButton, Icon } from '@stardust-ui/react'
+import { List, Avatar, Flex, Text, MenuButton, Icon } from '@fluentui/react'
 import { PrototypeSection, ComponentPrototype } from '../Prototypes'
 
 const menu = ['Open', 'Remove from list']

@@ -1,4 +1,4 @@
-import { Dropdown } from '@stardust-ui/react'
+import { Dropdown } from '@fluentui/react'
 
 const selectors = {
   clearIndicator: `.${Dropdown.slotClassNames.clearIndicator}`,

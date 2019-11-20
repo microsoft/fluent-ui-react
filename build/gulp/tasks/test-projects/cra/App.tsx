@@ -13,7 +13,7 @@ import {
   Popup,
   Provider,
   themes,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 import * as React from 'react'
 
 class App extends React.Component {

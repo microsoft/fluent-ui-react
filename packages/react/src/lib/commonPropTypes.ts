@@ -1,4 +1,4 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
 
 export interface CreateCommonConfig {

@@ -1,4 +1,4 @@
-import { dialogBehavior } from '@stardust-ui/accessibility'
+import { dialogBehavior } from '@fluentui/accessibility'
 import * as React from 'react'
 
 describe('DialogBehavior.ts', () => {

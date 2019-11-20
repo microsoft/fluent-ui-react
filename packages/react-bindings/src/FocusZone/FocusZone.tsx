@@ -2,7 +2,7 @@ import {
   FocusZoneDirection,
   FocusZoneTabbableElements,
   IS_FOCUSABLE_ATTRIBUTE,
-} from '@stardust-ui/accessibility'
+} from '@fluentui/accessibility'
 import * as React from 'react'
 import cx from 'classnames'
 import * as _ from 'lodash'

@@ -1,4 +1,4 @@
-import { Accessibility, hierarchicalTreeTitleBehavior } from '@stardust-ui/accessibility'
+import { Accessibility, hierarchicalTreeTitleBehavior } from '@fluentui/accessibility'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'

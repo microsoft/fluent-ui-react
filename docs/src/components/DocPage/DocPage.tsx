@@ -1,6 +1,6 @@
 import * as React from 'react'
 import DocumentTitle from 'react-document-title'
-import { Header } from '@stardust-ui/react'
+import { Header } from '@fluentui/react'
 
 interface DocPageProps {
   title: string

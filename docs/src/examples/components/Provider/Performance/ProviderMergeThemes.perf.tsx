@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { mergeThemes, callable, ComponentStyleFunctionParam, themes } from '@stardust-ui/react'
+import { mergeThemes, callable, ComponentStyleFunctionParam, themes } from '@fluentui/react'
 import * as _ from 'lodash'
 
 /**

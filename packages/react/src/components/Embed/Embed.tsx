@@ -1,8 +1,8 @@
-import { Accessibility, embedBehavior } from '@stardust-ui/accessibility'
+import { Accessibility, embedBehavior } from '@fluentui/accessibility'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import * as customPropTypes from '@fluentui/react-proptypes'
 
 import {
   createShorthandFactory,
@@ -17,7 +17,7 @@ import Image from '../Image/Image'
 import Video, { VideoProps } from '../Video/Video'
 import Box, { BoxProps } from '../Box/Box'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
-import { Ref } from '@stardust-ui/react-component-ref'
+import { Ref } from '@fluentui/react-component-ref'
 
 export interface EmbedSlotClassNames {
   control: string

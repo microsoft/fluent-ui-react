@@ -8,7 +8,7 @@ import {
   ChatItem,
   ChatItemProps,
   Chat,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 import repliesButtonBehavior from './repliesButtonBehavior'
 import ScreenReaderHeaderText from './ScreenReaderHeaderText'
 import classNames from './classNames'

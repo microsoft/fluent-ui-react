@@ -1,6 +1,6 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { Flex, Icon } from '@stardust-ui/react'
+import { Flex, Icon } from '@fluentui/react'
 import { constants } from 'src/lib'
 
 export default class ComponentDocLinks extends React.PureComponent<any, any> {

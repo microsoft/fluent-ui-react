@@ -5,11 +5,11 @@ import {
   ChatMessageProps,
   ShorthandCollection,
   ReactionProps,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 import * as React from 'react'
 import Popover from './Popover'
 import ReactionPopup from './ReactionPopup'
-import { Ref } from '@stardust-ui/react-component-ref'
+import { Ref } from '@fluentui/react-component-ref'
 
 const reactions: ShorthandCollection<ReactionProps> = [
   {
