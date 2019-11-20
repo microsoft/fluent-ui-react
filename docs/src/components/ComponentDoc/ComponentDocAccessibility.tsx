@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Flex, Loader, Text, Segment, Header } from '@stardust-ui/react'
+import { Flex, Loader, Text, Segment, Header } from '@fluentui/react'
 import { link } from './../../utils/helpers'
 import { BehaviorInfo, ComponentInfo, BehaviorVariantionInfo } from 'docs/src/types'
 import { BehaviorCard, exampleStyle, behaviorVariantDisplayName } from './BehaviorCard'

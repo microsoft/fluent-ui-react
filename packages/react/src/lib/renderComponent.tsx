@@ -3,7 +3,7 @@ import {
   FocusZoneMode,
   FocusZoneDefinition,
   Accessibility,
-} from '@stardust-ui/accessibility'
+} from '@fluentui/accessibility'
 import {
   callable,
   FocusZone,
@@ -11,7 +11,7 @@ import {
   FOCUSZONE_WRAP_ATTRIBUTE,
   getElementType,
   getUnhandledProps,
-} from '@stardust-ui/react-bindings'
+} from '@fluentui/react-bindings'
 import cx from 'classnames'
 import * as React from 'react'
 import * as _ from 'lodash'
@@ -84,7 +84,7 @@ const getAccessibility = (
   if (process.env.NODE_ENV !== 'production') {
     // For the non-production builds we enable the runtime accessibility attributes validator.
     // We're adding the data-aa-class attribute which is being consumed by the validator, the
-    // schema is located in @stardust-ui/ability-attributes package.
+    // schema is located in @fluentui/ability-attributes package.
     if (definition.attributes) {
       const slotNames = Object.keys(definition.attributes)
       slotNames.forEach(slotName => {

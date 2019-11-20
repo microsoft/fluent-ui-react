@@ -1,4 +1,4 @@
-import { listItemBehavior, IS_FOCUSABLE_ATTRIBUTE } from '@stardust-ui/accessibility'
+import { listItemBehavior, IS_FOCUSABLE_ATTRIBUTE } from '@fluentui/accessibility'
 
 describe('ListItemBehavior.ts', () => {
   test('use SelectableListItemBehavior if selectable prop is defined', () => {

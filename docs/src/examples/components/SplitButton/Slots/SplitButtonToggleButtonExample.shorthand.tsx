@@ -1,5 +1,5 @@
-import { useBooleanKnob } from '@stardust-ui/docs-components'
-import { SplitButton } from '@stardust-ui/react'
+import { useBooleanKnob } from '@fluentui/docs-components'
+import { SplitButton } from '@fluentui/react'
 import * as React from 'react'
 
 const SplitButtonExampleToggleButtonShorthand = () => {

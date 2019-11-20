@@ -14,7 +14,7 @@ import {
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
 } from '../../lib'
-import { Accessibility, treeTitleBehavior } from '@stardust-ui/accessibility'
+import { Accessibility, treeTitleBehavior } from '@fluentui/accessibility'
 import { ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface TreeTitleProps

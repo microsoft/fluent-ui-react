@@ -1,11 +1,11 @@
-import { CodeSnippet } from '@stardust-ui/docs-components'
+import { CodeSnippet } from '@fluentui/docs-components'
 import * as React from 'react'
 import DocPage from '../components/DocPage/DocPage'
 import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
 import { Link } from 'react-router-dom'
 
 import { code, link } from '../utils/helpers'
-import { Header } from '@stardust-ui/react'
+import { Header } from '@fluentui/react'
 
 export default () => (
   <DocPage title="Accessibility in Stardust">

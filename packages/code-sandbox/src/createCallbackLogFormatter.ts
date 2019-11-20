@@ -1,4 +1,4 @@
-import { formatCode } from '@stardust-ui/docs-components'
+import { formatCode } from '@fluentui/docs-components'
 import * as React from 'react'
 
 /**

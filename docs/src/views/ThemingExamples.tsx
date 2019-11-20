@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Button, Icon, Label, Provider, Header } from '@stardust-ui/react'
+import { Button, Icon, Label, Provider, Header } from '@fluentui/react'
 
 import DocPage from '../components/DocPage/DocPage'
 import ExampleSnippet from '../components/ExampleSnippet/ExampleSnippet'
@@ -44,7 +44,7 @@ export default () => (
     <ExampleSnippet
       value={`
         import React from 'react'
-        import { Button, Icon, Label, Provider, themes } from '@stardust-ui/react'
+        import { Button, Icon, Label, Provider, themes } from '@fluentui/react'
 
         export default () =>
          <Provider theme={themes.teams}>
@@ -78,7 +78,7 @@ export default () => (
     <ExampleSnippet
       value={`
         import React from 'react'
-        import { Button } from '@stardust-ui/react'
+        import { Button } from '@fluentui/react'
 
         const styles = {
           color: "coral",
@@ -118,7 +118,7 @@ export default () => (
     <ExampleSnippet
       value={`
         import React from 'react'
-        import { Button } from '@stardust-ui/react'
+        import { Button } from '@fluentui/react'
 
         const btnExample = () => (
         <Button
@@ -187,7 +187,7 @@ export default () => (
     <ExampleSnippet
       value={`
         import React from 'react'
-        import { Button, Icon, Label, Provider } from '@stardust-ui/react'
+        import { Button, Icon, Label, Provider } from '@fluentui/react'
 
         const theme = {
           siteVariables: {

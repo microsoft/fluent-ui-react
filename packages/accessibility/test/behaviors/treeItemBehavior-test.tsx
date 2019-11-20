@@ -1,4 +1,4 @@
-import { treeItemBehavior } from '@stardust-ui/accessibility'
+import { treeItemBehavior } from '@fluentui/accessibility'
 
 describe('TreeItemBehavior', () => {
   describe('tabIndex', () => {

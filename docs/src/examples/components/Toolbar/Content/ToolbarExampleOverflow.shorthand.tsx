@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Toolbar } from '@stardust-ui/react'
+import { Toolbar } from '@fluentui/react'
 
 const ToolbarExampleOverflow = () => {
   const icons = ['bold', 'italic', 'underline']

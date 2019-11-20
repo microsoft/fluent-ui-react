@@ -1,4 +1,4 @@
-import { Accessibility, textAreaBehavior } from '@stardust-ui/accessibility'
+import { Accessibility, textAreaBehavior } from '@fluentui/accessibility'
 import { ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
 import * as _ from 'lodash'
 import * as React from 'react'

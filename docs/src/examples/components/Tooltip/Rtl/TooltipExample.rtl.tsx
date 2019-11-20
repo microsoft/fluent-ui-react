@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Tooltip, Text } from '@stardust-ui/react'
+import { Button, Tooltip, Text } from '@fluentui/react'
 
 const TooltipExampleRtl = () => (
   <Tooltip

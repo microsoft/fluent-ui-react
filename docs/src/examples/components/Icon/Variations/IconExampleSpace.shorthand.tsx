@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Icon, Label } from '@stardust-ui/react'
+import { Icon, Label } from '@fluentui/react'
 
 const IconExampleSpace = () => (
   <div>

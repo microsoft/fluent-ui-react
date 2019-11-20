@@ -1,5 +1,5 @@
-import { Accessibility, checkboxBehavior } from '@stardust-ui/accessibility'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, checkboxBehavior } from '@fluentui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as _ from 'lodash'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'

@@ -1,4 +1,4 @@
-import { sliderBehavior } from '@stardust-ui/accessibility'
+import { sliderBehavior } from '@fluentui/accessibility'
 
 type SliderBehaviorTestOptions = {
   propName: string

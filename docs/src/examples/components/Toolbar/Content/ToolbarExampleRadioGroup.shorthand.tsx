@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Toolbar } from '@stardust-ui/react'
+import { Toolbar } from '@fluentui/react'
 
 const ToolbarExampleRadioGroupShorthand = () => {
   const [bulletListActive, setBulletListActive] = React.useState(false)

@@ -1,4 +1,4 @@
-import { RefFindNode } from '@stardust-ui/react-component-ref'
+import { RefFindNode } from '@fluentui/react-component-ref'
 import { mount } from 'enzyme'
 import * as React from 'react'
 

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Animation, Flex, Icon, Provider, ThemeAnimation } from '@stardust-ui/react'
+import { Animation, Flex, Icon, Provider, ThemeAnimation } from '@fluentui/react'
 
 const colorChanger: ThemeAnimation<{ fromColor: string; toColor: string }> = {
   keyframe: ({ fromColor, toColor }) => ({

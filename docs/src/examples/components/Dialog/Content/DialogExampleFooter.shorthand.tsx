@@ -1,4 +1,4 @@
-import { Button, Dialog, Flex, Text } from '@stardust-ui/react'
+import { Button, Dialog, Flex, Text } from '@fluentui/react'
 import * as React from 'react'
 
 const DialogExampleFooter: React.FC = () => (

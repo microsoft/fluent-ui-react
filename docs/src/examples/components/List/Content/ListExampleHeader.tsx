@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { List } from '@stardust-ui/react'
+import { List } from '@fluentui/react'
 
 const ListExample = () => (
   <List>

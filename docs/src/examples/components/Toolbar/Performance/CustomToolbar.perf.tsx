@@ -22,7 +22,7 @@ import {
   mergeThemes,
   Tooltip,
   tooltipAsLabelBehavior,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 
 type CustomStatusVariables = {
   isRecordingIndicator?: boolean

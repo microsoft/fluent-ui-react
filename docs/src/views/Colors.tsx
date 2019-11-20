@@ -1,4 +1,4 @@
-import { CodeSnippet } from '@stardust-ui/docs-components'
+import { CodeSnippet } from '@fluentui/docs-components'
 import {
   Provider,
   ProviderConsumer,
@@ -9,7 +9,7 @@ import {
   Alert,
   mergeThemes,
   themes,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
@@ -231,7 +231,7 @@ const Colors = () => (
           <ExampleSnippet
             value={`
 import React from "react";
-import { Box, Provider, mergeThemes, themes } from "@stardust-ui/react";
+import { Box, Provider, mergeThemes, themes } from "@fluentui/react";
 
 const theme = {
   componentVariables: {

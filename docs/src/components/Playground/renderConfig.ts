@@ -1,14 +1,14 @@
-import * as CodeSandbox from '@stardust-ui/code-sandbox'
-import * as DocsComponent from '@stardust-ui/docs-components'
-import * as Stardust from '@stardust-ui/react'
+import * as CodeSandbox from '@fluentui/code-sandbox'
+import * as DocsComponent from '@fluentui/docs-components'
+import * as Stardust from '@fluentui/react'
 import * as ReactFela from 'react-fela'
 import * as _ from 'lodash'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as Classnames from 'classnames'
 
-const docsComponentsPackageJson = require('@stardust-ui/docs-components/package.json')
-const stardustReactPackageJson = require('@stardust-ui/react/package.json')
+const docsComponentsPackageJson = require('@fluentui/docs-components/package.json')
+const stardustReactPackageJson = require('@fluentui/react/package.json')
 
 export const babelConfig = {
   plugins: [
@@ -21,15 +21,15 @@ export const babelConfig = {
 }
 
 export const imports: Record<string, { version: string; module: any }> = {
-  '@stardust-ui/code-sandbox': {
+  '@fluentui/code-sandbox': {
     version: 'latest',
     module: CodeSandbox,
   },
-  '@stardust-ui/docs-components': {
+  '@fluentui/docs-components': {
     version: docsComponentsPackageJson.version,
     module: DocsComponent,
   },
-  '@stardust-ui/react': {
+  '@fluentui/react': {
     version: stardustReactPackageJson.version,
     module: Stardust,
   },

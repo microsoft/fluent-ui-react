@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Animation, Icon, Grid, Text, Provider } from '@stardust-ui/react'
+import { Animation, Icon, Grid, Text, Provider } from '@fluentui/react'
 
 const colorChanger = {
   keyframe: {

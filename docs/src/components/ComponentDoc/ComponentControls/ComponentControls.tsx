@@ -1,5 +1,5 @@
-import { CopyToClipboard } from '@stardust-ui/docs-components'
-import { Menu, Provider, ThemeInput, menuAsToolbarBehavior } from '@stardust-ui/react'
+import { CopyToClipboard } from '@fluentui/docs-components'
+import { Menu, Provider, ThemeInput, menuAsToolbarBehavior } from '@fluentui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'

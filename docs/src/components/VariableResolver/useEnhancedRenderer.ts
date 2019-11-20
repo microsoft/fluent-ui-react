@@ -1,5 +1,5 @@
-import { callable } from '@stardust-ui/react-bindings'
-import { ComponentSlotStylesPrepared, Renderer } from '@stardust-ui/react'
+import { callable } from '@fluentui/react-bindings'
+import { ComponentSlotStylesPrepared, Renderer } from '@fluentui/react'
 import flat from 'flat'
 import * as _ from 'lodash'
 import * as React from 'react'

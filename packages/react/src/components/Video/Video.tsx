@@ -1,4 +1,4 @@
-import { Ref } from '@stardust-ui/react-component-ref'
+import { Ref } from '@fluentui/react-component-ref'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 

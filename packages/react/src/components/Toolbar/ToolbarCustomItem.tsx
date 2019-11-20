@@ -1,4 +1,4 @@
-import { Accessibility, IS_FOCUSABLE_ATTRIBUTE } from '@stardust-ui/accessibility'
+import { Accessibility, IS_FOCUSABLE_ATTRIBUTE } from '@fluentui/accessibility'
 import * as _ from 'lodash'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'

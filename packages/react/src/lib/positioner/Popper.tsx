@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import PopperJS, * as _PopperJS from 'popper.js'
-import { Ref, isRefObject } from '@stardust-ui/react-component-ref'
+import { Ref, isRefObject } from '@fluentui/react-component-ref'
 
 import { getPlacement, applyRtlToOffset } from './positioningHelper'
 import { PopperProps, PopperChildrenFn } from './types'

@@ -9,7 +9,7 @@ import {
   ListItemProps,
   Segment,
   ShorthandCollection,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 import { Extendable } from 'src/types'
 
 export type ComponentBestPracticesProps = Extendable<{

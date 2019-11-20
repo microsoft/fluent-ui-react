@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Header, ProviderConsumer } from '@stardust-ui/react'
+import { Header, ProviderConsumer } from '@fluentui/react'
 
 const HeaderExampleColor = () => (
   <ProviderConsumer

@@ -1,4 +1,4 @@
-import { Image, Button } from '@stardust-ui/react'
+import { Image, Button } from '@fluentui/react'
 
 import * as React from 'react'
 

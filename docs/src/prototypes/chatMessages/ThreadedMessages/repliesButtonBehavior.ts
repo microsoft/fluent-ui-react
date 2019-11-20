@@ -1,4 +1,4 @@
-import { Accessibility } from '@stardust-ui/react'
+import { Accessibility } from '@fluentui/react'
 import * as keyboardKey from 'keyboard-key'
 
 const repliesButtonBehavior: Accessibility = () => ({

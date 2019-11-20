@@ -1,4 +1,4 @@
-import { treeItemAsListItemBehavior } from '@stardust-ui/accessibility'
+import { treeItemAsListItemBehavior } from '@fluentui/accessibility'
 
 describe('TreeItemAsListItemBehavior', () => {
   describe('role', () => {

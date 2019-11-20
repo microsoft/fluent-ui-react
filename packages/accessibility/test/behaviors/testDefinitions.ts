@@ -2,7 +2,7 @@ import {
   FocusZoneMode,
   FocusZoneDirection,
   FocusZoneTabbableElements,
-} from '@stardust-ui/accessibility'
+} from '@fluentui/accessibility'
 import * as keyboardKey from 'keyboard-key'
 
 import { TestDefinition, TestMethod, TestHelper } from './testHelper'

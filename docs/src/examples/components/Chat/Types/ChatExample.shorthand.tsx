@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Avatar, Chat, ChatItemProps, Divider, ShorthandCollection } from '@stardust-ui/react'
+import { Avatar, Chat, ChatItemProps, Divider, ShorthandCollection } from '@fluentui/react'
 
 const janeAvatar = {
   image: 'public/images/avatar/small/ade.jpg',

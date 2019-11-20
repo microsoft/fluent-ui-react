@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ItemLayout } from '@stardust-ui/react'
+import { ItemLayout } from '@fluentui/react'
 
 const ellipsis = <span>&hellip;</span>
 

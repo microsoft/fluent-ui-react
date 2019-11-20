@@ -7,7 +7,7 @@ import {
   ToolbarDividerProps,
   StatusProps,
   pxToRem,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 
 export type CustomStatusVariables = {
   isRecordingIndicator?: boolean

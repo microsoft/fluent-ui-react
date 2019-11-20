@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import { carouselItemBehavior } from '@stardust-ui/accessibility'
+import { carouselItemBehavior } from '@fluentui/accessibility'
 
 import {
   UIComponent,

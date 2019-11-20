@@ -255,7 +255,7 @@ import {
   getNextElement,
   getPreviousElement,
   focusAsync,
-} from '@stardust-ui/react-bindings'
+} from '@fluentui/react-bindings'
 
 export const FocusZoneUtilities = {
   getFirstTabbable,
@@ -267,6 +267,6 @@ export const FocusZoneUtilities = {
   focusAsync,
 }
 
-export * from '@stardust-ui/accessibility'
-export * from '@stardust-ui/react-component-ref'
-export * from '@stardust-ui/react-bindings'
+export * from '@fluentui/accessibility'
+export * from '@fluentui/react-component-ref'
+export * from '@fluentui/react-bindings'

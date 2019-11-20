@@ -1,4 +1,4 @@
-import { Dropdown, Button } from '@stardust-ui/react'
+import { Dropdown, Button } from '@fluentui/react'
 
 const selectors = {
   toggleIndicator: `.${Dropdown.slotClassNames.toggleIndicator}`,

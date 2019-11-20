@@ -1,7 +1,7 @@
 import {
   NodeRef,
   Unstable_NestingAuto as NestingAuto,
-} from '@stardust-ui/react-component-nesting-registry'
+} from '@fluentui/react-component-nesting-registry'
 import { mount } from 'enzyme'
 import * as React from 'react'
 

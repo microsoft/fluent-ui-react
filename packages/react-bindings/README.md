@@ -1,4 +1,4 @@
-`@stardust-ui/react-bindings`
+`@fluentui/react-bindings`
 ===
 
 A set of reusable components and hooks to build component libraries and UI kits.
@@ -19,12 +19,12 @@ A set of reusable components and hooks to build component libraries and UI kits.
 
 **NPM**
 ```bash
-npm install --save @stardust-ui/react-bindings
+npm install --save @fluentui/react-bindings
 ```
 
 **Yarn**
 ```bash
-yarn add @stardust-ui/react-bindings
+yarn add @fluentui/react-bindings
 ```
 
 # Hooks

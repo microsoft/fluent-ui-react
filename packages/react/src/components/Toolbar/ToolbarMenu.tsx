@@ -1,8 +1,8 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
-import { toolbarMenuBehavior, toolbarMenuItemCheckboxBehavior } from '@stardust-ui/accessibility'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { toolbarMenuBehavior, toolbarMenuItemCheckboxBehavior } from '@fluentui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
 
 import {
   createShorthandFactory,

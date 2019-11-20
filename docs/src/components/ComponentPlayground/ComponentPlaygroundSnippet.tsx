@@ -1,4 +1,4 @@
-import { CodeSnippet, CodeSnippetProps } from '@stardust-ui/docs-components'
+import { CodeSnippet, CodeSnippetProps } from '@fluentui/docs-components'
 import * as React from 'react'
 
 import renderElementToJSX from 'docs/src/components/ExampleSnippet/renderElementToJSX'

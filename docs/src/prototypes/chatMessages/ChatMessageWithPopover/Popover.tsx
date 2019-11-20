@@ -1,4 +1,4 @@
-import { Accessibility, Menu, menuAsToolbarBehavior } from '@stardust-ui/react'
+import { Accessibility, Menu, menuAsToolbarBehavior } from '@fluentui/react'
 import * as React from 'react'
 import cx from 'classnames'
 

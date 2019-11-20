@@ -1,4 +1,4 @@
-import { chatBehavior, AccessibilityDefinition } from '@stardust-ui/accessibility'
+import { chatBehavior, AccessibilityDefinition } from '@fluentui/accessibility'
 import { handlesAccessibility, isConformant } from 'test/specs/commonTests'
 
 import Chat from 'src/components/Chat/Chat'
