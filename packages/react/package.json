@@ -31,6 +31,7 @@
   },
   "devDependencies": {
     "@stardust-ui/internal-tooling": "^0.40.0",
+    "@types/react-transition-group": "^4.2.3",
     "lerna-alias": "^3.0.3-0",
     "qs": "^6.8.0"
   },
