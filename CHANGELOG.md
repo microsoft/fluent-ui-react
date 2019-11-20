@@ -33,6 +33,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add necessary `-ms-grid-` styles to `Layout` for IE11 @jurokapsiar ([#2106](https://github.com/microsoft/fluent-ui-react/pull/2106))
 - Accessibility `splitButton` & `menuButton` - screen reader fixes @kolaps33 ([#2090](https://github.com/microsoft/fluent-ui-react/pull/2090))
 - Accessibility `menuButton` add aria-controls attribute based on `open` prop @kolaps33 ([#2107](https://github.com/microsoft/fluent-ui-react/pull/2107))
+- Fix the 500 color variant for `steelLight` in category color scheme @natashamayurshah ([#2089](https://github.com/microsoft/fluent-ui-react/pull/2089))
 
 ### Features
 - Add `Table` component base implementation @pompomon ([#2099](https://github.com/microsoft/fluent-ui-react/pull/2099))
