@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Status } from '@stardust-ui/react'
+import { Status } from '@fluentui/react'
 
 const StatusTypeExampleShorthand = () => (
   <div>

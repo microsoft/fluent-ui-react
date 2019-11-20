@@ -8,7 +8,7 @@ import {
   MenuItemProps,
   ShorthandCollection,
   IconXSpacing,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 
 import { Props } from 'src/types'
 import chatProtoStyle from './chatProtoStyle'

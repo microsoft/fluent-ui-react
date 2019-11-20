@@ -1,5 +1,5 @@
-import { Accessibility, AriaRole, FocusZoneMode } from '@stardust-ui/accessibility'
-import { FocusZone, FOCUSZONE_WRAP_ATTRIBUTE } from '@stardust-ui/react-bindings'
+import { Accessibility, AriaRole, FocusZoneMode } from '@fluentui/accessibility'
+import { FocusZone, FOCUSZONE_WRAP_ATTRIBUTE } from '@fluentui/react-bindings'
 import * as React from 'react'
 import * as keyboardKey from 'keyboard-key'
 

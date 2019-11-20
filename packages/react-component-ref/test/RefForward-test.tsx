@@ -1,4 +1,4 @@
-import { RefForward } from '@stardust-ui/react-component-ref'
+import { RefForward } from '@fluentui/react-component-ref'
 import { mount } from 'enzyme'
 import * as React from 'react'
 

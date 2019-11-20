@@ -1,5 +1,5 @@
 {
-  "name": "@stardust-ui/state",
+  "name": "@fluentui/state",
   "description": "A set of utils to create framework agnostic and reusable state managers",
   "version": "0.40.0",
   "author": "Oleksandr Fediashov <a@fedyashov.com>",
@@ -8,7 +8,7 @@
     "@babel/runtime": "^7.1.2"
   },
   "devDependencies": {
-    "@stardust-ui/internal-tooling": "^0.40.0",
+    "@fluentui/internal-tooling": "^0.40.0",
     "lerna-alias": "^3.0.3-0"
   },
   "files": [

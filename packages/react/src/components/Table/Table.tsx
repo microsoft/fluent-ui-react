@@ -1,4 +1,4 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -16,7 +16,7 @@ import { mergeComponentVariables } from '../../lib/mergeThemes'
 import TableRow, { TableRowProps } from './TableRow'
 import TableCell from './TableCell'
 import { WithAsProp, ShorthandCollection, ShorthandValue } from '../../types'
-import { Accessibility, tableBehavior } from '@stardust-ui/accessibility'
+import { Accessibility, tableBehavior } from '@fluentui/accessibility'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 
 export interface TableSlotClassNames {

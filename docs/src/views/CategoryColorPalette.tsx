@@ -1,4 +1,4 @@
-import { Provider, ProviderConsumer, Grid } from '@stardust-ui/react'
+import { Provider, ProviderConsumer, Grid } from '@fluentui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 

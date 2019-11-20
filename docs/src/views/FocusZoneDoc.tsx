@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import { Header } from '@stardust-ui/react'
-import { CodeSnippet } from '@stardust-ui/docs-components'
+import { Header } from '@fluentui/react'
+import { CodeSnippet } from '@fluentui/docs-components'
 
 import ComponentPropsTable from 'docs/src/components/ComponentDoc/ComponentPropsTable'
 import DocPage from '../components/DocPage'

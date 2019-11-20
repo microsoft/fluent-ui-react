@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Accordion, Button, Flex } from '@stardust-ui/react'
+import { Accordion, Button, Flex } from '@fluentui/react'
 
 const AccordionPanelCustomContentExample = () => {
   const panels = [

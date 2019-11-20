@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Grid, TextArea } from '@stardust-ui/react'
+import { Grid, TextArea } from '@fluentui/react'
 
 const TextAreaExampleInverted = () => (
   <div>

@@ -218,6 +218,15 @@ export { default as Tooltip } from './components/Tooltip/Tooltip'
 export * from './components/Tooltip/TooltipContent'
 export { default as TooltipContent } from './components/Tooltip/TooltipContent'
 
+export * from './components/Carousel/Carousel'
+export { default as Carousel } from './components/Carousel/Carousel'
+export * from './components/Carousel/CarouselItem'
+export { default as CarouselItem } from './components/Carousel/CarouselItem'
+export * from './components/Carousel/CarouselNavigation'
+export { default as CarouselNavigation } from './components/Carousel/CarouselNavigation'
+export * from './components/Carousel/CarouselNavigationItem'
+export { default as CarouselNavigationItem } from './components/Carousel/CarouselNavigationItem'
+
 export * from './components/Table/Table'
 export { default as Table } from './components/Table/Table'
 export * from './components/Table/TableRow'
@@ -246,7 +255,7 @@ import {
   getNextElement,
   getPreviousElement,
   focusAsync,
-} from '@stardust-ui/react-bindings'
+} from '@fluentui/react-bindings'
 
 export const FocusZoneUtilities = {
   getFirstTabbable,
@@ -258,6 +267,6 @@ export const FocusZoneUtilities = {
   focusAsync,
 }
 
-export * from '@stardust-ui/accessibility'
-export * from '@stardust-ui/react-component-ref'
-export * from '@stardust-ui/react-bindings'
+export * from '@fluentui/accessibility'
+export * from '@fluentui/react-component-ref'
+export * from '@fluentui/react-bindings'

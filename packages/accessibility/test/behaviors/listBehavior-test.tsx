@@ -1,4 +1,4 @@
-import { listBehavior } from '@stardust-ui/accessibility'
+import { listBehavior } from '@fluentui/accessibility'
 
 describe('ListBehavior.ts', () => {
   test('use SelectableListBehavior if selectable prop is defined', () => {

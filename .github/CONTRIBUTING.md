@@ -114,7 +114,7 @@ We are using [Lerna][14] to manage our packages and [Yarn Workspaces][15] to lin
  
 You should to run `lerna create` command to create a new package
 
-- we are using `@stardust-ui` namespace on NPM to publish our packages
+- we are using `@fluentui` namespace on NPM to publish our packages
 - the directory name should not contain any namespace prefix and can be prefixed with the library name if the
   implementation is not framework agnostic
 - please provide a meaningful description to a package in the matched field
@@ -122,13 +122,13 @@ You should to run `lerna create` command to create a new package
 - our packages are currently published with MIT license, please follow it until you will have specific legal requirements
 
 ```sh
-lerna create @stardust-ui/react-proptypes react-proptypes
+lerna create @fluentui/react-proptypes react-proptypes
 ```
 
 ##### Example input
 ```
 lerna notice cli v3.11.1
-package name: (@stardust-ui/react-proptypes)
+package name: (@fluentui/react-proptypes)
 version: (0.21.1)
 description: Set of custom reusable PropTypes for React components.
 keywords:
@@ -194,7 +194,7 @@ If your package uses Jest for unit tests, please also create a new `jest.config.
 
 ```js
 module.exports = {
-  ...require('@stardust-ui/internal-tooling/jest'),
+  ...require('@fluentui/internal-tooling/jest'),
   name: '__DIRECTORY_NAME__',
 }
 ```
@@ -211,10 +211,10 @@ yarn syncpack format
 ### Add a new dependency
 
 Please always use [`lerna add`][16] to manage all dependencies including internal packages. The command bellow will add
-`@stardust-ui/react-proptypes` as production dependency to the `@stardust-ui/react` package.
+`@fluentui/react-proptypes` as production dependency to the `@fluentui/react` package.
 
 ```yarn
-lerna add @stardust-ui/react-proptypes packages/react
+lerna add @fluentui/react-proptypes packages/react
 ```
 
 [1]: https://nodejs.org/

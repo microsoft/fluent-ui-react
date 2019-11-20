@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import { createComponent, ComponentSlotStylesInput, Button, Flex } from '@stardust-ui/react'
+import { createComponent, ComponentSlotStylesInput, Button, Flex } from '@fluentui/react'
 
 type FaderProps = {
   children: JSX.Element

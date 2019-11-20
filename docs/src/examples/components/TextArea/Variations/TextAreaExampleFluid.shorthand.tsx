@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { TextArea } from '@stardust-ui/react'
+import { TextArea } from '@fluentui/react'
 
 const TextAreaExampleFluid = () => <TextArea fluid placeholder="Type here..." />
 

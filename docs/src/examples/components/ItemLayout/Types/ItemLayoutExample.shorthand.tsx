@@ -1,5 +1,5 @@
-import { useBooleanKnob } from '@stardust-ui/docs-components'
-import { ItemLayout, Image } from '@stardust-ui/react'
+import { useBooleanKnob } from '@fluentui/docs-components'
+import { ItemLayout, Image } from '@fluentui/react'
 import * as React from 'react'
 
 const ItemLayoutExampleShorthand = () => {

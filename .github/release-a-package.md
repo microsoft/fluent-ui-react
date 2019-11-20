@@ -1,6 +1,6 @@
 # How to release a new library version
 
-This documentation is intended for core Stardust contributors and describes `@stardust-ui/react` NPM package release process.
+This documentation is intended for core Stardust contributors and describes `@fluentui/react` NPM package release process.
 
 ## Prerequisities
 
@@ -30,5 +30,5 @@ There will be a battery of tests run prior to release.
 The release command in step 4 will handle tagging and releasing flow entirely. Just wait for it to finish.
 
 ## Verification after release
-1. Verify NPM package has been released: https://www.npmjs.com/package/@stardust-ui/react
+1. Verify NPM package has been released: https://www.npmjs.com/package/@fluentui/react
 2. Verify new docsite version has been published: https://stardust-ui.github.io/react/  

@@ -1,4 +1,4 @@
-import { getFirstFocusable, getLastFocusable, focusAsync } from '@stardust-ui/react-bindings'
+import { getFirstFocusable, getLastFocusable, focusAsync } from '@fluentui/react-bindings'
 
 export const focusMenuItem = (menuRef: HTMLElement, order: 'first' | 'last') => {
   const element =

@@ -1,6 +1,6 @@
-import { Accessibility, iconBehavior } from '@stardust-ui/accessibility'
-import { callable } from '@stardust-ui/react-bindings'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, iconBehavior } from '@fluentui/accessibility'
+import { callable } from '@fluentui/react-bindings'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import {

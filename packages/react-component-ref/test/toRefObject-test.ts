@@ -1,4 +1,4 @@
-import { toRefObject } from '@stardust-ui/react-component-ref'
+import { toRefObject } from '@fluentui/react-component-ref'
 
 describe('toRefObject', () => {
   it('creates an ref object from an input', () => {

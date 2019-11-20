@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Layout, Grid, Button, Text, Icon, Input, Header } from '@stardust-ui/react'
+import { Layout, Grid, Button, Text, Icon, Input, Header } from '@fluentui/react'
 import { middleColumnStyles } from '../styles'
 import TransparentDivider from './TransparentDivider'
 

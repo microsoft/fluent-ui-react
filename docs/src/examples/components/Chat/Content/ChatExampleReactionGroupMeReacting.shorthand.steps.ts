@@ -1,4 +1,4 @@
-import { Reaction, ChatMessage } from '@stardust-ui/react'
+import { Reaction, ChatMessage } from '@fluentui/react'
 
 const selectors = {
   chatMessageContent: `.${ChatMessage.slotClassNames.content}`,

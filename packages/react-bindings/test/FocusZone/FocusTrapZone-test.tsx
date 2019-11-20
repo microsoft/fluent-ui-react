@@ -1,5 +1,5 @@
-import { FocusZoneDirection } from '@stardust-ui/accessibility'
-import { FocusTrapZone, FocusZone, FocusTrapZoneProps } from '@stardust-ui/react-bindings'
+import { FocusZoneDirection } from '@fluentui/accessibility'
+import { FocusTrapZone, FocusZone, FocusTrapZoneProps } from '@fluentui/react-bindings'
 import * as React from 'react'
 import * as ReactTestUtils from 'react-dom/test-utils'
 import * as keyboardKey from 'keyboard-key'

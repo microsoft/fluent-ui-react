@@ -1,4 +1,4 @@
-import { hierarchicalTreeTitleBehavior } from '@stardust-ui/accessibility'
+import { hierarchicalTreeTitleBehavior } from '@fluentui/accessibility'
 
 describe('HierarchicalTreeTitleBehavior', () => {
   describe('tabIndex', () => {

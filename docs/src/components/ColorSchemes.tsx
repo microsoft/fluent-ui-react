@@ -8,7 +8,7 @@ import {
   Header,
   HeaderProps,
   ShorthandCollection,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 
 import ColorBox from './ColorBox'
 

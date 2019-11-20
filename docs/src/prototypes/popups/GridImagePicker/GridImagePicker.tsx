@@ -1,4 +1,4 @@
-import { Grid, Input, gridBehavior, IconProps } from '@stardust-ui/react'
+import { Grid, Input, gridBehavior, IconProps } from '@fluentui/react'
 import * as React from 'react'
 import * as _ from 'lodash'
 

@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
 import * as React from 'react'
-import { Menu, Segment } from '@stardust-ui/react'
+import { Menu, Segment } from '@fluentui/react'
 
 import ComponentSidebarSection from './ComponentSidebarSection'
 

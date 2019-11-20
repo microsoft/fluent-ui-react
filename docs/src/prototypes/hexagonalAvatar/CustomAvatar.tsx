@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Avatar as StardustAvatar, AvatarProps } from '@stardust-ui/react'
+import { Avatar as StardustAvatar, AvatarProps } from '@fluentui/react'
 
 const Avatar = (props: AvatarProps & { hexagonal?: boolean }) => {
   const { hexagonal, ...rest } = props

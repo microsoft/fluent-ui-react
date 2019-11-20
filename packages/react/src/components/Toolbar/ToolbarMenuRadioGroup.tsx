@@ -1,4 +1,4 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -24,7 +24,7 @@ import {
   Accessibility,
   toolbarMenuRadioGroupBehavior,
   toolbarMenuItemRadioBehavior,
-} from '@stardust-ui/accessibility'
+} from '@fluentui/accessibility'
 import ToolbarMenuItem, { ToolbarMenuItemProps } from './ToolbarMenuItem'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 import Box, { BoxProps } from '../Box/Box'

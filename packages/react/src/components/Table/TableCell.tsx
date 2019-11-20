@@ -1,4 +1,4 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import {
@@ -15,7 +15,7 @@ import {
 } from '../../lib'
 import Box, { BoxProps } from '../Box/Box'
 import { WithAsProp, ShorthandValue } from '../../types'
-import { Accessibility, tableCellBehavior } from '@stardust-ui/accessibility'
+import { Accessibility, tableCellBehavior } from '@fluentui/accessibility'
 
 export interface TableCellProps
   extends UIComponentProps,

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Menu, Popup, Button } from '@stardust-ui/react'
+import { Menu, Popup, Button } from '@fluentui/react'
 
 export const selectors = {
   menuId: 'menu',

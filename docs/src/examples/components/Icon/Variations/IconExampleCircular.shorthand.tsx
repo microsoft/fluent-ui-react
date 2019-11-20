@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Flex, Icon } from '@stardust-ui/react'
+import { Flex, Icon } from '@fluentui/react'
 
 const IconExampleCircular = () => (
   <Flex gap="gap.smaller">

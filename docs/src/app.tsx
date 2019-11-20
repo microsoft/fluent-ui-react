@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { hot } from 'react-hot-loader/root'
-import { Provider, Debug, themes } from '@stardust-ui/react'
+import { Provider, Debug, themes } from '@fluentui/react'
 
 import { mergeThemes } from 'src/lib'
 import { ThemeContext, ThemeContextData, themeContextDefaults } from './context/ThemeContext'
@@ -8,7 +8,7 @@ import Routes from './routes'
 import { PerfDataProvider } from './components/ComponentDoc/PerfChart'
 
 // Experimental dev-time accessibility attributes integrity validation.
-import { setup } from '@stardust-ui/ability-attributes'
+import { setup } from '@fluentui/ability-attributes'
 
 // Temporarily disabling the validation for Screener.
 if (process.env.NODE_ENV !== 'production' && !process.env.SCREENER) {
