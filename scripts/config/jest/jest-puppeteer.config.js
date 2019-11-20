@@ -1,6 +1,3 @@
-const os = require('os')
-const path = require('path')
-
 const server = {
   command: 'yarn just e2e:server',
   launchTimeout: 10000,

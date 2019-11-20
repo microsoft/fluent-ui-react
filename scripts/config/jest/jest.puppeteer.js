@@ -1,5 +1,5 @@
 const { defaults: tsjPreset } = require('ts-jest/presets')
-const { resolveCwd, resolve } = require('just-scripts')
+const { resolveCwd } = require('just-scripts')
 const path = require('path')
 
 module.exports = {
