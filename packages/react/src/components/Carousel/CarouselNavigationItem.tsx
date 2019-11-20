@@ -1,8 +1,8 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as _ from 'lodash'
-import { Accessibility, tabBehavior } from '@stardust-ui/accessibility'
+import { Accessibility, tabBehavior } from '@fluentui/accessibility'
 
 import {
   childrenExist,
