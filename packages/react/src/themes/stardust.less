@@ -1,0 +1,183 @@
+/*
+ * Name    : Stardust UI React
+ * Version : 0.40.3
+ * Theme   : Teams
+ * GitHub  : https://github.com/stardust-ui/react
+ * NPM     : https://npmjs.com/@stardust-ui/react
+ * Docs    : https://stardust-ui.github.io/react
+ *
+ */
+/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:block}h1{font-size:2em;margin:.67em 0}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details{display:block}summary{display:list-item}template{display:none}[hidden]{display:none}
+
+    body {
+      padding: 0;
+      margin: 0;
+      font-family: "Segoe UI", "Helvetica Neue", "Apple Color Emoji", "Segoe UI Emoji", Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.4286;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    *:before {
+      box-sizing: border-box;
+    }
+    *:after {
+      box-sizing: border-box;
+    }
+  
+/***************************************
+                  Icon                  
+***************************************/
+
+.ui-icon {
+  speak: none;
+  vertical-align: middle;
+  display: inline-flex;
+  font-weight: 900;
+  align-items: center;
+  box-sizing: content-box;
+  justify-content: center;
+  font-size: 1rem;
+  line-height: 1;
+  width: 1rem;
+  height: 1rem;
+  ::before {
+    content: ?;
+  }
+  transform: rotate(0deg);
+}
+
+.ui-icon__outline-part {
+  display: none;
+}
+
+.ui-icon__filled-part {}
+
+.ui-icon__svg {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+  transform: rotate(0deg);
+}
+
+.ui-icon__svg-flipping-in-rtl {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+  transform: rotate(0deg);
+}
+
+.ui-icon__g {}
+
+.ui-icon__path {}
+
+.ui-icon__secondary-path {}
+
+/***************************************
+                Divider                
+***************************************/
+
+.ui-divider {
+  color: #605E5C;
+  display: flex;
+  align-items: center;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  ::before {
+    content: "\\";
+    flex: 1;
+    height: 1px;
+    background: #EDEBE9;
+  }
+}
+
+/***************************************
+                  Menu                  
+***************************************/
+
+.ui-menu {
+  display: flex;
+  min-height: 1.5rem;
+  margin: 0;
+  padding: 0;
+  color: #484644;
+  background-color: inherit;
+  list-style-type: none;
+  border: 0.0625rem solid #E1DFDD;
+  border-radius: 0.25rem;
+}
+
+.ui-menu__divider {}
+
+/***************************************
+                MenuItem                
+***************************************/
+
+.ui-menu-item__wrapper {
+  color: inherit;
+  line-height: 1;
+  position: relative;
+  vertical-align: middle;
+  display: block;
+  box-shadow: -1px 0 0 0 #E1DFDD inset;
+  :hover {
+    color: #252423;
+    background: #F3F2F1;
+  }
+  :first-child {
+    border-bottom-left-radius: 0.1875rem;
+    border-top-left-radius: 0.1875rem;
+  }
+}
+
+.ui-menu-item {
+  color: inherit;
+  display: block;
+  cursor: pointer;
+  white-space: nowrap;
+  padding: 0.875rem 1.125rem;
+  :focus {
+    outline: 0;
+  }
+  :hover {
+    color: inherit;
+  }
+}
+
+.ui-menu-item__content {
+  white-space: normal;
+  line-height: 1.5;
+  margin-top: -0.25rem;
+  margin-bottom: -0.25rem;
+  display: inline-block;
+}
+
+.ui-menu-item__icon {
+  margin-top: 0;
+  margin-bottom: -0.5rem;
+  vertical-align: top;
+}
+
+.ui-menu-item__menu {
+  z-index: 1000;
+}
+
+.ui-menu-item__indicator {
+  position: relative;
+  float: right;
+  left: 0.75rem;
+  user-select: none;
+  margin-right: 0.25rem;
+}
+
+/***************************************
+              MenuDivider              
+***************************************/
+
+.ui-menu-divider {
+  border-left: 1px solid #E1DFDD;
+  align-self: stretch;
+}

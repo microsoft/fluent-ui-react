@@ -1,14 +1,15 @@
 /**
  * To run:
- *  nodemon --watch 'src/themes/toCSS.ts' --exec 'ts-node src/themes/toCSS.ts'
+ *   - build all packages to dist
+ *   - nodemon --watch './packages/react/src/themes/toCSS.js' ./packages/react/src/themes/toCSS.js
  */
 /* tslint:disable */
 // @ts-ignore-start
-import { cssifyObject } from 'css-in-js-utils'
-import * as _ from 'lodash'
+// import { cssifyObject } from 'css-in-js-utils'
+const _ = require('lodash')
 
-import * as stardust from '../index'
-import * as themes from './index'
+const stardust = require('../../dist/commonjs')
+const themes = require('../../dist/commonjs/themes')
 
 const fs = require('fs')
 const pkg = require('../../package.json')
@@ -170,18 +171,19 @@ const jsStyleSheetToCSSString = (jsStyleObject = {}) => {
 // ============================================================
 
 const makeStyleArg = (name, props, theme) => {
-  const SEE_FINDINGS_RADIO_GROUP_ITEM = {}
   return {
+    displayName: name,
     props: {
-      isFromKeyboard: false, // see FINDINGS 3
       ..._.get(stardust, `${name}.defaultProps`, {}), // see FINDINGS 1
+      ..._.get(stardust, `${name}.prototype.getInitialAutoControlledState`, {}), // see FINDINGS 1
       ...props,
     },
     variables: theme.componentVariables[name]
-      ? theme.componentVariables[name](theme.siteVariables, SEE_FINDINGS_RADIO_GROUP_ITEM)
+      ? theme.componentVariables[name](theme.siteVariables)
       : {},
-    colors: {},
     theme,
+    rtl: false,
+    disableAnimations: false,
   }
 }
 
@@ -225,10 +227,10 @@ const makeStyleArg = (name, props, theme) => {
 // ======================================================================
 
 const theme = themes.teams
-const sassFilename = __dirname + '/stardust.scss'
+const filename = __dirname + '/stardust.less'
 
 fs.writeFileSync(
-  sassFilename,
+  filename,
   [
     `/*`,
     ` * Name    : Stardust UI React`,
@@ -239,15 +241,49 @@ fs.writeFileSync(
     ` * Docs    : https://stardust-ui.github.io/react`,
     ` *`,
     ` */`,
+
+    // TODO: static styles should be computed from theme, they are pasted here for testing...
+
+    // normalizeCSS
+    themes.teams.staticStyles[0],
+
+    // globalStyles
+    `
+    body {
+      padding: 0;
+      margin: 0;
+      font-family: "Segoe UI", "Helvetica Neue", "Apple Color Emoji", "Segoe UI Emoji", Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.4286;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    *:before {
+      box-sizing: border-box;
+    }
+    *:after {
+      box-sizing: border-box;
+    }
+  `,
   ].join('\n'),
 )
 
-Object.keys(theme.componentStyles).forEach(name => {
-  const props = {}
+// TODO: all components...
+Object.keys({
+  Icon: theme.componentStyles.Icon,
+  Divider: theme.componentStyles.Divider,
+  Menu: theme.componentStyles.Menu,
+  MenuItem: theme.componentStyles.MenuItem,
+  MenuDivider: theme.componentStyles.MenuDivider,
+}).forEach(name => {
+  console.log(name)
+  const props = {} // TODO: permutate props for component styles
   const anatomy = Object.keys(theme.componentStyles[name])
   const componentStyle = {}
 
   anatomy.forEach(slot => {
+    console.log('  - ', slot)
     const slotSelector = makeSelector(name, slot, props)
     const slotStyleArg = makeStyleArg(name, props, theme)
     const slotStyle = theme.componentStyles[name][slot](slotStyleArg)
@@ -255,18 +291,17 @@ Object.keys(theme.componentStyles).forEach(name => {
     componentStyle[slotSelector] = slotStyle
   })
 
-  let scssString = ''
+  let lessString = ''
 
   const headerLength = 40
   const paddingLength = Math.floor((headerLength - name.length) / 2)
   const padding = ' '.repeat(paddingLength)
-  scssString += '\n/' + '*'.repeat(headerLength - 1) + '\n'
-  scssString += `${padding}${name}${padding}` + '\n'
-  scssString += '*'.repeat(headerLength - 1) + '/' + '\n\n'
-  scssString += jsStyleSheetToCSSString(componentStyle) + '\n'
+  lessString += '\n/' + '*'.repeat(headerLength - 1) + '\n'
+  lessString += `${padding}${name}${padding}` + '\n'
+  lessString += '*'.repeat(headerLength - 1) + '/' + '\n\n'
+  lessString += jsStyleSheetToCSSString(componentStyle) + '\n'
 
-  console.log(scssString)
-  fs.appendFileSync(sassFilename, scssString)
+  fs.appendFileSync(filename, lessString)
 })
 
 // const makeStyleSheet = spec => {
@@ -304,10 +339,12 @@ Object.keys(theme.componentStyles).forEach(name => {
 TODO
  - [ ] stardust.scss .ui-icon style is missing font-family value
  - [ ] stardust.scss .ui-layout style is missing grid-template-columns value
+ - [ ] document use of util components, render method cleanliness/conformance
+ - [ ] render static styles as globals at top of file (normalize, statics font/animations, etc)
 
-# 1. defaultProps
-Many styles are dependant on defaultProp values.  Some styles break (statusStyles) when the default
-props are not present.
+# 1. defaultProps & getInitialAutoControlledState
+Many styles are dependant on initial prop/state values.  Some styles break (statusStyles, alertStyles, etc)
+when the initial values are not present.
 
 Aside from breaking, there are some components where a default prop value is going to make sense. In
 those cases, the default "style props" should likely be part of the base theme.  This way, when
@@ -328,18 +365,9 @@ these design terms are applied.  This way the base style is defined at the top o
 detailed definitions are at the bottom.  This order also has to be shared and adopted, else, we
 won't be able to reliably produce styles.
 
-# 3. isFromKeyboard
-https://github.com/stardust-ui/react/issues/749
+# 3. isFromKeyboard (RESOLVED)
 
-There is no way to encode this in a flat stylesheet.  Even if we produce two flat styles, one with
-keyboard focus and one without, we will have to decide on a selector to use in the stylesheet. This
-means consumers will also have to use a similar utility and creating matching elements in order to
-apply the style.
-
-# 4. RadioGroupItem
-
-The variables for this file require props to be provided.  This is the only file doing so.
-Only styles should be dependant on runtime values, such as props.  Variables should be static.
+# 4. RadioGroupItem (RESOLVED)
 
 # 5. dropdownSearchInputStyles
 https://github.com/stardust-ui/react/issues/753
