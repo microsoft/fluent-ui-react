@@ -43,9 +43,8 @@ steps:
     displayName: Project tests
 
   - script: |
-      echo "Build source branch:"
-      echo $BUILD_SOURCEBRANCH
-      if [ $BUILD_SOURCEBRANCH == 'master' ]; then
+      echo $BUILD_SOURCEBRANCHNAME
+      if [ $BUILD_SOURCEBRANCHNAME == 'master' ]; then
         yarn stats:build
       else
         echo 'skip bundle statistics collection'
@@ -53,11 +52,11 @@ steps:
     displayName: Bundle statistics (master only)
 
   - script: |
-      if [ $BUILD_SOURCEBRANCH == 'master' ]; then yarn perf; fi
+      if [ $BUILD_SOURCEBRANCHNAME == 'master' ]; then yarn perf; fi
     displayName: Performance tests (master only)
 
   - script: |
-      if [ $BUILD_SOURCEBRANCH == 'master' ] && [ -n "${STATS_URI}" ]; then
+      if [ $BUILD_SOURCEBRANCHNAME == 'master' ] && [ -n "${STATS_URI}" ]; then
         yarn stats:save --tag=`git tag --points-at HEAD`
       else
         echo 'skip saving statistics'
@@ -65,9 +64,9 @@ steps:
     displayName: Save statistics to DB (master only)
 
   - script: |
-      echo "PR source branch:"
-      echo $SYSTEM_PULLREQUEST_SOURCEBRANCH
-      if [ ! -z $SYSTEM_PULLREQUEST_SOURCEBRANCH ] && [ ! -z $DANGER_GITHUB_API_TOKEN ]; then
+      echo "Build reason:"
+      echo $BUILD_REASON
+      if [ $BUILD_REASON != "PullRequest" ] && [ ! -z $DANGER_GITHUB_API_TOKEN ]; then
         yarn danger ci
       fi
     displayName: Danger JS
