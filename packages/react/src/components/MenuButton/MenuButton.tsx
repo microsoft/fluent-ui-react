@@ -57,15 +57,15 @@ export interface MenuButtonProps extends StyledComponentProps<MenuButtonProps>, 
   /**
    * Called after user's click on a menu item.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onMenuItemClick?: ComponentEventHandler<MenuItemProps>
 
   /**
    * Event for request to change 'open' value.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onOpenChange?: ComponentEventHandler<PopupProps>
 

@@ -51,7 +51,7 @@ export interface PopperProps extends PositioningProps {
 
   /**
    * Enables events (resize, scroll).
-   * @prop {Boolean} enabled=true
+   * @default true
    */
   enabled?: boolean
 
@@ -68,7 +68,7 @@ export interface PopperProps extends PositioningProps {
 
   /**
    * Enables the Popper box to position itself in 'fixed' mode (default value is position: 'absolute')
-   * @prop {Boolean} positionFixed=false
+   * @default false
    */
   positionFixed?: boolean
 

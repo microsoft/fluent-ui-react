@@ -36,15 +36,15 @@ export interface ToolbarCustomItemProps
 
   /**
    * Called after user's focus. Will be called only if the item is focusable.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onFocus?: ComponentEventHandler<ToolbarCustomItemProps>
 
   /**
    * Called after item blur. Will be called only if the item is focusable.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onBlur?: ComponentEventHandler<ToolbarCustomItemProps>
 }

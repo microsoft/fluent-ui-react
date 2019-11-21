@@ -1,11 +1,10 @@
 import componentInfoContext from './componentInfoContext'
+import { ComponentInfo } from '../types'
 
 /**
  * Returns a component's info.json file and subcomponent info.json files grouped by displayName.
- * @param displayName
- * @returns {{}}
  */
-const getComponentGroup = displayName => {
+const getComponentGroup = (displayName: string): { [key: string]: ComponentInfo } => {
   const info = componentInfoContext.byDisplayName[displayName]
 
   const group = {
