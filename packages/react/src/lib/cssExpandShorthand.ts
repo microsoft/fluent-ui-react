@@ -387,20 +387,13 @@ let cssUrlRegex = function() {
   return /url\(.*?\)/gi
 }
 
-/**
- * @enum {number}
- */
 let states = {
   VARIATION: 1,
   LINE_HEIGHT: 2,
   FONT_FAMILY: 3,
 }
-/**
- * @param {string} input
- * @return {Object}
- */
 
-function parse(input) {
+function parse(input: string): object {
   let state = states.VARIATION,
     buffer = '',
     result = {

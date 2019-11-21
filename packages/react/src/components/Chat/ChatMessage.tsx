@@ -81,22 +81,22 @@ export interface ChatMessageProps
 
   /**
    * Called after user's blur.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onBlur?: ComponentEventHandler<ChatMessageProps>
 
   /**
    * Called after user's focus.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onFocus?: ComponentEventHandler<ChatMessageProps>
 
   /**
    * Called after user enters by mouse.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onMouseEnter?: ComponentEventHandler<ChatMessageProps>
 

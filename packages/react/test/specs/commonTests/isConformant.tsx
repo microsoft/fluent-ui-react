@@ -21,25 +21,31 @@ import * as stardust from 'src/index'
 import { getEventTargetComponent, EVENT_TARGET_ATTRIBUTE } from './eventTarget'
 
 export interface Conformant {
+  /** Map of events and the child component to target. */
   eventTargets?: object
   hasAccessibilityProp?: boolean
+  /** Props required to render Component without errors or warnings. */
   requiredProps?: object
+  /** Is this component exported as top level API? */
   exportedAtTopLevel?: boolean
+  /** Does this component render a Portal powered component? */
   rendersPortal?: boolean
+  /** This component uses wrapper slot to wrap the 'meaningful' element. */
   wrapperComponent?: React.ReactType
 }
 
 /**
  * Assert Component conforms to guidelines that are applicable to all components.
- * @param {React.Component|Function} Component A component that should conform.
- * @param {Object} [options={}]
- * @param {Object} [options.eventTargets={}] Map of events and the child component to target.
- * @param {boolean} [options.exportedAtTopLevel=false] Is this component exported as top level API?
- * @param {boolean} [options.rendersPortal=false] Does this component render a Portal powered component?
- * @param {Object} [options.requiredProps={}] Props required to render Component without errors or warnings.
- * @param {boolean} [options.usesWrapperSlot=false] This component uses wrapper slot to wrap the 'meaningful' element.
+ * @param Component - A component that should conform.
  */
-export default (Component, options: Conformant = {}) => {
+export default function isConformant(
+  Component: React.ComponentType<any> & {
+    handledProps: stardust.ObjectOf<any>
+    autoControlledProps: string[]
+    className: string
+  },
+  options: Conformant = {},
+) {
   const {
     eventTargets = {},
     exportedAtTopLevel = true,
@@ -490,7 +496,7 @@ export default (Component, options: Conformant = {}) => {
         const wrapper = mount(<Component {...requiredProps} className={className} />, {
           attachTo: mountNode,
         })
-        wrapper.setProps({ open: true })
+        wrapper.setProps({ open: true } as any)
 
         // portals/popups/etc may render the component to somewhere besides descendants
         // we look for the component anywhere in the DOM
