@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Form, Button } from '@stardust-ui/react'
+import { Form, Button } from '@fluentui/react'
 
 const FormExample = () => (
   <Form
@@ -7,8 +7,8 @@ const FormExample = () => (
       alert('Form submitted')
     }}
   >
-    <Form.Field label="First name" name="firstName" id="first-name" required={true} />
-    <Form.Field label="Last name" name="lastName" id="last-name" required={true} />
+    <Form.Field label="First name" name="firstName" id="first-name" required />
+    <Form.Field label="Last name" name="lastName" id="last-name" required />
     <Form.Field
       label="I agree to the Terms and Conditions"
       control={{ as: 'input' }}

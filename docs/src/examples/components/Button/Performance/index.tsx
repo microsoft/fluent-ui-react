@@ -1,16 +1,16 @@
 import * as React from 'react'
 
-import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
-import PerformanceSection from 'docs/src/components/ComponentDoc/PerformanceSection'
+import ComponentPerfExample from 'docs/src/components/ComponentDoc/ComponentPerfExample'
+import NonPublicSection from 'docs/src/components/ComponentDoc/NonPublicSection'
 
 const Performance = () => (
-  <PerformanceSection title="Performance">
-    <ComponentExample
+  <NonPublicSection title="Performance">
+    <ComponentPerfExample
       title="Default"
       description="A default test."
       examplePath="components/Button/Performance/Button.perf"
     />
-  </PerformanceSection>
+  </NonPublicSection>
 )
 
 export default Performance

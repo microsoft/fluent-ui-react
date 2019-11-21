@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import { Header, List } from 'semantic-ui-react'
+import { List, Header } from '@fluentui/react'
 
 import { getComponentPathname, getInfoForSeeTags } from 'docs/src/utils'
 
@@ -11,11 +11,12 @@ const listStyle = { display: 'block' }
 const ComponentDocSee: any = ({ displayName }) => {
   const items = getInfoForSeeTags(displayName)
 
+  if (_.isEmpty(items)) return null
   return (
-    <List horizontal link size="small" style={listStyle}>
+    <List styles={listStyle}>
       {/* Heads up! Still render empty lists to reserve the whitespace */}
       <List.Item>
-        <Header color="grey" content={items.length > 0 ? 'See:' : ' '} size="tiny" />
+        <Header color="grey" content={items.length > 0 ? 'See:' : ' '} />
       </List.Item>
       {_.map(items, info => (
         <List.Item

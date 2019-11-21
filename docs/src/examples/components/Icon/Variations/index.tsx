@@ -29,6 +29,11 @@ const Variations = () => (
       description="An icon can be formatted to appear circular."
       examplePath="components/Icon/Variations/IconExampleCircular"
     />
+    <ComponentExample
+      title="Rotate"
+      description="An icon can be rotated by specified degrees."
+      examplePath="components/Icon/Variations/IconExampleRotate"
+    />
   </ExampleSection>
 )
 

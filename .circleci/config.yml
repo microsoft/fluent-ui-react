@@ -6,7 +6,7 @@ general:
 jobs:
   build:
     docker:
-      - image: circleci/node:8
+      - image: circleci/node:8-browsers
     environment:
       TZ: "/usr/share/zoneinfo/America/Los_Angeles"
     steps:
@@ -26,13 +26,13 @@ jobs:
           command: echo 'export PATH="${PATH}:$(npm bin)"' >> $BASH_ENV
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            - v1-dependencies
+            - v1.1-dependencies-{{ checksum "yarn.lock" }}
+            - v1.1-dependencies
       - run:
           name: Install Dependencies
           command: yarn
       - save_cache:
-          key: v1-dependencies-{{ checksum "yarn.lock" }}
+          key: v1.1-dependencies-{{ checksum "yarn.lock" }}
           paths:
             - ~/.cache/yarn
             - .yarn-cache
@@ -43,38 +43,43 @@ jobs:
       - run:
           name: Prettier
           command: yarn prettier
-      # weak package is required for --detectLeaks in Unit tests
-      # it is not in package.json as it would require Python on Windows
-      - run:
-          name: Install weak
-          command: yarn add --dev weak
       - run:
           name: Unit Tests
-          command: yarn test --strict --maxWorkers=4 --detectLeaks
+          command: yarn test --maxWorkers=2
       - run:
           name: Report coverage
           command: bash <(curl -s https://codecov.io/bash)
 
-      - restore_cache:
-          key: v1-vuln-scans-{{ checksum "yarn.lock" }}
       - run:
-          name: Vulnerability Tests
-          command: yarn test:vulns
-      # https://discuss.circleci.com/t/add-mechanism-to-update-existing-cache-key/9014/12
-      - save_cache:
-          key: v1-vuln-scans-{{ checksum "yarn.lock" }}-{{ epoch }}
-          paths:
-            - .vuln-scans
+          name: E2E Tests
+          command: yarn test:e2e
 
-      - run:
-          name: Visual Tests
-          command: yarn test:visual
       - run:
           name: Project Tests
           command: yarn test:projects
       - run:
-          name: Bundle Statistics
-          command: yarn build:stats
+          name: Circular Dependencies Tests
+          command: yarn test:circulars
+      - run:
+          name: Bundle Statistics (master only)
+          command: |
+            if [ $CIRCLE_BRANCH == 'master' ]; then
+              yarn stats:build
+            else
+              echo 'skip bundle statistics collection'
+            fi
+      - run:
+          name: Performance Tests (master only)
+          command: |
+            if [ $CIRCLE_BRANCH == 'master' ]; then yarn perf; fi
+      - run:
+          name: Save Statistics to DB (master only)
+          command: |
+            if [ $CIRCLE_BRANCH == 'master' ] && [ -n "${STATS_URI}" ]; then
+              yarn stats:save --tag=`git tag --points-at HEAD`
+            else
+              echo 'skip saving statistics'
+            fi
       - run:
           name: Danger JS
           command: |
@@ -82,10 +87,9 @@ jobs:
               yarn danger ci
             fi
       - run:
-          name: Publish npm package
+          name: Publish npm package (master only)
           command: |
-            if [ -n "${npm_TOKEN+x}" ] && [ "${CIRCLE_BRANCH}" == "master" ]; then
+            if [ -n "${npm_TOKEN}" ] && [ "${CIRCLE_BRANCH}" == "master" ]; then
               echo "//registry.npmjs.org/:_authToken=${npm_TOKEN}" > ~/project/.npmrc
-              npm version prerelease --preid="${CIRCLE_BUILD_NUM}.${CIRCLE_BRANCH}.`git rev-parse --short HEAD`" --no-git-tag-version
-              npm publish --tag current
+              yarn lerna publish --canary --preid "${CIRCLE_BUILD_NUM}.${CIRCLE_BRANCH}" --yes
             fi

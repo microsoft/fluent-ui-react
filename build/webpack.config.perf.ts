@@ -1,18 +1,18 @@
-import * as CopyWebpackPlugin from 'copy-webpack-plugin'
-import * as webpack from 'webpack'
+import CopyWebpackPlugin from 'copy-webpack-plugin'
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
+import { webpack as lernaAliases } from 'lerna-alias'
+import { argv } from 'yargs'
 
 import config from '../config'
 
 const { paths } = config
-const { __DEV__, __PERF__, __PROD__ } = config.compiler_globals
 
 const webpackConfig: any = {
   name: 'client',
   target: 'web',
-  mode: __DEV__ ? 'development' : 'production',
+  mode: 'development',
   entry: {
     app: paths.perfSrc('index'),
-    vendor: config.compiler_vendor,
   },
   output: {
     filename: `[name].js`,
@@ -33,20 +33,16 @@ const webpackConfig: any = {
     rules: [
       {
         test: /\.(js|ts|tsx)$/,
-        loader: 'awesome-typescript-loader',
+        loader: 'babel-loader',
         exclude: /node_modules/,
         options: {
-          useCache: true,
-          configFileName: __PERF__
-            ? paths.base('build/tsconfig.perf.json')
-            : paths.base('build/tsconfig.docs.json'),
-          errorsAsWarnings: __DEV__,
+          cacheDirectory: true,
         },
       },
     ],
   },
   plugins: [
-    new webpack.DefinePlugin(config.compiler_globals),
+    new ForkTsCheckerWebpackPlugin({ tsconfig: paths.build('tsconfig.perf.json') }),
     new CopyWebpackPlugin([
       {
         from: paths.perfSrc('index.html'),
@@ -57,22 +53,22 @@ const webpackConfig: any = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json'],
     alias: {
-      '@stardust-ui/react': paths.src(),
+      ...lernaAliases(),
       docs: paths.base('docs'),
-      src: paths.src(),
+      src: paths.packageSrc('react'),
+
+      // We are using React in production mode with tracing.
+      // https://gist.github.com/bvaughn/25e6233aeb1b4f0cdb8d8366e54a3977
+      'react-dom$': 'react-dom/profiling',
+      'scheduler/tracing': 'scheduler/tracing-profiling',
     },
   },
   performance: {
     hints: false, // to (temporarily) disable "WARNING in entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit")
   },
-}
-
-if (__PROD__) {
-  webpackConfig.plugins.push(
-    new webpack.LoaderOptionsPlugin({
-      minimize: true,
-    }),
-  )
+  optimization: {
+    nodeEnv: !!argv.debug ? 'development' : 'production',
+  },
 }
 
 export default webpackConfig

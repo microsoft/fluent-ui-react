@@ -1,11 +1,11 @@
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Header } from 'semantic-ui-react'
-import { Button, Divider, Icon, Label, Provider } from '@stardust-ui/react'
+import { Button, Icon, Label, Provider, Header } from '@fluentui/react'
 
 import DocPage from '../components/DocPage/DocPage'
 import ExampleSnippet from '../components/ExampleSnippet/ExampleSnippet'
-import { pxToRem } from '../../../src/lib'
+
+import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
 
 export default () => (
   <DocPage title="Theming Examples">
@@ -44,25 +44,23 @@ export default () => (
     <ExampleSnippet
       value={`
         import React from 'react'
-        import { Button, Icon, Label, Provider } from '@stardust-ui/react'
+        import { Button, Icon, Label, Provider, themes } from '@fluentui/react'
 
         export default () =>
-         <Provider>
-          <>
+         <Provider theme={themes.teams}>
             <Button content="Button" />
-            <Button icon="plus" iconOnly primary />
-            <Button icon="at" content="Send email" secondary />
-            <Icon name="chess rook" size="larger" />
+            <Button icon="add" iconOnly primary />
+            <Button icon="email" content="Send email" secondary />
+            <Icon name="emoji" size="larger" />
             <Label content="Label with icon" icon="close" />
-          </>
          </Provider>
       `}
       render={() => (
         <>
           <Button content="Button" />
-          <Button icon="plus" iconOnly primary />
-          <Button icon="at" content="Send email" secondary />
-          <Icon name="chess rook" size="larger" />
+          <Button icon="add" iconOnly primary />
+          <Button icon="email" content="Send email" secondary />
+          <Icon name="emoji" size="larger" />
           <Label content="Label with icon" icon="close" />
         </>
       )}
@@ -80,7 +78,7 @@ export default () => (
     <ExampleSnippet
       value={`
         import React from 'react'
-        import { Button } from '@stardust-ui/react'
+        import { Button } from '@fluentui/react'
 
         const styles = {
           color: "coral",
@@ -92,7 +90,7 @@ export default () => (
           <Button
             content="Send email"
             icon={{
-              name: "at",
+              name: "email",
               styles: { color: "brown" },
             }}
             secondary
@@ -104,7 +102,7 @@ export default () => (
       render={() => (
         <Button
           content="Send email"
-          icon={{ name: 'at', styles: { color: 'brown' } }}
+          icon={{ name: 'email', styles: { color: 'brown' } }}
           styles={{
             color: 'coral',
             backgroundColor: 'charcoal',
@@ -120,34 +118,42 @@ export default () => (
     <ExampleSnippet
       value={`
         import React from 'react'
-        import { Button } from '@stardust-ui/react'
+        import { Button } from '@fluentui/react'
 
         const btnExample = () => (
-          <Button
-            icon={{
-              name: "at",
-              variables: { color: "brown" }
-            }}
-            content="Send email"
-            variables={{
-              secondaryColor: "coral",
-              secondaryBackgroundColor: "charcoal",
-              paddingLeftRightValue: 20,
-            }}
-          />
+        <Button
+          content="Secure payment"
+          icon={{
+            name: 'lock',
+            variables: {
+              color: 'blue'
+            }
+          }}
+          secondary
+          variables={{
+            color: 'coral',
+            backgroundColor: 'charcoal',
+            paddingLeftRightValue: 30
+          }}
+        />
         )
 
         export default btnExample
       `}
       render={() => (
         <Button
-          content="Send email"
-          icon={{ name: 'at', variables: { color: 'brown' } }}
+          content="Secure payment"
+          icon={{
+            name: 'lock',
+            variables: {
+              color: 'blue',
+            },
+          }}
           secondary
           variables={{
-            secondaryColor: 'coral',
-            secondaryBackgroundColor: 'charcoal',
-            paddingLeftRightValue: 20,
+            color: 'coral',
+            backgroundColor: 'charcoal',
+            paddingLeftRightValue: 30,
           }}
         />
       )}
@@ -181,7 +187,7 @@ export default () => (
     <ExampleSnippet
       value={`
         import React from 'react'
-        import { Button, Icon, Label, Provider } from '@stardust-ui/react'
+        import { Button, Icon, Label, Provider } from '@fluentui/react'
 
         const theme = {
           siteVariables: {
@@ -216,9 +222,9 @@ export default () => (
           <Provider theme={theme}>
             <div>
               <Button content="Button" />
-              <Button icon="plus" iconOnly primary />
-              <Button icon="at" content="Send email" secondary />
-              <Icon name="chess rook" size="larger" />
+              <Button icon="add" iconOnly primary />
+              <Button icon="email" content="Send email" secondary />
+              <Icon name="emoji" size="larger" />
               <Label content="Label with icon" icon="close" />
             </div>
           </Provider>
@@ -260,9 +266,9 @@ export default () => (
           >
             <div>
               <Button content="Button" />
-              <Button icon="plus" iconOnly primary />
-              <Button icon="at" content="Send email" secondary />
-              <Icon name="chess rook" size="larger" />
+              <Button icon="add" iconOnly primary />
+              <Button icon="email" content="Send email" secondary />
+              <Icon name="emoji" size="larger" />
               <Label content="Label with icon" icon="close" />
             </div>
           </Provider>
@@ -278,26 +284,35 @@ export default () => (
     <ExampleSnippet
       value={`
         <div>
-          /* Default theming */
-          <Header as="h3" content="Default" />
-          <Button primary>Branding</Button>
+          {/* Default theming */}
+          <Header as="h3" content="Default theming" />
+          <Button content="Button" />
+          <Button icon="add" iconOnly primary />
+          <Button icon="email" content="Send email" secondary />
+          <Icon name="emoji" size="larger" />
+          <Label content="Label with icon" icon="close" />
 
-          /* First nested theming */
+          {/* First nested theming */}
           <Provider
             theme={{
-              siteVariables: { brand: 'darkred' },
+              componentVariables: {
+                Button: {
+                  primaryBackgroundColor: 'darkred',
+                },
+              },
             }}
           >
+
             <div>
               <Header as="h3" content="First nested theming" />
 
               <Button content="Button" />
-              <Button icon="plus" iconOnly primary />
-              <Button icon="at" content="Send email" secondary />
-              <Icon name="chess rook" size="larger" />
+              <Button icon="add" iconOnly primary />
+              <Button icon="email" content="Send email" secondary />
+              <Icon name="emoji" size="larger" />
               <Label content="Label with icon" icon="close" />
 
-              /* Second nested theming */
+              {/* Second nested theming */}
               <Provider
                 theme={{
                   componentStyles: {
@@ -312,8 +327,8 @@ export default () => (
 
                   <Button content="Button" />
                   <Button icon="plus" iconOnly primary />
-                  <Button icon="at" content="Send email" secondary />
-                  <Icon name="chess rook" size="larger" />
+                  <Button icon="email" content="Send email" secondary />
+                  <Icon name="emoji" size="larger" />
                   <Label content="Label with icon" icon="close" />
                 </div>
               </Provider>
@@ -325,23 +340,27 @@ export default () => (
         <div>
           <Header as="h3" content="Default theming" />
           <Button content="Button" />
-          <Button icon="plus" iconOnly primary />
-          <Button icon="at" content="Send email" secondary />
-          <Icon name="chess rook" size="larger" />
+          <Button icon="add" iconOnly primary />
+          <Button icon="email" content="Send email" secondary />
+          <Icon name="emoji" size="larger" />
           <Label content="Label with icon" icon="close" />
 
           <Provider
             theme={{
-              siteVariables: { brand: 'darkred' },
+              componentVariables: {
+                Button: {
+                  primaryBackgroundColor: 'darkred',
+                },
+              },
             }}
           >
             <>
               <Header as="h3" content="First nested theming" />
 
               <Button content="Button" />
-              <Button icon="plus" iconOnly primary />
-              <Button icon="at" content="Send email" secondary />
-              <Icon name="chess rook" size="larger" />
+              <Button icon="add" iconOnly primary />
+              <Button icon="email" content="Send email" secondary />
+              <Icon name="emoji" size="larger" />
               <Label content="Label with icon" icon="close" />
 
               <Provider
@@ -357,9 +376,9 @@ export default () => (
                   <Header as="h3" content="Second nested theming" />
 
                   <Button content="Button" />
-                  <Button icon="plus" iconOnly primary />
-                  <Button icon="at" content="Send email" secondary />
-                  <Icon name="chess rook" size="larger" />
+                  <Button icon="add" iconOnly primary />
+                  <Button icon="email" content="Send email" secondary />
+                  <Icon name="emoji" size="larger" />
                   <Label content="Label with icon" icon="close" />
                 </>
               </Provider>
@@ -369,24 +388,9 @@ export default () => (
       )}
     />
 
-    <Divider size={1} />
-    <br />
-    <Button
-      as={NavLink}
-      content="Theming"
-      icon="arrow left"
-      iconPosition="before"
-      primary
-      to="theming"
-    />
-    <Button
-      as={NavLink}
-      content="Integrate Custom Components"
-      icon="arrow right"
-      iconPosition="after"
-      primary
-      to="integrate-custom-components"
-      variables={{ maxWidth: pxToRem(300) }}
+    <GuidesNavigationFooter
+      previous={{ name: 'Theming', url: 'theming' }}
+      next={{ name: 'Colors', url: 'colors' }}
     />
   </DocPage>
 )

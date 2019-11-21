@@ -11,14 +11,14 @@ const Types = () => (
       examplePath="components/Popup/Types/PopupExample"
     />
     <ComponentExample
-      title="Controlled"
-      description="Note that if Popup is controlled, then its 'open' prop value could be changed either by parent component, or by user actions (e.g. key press) - thus it is necessary to handle 'onOpenChanged' event. Try to type some text into popup's input field and press ESC to see the effect."
-      examplePath="components/Popup/Types/PopupControlledExample"
+      title="Pointing"
+      description="A popup can have a pointer."
+      examplePath="components/Popup/Types/PopupExamplePointing"
     />
     <ComponentExample
-      title="Content Wrapper"
-      description="Use 'content' prop of the Popup to set whether Popup content should be rendered with the default wrapper."
-      examplePath="components/Popup/Types/PopupContentWrapperExample"
+      title="Controlled"
+      description="Note that if Popup is controlled, then its 'open' prop value could be changed either by parent component, or by user actions (e.g. key press) - thus it is necessary to handle 'onOpenChange' event. Try to type some text into popup's input field and press ESC to see the effect."
+      examplePath="components/Popup/Types/PopupControlledExample"
     />
     <ComponentExample
       title="Focus Trap"
@@ -29,6 +29,11 @@ const Types = () => (
       title="Custom Target"
       description="By default Popup uses trigger element as the one it is displayed for, but it is possible to provide any DOM element as popup's target."
       examplePath="components/Popup/Types/PopupCustomTargetExample"
+    />
+    <ComponentExample
+      title="Inline"
+      description="The content of the popup can be rendered next to the trigger element instead of the body."
+      examplePath="components/Popup/Types/PopupExampleInline"
     />
   </ExampleSection>
 )

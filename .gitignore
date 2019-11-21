@@ -1,4 +1,3 @@
-.awcache
 *.log*
 *.iml
 
@@ -11,10 +10,13 @@ dist/
 docs/src/componentInfo
 docs/src/componentMenu.json
 docs/src/behaviorMenu.json
+docs/src/currentBundleStats.json
 docs/src/exampleMenus
 docs/src/exampleSources
 docs/dist/
-dll/
 node_modules/
+report.*.json
 stats/
 .vscode/
+temp/
+*.api.json

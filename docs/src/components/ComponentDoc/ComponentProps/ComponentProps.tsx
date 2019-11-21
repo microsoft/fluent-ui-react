@@ -1,14 +1,11 @@
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { Checkbox } from 'semantic-ui-react'
 
-import { getComponentGroup } from 'docs/src/utils'
-import ComponentTable from '../ComponentTable'
-import ComponentPropsComponents from './ComponentPropsComponents'
-import ComponentPropsDescription from './ComponentPropsDescription'
-
-const propsContainerStyle: any = { overflowX: 'auto' }
+import { getComponentGroup, scrollToAnchor } from 'docs/src/utils'
+import ComponentPropsOutline from './ComponentPropsOutline'
+import { Flex, Header } from '@fluentui/react'
+import ComponentPropCard from './ComponentPropCard'
 
 export default class ComponentProps extends React.Component<any, any> {
   static propTypes = {
@@ -19,55 +16,43 @@ export default class ComponentProps extends React.Component<any, any> {
   componentWillMount() {
     const { displayName } = this.props
 
-    this.setState({ componentGroup: getComponentGroup(displayName) })
+    this.setState({
+      componentGroup: getComponentGroup(displayName),
+    })
+    scrollToAnchor()
   }
 
-  componentWillReceiveProps({ displayName: next }) {
-    const current = this.props.displayName
+  componentWillReceiveProps(nextProps) {
+    const { displayName } = nextProps
 
-    if (current !== next) {
-      this.setState({
-        activeDisplayName: null,
-        componentGroup: getComponentGroup(next),
-      })
-    }
-  }
-
-  handleComponentClick = (e, { name }) => {
-    this.setState({ activeDisplayName: name })
-  }
-
-  handleToggle = () => {
-    const { displayName } = this.props
-    const { activeDisplayName } = this.state
-
-    this.setState({ activeDisplayName: activeDisplayName ? false : displayName })
+    this.setState({
+      componentGroup: getComponentGroup(displayName),
+    })
+    scrollToAnchor()
   }
 
   render() {
-    const { displayName } = this.props
-    const { activeDisplayName, componentGroup } = this.state
+    const { componentGroup } = this.state
     const displayNames = _.keys(componentGroup)
-    const { docblock, props } = (componentGroup[activeDisplayName] || {}) as any
-    const description = _.get(docblock, 'description', [])
 
     return (
-      <div>
-        <Checkbox slider checked={!!activeDisplayName} label="Props" onClick={this.handleToggle} />
-        <ComponentPropsComponents
-          activeDisplayName={activeDisplayName}
-          displayNames={displayNames}
-          onItemClick={this.handleComponentClick}
-          parentDisplayName={displayName}
-        />
-
-        {activeDisplayName && (
-          <div style={propsContainerStyle}>
-            <ComponentPropsDescription description={_.join(description, ' ')} />
-            <ComponentTable displayName={activeDisplayName} props={props} />
-          </div>
-        )}
-      </div>
+      <Flex column gap="gap.small">
+        <Flex.Item styles={{ display: 'block', verticalAlign: 'middle' }}>
+          <Flex gap="gap.medium">
+            <ComponentPropsOutline displayNames={displayNames} />
+          </Flex>
+        </Flex.Item>
+        {_.map(displayNames, displayName => {
+          const description = _.get(componentGroup, [displayName, 'docblock', 'description'], '')
+          const showHeader = displayNames.length > 1
+          return (
+            <>
+              {showHeader && <Header content={displayName} id={_.kebabCase(displayName)} as="h2" />}
+              <ComponentPropCard name={displayName} description={description} />
+            </>
+          )
+        })}
+      </Flex>
     )
   }
 }

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Animation, Icon, Grid, Text, Provider } from '@stardust-ui/react'
+import { Animation, Icon, Grid, Text, Provider } from '@fluentui/react'
 
 const spinner = {
   keyframe: {
@@ -22,16 +22,16 @@ const AnimationExampleIterationCount = () => (
       <Text content="5 iterations" />
       <Text content="Infinite" />
       <Animation name="spinner" iterationCount="1">
-        <Icon name="umbrella" circular />
+        <Icon name="mention" circular bordered />
       </Animation>
       <Animation name="spinner" iterationCount="2">
-        <Icon name="umbrella" circular />
+        <Icon name="mention" circular bordered />
       </Animation>
       <Animation name="spinner" iterationCount="5">
-        <Icon name="umbrella" circular />
+        <Icon name="mention" circular bordered />
       </Animation>
       <Animation name="spinner" iterationCount="infinite">
-        <Icon name="umbrella" circular />
+        <Icon name="mention" circular bordered />
       </Animation>
     </Grid>
   </Provider>

@@ -1,11 +1,9 @@
+import { CodeSnippet } from '@fluentui/docs-components'
+import { Header, Icon } from '@fluentui/react'
 import * as React from 'react'
-import { NavLink } from 'react-router-dom'
-import { Header, Icon, Divider } from 'semantic-ui-react'
 
-import { Button } from '@stardust-ui/react'
-
-import CodeSnippet from '../components/CodeSnippet'
 import DocPage from '../components/DocPage'
+import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
 
 export default () => (
   <DocPage title="Quick Start">
@@ -13,13 +11,13 @@ export default () => (
     <p>
       Stardust UI should be installed as a <code>dependency</code> of your app.
     </p>
-    <CodeSnippet mode="sh" value="yarn add @stardust-ui/react" />
+    <CodeSnippet mode="bash" value="yarn add @fluentui/react" />
     <Header as="h2">Setup</Header>
     <p>
       Stardust components are styled using CSS in JS. This technique requires a style renderer to
       render JavaScript objects to CSS.{' '}
       <a href="https://reactjs.org/docs/context.html" target="_blank" rel="noopener nofollow">
-        React Context <Icon name="external" size="small" link fitted />
+        React Context <Icon name="open-outside" size="small" />
       </a>{' '}
       is used to provide the style renderer and theme to components.
     </p>
@@ -31,7 +29,7 @@ export default () => (
       value={`
         import React from 'react'
         import ReactDOM from 'react-dom'
-        import { Provider, themes } from '@stardust-ui/react'
+        import { Provider, themes } from '@fluentui/react'
 
         import App from './App'
 
@@ -49,21 +47,12 @@ export default () => (
       label="App.jsx"
       value={`
         import React from 'react'
-        import { Button } from '@stardust-ui/react'
+        import { Button } from '@fluentui/react'
 
-        export default () => <Button content="Theming" icon="arrow right" iconPosition="after" primary />
+        export default () => <Button content="Get started" icon="play" iconPosition="after" primary />
       `}
     />
 
-    <Divider />
-    <br />
-    <Button
-      as={NavLink}
-      content="Accessibility"
-      icon="arrow right"
-      iconPosition="after"
-      primary
-      to="accessibility"
-    />
+    <GuidesNavigationFooter next={{ name: 'FAQ', url: 'faq' }} />
   </DocPage>
 )

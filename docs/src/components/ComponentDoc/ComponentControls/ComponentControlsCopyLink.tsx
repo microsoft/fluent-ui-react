@@ -1,55 +1,44 @@
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { Icon, Menu } from 'semantic-ui-react'
+import ComponentButton from './ComponentButton'
+import * as _ from 'lodash'
 
 export default class ComponentControlsCopyLink extends React.Component<any, any> {
-  private mounted: boolean
-  private readonly btnLabel = 'Permalink'
+  mounted: boolean
+  readonly btnLabel = 'Permalink'
 
-  public static propTypes = {
-    anchorName: PropTypes.string,
-    onClick: PropTypes.func,
-  }
+  state: any = {}
 
-  public state: any = {}
-
-  public shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps, nextState) {
     return this.state.active !== nextState.active
   }
 
-  public componentDidMount() {
+  componentDidMount() {
     this.mounted = true
   }
 
-  public componentWillUnmount() {
+  componentWillUnmount() {
     this.mounted = false
   }
 
-  public render() {
-    const { anchorName } = this.props
+  render() {
     const { active } = this.state
 
     return (
-      <Menu.Item
-        href={`#${anchorName}`}
+      <ComponentButton
+        iconName="linkify"
+        label={active ? 'Copied!' : this.btnLabel}
         onClick={this.handleClick}
-        color={active ? 'green' : undefined}
-      >
-        <Icon color={active ? 'green' : 'grey'} fitted name="linkify" size="large" />
-        {active ? 'Copied!' : this.btnLabel}
-      </Menu.Item>
+      />
     )
   }
 
-  private handleClick = e => {
-    const { onClick } = this.props
-
+  handleClick = e => {
     e.preventDefault()
-    onClick()
+    _.invoke(this.props, 'onClick', e, this.props)
 
     this.setState({ active: true })
     setTimeout(this.resetActive, 3000)
   }
 
-  private resetActive = () => this.mounted && this.setState({ active: false })
+  resetActive = () => this.mounted && this.setState({ active: false })
 }

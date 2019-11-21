@@ -1,10 +1,10 @@
 import * as React from 'react'
-import { Attachment } from '@stardust-ui/react'
+import { Attachment } from '@fluentui/react'
 
 const AttachmentProgressExampleShorthand = () => (
   <Attachment
     header="Photo.jpg"
-    action={{ icon: 'x', onClick: () => alert("'X' is clicked!") }}
+    action={{ icon: 'close', onClick: () => alert("'X' is clicked!"), title: 'Close' }}
     progress={33}
   />
 )

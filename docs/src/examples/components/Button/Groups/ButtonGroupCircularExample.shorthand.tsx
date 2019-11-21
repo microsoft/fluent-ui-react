@@ -1,13 +1,13 @@
 import * as React from 'react'
-import { Button } from '@stardust-ui/react'
+import { Button } from '@fluentui/react'
 
 const ButtonGroupCircularExampleShorthand = () => (
   <Button.Group
     circular
     buttons={[
-      { key: 'book', icon: 'book', primary: true },
-      { key: 'coffee', icon: 'coffee' },
-      { key: 'play', icon: 'play', primary: true },
+      { key: 'emoji', icon: 'emoji', primary: true, title: 'Emoji' },
+      { key: 'translation', icon: 'translation', title: 'Translation' },
+      { key: 'play', icon: 'play', primary: true, title: 'Play' },
     ]}
   />
 )

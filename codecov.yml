@@ -1,7 +1,8 @@
 coverage:
   ignore:
     - docs/*
-    - src/lib/*
-    - src/themes/*
-    - src/styles/*
-    - test/*
+    - packages/ability-attributes/src/*
+    - packages/accessibility/src/behaviors/*
+    - packages/react/src/themes/*
+    - packages/react/src/styles/*
+    - packages/react/test/*

@@ -3,16 +3,15 @@ import {
   Popup,
   Button,
   Menu,
-  popupFocusTrapBehavior,
   AvatarProps,
-} from '@stardust-ui/react'
+  ChatMessageProps,
+  DividerProps,
+  StatusProps,
+} from '@fluentui/react'
 import * as React from 'react'
 import * as _ from 'lodash'
 import * as keyboardKey from 'keyboard-key'
-import { ChatMessageProps } from 'src/components/Chat/ChatMessage'
-import { DividerProps } from 'src/components/Divider/Divider'
-import { StatusProps } from 'src/components/Status/Status'
-import { Extendable, ShorthandValue } from 'utils'
+import { Extendable, ShorthandValue } from 'src/types'
 import { ChatData, UserStatus, MessageData, UserData, areSameDay, getFriendlyDateString } from '.'
 
 export enum ChatItemTypes {
@@ -76,7 +75,7 @@ function generateChatMsgProps(message: MessageData, fromUser: UserData): ChatIte
   }
 }
 
-function createMessageContent(message: MessageData): ShorthandValue {
+function createMessageContent(message: MessageData): ShorthandValue<ChatMessageProps> {
   const messageId = `content-${message.id}`
   return {
     id: message.withAttachment ? undefined : messageId,
@@ -87,8 +86,8 @@ function createMessageContent(message: MessageData): ShorthandValue {
 }
 
 function createMessageContentWithAttachments(content: string, messageId: string): JSX.Element {
-  const menuClickHandler = content => e => {
-    alert(`${content} clicked`)
+  const menuClickHandler = message => e => {
+    alert(`${message} clicked`)
     e.stopPropagation()
   }
 
@@ -119,7 +118,7 @@ function createMessageContentWithAttachments(content: string, messageId: string)
     />
   )
 
-  const stopPropagationOnKeys = (keys: number[]) => (e: Event) => {
+  const stopPropagationOnKeys = (keys: number[]) => (e: React.KeyboardEvent<any>) => {
     if (keys.indexOf(keyboardKey.getCode(e)) > -1) {
       e.stopPropagation()
     }
@@ -127,7 +126,7 @@ function createMessageContentWithAttachments(content: string, messageId: string)
 
   const actionPopup = (
     <Popup
-      accessibility={popupFocusTrapBehavior}
+      trapFocus
       trigger={
         <Button
           aria-label="More attachment options"
@@ -150,6 +149,7 @@ function createMessageContentWithAttachments(content: string, messageId: string)
       <div style={{ marginTop: '20px', display: 'flex' }}>
         {_.map(['MeetingNotes.pptx', 'Document.docx'], (fileName, index) => (
           <Attachment
+            key={`attachment-${index}`}
             icon="file word outline"
             aria-label={`File attachment ${fileName}. Press tab for more options Press Enter to open the file`}
             header={fileName}
@@ -203,7 +203,7 @@ export function generateChatProps(chat: ChatData): ChatItem[] {
     chatProps.splice(
       myLastMsgIndex + 1,
       0,
-      generateDividerProps({ content: 'Last read', color: 'primary', important: true }),
+      generateDividerProps({ content: 'Last read', color: 'brand', important: true }),
     )
   }
 

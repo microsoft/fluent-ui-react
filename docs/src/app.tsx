@@ -1,33 +1,26 @@
 import * as React from 'react'
-import { Provider, themes } from '@stardust-ui/react'
+import { hot } from 'react-hot-loader/root'
+import { Provider, Debug, themes } from '@fluentui/react'
 
-import { mergeThemes } from '../../src/lib'
-import { ThemeContext } from './context/ThemeContext'
-import Router from './routes'
+import { mergeThemes } from 'src/lib'
+import { ThemeContext, ThemeContextData, themeContextDefaults } from './context/ThemeContext'
+import Routes from './routes'
+import { PerfDataProvider } from './components/ComponentDoc/PerfChart'
 
-interface AppState {
-  themeName: string
-  changeTheme: (newTheme: string) => void
+// Experimental dev-time accessibility attributes integrity validation.
+import { setup } from '@fluentui/ability-attributes'
+
+// Temporarily disabling the validation for Screener.
+if (process.env.NODE_ENV !== 'production' && !process.env.SCREENER) {
+  setup()
 }
 
-class App extends React.Component<any, AppState> {
-  private changeTheme
-
-  constructor(props) {
-    super(props)
-
-    this.changeTheme = newTheme => {
-      this.setState({
-        themeName: newTheme,
-      })
-    }
-
-    // State also contains the updater function so it will
-    // be passed down into the context provider
-    this.state = {
-      themeName: 'teams',
-      changeTheme: this.changeTheme,
-    }
+class App extends React.Component<any, ThemeContextData> {
+  // State also contains the updater function so it will
+  // be passed down into the context provider
+  state: ThemeContextData = {
+    ...themeContextDefaults,
+    changeTheme: (e, { value: item }) => this.setState({ themeName: item.value }),
   }
 
   render() {
@@ -35,19 +28,27 @@ class App extends React.Component<any, AppState> {
     return (
       <ThemeContext.Provider value={this.state}>
         <Provider
-          theme={mergeThemes(themes[themeName], {
-            // adjust Teams' theme to Semantic UI's font size scheme
-            siteVariables: {
-              htmlFontSize: '14px',
-              bodyFontSize: '1rem',
-            },
+          as={React.Fragment}
+          theme={mergeThemes(themes.fontAwesome, themes[themeName], {
+            staticStyles: [
+              {
+                a: {
+                  textDecoration: 'none',
+                },
+              },
+            ],
           })}
         >
-          <Router />
+          <PerfDataProvider>
+            <div>
+              <Debug />
+              <Routes />
+            </div>
+          </PerfDataProvider>
         </Provider>
       </ThemeContext.Provider>
     )
   }
 }
 
-export default App
+export default hot(App)

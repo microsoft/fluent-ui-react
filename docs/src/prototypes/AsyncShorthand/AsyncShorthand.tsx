@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
 import * as React from 'react'
-import { Chat, Menu, Popup, Avatar } from '@stardust-ui/react'
+import { Chat, Menu, Popup, Avatar } from '@fluentui/react'
 
 /**
  * This example shows how to create custom Chat Messages.
@@ -39,16 +39,14 @@ class CustomChatMessage extends React.Component {
         key={props.key}
         position="below"
         open={this.state.open}
-        content={{
-          content: (
-            <AsyncData
-              data={['User 1', 'User 2', 'User 3']}
-              render={data => {
-                return !data ? '...loading' : data.map(user => <div key={user}>{user}</div>)
-              }}
-            />
-          ),
-        }}
+        content={
+          <AsyncData
+            data={['User 1', 'User 2', 'User 3']}
+            render={data => {
+              return !data ? '...loading' : data.map(user => <div key={user}>{user}</div>)
+            }}
+          />
+        }
         trigger={
           <AsyncData
             data={3}
@@ -95,8 +93,7 @@ class CustomChatMessage extends React.Component {
                 { key: 'a', icon: 'thumbs up' },
                 { key: 'b', icon: 'user' },
                 { key: 'c', icon: 'ellipsis horizontal' },
-              ]}
-              renderItem={this.renderMenuItem}
+              ].map(item => render => render(item, this.renderMenuItem))}
             />
           </div>
         }
@@ -130,9 +127,9 @@ const gutterContent = (
 const AsyncShorthand = () => (
   <Chat
     items={[
-      { key: 'a', gutter: { content: gutterContent }, message: { content: <CustomChatMessage /> } },
-      { key: 'b', gutter: { content: gutterContent }, message: { content: <CustomChatMessage /> } },
-      { key: 'c', gutter: { content: gutterContent }, message: { content: <CustomChatMessage /> } },
+      { key: 'a', gutter: gutterContent, message: <CustomChatMessage /> },
+      { key: 'b', gutter: gutterContent, message: <CustomChatMessage /> },
+      { key: 'c', gutter: gutterContent, message: <CustomChatMessage /> },
     ]}
   />
 )

@@ -1,12 +1,15 @@
 import * as React from 'react'
+
+import Rtl from './Rtl'
 import Types from './Types'
 import Variations from './Variations'
 
 const ImageExamples = () => (
-  <div>
+  <>
     <Types />
     <Variations />
-  </div>
+    <Rtl />
+  </>
 )
 
 export default ImageExamples

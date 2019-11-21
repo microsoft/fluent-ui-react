@@ -1,19 +1,19 @@
 import * as React from 'react'
-import { Status } from '@stardust-ui/react'
+import { Status } from '@fluentui/react'
 
 const StatusColorExampleShorthand = () => (
   <div>
-    <Status color="red" />
+    <Status color="red" title="red" />
     &emsp;
-    <Status color="orange" />
+    <Status color="orange" title="orange" />
     &emsp;
-    <Status color="yellow" />
+    <Status color="yellow" title="yellow" />
     &emsp;
-    <Status color="green" />
+    <Status color="green" title="green" />
     &emsp;
-    <Status color="blue" />
+    <Status color="blue" title="blue" />
     &emsp;
-    <Status color="violet" />
+    <Status color="violet" title="violet" />
   </div>
 )
 

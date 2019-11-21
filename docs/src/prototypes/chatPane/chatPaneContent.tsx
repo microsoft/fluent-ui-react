@@ -1,43 +1,41 @@
 import * as React from 'react'
 import Scrollbars from 'react-custom-scrollbars'
-import { Chat, Divider, Avatar } from '@stardust-ui/react'
+import { Chat, Divider, Avatar } from '@fluentui/react'
+
+import { Props } from 'src/types'
 import { ChatData, ChatItemTypes, generateChatProps } from './services'
+import chatProtoStyle from './chatProtoStyle'
 
-const screenReaderMessageContainerStyles: React.CSSProperties = {
-  border: '0px',
-  clip: 'rect(0px, 0px, 0px, 0px)',
-  height: '1px',
-  margin: '-1px',
-  overflow: 'hidden',
-  padding: '0px',
-  width: '1px',
-  position: 'absolute',
-}
-
-export interface ChatPaneContainerProps {
-  chat: ChatData
-}
+export type ChatPaneContainerProps = Props<{ chat: ChatData }>
 
 class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
-  public render() {
+  render() {
     const { chat } = this.props
     const items = this.generateChatItems(chat)
 
     return (
       items.length > 0 && (
         <Scrollbars ref={this.handleScrollRef}>
-          <Chat
-            items={items}
+          <div
             role="main"
-            aria-label={`${chat.title} chat content.`}
-            styles={{ padding: '0 32px' }}
-          />
+            aria-label="Message list. In forms mode: press Enter to explore message content, then use Escape to shift focus back to the message"
+          >
+            <div
+              id="chat-pane-reader-text"
+              style={chatProtoStyle.screenReaderContainerStyles}
+              role="heading"
+              aria-level={2}
+            >
+              Message list.
+            </div>
+            <Chat items={items} styles={{ padding: '0 32px' }} />
+          </div>
         </Scrollbars>
       )
     )
   }
 
-  private generateChatItems(chat: ChatData): JSX.Element[] {
+  generateChatItems(chat: ChatData): JSX.Element[] {
     return generateChatProps(chat).map(
       ({ mine, gutter, message: { itemType, ...props } }, index) => {
         const ElementType = this.getElementType(itemType)
@@ -51,27 +49,29 @@ class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
         return (
           <Chat.Item
             key={`chat-item-${index}`}
-            gutterPosition={mine ? 'end' : 'start'}
-            gutter={gutter && { content: <Avatar {...gutter} /> }}
-            message={{
-              content: (
-                <>
-                  {itemType === ChatItemTypes.message && (
-                    <div style={screenReaderMessageContainerStyles} role="heading" aria-level={4}>
-                      {this.getMessagePreviewForScreenReader(props)}
-                    </div>
-                  )}
-                  <ElementType {...props} text={undefined} {...maybeAttributesForDivider} />
-                </>
-              ),
-            }}
+            contentPosition={mine ? 'end' : 'start'}
+            gutter={gutter && <Avatar {...gutter} />}
+            message={
+              <>
+                {itemType === ChatItemTypes.message && (
+                  <div
+                    style={chatProtoStyle.screenReaderContainerStyles}
+                    role="heading"
+                    aria-level={4}
+                  >
+                    {this.getMessagePreviewForScreenReader(props)}
+                  </div>
+                )}
+                <ElementType {...props} {...maybeAttributesForDivider} />
+              </>
+            }
           />
         )
       },
     )
   }
 
-  private getElementType = (itemType: ChatItemTypes) => {
+  getElementType = (itemType: ChatItemTypes): React.ElementType => {
     switch (itemType) {
       case ChatItemTypes.message:
         return Chat.Message
@@ -80,16 +80,18 @@ class ChatPaneContainer extends React.PureComponent<ChatPaneContainerProps> {
     }
   }
 
-  private handleScrollRef(scrollRef: Scrollbars) {
+  handleScrollRef(scrollRef: Scrollbars) {
     if (scrollRef) {
       scrollRef.scrollToBottom()
     }
   }
 
-  private getMessagePreviewForScreenReader(props) {
-    // Show the first 60 characters from the message, as NVDA splits it into 2 lines if more is shown
+  getMessagePreviewForScreenReader(props) {
+    /*  Show the first 44 characters from the message, reasons:
+          - as NVDA splits it into 2 lines if more is shown
+          - for announcements feature, messaging team went with 44 characters but that was not based on loc issues but some UI real estate issue.  */
     const messageText = props.text || ''
-    return `${messageText.slice(0, 60)} ..., by ${
+    return `${messageText.slice(0, 44)} ..., by ${
       typeof props.author === 'object' ? props.author.content : props.author
     }`
   }

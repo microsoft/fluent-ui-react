@@ -1,9 +1,21 @@
 import * as React from 'react'
-import { Avatar, Chat, Provider } from '@stardust-ui/react'
+import {
+  Avatar,
+  AvatarProps,
+  Chat,
+  Provider,
+  ReactionProps,
+  ShorthandCollection,
+} from '@fluentui/react'
 
-const janeAvatar = {
+const reactions: ShorthandCollection<ReactionProps> = [
+  { key: 'up', icon: 'like', content: '1K' },
+  { key: 'smile', icon: 'emoji', content: 5 },
+]
+
+const janeAvatar: AvatarProps = {
   image: 'public/images/avatar/small/ade.jpg',
-  status: { color: 'green', icon: 'check' },
+  status: { color: 'green', icon: 'stardust-checkmark' },
 }
 
 const content = (
@@ -17,10 +29,11 @@ const content = (
   </div>
 )
 
-const slotLabelStyles: any = (label, beforeStyles) => ({
+const slotLabelStyles: any = (label, beforeStyles?, slotStyles?) => ({
   position: 'relative',
   border: '1px solid #000',
   padding: '12px',
+  ...slotStyles,
   ':before': {
     content: `'${label}'`,
     position: 'absolute',
@@ -51,15 +64,35 @@ const ChatMessageExampleStyled = () => (
         },
         ChatMessage: {
           root: { ...slotLabelStyles('chat-message-root'), backgroundColor: '#87CEFA' },
-          author: { ...slotLabelStyles('author'), backgroundColor: '#E0FFFF' },
+          author: ({ props: { mine } }) => ({
+            ...(!mine && {
+              ...slotLabelStyles('author', {}, { display: 'inline-block' }),
+              backgroundColor: '#E0FFFF',
+            }),
+          }),
           content: { ...slotLabelStyles('content'), backgroundColor: '#F08080' },
-          timestamp: { ...slotLabelStyles('timestamp'), backgroundColor: '#FFFFE0' },
+          timestamp: {
+            ...slotLabelStyles('timestamp', {}, { display: 'inline-block' }),
+            backgroundColor: '#FFFFE0',
+          },
+          badge: {
+            ...slotLabelStyles(
+              'badge',
+              { textAlign: 'center', left: '0px' },
+              { position: 'absolute', overflow: 'visible' },
+            ),
+            backgroundColor: '#FFFF00',
+          },
+          reactionGroup: {
+            ...slotLabelStyles('reactions', {}, { padding: '8px' }),
+            backgroundColor: '#FFFFE0',
+          },
         },
       },
       componentVariables: {
         ChatMessage: siteVars => ({
           content: {
-            focusOutlineColor: siteVars.red,
+            focusOutlineColor: siteVars.colors.red[400],
           },
         }),
       },
@@ -75,23 +108,27 @@ const ChatMessageExampleStyled = () => (
                 author="John Doe"
                 timestamp="Yesterday, 10:15 PM"
                 mine
+                badge={{ icon: 'mention' }}
+                badgePosition="start"
+                reactionGroup={reactions}
               />
             ),
           },
+          contentPosition: 'end',
           key: 'message-id-1',
         },
         {
           key: 'message-id-2',
-          gutter: { content: <Avatar {...janeAvatar} /> },
-          message: {
-            content: (
-              <Chat.Message
-                content={{ content }}
-                author="Jane Doe"
-                timestamp="Yesterday, 10:15 PM"
-              />
-            ),
-          },
+          gutter: <Avatar {...janeAvatar} />,
+          message: (
+            <Chat.Message
+              content={{ content }}
+              author="Jane Doe"
+              timestamp="Yesterday, 10:15 PM"
+              badge={{ icon: 'exclamation-circle' }}
+              reactionGroup={reactions}
+            />
+          ),
         },
       ]}
     />

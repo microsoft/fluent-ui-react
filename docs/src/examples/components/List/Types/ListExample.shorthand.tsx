@@ -1,5 +1,6 @@
+import { useBooleanKnob } from '@fluentui/docs-components'
+import { List, Image } from '@fluentui/react'
 import * as React from 'react'
-import { List, Image } from '@stardust-ui/react'
 
 const items = [
   {
@@ -25,6 +26,10 @@ const items = [
   },
 ]
 
-const ListExampleSelectable = ({ knobs }) => <List debug={knobs.debug} items={items} />
+const ListExampleSelectable = () => {
+  const [debug] = useBooleanKnob({ name: 'debug' })
+
+  return <List debug={debug} items={items} />
+}
 
 export default ListExampleSelectable

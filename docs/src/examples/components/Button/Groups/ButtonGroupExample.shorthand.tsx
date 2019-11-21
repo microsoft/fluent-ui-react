@@ -1,12 +1,12 @@
 import * as React from 'react'
-import { Button } from '@stardust-ui/react'
+import { Button } from '@fluentui/react'
 
 const ButtonGroupExampleShorthand = () => (
   <Button.Group
     buttons={[
-      { key: 'book', icon: 'book', iconOnly: true },
-      { key: 'coffee', icon: 'coffee', iconOnly: true },
-      { key: 'play', icon: 'play', iconOnly: true },
+      { key: 'emoji', icon: 'emoji', iconOnly: true, title: 'Emoji' },
+      { key: 'translation', icon: 'translation', iconOnly: true, title: 'Translation' },
+      { key: 'play', icon: 'play', iconOnly: true, title: 'Play' },
     ]}
   />
 )

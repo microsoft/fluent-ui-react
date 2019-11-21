@@ -1,0 +1,11 @@
+{
+  "extends": "../../../build/tsconfig.common",
+  "compilerOptions": {
+    "paths": {
+      "docs/*": ["docs/*"],
+      "src/*": ["packages/react/src/*"],
+      "test/*": ["packages/react/test/*"]
+    }
+  },
+  "include": ["**/*"]
+}

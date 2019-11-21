@@ -1,10 +1,12 @@
+import { CodeSnippet } from '@fluentui/docs-components'
 import * as React from 'react'
-import reactElementToJSXString from 'react-element-to-jsx-string'
-import CodeSnippet from '../CodeSnippet'
+
+import renderElementToJSX from './renderElementToJSX'
 
 export type ExampleSnippetProps = {
+  children?: React.ReactElement
+  render?: () => React.ReactElement
   value?: string
-  render?: () => React.ReactNode
 }
 
 const rootStyle = {
@@ -17,33 +19,14 @@ const renderedStyle = {
   padding: '1rem',
 }
 
-const ExampleSnippet = ({ render = () => null, value }: ExampleSnippetProps) => {
-  let renderHasFunction
+const ExampleSnippet: React.FunctionComponent<ExampleSnippetProps> = props => {
+  const { children, render = () => null, value } = props
 
-  const element = render()
-  const string =
-    value ||
-    reactElementToJSXString(element, {
-      showDefaultProps: false,
-      showFunctions: true,
-      functionValue: fn => (renderHasFunction = true),
-    })
+  const child: React.ReactElement | null = render() || children
+  const element: React.ReactElement = child ? React.Children.only(child) : null
 
-  if (process.env.NODE_ENV !== 'production') {
-    if (renderHasFunction && !value) {
-      throw new Error(
-        [
-          "This ExampleSnippet's render prop output includes function.",
-          ' A helpful JSX string cannot be generated for functions.',
-          ' Please define a `value` string prop that displays readable code to the user.',
-          '\n\n',
-          'RENDERED:',
-          '\n\n',
-          string,
-        ].join(''),
-      )
-    }
-  }
+  const isFunctionWithoutValue = render && !value
+  const string = value || renderElementToJSX(element, !isFunctionWithoutValue)
 
   return (
     <div style={rootStyle}>

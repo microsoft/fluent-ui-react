@@ -1,5 +1,13 @@
 import * as React from 'react'
-import { Grid, Image, Button, gridBehavior } from '@stardust-ui/react'
+import {
+  Grid,
+  Image,
+  Button,
+  Text,
+  Label,
+  gridBehavior,
+  gridHorizontalBehavior,
+} from '@fluentui/react'
 import * as _ from 'lodash'
 
 const imageNames = [
@@ -28,8 +36,8 @@ const imageButtonStyles = {
   height: '72px',
   padding: '0',
   margin: '0',
-  background: '#fff',
 }
+
 const renderImages = () => {
   return _.map(imageNames, imageName => (
     <Image
@@ -43,31 +51,33 @@ const renderImages = () => {
 
 const renderImageButtons = () => {
   return _.map(imageNames, imageName => (
-    <Button key={imageName} styles={imageButtonStyles}>
+    <Button key={imageName} styles={imageButtonStyles} title={imageName}>
       <Image fluid src={`public/images/avatar/large/${imageName}.jpg`} />
     </Button>
   ))
 }
 
-const gridStyles = {
-  gridColumnGap: '10px',
-  gridRowGap: '10px',
-}
-
 const GridExample = () => (
   <div>
-    Grid with images, which are not natively focusable elements. Set 'data-is-focusable=true' to
-    each item to make grid items focusable and navigable.
-    <Grid accessibility={gridBehavior} styles={gridStyles} columns="7" content={renderImages()} />
+    <Text size="medium">
+      Grid with images, which are not natively focusable elements. Set{' '}
+      <Label>data-is-focusable=true</Label> to each item to make grid items focusable and navigable.
+      Use <Label>gridBehavior</Label> to provide arrow key navigation in 4 directions.
+    </Text>
+    <Grid accessibility={gridBehavior} columns="7" content={renderImages()} />
     <br />
-    Grid with images, wrapped with buttons, which are natively focusable elements. No need to add
-    'data-is-focusable'='true'.
-    <Grid
-      accessibility={gridBehavior}
-      styles={gridStyles}
-      columns="7"
-      content={renderImageButtons()}
-    />
+    <Text size="medium">
+      Grid with buttons images, which are natively focusable elements. <b>No need</b> to add{' '}
+      <Label>data-is-focusable=true</Label>
+    </Text>
+    <Grid accessibility={gridBehavior} columns="7" content={renderImageButtons()} />
+    <br />
+    <Text size="medium">
+      Grid with buttons images, which are natively focusable elements. Use{' '}
+      <Label>gridHorizontalBehavior</Label> to provide horizontal navigation within Grid with 4
+      arrow keys.
+    </Text>
+    <Grid accessibility={gridHorizontalBehavior} columns="7" content={renderImageButtons()} />
   </div>
 )
 

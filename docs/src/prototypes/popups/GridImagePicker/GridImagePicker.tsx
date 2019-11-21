@@ -1,14 +1,14 @@
-import { Grid, Input, gridBehavior } from '@stardust-ui/react'
+import { Grid, Input, gridBehavior, IconProps } from '@fluentui/react'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { ShorthandValue } from '../../../../../types/utils'
+import { ShorthandValue } from 'src/types'
 import GridImagePickerItem, { GridPickerItemProps } from './GridImagePickerItem'
 
 export interface GridPickerProps {
   items: GridPickerItemProps[]
   gridColumns?: string | number
-  inputIcon?: ShorthandValue
+  inputIcon?: ShorthandValue<IconProps>
   inputPlaceholder?: string
 }
 

@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import traverse from 'babel-traverse'
+import traverse from '@babel/traverse'
 
 import parseBuffer from './parseBuffer'
 
@@ -19,10 +19,9 @@ type Example = {
 /**
  * Parses the section view of component examples and builds an object with examples titles and paths.
  *
- * @param {buffer} buffer The content of a view
- * @return {object}
+ * @param buffer - The content of a view
  */
-const parseDocSection = buffer => {
+const parseDocSection = (buffer: any): { examples: Example[]; sectionName: string } => {
   const ast = parseBuffer(buffer)
   const examples: Example[] = []
   let sectionName: string

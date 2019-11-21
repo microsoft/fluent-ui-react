@@ -9,6 +9,5 @@ We primarily use GitHub as an issue tracker; for usage and support questions, pl
 
 ---
 
-* Gitter Community Chat: https://gitter.im/Semantic-Org/Semantic-UI-React
-* StackOverflow: https://stackoverflow.com/questions/tagged/semantic-ui-react using the tag `semantic-ui-react`
+* Gitter Community Chat: https://gitter.im/stardust-ui/react
 * Also have a look at our docs: https://stardust-ui.github.io/react

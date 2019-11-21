@@ -1,29 +1,22 @@
 import { parallel, series, task } from 'gulp'
-import { argv } from 'yargs'
+import yargs from 'yargs'
 
 import sh from '../sh'
+import jest, { JestPluginConfig } from '../plugins/gulp-jest'
 
-// ----------------------------------------
-// Jest
-// ----------------------------------------
-const jest = ({ watch = false } = {}) => cb => {
-  process.env.NODE_ENV = 'test'
+const argv = yargs
+  .option('runInBand', {})
+  .option('maxWorkers', {})
+  .option('detectLeaks', {})
+  .option('testNamePattern', { alias: 't' })
+  .option('testFilePattern', { alias: 'F' }).argv
 
-  const jestConfigFileName = `jest.config.${argv.strict ? 'strict' : 'common'}.js`
-
-  // in watch mode jest never exits
-  // let the gulp task complete to prevent blocking subsequent tasks
-  const command = [
-    `jest --config ./test/${jestConfigFileName} --coverage`,
-    watch && '--watchAll',
-    argv.runInBand && '--runInBand',
-    argv.maxWorkers && `--maxWorkers=${argv.maxWorkers}`,
-    argv.detectLeaks && '--detectLeaks',
-  ]
-    .filter(Boolean)
-    .join(' ')
-
-  return sh(command)
+const jestConfigFromArgv: Partial<JestPluginConfig> = {
+  runInBand: argv.runInBand as boolean,
+  maxWorkers: argv.maxWorkers as number,
+  detectLeaks: argv.detectLeaks as boolean,
+  testNamePattern: argv.testNamePattern as string,
+  testFilePattern: argv.testFilePattern as string,
 }
 
 task('test:jest:pre', () => sh('yarn satisfied'))
@@ -36,8 +29,23 @@ task(
   ),
 )
 
-task('test:jest', jest())
-task('test:jest:watch', jest({ watch: true }))
+task(
+  'test:jest',
+  jest({
+    config: './jest.config.js',
+    coverage: true,
+    ...jestConfigFromArgv,
+  }),
+)
+
+task(
+  'test:jest:watch',
+  jest({
+    config: './jest.config.js',
+    watchAll: true,
+    ...jestConfigFromArgv,
+  }),
+)
 
 // ----------------------------------------
 // Tests

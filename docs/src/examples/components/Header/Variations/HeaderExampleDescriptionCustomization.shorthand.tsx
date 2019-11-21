@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Header } from '@stardust-ui/react'
+import { Header } from '@fluentui/react'
 
 const HeaderExampleDescriptionCustomizationShorthand = () => (
   <Header

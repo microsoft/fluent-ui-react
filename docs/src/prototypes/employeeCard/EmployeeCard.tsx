@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { Extendable, ShorthandValue } from '../../../../types/utils'
-import { Avatar, Divider, Grid } from '@stardust-ui/react'
+import { Extendable, ShorthandValue } from 'src/types'
+import { Avatar, AvatarProps, Divider, Grid } from '@fluentui/react'
 import Text from './Text'
 
 export interface EmployeeCardProps {
@@ -12,7 +12,7 @@ export interface EmployeeCardProps {
   location?: string
   email?: string
   phone?: string
-  avatar?: ShorthandValue
+  avatar?: ShorthandValue<AvatarProps>
 }
 
 class EmployeeCard extends React.Component<Extendable<EmployeeCardProps>, any> {
@@ -70,10 +70,10 @@ class EmployeeCard extends React.Component<Extendable<EmployeeCardProps>, any> {
           )}
         </div>
         {Avatar.create(avatar, {
-          defaultProps: {
-            size: 72,
+          defaultProps: () => ({
+            size: 'largest',
             name: `${firstName} ${lastName}`,
-          },
+          }),
         })}
       </Grid>
     )

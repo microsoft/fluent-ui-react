@@ -1,13 +1,16 @@
 import * as React from 'react'
-import { Button, Icon } from '@stardust-ui/react'
+import { Button, Flex, Icon } from '@fluentui/react'
 
 const ButtonExampleCircular = () => (
-  <div>
+  <Flex gap="gap.smaller">
     <Button circular>C</Button>
-    <Button circular icon>
-      <Icon name="book" xSpacing="none" />
+    <Button circular icon title="Emoji">
+      <Icon name="emoji" xSpacing="none" />
     </Button>
-  </div>
+    <Button circular icon primary title="Broadcast">
+      <Icon name="broadcast" xSpacing="none" />
+    </Button>
+  </Flex>
 )
 
 export default ButtonExampleCircular

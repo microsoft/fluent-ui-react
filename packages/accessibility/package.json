@@ -1,0 +1,33 @@
+{
+  "name": "@fluentui/accessibility",
+  "description": "A set of reusable framework accessibility behaviours.",
+  "version": "0.40.2",
+  "author": "Oleksandr Fediashov <olfedias@microsoft.com>",
+  "bugs": "https://github.com/stardust-ui/react/issues",
+  "dependencies": {
+    "@babel/runtime": "^7.1.2",
+    "keyboard-key": "^1.0.1",
+    "lodash": "^4.17.15"
+  },
+  "devDependencies": {
+    "@fluentui/internal-tooling": "^0.40.0",
+    "lerna-alias": "^3.0.3-0"
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/stardust-ui/react/tree/master/packages/accessibility",
+  "jsnext:main": "dist/es/index.js",
+  "license": "MIT",
+  "main": "dist/commonjs/index.js",
+  "module": "dist/es/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": "stardust-ui/react.git",
+  "scripts": {
+    "build": "gulp bundle:package:no-umd --package accessibility"
+  },
+  "sideEffects": false,
+  "types": "dist/es/index.d.ts"
+}

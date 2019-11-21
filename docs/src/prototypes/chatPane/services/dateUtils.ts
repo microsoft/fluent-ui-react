@@ -22,8 +22,8 @@ export const getRandomDates = (count, daysAgo: number): Date[] => {
   ].slice(0, count)
 }
 
-export const getTimestamp = (date: Date): { short: string; long: string } => {
-  const dateMoment = moment(date)
+export const getTimestamp = (inputDate: Date): { short: string; long: string } => {
+  const dateMoment = moment(inputDate)
   const timeString = dateMoment.format('LT')
 
   return {
@@ -32,17 +32,17 @@ export const getTimestamp = (date: Date): { short: string; long: string } => {
   }
 }
 
-export const getFriendlyDateString = (date: Date): string => {
+export const getFriendlyDateString = (inputDate: Date): string => {
   const momentNow = moment()
-  if (areMomentsSameDay(momentNow, date)) {
+  if (areMomentsSameDay(momentNow, inputDate)) {
     return 'Today'
   }
 
-  if (areMomentsSameDay(momentNow.subtract(1, 'd'), date)) {
+  if (areMomentsSameDay(momentNow.subtract(1, 'd'), inputDate)) {
     return 'Yesterday'
   }
 
-  return moment(date).format('LL')
+  return moment(inputDate).format('LL')
 }
 
 export const areSameDay = (d1: Date, d2: Date): boolean => areMomentsSameDay(moment(d1), d2)

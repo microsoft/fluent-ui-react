@@ -2,7 +2,6 @@ import * as _ from 'lodash'
 
 /**
  * Converts kebab-cased-example-name back into the original filename.
- * @param {string} exampleKebabName
  */
 const exampleKebabNameToSourceFilename = (exampleKebabName: string) => {
   // button-example           => ButtonExample.source.json
@@ -10,6 +9,7 @@ const exampleKebabNameToSourceFilename = (exampleKebabName: string) => {
   return `${_.startCase(exampleKebabName)
     .replace(/ /g, '')
     .replace(/Shorthand$/, '.shorthand')
+    .replace(/Rtl$/, '.rtl')
     .replace(/Perf$/, '.perf')}.source.json`
 }
 

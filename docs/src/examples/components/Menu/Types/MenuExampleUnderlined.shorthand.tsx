@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Menu } from '@stardust-ui/react'
+import { Menu } from '@fluentui/react'
 
 const items = [
   { key: 'editorials', content: 'Editorials' },
@@ -7,6 +7,6 @@ const items = [
   { key: 'events', content: 'Upcoming Events' },
 ]
 
-const MenuExampleUnderlined = () => <Menu defaultActiveIndex={0} items={items} underlined />
+const MenuExampleUnderlined = () => <Menu defaultActiveIndex={0} items={items} underlined primary />
 
 export default MenuExampleUnderlined

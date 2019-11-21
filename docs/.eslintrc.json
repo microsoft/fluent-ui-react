@@ -1,0 +1,7 @@
+{
+  "extends": ["../packages/internal-tooling/eslint/index.js"],
+  "rules": {
+    "no-alert": "off"
+  },
+  "root": true
+}

@@ -47,7 +47,7 @@ A doc block should appear above each prop in `propTypes` to describe them:
 ```tsx
 Label.propTypes = {
   /** An element type to render as (string or function). */
-  as: customPropTypes.as,
+  as: PropTypes.elementType,
 
   /** A label can reduce its complexity. */
   basic: PropTypes.bool,

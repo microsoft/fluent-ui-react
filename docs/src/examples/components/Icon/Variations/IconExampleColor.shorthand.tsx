@@ -1,61 +1,64 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Icon, Grid, Text, ProviderConsumer } from '@stardust-ui/react'
+import { Flex, Icon, Grid, Text, ProviderConsumer } from '@fluentui/react'
 
 const IconExampleColor = () => (
-  <Grid columns="repeat(4, auto)" styles={{ alignItems: 'center' }} variables={{ gridGap: '10px' }}>
+  <Grid
+    columns="repeat(4, auto)"
+    styles={{
+      alignItems: 'center',
+    }}
+    variables={{
+      gridGap: '10px',
+    }}
+  >
     <Text content="INHERITED COLOR:" weight="bold" />
-    <div style={{ color: 'violet' }}>
+    <Flex
+      gap="gap.smaller"
+      styles={({ theme: { siteVariables } }) => ({
+        color: siteVariables.colorScheme.brand.foreground,
+      })}
+    >
       <Icon name="calendar" bordered />
       <Icon name="call" bordered />
       <Icon name="call-video" bordered />
-    </div>
+    </Flex>
     <Text content="INHERITED COLOR FOR OUTLINED ICONS:" weight="bold" />
-    <div style={{ color: 'yellowgreen' }}>
-      <Icon name="calendar" bordered variables={{ outline: true }} />
-      <Icon name="call" bordered variables={{ outline: true }} />
-      <Icon name="call-video" bordered variables={{ outline: true }} />
-    </div>
-    <Text weight="bold">
-      USING THE <code>color</code> VARIABLE:
-    </Text>
-    <div>
-      <Icon name="calendar" bordered variables={{ color: 'violet' }} />
-      <Icon name="call" bordered variables={{ color: 'yellowgreen' }} />
-      <Icon name="call-video" bordered variables={{ color: 'cornflowerblue' }} />
-    </div>
-    <Text weight="bold">
-      USING THE <code>borderColor</code> VARIABLE:
-    </Text>
-    <div>
-      <Icon
-        name="calendar"
-        bordered
-        variables={{ color: 'cornflowerblue', borderColor: 'violet' }}
-      />
-      <Icon
-        name="call"
-        bordered
-        variables={{ color: 'cornflowerblue', borderColor: 'yellowgreen' }}
-      />
-      <Icon
-        name="call-video"
-        bordered
-        variables={{ color: 'cornflowerblue', borderColor: 'orangered' }}
-      />
-    </div>
+    <Flex
+      gap="gap.smaller"
+      styles={({ theme: { siteVariables } }) => ({
+        color: siteVariables.colorScheme.brand.foreground,
+      })}
+    >
+      <Icon name="calendar" bordered outline />
+      <Icon name="call" bordered outline />
+      <Icon name="call-video" bordered outline />
+    </Flex>
     <Text weight="bold">
       USING THE <code>color</code> PROP:
     </Text>
-    <div>
+    <Flex gap="gap.smaller">
       <ProviderConsumer
-        render={({ siteVariables: { emphasisColors, naturalColors } }) =>
-          _.take(_.keys({ ...emphasisColors, ...naturalColors }), 3).map(color => (
-            <Icon key={color} name="call" bordered color={color} />
+        render={({ siteVariables: { contextualColors, naturalColors } }) =>
+          _.keys({ ...contextualColors, ...naturalColors }).map(color => (
+            <Icon color={color} name="calendar" title={color} key={color} />
           ))
         }
       />
-    </div>
+    </Flex>
+    <Text weight="bold">
+      USING THE <code>color</code> PROP WITH OUTLINED ICONS:
+    </Text>
+    <Flex gap="gap.smaller">
+      <ProviderConsumer
+        render={({ siteVariables: { contextualColors, naturalColors } }) =>
+          _.keys({ ...contextualColors, ...naturalColors }).map(color => (
+            <Icon color={color} name="calendar" outline title={color} key={color} />
+          ))
+        }
+      />
+    </Flex>
+    <Text weight="bold" size="small" content={'*hover the icons to see the color prop value'} />
   </Grid>
 )
 

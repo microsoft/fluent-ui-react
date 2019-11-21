@@ -1,17 +1,15 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Text, ProviderConsumer } from '@stardust-ui/react'
+import { Text, ProviderConsumer } from '@fluentui/react'
 
 const TextExampleColor = () => (
   <ProviderConsumer
-    render={({ siteVariables: { emphasisColors, naturalColors } }) =>
-      _.keys({ ...emphasisColors, ...naturalColors }).map(color => (
-        <>
-          <Text key={color} color={color}>
-            {_.startCase(color)}
-          </Text>
+    render={({ siteVariables: { contextualColors, naturalColors } }) =>
+      _.keys({ ...contextualColors, ...naturalColors }).map(color => (
+        <React.Fragment key={color}>
+          <Text color={color}>{_.startCase(color)}</Text>
           <br />
-        </>
+        </React.Fragment>
       ))
     }
   />

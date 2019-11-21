@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Animation, Icon, Provider } from '@stardust-ui/react'
+import { Animation, Icon, Provider } from '@fluentui/react'
 
 const spinner = {
   keyframe: {
@@ -17,7 +17,7 @@ const spinner = {
 const AnimationExampleDuration = () => (
   <Provider theme={{ animations: { spinner } }}>
     <Animation name="spinner" duration="1s">
-      <Icon name="umbrella" circular />
+      <Icon name="mention" circular bordered />
     </Animation>
   </Provider>
 )

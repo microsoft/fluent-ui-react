@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Menu } from '@stardust-ui/react'
+import { Menu } from '@fluentui/react'
 
 const items = [
   { key: 'editorials', content: 'Editorials' },
@@ -9,9 +9,9 @@ const items = [
 
 const MenuExamplePointing = () => (
   <div>
-    <Menu defaultActiveIndex={2} items={items} pointing />
+    <Menu defaultActiveIndex={2} items={items} pointing primary />
     <br />
-    <Menu defaultActiveIndex={0} items={items} pointing="start" />
+    <Menu defaultActiveIndex={0} items={items} pointing="start" primary />
   </div>
 )
 export default MenuExamplePointing

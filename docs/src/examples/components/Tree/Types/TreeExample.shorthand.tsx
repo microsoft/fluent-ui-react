@@ -1,35 +1,75 @@
 import * as React from 'react'
-import { Tree } from '@stardust-ui/react'
+import { Tree } from '@fluentui/react'
 
 const items = [
   {
-    key: '1',
-    title: 'one',
+    id: '1',
+    title: 'House Lannister',
     items: [
       {
-        key: '1',
-        title: 'one one',
+        id: '11',
+        title: 'Tywin',
         items: [
           {
-            key: '1',
-            title: 'one one one',
+            id: '111',
+            title: 'Jaime',
+          },
+          {
+            id: '112',
+            title: 'Cersei',
+          },
+          {
+            id: '113',
+            title: 'Tyrion',
+          },
+        ],
+      },
+      {
+        id: '12',
+        title: 'Kevan',
+        items: [
+          {
+            id: '121',
+            title: 'Lancel',
+          },
+          {
+            id: '122',
+            title: 'Willem',
+          },
+          {
+            id: '123',
+            title: 'Martyn',
           },
         ],
       },
     ],
   },
   {
-    key: '2',
-    title: ' two',
+    id: '2',
+    title: 'House Targaryen',
     items: [
       {
-        key: '1',
-        title: 'two one',
+        id: '21',
+        title: 'Aerys',
+        items: [
+          {
+            id: '211',
+            title: 'Rhaegar',
+          },
+          {
+            id: '212',
+            title: 'Viserys',
+          },
+          {
+            id: '213',
+            title: 'Daenerys',
+          },
+        ],
       },
     ],
   },
 ]
 
-const TreeExampleShorthand = () => <Tree items={items} />
+const TreeExampleShorthand = () => <Tree aria-label="default" items={items} />
 
 export default TreeExampleShorthand

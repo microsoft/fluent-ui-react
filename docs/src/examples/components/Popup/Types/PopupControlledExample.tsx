@@ -1,27 +1,29 @@
+import { useBooleanKnob } from '@fluentui/docs-components'
 import * as React from 'react'
-import { Button, Input, Popup } from '@stardust-ui/react'
+import { Button, Input, Popup, Flex } from '@fluentui/react'
 
-class PopupControlledExample extends React.Component<any, any> {
-  state = { popupOpen: false }
+const PopupControlledExample = () => {
+  const [open, setOpen] = useBooleanKnob({ name: 'open' })
 
-  togglePopup() {
-    this.setState(prev => ({ popupOpen: !prev.popupOpen }))
-  }
+  const popupContent = (
+    <Flex column>
+      <Flex.Item align="end">
+        <Button text iconOnly icon="close" onClick={() => setOpen(false)} title="Close" />
+      </Flex.Item>
+      <Input icon="search" placeholder="Search..." />
+    </Flex>
+  )
 
-  render() {
-    return (
-      <Popup
-        open={this.state.popupOpen}
-        onOpenChange={(e, newProps) => {
-          alert(`Popup is requested to change its open state to "${newProps.open}".`)
-          this.setState({ popupOpen: newProps.open })
-        }}
-        content={{ content: <Input icon="search" placeholder="Search..." /> }}
-      >
-        <Button icon="expand" onClick={() => this.togglePopup()} />
-      </Popup>
-    )
-  }
+  return (
+    <Popup
+      open={open}
+      onOpenChange={(e, { open }) => setOpen(open)}
+      content={popupContent}
+      trapFocus
+    >
+      <Button icon="open-outside" title="Open popup" />
+    </Popup>
+  )
 }
 
 export default PopupControlledExample

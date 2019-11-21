@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Header } from 'semantic-ui-react'
-import { Button, Divider, Icon, Provider, Text, Animation } from '@stardust-ui/react'
+import { Button, Icon, Provider, Text, Animation, Header } from '@fluentui/react'
 
 import DocPage from '../components/DocPage/DocPage'
 import ExampleSnippet from '../components/ExampleSnippet/ExampleSnippet'
+import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
 
 export default () => (
   <DocPage title="Theming">
@@ -27,7 +27,7 @@ export default () => (
 
     <p>Variables are defined at two levels, the site level and the component level.</p>
 
-    <Header a="h3" content="Site variables" />
+    <Header as="h3" content="Site variables" />
     <p>
       Site variables define your site, app, or business. These are global values, like brand colors
       and typography, that are shared across many components.
@@ -38,13 +38,45 @@ export default () => (
 
     <ExampleSnippet
       render={() => (
-        <Provider theme={{ siteVariables: { brand: 'hotpink' } }}>
+        <Provider
+          theme={{
+            siteVariables: {
+              colors: {
+                white: '#FFF',
+                grey: {
+                  50: '#F2F2F2',
+                  100: '#E6E6E6',
+                  200: '#CCCCCC',
+                  300: '#B3B3B3',
+                  400: '#999999',
+                  500: '#737373',
+                  600: '#666666',
+                  700: '#4D4D4D',
+                  800: '#333333',
+                  900: '#1A1A1A',
+                },
+                brand: {
+                  50: 'white',
+                  100: 'white',
+                  200: 'white',
+                  300: 'pink',
+                  400: 'lightpink',
+                  500: 'hotpink',
+                  600: 'deeppink',
+                  700: 'palevioletred',
+                  800: 'black',
+                  900: 'black',
+                },
+              },
+            },
+          }}
+        >
           <Button primary>Branding</Button>
         </Provider>
       )}
     />
 
-    <Header a="h3" content="Component variables" />
+    <Header as="h3" content="Component variables" />
     <p>
       Component variables define theme values for a specific component. This includes information
       such as colors, borders, or box model values.
@@ -54,8 +86,8 @@ export default () => (
     <ExampleSnippet
       render={() => (
         <>
-          <Icon name="user" circular />
-          <Icon name="user" circular variables={{ color: 'cornflowerblue' }} />
+          <Icon name="calendar" circular />
+          <Icon name="calendar" circular variables={{ color: 'cornflowerblue' }} />
         </>
       )}
     />
@@ -67,13 +99,13 @@ export default () => (
     <ExampleSnippet
       render={() => (
         <>
-          <Icon name="user" circular />
-          <Icon name="user" circular />
+          <Icon name="calendar" circular />
+          <Icon name="calendar" circular />
 
           <Provider theme={{ componentVariables: { Icon: { color: 'cornflowerblue' } } }}>
             <span>
-              <Icon name="user" circular />
-              <Icon name="user" circular />
+              <Icon name="calendar" circular />
+              <Icon name="calendar" circular />
             </span>
           </Provider>
         </>
@@ -109,7 +141,10 @@ export default () => (
     </p>
     <ExampleSnippet
       render={() => (
-        <Button icon={{ name: 'user', styles: { boxShadow: '0 0 0 2px red' } }} content="Profile" />
+        <Button
+          icon={{ name: 'calendar', styles: { boxShadow: '0 0 0 2px red' } }}
+          content="Profile"
+        />
       )}
     />
 
@@ -125,8 +160,8 @@ export default () => (
     <ExampleSnippet
       render={() => (
         <>
-          <Button icon="user" content="Profile" />
-          <Button icon="user" content="Profile" />
+          <Button icon="calendar" content="Profile" />
+          <Button icon="calendar" content="Profile" />
 
           <Provider
             theme={{
@@ -140,8 +175,8 @@ export default () => (
             }}
           >
             <span>
-              <Button icon="user" content="Profile" />
-              <Button icon="user" content="Profile" />
+              <Button icon="calendar" content="Profile" />
+              <Button icon="calendar" content="Profile" />
             </span>
           </Provider>
         </>
@@ -207,9 +242,9 @@ export default () => (
         >
           <div>
             <Animation name="spinner">
-              <Icon name="user" circular />
+              <Icon name="calendar" circular />
             </Animation>
-            <Icon name="book" animation="spinner" circular />
+            <Icon name="emoji" animation="spinner" circular />
           </div>
         </Provider>
       )}
@@ -246,10 +281,10 @@ export default () => (
         >
           <div>
             <Animation name="spinner" delay="2s" duration="1s">
-              <Icon name="user" circular />
+              <Icon name="calendar" circular />
             </Animation>
             <Icon
-              name="book"
+              name="emoji"
               animation={{ name: 'spinner', delay: '5s', duration: '2s' }}
               circular
             />
@@ -268,24 +303,9 @@ export default () => (
       structure of the <code>animation</code> property in any of the Stardust components.
     </p>
 
-    <br />
-    <Divider size={1} />
-    <br />
-    <Button
-      as={NavLink}
-      content="Accessibility"
-      icon="arrow left"
-      iconPosition="before"
-      primary
-      to="/accessibility"
-    />
-    <Button
-      as={NavLink}
-      content="Theming Examples"
-      icon="arrow right"
-      iconPosition="after"
-      primary
-      to="theming-examples"
+    <GuidesNavigationFooter
+      previous={{ name: 'Accessibility', url: 'accessibility' }}
+      next={{ name: 'Theming Examples', url: 'theming-examples' }}
     />
   </DocPage>
 )

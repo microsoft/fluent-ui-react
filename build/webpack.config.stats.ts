@@ -1,7 +1,7 @@
-import * as CleanWebpackPlugin from 'clean-webpack-plugin'
-import * as fs from 'fs'
-import * as path from 'path'
-import * as webpack from 'webpack'
+import CleanWebpackPlugin from 'clean-webpack-plugin'
+import fs from 'fs'
+import path from 'path'
+import webpack from 'webpack'
 import config from '../config'
 
 const { paths } = config
@@ -31,7 +31,7 @@ const makeConfig = (srcPath, name) => ({
   mode: 'production',
   name: 'client',
   target: 'web',
-  entry: paths.dist(path.join('es', srcPath)),
+  entry: paths.packageDist('react', path.join('es', srcPath)),
   output: {
     filename: `${name}.js`,
     path: paths.base('stats'),
@@ -43,15 +43,10 @@ const makeConfig = (srcPath, name) => ({
     rules: [
       {
         test: /\.(js|ts|tsx)$/,
-        loader: 'ts-loader',
-        include: /src/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
         options: {
-          configFile: paths.base('build/tsconfig.es.json'),
-          transpileOnly: true,
-          onlyCompileBundledFiles: true,
-          compilerOptions: {
-            declaration: false,
-          },
+          cacheDirectory: true,
         },
       },
     ],
@@ -85,12 +80,12 @@ export default [
 
   // individual components
   ...fs
-    .readdirSync(paths.src('components'))
+    .readdirSync(paths.packageSrc('react', 'components'))
     .map(dir => makeConfig(`components/${dir}/${dir}`, `component-${dir}`)),
 
   // individual themes
   ...fs
-    .readdirSync(paths.src('themes'))
+    .readdirSync(paths.packageSrc('react', 'themes'))
     .filter(dir => !/.*\.\w+$/.test(dir))
     .map(dir => makeConfig(`themes/${dir}`, `theme-${dir}`)),
 ]

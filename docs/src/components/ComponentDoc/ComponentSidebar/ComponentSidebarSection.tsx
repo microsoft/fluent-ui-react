@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { Accordion, Icon, Menu } from 'semantic-ui-react'
+import { Icon, HierarchicalTree } from '@fluentui/react'
 
 import { examplePathToHash } from 'docs/src/utils'
 
@@ -61,23 +61,48 @@ export default class ComponentSidebarSection extends React.PureComponent<any, an
       return null
     }
 
-    return (
-      <Menu.Item>
-        <Accordion.Title active={active} onClick={this.handleTitleClick}>
-          <b>{sectionName}</b>
-          <Icon name="dropdown" />
-        </Accordion.Title>
-        <Accordion.Content as={Menu.Menu} active={active}>
-          {_.map(examples, ({ title, examplePath }) => (
-            <Menu.Item
-              key={examplePath}
-              active={activePath === examplePathToHash(examplePath)}
-              content={title}
-              onClick={this.handleItemClick(examplePath)}
-            />
-          ))}
-        </Accordion.Content>
-      </Menu.Item>
+    const items = [
+      {
+        key: sectionName,
+        title: sectionName,
+        items: _.map(examples, example => ({
+          key: example.examplePath,
+          title: {
+            content: example.title,
+            active: activePath === examplePathToHash(example.examplePath),
+          },
+          styles: {
+            paddingLeft: 0,
+          },
+        })),
+      },
+    ]
+
+    const treeStyles = {
+      display: 'flex',
+      justifyContent: 'space-between',
+      paddingBottom: '.6rem',
+      paddingLeft: 0,
+      ':focus, :hover': {
+        color: '#252424',
+        outline: 'none',
+      },
+    }
+
+    const titleRenderer = (Component, { content, open, hasSubtree, ...restProps }) => (
+      <Component
+        open={open}
+        hasSubtree={hasSubtree}
+        {...restProps}
+        styles={treeStyles}
+        active={active}
+        onClick={this.handleTitleClick}
+      >
+        <span>{content}</span>
+        {hasSubtree && <Icon name="arrow-down" />}
+      </Component>
     )
+
+    return <HierarchicalTree items={items} renderItemTitle={titleRenderer} />
   }
 }

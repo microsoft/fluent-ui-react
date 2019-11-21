@@ -6,7 +6,8 @@ import {
   dialogBehavior,
   tabBehavior,
   tabListBehavior,
-} from '@stardust-ui/react'
+  MenuItemProps,
+} from '@fluentui/react'
 import * as _ from 'lodash'
 import { arrayOfStickerImagesNames, getItemsData } from './dataMocks'
 import GridImagePicker from './GridImagePicker/GridImagePicker'
@@ -35,7 +36,7 @@ class StickerPicker extends React.Component {
     })
   }
 
-  getTabListItems = () => {
+  getTabListItems = (): MenuItemProps[] => {
     return _.map(tabListItemsContent, item => ({
       key: item,
       content: item,
@@ -63,7 +64,7 @@ class StickerPicker extends React.Component {
                   pointing
                 />
               </div>
-              <div className="right-rail">
+              <div className="right-rail" style={{ display: 'flex', flexDirection: 'column' }}>
                 <GridImagePicker ref={this.gridPickerRef} items={this.getStickersData()} />
               </div>
             </div>

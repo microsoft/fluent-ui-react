@@ -4,10 +4,8 @@ import * as React from 'react'
 import AceEditor, { AceEditorProps } from 'react-ace'
 import * as ace from 'brace'
 import 'brace/ext/language_tools'
-import 'brace/mode/html'
 import 'brace/mode/jsx'
-import 'brace/mode/sh'
-import 'brace/theme/tomorrow_night'
+import 'brace/theme/tomorrow_night_eighties'
 
 const parentComponents = []
 
@@ -47,21 +45,21 @@ languageTools.addCompleter(semanticUIReactCompleter)
 export interface EditorProps extends AceEditorProps {
   active?: boolean
   highlightGutterLine?: boolean
-  mode?: 'html' | 'jsx' | 'sh'
+  mode?: 'html' | 'jsx' | 'sh' | 'json'
   value?: string
   showCursor?: boolean
 }
 
-export const EDITOR_BACKGROUND_COLOR = '#1D1F21'
-export const EDITOR_GUTTER_COLOR = '#26282d'
+export const EDITOR_BACKGROUND_COLOR = '#2D2D2D'
+export const EDITOR_GUTTER_COLOR = '#272727'
 
-class Editor extends React.Component<EditorProps> {
-  editorRef: any
+class Editor extends React.PureComponent<EditorProps> {
+  editorRef = React.createRef<any>()
   name = `docs-editor-${_.uniqueId()}`
 
   static propTypes = {
     value: PropTypes.string.isRequired,
-    mode: PropTypes.oneOf(['html', 'jsx', 'sh']),
+    mode: PropTypes.oneOf(['html', 'json', 'jsx', 'sh']),
     active: PropTypes.bool,
     showCursor: PropTypes.bool,
   }
@@ -69,7 +67,7 @@ class Editor extends React.Component<EditorProps> {
   static defaultProps = {
     value: '',
     mode: 'jsx',
-    theme: 'tomorrow_night',
+    theme: 'tomorrow_night_eighties',
     height: '100px',
     width: '100%',
     active: true,
@@ -101,18 +99,29 @@ class Editor extends React.Component<EditorProps> {
 
     // focus editor when editor it becomes active
     if (active !== previousPros.active && active) {
-      this.editorRef.editor.focus()
+      this.editorRef.current.editor.focus()
     }
   }
 
+  handleChange = _.debounce((value: string, e) => {
+    _.invoke(this.props, 'onChange', value, e)
+  }, 200)
+
   setCursorVisibility = visible => {
-    const cursor = this.editorRef.editor.renderer.$cursorLayer.element
+    const cursor = this.editorRef.current.editor.renderer.$cursorLayer.element
 
     cursor.style.display = visible ? '' : 'none'
   }
 
   render() {
-    return <AceEditor {...this.props} name={this.name} ref={c => (this.editorRef = c)} />
+    return (
+      <AceEditor
+        {...this.props}
+        name={this.name}
+        onChange={this.handleChange}
+        ref={this.editorRef}
+      />
+    )
   }
 }
 

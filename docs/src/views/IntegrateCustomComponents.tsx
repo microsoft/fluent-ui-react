@@ -1,18 +1,17 @@
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Header } from 'semantic-ui-react'
 import {
-  Button,
-  Divider,
+  Header,
   Provider,
   createComponent,
   ComponentSlotStyle,
   ComponentVariablesInput,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 
 import DocPage from '../components/DocPage/DocPage'
 import ExampleSnippet from '../components/ExampleSnippet/ExampleSnippet'
-import { ReactChildren } from '../../../types/utils'
+import { ReactChildren } from 'src/types'
+import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
 
 interface StyledButtonProps {
   className?: string
@@ -21,7 +20,7 @@ interface StyledButtonProps {
   children?: ReactChildren
 }
 
-const StyledButton: React.SFC<StyledButtonProps> = createComponent<StyledButtonProps>({
+const StyledButton = createComponent<StyledButtonProps>({
   displayName: 'StyledButton',
   render({ stardust, children }) {
     const { classes } = stardust
@@ -44,11 +43,11 @@ export default () => (
     </p>
     <ExampleSnippet
       value={`
-        import { createComponent } from '@stardust-ui/react'
+        import { createComponent } from '@fluentui/react'
 
         const StyledButton = createComponent({
           displayName: 'StyledButton',
-          render: ({stardust, className, children}) => {
+          render: ({ stardust, children }) => {
             const { classes } = stardust
             return <button className={classes.root}>{children}</button>
           }
@@ -75,8 +74,8 @@ export default () => (
             },
             componentStyles: {
               StyledButton: {
-                root: ({ props, variables, theme: { siteVariables } }) => ({
-                  backgroundColor: siteVariables.brand,
+                root: ({ variables, theme: { siteVariables } }) => ({
+                  backgroundColor: siteVariables.colors.brand[600],
                   color: variables.color,
                 }),
               },
@@ -257,14 +256,14 @@ export default () => (
     </p>
     <ExampleSnippet
       value={`
-        import { buttonBehavior } from '@stardust-ui/react'
+        import { createComponent, buttonBehavior } from '@fluentui/react'
 
         const StyledButton = createComponent({
           displayName: 'StyledButton',
           defaultProps: {
             accessibility: buttonBehavior
           },
-          render: ({stardust, className, children}) => {
+          render: ({ stardust, children }) => {
             const { classes, accessibility } = stardust
             return <button {...accessibility.attributes.root} className={classes.root}>{children}</button>
           }
@@ -276,16 +275,6 @@ export default () => (
       <NavLink to="accessibility">Accessibility guide</NavLink> section.
     </p>
 
-    <br />
-    <Divider size={1} />
-    <br />
-    <Button
-      as={NavLink}
-      content="Theming Examples"
-      icon="arrow left"
-      iconPosition="before"
-      primary
-      to="/theming-examples"
-    />
+    <GuidesNavigationFooter previous={{ name: 'Layout', url: 'layout' }} />
   </DocPage>
 )

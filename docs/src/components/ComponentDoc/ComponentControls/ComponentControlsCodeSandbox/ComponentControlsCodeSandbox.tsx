@@ -1,12 +1,10 @@
-import * as _ from 'lodash'
 import * as React from 'react'
 import CodeSandboxer from 'react-codesandboxer'
 
-import { Menu } from 'semantic-ui-react'
 import { ComponentSourceManagerLanguage } from 'docs/src/components/ComponentDoc/ComponentSourceManager'
-import { imports } from 'docs/src/components/Playground/renderConfig'
-import { updateForKeys } from 'docs/src/hoc'
-import { appTemplateJs } from './indexTemplates'
+import { appTemplate } from './indexTemplates'
+import ComponentButton from '../ComponentButton'
+import createPackageJson from './createPackageJson'
 
 type ComponentControlsCodeSandboxProps = {
   exampleCode: string
@@ -16,15 +14,17 @@ type ComponentControlsCodeSandboxProps = {
 
 type ComponentControlsCodeSandboxState = {
   exampleCode: string
+  examplePath: string
   sandboxUrl: string
 }
 
-class ComponentControlsShowCode extends React.Component<
+class ComponentControlsCodeSandbox extends React.PureComponent<
   ComponentControlsCodeSandboxProps,
   ComponentControlsCodeSandboxState
 > {
   state = {
     exampleCode: '',
+    examplePath: '',
     sandboxUrl: '',
   }
 
@@ -34,71 +34,56 @@ class ComponentControlsShowCode extends React.Component<
   ): Partial<ComponentControlsCodeSandboxState> {
     return {
       exampleCode: props.exampleCode,
+      examplePath: props.exampleLanguage === 'ts' ? '/example.tsx' : '/example.js',
       sandboxUrl: props.exampleCode === state.exampleCode ? state.sandboxUrl : '',
     }
   }
 
   handleDeploy = (embedUrl: string, sandboxId: string) => {
-    const sandboxUrl = `https://codesandbox.io/s/${sandboxId}?module=/example.js`
+    const { examplePath } = this.state
+    const sandboxUrl = `https://codesandbox.io/s/${sandboxId}?module=${examplePath}`
 
     this.setState({ sandboxUrl })
   }
 
+  handleClick = e => {
+    const { sandboxUrl } = this.state
+    e.preventDefault()
+    window.open(sandboxUrl)
+  }
+
   render() {
     const { exampleLanguage, exampleCode, exampleName } = this.props
-    const { sandboxUrl } = this.state
+    const { examplePath, sandboxUrl } = this.state
 
-    if (exampleLanguage === 'ts') {
-      return (
-        <Menu.Item
-          disabled
-          content="CodeSandbox"
-          icon="connectdevelop"
-          title="Export of TypeScript code is not supported"
-        />
-      )
-    }
+    const main = exampleLanguage === 'ts' ? 'index.tsx' : 'index.js'
+    const template = exampleLanguage === 'ts' ? 'create-react-app-typescript' : 'create-react-app'
 
     if (sandboxUrl) {
       return (
-        <Menu.Item
-          as="a"
-          content="Click to open"
-          href={sandboxUrl}
-          icon={{ color: 'green', name: 'checkmark' }}
-          target="_blank"
-          title="Open in a new tab"
-        />
+        <ComponentButton label="Click to open" onClick={this.handleClick} iconName="checkmark" />
       )
     }
 
     return (
       <CodeSandboxer
         afterDeploy={this.handleDeploy}
-        examplePath="/"
+        examplePath={examplePath}
         example={exampleCode}
-        dependencies={_.mapValues(imports, () => 'latest')}
-        /* Magic trick to reload sources on passed code update */
-        key={exampleCode}
         name={exampleName}
         providedFiles={{
-          'index.js': { content: appTemplateJs },
+          [main]: { content: appTemplate },
+          'package.json': createPackageJson(main, exampleLanguage),
         }}
         skipRedirect
-        template="create-react-app"
+        template={template}
       >
         {({ isLoading, isDeploying }) => {
           const loading = isLoading || isDeploying
-
           return (
-            <Menu.Item
-              as="a"
-              content={loading ? 'Exporting...' : 'CodeSandbox'}
-              icon={{
-                loading,
-                name: loading ? 'spinner' : 'connectdevelop',
-              }}
-              title="Export to CodeSandbox"
+            <ComponentButton
+              iconName={loading ? 'spinner' : 'connectdevelop'}
+              label={loading ? 'Exporting...' : 'CodeSandbox'}
             />
           )
         }}
@@ -107,4 +92,4 @@ class ComponentControlsShowCode extends React.Component<
   }
 }
 
-export default updateForKeys(['exampleCode'])(ComponentControlsShowCode)
+export default ComponentControlsCodeSandbox

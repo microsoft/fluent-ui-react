@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Divider, RadioGroup } from '@stardust-ui/react'
+import { Divider, RadioGroup } from '@fluentui/react'
 
 class RadioGroupColorPickerExample extends React.Component {
   state = { selectedValue: '' }
@@ -17,34 +17,17 @@ class RadioGroupColorPickerExample extends React.Component {
             value: color,
             name: color,
             'aria-label': color,
-            icon: this.createIcon(color),
+            icon: {
+              name: 'stardust-circle',
+              variables: {
+                color,
+              },
+            },
           }))}
           checkedValueChanged={(e, props) => this.setState({ selectedValue: props.value })}
         />
       </div>
     )
-  }
-
-  createIcon(value) {
-    const { selectedValue } = this.state
-    const isSelected = selectedValue === value
-
-    return {
-      variables: {
-        backgroundColor: value,
-        borderColor: 'white',
-        ...(isSelected && {
-          borderColor: 'black',
-        }),
-      },
-      styles: {
-        borderRadius: '3px',
-        ...(isSelected && {
-          backgroundClip: 'content-box',
-          padding: '2px',
-        }),
-      },
-    }
   }
 }
 

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Attachment } from '@stardust-ui/react'
+import { Attachment } from '@fluentui/react'
 
 class AttachmentActionExampleShorthand extends React.Component {
   handleClick = action => () => alert(`'${action}' was clicked`)
@@ -9,11 +9,11 @@ class AttachmentActionExampleShorthand extends React.Component {
       <div>
         <Attachment
           header="Picture.jpg"
-          action={{ icon: 'x', onClick: this.handleClick('Remove') }}
+          action={{ icon: 'close', onClick: this.handleClick('Remove'), title: 'Close' }}
         />
         <Attachment
           header="Document.docx"
-          action={{ icon: 'ellipsis horizontal', onClick: this.handleClick('Show more') }}
+          action={{ icon: 'more', onClick: this.handleClick('Show more'), title: 'Show more' }}
         />
       </div>
     )

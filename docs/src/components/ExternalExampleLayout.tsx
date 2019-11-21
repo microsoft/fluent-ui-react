@@ -1,7 +1,9 @@
+import { Provider, themes } from '@fluentui/react'
 import * as _ from 'lodash'
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import { match } from 'react-router-dom'
 import SourceRender from 'react-source-render'
+import { KnobProvider } from '@fluentui/docs-components'
 
 import { ExampleSource } from 'docs/src/types'
 import {
@@ -14,47 +16,51 @@ import { babelConfig, importResolver } from './Playground/renderConfig'
 
 const examplePaths = exampleSourcesContext.keys()
 
-const ExternalExampleLayout: any = props => {
-  const { exampleName } = props.match.params
-  const exampleFilename = exampleKebabNameToSourceFilename(exampleName)
-
-  const examplePath = _.find(examplePaths, path => {
-    const { exampleName } = parseExamplePath(path)
-    return exampleFilename === exampleName
-  })
-
-  if (!examplePath) return <PageNotFound />
-  const exampleSource: ExampleSource = exampleSourcesContext(examplePath)
-
-  return (
-    <SourceRender
-      babelConfig={babelConfig}
-      source={exampleSource.js}
-      renderHtml={false}
-      resolver={importResolver}
-    >
-      <SourceRender.Consumer>
-        {({ element, error }) => (
-          <>
-            {element}
-            {/* This block allows to see issues with examples as visual regressions. */}
-            {error && <div style={{ fontSize: '5rem', color: 'red' }}>{error.toString()}</div>}
-          </>
-        )}
-      </SourceRender.Consumer>
-    </SourceRender>
-  )
+type ExternalExampleLayoutProps = {
+  match: match<{
+    exampleName: string
+    rtl: string
+  }>
 }
 
-ExternalExampleLayout.propTypes = {
-  children: PropTypes.node,
-  history: PropTypes.object.isRequired,
-  location: PropTypes.object.isRequired,
-  match: PropTypes.shape({
-    params: PropTypes.shape({
-      exampleName: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
+const ExternalExampleLayout: React.FC<ExternalExampleLayoutProps> = props => {
+  const { exampleName, rtl } = props.match.params
+
+  const [error, setError] = React.useState<Error | null>(null)
+  const [renderId, setRenderId] = React.useState<number>(0)
+  const [themeName, setThemeName] = React.useState<string>()
+
+  React.useLayoutEffect(() => {
+    window.resetExternalLayout = () => setRenderId(prevNumber => prevNumber + 1)
+    window.switchTheme = setThemeName
+  }, [])
+
+  const exampleFilename = exampleKebabNameToSourceFilename(exampleName)
+  const examplePath = _.find(
+    examplePaths,
+    path => exampleFilename === parseExamplePath(path).exampleName,
+  )
+
+  if (!examplePath) return <PageNotFound />
+
+  const exampleSource: ExampleSource = exampleSourcesContext(examplePath)
+  const theme = (themeName && themes[themeName]) || {}
+
+  return (
+    <Provider key={renderId} theme={theme} rtl={rtl === 'true'}>
+      <KnobProvider>
+        <SourceRender
+          babelConfig={babelConfig}
+          onRender={setError}
+          source={exampleSource.js}
+          resolver={importResolver}
+          hot
+        />
+        {/* This block allows to see issues with examples as visual regressions. */}
+        {error && <div style={{ fontSize: '5rem', color: 'red' }}>{error.toString()}</div>}
+      </KnobProvider>
+    </Provider>
+  )
 }
 
 export default ExternalExampleLayout
