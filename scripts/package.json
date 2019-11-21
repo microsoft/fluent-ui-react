@@ -24,7 +24,7 @@
     "@types/node": "^12.11.1",
     "@types/react": "^16.9.2",
     "@types/storybook__react": "^4.0.2",
-    "@typescript-eslint/eslint-plugin": "2.5.0",
+    "@typescript-eslint/eslint-plugin": "^2.5.0",
     "@typescript-eslint/parser": "^2.5.0",
     "babel-loader": "^8.0.6",
     "chokidar": "^3.3.0",
