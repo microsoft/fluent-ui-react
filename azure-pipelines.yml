@@ -64,8 +64,6 @@ steps:
     displayName: Save statistics to DB (master only)
 
   - script: |
-      echo "Build reason:"
-      echo $BUILD_REASON
       if [ $BUILD_REASON != "PullRequest" ] && [ ! -z $DANGER_GITHUB_API_TOKEN ]; then
         yarn danger ci
       fi
