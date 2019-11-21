@@ -7,20 +7,28 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.10.3/less.min.js"></script>
   </head>
   <body>
-    <div class="ui-menu">
-      <div class="ui-menu__item">
-        Item 1
-        <div class="ui-icon ui-menu-item__icon"></div>
-      </div>
-      <div class="ui-menu ui-menu__item">
-        Item 2
-        <div class="ui-icon ui-menu-item__icon"></div>
-      </div>
-      <div class="ui-menu ui-menu__item">
-        Item 3
-        <div class="ui-icon ui-menu-item__icon"></div>
-      </div>
-    </div>
+    <ul class="ui-menu">
+      <li class="ui-menu-item__wrapper">
+        <a class="ui-menu-item">
+          <span dir="auto" class="ui-menu-item__content">Profile</span>
+        </a>
+      </li>
+      <li class="ui-menu-item__wrapper">
+        <a class="ui-menu-item">
+          <span dir="auto" class="ui-menu-item__content">My account</span>
+        </a>
+      </li>
+      <li class="ui-menu-item__wrapper">
+        <a class="ui-menu-item">
+          <span dir="auto" class="ui-menu-item__content">Messages</span>
+        </a>
+      </li>
+      <li class="ui-menu-item__wrapper">
+        <a class="ui-menu-item">
+          <span dir="auto" class="ui-menu-item__content">Logout</span>
+        </a>
+      </li>
+    </ul>
 
     <div class="ui-divider"></div>
     <div class="ui-divider"></div>
@@ -56,7 +64,5 @@
     <div class="ui-divider"></div>
     <div class="ui-divider"></div>
     <div class="ui-divider"></div>
-
-    <span class="ui-icon">Click Me</span>
   </body>
 </html>

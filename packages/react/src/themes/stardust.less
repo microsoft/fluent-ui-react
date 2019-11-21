@@ -25,9 +25,9 @@
     *:after {
       box-sizing: border-box;
     }
-  
+
 /***************************************
-                  Icon                  
+                  Icon
 ***************************************/
 
 .ui-icon {
@@ -77,7 +77,7 @@
 .ui-icon__secondary-path {}
 
 /***************************************
-                Divider                
+                Divider
 ***************************************/
 
 .ui-divider {
@@ -95,7 +95,7 @@
 }
 
 /***************************************
-                  Menu                  
+                  Menu
 ***************************************/
 
 .ui-menu {
@@ -110,10 +110,26 @@
   border-radius: 0.25rem;
 }
 
+.ui-menu.vertical {
+  display: flex;
+  min-height: 1.5rem;
+  margin: 0;
+  padding: 0.5rem 0;
+  color: #484644;
+  background-color: #fff;
+  list-style-type: none;
+  flex-direction: column;
+  width: fit-content;
+  border: 0.0625rem solid #E1DFDD;
+  border-radius: 0.25rem;
+}
+
 .ui-menu__divider {}
 
+.ui-menu__divider.vertical {}
+
 /***************************************
-                MenuItem                
+                MenuItem
 ***************************************/
 
 .ui-menu-item__wrapper {
@@ -133,12 +149,44 @@
   }
 }
 
+.ui-menu-item__wrapper.vertical {
+  color: inherit;
+  line-height: 1;
+  position: relative;
+  vertical-align: middle;
+  display: block;
+  border: solid 0.125rem transparent;
+  :hover {
+    color: #252423;
+    background: #F3F2F1;
+  }
+  :first-child {
+    ::before {
+      display: none;
+    }
+  }
+}
+
 .ui-menu-item {
   color: inherit;
   display: block;
   cursor: pointer;
   white-space: nowrap;
   padding: 0.875rem 1.125rem;
+  :focus {
+    outline: 0;
+  }
+  :hover {
+    color: inherit;
+  }
+}
+
+.ui-menu-item.vertical {
+  color: inherit;
+  display: block;
+  cursor: pointer;
+  white-space: nowrap;
+  padding: 0.4375rem 0.875rem;
   :focus {
     outline: 0;
   }
@@ -155,13 +203,35 @@
   display: inline-block;
 }
 
+.ui-menu-item__content.vertical {
+  white-space: normal;
+  line-height: 1.5;
+  margin-top: -0.25rem;
+  margin-bottom: -0.25rem;
+  display: inline-block;
+  width: max-content;
+  min-width: 2.875rem;
+  max-width: 16.375rem;
+  margin-right: 1rem;
+}
+
 .ui-menu-item__icon {
   margin-top: 0;
   margin-bottom: -0.5rem;
   vertical-align: top;
 }
 
+.ui-menu-item__icon.vertical {
+  margin-top: 0;
+  margin-bottom: -0.5rem;
+  vertical-align: top;
+}
+
 .ui-menu-item__menu {
+  z-index: 1000;
+}
+
+.ui-menu-item__menu.vertical {
   z-index: 1000;
 }
 
@@ -173,11 +243,23 @@
   margin-right: 0.25rem;
 }
 
+.ui-menu-item__indicator.vertical {
+  position: relative;
+  float: right;
+  left: 0.75rem;
+  user-select: none;
+  margin-right: 0.25rem;
+}
+
 /***************************************
-              MenuDivider              
+              MenuDivider
 ***************************************/
 
 .ui-menu-divider {
   border-left: 1px solid #E1DFDD;
   align-self: stretch;
+}
+
+.ui-menu-divider.vertical {
+  border-top: 1px solid #E1DFDD;
 }

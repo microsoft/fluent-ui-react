@@ -278,17 +278,21 @@ Object.keys({
   MenuDivider: theme.componentStyles.MenuDivider,
 }).forEach(name => {
   console.log(name)
-  const props = {} // TODO: permutate props for component styles
+
+  // TODO: permutate props for component styles
+  const props = name.startsWith('Menu') ? [{}, { vertical: true }] : [{}]
   const anatomy = Object.keys(theme.componentStyles[name])
   const componentStyle = {}
 
   anatomy.forEach(slot => {
-    console.log('  - ', slot)
-    const slotSelector = makeSelector(name, slot, props)
-    const slotStyleArg = makeStyleArg(name, props, theme)
-    const slotStyle = theme.componentStyles[name][slot](slotStyleArg)
+    props.forEach(propObj => {
+      console.log('  - ', slot)
+      const slotSelector = makeSelector(name, slot, propObj)
+      const slotStyleArg = makeStyleArg(name, propObj, theme)
+      const slotStyle = theme.componentStyles[name][slot](slotStyleArg)
 
-    componentStyle[slotSelector] = slotStyle
+      componentStyle[slotSelector] = slotStyle
+    })
   })
 
   let lessString = ''
@@ -385,4 +389,8 @@ Does not gracefully handle undefined props.progress in the "progress" slot style
 # 8. Missing variables for menuDividerStyles and menuItemStyles
 
 There are variables for the Menu itself, but not for the divider or item subcomponents.
+
+9. Slots vs Components
+There is no way to tell if top level component name keys in the componentStyles are "ui components" vs "component slots".
+Example, how to differentiate a Menu from a MenuItem if BEM selectors are to be generated.
 */
