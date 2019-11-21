@@ -1,0 +1,73 @@
+pr: [master]
+
+trigger: [master]
+
+pool:
+  vmImage: 'Ubuntu 16.04'
+
+variables:
+  - group: fluent-secrets
+
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '10.x'
+    displayName: 'Install Node.js'
+
+  - script: |
+      yarn
+    displayName: Install dependencies
+
+  - script: |
+      yarn lint
+    displayName: Lint
+
+  - script: |
+      yarn prettier
+    displayName: Prettier
+
+  - script: |
+      yarn test --maxWorkers=2
+    displayName: Unit tests
+
+  - script: |
+      bash <(curl -s https://codecov.io/bash)
+    displayName: Report coverage
+
+  - script: |
+      yarn test:e2e
+    displayName: E2E tests
+
+  - script: |
+      yarn test:projects
+    displayName: Project tests
+
+  - script: |
+      echo "Build source branch:"
+      echo $BUILD_SOURCEBRANCH
+      if [ $BUILD_SOURCEBRANCH == 'master' ]; then
+        yarn stats:build
+      else
+        echo 'skip bundle statistics collection'
+      fi
+    displayName: Bundle statistics (master only)
+
+  - script: |
+      if [ $BUILD_SOURCEBRANCH == 'master' ]; then yarn perf; fi
+    displayName: Performance tests (master only)
+
+  - script: |
+      if [ $BUILD_SOURCEBRANCH == 'master' ] && [ -n "${STATS_URI}" ]; then
+        yarn stats:save --tag=`git tag --points-at HEAD`
+      else
+        echo 'skip saving statistics'
+      fi
+    displayName: Save statistics to DB (master only)
+
+  - script: |
+      echo "PR source branch:"
+      echo $SYSTEM_PULLREQUEST_SOURCEBRANCH
+      if [ ! -z $SYSTEM_PULLREQUEST_SOURCEBRANCH ] && [ ! -z $DANGER_GITHUB_API_TOKEN ]; then
+        yarn danger ci
+      fi
+    displayName: Danger JS
