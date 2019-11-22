@@ -43,7 +43,6 @@ steps:
     displayName: Project tests
 
   - script: |
-      echo $BUILD_SOURCEBRANCHNAME
       if [ $BUILD_SOURCEBRANCHNAME == 'master' ]; then
         yarn stats:build
       else
@@ -65,6 +64,11 @@ steps:
 
   - script: |
       if [ $BUILD_REASON == "PullRequest" ] && [ ! -z $DANGER_GITHUB_API_TOKEN ]; then
+        echo "Running Danger JS"
         yarn danger ci
+      elif [ $BUILD_REASON != "PullRequest" ]; then
+        echo "Skipping Danger JS because BUILD_REASON ${BUILD_REASON} != PullRequest"
+      else
+        echo "Skipping Danger JS because API token wasn't found"
       fi
     displayName: Danger JS
