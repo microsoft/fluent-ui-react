@@ -27,7 +27,7 @@ steps:
     displayName: Prettier
 
   - script: |
-      yarn test --maxWorkers=2
+      yarn test
     displayName: Unit tests
 
   - script: |
@@ -41,6 +41,10 @@ steps:
   - script: |
       yarn test:projects
     displayName: Project tests
+
+  - script: |
+      yarn test:circulars
+    displayName: Circular dependency tests
 
   - script: |
       if [ $BUILD_SOURCEBRANCHNAME == 'master' ]; then
