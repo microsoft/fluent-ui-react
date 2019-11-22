@@ -1,4 +1,5 @@
 const util = require('@typescript-eslint/eslint-plugin/dist/util')
+const isTypeScriptFile = require('../../utils/isTypeScriptFile')
 const { AST_NODE_TYPES, ESLintUtils } = require('@typescript-eslint/experimental-utils')
 
 const createRule = ESLintUtils.RuleCreator(
@@ -49,7 +50,7 @@ module.exports = createRule({
         nodeType = `${methodDefinition.kind} property accessor`
       }
 
-      if (util.isTypeScriptFile(context.getFilename())) {
+      if (isTypeScriptFile(context.getFilename())) {
         const methodName = util.getNameFromClassMember(methodDefinition, sourceCode)
 
         if (!!methodDefinition.accessibility) {
@@ -65,7 +66,7 @@ module.exports = createRule({
     function checkPropertyAccessibilityModifier(classProperty) {
       const nodeType = 'class property'
 
-      if (util.isTypeScriptFile(context.getFilename())) {
+      if (isTypeScriptFile(context.getFilename())) {
         const propertyName = util.getNameFromPropertyName(classProperty.key)
 
         if (!!classProperty.accessibility) {
@@ -81,7 +82,7 @@ module.exports = createRule({
     function checkParameterPropertyAccessibilityModifier(node) {
       const nodeType = 'parameter property'
 
-      if (util.isTypeScriptFile(context.getFilename())) {
+      if (isTypeScriptFile(context.getFilename())) {
         // HAS to be an identifier or assignment or TSC will throw
         if (
           node.parameter.type !== AST_NODE_TYPES.Identifier &&
