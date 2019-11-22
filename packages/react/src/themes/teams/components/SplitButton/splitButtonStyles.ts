@@ -16,7 +16,7 @@ const splitButtonStyles = {
     }),
 
     ':active': {
-      animationName: '0',
+      animationName: 'unset',
     },
   }),
 
@@ -44,7 +44,8 @@ const splitButtonStyles = {
     }),
 
     ':active': {
-      animationName: '0',
+      animationName: 'unset',
+      animationDuration: 'unset',
     },
   }),
 }
