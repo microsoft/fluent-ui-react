@@ -91,7 +91,7 @@ const attachmentStyles: ComponentSlotStylesPrepared<AttachmentProps, AttachmentV
     bottom: 0,
     left: 0,
     // TODO: anti-pattern, move to component logic
-    width: `${p.progress}%`,
+    // width: `${p.progress}%`,
     maxWidth: '100%',
     height: pxToRem(v.progressHeight),
     background: v.progressColor,

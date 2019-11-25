@@ -1,6 +1,6 @@
 /**
  * To run:
- *   - build all packages to dist
+ *   - yarn build
  *   - nodemon --watch './packages/react/src/themes/toCSS.js' ./packages/react/src/themes/toCSS.js
  */
 /* tslint:disable */
@@ -10,6 +10,8 @@ const _ = require('lodash')
 
 const stardust = require('../../dist/commonjs')
 const themes = require('../../dist/commonjs/themes')
+
+const felaPluginRtl = require('fela-plugin-rtl').default
 
 const fs = require('fs')
 const pkg = require('../../package.json')
@@ -49,7 +51,9 @@ const sortObject = unsorted => {
 // ============================================================
 // Selectors
 // ============================================================
-const nameToSelector = name => `.ui-${_.kebabCase(name)}`
+const componentNameToSelector = name => `.ui-${_.kebabCase(name)}`
+
+const themeNameToSelector = themeName => `.${_.kebabCase(themeName)}`
 
 const slotToSelector = slot => `__${_.kebabCase(slot)}`
 
@@ -63,10 +67,22 @@ const propsToSelector = (props = {}) => {
     return `.${className}`
   }, '')
 }
-const makeSelector = (name, slot, props) => {
-  return slot === 'root'
-    ? nameToSelector(name) + propsToSelector(props)
-    : nameToSelector(name) + slotToSelector(slot) + propsToSelector(props)
+
+const makeSelector = (themeName, componentName, slot, props) => {
+  if (slot === 'root') {
+    return (
+      themeNameToSelector(themeName) +
+      componentNameToSelector(componentName) +
+      propsToSelector(props)
+    )
+  }
+
+  return (
+    themeNameToSelector(themeName) +
+    componentNameToSelector(componentName) +
+    slotToSelector(slot) +
+    propsToSelector(props)
+  )
 }
 
 // ============================================================
@@ -144,7 +160,6 @@ const jsStyleToCSSObject = (styleObject = {}) => {
 // ============================================================
 
 const cssObjectToString = (cssObject = {}) => {
-  console.log(cssObject)
   return (
     JSON.stringify(cssObject, null, 2)
       // remove escaping backslashes
@@ -155,6 +170,8 @@ const cssObjectToString = (cssObject = {}) => {
       .replace(/"/gm, '')
       // quote content properties
       .replace(/ content: (.*)/gm, ' content: "$1"')
+      // quote url() strings
+      .replace(/url\((.*)\)/gm, 'url("$1")')
       // remove colon before curly braces
       .replace(/: \{/gm, ' {')
       // add semis
@@ -174,7 +191,7 @@ const jsStyleSheetToCSSString = (jsStyleObject = {}) => {
 }
 
 // ============================================================
-// Stardust Theme Utils
+// Fluent UI Theme Utils
 // ============================================================
 
 const makeStyleArg = (name, props, theme) => {
@@ -192,6 +209,14 @@ const makeStyleArg = (name, props, theme) => {
     rtl: false,
     disableAnimations: false,
   }
+}
+
+const processStyleObj = style => {
+  const type = null
+  const renderer = null
+  const props = { theme: { direction: 'ltr' } }
+
+  return felaPluginRtl()(style, type, renderer, props)
 }
 
 // const spec = {
@@ -233,29 +258,60 @@ const makeStyleArg = (name, props, theme) => {
 //                               USAGE
 // ======================================================================
 
-const theme = themes.teams
-const filename = __dirname + '/stardust.less'
+const propEnumerations = {
+  Button: [
+    {},
+    // .ui-button.icon-only
+    // <Button iconOnly icon='user' />
 
-fs.writeFileSync(
-  filename,
-  [
-    `/*`,
-    ` * Name    : Stardust UI React`,
-    ` * Version : ${pkg.version}`,
-    ` * Theme   : Teams`,
-    ` * GitHub  : https://github.com/stardust-ui/react`,
-    ` * NPM     : https://npmjs.com/@stardust-ui/react`,
-    ` * Docs    : https://stardust-ui.github.io/react`,
-    ` *`,
-    ` */`,
+    { content: true },
+    { content: false },
 
-    // TODO: static styles should be computed from theme, they are pasted here for testing...
+    { iconOnly: true },
+    { icon: false },
 
-    // normalizeCSS
-    themes.teams.staticStyles[0],
+    { icon: true, content: true },
+    { icon: true, content: false },
 
-    // globalStyles
-    `
+    { icon: false, content: true },
+    { icon: false, content: false },
+  ],
+
+  // TODO: how?...
+  Layout: [
+    // no gap
+    { start: true },
+    { main: true },
+    { end: true },
+
+    { start: true, main: true },
+    { start: true, end: true },
+
+    { main: true, end: true },
+  ],
+}
+
+const writeTheme = (filename, themeName, theme) => {
+  console.log('###', filename, '###############################')
+
+  const absFilename = `${__dirname}/${filename}.less`
+
+  fs.writeFileSync(
+    absFilename,
+    [
+      `/*`,
+      ` * Name    : ${pkg.name}`,
+      ` * Version : ${pkg.version}`,
+      ` * Theme   : ${absFilename}`,
+      ` */`,
+
+      // TODO: static styles should be computed from theme, they are pasted here for testing...
+
+      // normalizeCSS
+      themes.teams.staticStyles[0],
+
+      // globalStyles
+      `
     body {
       padding: 0;
       margin: 0;
@@ -273,73 +329,49 @@ fs.writeFileSync(
       box-sizing: border-box;
     }
   `,
-  ].join('\n'),
-)
+    ].join('\n'),
+  )
 
-// TODO: all components...
-Object.keys({
-  Icon: theme.componentStyles.Icon,
-  Divider: theme.componentStyles.Divider,
-  Menu: theme.componentStyles.Menu,
-  MenuItem: theme.componentStyles.MenuItem,
-  MenuDivider: theme.componentStyles.MenuDivider,
-}).forEach(name => {
-  console.log(name)
+  // TODO: all components...
+  Object.keys(theme.componentStyles).forEach(componentName => {
+    console.log(componentName)
 
-  // TODO: permutate props for component styles
-  const props = name.startsWith('Menu') ? [{}, { vertical: true }] : [{}]
-  const anatomy = Object.keys(theme.componentStyles[name])
-  const componentStyle = {}
+    // TODO: permutate props for component styles
+    const props = propEnumerations[componentName] || [{}]
+    const anatomy = Object.keys(theme.componentStyles[componentName])
+    const componentStyle = {}
 
-  anatomy.forEach(slot => {
-    console.log('  ', slot)
-    props.forEach(propObj => {
-      console.log('      ', propObj)
-      const slotSelector = makeSelector(name, slot, propObj)
-      const slotStyleArg = makeStyleArg(name, propObj, theme)
-      const slotStyle = theme.componentStyles[name][slot](slotStyleArg)
+    anatomy.forEach(slot => {
+      console.log('  ', slot)
+      props.forEach(propObj => {
+        console.log('      ', propObj)
+        const slotSelector = makeSelector(themeName, componentName, slot, propObj)
+        const slotStyleArg = makeStyleArg(componentName, propObj, theme)
+        // some styles return undefined, see FINDINGS 10
+        const slotStyle = theme.componentStyles[componentName][slot](slotStyleArg) || {}
+        const processedSlotStyle = processStyleObj(slotStyle)
 
-      componentStyle[slotSelector] = slotStyle
+        componentStyle[slotSelector] = processedSlotStyle
+      })
     })
+
+    let lessString = ''
+
+    const headerLength = 40
+    const paddingLength = Math.floor((headerLength - componentName.length) / 2)
+    const padding = ' '.repeat(paddingLength)
+    lessString += '\n/' + '*'.repeat(headerLength - 1) + '\n'
+    lessString += `${padding}${componentName}${padding}` + '\n'
+    lessString += '*'.repeat(headerLength - 1) + '/' + '\n\n'
+    lessString += jsStyleSheetToCSSString(componentStyle) + '\n'
+
+    fs.appendFileSync(absFilename, lessString)
   })
+}
 
-  let lessString = ''
-
-  const headerLength = 40
-  const paddingLength = Math.floor((headerLength - name.length) / 2)
-  const padding = ' '.repeat(paddingLength)
-  lessString += '\n/' + '*'.repeat(headerLength - 1) + '\n'
-  lessString += `${padding}${name}${padding}` + '\n'
-  lessString += '*'.repeat(headerLength - 1) + '/' + '\n\n'
-  lessString += jsStyleSheetToCSSString(componentStyle) + '\n'
-
-  fs.appendFileSync(filename, lessString)
-})
-
-// const makeStyleSheet = spec => {
-//   const [baseProps, ...restProps] = spec.definition
-//
-//   // TODO: make styles for all anatomy parts
-//   // const anatomy = Object.keys(buttonStyles)
-//
-//   const baseStyle = themes.teams.componentStyles[COMPONENT_NAME].root(makeStyleArg(spec.name, { props: baseProps }))
-//   const baseSelector = nameToSelector(spec.name) + propsToSelector(baseProps)
-//
-//   const styleSheet = { [baseSelector]: baseStyle }
-//
-//   return restProps.reduce((acc, props) => {
-//     const style = themes.teams.componentStyles[COMPONENT_NAME].root(makeStyleArg(spec.name, { props }))
-//     const selector = nameToSelector(spec.name) + propsToSelector(props)
-//
-//     acc[selector] = getOverrideStyles(style, baseStyle)
-//
-//     return acc
-//   }, styleSheet)
-// }
-//
-// const jsStyleSheet = makeStyleSheet(spec)
-//
-// console.log(_.mapValues(jsStyleSheet, (val, key) => cssifyObject(val)))
+writeTheme('teams', 'teams', themes.teams)
+writeTheme('teams-dark', 'teams-dark', themes.teamsDark)
+writeTheme('teams-high-contrast', 'teams-high-contrast', themes.teamsHighContrast)
 
 /*
 ============================================================
@@ -349,7 +381,8 @@ Object.keys({
 ============================================================
 
 TODO
- - [ ] stardust.scss .ui-icon style is missing font-family value
+ - [ :( ] stardust.scss .ui-icon style is missing font-family value
+    - no longer have font based icon styles to test, do this
  - [ ] stardust.scss .ui-layout style is missing grid-template-columns value
  - [ ] document use of util components, render method cleanliness/conformance
  - [ ] render static styles as globals at top of file (normalize, statics font/animations, etc)
@@ -411,4 +444,8 @@ CONCLUSION: If there is a style function, there must be a variables fn.
 9. Slots vs Components
 There is no way to tell if top level component name keys in the componentStyles are "ui components" vs "component slots".
 Example, how to differentiate a Menu from a MenuItem if BEM selectors are to be generated.
+
+10. Styles returning non-objects (undefined)
+Some styles, like Label's icon slot, are completely conditional and may return undefined.
+Styles should always return objects. Update typings to ensure this.
 */

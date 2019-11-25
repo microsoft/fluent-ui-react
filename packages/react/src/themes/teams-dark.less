@@ -1,0 +1,3262 @@
+/*
+ * Name    : @fluentui/react
+ * Version : 0.40.3
+ * Theme   : /Users/levithomason/src/stardust-ui/react/packages/react/src/themes/teams-dark.less
+ */
+/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}main{display:block}h1{font-size:2em;margin:.67em 0}hr{box-sizing:content-box;height:0;overflow:visible}pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent}abbr[title]{border-bottom:none;text-decoration:underline;text-decoration:underline dotted}b,strong{font-weight:bolder}code,kbd,samp{font-family:monospace,monospace;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}img{border-style:none}button,input,optgroup,select,textarea{font-family:inherit;font-size:100%;line-height:1.15;margin:0}button,input{overflow:visible}button,select{text-transform:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}[type=button]::-moz-focus-inner,[type=reset]::-moz-focus-inner,[type=submit]::-moz-focus-inner,button::-moz-focus-inner{border-style:none;padding:0}[type=button]:-moz-focusring,[type=reset]:-moz-focusring,[type=submit]:-moz-focusring,button:-moz-focusring{outline:1px dotted ButtonText}fieldset{padding:.35em .75em .625em}legend{box-sizing:border-box;color:inherit;display:table;max-width:100%;padding:0;white-space:normal}progress{vertical-align:baseline}textarea{overflow:auto}[type=checkbox],[type=radio]{box-sizing:border-box;padding:0}[type=number]::-webkit-inner-spin-button,[type=number]::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}[type=search]::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}details{display:block}summary{display:list-item}template{display:none}[hidden]{display:none}
+
+    body {
+      padding: 0;
+      margin: 0;
+      font-family: "Segoe UI", "Helvetica Neue", "Apple Color Emoji", "Segoe UI Emoji", Helvetica, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.4286;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    *:before {
+      box-sizing: border-box;
+    }
+    *:after {
+      box-sizing: border-box;
+    }
+  
+/***************************************
+               Accordion               
+***************************************/
+
+.teams-dark.ui-accordion {
+  vertical-align: middle;
+  display: flex;
+  flex-direction: column;
+  margin-block-end: 0;
+  margin-block-start: 0;
+}
+
+/***************************************
+            AccordionContent            
+***************************************/
+
+.teams-dark.ui-accordion-content {
+  display: none;
+  vertical-align: middle;
+  margin-inline-start: 0;
+}
+
+/***************************************
+             AccordionTitle             
+***************************************/
+
+.teams-dark.ui-accordion-title {
+  display: inline-block;
+  vertical-align: middle;
+  padding: .5rem 0;
+  cursor: pointer;
+}
+
+.teams-dark.ui-accordion-title__indicator {
+  user-select: none;
+}
+
+/***************************************
+                 Alert                 
+***************************************/
+
+.teams-dark.ui-alert {
+  display: flex;
+  align-items: center;
+  position: relative;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 0.1875rem;
+  min-height: 1.75rem;
+  padding: 0 1rem;
+  font-weight: 400;
+  visibility: hidden;
+  color: #3B3A39;
+  background-color: #C8C6C4;
+  border-color: #3B3A39;
+}
+
+.teams-dark.ui-alert__actions {
+  margin: 0.3125rem;
+}
+
+.teams-dark.ui-alert__header {
+  font-weight: 700;
+  margin: 0 0.625rem 0 0;
+}
+
+.teams-dark.ui-alert__body {
+  display: flex;
+  flex-grow: 1;
+}
+
+.teams-dark.ui-alert__content {
+  flex-grow: 1;
+}
+
+.teams-dark.ui-alert__icon {
+  margin: 0 0.625rem 0 0;
+}
+
+.teams-dark.ui-alert__dismiss-action {
+  height: 1.75rem;
+  min-width: 1.75rem;
+  color: currentColor;
+  border: 0;
+  border-radius: 0.1875rem;
+  & .ui-icon__filled {
+    display: none;
+  }
+  & .ui-icon__outline {
+    display: block;
+  }
+  :hover {
+    color: currentColor;
+    & .ui-icon__filled {
+      display: block;
+    }
+    & .ui-icon__outline {
+      display: none;
+    }
+  }
+  :focus {
+    outline: 0;
+  }
+  :focus-visible {
+    & .ui-icon__filled {
+      display: block;
+    }
+    & .ui-icon__outline {
+      display: none;
+    }
+    border-color: transparent;
+    :before {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      border-color: #000;
+      border-width: 1px;
+      border-radius: 2px;
+    }
+    :after {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: -1px;
+      right: -1px;
+      bottom: -1px;
+      left: -1px;
+      z-index: 1;
+      border-color: #fff;
+      border-width: 1px;
+      border-radius: 2px;
+    }
+  }
+}
+
+/***************************************
+               Attachment               
+***************************************/
+
+.teams-dark.ui-attachment {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  max-width: 27.5rem;
+  min-height: 3rem;
+  padding: 0.4375rem 0.1875rem 0.4375rem 0.6875rem;
+  margin-bottom: 0.125rem;
+  margin-right: 0.125rem;
+  background: #3B3A39;
+  color: #fff;
+  box-shadow: 0 .2rem .4rem -.075rem rgba(0, 0, 0, .25);
+  border: 1px solid rgba(0,0,0,0.5);
+  border-radius: 0.1875rem;
+  :focus {
+    outline: 0;
+  }
+  :focus-visible {
+    border-color: transparent;
+    :before {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      border-color: #000;
+      border-width: 1px;
+      border-radius: 0.1875rem;
+    }
+    :after {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: -1px;
+      right: -1px;
+      bottom: -1px;
+      left: -1px;
+      z-index: 1;
+      border-color: #fff;
+      border-width: 1px;
+      border-radius: 0.1875rem;
+    }
+  }
+}
+
+.teams-dark.ui-attachment__content {
+  flex: 1;
+}
+
+.teams-dark.ui-attachment__header {
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.4286;
+}
+
+.teams-dark.ui-attachment__description {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.teams-dark.ui-attachment__icon {
+  flex: 0 0 auto;
+  margin-right: 0.75rem;
+}
+
+.teams-dark.ui-attachment__action {
+  & .ui-icon {
+    color: #fff;
+  }
+  & .ui-icon__filled {
+    display: none;
+  }
+  & .ui-icon__outline {
+    display: block;
+  }
+  :hover {
+    & .ui-icon__filled {
+      display: block;
+    }
+    & .ui-icon__outline {
+      display: none;
+    }
+  }
+  :focus {
+    outline: 0;
+  }
+  :focus-visible {
+    & .ui-icon__filled {
+      display: block;
+    }
+    & .ui-icon__outline {
+      display: none;
+    }
+    border-color: transparent;
+    :before {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      border-color: #000;
+      border-width: 1px;
+      border-radius: 0.1875rem;
+    }
+    :after {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: -1px;
+      right: -1px;
+      bottom: -1px;
+      left: -1px;
+      z-index: 1;
+      border-color: #fff;
+      border-width: 1px;
+      border-radius: 0.1875rem;
+    }
+  }
+}
+
+.teams-dark.ui-attachment__progress {
+  transition: width 0.2s;
+  position: absolute;
+  display: block;
+  bottom: 0;
+  left: 0;
+  max-width: 100%;
+  height: 0.25rem;
+  background: #92C353;
+}
+
+/***************************************
+                 Avatar                 
+***************************************/
+
+.teams-dark.ui-avatar {
+  position: relative;
+  background-color: inherit;
+  display: inline-block;
+  vertical-align: middle;
+  height: 2rem;
+  width: 2rem;
+}
+
+.teams-dark.ui-avatar__image {
+  border-color: ;
+  border-style: solid;
+  border-width: 0px;
+  height: 100%;
+  object-fit: cover;
+  vertical-align: top;
+  width: 100%;
+}
+
+.teams-dark.ui-avatar__label {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  line-height: 2rem;
+  font-size: 0.8573rem;
+  vertical-align: top;
+  text-align: center;
+  padding: 0px;
+}
+
+.teams-dark.ui-avatar__status {
+  position: absolute;
+  bottom: -2px;
+  right: -2px;
+}
+
+/***************************************
+                 Button                 
+***************************************/
+
+.teams-dark.ui-button {
+  height: 2rem;
+  min-width: 6rem;
+  max-width: 17.5rem;
+  color: #fff;
+  background-color: #2D2C2C;
+  border-radius: 2px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 0 1.25rem;
+  vertical-align: middle;
+  cursor: pointer;
+  outline: 0;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #605E5C;
+  box-shadow: 0 .2rem .4rem -.075rem rgba(0, 0, 0, .25);
+  :hover {
+    color: #fff;
+    background-color: #3B3A39;
+    border-color: #8A8886;
+  }
+  :active {
+    animation-name {
+      keyframe {
+        0% {
+          transform: scale(1);
+        }
+        100% {
+          transform: scale(.96);
+        }
+      }
+    }
+    animation-duration: 100ms;
+    animation-fill-mode: both;
+    animation-timing-function: cubic-bezier(.78, 0, .22, 1);
+    color: #fff;
+    background-color: #484644;
+    border-color: #8A8886;
+    box-shadow: none;
+  }
+  :focus {
+    outline: 0;
+  }
+  :focus-visible {
+    border-color: #605E5C;
+    :before {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: -1px;
+      right: -1px;
+      bottom: -1px;
+      left: -1px;
+      z-index: 1;
+      border-color: #000;
+      border-width: 1px;
+      border-radius: 2px;
+    }
+    :after {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: calc(0px - 1px - 1px);
+      right: calc(0px - 1px - 1px);
+      bottom: calc(0px - 1px - 1px);
+      left: calc(0px - 1px - 1px);
+      z-index: 1;
+      border-color: #fff;
+      border-width: 1px;
+      border-radius: 2px;
+    }
+    border-width: 1px;
+    :hover {
+      border-color: #8A8886;
+    }
+  }
+}
+
+.teams-dark.ui-button.content {
+  height: 2rem;
+  min-width: 6rem;
+  max-width: 17.5rem;
+  color: #fff;
+  background-color: #2D2C2C;
+  border-radius: 2px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 0 1.25rem;
+  vertical-align: middle;
+  cursor: pointer;
+  outline: 0;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #605E5C;
+  box-shadow: 0 .2rem .4rem -.075rem rgba(0, 0, 0, .25);
+  :hover {
+    color: #fff;
+    background-color: #3B3A39;
+    border-color: #8A8886;
+  }
+  :active {
+    animation-name {
+      keyframe {
+        0% {
+          transform: scale(1);
+        }
+        100% {
+          transform: scale(.96);
+        }
+      }
+    }
+    animation-duration: 100ms;
+    animation-fill-mode: both;
+    animation-timing-function: cubic-bezier(.78, 0, .22, 1);
+    color: #fff;
+    background-color: #484644;
+    border-color: #8A8886;
+    box-shadow: none;
+  }
+  :focus {
+    outline: 0;
+  }
+  :focus-visible {
+    border-color: #605E5C;
+    :before {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: -1px;
+      right: -1px;
+      bottom: -1px;
+      left: -1px;
+      z-index: 1;
+      border-color: #000;
+      border-width: 1px;
+      border-radius: 2px;
+    }
+    :after {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: calc(0px - 1px - 1px);
+      right: calc(0px - 1px - 1px);
+      bottom: calc(0px - 1px - 1px);
+      left: calc(0px - 1px - 1px);
+      z-index: 1;
+      border-color: #fff;
+      border-width: 1px;
+      border-radius: 2px;
+    }
+    border-width: 1px;
+    :hover {
+      border-color: #8A8886;
+    }
+  }
+}
+
+.teams-dark.ui-button.content-false {
+  height: 2rem;
+  min-width: 6rem;
+  max-width: 17.5rem;
+  color: #fff;
+  background-color: #2D2C2C;
+  border-radius: 2px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 0 1.25rem;
+  vertical-align: middle;
+  cursor: pointer;
+  outline: 0;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #605E5C;
+  box-shadow: 0 .2rem .4rem -.075rem rgba(0, 0, 0, .25);
+  :hover {
+    color: #fff;
+    background-color: #3B3A39;
+    border-color: #8A8886;
+  }
+  :active {
+    animation-name {
+      keyframe {
+        0% {
+          transform: scale(1);
+        }
+        100% {
+          transform: scale(.96);
+        }
+      }
+    }
+    animation-duration: 100ms;
+    animation-fill-mode: both;
+    animation-timing-function: cubic-bezier(.78, 0, .22, 1);
+    color: #fff;
+    background-color: #484644;
+    border-color: #8A8886;
+    box-shadow: none;
+  }
+  :focus {
+    outline: 0;
+  }
+  :focus-visible {
+    border-color: #605E5C;
+    :before {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: -1px;
+      right: -1px;
+      bottom: -1px;
+      left: -1px;
+      z-index: 1;
+      border-color: #000;
+      border-width: 1px;
+      border-radius: 2px;
+    }
+    :after {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: calc(0px - 1px - 1px);
+      right: calc(0px - 1px - 1px);
+      bottom: calc(0px - 1px - 1px);
+      left: calc(0px - 1px - 1px);
+      z-index: 1;
+      border-color: #fff;
+      border-width: 1px;
+      border-radius: 2px;
+    }
+    border-width: 1px;
+    :hover {
+      border-color: #8A8886;
+    }
+  }
+}
+
+.teams-dark.ui-button.icon-only {
+  height: 2rem;
+  min-width: 2rem;
+  max-width: 17.5rem;
+  color: #fff;
+  background-color: #2D2C2C;
+  border-radius: 2px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 0;
+  vertical-align: middle;
+  cursor: pointer;
+  outline: 0;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #605E5C;
+  box-shadow: 0 .2rem .4rem -.075rem rgba(0, 0, 0, .25);
+  :hover {
+    color: #fff;
+    background-color: #3B3A39;
+    border-color: #8A8886;
+  }
+  :active {
+    animation-name {
+      keyframe {
+        0% {
+          transform: scale(1);
+        }
+        100% {
+          transform: scale(.96);
+        }
+      }
+    }
+    animation-duration: 100ms;
+    animation-fill-mode: both;
+    animation-timing-function: cubic-bezier(.78, 0, .22, 1);
+    color: #fff;
+    background-color: #484644;
+    border-color: #8A8886;
+    box-shadow: none;
+  }
+  :focus {
+    outline: 0;
+  }
+  :focus-visible {
+    border-color: #605E5C;
+    :before {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: -1px;
+      right: -1px;
+      bottom: -1px;
+      left: -1px;
+      z-index: 1;
+      border-color: #000;
+      border-width: 1px;
+      border-radius: 2px;
+    }
+    :after {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: calc(0px - 1px - 1px);
+      right: calc(0px - 1px - 1px);
+      bottom: calc(0px - 1px - 1px);
+      left: calc(0px - 1px - 1px);
+      z-index: 1;
+      border-color: #fff;
+      border-width: 1px;
+      border-radius: 2px;
+    }
+    border-width: 1px;
+    :hover {
+      border-color: #8A8886;
+    }
+  }
+}
+
+.teams-dark.ui-button.icon-false {
+  height: 2rem;
+  min-width: 6rem;
+  max-width: 17.5rem;
+  color: #fff;
+  background-color: #2D2C2C;
+  border-radius: 2px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  padding: 0 1.25rem;
+  vertical-align: middle;
+  cursor: pointer;
+  outline: 0;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #605E5C;
+  box-shadow: 0 .2rem .4rem -.075rem rgba(0, 0, 0, .25);
+  :hover {
+    color: #fff;
+    background-color: #3B3A39;
+    border-color: #8A8886;
+  }
+  :active {
+    animation-name {
+      keyframe {
+        0% {
+          transform: scale(1);
+        }
+        100% {
+          transform: scale(.96);
+        }
+      }
+    }
+    animation-duration: 100ms;
+    animation-fill-mode: both;
+    animation-timing-function: cubic-bezier(.78, 0, .22, 1);
+    color: #fff;
+    background-color: #484644;
+    border-color: #8A8886;
+    box-shadow: none;
+  }
+  :focus {
+    outline: 0;
+  }
+  :focus-visible {
+    border-color: #605E5C;
+    :before {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: -1px;
+      right: -1px;
+      bottom: -1px;
+      left: -1px;
+      z-index: 1;
+      border-color: #000;
+      border-width: 1px;
+      border-radius: 2px;
+    }
+    :after {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: calc(0px - 1px - 1px);
+      right: calc(0px - 1px - 1px);
+      bottom: calc(0px - 1px - 1px);
+      left: calc(0px - 1px - 1px);
+      z-index: 1;
+      border-color: #fff;
+      border-width: 1px;
+      border-radius: 2px;
+    }
+    border-width: 1px;
+    :hover {
+      border-color: #8A8886;
+    }
+  }
+}
+
+.teams-dark.ui-button__content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.4286;
+}
+
+.teams-dark.ui-button__content.content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.4286;
+}
+
+.teams-dark.ui-button__content.content-false {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.4286;
+}
+
+.teams-dark.ui-button__content.icon-only {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.4286;
+}
+
+.teams-dark.ui-button__content.icon-false {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.4286;
+}
+
+.teams-dark.ui-button__icon {}
+
+.teams-dark.ui-button__icon.content {}
+
+.teams-dark.ui-button__icon.content-false {}
+
+.teams-dark.ui-button__icon.icon-only {}
+
+.teams-dark.ui-button__icon.icon-false {}
+
+.teams-dark.ui-button__loader {
+  & .ui-loader__indicator {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  & .ui-loader__svg {
+    :before {
+      animation-name {
+        to {
+          transform: translate3d(0, -75rem, 0);
+        }
+      }
+      border-width: 0.125rem;
+      width: 1.25rem;
+      height: 76.25rem;
+    }
+  }
+}
+
+.teams-dark.ui-button__loader.content {
+  & .ui-loader__indicator {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  & .ui-loader__svg {
+    :before {
+      animation-name {
+        to {
+          transform: translate3d(0, -75rem, 0);
+        }
+      }
+      border-width: 0.125rem;
+      width: 1.25rem;
+      height: 76.25rem;
+    }
+  }
+  margin-right: 0.25rem;
+}
+
+.teams-dark.ui-button__loader.content-false {
+  & .ui-loader__indicator {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  & .ui-loader__svg {
+    :before {
+      animation-name {
+        to {
+          transform: translate3d(0, -75rem, 0);
+        }
+      }
+      border-width: 0.125rem;
+      width: 1.25rem;
+      height: 76.25rem;
+    }
+  }
+}
+
+.teams-dark.ui-button__loader.icon-only {
+  & .ui-loader__indicator {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  & .ui-loader__svg {
+    :before {
+      animation-name {
+        to {
+          transform: translate3d(0, -75rem, 0);
+        }
+      }
+      border-width: 0.125rem;
+      width: 1.25rem;
+      height: 76.25rem;
+    }
+  }
+}
+
+.teams-dark.ui-button__loader.icon-false {
+  & .ui-loader__indicator {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  & .ui-loader__svg {
+    :before {
+      animation-name {
+        to {
+          transform: translate3d(0, -75rem, 0);
+        }
+      }
+      border-width: 0.125rem;
+      width: 1.25rem;
+      height: 76.25rem;
+    }
+  }
+}
+
+/***************************************
+              ButtonGroup              
+***************************************/
+
+.teams-dark.ui-button-group {}
+
+.teams-dark.ui-button-group__middle-button {
+  border-radius: 0;
+}
+
+.teams-dark.ui-button-group__first-button {
+  border-radius: 0;
+  border-top-left-radius: 2px;
+  border-bottom-left-radius: 2px;
+}
+
+.teams-dark.ui-button-group__last-button {
+  border-radius: 0;
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+}
+
+/***************************************
+                  Chat                  
+***************************************/
+
+.teams-dark.ui-chat {
+  background-color: #201F1F;
+  border: 1px solid #201F1F;
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0 0.625rem 0 0.625rem;
+  margin: 0;
+}
+
+/***************************************
+                ChatItem                
+***************************************/
+
+.teams-dark.ui-chat-item {
+  position: relative;
+  padding-top: 1rem;
+  padding-bottom: 0;
+}
+
+.teams-dark.ui-chat-item__gutter {
+  position: absolute;
+  margin-top: 0.625rem;
+  left: 0;
+}
+
+.teams-dark.ui-chat-item__message {
+  position: relative;
+  float: left;
+  margin-left: 2.5rem;
+  margin-right: 2.5rem;
+}
+
+/***************************************
+              ChatMessage              
+***************************************/
+
+.teams-dark.ui-chat-message {
+  display: inline-block;
+  position: relative;
+  margin-left: 0;
+  margin-right: 6.25rem;
+  max-width: calc(100% - 6.25rem);
+  min-width: 6.25rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.625rem;
+  border-radius: 0.1875rem;
+  border: none;
+  outline: 0;
+  color: #fff;
+  background-color: #323131;
+  word-break: break-word;
+  word-wrap: break-word;
+  :focus {
+    outline: 0;
+  }
+  :focus-visible {
+    border-color: transparent;
+    :before {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      border-color: #000;
+      border-width: 1px;
+      border-radius: 2px;
+    }
+    :after {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: -1px;
+      right: -1px;
+      bottom: -1px;
+      left: -1px;
+      z-index: 1;
+      border-color: #fff;
+      border-width: 1px;
+      border-radius: 2px;
+    }
+  }
+  :hover {
+    > .ui-chat__message__actions {
+      opacity: 1;
+      width: auto;
+      [x-out-of-boundaries] {
+        opacity: 0;
+      }
+    }
+  }
+}
+
+.teams-dark.ui-chat-message__action-menu {
+  background-color: #323131;
+  border: 1px solid;
+  border-color: transparent;
+  border-radius: 0.1875rem;
+  box-shadow: 0 .2rem .4rem -.075rem rgba(0, 0, 0, .25);
+  z-index: 1000;
+  overflow: hidden;
+  opacity: 0;
+  width: 0;
+  [x-out-of-boundaries] {
+    opacity: 0;
+  }
+}
+
+.teams-dark.ui-chat-message__author {
+  color: #C8C6C4;
+  margin-right: 0.75rem;
+  margin-bottom: 0.125rem;
+  font-weight: 400;
+}
+
+.teams-dark.ui-chat-message__timestamp {
+  margin-bottom: 0.125rem;
+}
+
+.teams-dark.ui-chat-message__content {
+  color: #fff;
+  display: block;
+  & a {
+    outline: none;
+    color: #A6A7DC;
+    :focus {
+      text-decoration: underline;
+    }
+  }
+}
+
+.teams-dark.ui-chat-message__badge {
+  background-color: #E73550;
+  color: #fff;
+  box-shadow: 0 .2rem .4rem -.075rem rgba(0, 0, 0, .25);
+  position: absolute;
+  padding: 0.25rem;
+  height: auto;
+  width: auto;
+  border-radius: 50%;
+  top: 0.25rem;
+  z-index: 1;
+  right: 0;
+  transform: translateX(50%);
+}
+
+.teams-dark.ui-chat-message__reaction-group {
+  margin-left: 0.75rem;
+  float: right;
+}
+
+/***************************************
+                Checkbox                
+***************************************/
+
+.teams-dark.ui-checkbox {
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: auto 0.75rem 1fr;
+  cursor: pointer;
+  outline: 0;
+  color: #C8C6C4;
+  padding: 3px 5px;
+  vertical-align: middle;
+  align-items: start;
+  :focus {
+    outline: 0;
+  }
+  :focus-visible {
+    border-color: transparent;
+    :before {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      border-color: #000;
+      border-width: 1px;
+      border-radius: 3px;
+    }
+    :after {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: -1px;
+      right: -1px;
+      bottom: -1px;
+      left: -1px;
+      z-index: 1;
+      border-color: #fff;
+      border-width: 1px;
+      border-radius: 3px;
+    }
+  }
+  :hover {
+    color: #fff;
+    & .ui-checkbox__indicator {
+      border-color: #fff;
+    }
+  }
+}
+
+.teams-dark.ui-checkbox__checkbox {
+  grid-column: 1;
+  -ms-grid-row-align: center;
+  box-shadow: unset;
+  background: transparent;
+  border-color: #C8C6C4;
+  border-style: solid;
+  border-radius: 0.1875rem;
+  border-width: 0.0625rem;
+  color: transparent;
+  margin: 0.125rem 0 0 0;
+  padding: 0.125rem;
+}
+
+.teams-dark.ui-checkbox__toggle {
+  -ms-grid-row-align: center;
+  grid-column: 1;
+  box-shadow: unset;
+  background: transparent;
+  border-color: #C8C6C4;
+  border-style: solid;
+  border-radius: 62.4375rem;
+  border-width: 0.0625rem;
+  color: #C8C6C4;
+  margin: 0;
+  padding: 0.125rem 1.25rem 0.125rem 0.125rem;
+  transition: padding .3s ease;
+  & svg {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+}
+
+.teams-dark.ui-checkbox__label {
+  display: block;
+  grid-column: 3;
+}
+
+/***************************************
+                 Dialog                 
+***************************************/
+
+.teams-dark.ui-dialog {
+  background: #2D2C2C;
+  border-radius: 0.1875rem;
+  outline: none;
+  padding: 1.6875rem 2rem 1.25rem 2rem;
+  position: relative;
+  width: 50vw;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  box-shadow: 0 .6rem 1.8rem -0.4rem rgba(0, 0, 0, .25);
+  color: #fff;
+}
+
+.teams-dark.ui-dialog__footer {
+  grid-column: 1 / -1;
+  grid-row: 3;
+}
+
+.teams-dark.ui-dialog__actions {
+  display: inline-block;
+}
+
+.teams-dark.ui-dialog__content {
+  margin: 0 0 1.25rem 0;
+  grid-column: 1 / span 2;
+  grid-row: 2;
+  justify-self: left;
+  width: 100%;
+}
+
+.teams-dark.ui-dialog__header {
+  margin: 0 0 0.5rem 0;
+  grid-row: 1;
+  grid-column: 1;
+  justify-self: left;
+  font-size: 1.125rem;
+  font-weight: 700;
+}
+
+.teams-dark.ui-dialog__header-action {
+  grid-row: 1;
+  grid-column: 2;
+  color: #fff;
+  margin: -0.1875rem -0.5rem 0 0;
+}
+
+.teams-dark.ui-dialog__overlay {
+  align-items: center;
+  background: rgba(37, 36, 36, .75);
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  left: 0;
+  overflow: auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 1000;
+}
+
+/***************************************
+              DialogFooter              
+***************************************/
+
+.teams-dark.ui-dialog-footer {
+  text-align: right;
+}
+
+/***************************************
+                Divider                
+***************************************/
+
+.teams-dark.ui-divider {
+  color: #C8C6C4;
+  display: flex;
+  align-items: center;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  &::before {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #3B3A39;
+  }
+}
+
+/***************************************
+                Dropdown                
+***************************************/
+
+.teams-dark.ui-dropdown {}
+
+.teams-dark.ui-dropdown__clear-indicator {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  background-color: transparent;
+  cursor: pointer;
+  user-select: none;
+  margin: 0;
+  position: absolute;
+  right: -0.125rem;
+  height: 100%;
+  width: 2rem;
+}
+
+.teams-dark.ui-dropdown__container {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  border-style: solid;
+  border-color: transparent;
+  outline: 0;
+  width: 22.25rem;
+  border-width: 0px;
+  color: #C8C6C4;
+  background-color: #2D2C2C;
+  border-radius: 0.1875rem;
+  :hover {
+    background-color: #3B3A39;
+  }
+}
+
+.teams-dark.ui-dropdown__selected-items {
+  display: flex;
+  flex-wrap: wrap;
+  overflow-y: auto;
+  max-height: 5.125rem;
+  width: 100%;
+  padding-right: 2rem;
+}
+
+.teams-dark.ui-dropdown__trigger-button {
+  overflow: hidden;
+  box-shadow: none;
+  margin: 0;
+  justify-content: left;
+  padding: 0 0.75rem;
+  background-color: transparent;
+  border-color: transparent;
+  border-bottom-color: transparent;
+  :hover {
+    background-color: transparent;
+    border-color: transparent;
+    border-bottom-color: transparent;
+  }
+  :active {
+    background-color: transparent;
+    border-color: transparent;
+    border-bottom-color: transparent;
+  }
+  :focus {
+    color: #C8C6C4;
+  }
+  :focus-visible {
+    color: #C8C6C4;
+    background-color: transparent;
+    border-color: transparent;
+    border-bottom-color: transparent;
+    :after {
+      border-color: transparent;
+    }
+    :before {
+      border-color: transparent;
+    }
+    :active {
+      background-color: transparent;
+      border-color: transparent;
+      border-bottom-color: transparent;
+    }
+  }
+}
+
+.teams-dark.ui-dropdown__list {
+  outline: 0;
+  border-style: solid;
+  border-width: 0px;
+  border-color: transparent;
+  z-index: 1000;
+  max-height: 18.5rem;
+  overflow-y: auto;
+  width: 22.25rem;
+  background: #2D2C2C;
+  border-radius: 0 0 0.1875rem 0.1875rem;
+}
+
+.teams-dark.ui-dropdown__loading-message {
+  background-color: #2D2C2C;
+}
+
+.teams-dark.ui-dropdown__no-results-message {
+  background-color: #2D2C2C;
+  font-weight: bold;
+}
+
+.teams-dark.ui-dropdown__toggle-indicator {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  background-color: transparent;
+  cursor: pointer;
+  user-select: none;
+  margin: 0;
+  position: absolute;
+  right: -0.125rem;
+  height: 100%;
+  width: 2rem;
+}
+
+/***************************************
+          DropdownSearchInput          
+***************************************/
+
+.teams-dark.ui-dropdown-search-input {
+  flex-basis: 3.125rem;
+  flex-grow: 1;
+}
+
+.teams-dark.ui-dropdown-search-input__input {
+  width: 100%;
+  background-color: transparent;
+  border-width: 0;
+}
+
+/***************************************
+          DropdownSelectedItem          
+***************************************/
+
+.teams-dark.ui-dropdown-selected-item {
+  margin: .4rem 0 0 .4rem;
+  color: #fff;
+  :focus {
+    color: #fff;
+    background-color: #E2E2F6;
+    outline: 0;
+  }
+  :hover {
+    color: #fff;
+    background-color: #E2E2F6;
+  }
+}
+
+.teams-dark.ui-dropdown-selected-item__icon {
+  & .ui-icon__filled {
+    display: none;
+  }
+  & .ui-icon__outline {
+    display: block;
+  }
+  :hover {
+    color: #fff;
+    & .ui-icon__filled {
+      display: block;
+    }
+    & .ui-icon__outline {
+      display: none;
+    }
+  }
+}
+
+/***************************************
+              DropdownItem              
+***************************************/
+
+.teams-dark.ui-dropdown-item {
+  min-height: 0;
+  padding: 0.25rem 0.6875rem;
+  white-space: nowrap;
+  border: 0.0625rem solid transparent;
+  background-color: #fff;
+  position: relative;
+}
+
+.teams-dark.ui-dropdown-item__image {
+  margin: 0.1875rem 0.75rem 0.1875rem 0.25rem;
+}
+
+.teams-dark.ui-dropdown-item__header {
+  font-size: 0.875rem;
+  color: #605E5C;
+}
+
+.teams-dark.ui-dropdown-item__content {
+  font-size: 0.75rem;
+  color: #605E5C;
+}
+
+.teams-dark.ui-dropdown-item__checkable-indicator {
+  position: relative;
+  left: 0.1875rem;
+}
+
+.teams-dark.ui-dropdown-item__end-media {
+  line-height: 1rem;
+}
+
+/***************************************
+                 Embed                 
+***************************************/
+
+.teams-dark.ui-embed {
+  display: inline-block;
+  vertical-align: middle;
+  position: relative;
+  cursor: pointer;
+  height: auto;
+  outline: 0;
+  :focus-visible {
+    & .ui-embed__control {
+      border-color: transparent;
+      opacity: 1;
+      :before {
+        content: "";
+        position: absolute;
+        border-style: solid;
+        pointer-events: none;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        border-color: #000;
+        border-width: 1px;
+        border-radius: 2px;
+      }
+      :after {
+        content: "";
+        position: absolute;
+        border-style: solid;
+        pointer-events: none;
+        top: -1px;
+        right: -1px;
+        bottom: -1px;
+        left: -1px;
+        z-index: 1;
+        border-color: #fff;
+        border-width: 1px;
+        border-radius: 2px;
+      }
+    }
+  }
+  :hover {
+    & .ui-embed__control {
+      opacity: 1;
+      z-index: 1;
+    }
+  }
+}
+
+.teams-dark.ui-embed__control {
+  background: 0 no-repeat rgba(0,0,0,.25);
+  background-position-x: 0.1875rem;
+  color: #2D2C2C;
+  opacity: 1;
+  pointer-events: none;
+  transition: opacity .22s ease-in-out;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.teams-dark.ui-embed__iframe {
+  display: none;
+}
+
+/***************************************
+                  Form                  
+***************************************/
+
+.teams-dark.ui-form {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-content: space-evenly;
+  grid-gap: 1.25rem;
+  justify-items: start;
+}
+
+/***************************************
+               FormField               
+***************************************/
+
+.teams-dark.ui-form-field {}
+
+.teams-dark.ui-form-field__label {
+  display: block;
+}
+
+.teams-dark.ui-form-field__control {}
+
+.teams-dark.ui-form-field__message {
+  display: block;
+}
+
+/***************************************
+                  Flex                  
+***************************************/
+
+.teams-dark.ui-flex {
+  display: flex;
+}
+
+/***************************************
+                FlexItem                
+***************************************/
+
+.teams-dark.ui-flex-item {}
+
+/***************************************
+                  Grid                  
+***************************************/
+
+.teams-dark.ui-grid {
+  display: grid;
+  justify-content: space-evenly;
+  grid-template-columns: repeat(5, 1fr);
+  & > * {
+    outline-offset: -3px;
+  }
+}
+
+/***************************************
+                 Header                 
+***************************************/
+
+.teams-dark.ui-header {
+  display: block;
+  color: #fff;
+}
+
+/***************************************
+           HeaderDescription           
+***************************************/
+
+.teams-dark.ui-header-description {
+  display: block;
+  color: #C8C6C4;
+  font-size: 1.375rem;
+  font-weight: 400;
+}
+
+/***************************************
+            HierarchicalTree            
+***************************************/
+
+.teams-dark.ui-hierarchical-tree {
+  display: block;
+  padding-left: 0.625rem;
+}
+
+/***************************************
+          HierarchicalTreeItem          
+***************************************/
+
+.teams-dark.ui-hierarchical-tree-item {
+  list-style-type: none;
+  padding: 0 0 0 0.0625rem;
+  outline: 0;
+  :focus-visible {
+    > .ui-hierarchicaltree__title {
+      position: relative;
+      border-color: transparent;
+      :before {
+        content: "";
+        position: absolute;
+        border-style: solid;
+        pointer-events: none;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        border-color: #000;
+        border-width: 1px;
+        border-radius: 2px;
+      }
+      :after {
+        content: "";
+        position: absolute;
+        border-style: solid;
+        pointer-events: none;
+        top: -1px;
+        right: -1px;
+        bottom: -1px;
+        left: -1px;
+        z-index: 1;
+        border-color: #fff;
+        border-width: 1px;
+        border-radius: 2px;
+      }
+    }
+  }
+}
+
+/***************************************
+         HierarchicalTreeTitle         
+***************************************/
+
+.teams-dark.ui-hierarchical-tree-title {
+  padding: 0.0625rem 0;
+  cursor: pointer;
+  color: #fff;
+  position: relative;
+  :focus {
+    outline: 0;
+  }
+  :focus-visible {
+    border-color: transparent;
+    :before {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      border-color: #000;
+      border-width: 1px;
+      border-radius: 2px;
+    }
+    :after {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: -1px;
+      right: -1px;
+      bottom: -1px;
+      left: -1px;
+      z-index: 1;
+      border-color: #fff;
+      border-width: 1px;
+      border-radius: 2px;
+    }
+  }
+}
+
+/***************************************
+                  Icon                  
+***************************************/
+
+.teams-dark.ui-icon {
+  speak: none;
+  vertical-align: middle;
+  display: inline-flex;
+  font-weight: 900;
+  align-items: center;
+  box-sizing: content-box;
+  justify-content: center;
+  font-size: 1rem;
+  line-height: 1;
+  width: 1rem;
+  height: 1rem;
+  &::before {
+    content: "?";
+  }
+  transform: rotate(0deg);
+}
+
+.teams-dark.ui-icon__outline-part {
+  display: none;
+}
+
+.teams-dark.ui-icon__filled-part {}
+
+.teams-dark.ui-icon__svg {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+  transform: rotate(0deg);
+}
+
+.teams-dark.ui-icon__svg-flipping-in-rtl {
+  display: block;
+  width: 1rem;
+  height: 1rem;
+  fill: currentColor;
+  transform: rotate(0deg);
+}
+
+.teams-dark.ui-icon__g {}
+
+.teams-dark.ui-icon__path {}
+
+.teams-dark.ui-icon__secondary-path {}
+
+/***************************************
+                 Image                 
+***************************************/
+
+.teams-dark.ui-image {
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: middle;
+  height: auto;
+}
+
+/***************************************
+                 Input                 
+***************************************/
+
+.teams-dark.ui-input {
+  align-items: center;
+  display: inline-flex;
+  position: relative;
+  outline: 0;
+}
+
+.teams-dark.ui-input__input {
+  background-color: #201F1F;
+  color: #fff;
+  border-color: transparent;
+  border-radius: 0.1875rem 0.1875rem 0.125rem 0.125rem;
+  border-style: solid;
+  border-width: 0 0 0.125rem 0;
+  outline: 0;
+  padding: 0.4375rem 0.75rem;
+  position: relative;
+  &::placeholder {
+    color: #C8C6C4;
+    opacity: 1;
+  }
+  :focus {
+    border-color: transparent transparent #A6A7DC transparent;
+  }
+}
+
+.teams-dark.ui-input__icon {
+  color: #fff;
+  outline: 0;
+  position: absolute;
+  right: 0.625rem;
+}
+
+/***************************************
+                 Label                 
+***************************************/
+
+.teams-dark.ui-label {
+  display: inline-flex;
+  align-items: center;
+  overflow: hidden;
+  height: 1.25rem;
+  line-height: 1.25rem;
+  color: #2D2C2C;
+  background-color: #fff;
+  font-size: 0.875rem;
+  border-radius: 0.1875rem;
+  padding: 0 0.25rem 0 0.25rem;
+}
+
+.teams-dark.ui-label__image {
+  height: 1.25rem;
+  width: 1.25rem;
+}
+
+.teams-dark.ui-label__icon {}
+
+/***************************************
+                 Layout                 
+***************************************/
+
+.teams-dark.ui-layout.start {
+  display: grid;
+  grid-template-columns: auto;
+}
+
+.teams-dark.ui-layout.main {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+.teams-dark.ui-layout.end {
+  display: grid;
+  grid-template-columns: 1fr auto;
+}
+
+.teams-dark.ui-layout__gap.start {}
+
+.teams-dark.ui-layout__gap.main {}
+
+.teams-dark.ui-layout__gap.end {}
+
+.teams-dark.ui-layout__start.start {
+  align-items: center;
+  display: inline-flex;
+  -ms-grid-column: 1;
+}
+
+.teams-dark.ui-layout__start.main {
+  align-items: center;
+  display: inline-flex;
+  -ms-grid-column: 1;
+}
+
+.teams-dark.ui-layout__start.end {
+  align-items: center;
+  display: inline-flex;
+  -ms-grid-column: 1;
+}
+
+.teams-dark.ui-layout__main.start {
+  align-items: center;
+  display: grid;
+  -ms-grid-column: 1;
+}
+
+.teams-dark.ui-layout__main.main {
+  align-items: center;
+  display: grid;
+  -ms-grid-column: 2;
+}
+
+.teams-dark.ui-layout__main.end {
+  align-items: center;
+  display: grid;
+  -ms-grid-column: 1;
+}
+
+.teams-dark.ui-layout__end.start {
+  align-items: center;
+  display: inline-flex;
+  -ms-grid-column: 1;
+}
+
+.teams-dark.ui-layout__end.main {
+  align-items: center;
+  display: inline-flex;
+  -ms-grid-column: 2;
+}
+
+.teams-dark.ui-layout__end.end {
+  align-items: center;
+  display: inline-flex;
+  -ms-grid-column: 2;
+}
+
+/***************************************
+                 Loader                 
+***************************************/
+
+.teams-dark.ui-loader {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.teams-dark.ui-loader__indicator {
+  height: 2.25rem;
+  width: 2.25rem;
+  overflow: hidden;
+}
+
+.teams-dark.ui-loader__svg {
+  animation-name {
+    to {
+      opacity: 1;
+    }
+  }
+  animation-delay: 1.5s;
+  animation-direction: normal;
+  animation-duration: .3s;
+  animation-fill-mode: both;
+  animation-iteration-count: 1;
+  animation-play-state: running;
+  animation-timing-function: ease-out;
+  display: block;
+  overflow: hidden;
+  position: relative;
+  :before {
+    animation-name {
+      to {
+        transform: translate3d(0, -135rem, 0);
+      }
+    }
+    animation-delay: 0s;
+    animation-direction: normal;
+    animation-duration: 2s;
+    animation-fill-mode: both;
+    animation-play-state: running;
+    animation-timing-function: steps(60, end);
+    animation-iteration-count: infinite;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 4880'%3E%3Cg role='presentation'%3E%3Cpath fill='%236264a7' d='M67.4 26.4c5.8-2 12.4 3.3 11.4 9.4-.4 6.5-8.8 10-13.8 6-5.6-3.6-4.2-13.5 2.4-15.3zM66.5 113.7c5.7-3.3 13.6 1.8 12.7 8.4 0 6.4-8 10.4-13.2 7-5.6-3.2-5.4-12.5.5-15.3z'%3E%3C/path%3E%3Cpath fill='%235659b0' d='M65.5 200.4c5.7-3.4 13.6 2 12.6 8.5 0 6-7 10.7-12.7 7.7-6.4-3-6-13.2.2-16.3z'%3E%3C/path%3E%3Cpath fill='%23575ab1' d='M64.3 286.2c5-2 11.3 2.3 11.2 7.8 0 5.4-4.5 11.7-10.5 11-5.4-.3-9.2-6.3-7.3-11.2 1.2-3.2 3.2-6.5 6.6-7.6z'%3E%3C/path%3E%3Cpath fill='%23585bb2' d='M59.4 372.5c5-2.6 11.6 1 12 6.5.8 5-3.4 8.6-7 11.3-4.5 3.2-11.7.2-12.6-5.3-1.4-5.5 3.6-9.7 7.6-12.5z'%3E%3C/path%3E%3Cpath fill='%235a5db4' d='M54.3 457.4c4-2.2 9.6 0 11.2 4.2 1.7 3.7 0 8.4-3.5 10.5-3.7 2.5-8.2 5.6-12.8 4-4.3-1.6-6.5-6.8-4.8-11 1.5-4.2 6.4-5.4 10-7.6z'%3E%3C/path%3E%3Cpath fill='%235b5fb6' d='M48.6 540.7c4.4-2 10 1 11 5.7 1 4-1.4 8.4-5.4 9.7-4 1.6-8.5 3-13 2.5-5.6-.8-8.6-8-5.3-12.6 2.7-4.4 8.4-3.5 12.6-5.3z'%3E%3C/path%3E%3Cpath fill='%235d60b8' d='M29.4 622.4c3-1.5 6.4 0 9.6 0 3.4.3 7.3-1 10.3 1.3 4.6 3 4.4 10.4-.2 13.3-3.7 2-8.2 1.7-12.4 1.5-3.6-.5-7.8-.7-10.2-4-3.2-3.7-1.6-10.2 3-12z'%3E%3C/path%3E%3Cpath fill='%235f63ba' d='M20.3 698.3c4-2 7.8 1.3 11.4 2.8 4 2 9.6 1 12.2 5 3.3 4.7-.2 12-6 12.3-7 0-14-2.6-19.7-6.6-4.7-3.4-3.5-11.6 2-13.4z'%3E%3C/path%3E%3Cpath fill='%236165bc' d='M12.3 771.3c3-1.5 7-.6 9 2 3 3.8 6.7 6.7 11 8.3 3.3 1 5.7 4 5.5 7.4.2 4.8-4.8 8.7-9.3 7.4-7.7-2.2-14.5-7.2-19.3-13.6-2.8-3.7-1.2-9.8 3-11.5z'%3E%3C/path%3E%3Cpath fill='%236467bf' d='M7.5 841.7c4-2 9.2.3 10.3 4.6 1.7 5.4 5 10 9.7 13 4 2.5 4.6 8.4 1.4 11.6-2.5 2.6-7 3-10 1-7.4-5-13-12.6-15.5-21-1.2-3.6.5-8 4-9.3z'%3E%3C/path%3E%3Cpath fill='%23666ac1' d='M6.5 910.8c3-1.6 7.3-.4 9 2.6 1.7 2.2 1 5 1.4 7.6 0 5.6 2.5 11 6 15 2.5 2.5 2.7 6.7.5 9.5-2.4 3.3-7.8 3.8-10.7 1-7.6-7.8-11.5-19-10.6-29.6.2-2.7 1.8-5.2 4.3-6.2z'%3E%3C/path%3E%3Cpath fill='%23696cc4' d='M9.3 980c3.7-2 9 .3 10 4.4 1 2.4-.2 4.8-1 7-2.4 5.7-2.3 12.4.3 18 1 2.3 2.4 5 1.5 7.6-1 4-5.7 6.2-9.5 4.5-2.6-1-3.8-3.7-5-6-4.4-10-4.3-21.8.4-31.6.6-1.7 1.7-3 3.3-4z'%3E%3C/path%3E%3Cpath fill='%236b6fc7' d='M16.3 1051.2c4-2.6 10 1 10 5.8.5 3-2 5.3-4 7.4-5.3 5.7-7 14-5.2 21.6 1 3.5-1 7.4-4.4 8.5-3.4 1.2-7.6-.8-8.7-4.3-4.2-13.8.7-30.2 12.3-39z'%3E%3C/path%3E%3Cpath fill='%236e72ca' d='M26.4 1125.3c4.5-2.6 10.7 1.5 10 6.7-.4 3.3-3.3 5.2-6 6.3-8.2 3.4-14 11.8-14.2 20.6 0 2.6-.6 5.6-3.2 7-4 2.8-10 0-10.2-5-.8-15.3 9.2-30.3 23.6-35.7z'%3E%3C/path%3E%3Cpath fill='%237175cd' d='M35.3 1203.2c3.7-.3 8.6-1.2 11.2 2.3 2.7 3.2 1 8.8-3 10-3.7.8-7.7.3-11.3 1.7-8 2.6-13.8 9.5-15.8 17.5-1 4.7-7.6 6.2-10.8 2.7-2.8-2.7-1.7-7-.4-10 4.5-13 16.6-22.6 30-24.2z'%3E%3C/path%3E%3Cpath fill='%237478d0' d='M36.4 1283.3c7-.6 14.2.5 20.3 4 3.8 2.4 3.3 8.7-.8 10.6-3 1.5-6-.2-8.6-1-9.8-3.5-21.6.5-27.3 9-1.5 2.4-3 5.6-6 6-4.6 1-9-4.4-6.8-8.7 5.4-11 17-18.8 29.2-20z'%3E%3C/path%3E%3Cpath fill='%23777bd3' d='M36.5 1363.5c11.6-1 23.8 3.6 31.3 12.7 2.7 3.6-.3 9.5-4.8 9.4-3.2.3-5-2.6-7.3-4.4-8.4-7.4-22.2-7.6-31-.4-2.3 1.8-4.3 5-7.7 4.7-4.7 0-7.5-6.3-4.4-9.8 6-7 14.8-11.3 24-12.2z'%3E%3C/path%3E%3Cpath fill='%237a7ed6' d='M31.4 1444.6c18-4.8 38.3 6.6 43.3 24.6 1 4-3.5 8-7.4 6.6-3.5-1-4-4.8-5.5-7.5-5.5-10.8-19.6-16-30.8-11.4-3.2 1-6.2 4.3-10 3-3.8-1.4-5-7.2-1.7-9.8 3.5-2.8 7.8-4.4 12-5.6z'%3E%3C/path%3E%3Cpath fill='%237d81da' d='M32.4 1524.6c15-3.4 31.8 4 39.2 17.8 3.5 6.5 5.3 14 4.3 21.5-1 4-6.7 5.5-9.5 2.4-2-2-1.4-5-1.6-7.4-.2-11.6-9.6-22-21-23.7-4.4-.8-8.8 0-13 1-4 1.2-7.7-3.5-6-7.2 1-3 4.6-3.7 7.4-4.4z'%3E%3C/path%3E%3Cpath fill='%238084dd' d='M36.3 1604.4c14-2 28.5 6 35 18.2 6 10.6 6 24.3 0 34.8-2 3.5-7.6 3-9-.6-1.8-3.5 1.4-6.8 2-10.2 3.8-12.4-4-26.7-16.3-30.5-4-1.6-8.3-.8-12.4-1.6-4.6-1.7-4-9 .7-10z'%3E%3C/path%3E%3Cpath fill='%238387e0' d='M43.3 1685.3c4-1.2 8.2 1 12 2.5 14.7 6.6 23.3 24.2 19.5 40-1.8 8-6.5 15.7-13.4 20.6-3 2.2-8-.6-7.7-4.4 0-2.3 1.8-3.7 3.3-5 7-6 10-16 7.8-24.7-1.8-8-7.6-15-15.3-18-2.2-.8-4.6-1-6.8-2-3.4-2-3-7.5.6-9z'%3E%3C/path%3E%3Cpath fill='%23868be4' d='M50.2 1768c1.4-.8 3.2-.8 4.7 0 13.2 5.7 21.7 20.5 20.3 35-1 15-12.6 28.5-27.3 31.4-3.4.6-6.4-3-5-6.3.6-2.6 3.7-3 6-4 8.2-2.8 14.5-10.4 16.2-19 2-9-1.5-18.8-8.6-24.6-2.2-2-5-3-7.2-4.8-2.2-2-1.7-6 .8-7.5z'%3E%3C/path%3E%3Cpath fill='%238a8ee7' d='M57.4 1852.2c3.7-1.8 6.6 2 9 4.5 11 12 11.7 31.6 1.7 44.5-6.8 9.3-18.5 14.6-30 14-2.4-.3-5.3-.2-7-2.2-1.6-2-1-5.4 1.3-6.8 1.7-1 3.8-.3 5.6-.4 9.8 1 20-4.5 24.7-13.2 4.6-8 4.3-18.7-.8-26.5-1.8-3-4.5-5-6.6-7.4-1.4-2.2-.4-5.4 2-6.4z'%3E%3C/path%3E%3Cpath fill='%238d91ea' d='M62.3 1938.3c1.7-1 4.3-1 5.6.8 9 11.5 9.2 28.8.8 40.8-7 10.4-20 16.4-32.6 15-5.7-.7-11.3-2.7-16-6-2.6-1.8-2-6.4 1-7.5 2.2-1 4.2.6 6 1.5 8.6 5 20 4.4 28-1.5 7.7-5.4 12-15 10.8-24.3-.3-4.5-2.3-8.6-4.7-12.4-1.6-2-1-5 1-6.3z'%3E%3C/path%3E%3Cpath fill='%239095ee' d='M66.3 2025.2c2-1.2 4.8-.5 5.7 1.6 5.6 12.8 2.2 28.7-8 38.2-9.4 9.2-24.2 12.2-36.5 7.4-7-2.8-13.5-8-17.3-14.7-1.2-2.6 1-5.8 3.8-5.7 2.5 0 3.7 2.4 5 4 7 9.5 20.5 13 31.2 8.4 12-4.7 19-18.8 15.3-31-.8-2.7-2.3-6.5.8-8.2z'%3E%3C/path%3E%3Cpath fill='%239398f1' d='M68.6 2112.7c2-1 5 0 5.4 2.4 2.4 14.5-5.8 30-19.2 36-12.5 6.2-28.7 3.6-38.7-6.2-5.6-5.5-9.4-13-10-21-.4-4 6-5 7.2-1.2 1 5.5 3 11 7 15.3 7 7.8 19 11 28.8 7 10.7-3.6 18.4-14.7 17.7-26-.2-2.2-.6-5.3 2-6.3z'%3E%3C/path%3E%3Cpath fill='%23969bf5' d='M8.4 2188.4c2-2 6-.3 6 2.6-.4 2-1 4-1.2 5.8-1 8.8 2.5 18 9.3 23.7 7 6 17.2 8 26 5 10-3 17-12.3 18.4-22.5.3-4 6.7-3.6 7 .3-1 15-13.3 28-28 30.3-13 2.5-27.4-3.6-34.6-15-5.2-7.8-6.8-17.8-4.6-27 .4-1 .6-2.4 1.6-3.2z'%3E%3C/path%3E%3Cpath fill='%23999ef8' d='M15.3 2257c2-1 4.4 0 5 2.2.3 2-1.3 3.3-2.3 4.8-5.7 7.6-6.8 18.2-3 27 4.3 10 15 16.7 26 16.2 10-.3 19.4-6.6 23.7-15.6 1.2-3.4 6.7-2.2 6.4 1.4-.7 3.4-3 6.3-5 9-9.3 11-26 15-39.3 9.2C13.8 2306 5 2292 6 2278c.7-7.8 3.7-15.7 9.3-21z'%3E%3C/path%3E%3Cpath fill='%239ca1fb' d='M25.6 2329.6c1.8-1.2 4.5.2 4.6 2.5.2 2.7-2.8 3.4-4.6 4.7-12 7-16.6 23.5-10 35.7 5.8 12.2 21.6 18.4 34.2 13.2 3.6-1.2 6.4-3.6 9.5-5.7 2.8-2 6 2.5 3.6 4.7-11.4 11-30.5 12-43 2.4-12.8-9-17.4-27.3-10.5-41.3 3.3-7 9-13 16-16z'%3E%3C/path%3E%3Cpath fill='%236264a7' d='M33.2 2407.2c2.3-.4 4.6-.8 7-.6 2.4.5 3 4.2.6 5.4-4 .7-8.3 1-12 2.8-12.6 5.3-19.5 20.5-15.2 33.4 4 13.3 18.8 22 32.3 18.8 2-.6 6-2 6.7 1.3.7 3.7-4 4-6.6 4.6-15.4 3-32.3-6.4-37.4-21.4-5.3-13.8 0-30.6 12-39 3.8-2.6 8-4.4 12.6-5.4z'%3E%3C/path%3E%3Cpath fill='%239ca1fb' d='M37.4 2486.4c5.5-.4 11.3.4 16.3 3 2 1.6.8 5.3-2 5.4-3.5-.8-7-2.3-10.8-2.2-13-.7-25.2 9-27.8 21.4-3 12 3.4 25 14.4 30.5 3.4 2 7.3 2.3 11 3 2.7 1 2.3 5.6-.6 6-17.3-.3-32-16.3-31.7-33.5-.4-17 14-32.7 31-33.6z'%3E%3C/path%3E%3Cpath fill='%23999ef8' d='M33.5 2566.7c10.8-2.2 22.7 1.3 30.5 9.3 1.8 1.6 1 5-1.3 5.6-2.3 1-4-1.5-5.6-2.7-9.6-8.4-25-8-34.6.3-8.6 7-12 19.7-8 30 2.3 6.4 7 11.4 12.7 14.8 3.2 2 .6 7.3-2.8 6-13.8-6.8-21.2-24-17-38.7 3-12.3 13.8-22.3 26.3-24.6z'%3E%3C/path%3E%3Cpath fill='%23969bf5' d='M32.4 2646.7c15-3.7 32 4.3 38.3 18.5.8 2.3-1.4 4.8-3.8 4.5-2.2 0-3-2.2-4-3.7-5.6-9.7-17.8-14.8-28.6-12.4-9.8 2-18 10-20.5 19.6-2 7.2-.8 15.2 3.4 21.4 1 1.5 2.4 3.3 1.4 5.2-1 2.4-4.7 2.8-6 .7-9.2-11.7-9.2-29.2-.2-41 4.8-6.4 12-11 19.8-12.8z'%3E%3C/path%3E%3Cpath fill='%239398f1' d='M31.4 2726.7c14.6-4 31.3 3 38.5 16.3 1.7 3.3 3.4 7 3.7 10.8-.3 2.8-4 4.3-6 2.6-1.6-1-1.7-3-2.3-4.6-2.5-8.4-9.6-15-18-17.5-8.6-2.6-18.6-.3-25.2 5.8-6.5 6-10 15-8.6 23.5 0 1.8 1 4-.5 5.6-1.5 2.2-5.2 1.8-6.3-.7-5.2-17.5 7-37.5 24.7-41.6z'%3E%3C/path%3E%3Cpath fill='%239095ee' d='M36.4 2805.5c14.7-1.7 29.7 7 35.4 20.6 2 5 3.2 10.4 2.8 15.7-.5 4-6.7 4.5-7.8.7-.6-3.3-.3-6.8-1.5-10-3-10.4-12.7-18.2-23.4-18.8-11.8-1-23.7 6.8-27 18-1 2.2-1 5-3.4 6-2.7 1.2-6-1.4-5.6-4.3 2.6-14.6 15.7-26.5 30.4-27.8z'%3E%3C/path%3E%3Cpath fill='%238d91ea' d='M33.5 2885.7c14-2.8 29.3 4 36.5 16.3 5 8.4 6.4 19 3.3 28.2-1 3-5.7 3.6-7.5 1-1.5-2.2 0-4.8 0-7 2.3-12-5-24.4-16.3-28.6-9.8-4-22-1.2-29 7-1.5 1.5-2.8 4-5.4 3.8-3.2 0-5.3-4-3.3-6.8 5-7.2 13-12.3 21.8-14z'%3E%3C/path%3E%3Cpath fill='%238a8ee7' d='M32.4 2965.7c15-3.5 31.4 4 38.5 17.4 5.8 10.8 5.6 24.7-1 35.2-1.6 3-6.4 2.6-7.8-.5-1.4-2.3.4-4.7 1.3-7 4.2-8.3 3-19-2.8-26.4-6-8-17-12-27-9.5-3 .6-5.7 2.6-8.8 3.3-4 .4-6.4-5-3.6-7.6 3.2-2.5 7.2-3.8 11-4.8z'%3E%3C/path%3E%3Cpath fill='%23868be4' d='M34.4 3045.4c14.2-3.4 29.8 4.8 36.7 17.5 7.7 13.5 5 32-6.5 42.5-2.5 2.2-7 .7-7.6-2.5-1-3.2 2-5.3 3.5-7.6 6-7.6 7-18.6 2.4-27-4.4-8.5-13.5-14.3-23-14-2-.2-4.6.4-6.3-1.2-2.5-2-2-6.3.7-7.8z'%3E%3C/path%3E%3Cpath fill='%238387e0' d='M48.2 3126c4.2-.4 8 2.2 11.5 4.2 13 8.3 19 25.5 14.5 40-2.6 8.7-8.6 16.4-16.5 20.7-3.2 2-7.7-1-7.4-4.8 0-2.7 2.5-4 4.5-5.5 7.5-5 11.6-14.7 10.5-23.6-1-9-7.2-17.2-15.7-20.5-1.8-1-4-1.5-4.8-3.6-1.3-2.8.5-6.3 3.4-7z'%3E%3C/path%3E%3Cpath fill='%238084dd' d='M58.3 3212.3c3.8-1.7 6.8 1.8 9 4.4 9.5 10.8 11.3 27.5 4.5 40-4.6 8.7-12.8 15.4-22.2 18-3.7 1-7.6-2.8-6.5-6.5 1-3.7 5-4 7.8-5.4 11.3-5 17.4-19.2 13-30.8-1.3-4.5-4.2-8.2-7.5-11.4-2.4-2.5-1.2-7 2-8.3z'%3E%3C/path%3E%3Cpath fill='%237d81da' d='M65.2 3302.3c2.8-1.5 6.5-.2 7.7 2.7 2.6 6 3.6 12.6 3 19-1.7 17.8-18.2 32.7-36 32-4.5 0-6.6-6.3-3.4-9.3 2.6-2.5 6.6-1.5 9.7-2.5 10.8-2.6 19-13 18.7-24.2 0-4-1.2-7.6-2.5-11.3-1-2.4.5-5.3 2.7-6.4z'%3E%3C/path%3E%3Cpath fill='%237a7ed6' d='M67.4 3394.4c3-2.2 8-.2 8.8 3.6 1.3 15-8.5 30.3-22.6 35.8-7.2 2.8-15.4 3.5-23 1.3-3.8-1.3-4.7-7.2-1.3-9.7 2.8-2.4 6.5-.6 9.7-.6 12 .8 23.8-8.7 25.4-20.7.6-3.3-.3-7.6 3-9.5z'%3E%3C/path%3E%3Cpath fill='%23777bd3' d='M66.5 3485.7c4.3-1.7 9.2 2.8 7.7 7.2-5 14.3-20 24.2-35.2 23.6-6-.2-12-1.6-17-4.8-3.5-2.5-2.8-8.7 1.3-10.2 3-1.5 6 .6 8.7 1.5 10.6 4.2 23.8-.8 29.2-10.8 1.4-2.4 2.3-5.7 5.3-6.5z'%3E%3C/path%3E%3Cpath fill='%237478d0' d='M59.5 3575.7c3.7-1.5 8.3 1.4 8.4 5.4.3 4.4-4 7-6.8 9.2-13.7 10-34.2 8.6-46.3-3.2-3.4-3.2-1.5-9.6 3-10.4 3-1 5.4 1.3 7.6 3 7.4 5.7 18.3 6.3 26.4 1.5 2.8-1.3 4.8-4 7.5-5.3z'%3E%3C/path%3E%3Cpath fill='%237175cd' d='M11.4 3651.2c2.5-1.4 6-1 8 1.4 2 2.5 4 5.3 6.8 7 6.6 5 15.5 5.6 23 2.7 4.7-2.3 10.3 2.6 8.8 7.6-1 4-5.6 5-9 6-15 4-32-2.8-40-16-2-3-.7-7.2 2.4-8.8z'%3E%3C/path%3E%3Cpath fill='%236e72ca' d='M9.5 3723.6c3.4-1 7 1.2 8 4.6 3 8.3 11 14.7 19.8 15.4 2.4.4 5.3 0 7.2 2 3 2.4 3 7.4 0 10-2.5 2.4-6.4 1.7-9.6 1.3C21 3755 9 3745 4.6 3732c-1.2-3.5 1-7.6 4.8-8.4z'%3E%3C/path%3E%3Cpath fill='%236b6fc7' d='M6.4 3796.4c3.3-1.6 7.6-.2 9.3 3 1 2.7 1 5.5 2 8.2 2 6 6.3 11 12 13.6 2.5 1.2 5.2 2.8 5.6 5.8 1.2 4.7-3.6 9.4-8.3 8-13.5-4.5-23.5-17.8-24.4-32-.2-2.8 1.5-5.4 3.8-6.6z'%3E%3C/path%3E%3Cpath fill='%23696cc4' d='M7.3 3868.4c3.3-1.3 7.3.3 9 3.5 1 1.8.4 4 .4 6-.7 7 2 13.7 6.7 18.6 2.4 2 3.4 5.8 1.8 8.7-1.8 4-7.5 5.2-10.8 2.3C5 3899.4.7 3886 2.8 3874c.4-2.6 2.2-4.7 4.5-5.6z'%3E%3C/path%3E%3Cpath fill='%23666ac1' d='M8.5 3941.4c4.6-2.7 11 1.3 10.7 6.7-.7 4-2.7 7.8-2.4 12-.2 4 1.3 7.5 2.5 11 1.2 4-1.6 8.3-5.5 9-3.4.8-7-1-8.3-4.4-4.3-9.3-4.5-20.3-.7-29.8.7-1.8 2-3.5 3.7-4.4z'%3E%3C/path%3E%3Cpath fill='%236467bf' d='M12.5 4014.7c4.2-2.2 9.8.6 10.5 5.3 1 5-4 8.3-5 13-2 4.6.7 10.7-3.4 14.6-3.8 4-11.3 1.7-12.4-3.7-1.2-8.7 1.2-17.6 6-25 1-1.6 2.3-3.5 4.3-4.3z'%3E%3C/path%3E%3Cpath fill='%236165bc' d='M17.4 4089.3c4.7-2.6 11.3 1.2 11 6.7.5 5-5 7.3-7.3 11-2.7 3.7-2.6 9.7-7.5 11.4-5.3 2.3-11.6-2.8-10.4-8.4 2.2-8.2 7.3-16 14.4-20.7z'%3E%3C/path%3E%3Cpath fill='%235f63ba' d='M25.4 4164.6c5.4-1.4 11 4 9.3 9.5-.7 4.2-5 5.6-8 7.7-4 2.3-5.7 7.7-10.7 7.8-6 .8-10.6-6.7-7.3-11.8 4-6 10-10.7 16.7-13z'%3E%3C/path%3E%3Cpath fill='%235d60b8' d='M30.3 4242.6c4.3-1.7 10 0 11.3 4.8 1.8 4.7-1.7 10-6.6 10.6-5 .8-9 6-14.3 4.2-5.6-1.3-7.6-9-3.6-13 3.8-3.4 8.6-5.2 13.3-6.6z'%3E%3C/path%3E%3Cpath fill='%235b5fb6' d='M35.4 4321.5c4.2-.4 9.4-1 12.3 2.8 3.6 4.3 1.3 12-4.3 13l-11.4 1.2c-6 .3-10-6.8-7-11.8 1.7-4 6.5-4.7 10.4-5.2z'%3E%3C/path%3E%3Cpath fill='%235a5db4' d='M39.3 4401.5c4.3-.8 8.7.2 12.7 1.6 5.2 2.3 6.2 10.2 2 13.8-4.4 3.8-10.4 1.2-15.3.4-7.2-2.4-6.6-14 .6-15.7z'%3E%3C/path%3E%3Cpath fill='%23585bb2' d='M49.3 4483c4-.5 7.7 1.7 11 3.8 4.5 3.5 3.7 11.5-1.6 14-4.6 2.4-9.5-.6-13.4-3-5.3-4.2-2.7-13.8 4-14.7z'%3E%3C/path%3E%3Cpath fill='%23575ab1' d='M56.3 4567.4c7-1.7 15 6.2 12 13.2-1.6 4.6-7.8 6.7-12 4-2.8-1.6-5.7-4-6.2-7.7-.6-4.2 2.2-8.6 6.3-9.6z'%3E%3C/path%3E%3Cpath fill='%235659b0' d='M61.4 4653.5c7-3 14.7 5.6 11.5 12.3-2.3 6-11 7-14.8 2-4.2-4.3-2.7-12.4 3-14.3z'%3E%3C/path%3E%3Cpath fill='%236264a7' d='M64.5 4740.3c5.7-3 13.2 2.2 12.4 8.6-.3 6.3-8.4 10.2-13.6 6.5-5.5-3.4-5-12.7 1-15.2zM67.3 4826.3c6.2-2.4 13 4 11.3 10.3-1 6-9.3 9-14 4.8-5.2-4-3.7-13.4 2.7-15z'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+    content: " ";
+    display: block;
+    overflow: hidden;
+    height: 137.25rem;
+    width: 2.25rem;
+  }
+}
+
+.teams-dark.ui-loader__label {
+  margin: 0.625rem;
+}
+
+/***************************************
+               ItemLayout               
+***************************************/
+
+.teams-dark.ui-item-layout {
+  grid-template-rows: minmax(3rem, max-content);
+  padding-left: 1.25rem;
+  padding-right: 1.125rem;
+}
+
+/***************************************
+                  List                  
+***************************************/
+
+.teams-dark.ui-list {
+  display: block;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/***************************************
+                ListItem                
+***************************************/
+
+.teams-dark.ui-list-item {
+  display: flex;
+  align-items: center;
+  min-height: 3rem;
+  padding: 0 1.125rem 0 1.25rem;
+}
+
+.teams-dark.ui-list-item__media {}
+
+.teams-dark.ui-list-item__header {
+  flex-grow: 1;
+  font-size: 0.875rem;
+  line-height: 1.3333;
+  margin-right: 0.5rem;
+}
+
+.teams-dark.ui-list-item__header-media {
+  align-self: flex-end;
+  font-size: 0.75rem;
+  line-height: 1.3333;
+}
+
+.teams-dark.ui-list-item__content {
+  flex-grow: 1;
+  font-size: 0.75rem;
+  line-height: 1.3333;
+  margin-right: 0.5rem;
+}
+
+.teams-dark.ui-list-item__content-media {
+  font-size: 0.75rem;
+  line-height: 1.3333;
+}
+
+.teams-dark.ui-list-item__end-media {
+  flex-shrink: 0;
+}
+
+.teams-dark.ui-list-item__header-wrapper {
+  display: flex;
+}
+
+.teams-dark.ui-list-item__content-wrapper {
+  display: flex;
+}
+
+.teams-dark.ui-list-item__main {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-width: 0;
+}
+
+/***************************************
+                  Menu                  
+***************************************/
+
+.teams-dark.ui-menu {
+  display: flex;
+  min-height: 1.5rem;
+  margin: 0;
+  padding: 0;
+  color: #C8C6C4;
+  background-color: inherit;
+  list-style-type: none;
+  border: 0.0625rem solid #605E5C;
+  border-radius: 0.25rem;
+}
+
+.teams-dark.ui-menu__divider {}
+
+/***************************************
+                MenuItem                
+***************************************/
+
+.teams-dark.ui-menu-item__wrapper {
+  color: inherit;
+  line-height: 1;
+  position: relative;
+  vertical-align: middle;
+  display: block;
+  box-shadow: -1px 0 0 0 #605E5C inset;
+  :hover {
+    color: #fff;
+    background: #3B3A39;
+  }
+  :first-child {
+    border-bottom-left-radius: 0.1875rem;
+    border-top-left-radius: 0.1875rem;
+  }
+}
+
+.teams-dark.ui-menu-item {
+  color: inherit;
+  display: block;
+  cursor: pointer;
+  white-space: nowrap;
+  padding: 0.875rem 1.125rem;
+  :focus {
+    outline: 0;
+  }
+  :hover {
+    color: inherit;
+  }
+}
+
+.teams-dark.ui-menu-item__content {
+  white-space: normal;
+  line-height: 1.5;
+  margin-top: -0.25rem;
+  margin-bottom: -0.25rem;
+  display: inline-block;
+}
+
+.teams-dark.ui-menu-item__icon {
+  margin-top: 0;
+  margin-bottom: -0.5rem;
+  vertical-align: top;
+}
+
+.teams-dark.ui-menu-item__menu {
+  z-index: 1000;
+}
+
+.teams-dark.ui-menu-item__indicator {
+  position: relative;
+  float: right;
+  left: 0.75rem;
+  user-select: none;
+  margin-right: 0.25rem;
+}
+
+/***************************************
+              MenuDivider              
+***************************************/
+
+.teams-dark.ui-menu-divider {
+  border-left: 1px solid #605E5C;
+  align-self: stretch;
+}
+
+/***************************************
+               MenuButton               
+***************************************/
+
+.teams-dark.ui-menu-button {
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+.teams-dark.ui-menu-button__popup-content {
+  & .ui-popup__content__content {
+    padding: 0px;
+  }
+  border-width: 0px;
+}
+
+/***************************************
+                 Popup                 
+***************************************/
+
+.teams-dark.ui-popup {}
+
+.teams-dark.ui-popup__popup {
+  z-index: 1000;
+  position: absolute;
+  text-align: left;
+  color: #fff;
+  background: #2D2C2C;
+}
+
+/***************************************
+              PopupContent              
+***************************************/
+
+.teams-dark.ui-popup-content {
+  border: 1px solid #11100F;
+  border-radius: 0.1875rem;
+  box-shadow: 0 .8rem 1rem -0.2rem rgba(0, 0, 0, .25);
+  display: block;
+}
+
+.teams-dark.ui-popup-content__pointer {
+  display: block;
+  position: absolute;
+  background-color: inherit;
+  border-bottom: 1px solid #11100F;
+  border-right: 1px solid #11100F;
+  height: 0.625rem;
+  width: 0.625rem;
+}
+
+.teams-dark.ui-popup-content__content {
+  display: block;
+  padding: 0.625rem 0.875rem;
+}
+
+/***************************************
+              ProviderBox              
+***************************************/
+
+.teams-dark.ui-provider-box {
+  background: #2D2C2C;
+  color: #fff;
+  text-align: left;
+  & ::-webkit-scrollbar {
+    height: 1rem;
+    width: 1rem;
+    :disabled {
+      display: none;
+    }
+  }
+  & ::-webkit-scrollbar-thumb {
+    border-radius: 0.5625rem;
+    border: solid 0.25rem transparent;
+    background-clip: content-box;
+    background-color: #605E5C;
+    :hover {
+      background-color: #8A8886;
+      border: solid 0.125rem transparent;
+    }
+  }
+  & ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+}
+
+/***************************************
+             RadioGroupItem             
+***************************************/
+
+.teams-dark.ui-radio-group-item {
+  position: relative;
+  align-items: center;
+  border-style: solid;
+  border-width: 0.0625rem;
+  border-color: transparent;
+  border-radius: 0.125rem;
+  color: #C8C6C4;
+  cursor: pointer;
+  display: inline-flex;
+  font-size: 0.875rem;
+  padding: 0 0.25rem;
+  :hover {
+    color: #fff;
+    & .ui-icon {
+      color: #fff;
+    }
+  }
+  :focus {
+    outline: 0;
+  }
+  :focus-visible {
+    border-color: transparent;
+    :before {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      border-color: #000;
+      border-width: 1px;
+      border-radius: 2px;
+    }
+    :after {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: -1px;
+      right: -1px;
+      bottom: -1px;
+      left: -1px;
+      z-index: 1;
+      border-color: #fff;
+      border-width: 1px;
+      border-radius: 2px;
+    }
+  }
+}
+
+.teams-dark.ui-radio-group-item__icon {
+  box-shadow: none;
+  margin: 0 0.75rem 0 0;
+  & .ui-icon__filled {
+    display: none;
+  }
+  & .ui-icon__outline {
+    display: block;
+  }
+}
+
+/***************************************
+                Segment                
+***************************************/
+
+.teams-dark.ui-segment {
+  border-color: transparent;
+  border-radius: 0;
+  border-style: solid;
+  border-width: 2px 0 0 0;
+  box-shadow: 0 1px 1px 1px rgba(34,36,38,.15);
+  padding: 1em;
+  color: #fff;
+  background-color: #2D2C2C;
+}
+
+/***************************************
+                 Slider                 
+***************************************/
+
+.teams-dark.ui-slider {
+  height: 1rem;
+}
+
+.teams-dark.ui-slider__input {
+  -webkit-appearance: none;
+  cursor: pointer;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  &::-webkit-slider-thumb {
+    border: 0;
+    width: 1px;
+    -webkit-appearance: none;
+  }
+  &::-moz-range-thumb {
+    border: 0;
+    width: 1px;
+  }
+  &::-ms-thumb {
+    border: 0;
+    width: 1px;
+    margin-top: calc(-0.625rem / 2);
+  }
+  &::-ms-fill-lower {
+    display: none;
+  }
+  &::-ms-fill-upper {
+    display: none;
+  }
+  :active {
+    &+ .ui-slider__thumb {
+      height: 0.875rem;
+      width: 0.875rem;
+      background: #C8C6C4;
+      margin-top: calc(1rem / 2  - 0.875rem / 2);
+      margin-left: calc(-0.875rem / 2);
+    }
+  }
+  :focus {
+    outline: 0;
+    &+ .ui-slider__thumb {
+      outline: 0;
+    }
+  }
+  :focus-visible {
+    &+ .ui-slider__thumb {
+      border-color: transparent;
+      :before {
+        content: "";
+        position: absolute;
+        border-style: solid;
+        pointer-events: none;
+        top: -0.25rem;
+        right: -0.25rem;
+        bottom: -0.25rem;
+        left: -0.25rem;
+        z-index: 1;
+        border-color: #000;
+        border-width: 1px;
+        border-radius: 2px;
+      }
+      :after {
+        content: "";
+        position: absolute;
+        border-style: solid;
+        pointer-events: none;
+        top: calc(0px - 0.25rem - 1px);
+        right: calc(0px - 0.25rem - 1px);
+        bottom: calc(0px - 0.25rem - 1px);
+        left: calc(0px - 0.25rem - 1px);
+        z-index: 1;
+        border-color: #fff;
+        border-width: 1px;
+        border-radius: 2px;
+      }
+      height: 0.875rem;
+      width: 0.875rem;
+      background: #C8C6C4;
+      margin-top: calc(1rem / 2  - 0.875rem / 2);
+      margin-left: calc(-0.875rem / 2);
+    }
+  }
+}
+
+.teams-dark.ui-slider__input-wrapper {
+  position: relative;
+  display: inline-block;
+  height: 1rem;
+  width: 20rem;
+}
+
+.teams-dark.ui-slider__rail {
+  width: 100%;
+  background: #605E5C;
+  cursor: pointer;
+  pointer-events: none;
+  position: absolute;
+  border: 0;
+  height: 0.125rem;
+  margin-top: calc(1rem / 2 - 0.125rem / 2);
+}
+
+.teams-dark.ui-slider__track {
+  background: #A6A7DC;
+  cursor: pointer;
+  pointer-events: none;
+  position: absolute;
+  border: 0;
+  height: 0.125rem;
+  margin-top: calc(1rem / 2 - 0.125rem / 2);
+}
+
+.teams-dark.ui-slider__thumb {
+  border: 0;
+  border-radius: 100%;
+  cursor: pointer;
+  pointer-events: none;
+  position: absolute;
+  background: #B3B0AD;
+  height: 0.625rem;
+  width: 0.625rem;
+  margin-top: calc(1rem / 2  - 0.625rem / 2);
+  margin-left: calc(-0.625rem / 2);
+}
+
+/***************************************
+                Reaction                
+***************************************/
+
+.teams-dark.ui-reaction {
+  cursor: pointer;
+  background: transparent;
+  border: 0rem;
+  padding: 0rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  color: #B3B0AD;
+  :hover {
+    color: #fff;
+    & .ui-reaction__content {
+      font-weight: 700;
+    }
+  }
+  position: relative;
+  :focus {
+    outline: none;
+  }
+  :focus-visible {
+    :after {
+      content: "";
+      position: absolute;
+      top: -0.125rem;
+      right: -0.125rem;
+      bottom: -0.125rem;
+      left: -0.125rem;
+      border-width: 1px;
+      border-style: solid;
+      border-color: #252423;
+      border-radius: 0.125rem;
+      box-shadow: 0px 0px 0px 1px #fff inset;
+    }
+  }
+}
+
+.teams-dark.ui-reaction__icon {
+  margin-right: 0rem;
+}
+
+.teams-dark.ui-reaction__content {
+  font-size: 0.75rem;
+}
+
+/***************************************
+             ReactionGroup             
+***************************************/
+
+.teams-dark.ui-reaction-group {}
+
+.teams-dark.ui-reaction-group__reaction {
+  :not(:last-child) {
+    margin-right: 0.5rem;
+  }
+}
+
+/***************************************
+                 Status                 
+***************************************/
+
+.teams-dark.ui-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 0.625rem;
+  width: 0.625rem;
+  vertical-align: middle;
+  border-radius: 9999px;
+  background-color: #979593;
+}
+
+.teams-dark.ui-status__icon {
+  color: #fff;
+}
+
+/***************************************
+              SplitButton              
+***************************************/
+
+.teams-dark.ui-split-button__button {
+  border: 0;
+  padding: 0 1rem;
+  :focus-visible {
+    &::before {
+      border: 0;
+    }
+    &::after {
+      border: 0;
+    }
+  }
+}
+
+.teams-dark.ui-split-button {
+  border: 1px solid #E1DFDD;
+  border-radius: 2px;
+  position: relative;
+  display: inline-block;
+  ui-splitbutton-toggle-button {
+    border-right: 0;
+    border-top: 0;
+    border-bottom: 0;
+  }
+  :focus-within {
+    box-shadow: none;
+  }
+}
+
+/***************************************
+                  Text                  
+***************************************/
+
+.teams-dark.ui-text {}
+
+/***************************************
+                TextArea                
+***************************************/
+
+.teams-dark.ui-text-area {
+  margin: 0;
+  height: auto;
+  background-color: #201F1F;
+  color: #fff;
+  border-color: transparent;
+  border-radius: 0.1875rem 0.1875rem 0.125rem 0.125rem;
+  border-style: solid;
+  border-width: 0 0 0.125rem 0;
+  outline: 0;
+  padding: 0.4375rem 0.75rem;
+  resize: none;
+  &::placeholder {
+    color: #C8C6C4;
+    opacity: 1;
+  }
+  :focus {
+    border-color: transparent transparent #A6A7DC transparent;
+  }
+}
+
+/***************************************
+                Toolbar                
+***************************************/
+
+.teams-dark.ui-toolbar {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.teams-dark.ui-toolbar__offset-measure {
+  position: absolute;
+  visibility: hidden;
+  left: 0;
+  top: 0;
+}
+
+.teams-dark.ui-toolbar__overflow-container {
+  display: flex;
+  overflow: hidden;
+  flex-grow: 1;
+}
+
+/***************************************
+           ToolbarRadioGroup           
+***************************************/
+
+.teams-dark.ui-toolbar-radio-group {
+  white-space: nowrap;
+}
+
+/***************************************
+           ToolbarCustomItem           
+***************************************/
+
+.teams-dark.ui-toolbar-custom-item {
+  position: relative;
+  background-color: transparent;
+  border-color: transparent;
+  border-width: 1px;
+  border-style: solid;
+  height: 2rem;
+  color: #C8C6C4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  :focus {
+    outline: 0;
+  }
+  :focus-visible {
+    border-color: transparent;
+    :before {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      border-color: #000;
+      border-width: 1px;
+      border-radius: 2px;
+    }
+    :after {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: -1px;
+      right: -1px;
+      bottom: -1px;
+      left: -1px;
+      z-index: 1;
+      border-color: #fff;
+      border-width: 1px;
+      border-radius: 2px;
+    }
+  }
+}
+
+/***************************************
+             ToolbarDivider             
+***************************************/
+
+.teams-dark.ui-toolbar-divider {
+  border-left: 1px solid #605E5C;
+  margin: 0.625rem 0.25rem;
+  align-self: stretch;
+}
+
+/***************************************
+              ToolbarItem              
+***************************************/
+
+.teams-dark.ui-toolbar-item {
+  position: relative;
+  background-color: transparent;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  border-radius: 50%;
+  height: 2rem;
+  min-width: 2rem;
+  padding: 0;
+  color: #C8C6C4;
+  cursor: pointer;
+  :focus {
+    outline: 0;
+  }
+  :hover {
+    color: #A6A7DC;
+    background-color: transparent;
+    & .ui-icon__filled {
+      display: block;
+    }
+    & .ui-icon__outline {
+      display: none;
+    }
+  }
+  :focus-visible {
+    border-color: transparent;
+    :before {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      border-color: #000;
+      border-width: 1px;
+      border-radius: 2px;
+    }
+    :after {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: -1px;
+      right: -1px;
+      bottom: -1px;
+      left: -1px;
+      z-index: 1;
+      border-color: #fff;
+      border-width: 1px;
+      border-radius: 2px;
+    }
+  }
+}
+
+/***************************************
+              ToolbarMenu              
+***************************************/
+
+.teams-dark.ui-toolbar-menu {
+  display: flex;
+  z-index: 1000;
+  flex-direction: column;
+  list-style-type: none;
+  margin: 0;
+  padding: 0.5rem 0;
+  background-color: #2D2C2C;
+  box-shadow: 0 .8rem 1rem -0.2rem rgba(0, 0, 0, .25);
+  border-style: solid;
+  border-color: #605E5C;
+  border-width: 1px;
+  border-radius: 0.25rem;
+  width: 12.5rem;
+}
+
+/***************************************
+           ToolbarMenuDivider           
+***************************************/
+
+.teams-dark.ui-toolbar-menu-divider {
+  border-top: 1px solid #605E5C;
+  margin: 0.5rem 0;
+  align-self: stretch;
+}
+
+/***************************************
+            ToolbarMenuItem            
+***************************************/
+
+.teams-dark.ui-toolbar-menu-item {
+  position: relative;
+  color: #C8C6C4;
+  border-width: 1px;
+  background-color: transparent;
+  border-color: transparent;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  padding: 0.5625rem 1rem;
+  cursor: pointer;
+  :focus {
+    outline: 0;
+  }
+  :hover {
+    color: #fff;
+    background-color: #3B3A39;
+  }
+  :focus-visible {
+    border-color: transparent;
+    :before {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      border-color: #000;
+      border-width: 1px;
+      border-radius: 0;
+    }
+    :after {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: -1px;
+      right: -1px;
+      bottom: -1px;
+      left: -1px;
+      z-index: 1;
+      border-color: #fff;
+      border-width: 1px;
+      border-radius: 0;
+    }
+  }
+}
+
+.teams-dark.ui-toolbar-menu-item__active-indicator {
+  position: absolute;
+  right: 0.4375rem;
+  top: 0.4375rem;
+}
+
+.teams-dark.ui-toolbar-menu-item__submenu-indicator {
+  position: absolute;
+  right: 0.4375rem;
+  top: 0.4375rem;
+}
+
+.teams-dark.ui-toolbar-menu-item__wrapper {
+  display: block;
+}
+
+/***************************************
+         ToolbarMenuRadioGroup         
+***************************************/
+
+.teams-dark.ui-toolbar-menu-radio-group {
+  padding: 0;
+}
+
+/***************************************
+                  Tree                  
+***************************************/
+
+.teams-dark.ui-tree {
+  display: block;
+  padding-left: 0.625rem;
+}
+
+/***************************************
+                TreeItem                
+***************************************/
+
+.teams-dark.ui-tree-item {
+  list-style-type: none;
+  padding: 0 0 0 NaNrem;
+  outline: 0;
+  :focus-visible {
+    outline: 0;
+    > .ui-tree__title {
+      position: relative;
+      border-color: transparent;
+      :before {
+        content: "";
+        position: absolute;
+        border-style: solid;
+        pointer-events: none;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+        border-color: #000;
+        border-width: 1px;
+        border-radius: 2px;
+      }
+      :after {
+        content: "";
+        position: absolute;
+        border-style: solid;
+        pointer-events: none;
+        top: -1px;
+        right: -1px;
+        bottom: -1px;
+        left: -1px;
+        z-index: 1;
+        border-color: #fff;
+        border-width: 1px;
+        border-radius: 2px;
+      }
+    }
+  }
+}
+
+/***************************************
+               TreeTitle               
+***************************************/
+
+.teams-dark.ui-tree-title {
+  padding: 0.0625rem 0;
+  cursor: pointer;
+  color: #fff;
+  position: relative;
+  :focus {
+    outline: 0;
+  }
+  :focus-visible {
+    border-color: transparent;
+    :before {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      border-color: #000;
+      border-width: 1px;
+      border-radius: 2px;
+    }
+    :after {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: -1px;
+      right: -1px;
+      bottom: -1px;
+      left: -1px;
+      z-index: 1;
+      border-color: #fff;
+      border-width: 1px;
+      border-radius: 2px;
+    }
+  }
+}
+
+/***************************************
+               Animation               
+***************************************/
+
+.teams-dark.ui-animation {
+  display: inline-block;
+}
+
+.teams-dark.ui-animation__children {}
+
+/***************************************
+                 Video                 
+***************************************/
+
+.teams-dark.ui-video {
+  display: inline-block;
+  vertical-align: middle;
+  height: auto;
+}
+
+/***************************************
+                Tooltip                
+***************************************/
+
+.teams-dark.ui-tooltip {}
+
+.teams-dark.ui-tooltip__content {
+  opacity: 0;
+  z-index: 1000;
+  position: absolute;
+  text-align: left;
+}
+
+/***************************************
+             TooltipContent             
+***************************************/
+
+.teams-dark.ui-tooltip-content {
+  border-radius: 0.1875rem;
+  display: block;
+  max-width: 15.375rem;
+  color: #fff;
+  background: #484644;
+}
+
+.teams-dark.ui-tooltip-content__pointer {
+  display: block;
+  position: absolute;
+  overflow: hidden;
+  width: 0.375rem;
+  height: 1rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23484644' viewBox='0 0 6 16'%3E%3Cpath d='M.708 9.527a2.002 2.002 0 0 1 0-3.055l3.284-2.78C5.324 2.562 5.991 1.332 5.991 0c0 1.002.02 15.013 0 16 0-1.333-.665-2.562-1.995-3.689L.708 9.527z' fill-rule='evenodd' clip-rule='evenodd'/%3E%3C/svg%3E%0A");;
+}
+
+.teams-dark.ui-tooltip-content__content {
+  display: block;
+  padding: 0.3125rem 0.75rem 0.4375rem 0.75rem;
+  border-radius: inherit;
+  box-shadow: 0 .4rem 0.7rem -0.1rem rgba(0, 0, 0, .25);
+}
+
+/***************************************
+                Carousel                
+***************************************/
+
+.teams-dark.ui-carousel {
+  display: inline-block;
+}
+
+.teams-dark.ui-carousel__items-container-wrapper {
+  display: flex;
+  width: 18.75rem;
+  overflow-x: hidden;
+}
+
+.teams-dark.ui-carousel__items-container {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  list-style: none;
+  transform: translateX(NaNrem);
+  transition-duration: .4s;
+  will-change: transform;
+}
+
+.teams-dark.ui-carousel__paddle-next {
+  height: 2rem;
+  top: -10.375rem;
+  left: 14.75rem;
+}
+
+.teams-dark.ui-carousel__paddle-previous {
+  height: 2rem;
+  top: -10.375rem;
+}
+
+/***************************************
+              CarouselItem              
+***************************************/
+
+.teams-dark.ui-carousel-item {
+  width: 18.75rem;
+}
+
+/***************************************
+           CarouselNavigation           
+***************************************/
+
+.teams-dark.ui-carousel-navigation {
+  display: flex;
+  min-height: 1.5rem;
+  margin: 0;
+  padding: 0;
+  color: #484644;
+  background-color: inherit;
+  list-style-type: none;
+  justify-content: center;
+  border: 0.0625rem solid #605E5C;
+  border-radius: 0.25rem;
+}
+
+/***************************************
+         CarouselNavigationItem         
+***************************************/
+
+.teams-dark.ui-carousel-navigation-item {
+  color: inherit;
+  display: block;
+  cursor: pointer;
+  white-space: nowrap;
+  padding: 0.875rem 1.125rem;
+  :focus {
+    outline: 0;
+  }
+  :hover {
+    color: inherit;
+  }
+}
+
+.teams-dark.ui-carousel-navigation-item__content {
+  white-space: normal;
+  line-height: 1.5;
+  margin-top: -0.25rem;
+  margin-bottom: -0.25rem;
+  display: inline-block;
+}
+
+.teams-dark.ui-carousel-navigation-item__icon {
+  margin-top: 0;
+  margin-bottom: -0.5rem;
+  vertical-align: top;
+}
+
+/***************************************
+                 Table                 
+***************************************/
+
+.teams-dark.ui-table {
+  display: flex;
+  flex-direction: column;
+  background: #2D2C2C;
+}
+
+/***************************************
+                TableRow                
+***************************************/
+
+.teams-dark.ui-table-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  font-size: 0.8125rem;
+  height: 3rem;
+  color: #fff;
+  background-color: #2D2C2C;
+  border-width: 0.0625rem;
+  border-style: solid;
+  border-color: transparent;
+  border-bottom-color: #3B3A39;
+  padding: 0;
+  width: 100%;
+  :hover {
+    color: #fff;
+    background-color: #3B3A39;
+    border-color: #3B3A39;
+  }
+  :focus {
+    outline: 0;
+  }
+  :focus-visible {
+    border-color: transparent;
+    :before {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      border-color: #000;
+      border-width: 1px;
+      border-radius: 2px;
+    }
+    :after {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: -1px;
+      right: -1px;
+      bottom: -1px;
+      left: -1px;
+      z-index: 1;
+      border-color: #fff;
+      border-width: 1px;
+      border-radius: 2px;
+    }
+  }
+}
+
+/***************************************
+               TableCell               
+***************************************/
+
+.teams-dark.ui-table-cell {
+  display: flex;
+  flex-flow: row nowrap;
+  flex-grow: 1;
+  flex-basis: 0;
+  min-width: 0;
+  outline: 0;
+  border-width: 0.0625rem;
+  border-style: solid;
+  border-color: transparent;
+  :focus {
+    outline: 0;
+  }
+  :focus-visible {
+    border-color: transparent;
+    :before {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      border-color: #000;
+      border-width: 1px;
+      border-radius: 2px;
+    }
+    :after {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      pointer-events: none;
+      top: -1px;
+      right: -1px;
+      bottom: -1px;
+      left: -1px;
+      z-index: 1;
+      border-color: #fff;
+      border-width: 1px;
+      border-radius: 2px;
+    }
+  }
+  padding: 0 0.5rem;
+  height: 100%;
+}
+
+.teams-dark.ui-table-cell__content {
+  align-self: center;
+}
