@@ -76,7 +76,11 @@ const makeSelector = (name, slot, props) => {
 const jsStyleToCSSObject = (styleObject = {}) => {
   return Object.keys(styleObject).reduce((acc, key) => {
     const value = styleObject[key]
-    const cssKey = /[A-Z]/.test(key) ? _.kebabCase(key) : key
+    let cssKey = /[A-Z]/.test(key) ? _.kebabCase(key) : key
+
+    if (cssKey.startsWith('::')) {
+      cssKey = `&` + cssKey
+    }
 
     acc[cssKey] = _.isPlainObject(value) ? jsStyleToCSSObject(value) : value
 
@@ -140,16 +144,19 @@ const jsStyleToCSSObject = (styleObject = {}) => {
 // ============================================================
 
 const cssObjectToString = (cssObject = {}) => {
+  console.log(cssObject)
   return (
     JSON.stringify(cssObject, null, 2)
+      // remove escaping backslashes
+      .replace(/\\/gm, '')
+      // remove commas
+      .replace(/,$/gm, '')
       // remove double quotes
       .replace(/"/gm, '')
       // quote content properties
-      .replace(/ content: (.*),/gm, ' content: "$1",')
+      .replace(/ content: (.*)/gm, ' content: "$1"')
       // remove colon before curly braces
       .replace(/: \{/gm, ' {')
-      // remove commas
-      .replace(/,$/gm, '')
       // add semis
       .replace(/([^{}])$/gm, '$1;')
       // remove empty rules
@@ -285,8 +292,9 @@ Object.keys({
   const componentStyle = {}
 
   anatomy.forEach(slot => {
+    console.log('  ', slot)
     props.forEach(propObj => {
-      console.log('  - ', slot)
+      console.log('      ', propObj)
       const slotSelector = makeSelector(name, slot, propObj)
       const slotStyleArg = makeStyleArg(name, propObj, theme)
       const slotStyle = theme.componentStyles[name][slot](slotStyleArg)
@@ -347,6 +355,8 @@ TODO
  - [ ] render static styles as globals at top of file (normalize, statics font/animations, etc)
 
 # 1. defaultProps & getInitialAutoControlledState
+CONCLUSION: Make styles depend on React components to get initial values.  Not idea, but can be abstracted/fixed later.
+
 Many styles are dependant on initial prop/state values.  Some styles break (statusStyles, alertStyles, etc)
 when the initial values are not present.
 
@@ -357,6 +367,8 @@ calling the style functions, the correct "base" style is produced for the compon
 If we leave defaultProps in each component, then styles have a hard dependency on components.
 
 # 2. Prop Permutations
+CONCLUSION: Fact of life, this has to exist somewhere and be maintained in parity with any other style fns.
+
 In order to generate styles for each type, state, and variation we need to have props objects
 that describe each of these.  In order to invoke a style object code path, we need to pass the
 correct props to the style function.
@@ -374,21 +386,27 @@ won't be able to reliably produce styles.
 # 4. RadioGroupItem (RESOLVED)
 
 # 5. dropdownSearchInputStyles
+CONCLUSION: solve at the component API philosophy level, not the theme algorithm.
 https://github.com/stardust-ui/react/issues/753
 
 This style file has no root key.
 
 # 6. inputStyles
+CONCLUSION: solve at the component API philosophy level, not the theme algorithm.
 
 The `root` key is applied to the `wrapper` slot in the render function.
 
 # 7. attachmentStyles
+CONCLUSION: This is an anti-pattern.  Runtime values should not be passed directly to style values: "width: `${p.progress}%`".
+Rapidly changing properties with many values (like progress width) should be applied inline for performance reasons.
 
 Does not gracefully handle undefined props.progress in the "progress" slot styles for width.
 
 # 8. Missing variables for menuDividerStyles and menuItemStyles
 
 There are variables for the Menu itself, but not for the divider or item subcomponents.
+
+CONCLUSION: If there is a style function, there must be a variables fn.
 
 9. Slots vs Components
 There is no way to tell if top level component name keys in the componentStyles are "ui components" vs "component slots".

@@ -25,9 +25,9 @@
     *:after {
       box-sizing: border-box;
     }
-
+  
 /***************************************
-                  Icon
+                  Icon                  
 ***************************************/
 
 .ui-icon {
@@ -42,8 +42,8 @@
   line-height: 1;
   width: 1rem;
   height: 1rem;
-  ::before {
-    content: ?;
+  &::before {
+    content: "?";
   }
   transform: rotate(0deg);
 }
@@ -77,7 +77,7 @@
 .ui-icon__secondary-path {}
 
 /***************************************
-                Divider
+                Divider                
 ***************************************/
 
 .ui-divider {
@@ -86,8 +86,8 @@
   align-items: center;
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
-  ::before {
-    content: "\\";
+  &::before {
+    content: "";
     flex: 1;
     height: 1px;
     background: #EDEBE9;
@@ -95,7 +95,7 @@
 }
 
 /***************************************
-                  Menu
+                  Menu                  
 ***************************************/
 
 .ui-menu {
@@ -129,7 +129,7 @@
 .ui-menu__divider.vertical {}
 
 /***************************************
-                MenuItem
+                MenuItem                
 ***************************************/
 
 .ui-menu-item__wrapper {
@@ -161,7 +161,7 @@
     background: #F3F2F1;
   }
   :first-child {
-    ::before {
+    &::before {
       display: none;
     }
   }
@@ -252,7 +252,7 @@
 }
 
 /***************************************
-              MenuDivider
+              MenuDivider              
 ***************************************/
 
 .ui-menu-divider {
