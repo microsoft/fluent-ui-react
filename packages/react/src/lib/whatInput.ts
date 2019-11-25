@@ -96,7 +96,7 @@ const addListeners = (eventTarget: Window) => {
   if (eventTarget.PointerEvent) {
     eventTarget.addEventListener('pointerdown', setInput)
     // @ts-ignore
-  } else if (window.MSPointerEvent) {
+  } else if (eventTarget.MSPointerEvent) {
     eventTarget.addEventListener('MSPointerDown', setInput)
   } else {
     // mouse events
@@ -256,7 +256,6 @@ export const tryCleanupWhatInput = (target: Document) => {
   if (isBrowser() && targetWindow && 'removeEventListener' in targetWindow) {
     if (target[whatInputInitialized] === 1) {
       delete target[whatInputInitialized]
-      console.log('clean--')
       cleanupWhatInput(targetWindow)
     } else {
       target[whatInputInitialized] = target[whatInputInitialized] - 1
