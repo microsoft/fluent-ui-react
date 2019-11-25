@@ -256,8 +256,9 @@ describe('Provider', () => {
         </Provider>,
       )
 
+      // mousedown + touchstart + touchend + keyup + keydown
       expect(addEventListener).toHaveBeenCalledTimes(5)
-      expect(setAttribute).toHaveBeenCalledTimes(1)
+      expect(setAttribute).toHaveBeenCalledWith('data-whatinput', expect.any(String))
     })
 
     test('performs whatinput cleanup on last Provider unmount', () => {
@@ -283,6 +284,7 @@ describe('Provider', () => {
       )
       wrapper.unmount()
 
+      // mousedown + touchstart + touchend + keyup + keydown
       expect(removeEventListener).toHaveBeenCalledTimes(5)
     })
   })
