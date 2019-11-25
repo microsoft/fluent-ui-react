@@ -1,5 +1,7 @@
 import { ICSSInJSStyle } from '../../../types'
+import getBorderFocusStyles from '../../getBorderFocusStyles'
 import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
+import SplitButton from '../../../../components/SplitButton/SplitButton'
 
 const splitButtonStyles = {
   menuButton: ({ props: p, variables: v }): ICSSInJSStyle => ({
@@ -48,6 +50,26 @@ const splitButtonStyles = {
       animationDuration: 'unset',
     },
   }),
+
+  root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
+    const borderFocusStyles = getBorderFocusStyles({
+      siteVariables,
+    })
+
+    return {
+      position: 'relative',
+      display: 'inline-block',
+      ...borderFocusStyles,
+
+      ':focus-within': {
+        boxShadow: 'none',
+
+        [`& .${SplitButton.slotClassNames.toggleButton}`]: {
+          borderColor: 'transparent',
+        },
+      },
+    }
+  },
 }
 
 export default splitButtonStyles
