@@ -16,6 +16,7 @@ import {
 import Box, { BoxProps } from '../Box/Box'
 import { WithAsProp, ShorthandValue } from '../../types'
 import { Accessibility, tableCellBehavior } from '@stardust-ui/accessibility'
+import TableCell from './TableCell'
 
 export interface TableHeaderCellProps
   extends UIComponentProps,
@@ -31,6 +32,21 @@ export interface TableHeaderCellProps
    * Truncate cell's content
    */
   truncateContent?: boolean
+
+  /**
+   * Minimum width the column can reach before hiding itself
+   */
+  minWidth?: number
+
+  /**
+   * The priority which determines the order in which non-fitting columns hide
+   */
+  priority?: number
+
+  /**
+   * A value which determines how the table size is distributed among its columns
+   */
+  flex?: number
 }
 
 export interface TableHeaderCellSlotClassNames {
@@ -42,12 +58,12 @@ export interface TableHeaderCellSlotClassNames {
  *
  */
 class TableHeaderCell extends UIComponent<WithAsProp<any>, any> {
-  static displayName = 'TableHeaderCell'
+  static displayName = 'TableCell'
 
   static className = 'ui-table__cell'
 
   static slotClassNames: TableHeaderCellSlotClassNames = {
-    content: `${TableHeaderCell.className}__content`,
+    content: `${TableCell.className}__content`,
   }
 
   static create: ShorthandFactory<TableHeaderCellProps>

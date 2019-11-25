@@ -6,6 +6,11 @@ import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 const Usage = () => (
   <ExampleSection title="Usage">
     <ComponentExample
+      title="Responsive"
+      description="Responsive table with no interactive content"
+      examplePath="components/Table/Usage/TableExampleResponsive"
+    />
+    <ComponentExample
       title="Static"
       description="Static table with no interactive content"
       examplePath="components/Table/Usage/TableExampleStatic"

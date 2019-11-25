@@ -76,7 +76,11 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
     return _.map(items, (item: TableCellProps, index: number) => {
       const cellProps = {}
       const overrideProps = handleVariablesOverrides(variables)
-      return TableCell.create(item, { defaultProps: () => cellProps, overrideProps })
+      return (
+        <React.Fragment key={index}>
+          {TableCell.create(item, { defaultProps: () => cellProps, overrideProps })}
+        </React.Fragment>
+      )
     })
   }
 
