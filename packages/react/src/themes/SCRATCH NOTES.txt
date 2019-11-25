@@ -1,0 +1,147 @@
+NEXT:
+- add combination of Menu states (e.g. active) to html/css for stress test
+
+------------------------------------------------------------------
+
+REQUIREMENTS (CSS IN JS)
+- cache in provider
+- write styles on component mount | provider mount | build
+- ?allow inline variable overrides
+- allow inline style overrides (OK, BUT CANNOT & WILL NOT CACHE)
+    - process for RTL, vendor prefix, etc.
+
+REQUIREMENTS (HTML/CSS)
+- allow inline variable overrides (COULD, W/CSS VARIABLES)
+- allow inline style overrides (TRADITIONAL STYLE ATTR/TAG)
+
+--------------------------------------------------------------
+
+from comp  from style fn
+        \    /
+         \  /
+          \/
+          DOM
+           ^
+           |
+   Get stylesheet from here?
+   
+-------------------------------------------
+   
+style fn => style obj
+
+<>
+
+sheet: prop/selector combos, and their order
+
+<>
+
+classNames
+
+----------------------------------------
+style = (theme, props) => {}
+
+style = (theme) => {
+  // encode props info
+}
+
+// what prop combos exist?
+// what order/specificity do they have?
+
+----------------------------------------
+
+HOW DO WE MAKE DECISIONS AND FIND OUR PATH?
+- Do the maximum amount of work for the consumer, caveats:
+    - minimal maintenance
+    - top perf
+    - do not tie anyone's hands (framework lock in)
+
+- Maximize portability and compatibility
+    - stick to CSS spec
+    - no proprietary algo.
+
+------------------------------------------------------------------
+
+styleSheet = [
+  [{ }, styles(p)],                        // .ui-button
+  [{ primary: true }, styles(p)],          // .ui-button--primary
+]
+
+btn
+btn.text
+
+btn.primary
+btn.text.primary
+
+btn.!primary
+btn.text.!primary
+
+
+Monolithic
+  PROS:
+     - Readability
+  CONS:
+    - Must write styles in specific order
+    - Specificity hell
+    - Requires proprietary patterns to solve all specificity problems
+      - order of styles written
+      - format and specificity of selectors
+      - special handling of user override styles
+    - Cannot load partial styles for a component, must load all or none
+
+Atmoic
+  PROS:
+    - Can write styles in any order (allows lazy injection)
+  CONS:
+    - Not readable
+    - expanded property hell
+
+
+------------------------------------------
+x = p, v => ({
+  ...(p.primary && p.active && {
+    color: v.PRIMARY
+  }),
+  ...(p.disabled && {
+    color: v.DISABLED
+  }),
+})
+
+btn.primary.active {
+  color: v.PRIMARY
+}
+
+btn.disabled {
+  color: v.DISABLED
+}
+--------------------------------------------
+
+button.primary.active
+
+button.disabled
+
+primary active disabled
+
+TS prop -> JS prop obj -> JS styles
+- typings
+- dev ux
+- dead code (no infinitely growing stylesheets)
+
+.btn_asdcv8wq7e45
+.btn_sdcv923h2t56
+
+hard code framework
+- features/requirements/tech change
+- styles: CSS/SCSS/JS/RN/????/Vue/WC
+  - encode props as selectors
+  - OR keep a "sheet" of prop objects -> css stylesheet
+
+styleSheet = `
+  ${writeStyles({ primary: true })}
+`
+
+re-hard code framework
+   - features/requirements/tech change
+re-hard code framework
+   - features/requirements/tech change
+re-hard code framework
+   - features/requirements/tech change
