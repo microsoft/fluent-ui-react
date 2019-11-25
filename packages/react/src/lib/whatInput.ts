@@ -214,8 +214,9 @@ export const setUpWhatInput = (target: Document) => {
     'addEventListener' in targetWindow &&
     Array.prototype.indexOf
   ) {
-    if (target[whatInputInitialized]) {
-      target[whatInputInitialized] = target[whatInputInitialized] + 1
+    const initializedTimes = target[whatInputInitialized]
+    if (typeof initializedTimes === 'number' && initializedTimes > 0) {
+      target[whatInputInitialized] = initializedTimes + 1
       return
     }
     target[whatInputInitialized] = 1
