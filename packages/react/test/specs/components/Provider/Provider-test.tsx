@@ -232,4 +232,58 @@ describe('Provider', () => {
 
     expect(renderStatic).toHaveBeenCalled()
   })
+
+  describe('target', () => {
+    test('performs whatinput init on first Provider mount', () => {
+      const addEventListener = jest.fn()
+      const setAttribute = jest.fn()
+      const externalDocument: any = {
+        defaultView: {
+          addEventListener,
+          removeEventListener: jest.fn(),
+          ontouchstart: jest.fn(),
+        },
+        documentElement: {
+          setAttribute,
+        },
+      }
+
+      mount(
+        <Provider id="first-provider" target={externalDocument}>
+          <Provider id="second-provider" target={externalDocument}>
+            <div />
+          </Provider>
+        </Provider>,
+      )
+
+      expect(addEventListener).toHaveBeenCalledTimes(5)
+      expect(setAttribute).toHaveBeenCalledTimes(1)
+    })
+
+    test('performs whatinput cleanup on last Provider unmount', () => {
+      const removeEventListener = jest.fn()
+      const setAttribute = jest.fn()
+      const externalDocument: any = {
+        defaultView: {
+          addEventListener: jest.fn(),
+          removeEventListener,
+          ontouchstart: jest.fn(),
+        },
+        documentElement: {
+          setAttribute,
+        },
+      }
+
+      const wrapper = mount(
+        <Provider id="first-provider" target={externalDocument}>
+          <Provider id="second-provider" target={externalDocument}>
+            <div />
+          </Provider>
+        </Provider>,
+      )
+      wrapper.unmount()
+
+      expect(removeEventListener).toHaveBeenCalledTimes(5)
+    })
+  })
 })
