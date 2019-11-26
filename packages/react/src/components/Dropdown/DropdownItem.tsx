@@ -29,9 +29,6 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
   /** A dropdown item can be active. */
   active?: boolean
 
-  /** Item's accessibility props. */
-  accessibilityItemProps?: any
-
   /** Item's content. */
   content?: ShorthandValue<BoxProps>
 
@@ -42,7 +39,7 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
   checkableIndicator?: ShorthandValue<IconProps>
 
   /** Getter prop callback from Downshift. */
-  getItemProps: (options: GetItemPropsOptions<ShorthandValue<DropdownItemProps>>) => any
+  getItemProps?: (options: GetItemPropsOptions<ShorthandValue<DropdownItemProps>>) => any
 
   /** Item's header. */
   header?: ShorthandValue<BoxProps>
@@ -51,10 +48,10 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
   image?: ShorthandValue<ImageProps>
 
   /** Index of item in the list. */
-  index: number
+  index?: number
 
   /** Item's shorthand that will be passed to getItemProps for referencing. */
-  item: ShorthandValue<DropdownItemProps>
+  item?: ShorthandValue<DropdownItemProps>
 
   /** Indicated whether the item has been set active by keyboard. */
   isFromKeyboard?: boolean
@@ -113,7 +110,6 @@ class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
       content,
       header,
       image,
-      accessibilityItemProps,
       selected,
       checkable,
       checkableIndicator,
@@ -164,7 +160,6 @@ class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
           index,
           onClick: this.handleItemClick,
         })}
-        {...accessibilityItemProps}
         {...unhandledProps}
       />
     )
