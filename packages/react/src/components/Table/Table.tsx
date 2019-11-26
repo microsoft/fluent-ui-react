@@ -49,6 +49,8 @@ const handleVariablesOverrides = variables => predefinedProps => ({
 
 /**
  * A Table is used to display data in tabular layout
+ * @accessibilityIssues
+ * [NVDA narrate table title(aria-label) twice](https://github.com/nvaccess/nvda/issues/10548)
  */
 class Table extends UIComponent<WithAsProp<TableProps>> {
   static displayName = 'Table'
