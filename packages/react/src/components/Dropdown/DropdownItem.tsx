@@ -88,6 +88,10 @@ class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
     selected: PropTypes.bool,
   }
 
+  shouldComponentUpdate(nextProps: DropdownItemProps) {
+    return !_.isEqual(this.props, nextProps)
+  }
+
   handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
@@ -101,7 +105,10 @@ class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
       selected,
       checkable,
       checkableIndicator,
-    } = this.props
+      getItemProps,
+      item,
+      index,
+    } = this.props as any
     return (
       <ListItem
         className={DropdownItem.className}
@@ -140,10 +147,21 @@ class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
         }
         truncateContent
         truncateHeader
+        {...getItemProps({
+          item,
+          index,
+          onClick: this.handleItemClick,
+        })}
         {...accessibilityItemProps}
         {...unhandledProps}
       />
     )
+  }
+
+  handleItemClick = e => {
+    e.stopPropagation()
+    e.nativeEvent.stopImmediatePropagation()
+    _.invoke(this.props, 'onClick', e, this.props)
   }
 }
 
