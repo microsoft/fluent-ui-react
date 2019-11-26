@@ -1,5 +1,5 @@
-import { useBooleanKnob } from '@stardust-ui/docs-components'
-import { Dropdown } from '@stardust-ui/react'
+import { useBooleanKnob } from '@fluentui/docs-components'
+import { Dropdown } from '@fluentui/react'
 import * as React from 'react'
 
 const inputItems = ['Bruce Wayne', 'Natasha Romanoff', 'Steven Strange', 'Alfred Pennyworth']

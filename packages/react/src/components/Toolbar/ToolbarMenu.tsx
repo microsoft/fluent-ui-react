@@ -1,8 +1,8 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
-import { toolbarMenuBehavior, toolbarMenuItemCheckboxBehavior } from '@stardust-ui/accessibility'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { toolbarMenuBehavior, toolbarMenuItemCheckboxBehavior } from '@fluentui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
 
 import {
   createShorthandFactory,
@@ -41,8 +41,8 @@ export interface ToolbarMenuProps
   /**
    * Called on item click.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All item props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All item props.
    */
   onItemClick?: ComponentEventHandler<ToolbarMenuItemProps>
 

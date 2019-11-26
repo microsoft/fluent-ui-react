@@ -1,4 +1,4 @@
-import { Attachment } from '@stardust-ui/react'
+import { Attachment } from '@fluentui/react'
 
 const selectors = {
   root: `.${Attachment.className}`,

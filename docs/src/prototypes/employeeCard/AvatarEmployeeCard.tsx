@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Avatar, Popup } from '@stardust-ui/react'
+import { Avatar, Popup } from '@fluentui/react'
 import EmployeeCard, { EmployeeCardProps } from './EmployeeCard'
 import { Extendable } from 'src/types'
 

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ChatMessageProps } from '@stardust-ui/react'
+import { ChatMessageProps } from '@fluentui/react'
 
 export const groupControlMessageItems: ChatMessageProps[] = [
   {

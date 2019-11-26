@@ -1,7 +1,7 @@
 // TODO:
 // vertical - padding variable?
-import { Accessibility, radioGroupBehavior } from '@stardust-ui/accessibility'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, radioGroupBehavior } from '@fluentui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -37,8 +37,8 @@ export interface RadioGroupProps extends UIComponentProps, ChildrenComponentProp
 
   /**
    * Called after radio group value is changed.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All value props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All value props.
    */
   checkedValueChanged?: ComponentEventHandler<RadioGroupItemProps>
 

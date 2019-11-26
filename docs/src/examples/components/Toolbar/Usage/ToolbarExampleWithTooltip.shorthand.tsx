@@ -4,8 +4,8 @@ import {
   Tooltip,
   ToolbarItemShorthandKinds,
   tooltipAsLabelBehavior,
-} from '@stardust-ui/react'
-import { useBooleanKnob } from '@stardust-ui/docs-components'
+} from '@fluentui/react'
+import { useBooleanKnob } from '@fluentui/docs-components'
 
 const ToolbarExampleShorthand = () => {
   const [isBold, setBold] = useBooleanKnob({ name: 'bold', initialValue: true })

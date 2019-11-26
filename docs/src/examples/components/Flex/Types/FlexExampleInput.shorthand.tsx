@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Flex, Input, Button, Label } from '@stardust-ui/react'
+import { Flex, Input, Button, Label } from '@fluentui/react'
 
 const FlexExampleInput = () => (
   <Flex gap="gap.medium" debug>

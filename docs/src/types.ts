@@ -1,5 +1,5 @@
-import { UseKnobOptions } from '@stardust-ui/docs-components'
-import { ThemePrepared } from '@stardust-ui/react'
+import { UseKnobOptions } from '@fluentui/docs-components'
+import { ThemePrepared } from '@fluentui/react'
 
 export type ExampleSource = {
   js: string

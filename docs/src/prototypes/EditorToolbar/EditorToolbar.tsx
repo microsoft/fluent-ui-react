@@ -14,9 +14,9 @@ import {
   ToolbarItemShorthandKinds,
   ToolbarMenuItemProps,
   ToolbarMenuItemShorthandKinds,
-} from '@stardust-ui/react'
-import { useEventListener } from '@stardust-ui/react-component-event-listener'
-import { toRefObject } from '@stardust-ui/react-component-ref'
+} from '@fluentui/react'
+import { useEventListener } from '@fluentui/react-component-event-listener'
+import { toRefObject } from '@fluentui/react-component-ref'
 import * as keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
 import * as React from 'react'

@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { Button, Input, Slider, Flex } from '@stardust-ui/react'
-import { useBooleanKnob } from '@stardust-ui/docs-components'
+import { Button, Input, Slider, Flex } from '@fluentui/react'
+import { useBooleanKnob } from '@fluentui/docs-components'
 
 interface SliderAction {
   type: 'toggle_mute' | 'change_value'

@@ -6,7 +6,7 @@ import {
   Avatar,
   Divider,
   Provider,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 import GroupControlMessages from './GroupControlMessages'
 import ControlMessage from './ControlMessage'
 import { groupControlMessageItems, mainControlMessage } from './mockData'

@@ -1,4 +1,4 @@
-import { Icon } from '@stardust-ui/react'
+import { Icon } from '@fluentui/react'
 import * as React from 'react'
 
 const IconPerf = () => <Icon name="call-video" />

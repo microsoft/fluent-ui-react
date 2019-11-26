@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Grid, Ref, Segment } from '@stardust-ui/react'
+import { Grid, Ref, Segment } from '@fluentui/react'
 
 type RefForwardingExampleState = {
   isMounted: boolean

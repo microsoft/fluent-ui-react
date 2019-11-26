@@ -1,4 +1,4 @@
-import { selectableListItemBehavior } from '@stardust-ui/accessibility'
+import { selectableListItemBehavior } from '@fluentui/accessibility'
 import * as React from 'react'
 import * as keyboardKey from 'keyboard-key'
 import { isConformant, handlesAccessibility } from 'test/specs/commonTests'

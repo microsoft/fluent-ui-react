@@ -7,7 +7,7 @@ import {
   tabBehavior,
   tabListBehavior,
   MenuItemProps,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 import * as _ from 'lodash'
 import { arrayOfStickerImagesNames, getItemsData } from './dataMocks'
 import GridImagePicker from './GridImagePicker/GridImagePicker'

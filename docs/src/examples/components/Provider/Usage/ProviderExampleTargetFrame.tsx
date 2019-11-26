@@ -1,4 +1,4 @@
-import { Attachment, Button, Provider, themes } from '@stardust-ui/react'
+import { Attachment, Button, Provider, themes } from '@fluentui/react'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 

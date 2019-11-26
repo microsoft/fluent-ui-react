@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
 import * as React from 'react'
-import { Chat, Menu, Popup, Avatar } from '@stardust-ui/react'
+import { Chat, Menu, Popup, Avatar } from '@fluentui/react'
 
 /**
  * This example shows how to create custom Chat Messages.

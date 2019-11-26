@@ -1,4 +1,4 @@
-import { KnobProvider } from '@stardust-ui/docs-components'
+import { KnobProvider } from '@fluentui/docs-components'
 import * as _ from 'lodash'
 import * as React from 'react'
 
@@ -14,6 +14,7 @@ const unsupportedComponents = [
   'Accordion',
   'Animation',
   'Box',
+  'Carousel',
   'Chat',
   'Dropdown',
   'Flex',

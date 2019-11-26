@@ -1,4 +1,4 @@
-const { coverageReporters } = require('@stardust-ui/internal-tooling/jest')
+const { coverageReporters } = require('@fluentui/internal-tooling/jest')
 const { rollup: lernaAliases } = require('lerna-alias')
 
 // packages/react/src -> packages/react,

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Provider } from '@stardust-ui/react'
+import { Provider } from '@fluentui/react'
 
 const customTheme = { siteVariables: { brand: 'cornflowerblue' } }
 

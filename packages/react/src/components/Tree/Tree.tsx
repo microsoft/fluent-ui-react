@@ -1,10 +1,10 @@
-import { Accessibility, treeBehavior } from '@stardust-ui/accessibility'
-import { getNextElement } from '@stardust-ui/react-bindings'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, treeBehavior } from '@fluentui/accessibility'
+import { getNextElement } from '@fluentui/react-bindings'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { Ref } from '@stardust-ui/react-component-ref'
+import { Ref } from '@fluentui/react-component-ref'
 
 import TreeItem, { TreeItemProps } from './TreeItem'
 import {
@@ -52,9 +52,9 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * A custom render function for the title slot.
    *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   * @param Component - The computed component for this slot.
+   * @param props - The computed props for this slot.
+   * @param children - The computed children for this slot.
    */
   renderItemTitle?: ShorthandRenderFunction<TreeTitleProps>
 
@@ -62,8 +62,8 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
    * Callback that provides rendered tree items to be used by react-virtualized for instance.
    * Acts as a render prop, with the rendered tree items being the re-used logic.
    *
-   * @param {React.ReactElement[]} renderedItem The array of rendered items.
-   * @return {React.ReactNode} The render prop result.
+   * @param renderedItem - The array of rendered items.
+   * @returns The render prop result.
    */
   renderedItems?: (renderedItems: React.ReactElement[]) => React.ReactNode
 }

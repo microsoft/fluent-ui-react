@@ -1,5 +1,5 @@
-import { CodeSnippet, useKnobValues } from '@stardust-ui/docs-components'
-import { createComponent, Flex } from '@stardust-ui/react'
+import { CodeSnippet, useKnobValues } from '@fluentui/docs-components'
+import { createComponent, Flex } from '@fluentui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 

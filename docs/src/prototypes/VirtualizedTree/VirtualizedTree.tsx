@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Tree, TreeItemProps } from '@stardust-ui/react'
+import { Tree, TreeItemProps } from '@fluentui/react'
 import { CellMeasurer, CellMeasurerCache, List as ReactVirtualizedList } from 'react-virtualized'
 import getItems from './itemsGenerator'
 

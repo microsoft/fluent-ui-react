@@ -1,5 +1,5 @@
-import { toRefObject, Ref } from '@stardust-ui/react-component-ref'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { toRefObject, Ref } from '@fluentui/react-component-ref'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
@@ -28,7 +28,7 @@ import {
   PopperChildrenProps,
 } from '../../lib/positioner'
 import TooltipContent, { TooltipContentProps } from './TooltipContent'
-import { Accessibility, tooltipBehavior } from '@stardust-ui/accessibility'
+import { Accessibility, tooltipBehavior } from '@fluentui/accessibility'
 import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 import PortalInner from '../Portal/PortalInner'
 

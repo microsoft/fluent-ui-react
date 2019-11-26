@@ -1,9 +1,9 @@
-import { Accessibility, sliderBehavior } from '@stardust-ui/accessibility'
+import { Accessibility, sliderBehavior } from '@fluentui/accessibility'
 import * as React from 'react'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
-import { handleRef, Ref } from '@stardust-ui/react-component-ref'
+import * as customPropTypes from '@fluentui/react-proptypes'
+import { handleRef, Ref } from '@fluentui/react-component-ref'
 import cx from 'classnames'
 
 import {
@@ -67,7 +67,7 @@ export interface SliderProps
 
   /**
    * Callback that creates custom accessibility message a screen reader narrates when the value changes.
-   * @param {SliderProps} props - Slider props.
+   * @param props - Slider props.
    */
   getA11yValueMessageOnChange?: (props: SliderProps) => string
 
@@ -85,8 +85,8 @@ export interface SliderProps
 
   /**
    * Called after item checked state is changed.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onChange?: ComponentEventHandler<SliderProps & { value: string }>
 

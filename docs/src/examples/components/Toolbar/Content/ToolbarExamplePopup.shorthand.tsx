@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Toolbar, Input, Button, Form } from '@stardust-ui/react'
+import { Toolbar, Input, Button, Form } from '@fluentui/react'
 
 const HighlightPopup = ({ onConfirm }) => {
   return (

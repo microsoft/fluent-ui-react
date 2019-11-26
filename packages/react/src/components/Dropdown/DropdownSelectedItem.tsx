@@ -1,5 +1,5 @@
-import { Ref } from '@stardust-ui/react-component-ref'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Ref } from '@fluentui/react-component-ref'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
@@ -47,24 +47,24 @@ export interface DropdownSelectedItemProps extends UIComponentProps<DropdownSele
   /**
    * Called on selected item click.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onClick?: ComponentEventHandler<DropdownSelectedItemProps>
 
   /**
    * Called on selected item key down.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onKeyDown?: ComponentKeyboardEventHandler<DropdownSelectedItemProps>
 
   /**
    * Called when item is removed from the selection list.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onRemove?: ComponentEventHandler<DropdownSelectedItemProps>
 }

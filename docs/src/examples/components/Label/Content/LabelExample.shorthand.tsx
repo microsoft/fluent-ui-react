@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Label } from '@stardust-ui/react'
+import { Label } from '@fluentui/react'
 
 const LabelExampleShorthand = () => <Label content="You have 23 emails" />
 

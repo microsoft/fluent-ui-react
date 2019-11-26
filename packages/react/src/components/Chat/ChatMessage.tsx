@@ -3,9 +3,9 @@ import {
   IS_FOCUSABLE_ATTRIBUTE,
   chatMessageBehavior,
   menuAsToolbarBehavior,
-} from '@stardust-ui/accessibility'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
-import { Ref } from '@stardust-ui/react-component-ref'
+} from '@fluentui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
+import { Ref } from '@fluentui/react-component-ref'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
@@ -81,24 +81,27 @@ export interface ChatMessageProps
 
   /**
    * Called after user's blur.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onBlur?: ComponentEventHandler<ChatMessageProps>
 
   /**
    * Called after user's focus.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onFocus?: ComponentEventHandler<ChatMessageProps>
 
   /**
    * Called after user enters by mouse.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onMouseEnter?: ComponentEventHandler<ChatMessageProps>
+
+  /** Allows suppression of action menu positioning for performance reasons */
+  positionActionMenu?: boolean
 
   /** Reaction group applied to the message. */
   reactionGroup?: ShorthandValue<ReactionGroupProps> | ShorthandCollection<ReactionProps>
@@ -140,6 +143,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     onBlur: PropTypes.func,
     onFocus: PropTypes.func,
     onMouseEnter: PropTypes.func,
+    positionActionMenu: PropTypes.bool,
     reactionGroup: PropTypes.oneOfType([
       customPropTypes.collectionShorthand,
       customPropTypes.itemShorthand,
@@ -152,6 +156,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     accessibility: chatMessageBehavior,
     as: 'div',
     badgePosition: 'end',
+    positionActionMenu: true,
     reactionGroupPosition: 'start',
   }
 
@@ -206,7 +211,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     actionMenu: ChatMessageProps['actionMenu'],
     styles: ComponentSlotStylesPrepared,
   ) {
-    const { unstable_overflow: overflow } = this.props
+    const { unstable_overflow: overflow, positionActionMenu } = this.props
     const { messageNode } = this.state
 
     const actionMenuElement = Menu.create(actionMenu, {
@@ -222,32 +227,37 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
       return actionMenuElement
     }
 
-    const menuRect: DOMRect = _.invoke(this.menuRef.current, 'getBoundingClientRect') || {
+    const menuRect: DOMRect = (positionActionMenu &&
+      _.invoke(this.menuRef.current, 'getBoundingClientRect')) || {
       height: 0,
     }
-    const messageRect: DOMRect = _.invoke(messageNode, 'getBoundingClientRect') || { height: 0 }
+    const messageRect: DOMRect = (positionActionMenu &&
+      _.invoke(messageNode, 'getBoundingClientRect')) || { height: 0 }
 
     return (
       <Popper
+        enabled={positionActionMenu}
         align="end"
-        modifiers={{
-          // https://popper.js.org/popper-documentation.html#modifiers..flip.behavior
-          // Forces to flip only in "top-*" positions
-          flip: { behavior: ['top'] },
-          preventOverflow: {
-            escapeWithReference: false,
-            // https://popper.js.org/popper-documentation.html#modifiers..preventOverflow.priority
-            // Forces to stop prevent overflow on bottom and bottom
-            priority: ['left', 'right'],
+        modifiers={
+          positionActionMenu && {
+            // https://popper.js.org/popper-documentation.html#modifiers..flip.behavior
+            // Forces to flip only in "top-*" positions
+            flip: { behavior: ['top'] },
+            preventOverflow: {
+              escapeWithReference: false,
+              // https://popper.js.org/popper-documentation.html#modifiers..preventOverflow.priority
+              // Forces to stop prevent overflow on bottom and bottom
+              priority: ['left', 'right'],
 
-            // Is required to properly position action items
-            ...(overflow && {
-              boundariesElement: 'scrollParent',
-              escapeWithReference: true,
-              padding: { top: messageRect.height - menuRect.height },
-            }),
-          },
-        }}
+              // Is required to properly position action items
+              ...(overflow && {
+                boundariesElement: 'scrollParent',
+                escapeWithReference: true,
+                padding: { top: messageRect.height - menuRect.height },
+              }),
+            },
+          }
+        }
         position="above"
         positionFixed={overflow}
         targetRef={messageNode}

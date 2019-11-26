@@ -1,4 +1,4 @@
-export const appTemplate = `import { SandboxApp } from "@stardust-ui/code-sandbox"
+export const appTemplate = `import { SandboxApp } from "@fluentui/code-sandbox"
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 

@@ -14,7 +14,7 @@ import {
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
 } from '../../lib'
-import { Accessibility, treeTitleBehavior } from '@stardust-ui/accessibility'
+import { Accessibility, treeTitleBehavior } from '@fluentui/accessibility'
 import { ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface TreeTitleProps
@@ -36,8 +36,8 @@ export interface TreeTitleProps
   /**
    * Called on click.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onClick?: ComponentEventHandler<TreeTitleProps>
 

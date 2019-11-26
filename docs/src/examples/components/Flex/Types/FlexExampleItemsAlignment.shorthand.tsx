@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Flex, Segment } from '@stardust-ui/react'
+import { Flex, Segment } from '@fluentui/react'
 
 const FlexExampleItemsAlignment = () => (
   <Flex column gap="gap.large" hAlign="center" vAlign="center" debug>

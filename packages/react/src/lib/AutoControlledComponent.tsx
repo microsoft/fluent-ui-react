@@ -38,10 +38,10 @@ const getDefaultPropName = prop => `default${prop[0].toUpperCase() + prop.slice(
  *  - then, `value` defaults to '' or [] if props.multiple
  *  - else, undefined
  *
- *  @param {string} propName A prop name
- *  @param {object} [props] A props object
- *  @param {object} [state] A state object
- *  @param {boolean} [includeDefaults=false] Whether or not to heed the default props or initial state
+ *  @param propName - A prop name
+ *  @param props - A props object
+ *  @param state - A state object
+ *  @param includeDefaults - Whether or not to heed the default props or initial state
  */
 export const getAutoControlledStateValue = (
   propName: string,

@@ -1,4 +1,4 @@
-import { AnyAction, EnhancedActions, Manager, ManagerFactory, SideEffect } from '@stardust-ui/state'
+import { AnyAction, EnhancedActions, Manager, ManagerFactory, SideEffect } from '@fluentui/state'
 import * as React from 'react'
 
 type UseStateManagerOptions<State> = {

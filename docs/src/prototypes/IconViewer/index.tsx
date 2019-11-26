@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { CopyToClipboard } from '@stardust-ui/docs-components'
-import { Provider, Grid, Divider, Header, Icon, Menu, Segment } from '@stardust-ui/react'
+import { CopyToClipboard } from '@fluentui/docs-components'
+import { Provider, Grid, Divider, Header, Icon, Menu, Segment } from '@fluentui/react'
 import themeWithProcessedIcons from 'src/themes/teams/withProcessedIcons'
 import { TeamsProcessedSvgIconSpec } from 'src/themes/teams/components/Icon/svg/types'
 

@@ -1,11 +1,11 @@
-import { knobComponents, KnobsSnippet } from '@stardust-ui/code-sandbox'
+import { knobComponents, KnobsSnippet } from '@fluentui/code-sandbox'
 import {
   CopyToClipboard,
   KnobInspector,
   KnobProvider,
   LogInspector,
-} from '@stardust-ui/docs-components'
-import { Flex, ICSSInJSStyle, Menu, Provider, Segment } from '@stardust-ui/react'
+} from '@fluentui/docs-components'
+import { Flex, ICSSInJSStyle, Menu, Provider, Segment } from '@fluentui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'

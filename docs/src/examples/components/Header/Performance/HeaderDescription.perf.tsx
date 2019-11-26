@@ -1,4 +1,4 @@
-import { Header } from '@stardust-ui/react'
+import { Header } from '@fluentui/react'
 import * as React from 'react'
 
 const HeaderDescriptionPerf = () => (
