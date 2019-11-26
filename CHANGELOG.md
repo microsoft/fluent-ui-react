@@ -20,6 +20,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixes
 - Trigger `whatInput` cleanup when last `Provider` with custom `target` gets removed @silviuavram ([#2127](https://github.com/microsoft/fluent-ui-react/pull/2127))
 
+### Performance
+- Allow suppression of action menu positioning in `ChatMessage` @jurokapsiar ([#2126](https://github.com/microsoft/fluent-ui-react/pull/2126))
+
 <!--------------------------------[ v0.40.3 ]------------------------------- -->
 ## [v0.40.3](https://github.com/stardust-ui/react/tree/v0.40.3) (2019-11-08)
 [Compare changes](https://github.com/stardust-ui/react/compare/v0.40.2...v0.40.3)
