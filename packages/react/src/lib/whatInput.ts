@@ -96,7 +96,7 @@ const addListeners = (eventTarget: Window) => {
   if (eventTarget.PointerEvent) {
     eventTarget.addEventListener('pointerdown', setInput)
     // @ts-ignore
-  } else if (eventTarget.MSPointerEvent) {
+  } else if (window.MSPointerEvent) {
     eventTarget.addEventListener('MSPointerDown', setInput)
   } else {
     // mouse events
