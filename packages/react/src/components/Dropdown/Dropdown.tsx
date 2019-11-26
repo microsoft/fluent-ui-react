@@ -728,9 +728,10 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     } = this.props
     const { filteredItems, value } = this.state
 
-    const items = _.map(filteredItems, (item, index) => render =>
-      render(item, () => {
+    const items = _.map(filteredItems, (item, index) => ({
+      children: () => {
         const selected = value.indexOf(item) !== -1
+
         return DropdownItem.create(item, {
           defaultProps: () => ({
             className: Dropdown.slotClassNames.item,
@@ -748,8 +749,8 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
           overrideProps: this.handleItemOverrides(item, index, getItemProps, selected),
           render: renderItem,
         })
-      }),
-    )
+      },
+    }))
 
     return [
       ...items,
