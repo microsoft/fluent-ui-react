@@ -16,6 +16,7 @@ import ListItem from '../List/ListItem'
 import Icon, { IconProps } from '../Icon/Icon'
 import Image, { ImageProps } from '../Image/Image'
 import Box, { BoxProps } from '../Box/Box'
+import { GetItemPropsOptions } from 'downshift'
 
 export interface DropdownItemSlotClassNames {
   content: string
@@ -40,11 +41,20 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
   /** A slot for a checkable indicator. */
   checkableIndicator?: ShorthandValue<IconProps>
 
+  /** Getter prop callback from Downshift. */
+  getItemProps: (options: GetItemPropsOptions<ShorthandValue<DropdownItemProps>>) => any
+
   /** Item's header. */
   header?: ShorthandValue<BoxProps>
 
   /** Item's image. */
   image?: ShorthandValue<ImageProps>
+
+  /** Index of item in the list. */
+  index: number
+
+  /** Item's shorthand that will be passed to getItemProps for referencing. */
+  item: ShorthandValue<DropdownItemProps>
 
   /** Indicated whether the item has been set active by keyboard. */
   isFromKeyboard?: boolean
@@ -76,13 +86,15 @@ class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
       children: false,
       content: false,
     }),
-    accessibilityItemProps: PropTypes.object,
     active: PropTypes.bool,
     content: customPropTypes.itemShorthand,
     checkable: PropTypes.bool,
     checkableIndicator: customPropTypes.itemShorthandWithoutJSX,
+    getItemProps: PropTypes.func,
     header: customPropTypes.itemShorthand,
     image: customPropTypes.itemShorthandWithoutJSX,
+    index: PropTypes.number,
+    item: customPropTypes.itemShorthand,
     onClick: PropTypes.func,
     isFromKeyboard: PropTypes.bool,
     selected: PropTypes.bool,
@@ -108,7 +120,7 @@ class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
       getItemProps,
       item,
       index,
-    } = this.props as any
+    } = this.props
     return (
       <ListItem
         className={DropdownItem.className}
