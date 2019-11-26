@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.40.4 ]------------------------------- -->
+## [v0.40.4](https://github.com/stardust-ui/react/tree/v0.40.4) (2019-11-26)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.40.3...v0.40.4)
+
 ### Fixes
 - Trigger `whatInput` cleanup when last `Provider` with custom `target` gets removed @silviuavram ([#2127](https://github.com/microsoft/fluent-ui-react/pull/2127))
 
