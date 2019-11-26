@@ -6,7 +6,7 @@ import * as React from 'react'
 // @ts-ignore
 import { RendererProvider, ThemeProvider, ThemeContext } from 'react-fela'
 
-import { ChildrenComponentProps, setUpWhatInput } from '../../lib'
+import { ChildrenComponentProps, setUpWhatInput, tryCleanupWhatInput } from '../../lib'
 
 import {
   ThemePrepared,
@@ -145,6 +145,12 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
     this.renderFontFaces(this.outgoingContext.renderer)
     if (this.props.target) {
       setUpWhatInput(this.props.target)
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.props.target) {
+      tryCleanupWhatInput(this.props.target)
     }
   }
 
