@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Embed } from '@stardust-ui/react'
+import { Embed } from '@fluentui/react'
 
 const EmbedExampleIframe = () => (
   <Embed

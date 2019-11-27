@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Dialog, Popup } from '@stardust-ui/react'
+import { Button, Dialog, Popup } from '@fluentui/react'
 
 export const selectors = {
   dialogCancel: 'dialog-cancel',

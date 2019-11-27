@@ -1,5 +1,5 @@
-import { useRangeKnob } from '@stardust-ui/docs-components'
-import { Alert } from '@stardust-ui/react'
+import { useRangeKnob } from '@fluentui/docs-components'
+import { Alert } from '@fluentui/react'
 import * as React from 'react'
 
 const AlertExampleWidth = () => {

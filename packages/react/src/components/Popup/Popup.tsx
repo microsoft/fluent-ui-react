@@ -1,9 +1,9 @@
-import { Accessibility, popupBehavior } from '@stardust-ui/accessibility'
-import { AutoFocusZoneProps, FocusTrapZoneProps } from '@stardust-ui/react-bindings'
-import { EventListener } from '@stardust-ui/react-component-event-listener'
-import { NodeRef, Unstable_NestingAuto } from '@stardust-ui/react-component-nesting-registry'
-import { handleRef, toRefObject, Ref } from '@stardust-ui/react-component-ref'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, popupBehavior } from '@fluentui/accessibility'
+import { AutoFocusZoneProps, FocusTrapZoneProps } from '@fluentui/react-bindings'
+import { EventListener } from '@fluentui/react-component-event-listener'
+import { NodeRef, Unstable_NestingAuto } from '@fluentui/react-component-nesting-registry'
+import { handleRef, toRefObject, Ref } from '@fluentui/react-component-ref'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as keyboardKey from 'keyboard-key'
@@ -84,8 +84,8 @@ export interface PopupProps
 
   /**
    * Event for request to change 'open' value.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onOpenChange?: ComponentEventHandler<PopupProps>
 
@@ -94,7 +94,7 @@ export interface PopupProps
 
   /**
    * Function to render popup content.
-   * @param {Function} updatePosition - function to request popup position update.
+   * @param updatePosition - function to request popup position update.
    */
   renderContent?: (updatePosition: Function) => ShorthandValue<PopupContentProps>
 

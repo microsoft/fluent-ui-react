@@ -1,4 +1,4 @@
-import { Image } from '@stardust-ui/react'
+import { Image } from '@fluentui/react'
 import * as React from 'react'
 
 const ProviderExampleScrollbar = () => (

@@ -3,7 +3,7 @@ import DocPage from '../components/DocPage/DocPage'
 import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
 import CategoryColorSchemes from 'docs/src/components/CategoryColorSchemes'
 
-import { Dropdown, themes, Flex, Provider } from '@stardust-ui/react'
+import { Dropdown, themes, Flex, Provider } from '@fluentui/react'
 import { faderStyles } from 'docs/src/components/Fader'
 import { colorVariantsStyles } from 'docs/src/components/ColorVariants'
 import { colorBoxStyles, colorBoxVariables } from 'docs/src/components/ColorBox'

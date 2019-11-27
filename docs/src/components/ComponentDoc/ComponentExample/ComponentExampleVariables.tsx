@@ -4,8 +4,8 @@ import {
   Segment,
   ProviderContextPrepared,
   ThemeComponentVariablesPrepared,
-} from '@stardust-ui/react'
-import { callable } from '@stardust-ui/react-bindings'
+} from '@fluentui/react'
+import { callable } from '@fluentui/react-bindings'
 import * as _ from 'lodash'
 import * as React from 'react'
 // @ts-ignore

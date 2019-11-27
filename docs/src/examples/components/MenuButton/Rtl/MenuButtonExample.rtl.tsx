@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, MenuButton } from '@stardust-ui/react'
+import { Button, MenuButton } from '@fluentui/react'
 
 const MenuButtonExampleRtl = () => (
   <MenuButton

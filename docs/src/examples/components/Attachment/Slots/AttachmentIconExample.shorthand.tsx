@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Attachment } from '@stardust-ui/react'
+import { Attachment } from '@fluentui/react'
 
 const AttachmentIconExampleShorthand = () => (
   <div>

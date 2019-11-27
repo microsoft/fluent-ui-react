@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Flex, Loader } from '@stardust-ui/react'
+import { Flex, Loader } from '@fluentui/react'
 
 const LoaderExampleRtl = () => (
   <Flex column gap="gap.medium">

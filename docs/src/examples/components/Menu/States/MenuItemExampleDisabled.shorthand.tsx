@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Menu } from '@stardust-ui/react'
+import { Menu } from '@fluentui/react'
 
 const items = [
   { key: 'item1', content: 'Item #1' },

@@ -1,4 +1,4 @@
-import { Dropdown, DropdownSelectedItem } from '@stardust-ui/react'
+import { Dropdown, DropdownSelectedItem } from '@fluentui/react'
 
 const selectors = {
   triggerButton: `.${Dropdown.slotClassNames.triggerButton}`,

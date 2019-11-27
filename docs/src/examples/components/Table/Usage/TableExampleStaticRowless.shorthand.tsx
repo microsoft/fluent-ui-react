@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Table } from '@stardust-ui/react'
+import { Table } from '@fluentui/react'
 
 const header = {
   items: ['id', 'Name', 'Picture', 'Age'],

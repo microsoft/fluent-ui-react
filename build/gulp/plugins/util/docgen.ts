@@ -104,7 +104,7 @@ type MaybeIntersectType = ts.Type & { types?: ts.Type[] }
 
 /**
  * Parses a file with default TS options
- * @param filePath component file that should be parsed
+ * @param filePath - component file that should be parsed
  */
 export function parse(
   filePathOrPaths: string | string[],

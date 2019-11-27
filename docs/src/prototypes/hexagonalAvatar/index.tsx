@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { Flex, StatusProps, WithAsProp, Extendable, Text } from '@stardust-ui/react'
+import { Flex, StatusProps, WithAsProp, Extendable, Text } from '@fluentui/react'
 import Avatar from './CustomAvatar'
 
 const statusProps: Extendable<WithAsProp<StatusProps>> = {

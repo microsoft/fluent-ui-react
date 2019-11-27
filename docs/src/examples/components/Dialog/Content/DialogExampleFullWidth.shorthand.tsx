@@ -1,4 +1,4 @@
-import { Button, Dialog, Input } from '@stardust-ui/react'
+import { Button, Dialog, Input } from '@fluentui/react'
 import * as React from 'react'
 
 const DialogExampleFullWidth: React.FC = () => (

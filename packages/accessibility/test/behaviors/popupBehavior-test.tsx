@@ -1,5 +1,5 @@
-import { popupBehavior } from '@stardust-ui/accessibility'
-import { Button } from '@stardust-ui/react'
+import { popupBehavior } from '@fluentui/accessibility'
+import { Button } from '@fluentui/react'
 import * as React from 'react'
 
 describe('PopupBehavior.ts', () => {

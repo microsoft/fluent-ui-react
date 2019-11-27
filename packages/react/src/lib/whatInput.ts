@@ -30,6 +30,8 @@ const ignoreMap = [
   91, // Windows key / left Apple cmd
   93, // Windows menu / right Apple cmd
 ]
+// used to count how many Providers needed to initialize whatinput.
+const whatInputInitialized = 'whatInputInitialized'
 
 // mapping of events to input types
 const inputMap = {
@@ -87,7 +89,7 @@ const addListeners = (eventTarget: Window) => {
   // `pointermove`, `MSPointerMove`, `mousemove` and mouse wheel event binding
   // can only demonstrate potential, but not actual, interaction
   // and are treated separately
-  const options = supportsPassive ? { passive: true, useCapture: true } : true
+  const options = supportsPassive ? { passive: true, capture: true } : true
 
   // pointer events (mouse, pen, touch)
   // @ts-ignore
@@ -212,14 +214,52 @@ export const setUpWhatInput = (target: Document) => {
     'addEventListener' in targetWindow &&
     Array.prototype.indexOf
   ) {
-    const whatInputInitialized = 'whatInputInitialized'
-    if (target[whatInputInitialized] === true) {
+    const initializedTimes = target[whatInputInitialized]
+    if (typeof initializedTimes === 'number' && initializedTimes > 0) {
+      target[whatInputInitialized] = initializedTimes + 1
       return
     }
-    target[whatInputInitialized] = true
+    target[whatInputInitialized] = 1
 
     addListeners(targetWindow)
     doUpdate(target)
+  }
+}
+
+function cleanupWhatInput(eventTarget: Window) {
+  const options = supportsPassive ? { capture: true } : true
+
+  // @ts-ignore
+  if (eventTarget.PointerEvent) {
+    eventTarget.removeEventListener('pointerdown', setInput)
+    // @ts-ignore
+  } else if (window.MSPointerEvent) {
+    eventTarget.removeEventListener('MSPointerDown', setInput)
+  } else {
+    // mouse events
+    eventTarget.removeEventListener('mousedown', setInput, true)
+
+    // touch events
+    if ('ontouchstart' in eventTarget) {
+      eventTarget.removeEventListener('touchstart', eventBuffer, options)
+      eventTarget.removeEventListener('touchend', setInput, true)
+    }
+  }
+
+  // keyboard events
+  eventTarget.removeEventListener('keydown', eventBuffer, true)
+  eventTarget.removeEventListener('keyup', eventBuffer, true)
+}
+
+export const tryCleanupWhatInput = (target: Document) => {
+  const targetWindow = target.defaultView
+  if (isBrowser() && targetWindow && 'removeEventListener' in targetWindow) {
+    if (target[whatInputInitialized] === 1) {
+      delete target[whatInputInitialized]
+      cleanupWhatInput(targetWindow)
+    } else {
+      target[whatInputInitialized] = target[whatInputInitialized] - 1
+    }
   }
 }
 

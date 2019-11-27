@@ -14,7 +14,7 @@ import {
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
 } from '../../lib'
-import { Accessibility, treeTitleBehavior } from '@stardust-ui/accessibility'
+import { Accessibility, treeTitleBehavior } from '@fluentui/accessibility'
 import { ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface TreeTitleProps
@@ -36,13 +36,13 @@ export interface TreeTitleProps
   /**
    * Called on click.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onClick?: ComponentEventHandler<TreeTitleProps>
 
   /** Whether or not the subtree of the title is in the open state. */
-  open?: boolean
+  expanded?: boolean
 
   /** Size of the tree containing this title without any children. */
   treeSize?: number
@@ -61,7 +61,7 @@ class TreeTitle extends UIComponent<WithAsProp<TreeTitleProps>> {
     index: PropTypes.number,
     level: PropTypes.number,
     onClick: PropTypes.func,
-    open: PropTypes.bool,
+    expanded: PropTypes.bool,
     treeSize: PropTypes.number,
   }
 

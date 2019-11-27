@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Grid } from '@stardust-ui/react'
+import { Grid } from '@fluentui/react'
 
 const GridExample = () => (
   <Grid columns={2}>

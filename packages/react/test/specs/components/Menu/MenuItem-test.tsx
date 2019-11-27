@@ -2,7 +2,7 @@ import {
   Accessibility,
   menuItemAsToolbarButtonBehavior,
   tabBehavior,
-} from '@stardust-ui/accessibility'
+} from '@fluentui/accessibility'
 import * as React from 'react'
 
 import { isConformant, handlesAccessibility, getRenderedAttribute } from 'test/specs/commonTests'

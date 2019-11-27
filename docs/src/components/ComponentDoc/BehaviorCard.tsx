@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Divider, Segment, Text } from '@stardust-ui/react'
+import { Divider, Segment, Text } from '@fluentui/react'
 import * as _ from 'lodash'
 import ComponentExampleTitle from './ComponentExample/ComponentExampleTitle'
 import BehaviorDescription from './BehaviorDescription'

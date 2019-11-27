@@ -24,8 +24,8 @@
   <a href="https://david-dm.org/stardust-ui/react">
     <img alt="David" src="https://img.shields.io/david/stardust-ui/react.svg?style=flat-square" />
   </a>
-  <a href="https://www.npmjs.com/package/@stardust-ui/react">
-    <img alt="npm" src="https://img.shields.io/npm/v/@stardust-ui/react.svg?style=flat-square" />
+  <a href="https://www.npmjs.com/package/@fluentui/react">
+    <img alt="npm" src="https://img.shields.io/npm/v/@fluentui/react.svg?style=flat-square" />
   </a>
 </p>
 

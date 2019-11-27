@@ -1,6 +1,6 @@
-import { Loader } from '@stardust-ui/react'
+import { Loader } from '@fluentui/react'
 import * as React from 'react'
-import { useBooleanKnob, useRangeKnob } from '@stardust-ui/docs-components'
+import { useBooleanKnob, useRangeKnob } from '@fluentui/docs-components'
 
 const LoaderExampleDelay = () => {
   const [mounted] = useBooleanKnob({ name: 'mounted', initialValue: true })

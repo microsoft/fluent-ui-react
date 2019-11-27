@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Form, Slider, Button } from '@stardust-ui/react'
+import { Form, Slider, Button } from '@fluentui/react'
 
 const FormExampleSlider = () => (
   <Form onSubmit={() => alert('Form submitted')}>

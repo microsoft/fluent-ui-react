@@ -1,5 +1,5 @@
-import { Accessibility, accordionBehavior } from '@stardust-ui/accessibility'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, accordionBehavior } from '@fluentui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -46,8 +46,8 @@ export interface AccordionProps extends UIComponentProps, ChildrenComponentProps
   /**
    * Called when a panel title is clicked.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All item props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All item props.
    */
   onTitleClick?: ComponentEventHandler<AccordionProps>
 
@@ -60,16 +60,16 @@ export interface AccordionProps extends UIComponentProps, ChildrenComponentProps
   /**
    * A custom renderer for each Accordion's panel title.
    *
-   * @param {React.ReactType} Component - The panel's component type.
-   * @param {object} props - The panel's computed props.
+   * @param Component - The panel's component type.
+   * @param props - The panel's computed props.
    */
   renderPanelTitle?: ShorthandRenderFunction<AccordionTitleProps>
 
   /**
    * A custom renderer for each Accordion's panel content.
    *
-   * @param {React.ReactType} Component - The panel's component type.
-   * @param {object} props - The panel's computed props.
+   * @param Component - The panel's component type.
+   * @param props - The panel's computed props.
    */
   renderPanelContent?: ShorthandRenderFunction<AccordionContentProps>
 
@@ -225,8 +225,8 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
    * index is active and either it's an exclusive accordion or if there are no other active
    * panels open besides this one.
    *
-   * @param {number} index The index of the panel.
-   * @returns {boolean} If the panel can be set active/inactive.
+   * @param index - The index of the panel.
+   * @returns If the panel can be set active/inactive.
    */
   isIndexActionable = (index: number): boolean => {
     if (!this.isIndexActive(index)) {

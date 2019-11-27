@@ -1,5 +1,5 @@
-import { useBooleanKnob } from '@stardust-ui/docs-components'
-import { List, Image } from '@stardust-ui/react'
+import { useBooleanKnob } from '@fluentui/docs-components'
+import { List, Image } from '@fluentui/react'
 import * as React from 'react'
 
 const items = [

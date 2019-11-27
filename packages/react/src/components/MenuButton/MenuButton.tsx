@@ -1,9 +1,9 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
-import { Accessibility, menuButtonBehavior } from '@stardust-ui/accessibility'
-import { Ref } from '@stardust-ui/react-component-ref'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, menuButtonBehavior } from '@fluentui/accessibility'
+import { Ref } from '@fluentui/react-component-ref'
+import * as customPropTypes from '@fluentui/react-proptypes'
 
 import {
   AutoControlledComponent,
@@ -57,15 +57,15 @@ export interface MenuButtonProps extends StyledComponentProps<MenuButtonProps>, 
   /**
    * Called after user's click on a menu item.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onMenuItemClick?: ComponentEventHandler<MenuItemProps>
 
   /**
    * Event for request to change 'open' value.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onOpenChange?: ComponentEventHandler<PopupProps>
 

@@ -1,4 +1,4 @@
-import { Accessibility } from '@stardust-ui/accessibility'
+import { Accessibility } from '@fluentui/accessibility'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 

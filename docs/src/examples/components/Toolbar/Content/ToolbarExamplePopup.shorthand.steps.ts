@@ -1,4 +1,4 @@
-import { ToolbarItem } from '@stardust-ui/react'
+import { ToolbarItem } from '@fluentui/react'
 
 const config: ScreenerTestsConfig = {
   themes: ['teams', 'teamsDark', 'teamsHighContrast'],

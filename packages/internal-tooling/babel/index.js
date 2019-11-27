@@ -27,7 +27,7 @@ module.exports = api => {
       },
     ],
     '@babel/preset-react',
-    '@babel/preset-typescript',
+    ['@babel/preset-typescript', { allowNamespaces: true }],
   ]
   const plugins = [
     '@babel/plugin-proposal-class-properties',

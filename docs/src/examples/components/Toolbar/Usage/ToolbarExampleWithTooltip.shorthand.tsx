@@ -1,12 +1,11 @@
 import * as React from 'react'
-import * as _ from 'lodash'
 import {
   Toolbar,
   Tooltip,
   ToolbarItemShorthandKinds,
   tooltipAsLabelBehavior,
-} from '@stardust-ui/react'
-import { useBooleanKnob } from '@stardust-ui/docs-components'
+} from '@fluentui/react'
+import { useBooleanKnob } from '@fluentui/docs-components'
 
 const ToolbarExampleShorthand = () => {
   const [isBold, setBold] = useBooleanKnob({ name: 'bold', initialValue: true })
@@ -58,27 +57,24 @@ const ToolbarExampleShorthand = () => {
           menuOpen: moreMenuOpen,
           onMenuOpenChange: (e, { menuOpen }) => setMoreMenuOpen(menuOpen),
         },
-      ].map(item =>
-        _.isNil(item.tooltip)
-          ? item
-          : render =>
-              render(
-                item,
-                // rendering Tooltip for the Toolbar Item
-                (ToolbarItem, props) => {
-                  const { tooltip, key, ...rest } = props
-                  // Adding tooltipAsLabelBehavior as the ToolbarItems contains only icon
-                  return (
-                    <Tooltip
-                      key={key}
-                      trigger={<ToolbarItem {...rest} />}
-                      accessibility={tooltipAsLabelBehavior}
-                      content={tooltip}
-                    />
-                  )
-                },
-              ),
-      )}
+      ].map(item => ({
+        ...item,
+        // rendering Tooltip for the Toolbar Item
+        children: item.tooltip
+          ? (ToolbarItem, props) => {
+              const { tooltip, key, ...rest } = props
+              // Adding tooltipAsLabelBehavior as the ToolbarItems contains only icon
+              return (
+                <Tooltip
+                  key={key}
+                  trigger={<ToolbarItem {...rest} />}
+                  accessibility={tooltipAsLabelBehavior}
+                  content={tooltip}
+                />
+              )
+            }
+          : undefined,
+      }))}
     />
   )
 }

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Flex } from '@stardust-ui/react'
+import { Flex } from '@fluentui/react'
 import { Props } from 'src/types'
 import { ChatData } from './services'
 

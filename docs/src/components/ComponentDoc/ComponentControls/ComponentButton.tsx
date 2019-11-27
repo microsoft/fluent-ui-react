@@ -1,4 +1,4 @@
-import { createComponent, Icon, Text, Flex } from '@stardust-ui/react'
+import { createComponent, Icon, Text, Flex } from '@fluentui/react'
 import * as React from 'react'
 
 interface LabelledButtonProps {

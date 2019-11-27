@@ -1,4 +1,4 @@
-import { ThemeInput } from '@stardust-ui/react'
+import { ThemeInput } from '@fluentui/react'
 import { CustomToolbarVariables } from './darkThemeOverrides'
 
 export const highContrastThemeOverrides: ThemeInput = {

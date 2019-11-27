@@ -1,4 +1,4 @@
-import { Ref, RefFindNode, RefForward } from '@stardust-ui/react-component-ref'
+import { Ref, RefFindNode, RefForward } from '@fluentui/react-component-ref'
 import { shallow } from 'enzyme'
 import * as React from 'react'
 

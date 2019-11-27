@@ -1,15 +1,16 @@
 /**
  * Return a dictionary of the parts of a component example file path.
  *
- * @param {string} examplePath - A component example's file path.
- * @returns {{
- *   type: string,
- *   displayName: string,
- *   section: string,
- *   exampleName: string
- * }}
+ * @param examplePath - A component example's file path.
  */
-const parseExamplePath = examplePath => {
+const parseExamplePath = (
+  examplePath: string,
+): {
+  type: string
+  displayName: string
+  section: string
+  exampleName: string
+} => {
   const [type, displayName, section, exampleName] = examplePath.split('/').slice(-4)
 
   return { displayName, section, exampleName, type: type.replace(/s$/, '') }

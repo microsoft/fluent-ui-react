@@ -1,11 +1,11 @@
-import { CopyToClipboard } from '@stardust-ui/docs-components'
+import { CopyToClipboard } from '@fluentui/docs-components'
 import {
   ComponentSlotStylesInput,
   ComponentSlotStyle,
   createComponent,
   Icon,
   ICSSInJSStyle,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 import * as Color from 'color'
 import * as _ from 'lodash'
 import * as React from 'react'

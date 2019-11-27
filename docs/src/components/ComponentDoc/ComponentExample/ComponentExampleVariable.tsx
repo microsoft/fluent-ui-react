@@ -1,4 +1,4 @@
-import { Input, InputProps, Popup } from '@stardust-ui/react'
+import { Input, InputProps, Popup } from '@fluentui/react'
 import * as React from 'react'
 import ComponentExampleColorPicker from 'docs/src/components/ComponentDoc/ComponentExample/ComponentExampleColorPicker'
 

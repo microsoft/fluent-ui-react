@@ -1,4 +1,4 @@
-import { Provider, themes, pxToRem, createTheme } from '@stardust-ui/react'
+import { Provider, themes, pxToRem, createTheme } from '@fluentui/react'
 import AnchorJS from 'anchor-js'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'

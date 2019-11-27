@@ -1,4 +1,4 @@
-import { splitButtonBehavior } from '@stardust-ui/accessibility'
+import { splitButtonBehavior } from '@fluentui/accessibility'
 import * as keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
 

@@ -1,6 +1,6 @@
-import { Accessibility, inputBehavior } from '@stardust-ui/accessibility'
-import { handleRef, Ref } from '@stardust-ui/react-component-ref'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, inputBehavior } from '@fluentui/accessibility'
+import { handleRef, Ref } from '@fluentui/react-component-ref'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
@@ -60,8 +60,8 @@ export interface InputProps
   /**
    * Called on change.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onChange?: ComponentEventHandler<InputProps & { value: string }>
 

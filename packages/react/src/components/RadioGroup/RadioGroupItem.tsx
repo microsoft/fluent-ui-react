@@ -1,6 +1,6 @@
-import { Accessibility, radioGroupItemBehavior } from '@stardust-ui/accessibility'
-import { Ref } from '@stardust-ui/react-component-ref'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, radioGroupItemBehavior } from '@fluentui/accessibility'
+import { Ref } from '@fluentui/react-component-ref'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
@@ -27,8 +27,8 @@ export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponent
 
   /**
    * Called after radio item checked state is changed.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   checkedChanged?: ComponentEventHandler<RadioGroupItemProps>
 
@@ -49,8 +49,8 @@ export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponent
 
   /**
    * Called after radio item is clicked.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onClick?: ComponentEventHandler<RadioGroupItemProps>
 
