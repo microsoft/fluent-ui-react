@@ -1,0 +1,10 @@
+{
+  "extends": "../build/tsconfig.docs.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "lib",
+    "types": ["node", "jest", "expect-puppeteer", "jest-environment-puppeteer"]
+  },
+  "include": ["src"],
+  "references": []
+}
