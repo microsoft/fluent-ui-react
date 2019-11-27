@@ -31,20 +31,18 @@ export default () => (
           // update only on 'active' prop change
           return prevProps.active === nextProps.active;
         });
-        
+
         // Replaces original Menu.Item with React.memo(Menu.Item)
         // Simplified - pass 'Component' to memoized props as well and use it to render.
-        const renderBlocker = item => render => {
-          return render(item, (Component, props) => <MenuItem {...props} />);
-        };
-        
+        const renderBlocker = (Component, props) => <MenuItem {...props} />;
+
         // Is static and created once
         const items = [
-          renderBlocker({ content: "One", key: "one" }),
-          renderBlocker({ content: "Two", key: "two" }),
-          renderBlocker({ content: "Three", key: "three" })
+          { content: 'One', key: 'one', children: renderBlocker },
+          { content: 'Two', key: 'two', children: renderBlocker },
+          { content: 'Three', key: 'three', children: renderBlocker },
         ];
-        
+
         function App() {
           return (
             <Provider theme={themes.teams}>
