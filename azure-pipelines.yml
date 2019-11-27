@@ -6,7 +6,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  - group: fluent-secrets
+  - group: fluent-variables-public
 
 steps:
   - task: NodeTool@0
