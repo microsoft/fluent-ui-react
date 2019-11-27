@@ -55,11 +55,15 @@ steps:
     displayName: Bundle statistics (master only)
 
   - script: |
-      if [ $BUILD_SOURCEBRANCHNAME == 'master' ]; then yarn perf; fi
+      if [ $BUILD_SOURCEBRANCHNAME == 'master' ]; then
+        yarn perf
+      else
+        echo "Skipping performance tests"
+      fi
     displayName: Performance tests (master only)
 
   - script: |
-      if [ $BUILD_SOURCEBRANCHNAME == 'master' ] && [ -n "${STATS_URI}" ]; then
+      if [ $BUILD_SOURCEBRANCHNAME == 'master' ]; then
         yarn stats:save --tag=`git tag --points-at HEAD`
       else
         echo 'skip saving statistics'
@@ -68,7 +72,6 @@ steps:
 
   - script: |
       if [ $BUILD_REASON == "PullRequest" ] && [ ! -z $DANGER_GITHUB_API_TOKEN ]; then
-        echo "Running Danger JS"
         yarn danger ci
       elif [ $BUILD_REASON != "PullRequest" ]; then
         echo "Skipping Danger JS because BUILD_REASON ${BUILD_REASON} != PullRequest"
