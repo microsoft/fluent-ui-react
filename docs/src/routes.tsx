@@ -17,6 +17,7 @@ import ColorSchemes from './views/ColorSchemes'
 import CategoryColorSchemes from './views/CategoryColorSchemes'
 
 import FAQ from './views/FAQ'
+import Performance from './views/Performance'
 import * as ShorthandProps from './pages/ShorthandProps.mdx'
 import Introduction from './views/Introduction'
 import PageNotFound from './views/PageNotFound'
@@ -101,6 +102,7 @@ const Routes = () => (
             <MarkdownPage page={ShorthandProps} />
           </Route>
           <Route exact path="/integrate-custom-components" component={IntegrateCustomComponents} />
+          <Route exact path="/performance" component={Performance} />
           <Route exact path="/composition">
             <MarkdownPage page={Composition} />
           </Route>
