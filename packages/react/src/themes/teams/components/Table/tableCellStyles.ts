@@ -25,6 +25,11 @@ export default {
       ...borderFocusStyles,
       padding: v.cellPadding,
       height: '100%',
+      ':focus': {
+        color: v.hoverColor,
+        backgroundColor: v.backgroundHoverColor,
+        borderColor: v.rowBorderHoverColor,
+      },
     }
   },
   content: ({

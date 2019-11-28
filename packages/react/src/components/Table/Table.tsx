@@ -89,7 +89,6 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
 
     return _.map(rows, (row: TableRowProps, index: number) => {
       const props = {
-        role: accessibility.attributes.row.role,
         compact,
       } as TableRowProps
       const overrideProps = handleVariablesOverrides(variables)
@@ -104,7 +103,6 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
     }
 
     const headerRowProps = {
-      role: accessibility.attributes.row.role,
       header: true,
       compact,
       className: Table.slotClassNames.header,

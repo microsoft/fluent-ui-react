@@ -80,3 +80,12 @@ export { default as tableBehavior } from './Table/tableBehavior'
 export { default as tableRowBehavior } from './Table/tableRowBehavior'
 export { default as tableCellBehavior } from './Table/tableCellBehavior'
 export { default as tableHeaderCellBehavior } from './Table/tableHeaderCellBehavior'
+export { default as gridCellByCellBehavior } from './Table/gridCellByCellBehavior'
+export { default as gridNestedBehavior } from './Table/gridNestedBehavior'
+export { default as gridHeaderRowBehavior } from './Table/gridHeaderRowBehavior'
+export { default as gridHeaderCellBehavior } from './Table/gridHeaderCellBehavior'
+export { default as gridRowBehavior } from './Table/gridRowBehavior'
+export { default as gridCellBehavior } from './Table/gridCellBehavior'
+export {
+  default as gridCellMultipleFocusableBehavior,
+} from './Table/gridCellMultipleFocusableBehavior'

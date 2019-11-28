@@ -27,11 +27,17 @@ export default {
       borderBottomColor: v.rowBorderColor,
       padding: v.rowPadding,
       width: '100%',
+      ':focus': {
+        color: v.hoverColor,
+        backgroundColor: v.backgroundHoverColor,
+        borderColor: v.rowBorderHoverColor,
+      },
       ':hover': {
         color: v.hoverColor,
         backgroundColor: v.backgroundHoverColor,
         borderColor: v.rowBorderHoverColor,
       },
+      // edit as border focus styles override my focus above
       ...borderFocusStyles,
       ...(header && {
         fontSize: v.headerFontSize,

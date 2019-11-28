@@ -1,4 +1,5 @@
 import * as customPropTypes from '@fluentui/react-proptypes'
+import { Ref } from '@fluentui/react-component-ref'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -75,6 +76,14 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
     accessibility: tableRowBehavior as Accessibility,
   }
 
+  rowRef = React.createRef<HTMLElement>()
+
+  actionHandlers = {
+    unsetRowTabbable: e => {
+      this.rowRef.current.setAttribute('tabindex', '-1')
+    },
+  }
+
   renderCells(variables: ComponentVariablesObject) {
     const { items, header } = this.props
 
@@ -100,15 +109,17 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
     const hasChildren = childrenExist(children)
 
     return (
-      <ElementType
-        className={classes.root}
-        {...accessibility.attributes.root}
-        {...unhandledProps}
-        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
-      >
-        {hasChildren && children}
-        {!hasChildren && this.renderCells(variables)}
-      </ElementType>
+      <Ref innerRef={this.rowRef}>
+        <ElementType
+          className={classes.root}
+          {...accessibility.attributes.root}
+          {...unhandledProps}
+          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
+        >
+          {hasChildren && children}
+          {!hasChildren && this.renderCells(variables)}
+        </ElementType>
+      </Ref>
     )
   }
 }
