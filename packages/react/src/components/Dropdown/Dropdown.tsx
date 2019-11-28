@@ -857,21 +857,19 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     getItemProps: (options: GetItemPropsOptions<ShorthandValue<DropdownItemProps>>) => any,
     selected: boolean,
   ) => (predefinedProps: DropdownItemProps) => ({
-    accessibilityItemProps: {
-      ...getItemProps({
-        item,
-        index,
-        onClick: e => {
-          e.stopPropagation()
-          e.nativeEvent.stopImmediatePropagation()
-          _.invoke(predefinedProps, 'onClick', e, predefinedProps)
-        },
-      }),
-      // for single selection the selected item should have aria-selected, instead of the highlighted
-      ...(!this.props.multiple && {
-        'aria-selected': selected,
-      }),
-    },
+    ...getItemProps({
+      item,
+      index,
+      onClick: e => {
+        e.stopPropagation()
+        e.nativeEvent.stopImmediatePropagation()
+        _.invoke(predefinedProps, 'onClick', e, predefinedProps)
+      },
+    }),
+    // for single selection the selected item should have aria-selected, instead of the highlighted
+    ...(!this.props.multiple && {
+      'aria-selected': selected,
+    }),
   })
 
   handleSelectedItemOverrides = (item: ShorthandValue<DropdownItemProps>, rtl: boolean) => (

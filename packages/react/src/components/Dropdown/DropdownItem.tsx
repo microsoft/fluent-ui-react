@@ -88,6 +88,10 @@ class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
     selected: PropTypes.bool,
   }
 
+  shouldComponentUpdate(props) {
+    return !_.isEqual(props, this.props)
+  }
+
   handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
