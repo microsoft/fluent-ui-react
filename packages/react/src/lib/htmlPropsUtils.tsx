@@ -159,15 +159,23 @@ export const htmlInputEvents: HtmlInputEvents[] = [
 
 export const htmlInputProps: HtmlInputProps[] = [...htmlInputAttrs, ...htmlInputEvents]
 
+export interface PartitionHTMLPropsOptions {
+  /** An array of html input props */
+  htmlProps?: HtmlInputProps[]
+  /** Includes all input props that starts with "aria-" */
+  includeAria?: boolean
+}
+
 /**
- * Returns an array of objects consisting of: props of html input element and restProps.
- * @param {object} props A ReactElement props object
- * @param {Object} [options={}]
- * @param {Array} [options.htmlProps] An array of html input props
- * @param {boolean} [options.includeAria] Includes all input props that starts with "aria-"
- * @returns {[{}, {}]} An array of objects
+ * Returns props of html input element and restProps.
+ * @param props - A ReactElement props object
+ * @param options - Options for
+ * @returns - 2-element array. First element is props of HTML input element and second element is the other props.
  */
-export const partitionHTMLProps = (props, options: any = {}) => {
+export const partitionHTMLProps = (
+  props: { [key: string]: any },
+  options: PartitionHTMLPropsOptions = {},
+): [{ [key: string]: any }, { [key: string]: any }] => {
   const { htmlProps = htmlInputProps, includeAria = true } = options
   const inputProps = {}
   const restProps = {}

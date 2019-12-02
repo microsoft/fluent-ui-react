@@ -342,8 +342,9 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         onClick: this.resetSourceCode,
         disabled: !wasCodeChanged,
       },
-      render =>
-        render({ content: 'Copy' }, (Component, props) => (
+      {
+        content: 'Copy',
+        children: (Component, props) => (
           <CopyToClipboard key="copy" value={currentCode}>
             {(active, onClick) => (
               <Component
@@ -354,7 +355,8 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
               />
             )}
           </CopyToClipboard>
-        )),
+        ),
+      },
       {
         disabled: currentCodeLanguage !== 'ts',
         icon: 'github',

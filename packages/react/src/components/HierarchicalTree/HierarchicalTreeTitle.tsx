@@ -27,8 +27,8 @@ export interface HierarchicalTreeTitleProps
   /**
    * Called on click.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onClick?: ComponentEventHandler<HierarchicalTreeTitleProps>
 

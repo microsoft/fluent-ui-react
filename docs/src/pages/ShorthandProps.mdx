@@ -56,126 +56,53 @@ It is also possible to pass falsy values (`false`, `null` or
 <Dropdown toggleIndicator={null} />
 ```
 
-## Function as value
+## Using Render Props
 
-Providing function as a shorthand value is the most involving but, at the same time, the most
-powerful option for customizing component's slot. The only requirements for this function are:
-
-- it should finish synchronously
-- it should return React Element as a result
-
-Thus, in its simplest form, it could be used the following way:
+Our components implement [`render props`](https://reactjs.org/docs/render-props.html) technique to allow customize rendered output or wrap component slots. All Stardust components support it via `children` prop on shorthand objects, for example:
 
 ```jsx
-<Button icon={() => <Icon name="emoji" />} />
-```
-
-However, if it will be just about that, this function form wouldn't introduce any additional value. So, lets take a look on the scenarios where it is really helpful.
-
-### 'Render' callback argument
-
-When function is provided as a shorthand value, there is a `render` callback provided
-as its argument. This `render` argument is a function that 'knows' how to render all
-the previously considered shorthand types - i.e. primitive values, objects, React Elements.
-
-Here is an example that represents this:
-
-```jsx
-<>
-  {/* All three have the same effect: */}
-  <Button icon="emoji" />
-  {/* render() transforms string to <Icon /> element */}
-  <Button icon={render => render('emoji')} />
-  {/* render() transforms object to <Icon /> element */}
-  <Button icon={render => render({ name: 'emoji' })} />
-</>
-```
-
-### Handle Async data loading scenarios
-
-This 'render callback' arg makes it possible for the client to tackle scenarios where slot's data may be fetched asynchronously.
-
-Consider the following scenario: suppose we need to render `Button`'s icon, but the
-problem is that icon's name is fetched from some remote source. Thus, we cannot do it as
-simply as that, as icon's name is not known at the moment `Button` is rendered:
-
-```jsx
-<Button icon={{ name: /* unknown yet */ undefined }} />
-```
-
-It is quite common case that there is some component that is responsible for data fetching
-abstraction - and it is possible to 'tell' this component what should be rendered while data
-is loading, as well as what should be rendered when data is fetched.
-
-```jsx
-<AsyncData
-  getData={fetch('https://some/url')}
-  onLoading={<div>Loading..</div>} // renders when data is loading
-  onLoaded={data => <div>Loaded Data: {data}</div>} // renders once data is fetched
+<Attachment
+  header="Contacts.docx"
+  action={{
+    content: '?',
+    children: (
+      Component /* evaluated `ElementType`, `Button` in this case */,
+      props /* necessary attributes (including accessibility) that should be applied */,
+    ) => <Tooltip content="Help..." trigger={<Component {...props} />} />,
+  }}
 />
 ```
 
-Lets suppose that we want to render `loading` icon before data is fetched, and switch it with
-the icon which `name` will be provided by fetched `data` object. Also, note
-that we have `render` arg that knows _how_ to render `Button`'s icons.
-
-Putting it all together, we will address our async data fetch case:
+You can also use this technique to completely replace slot contents:
 
 ```jsx
 <Button
-  icon={render => (
-    <AsyncData
-      getData={fetch('https://some/url')}
-      onLoading={<Icon name="loading" />}
-      /* using 'render' arg here to render icon from loaded na */
-      onLoaded={data => render({ name: data.iconName })}
-    />
-  )}
+  content="Click me"
+  icon={{
+    /* ⚠️ Replacement without applying props can break accessibility and styling concerns */
+    children: () => <FaBeer />,
+  }}
 />
 ```
 
-Note that this example can be further simplified, as `render` can be used to render
-'loading' icon as well:
+### Use with shorthand collections
+
+The same approach can be used with components that accept shorthand collections, for example `Menu`:
 
 ```jsx
-<Button
-  icon={render => (
-    <AsyncData
-      getData={fetch('https://some/url')}
-      /* using 'render' arg here to render loading icon as well */
-      onLoading={render('loading')}
-      onLoaded={data => render({ name: data.iconName })}
-    />
-  )}
+<Menu
+  items={[
+    {
+      key: 'first',
+      content: 'First',
+      tooltip: 'First item',
+      children: (Component, props) => {
+        /* ☝️ `tooltip` comes from shorthand object */
+        const { tooltip, ...rest } = props
+
+        return <Tooltip content={tooltip} trigger={<Component {...props} />} />
+      },
+    },
+  ]}
 />
 ```
-
-### Customizing rendered tree
-
-There is another use case that `render` callback arg is very useful for - this is the
-case where custom element's tree should be rendered for the slot, but, at the same time, all
-the evaluated styles and accessibility behaviors should be preserved for rendered custom
-element.
-
-```jsx
-<Button
-  icon={render =>
-    render(
-      /* what to render */
-      { name: 'emoji' },
-
-      /* how to render */
-      (ComponentType, props) => (
-        <div class="my-icon-container">
-          <i class="my-emoji-icon" {...props.accessibility.root} />
-        </div>
-      ),
-    )
-  }
-/>
-```
-
-Here we are passing a recipe of how evaluated `ComponentType` (`Icon` in our
-case, which is ignored by the rendered tree) and `props` should be passed to custom
-elements tree. Note that `props` object, amongst others, contains all the necessary
-evaluated accessibility attributes that should be applied to rendered element.

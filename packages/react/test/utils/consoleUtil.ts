@@ -7,13 +7,11 @@ let isDisabledOnce
 
 /**
  * Enable console logging.
- * @returns {Object} console
  */
 const enable = () => Object.assign(console, original)
 
 /**
  * Disable console logging.
- * @returns {Object} console
  */
 const disable = () => Object.assign(console, disabled)
 

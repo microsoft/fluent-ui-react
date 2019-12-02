@@ -56,15 +56,15 @@ export interface ButtonProps
 
   /**
    * Called after a user clicks the button.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onClick?: ComponentEventHandler<ButtonProps>
 
   /**
    * Called after a user focuses the button.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onFocus?: ComponentEventHandler<ButtonProps>
 

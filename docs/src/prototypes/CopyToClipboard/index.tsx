@@ -34,10 +34,12 @@ const CopyToClipboardInMenu: React.FC = props => {
     menu: [
       'Open File...',
       'Save File...',
-      render =>
-        render('Copy text', (Component, props) => {
-          return <CopyToClipboard value={'Julius Caesar'} trigger={<Component {...props} />} />
-        }),
+      {
+        content: 'Copy text',
+        children: (Component, props) => {
+          return <CopyToClipboard value="Julius Caesar" trigger={<Component {...props} />} />
+        },
+      },
     ],
   }
 
@@ -47,33 +49,32 @@ const CopyToClipboardInMenu: React.FC = props => {
 const CopyToClipboardAttached: React.FC = props => {
   const [target, setTarget] = React.useState<HTMLElement>(null)
 
-  const item = {
-    key: 'edit',
-    content: 'Edit',
-    menu: [
-      'Open File...',
-      'Save File...',
-      render =>
-        render('Copy text', (Component, props) => {
-          return (
+  const items = [
+    {
+      key: 'edit',
+      content: 'Edit',
+      children: (Component, props) => (
+        <Ref innerRef={setTarget}>
+          <Component {...props} />
+        </Ref>
+      ),
+      menu: [
+        'Open File...',
+        'Save File...',
+        {
+          content: 'Copy text',
+          children: (Component, props) => (
             <CopyToClipboard
               target={target}
               value="Julius Caesar"
               trigger={<Component {...props} />}
             />
-          )
-        }),
-    ],
-  }
-
-  const items = [
-    render =>
-      render(item, (Component, props) => (
-        <Ref innerRef={setTarget}>
-          <Component {...props} />
-        </Ref>
-      )),
+          ),
+        },
+      ],
+    },
   ]
+
   return <Menu items={items} />
 }
 

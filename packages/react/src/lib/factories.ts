@@ -58,6 +58,16 @@ export function createShorthand<P>({
   const valIsRenderFunction =
     typeof valueOrRenderCallback === 'function' && !React.isValidElement(valueOrRenderCallback)
   if (valIsRenderFunction) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.warn(
+        [
+          '@stardust-ui/react:',
+          'The usage of render callback is deprecated and will be removed soon. Please use render props for shorthands instead.',
+          'See: https://stardust-ui.github.io/react/shorthand-props',
+        ].join(' '),
+      )
+    }
+
     return createShorthandFromRenderCallback({
       allowsJSX,
       Component,
@@ -86,20 +96,20 @@ export type ShorthandFactory<P> = (
 // Factory Creators
 // ============================================================
 /**
- * @param {Object} config Options passed to factory
- * @param {React.ElementType} config.Component A ReactClass or string
- * @param {string} config.mappedProp A function that maps a primitive value to the Component props
- * @param {string} config.mappedArrayProp A function that maps an array value to the Component props
- * @param {string} config.allowsJSX Indicates if factory supports React Elements
- * @returns {function} A shorthand factory function waiting for `val` and `defaultProps`.
+ * @param config - Options passed to factory
+ * @returns A shorthand factory function waiting for `val` and `defaultProps`.
  */
 export function createShorthandFactory<
   TStringElement extends keyof JSX.IntrinsicElements,
   P
 >(config: {
+  /** A ReactClass or string */
   Component: TStringElement
+  /** A function that maps a primitive value to the Component props */
   mappedProp?: keyof PropsOf<TStringElement>
+  /** A function that maps an array value to the Component props */
   mappedArrayProp?: keyof PropsOf<TStringElement>
+  /** Indicates if factory supports React Elements */
   allowsJSX?: boolean
 }): ShorthandFactory<P>
 export function createShorthandFactory<
@@ -277,6 +287,10 @@ function createShorthandFromValue<P>({
   const { render } = options
   if (render) {
     return render(Component, props)
+  }
+
+  if (typeof props.children === 'function') {
+    return props.children(Component, { ...props, children: undefined })
   }
 
   if (!allowsJSX && valIsReactElement) {
