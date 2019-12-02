@@ -67,7 +67,7 @@ export interface SliderProps
 
   /**
    * Callback that creates custom accessibility message a screen reader narrates when the value changes.
-   * @param {SliderProps} props - Slider props.
+   * @param props - Slider props.
    */
   getA11yValueMessageOnChange?: (props: SliderProps) => string
 
@@ -85,8 +85,8 @@ export interface SliderProps
 
   /**
    * Called after item checked state is changed.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onChange?: ComponentEventHandler<SliderProps & { value: string }>
 

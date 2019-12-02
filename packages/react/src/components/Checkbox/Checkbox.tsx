@@ -47,15 +47,15 @@ export interface CheckboxProps extends UIComponentProps, ChildrenComponentProps 
 
   /**
    * Called after a checkbox's checked state is changed.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onChange?: ComponentEventHandler<CheckboxProps>
 
   /**
    * Called after a checkbox is clicked.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onClick?: ComponentEventHandler<CheckboxProps>
 

@@ -1,14 +1,19 @@
+import * as React from 'react'
+import { ComponentInfo } from '../types'
+
 /**
  * Get the Webpack Context for all Component.info.json files.
  */
-const componentInfoContext = require.context(
-  '../../../docs/src/componentInfo',
-  true,
-  /\.info\.json$/,
-)
+const requireContext = require.context('../../../docs/src/componentInfo', true, /\.info\.json$/)
 
-const keys = componentInfoContext.keys()
-const infoObjects = keys.map(componentInfoContext)
+const keys: string[] = requireContext.keys()
+const infoObjects: ComponentInfo[] = keys.map(requireContext)
+
+const componentInfoContext: {
+  byDisplayName: { [componentName: string]: ComponentInfo }
+  fromComponent: (Component: React.ComponentType) => ComponentInfo
+  parents: ComponentInfo[]
+} = {} as any
 
 componentInfoContext.byDisplayName = infoObjects.reduce((acc, next) => {
   acc[next.displayName] = next

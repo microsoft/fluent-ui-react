@@ -52,8 +52,8 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
   /**
    * Called on dropdown item click.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onClick?: ComponentEventHandler<DropdownItemProps>
 
