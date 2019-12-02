@@ -3,7 +3,7 @@ import { Provider, themes } from '@fluentui/react'
 
 // TODO:
 // Relative pathing isn't the best here, but docs containing perf stories isn't a package that can be added as a dep.
-const reqContext = require.context('../../docs/src', true, /\.perf\.tsx$/)
+const reqContext = require.context('../../../docs/src', true, /\.perf\.tsx$/)
 
 const decorator = content => <Provider theme={themes.teams}>{content}</Provider>
 

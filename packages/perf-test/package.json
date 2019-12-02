@@ -1,5 +1,5 @@
 {
-  "name": "perf-test",
+  "name": "@fluentui/perf-test",
   "description": "Perf tests for fluentui.",
   "version": "0.0.1",
   "private": true,
