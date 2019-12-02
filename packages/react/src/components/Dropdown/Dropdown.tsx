@@ -435,6 +435,8 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       getA11yStatusMessage,
       itemToString,
       toggleIndicator,
+      renderedItems,
+      items,
     } = this.props
     const { highlightedIndex, open, searchQuery, value } = this.state
 
@@ -453,6 +455,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
           onStateChange={this.handleStateChange}
           labelId={this.props['aria-labelledby']}
           environment={this.context.target.defaultView}
+          itemCount={renderedItems ? items.length : undefined}
           inputId={
             this.props.searchInput && this.props.searchInput['id']
               ? this.props.searchInput['id']
