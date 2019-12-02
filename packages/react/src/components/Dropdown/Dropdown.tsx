@@ -715,8 +715,10 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
             aria-hidden={!open}
             onFocus={this.handleTriggerButtonOrListFocus}
             onBlur={this.handleListBlur}
-            items={renderedItems ? renderedItems(items) : items}
-          />
+            items={renderedItems ? undefined : items}
+          >
+            {renderedItems ? renderedItems(items) : null}
+          </List>
         </Popper>
       </Ref>
     )
@@ -762,24 +764,23 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       },
     }))
 
-    return [
-      ...items,
-      loading &&
-        ListItem.create(loadingMessage, {
-          defaultProps: () => ({
-            key: 'loading-message',
-            styles: styles.loadingMessage,
-          }),
+    if (loading) {
+      items.push(ListItem.create(loadingMessage, {
+        defaultProps: () => ({
+          key: 'loading-message',
+          styles: styles.loadingMessage,
         }),
-      !loading &&
-        items.length === 0 &&
-        ListItem.create(noResultsMessage, {
-          defaultProps: () => ({
-            key: 'no-results-message',
-            styles: styles.noResultsMessage,
-          }),
+      }) as any)
+    } else if (items.length === 0) {
+      items.push(ListItem.create(noResultsMessage, {
+        defaultProps: () => ({
+          key: 'no-results-message',
+          styles: styles.noResultsMessage,
         }),
-    ] as React.ReactElement[]
+      }) as any)
+    }
+
+    return items as any[]
   }
 
   renderSelectedItems(variables, rtl: boolean) {
