@@ -1,5 +1,4 @@
 import * as React from 'react'
-import * as _ from 'lodash'
 import { Tree, TreeItemProps } from '@fluentui/react'
 import { CellMeasurer, CellMeasurerCache, List as ReactVirtualizedList } from 'react-virtualized'
 import getItems from './itemsGenerator'
@@ -46,7 +45,7 @@ function TreeVirtualizer(props: TreeVirtualizerProps) {
 
     return (
       <CellMeasurer cache={cache} columnIndex={0} key={key} parent={parent} rowIndex={index}>
-        {React.cloneElement(_.invoke(renderedItems[index], 'children'), {
+        {React.cloneElement(renderedItems[index], {
           style,
           onFocusParent: (e, treeItemProps: TreeItemProps) => {
             handleFocusParent(e, treeItemProps, index)
