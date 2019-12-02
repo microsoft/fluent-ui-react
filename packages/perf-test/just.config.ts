@@ -30,3 +30,5 @@ task('perf-test:run', () => {
 // TOOD: is build doing anything meaningful? only if there's source that's not a just script?
 // TODO: if stories/scenarios are added in this package, make sure build catches type errors
 task('perf-test', series('build', 'perf-test:bundle', 'perf-test:run'))
+
+task('build', series('build', 'perf-test:bundle'))

@@ -7,6 +7,11 @@
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
   },
+  "scripts": {
+    "build": "just-scripts build",
+    "clean": "just-scripts clean",
+    "test": "just-scripts test"
+  },
   "devDependencies": {
     "@fluentui/digest": "^0.0.1",
     "@types/react": "^16.8.10",
