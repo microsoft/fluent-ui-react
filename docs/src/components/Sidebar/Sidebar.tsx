@@ -222,6 +222,15 @@ class Sidebar extends React.Component<any, any> {
               to: '/integrate-custom-components',
             },
           },
+          {
+            key: 'performance',
+            title: {
+              content: 'Performance',
+              as: NavLink,
+              activeClassName: 'active',
+              to: '/performance',
+            },
+          },
         ],
       },
     ]
