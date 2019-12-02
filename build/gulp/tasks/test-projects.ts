@@ -50,6 +50,8 @@ const packStardustPackages = async (logger: Function): Promise<PackedPackages> =
   delete stardustPackages['@fluentui/eslint-plugin']
   delete stardustPackages['@fluentui/internal-tooling']
   delete stardustPackages['@fluentui/scripts']
+  delete stardustPackages['@fluentui/digest']
+  delete stardustPackages['@fluentui/perf-test']
 
   await Promise.all(
     Object.keys(stardustPackages).map(async (packageName: string) => {
