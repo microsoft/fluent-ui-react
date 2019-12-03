@@ -31,15 +31,7 @@ const dividerStyles: ComponentSlotStylesPrepared<DividerProps, DividerVariables>
       display: 'flex',
       alignItems: 'center',
       ...(!fitted && {
-        ...(vertical
-          ? {
-              paddingLeft: variables.dividerPadding,
-              paddingRight: variables.dividerPadding,
-            }
-          : {
-              paddingTop: variables.dividerPadding,
-              paddingBottom: variables.dividerPadding,
-            }),
+        padding: vertical ? `0 ${variables.dividerPadding}` : `${variables.dividerPadding} 0`,
       }),
       ...(important && {
         fontWeight: variables.importantFontWeight,
