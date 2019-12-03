@@ -5,6 +5,11 @@ import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 const Variations = () => (
   <ExampleSection title="Variations">
     <ComponentExample
+      title="Vertical"
+      description="A divider can be displayed vertically."
+      examplePath="components/Divider/Variations/DividerExampleVertical"
+    />
+    <ComponentExample
       title="Color"
       description="A divider can have different colors."
       examplePath="components/Divider/Variations/DividerExampleColor"
