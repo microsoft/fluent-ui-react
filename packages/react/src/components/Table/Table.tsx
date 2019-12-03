@@ -51,6 +51,7 @@ const handleVariablesOverrides = variables => predefinedProps => ({
  * A Table is used to display data in tabular layout
  * @accessibilityIssues
  * [NVDA narrate table title(aria-label) twice](https://github.com/nvaccess/nvda/issues/10548)
+ * [Accessibility DOM > Table > gridcell > when gridcell is focused, then selected state is send to reader](https://bugs.chromium.org/p/chromium/issues/detail?id=1030378)
  */
 class Table extends UIComponent<WithAsProp<TableProps>> {
   static displayName = 'Table'
@@ -61,6 +62,18 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
 
   static slotClassNames: TableSlotClassNames = {
     header: `${Table.className}__header`,
+  }
+
+  actionHandlers = {
+    performClick: e => {
+      // event.preventDefault()
+      this.handleClick(e)
+    },
+  }
+
+  handleClick = (e: React.SyntheticEvent) => {
+    // _.invoke(this.props.rows[0], 'onClick', e, this.props.rows[0])
+    console.log('why not')
   }
 
   static propTypes = {
@@ -90,6 +103,9 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
     return _.map(rows, (row: TableRowProps, index: number) => {
       const props = {
         compact,
+        onClick: (e, props) => {
+          _.invoke(row, 'onClick', e, props)
+        },
       } as TableRowProps
       const overrideProps = handleVariablesOverrides(variables)
       return TableRow.create(row, { defaultProps: () => props, overrideProps })

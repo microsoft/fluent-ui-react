@@ -27,6 +27,9 @@ const gridRowBehavior: Accessibility = props => ({
       unsetRowTabbable: {
         keyCombinations: [{ keyCode: keyboardKey.Tab, shiftKey: true }],
       },
+      performClick: {
+        keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
+      },
     },
   },
 })

@@ -35,11 +35,6 @@ const Usage = () => (
       description="Navigable table by row and cell"
       examplePath="components/Table/Usage/TableExampleNavigable"
     />
-    <ComponentExample
-      title="Navigable table by cell"
-      description="Navigable table cell by cell"
-      examplePath="components/Table/Usage/TableExampleNavigableByCell"
-    />
   </ExampleSection>
 )
 

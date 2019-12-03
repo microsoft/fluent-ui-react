@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Table, Button } from '@fluentui/react'
+import { Table, Button, Provider, Flex } from '@fluentui/react'
 import {
   gridNestedBehavior,
   gridRowBehavior,
@@ -9,6 +9,36 @@ import {
   gridHeaderCellBehavior,
 } from '@fluentui/accessibility'
 
+function tagButton(tagName: string) {
+  return (
+    <Provider
+      theme={{
+        componentVariables: {
+          Button: siteVars => ({
+            color: siteVars.colorScheme.brand.foreground,
+            colorHover: siteVars.colorScheme.brand.foreground,
+            colorFocus: siteVars.colorScheme.default.foreground,
+            colorDisabled: siteVars.colorScheme.brandForegroundDisabled,
+            backgroundColor: siteVars.colorScheme.default.background,
+            backgroundColorActive: siteVars.colorScheme.brandBorderPressed,
+            backgroundColorHover: siteVars.colorScheme.brand.backgroundHover1,
+            backgroundColorFocus: siteVars.colorScheme.default.background,
+            backgroundColorDisabled: siteVars.colorScheme.brand.backgroundDisabled,
+            borderColor: siteVars.colorScheme.brandBorder2,
+            borderColorHover: siteVars.colorScheme.brandBorderHover,
+          }),
+        },
+      }}
+    >
+      <Button size="small" content={tagName} />
+    </Provider>
+  )
+}
+
+function handleRowClick(index) {
+  alert(`OnClick on the row ${index} executed.`)
+}
+
 const header = {
   key: 'header',
   items: [
@@ -16,30 +46,31 @@ const header = {
     { content: 'Name', key: 'name', accessibility: gridHeaderCellBehavior },
     { content: 'Picture', key: 'pic', accessibility: gridHeaderCellBehavior },
     { content: 'Age', key: 'action', accessibility: gridHeaderCellBehavior },
-    { content: ' ', key: 'more option' },
+    { content: 'Tags', key: 'tags', accessibility: gridHeaderCellBehavior },
+    { key: 'more options' },
   ],
   accessibility: gridHeaderRowBehavior,
 }
 
 const moreOptionButton = {
-  content: (
-    <span>
-      <Button tabIndex={-1} icon="more" iconOnly title="More options" />
-    </span>
-  ),
+  content: <Button tabIndex={-1} icon="more" circular text iconOnly title="More options" />,
   truncateContent: true,
-  key: '1-5',
+  key: '1-6',
+  onClick: e => {
+    alert('more option button clicked')
+    e.stopPropagation()
+  },
 }
 
 const moreActionableElements = {
   content: (
-    <span>
-      <Button tabIndex={-1} icon="more" iconOnly title="More options" />
-      <Button tabIndex={-1} icon="more" iconOnly title="More options" />
-      <Button tabIndex={-1} icon="more" iconOnly title="More options" />
-    </span>
+    <Flex gap="gap.small" vAlign="center">
+      {tagButton('tag 1')}
+      {tagButton('tag 2')}
+      {/* table layout not support now more content in the cell */}
+      {/* <Button tabIndex={-1} icon="edit" circular text iconOnly title="edit tags" /> */}
+    </Flex>
   ),
-  truncateContent: true,
   key: '1-5',
   accessibility: gridCellMultipleFocusableBehavior,
 }
@@ -57,8 +88,11 @@ const rowsPlain = [
       { content: 'None', key: '1-3', accessibility: gridCellBehavior },
       { content: '30 years', key: '1-4', accessibility: gridCellBehavior },
       moreActionableElements,
+      moreOptionButton,
     ],
     accessibility: gridRowBehavior,
+    onClick: () => handleRowClick(1),
+    'aria-label': 'custom text',
   },
   {
     key: 2,
@@ -67,9 +101,11 @@ const rowsPlain = [
       { content: 'Alex', key: '2-2', accessibility: gridCellBehavior },
       { content: 'None', key: '2-3', accessibility: gridCellBehavior },
       { content: '1 year', key: '2-4', accessibility: gridCellBehavior },
+      moreActionableElements,
       moreOptionButton,
     ],
     accessibility: gridRowBehavior,
+    onClick: () => handleRowClick(2),
   },
   {
     key: 3,
@@ -83,9 +119,11 @@ const rowsPlain = [
         key: '3-4',
         accessibility: gridCellBehavior,
       },
+      {},
       moreOptionButton,
     ],
     accessibility: gridRowBehavior,
+    onClick: () => handleRowClick(3),
   },
 ]
 
@@ -94,7 +132,7 @@ const StaticTable = () => (
     variables={{ cellContentOverflow: 'none' }}
     header={header}
     rows={rowsPlain}
-    aria-label="Static table"
+    aria-label="Nested navigation"
     accessibility={gridNestedBehavior}
   />
 )

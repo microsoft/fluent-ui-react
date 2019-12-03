@@ -26,6 +26,7 @@ export default {
       borderColor: 'transparent',
       borderBottomColor: v.rowBorderColor,
       padding: v.rowPadding,
+      position: 'relative',
       width: '100%',
       ':focus': {
         color: v.hoverColor,

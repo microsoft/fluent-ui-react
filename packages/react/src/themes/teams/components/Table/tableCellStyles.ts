@@ -24,12 +24,8 @@ export default {
       borderColor: 'transparent',
       ...borderFocusStyles,
       padding: v.cellPadding,
+      position: 'relative',
       height: '100%',
-      ':focus': {
-        color: v.hoverColor,
-        backgroundColor: v.backgroundHoverColor,
-        borderColor: v.rowBorderHoverColor,
-      },
     }
   },
   content: ({

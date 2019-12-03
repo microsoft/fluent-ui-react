@@ -82,6 +82,16 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
     unsetRowTabbable: e => {
       this.rowRef.current.setAttribute('tabindex', '-1')
     },
+    performClick: e => {
+      this.handleClick(e)
+    },
+  }
+
+  handleClick = (e: React.SyntheticEvent) => {
+    if (e.currentTarget === e.target) {
+      _.invoke(this.props, 'onClick', e, this.props)
+      e.preventDefault()
+    }
   }
 
   renderCells(variables: ComponentVariablesObject) {
@@ -112,6 +122,7 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
       <Ref innerRef={this.rowRef}>
         <ElementType
           className={classes.root}
+          onClick={this.handleClick}
           {...accessibility.attributes.root}
           {...unhandledProps}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
