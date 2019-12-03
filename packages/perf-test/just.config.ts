@@ -31,4 +31,7 @@ task('perf-test:run', () => {
 // TODO: if stories/scenarios are added in this package, make sure build catches type errors
 task('perf-test', series('build', 'perf-test:bundle', 'perf-test:run'))
 
-task('build', series('build', 'perf-test:bundle'))
+// TODO: Uncomment once stories can be referred to in a dependency.
+// This command will not be reliable until perf stories are in a package that can be set as a dep.
+// For now, the repo must be built with 'yarn build' before perf-test will build successfully.
+// task('build', series('build', 'perf-test:bundle'))
