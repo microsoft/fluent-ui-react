@@ -18,15 +18,17 @@ Fabric Checkbox [docs](https://developer.microsoft.com/en-us/fabric#/controls/we
 
 Stardust Checkbox [docs](https://microsoft.github.io/fluent-ui-react/components/checkbox/definition)
 
+Open UI Checkbox [docs](https://open-ui.org/components/checkbox)
+
 Material UI Checkbox [docs](https://material-ui.com/components/checkboxes/)
 
 BaseUI Checkbox [docs](https://baseweb.design/components/Checkbox/)
 
 Chakra Checkbox [docs](https://chakra-ui.com/Checkbox)
 
-Cabon Checkbox [docs](https://www.carbondesignsystem.com/components/checkbox/code)
+Carbon Checkbox [docs](https://www.carbondesignsystem.com/components/checkbox/code)
 
-AntD Checkbox [docs](https://ant.design/components/Checkbox/)
+AntD Checkbox [docs](https://ant.design/components/checkbox/)
 
 FastDNA Checkbox [docs](https://explore.fast.design/components/Checkbox)
 
@@ -46,7 +48,7 @@ FastDNA Checkbox [docs](https://explore.fast.design/components/Checkbox)
 | ariaDescribedBy      | string                                                      |
 | ariaLabel            | string                                                      |                                                
 | ariaLabelledBy       | string                                                      |                                                
-| as                   | React.ElementType                                           |
+| as                   | keyof JSX.IntrinsicElements                                 |
 | checked              | boolean                                                     |      
 | className            | string                                                      |
 | defaultChecked       | boolean                                                     |
@@ -74,8 +76,8 @@ https://developer.microsoft.com/en-us/fabric#/controls/web/checkbox
 
 | Name                 | Type                                                        | Notes                                                                          |
 | -------------------- | --------------------------------------------------------    | -------------------------------------------------------------------------------|
-| ariaLabel            | string                                                      |                                                                                |
 | ariaDescribedBy      | string                                                      |                                                                                |
+| ariaLabel            | string                                                      |                                                                                |
 | ariaLabelledBy       | string                                                      |                                                                                |
 | ariaPositionInset    | number                                                      |                                                                                |
 | ariaSetSize          | number                                                      |                                                                                |
@@ -89,7 +91,7 @@ https://developer.microsoft.com/en-us/fabric#/controls/web/checkbox
 | disabled             | boolean                                                     |                                                                                |
 | indeterminate        | boolean                                                     |                                                                                |
 | inputProps           | React.ButtonHTMLAttributes<HTMLElement or HTMLButtonElement>|                                                                                |
-| keytipProps          | IKpeytipProps                                               |                                                                                |  
+| keytipProps          | IKeytipProps                                               |                                                                                |  
 | label                | string                                                      |                                                                                |
 | onChange             | (ev, checked) => void                                       |                                                                                |
 | onRenderLabel        | IRenderFunction<ICheckboxProps>                             |                                                                                |
@@ -101,33 +103,48 @@ https://developer.microsoft.com/en-us/fabric#/controls/web/checkbox
 
 | Name                 | Type                                                        | Notes                                                                          |
 | -------------------- | --------------------------------------------------------    | -------------------------------------------------------------------------------|
-| animation            | AnimationProp                                               |                                                                                |
-| as                   | React.ElementType                                           | default type is "div"                                                          |
-| className            | string                                                      |                                                                                |
-| content              | ReactNode                                                   |                                                                                |
-| design               | ComponentDesign                                             |                                                                                |
-| disableAnimations    | boolean                                                     | default false                                                                  |
-| overwrite            | boolean                                                     | default false                                                                  |
-| renderer             | Renderer                                                    |                                                                                |
-| rtl                  | boolean                                                     | default false                                                                  |
-| styles               | ComponentSlotStyle                                          |                                                                                |
-| target               | Document                                                    |                                                                                |
-| theme                | ThemeInput                                                  |                                                                                |
-| variables            | any                                                         |                                                                                |
+| accessibility        | Accessibility                                               |                                                                                 |
+| animation            | AnimationProp                                               |                                                                                 |
+| as                   | React.ElementType                                           | default type is "div"                                                           |
+| checked              | boolean                                                     | default false                                                                   |
+| className            | string                                                      |                                                                                 |
+| defaultChecked       | boolean                                                     | default false                                                                   |
+| design               | ComponentDesign                                             |                                                                                 |
+| disabled             | boolean                                                     | default false                                                                   |
+| icon                 | ShorthandValue<IconProps>                                   | {}                                                                             |
+| label                | ShorthandValue<IconProps>                                   |                                                                                 |
+| labelPosition        | enum (Values: start, end)                                   | "end"                                                                           |
+| onChange             | ComponentEventHandler                                       |                                                                                 |
+| onClick              | ComponentEventHandler                                       |                                                                                 |
+| styles               | ComponentSlotStyle                                          |                                                                                 |
+| toggle               | boolean                                                     | default false                                                                   |
+| variables            | any                                                         |                                                                                 |
 
 ### Differences of Fabric/Stardust to resolve
 
 | Name                 | Type                                                        | Notes                                                                          |
 | -------------------- | --------------------------------------------------------    | -------------------------------------------------------------------------------|
+| accessibility        | Accessibility                                               |                                                                                |
 | animation            | AnimationProp                                               |                                                                                |
-| disableAnimations    | boolean                                                     | default false                                                                  |
-| overwrite            | boolean                                                     | default false                                                                  |
-| renderer             | Renderer                                                    |                                                                                |
-| variables            | any                                                         |                                                                                |
-| target               | Document                                                    |                                                                                |
-| content              | ReactNode                                                   |                                                                                |
-| ariaPositionInSet    | number                                                      | if checkbox is in a set, should be up to the user to provide a11y              |
+| as                   | React.ElementType                                           | default type is "div"                                                          |
+| ariaDescribedBy      | string                                                      |                                                                                |
+| ariaLabel            | string                                                      |                                                                                |
+| ariaLabelledBy       | string                                                      |                                                                                |
+| ariaPositionInSet    | number                                                      | if checkbox is in a set, should be up to the user to provide a11y            |
 | ariaSetSize          | number                                                      |                                                                                |
+| boxSide              | 'start' or 'end'                                            | default 'start'                                                                |
+| checkmarkIconProps   | IIconProps                                                  |                                                                                |
+| componentRef         | IRefObject<ICheckbox>                                       |                                                                                |
+| defaultIndeterminate | boolean                                                     |                                                                                |
+| indeterminate        | boolean                                                     |                                                                                |
+| inputProps           | React.ButtonHTMLAttributes<HTMLElement or HTMLButtonElement>|                                                                                |
+| keytipProps          | IKpeytipProps                                               |                                                                                |
+| labelPosition        | enum (Values: start, end)                                   | "end"                                                                          |
+| onRenderLabel        | IRenderFunction<ICheckboxProps>                             |                                                                                |
+| onClick              | ComponentEventHandler                                       |                                                                                |
+| theme                | ITheme                                                      |                                                                                |
+| toggle               | boolean                                                     | default false                                                                  |  
+| variables            | any                                                         |                                                                                |
 
 ### Conversion process from Fabric 7 to Fluent UI Checkbox
 
@@ -301,9 +318,7 @@ render() {
 ```
 
 ### Composition
-
-1 per slot
-1 per state, tagged on root
+TBD
 
 ### Component design tokens
 
