@@ -138,7 +138,7 @@ https://developer.microsoft.com/en-us/fabric#/controls/web/checkbox
 | defaultIndeterminate | boolean                                                     |                                                                                |
 | indeterminate        | boolean                                                     |                                                                                |
 | inputProps           | React.ButtonHTMLAttributes<HTMLElement or HTMLButtonElement>|                                                                                |
-| keytipProps          | IKpeytipProps                                               |                                                                                |
+| keytipProps          | IKeytipProps                                                |                                                                                |
 | labelPosition        | enum (Values: start, end)                                   | "end"                                                                          |
 | onRenderLabel        | IRenderFunction<ICheckboxProps>                             |                                                                                |
 | onClick              | ComponentEventHandler                                       |                                                                                |
@@ -167,6 +167,7 @@ defaultChecked: overloading with checked - can just set default value of checked
 | input     | actual checkbox element - what gets checked/unchecked  |
 | icon      | visual checkmark, sideways if indeterminate            |
 | box       | wraps input & icon - what actual gets the styling      |
+TODO: indeterminate state icon - need consensus on what this should look like
 
 ## DOM structure
 
