@@ -27,8 +27,7 @@ const createManager = <State, Actions extends AnyActions>(
       applyMiddleware(prevState)
       applySideEffects(prevState)
     }
-
-    manager.actions[actionName] = action
+    ;(<Record<string, AnyAction>>manager.actions)[actionName] = action
   })
 
   const applyAction = <A extends EnhancedAction<State, Actions>>(
