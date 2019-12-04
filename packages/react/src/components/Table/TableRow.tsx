@@ -18,6 +18,7 @@ import { ShorthandCollection, WithAsProp } from '../../types'
 import { Accessibility, tableHeaderCellBehavior, tableRowBehavior } from '@fluentui/accessibility'
 import { ComponentVariablesObject } from '../../themes/types'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
+import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
 
 export interface TableRowProps extends UIComponentProps {
   /**
@@ -94,7 +95,7 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
     }
   }
 
-  renderCells(variables: ComponentVariablesObject) {
+  renderCells(accessibility: ReactAccessibilityBehavior, variables: ComponentVariablesObject) {
     const { items, header } = this.props
 
     return _.map(items, (item: TableCellProps, index: number) => {
@@ -104,7 +105,15 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
         }),
       }
       const overrideProps = handleVariablesOverrides(variables)
-      return TableCell.create(item, { defaultProps: () => cellProps, overrideProps })
+      return TableCell.create(item, {
+        defaultProps: () => ({
+          cellProps,
+          overrideProps,
+          accessibility: accessibility.childBehaviors
+            ? accessibility.childBehaviors.cell
+            : undefined,
+        }),
+      })
     })
   }
 
@@ -128,7 +137,7 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         >
           {hasChildren && children}
-          {!hasChildren && this.renderCells(variables)}
+          {!hasChildren && this.renderCells(accessibility, variables)}
         </ElementType>
       </Ref>
     )

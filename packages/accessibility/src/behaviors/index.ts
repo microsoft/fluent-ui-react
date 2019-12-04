@@ -88,3 +88,6 @@ export { default as gridCellBehavior } from './Table/gridCellBehavior'
 export {
   default as gridCellMultipleFocusableBehavior,
 } from './Table/gridCellMultipleFocusableBehavior'
+export {
+  default as gridCellWithFocusableElementBehavior,
+} from './Table/gridCellWithFocusableElementBehavior'

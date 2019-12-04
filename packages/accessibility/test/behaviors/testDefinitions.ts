@@ -609,6 +609,21 @@ definitions.push({
   },
 })
 
+// Triggers 'unsetRowTabbable' action using SHIFT + TAB key on 'root'.
+definitions.push({
+  regexp: /Triggers '(\w+)' action using SHIFT \+ TAB key on '(\w+)'\./g,
+  testMethod: (parameters: TestMethod) => {
+    const [action, elementToPerformAction] = [...parameters.props]
+    const property = {}
+    const key = 'Tab'
+    const keyCombinations = parameters.behavior(property).keyActions[elementToPerformAction][action]
+      .keyCombinations[0]
+
+    expect(keyCombinations.keyCode).toBe(keyboardKey[key])
+    expect(keyCombinations.shiftKey).toBe(true)
+  },
+})
+
 // Triggers 'openMenu' action with 'ArrowDown' on 'root', when orientaton is horizontal.
 definitions.push({
   regexp: /Triggers '(\w+)' action with '(\w+)' on '([\w-]+)', when orientation is horizontal\./g,

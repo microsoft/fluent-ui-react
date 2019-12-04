@@ -2,11 +2,21 @@ import { Accessibility } from '../../types'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../attributes'
 import { FocusZoneMode, FocusZoneDirection } from '../../focusZone/types'
 import * as keyboardKey from 'keyboard-key'
+import gridCellBehavior from './gridCellBehavior'
+
+// add key actions unit tests
+
 /**
  * @description
- * Sets the message to be a focusable element.
- * Adds a vertical circular focus zone navigation where a user navigates using a Tab key.
- * Adds a key action which prevents up and down arrow keys from navigating in FocusZone, we only want a Tab key to navigate.
+ * Provides arrow key navigation in horizontal direction.
+ * @specification
+ * Adds role='row'.
+ * Adds attribute 'data-is-focusable=true' to 'root' slot.
+ * Embeds component into FocusZone.
+ * Focus can be moved inside a child component with embeded inner FocusZone by pressing a specified key.
+ * Provides arrow key navigation in horizontal direction.
+ * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'root'.
+ * Triggers 'unsetRowTabbable' action using SHIFT + TAB key on 'root'.
  */
 const gridRowBehavior: Accessibility = props => ({
   attributes: {
@@ -31,6 +41,9 @@ const gridRowBehavior: Accessibility = props => ({
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },
     },
+  },
+  childBehaviors: {
+    cell: gridCellBehavior,
   },
 })
 

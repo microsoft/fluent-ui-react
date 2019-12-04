@@ -52,6 +52,7 @@ const handleVariablesOverrides = variables => predefinedProps => ({
  * @accessibilityIssues
  * [NVDA narrate table title(aria-label) twice](https://github.com/nvaccess/nvda/issues/10548)
  * [Accessibility DOM > Table > gridcell > when gridcell is focused, then selected state is send to reader](https://bugs.chromium.org/p/chromium/issues/detail?id=1030378)
+ * [JAWS narrate grid name twice, once as table and second time as grid](https://github.com/FreedomScientific/VFO-standards-support/issues/346)
  */
 class Table extends UIComponent<WithAsProp<TableProps>> {
   static displayName = 'Table'
@@ -108,7 +109,15 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
         },
       } as TableRowProps
       const overrideProps = handleVariablesOverrides(variables)
-      return TableRow.create(row, { defaultProps: () => props, overrideProps })
+      return TableRow.create(row, {
+        defaultProps: () => ({
+          props,
+          overrideProps,
+          accessibility: accessibility.childBehaviors
+            ? accessibility.childBehaviors.row
+            : undefined,
+        }),
+      })
     })
   }
 
@@ -127,8 +136,13 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
     const overrideProps = handleVariablesOverrides(variables)
 
     return TableRow.create(header, {
-      defaultProps: () => headerRowProps,
-      overrideProps,
+      defaultProps: () => ({
+        headerRowProps,
+        accessibility: accessibility.childBehaviors
+          ? accessibility.childBehaviors.headerRow
+          : undefined,
+        overrideProps,
+      }),
     })
   }
 

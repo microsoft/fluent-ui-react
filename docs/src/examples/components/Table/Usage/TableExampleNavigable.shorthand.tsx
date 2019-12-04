@@ -2,11 +2,8 @@ import * as React from 'react'
 import { Table, Button, Provider, Flex } from '@fluentui/react'
 import {
   gridNestedBehavior,
-  gridRowBehavior,
-  gridHeaderRowBehavior,
-  gridCellBehavior,
+  gridCellWithFocusableElementBehavior,
   gridCellMultipleFocusableBehavior,
-  gridHeaderCellBehavior,
 } from '@fluentui/accessibility'
 
 function tagButton(tagName: string) {
@@ -42,20 +39,20 @@ function handleRowClick(index) {
 const header = {
   key: 'header',
   items: [
-    { content: 'id', key: 'id', accessibility: gridHeaderCellBehavior },
-    { content: 'Name', key: 'name', accessibility: gridHeaderCellBehavior },
-    { content: 'Picture', key: 'pic', accessibility: gridHeaderCellBehavior },
-    { content: 'Age', key: 'action', accessibility: gridHeaderCellBehavior },
-    { content: 'Tags', key: 'tags', accessibility: gridHeaderCellBehavior },
+    { content: 'id', key: 'id' },
+    { content: 'Name', key: 'name' },
+    { content: 'Picture', key: 'pic' },
+    { content: 'Age', key: 'action' },
+    { content: 'Tags', key: 'tags' },
     { key: 'more options' },
   ],
-  accessibility: gridHeaderRowBehavior,
 }
 
 const moreOptionButton = {
   content: <Button tabIndex={-1} icon="more" circular text iconOnly title="More options" />,
   truncateContent: true,
   key: '1-6',
+  accessibility: gridCellWithFocusableElementBehavior,
   onClick: e => {
     alert('more option button clicked')
     e.stopPropagation()
@@ -79,50 +76,38 @@ const rowsPlain = [
   {
     key: 1,
     items: [
-      { content: '1', key: '1-1', accessibility: gridCellBehavior },
-      {
-        content: 'Roman van von der Longername',
-        key: '1-2',
-        accessibility: gridCellBehavior,
-      },
-      { content: 'None', key: '1-3', accessibility: gridCellBehavior },
-      { content: '30 years', key: '1-4', accessibility: gridCellBehavior },
+      { content: '1', key: '1-1' },
+      { content: 'Roman van von der Longername', key: '1-2' },
+      { content: 'None', key: '1-3' },
+      { content: '30 years', key: '1-4' },
       moreActionableElements,
       moreOptionButton,
     ],
-    accessibility: gridRowBehavior,
     onClick: () => handleRowClick(1),
     'aria-label': 'custom text',
   },
   {
     key: 2,
     items: [
-      { content: '2', key: '2-1', accessibility: gridCellBehavior },
-      { content: 'Alex', key: '2-2', accessibility: gridCellBehavior },
-      { content: 'None', key: '2-3', accessibility: gridCellBehavior },
-      { content: '1 year', key: '2-4', accessibility: gridCellBehavior },
+      { content: '2', key: '2-1' },
+      { content: 'Alex', key: '2-2' },
+      { content: 'None', key: '2-3' },
+      { content: '1 year', key: '2-4' },
       moreActionableElements,
       moreOptionButton,
     ],
-    accessibility: gridRowBehavior,
     onClick: () => handleRowClick(2),
   },
   {
     key: 3,
     items: [
-      { content: '3', key: '3-1', accessibility: gridCellBehavior },
-      { content: 'Ali', key: '3-2', accessibility: gridCellBehavior },
-      { content: 'None', key: '3-3', accessibility: gridCellBehavior },
-      {
-        content: '30000000000000 years',
-        truncateContent: true,
-        key: '3-4',
-        accessibility: gridCellBehavior,
-      },
+      { content: '3', key: '3-1' },
+      { content: 'Ali', key: '3-2' },
+      { content: 'None', key: '3-3' },
+      { content: '30000000000000 years', truncateContent: true, key: '3-4' },
       {},
       moreOptionButton,
     ],
-    accessibility: gridRowBehavior,
     onClick: () => handleRowClick(3),
   },
 ]
