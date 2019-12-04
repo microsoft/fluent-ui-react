@@ -1,4 +1,4 @@
-# Right now this definition just runs component governance checks on master.
+# Right now this definition just runs component registration on master.
 # The rest of the build is a port of the circleci config and left there
 # for reference in case we want to use it later.
 
@@ -16,7 +16,7 @@ steps:
     scanType: 'Register'
     verbosity: 'Verbose'
     alertWarningLevel: 'High'
-  displayName: Component governance
+  displayName: Component governance registration
 
 # Rest of build is not being used for now, but leaving setup for reference
 
