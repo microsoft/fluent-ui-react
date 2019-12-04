@@ -29,47 +29,47 @@ import { generateUrl } from '@fluentui/digest'
 // https://github.com/storybookjs/storybook/blob/123d0c6a544e989f96c3c3663a0c7f29fde8be01/lib/core/src/server/preview/iframe-webpack.config.js#L29
 //
 // For now this file hardcodes the kinds/stories/iterations (partially generated from index.digest.tsx):
-const defaultIterations = 5000
+// const defaultIterations = 5000
 const stories = {
-  Attachment: {
-    default: defaultIterations,
-  },
-  Button: {
-    default: defaultIterations,
-  },
+  // Attachment: {
+  //   default: defaultIterations,
+  // },
+  // Button: {
+  //   default: defaultIterations,
+  // },
   Chat: {
-    default: 50,
+    default: 10,
   },
-  ChatWithPopover: {
-    default: 50,
-  },
-  Divider: {
-    default: defaultIterations,
-  },
-  Dropdown: {
-    default: 50,
-  },
-  Header: {
-    default: defaultIterations,
-  },
-  HeaderDescription: {
-    default: defaultIterations,
-  },
-  Icon: {
-    default: defaultIterations,
-  },
-  List: {
-    default: 1000,
-  },
-  Loader: {
-    default: 1000,
-  },
-  ProviderMergeThemes: {
-    default: 50,
-  },
-  CustomToolbar: {
-    default: 500,
-  },
+  // ChatWithPopover: {
+  //   default: 50,
+  // },
+  // Divider: {
+  //   default: defaultIterations,
+  // },
+  // Dropdown: {
+  //   default: 50,
+  // },
+  // Header: {
+  //   default: defaultIterations,
+  // },
+  // HeaderDescription: {
+  //   default: defaultIterations,
+  // },
+  // Icon: {
+  //   default: defaultIterations,
+  // },
+  // List: {
+  //   default: 1000,
+  // },
+  // Loader: {
+  //   default: 1000,
+  // },
+  // ProviderMergeThemes: {
+  //   default: 50,
+  // },
+  // CustomToolbar: {
+  //   default: 500,
+  // },
 }
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
