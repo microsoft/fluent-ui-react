@@ -34,8 +34,13 @@ const getChangedDependencies = async (
   dependenciesKey = 'dependencies',
 ) => {
   const { danger } = dangerJS
-
-  const diff = await danger.git.JSONDiffForFile(filepath)
+  let diff = {}
+  try {
+    diff = await danger.git.JSONDiffForFile(filepath)
+  } catch (err) {
+    // JSONDiffForFile() throws if file diff is empty (moved file with no changes)
+    dangerJS.warn(`Cannot get diff for ${filepath} when checking ${dependenciesKey}: ${err}`)
+  }
   if (!diff[dependenciesKey]) {
     return {}
   }
