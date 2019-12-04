@@ -14,7 +14,7 @@ const SplitButtonExampleSmallShorthand = () => (
         'aria-describedby': 'instruction-message',
       }}
       small
-      toggleButton={{ 'aria-label': 'options' }}
+      toggleButton={{ 'aria-label': 'expand options menu' }}
       onMainButtonClick={() => alert('button was clicked')}
     />
     <span aria-hidden="true" id="instruction-message" style={{ opacity: 0 }}>
