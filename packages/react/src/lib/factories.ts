@@ -225,12 +225,12 @@ function createShorthandFromValue<P>({
 
   // Map prop for primitive value
   if (valIsPrimitive || valIsReactElement) {
-    props[mappedHTMLProps || mappedProp || 'children'] = value
+    ;(props as any)[mappedHTMLProps || mappedProp || 'children'] = value
   }
 
   // Map prop for array value
   if (valIsArray) {
-    props[mappedHTMLProps || mappedArrayProp || 'children'] = value
+    ;(props as any)[mappedHTMLProps || mappedArrayProp || 'children'] = value
   }
 
   // Merge className
@@ -240,17 +240,21 @@ function createShorthandFromValue<P>({
       overrideProps.className,
       usersProps.className,
     )
-    props.className = _.uniq(mergedClassesNames.split(' ')).join(' ')
+    ;(props as any).className = _.uniq(mergedClassesNames.split(' ')).join(' ')
   }
 
   // Merge style
   if (defaultProps.style || overrideProps.style || usersProps.style) {
-    props.style = { ...defaultProps.style, ...usersProps.style, ...overrideProps.style }
+    ;(props as any).style = { ...defaultProps.style, ...usersProps.style, ...overrideProps.style }
   }
 
   // Merge styles
   if (defaultProps.styles || overrideProps.styles || usersProps.styles) {
-    props.styles = mergeStyles(defaultProps.styles, usersProps.styles, overrideProps.styles)
+    ;(props as any).styles = mergeStyles(
+      defaultProps.styles,
+      usersProps.styles,
+      overrideProps.styles,
+    )
   }
 
   // ----------------------------------------
@@ -262,7 +266,7 @@ function createShorthandFromValue<P>({
   if (generateKey && _.isNil(props.key)) {
     if (valIsPrimitive) {
       // use string/number shorthand values as the key
-      props.key = value
+      ;(props as any).key = value
     }
 
     if (valIsReactElement) {
@@ -273,7 +277,7 @@ function createShorthandFromValue<P>({
       const isNullKey = elementKey === null
 
       if (!isNullKey) {
-        props.key = elementKey
+        ;(props as any).key = elementKey
       }
     }
   }
