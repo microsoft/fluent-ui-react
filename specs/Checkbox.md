@@ -58,7 +58,6 @@ FastDNA Checkbox [docs](https://explore.fast.design/components/Checkbox)
 | label                | string                                                      |
 | name                 | string                                                      |
 | onChange             | (ev: Event, value: boolean) => void                         |
-| vertical             | boolean                                                     |
 
 Note: rtl, styles, and theme come from compose or the ThemeProvider. And name has been added to support checkbox in form scenarios.
 
@@ -167,8 +166,8 @@ defaultChecked: overloading with checked - can just set default value of checked
 | input     | actual checkbox element - what gets checked/unchecked  |
 | icon      | visual checkmark, sideways if indeterminate            |
 | box       | wraps input & icon - what actual gets the styling      |
-TODO: indeterminate state icon - need consensus on what this should look like
 
+TODO: indeterminate state icon - need consensus on what this should look like
 ## DOM structure
 
 General considerations:
