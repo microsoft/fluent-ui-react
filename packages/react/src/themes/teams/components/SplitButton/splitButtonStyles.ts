@@ -1,13 +1,12 @@
 import { ICSSInJSStyle } from '../../../types'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
-import SplitButton from '../../../../components/SplitButton/SplitButton'
 
 const splitButtonStyles = {
   menuButton: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    borderTopRightRadius: '0',
-    borderBottomRightRadius: '0',
-    borderRightWidth: '0',
+    borderTopRightRadius: 0,
+    borderBottomRightRadius: 0,
+    borderRightWidth: 0,
     padding: v.padding,
 
     ...(p.small && {
@@ -17,14 +16,27 @@ const splitButtonStyles = {
       boxShadow: v.smallBoxShadow,
     }),
 
+    ':focus-visible': {
+      borderRightWidth: 0,
+
+      ':before': {
+        borderRightWidth: 0,
+      },
+
+      ':after': {
+        borderRightWidth: 0,
+      },
+    },
+
     ':active': {
       animationName: 'unset',
+      animationDuration: 'unset',
     },
   }),
 
   toggleButton: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    borderTopLeftRadius: '0',
-    borderBottomLeftRadius: '0',
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0,
     borderColor: v.borderColor,
     ...getIconFillOrOutlineStyles({ outline: true }),
 
@@ -45,6 +57,16 @@ const splitButtonStyles = {
       boxShadow: v.smallBoxShadow,
     }),
 
+    ':focus-visible': {
+      ':before': {
+        borderLeftWidth: 0,
+      },
+
+      ':after': {
+        borderLeftWidth: 0,
+      },
+    },
+
     ':active': {
       animationName: 'unset',
       animationDuration: 'unset',
@@ -57,16 +79,12 @@ const splitButtonStyles = {
     })
 
     return {
+      borderRadius: v.borderRadius,
       position: 'relative',
       display: 'inline-block',
-      ...borderFocusStyles,
 
       ':focus-within': {
-        boxShadow: 'none',
-
-        [`& .${SplitButton.slotClassNames.toggleButton}`]: {
-          borderColor: 'transparent',
-        },
+        ...borderFocusStyles[':focus-visible'],
       },
     }
   },
