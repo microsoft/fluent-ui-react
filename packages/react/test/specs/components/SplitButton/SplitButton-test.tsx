@@ -78,7 +78,7 @@ describe('SplitButton', () => {
       expect(getMenuItems(wrapper)).toHaveLength(0)
     })
 
-    test('is false when Enter is sent to the item', () => {
+    test('is false when Enter is sent to the menu', () => {
       const wrapper = mountWithProvider(<SplitButton menu={mockMenu} button="test" defaultOpen />)
 
       getMenu(wrapper).simulate('keydown', { keyCode: keyboardKey.Enter })
