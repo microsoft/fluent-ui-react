@@ -1,5 +1,6 @@
 *.log*
 *.iml
+*.tsbuildinfo
 
 .DS_Store
 .idea/
