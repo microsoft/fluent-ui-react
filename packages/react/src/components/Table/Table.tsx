@@ -65,18 +65,6 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
     header: `${Table.className}__header`,
   }
 
-  actionHandlers = {
-    performClick: e => {
-      // event.preventDefault()
-      this.handleClick(e)
-    },
-  }
-
-  handleClick = (e: React.SyntheticEvent) => {
-    // _.invoke(this.props.rows[0], 'onClick', e, this.props.rows[0])
-    console.log('why not')
-  }
-
   static propTypes = {
     ...commonPropTypes.createCommon({
       content: false,
