@@ -1,4 +1,9 @@
-pr: [master]
+# Right now this definition just runs component governance checks on master.
+# The rest of the build is a port of the circleci config and left there
+# for reference in case we want to use it later.
+
+pr: none
+# pr: [master]
 
 trigger: [master]
 
@@ -11,6 +16,7 @@ steps:
     scanType: 'Register'
     verbosity: 'Verbose'
     alertWarningLevel: 'High'
+  displayName: Component governance
 
 # Rest of build is not being used for now, but leaving setup for reference
 
