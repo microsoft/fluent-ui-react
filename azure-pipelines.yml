@@ -7,6 +7,8 @@ pool:
 
 variables:
   - group: fluent-variables-public
+  - name: DANGER_GITHUB_API_TOKEN
+    value: '$(DANGER_GITHUB_API_TOKEN)'
 
 steps:
   - task: NodeTool@0
@@ -71,7 +73,7 @@ steps:
     displayName: Save statistics to DB (master only)
 
   - script: |
-      if [ $BUILD_REASON == "PullRequest" ] && [ ! -z $(DANGER_GITHUB_API_TOKEN) ]; then
+      if [ $BUILD_REASON == "PullRequest" ] && [ ! -z $DANGER_GITHUB_API_TOKEN ]; then
         yarn danger ci
       elif [ $BUILD_REASON != "PullRequest" ]; then
         echo "Skipping Danger JS because BUILD_REASON ${BUILD_REASON} != PullRequest"
