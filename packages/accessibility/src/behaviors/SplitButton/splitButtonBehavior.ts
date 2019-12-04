@@ -20,26 +20,26 @@ import menuButtonBehavior from '../MenuButton/menuButtonBehavior'
  * Adds attribute 'aria-haspopup=true' to 'toggleButton' slot.
  */
 const splitButtonBehavior: Accessibility = props => {
-  const splitButtonMenuButtonBehavior = props => {
+  const splitButtonMenuButtonBehavior = () => {
     const menuButtonBehaviorData = menuButtonBehavior(props)
     menuButtonBehaviorData.attributes.trigger['aria-haspopup'] = undefined
 
     return _.merge(menuButtonBehaviorData, {
       keyActions: {
-        trigger: {
-          open: {
-            keyCombinations: [{ keyCode: keyboardKey.ArrowDown, altKey: true }],
-          },
-        },
         popup: {
           closeAndFocusTrigger: {
             keyCombinations: [
               { keyCode: keyboardKey.Escape },
               { keyCode: keyboardKey.ArrowUp, altKey: true },
-              { keyCode: keyboardKey.Tab, shiftKey: false },
-              { keyCode: keyboardKey.Tab, shiftKey: true },
             ],
           },
+        },
+        root: {
+          ...(!props.open && {
+            openAndFocusFirst: {
+              keyCombinations: [{ keyCode: keyboardKey.ArrowDown, altKey: true }],
+            },
+          }),
         },
       },
     })

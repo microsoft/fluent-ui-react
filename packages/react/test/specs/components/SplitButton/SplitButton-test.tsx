@@ -29,10 +29,10 @@ describe('SplitButton', () => {
       const toggleButton = getToggleButton(wrapper)
 
       toggleButton.simulate('click')
-      expect(getMenuItems(wrapper).length).toBe(mockMenu.items.length)
+      expect(getMenuItems(wrapper)).toHaveLength(mockMenu.items.length)
 
       toggleButton.simulate('click')
-      expect(getMenuItems(wrapper).length).toBe(0)
+      expect(getMenuItems(wrapper)).toHaveLength(0)
     })
 
     test('is false when clicking menu item', () => {
@@ -41,31 +41,60 @@ describe('SplitButton', () => {
       getMenuItems(wrapper)
         .at(0)
         .simulate('click')
-      expect(getMenuItems(wrapper).length).toBe(0)
+      expect(getMenuItems(wrapper)).toHaveLength(0)
     })
 
-    test('is open when Alt+ArrowDown is sent to the main button', () => {
+    test('is true when Alt+ArrowDown is sent to the main button', () => {
       const wrapper = mountWithProvider(<SplitButton menu={mockMenu} button="test" />)
 
       getMainButton(wrapper).simulate('keydown', { keyCode: keyboardKey.ArrowDown, altKey: true })
 
-      expect(getMenuItems(wrapper).length).toBe(mockMenu.items.length)
+      expect(getMenuItems(wrapper)).toHaveLength(mockMenu.items.length)
     })
 
-    test('is open when Alt+ArrowUp is sent to the menu', () => {
+    test('is false when Alt+ArrowUp is sent to the menu', () => {
       const wrapper = mountWithProvider(<SplitButton menu={mockMenu} button="test" defaultOpen />)
 
       getMenu(wrapper).simulate('keydown', { keyCode: keyboardKey.ArrowUp, altKey: true })
 
-      expect(getMenuItems(wrapper).length).toBe(0)
+      expect(getMenuItems(wrapper)).toHaveLength(0)
+      expect(document.activeElement).toBe(getMainButton(wrapper).getDOMNode())
     })
 
-    test('is open when Escape is sent to the menu', () => {
+    test('is false when Escape is sent to the menu', () => {
       const wrapper = mountWithProvider(<SplitButton menu={mockMenu} button="test" defaultOpen />)
 
       getMenu(wrapper).simulate('keydown', { keyCode: keyboardKey.Escape })
 
-      expect(getMenuItems(wrapper).length).toBe(0)
+      expect(getMenuItems(wrapper)).toHaveLength(0)
+      expect(document.activeElement).toBe(getMainButton(wrapper).getDOMNode())
+    })
+
+    test('is false when Tab is sent to the menu', () => {
+      const wrapper = mountWithProvider(<SplitButton menu={mockMenu} button="test" defaultOpen />)
+
+      getMenu(wrapper).simulate('keydown', { keyCode: keyboardKey.Tab, shiftKey: false })
+
+      expect(getMenuItems(wrapper)).toHaveLength(0)
+    })
+
+    test('is false when Enter is sent to the item', () => {
+      const wrapper = mountWithProvider(<SplitButton menu={mockMenu} button="test" defaultOpen />)
+
+      getMenu(wrapper).simulate('keydown', { keyCode: keyboardKey.Enter })
+      getMenuItems(wrapper)
+        .at(0)
+        .simulate('click')
+
+      expect(getMenuItems(wrapper)).toHaveLength(0)
+    })
+
+    test('is false when Shift+Tab is sent to the menu', () => {
+      const wrapper = mountWithProvider(<SplitButton menu={mockMenu} button="test" defaultOpen />)
+
+      getMenu(wrapper).simulate('keydown', { keyCode: keyboardKey.Tab, shiftKey: true })
+
+      expect(getMenuItems(wrapper)).toHaveLength(0)
     })
   })
 
