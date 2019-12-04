@@ -139,7 +139,7 @@ export default async function getPerfRegressions() {
   fs.writeFileSync(path.join(outDir, 'perfCounts.html'), comment)
 
   console.log(
-    `##vso[task.setvariable variable=PerfCommentFilePath;]apps/perf-test/dist/perfCounts.html`,
+    `##vso[task.setvariable variable=PerfCommentFilePath;]packages/perf-test/dist/perfCounts.html`,
   )
   console.log(`##vso[task.setvariable variable=PerfCommentStatus;]${status}`)
 }
