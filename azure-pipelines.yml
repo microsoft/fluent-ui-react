@@ -5,11 +5,6 @@ trigger: [master]
 pool:
   vmImage: 'ubuntu-latest'
 
-variables:
-  - group: fluent-variables-public
-  - name: DANGER_GITHUB_API_TOKEN
-    value: '$(DANGER_GITHUB_API_TOKEN)'
-
 steps:
   - task: NodeTool@0
     inputs:
@@ -70,6 +65,8 @@ steps:
       else
         echo 'skip saving statistics'
       fi
+    env:
+      STATS_URI: $(statsUri)
     displayName: Save statistics to DB (master only)
 
   - script: |
@@ -80,4 +77,6 @@ steps:
       else
         echo "Skipping Danger JS because API token wasn't found"
       fi
+    env:
+      DANGER_GITHUB_API_TOKEN: $(dangerKey)
     displayName: Danger JS
