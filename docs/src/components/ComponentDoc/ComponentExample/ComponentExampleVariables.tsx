@@ -30,9 +30,7 @@ const getGroupName = (variableName: string): string => {
   return 'Other'
 }
 
-const ComponentExampleVariables: React.FunctionComponent<
-  ComponentExampleVariablesProps
-> = props => {
+const ComponentExampleVariables: React.FunctionComponent<ComponentExampleVariablesProps> = props => {
   const { onChange, overriddenVariables, usedVariables } = props
 
   const { theme } = React.useContext<ProviderContextPrepared>(ThemeContext)

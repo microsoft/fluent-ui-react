@@ -33,12 +33,9 @@ const formatXAxis = val => {
  */
 const PerfChart: React.FC<PerfChartProps> = ({ perfData }) => {
   const availableCharts: string[] = perfData
-    .reduce(
-      (acc, next) => {
-        return Array.from(new Set([...acc, ...Object.keys(next.performance)]))
-      },
-      [] as string[],
-    )
+    .reduce((acc, next) => {
+      return Array.from(new Set([...acc, ...Object.keys(next.performance)]))
+    }, [] as string[])
     .sort()
 
   const [nearestX, setNearestX] = React.useState<number>()
@@ -86,7 +83,10 @@ const PerfChart: React.FC<PerfChartProps> = ({ perfData }) => {
       {perfData
         .filter(sample => sample.tag)
         .map(sample => {
-          const data = [{ x: sampleToXAxis(sample), y: 0 }, { x: sampleToXAxis(sample), y: 1000 }]
+          const data = [
+            { x: sampleToXAxis(sample), y: 0 },
+            { x: sampleToXAxis(sample), y: 1000 },
+          ]
           return (
             <DecorativeAxis
               key={sample.build}
