@@ -13,11 +13,9 @@ node_modules
 packages/**/dist
 packages/**/test
 perf/dist
-lib/
-!src/**/lib/
-!test/**/lib/
-!src/lib/
-!test/lib/
+
+packages/digest/lib
+packages/perf-test/lib
 
 .editorconfig
 .gitignore

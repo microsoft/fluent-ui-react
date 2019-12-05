@@ -6,12 +6,10 @@
 coverage/
 dist/
 stats/
-lib/
-!src/**/lib/
-!test/**/lib/
-!src/lib/
-!test/lib/
 
+# packages that have lib as the output
+packages/digest/lib
+packages/perf-test/lib
 
 package.json
 
