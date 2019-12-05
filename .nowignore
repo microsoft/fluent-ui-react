@@ -17,6 +17,7 @@ perf/dist
 packages/digest/lib
 packages/perf-test/lib
 packages/playground/lib
+packages/react-theming/lib
 
 .editorconfig
 .gitignore

@@ -11,6 +11,7 @@ stats/
 packages/digest/lib
 packages/perf-test/lib
 packages/playground/lib
+packages/react-theming/lib
 
 package.json
 
