@@ -12,6 +12,12 @@
       "options": {
         "semi": true
       }
+    },
+    {
+      "files": "packages/playground/**/*",
+      "options": {
+        "semi": true
+      }
     }
   ]
 }

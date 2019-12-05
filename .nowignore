@@ -16,6 +16,7 @@ perf/dist
 
 packages/digest/lib
 packages/perf-test/lib
+packages/playground/lib
 
 .editorconfig
 .gitignore
