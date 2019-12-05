@@ -72,12 +72,10 @@ const stories = {
   // },
   Button: {
     Fabric: 5000,
-    FabricBase: 5000,
     Fluent: 5000,
   },
   Checkbox: {
     Fabric: 5000,
-    FabricBase: 5000,
     Fluent: 5000,
   },
   Icon: {
@@ -86,7 +84,6 @@ const stories = {
   },
   Slider: {
     Fabric: 5000,
-    FabricBase: 5000,
     Fluent: 5000,
   },
 }
