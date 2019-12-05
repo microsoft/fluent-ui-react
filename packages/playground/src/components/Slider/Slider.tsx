@@ -1,7 +1,7 @@
-import { compose } from '@fluentui/react-theming'
-import { SliderBase } from './Slider.base'
-import styles from './Slider.styles'
-import tokens from './Slider.tokens'
+import { compose } from '@fluentui/react-theming';
+import { SliderBase } from './Slider.base';
+import styles from './Slider.styles';
+import tokens from './Slider.tokens';
 
 /*
 What if items-view uses sliderbase, or something like it, that can receive class map from context.
@@ -27,4 +27,4 @@ export const Slider = compose(SliderBase, {
   name: 'Slider',
   styles,
   tokens,
-})
+});

@@ -1,4 +1,4 @@
-import { IClasses, ISlotProps, ISlottableProps } from '@fluentui/react-theming'
+import { IClasses, ISlotProps, ISlottableProps } from '@fluentui/react-theming';
 
 export interface ISliderSlots {
   /** Intended to contain the slider */

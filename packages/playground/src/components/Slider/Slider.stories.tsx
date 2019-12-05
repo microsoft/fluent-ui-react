@@ -1,18 +1,18 @@
-import React from 'react'
-import { Slider } from './Slider'
-import { ISliderTokens } from './Slider.tokens'
-import { ThemeProvider, ITheme, createTheme } from '@fluentui/react-theming'
-import { SliderBase } from './Slider.base'
+import React from 'react';
+import { Slider } from './Slider';
+import { ISliderTokens } from './Slider.tokens';
+import { ThemeProvider, ITheme, createTheme } from '@fluentui/react-theming';
+import { SliderBase } from './Slider.base';
 
 export default {
   component: 'Slider',
   title: 'Slider',
-}
+};
 
 const defaultColorRamp = {
   values: [],
   index: -1,
-}
+};
 
 const fluentLight: ITheme = createTheme({
   direction: 'ltr',
@@ -64,7 +64,7 @@ const fluentLight: ITheme = createTheme({
       },
     },
   },
-})
+});
 
 const teamsLight: ITheme = createTheme(fluentLight, {
   colors: {},
@@ -84,9 +84,9 @@ const teamsLight: ITheme = createTheme(fluentLight, {
       } as ISliderTokens,
     },
   },
-})
+});
 
-const Wrapper = (p: React.HTMLAttributes<any>) => <ThemeProvider theme={fluentLight} {...p} />
+const Wrapper = (p: React.HTMLAttributes<any>) => <ThemeProvider theme={fluentLight} {...p} />;
 
 export const fluentSlider = () => (
   <ThemeProvider theme={fluentLight}>
@@ -102,13 +102,13 @@ export const fluentSlider = () => (
       <Slider disabled defaultValue={50} slotProps={{ thumb: { 'aria-label': 'I am a slider' } }} />
     </ThemeProvider>
   </ThemeProvider>
-)
+);
 
 export const fluentSliderDisabled = () => (
   <Wrapper>
     <Slider disabled defaultValue={50} />
   </Wrapper>
-)
+);
 
 export const fluentVerticalSlider = () => (
   <Wrapper style={{ display: 'flex', height: 200 }}>
@@ -116,12 +116,12 @@ export const fluentVerticalSlider = () => (
     <Slider vertical defaultValue={50} />
     <Slider vertical defaultValue={50} />
   </Wrapper>
-)
+);
 
 export const teamsLightSlider = (p: React.HTMLAttributes<any>) => (
   <ThemeProvider theme={teamsLight}>
     <Slider defaultValue={50} />
   </ThemeProvider>
-)
+);
 
-export const aTypicalSlider = () => <SliderBase min={0} max={10} defaultValue={5} />
+export const aTypicalSlider = () => <SliderBase min={0} max={10} defaultValue={5} />;

@@ -1,4 +1,4 @@
-import { IClasses, ISlotProps, ISlottableProps } from '@fluentui/react-theming'
+import { IClasses, ISlotProps, ISlottableProps } from '@fluentui/react-theming';
 
 export interface ILinkSlots {
   /** Intended to contain the link. */

@@ -1,13 +1,13 @@
-import * as React from 'react'
-import { ICheckboxProps, ICheckboxSlots } from './Checkbox.types'
-import { useCheckbox } from './useCheckbox'
+import * as React from 'react';
+import { ICheckboxProps, ICheckboxSlots } from './Checkbox.types';
+import { useCheckbox } from './useCheckbox';
 
 export const CheckboxBase: React.FunctionComponent<ICheckboxProps> = (props: ICheckboxProps) => {
-  const { children, slots } = props
+  const { children, slots } = props;
   const { root: Root = 'label', input: Input = 'input', icon: Icon = 'i' } = (slots ||
-    {}) as ICheckboxSlots
+    {}) as ICheckboxSlots;
 
-  const { slotProps = {} } = useCheckbox(props)
+  const { slotProps = {} } = useCheckbox(props);
 
   return (
     <Root {...slotProps.root}>
@@ -15,5 +15,5 @@ export const CheckboxBase: React.FunctionComponent<ICheckboxProps> = (props: ICh
       <Icon {...slotProps.icon} />
       {children}
     </Root>
-  )
-}
+  );
+};

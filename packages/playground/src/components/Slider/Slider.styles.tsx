@@ -1,5 +1,5 @@
-import { IResolvedTokens } from '@fluentui/react-theming'
-import { ISliderTokens } from './Slider.tokens'
+import { IResolvedTokens } from '@fluentui/react-theming';
+import { ISliderTokens } from './Slider.tokens';
 
 const styles = (t: IResolvedTokens<ISliderTokens>) => ({
   rootDisabled: {},
@@ -121,6 +121,6 @@ const styles = (t: IResolvedTokens<ISliderTokens>) => ({
       borderColor: t.thumbBorderColorDisabled,
     },
   },
-})
+});
 
-export default styles
+export default styles;

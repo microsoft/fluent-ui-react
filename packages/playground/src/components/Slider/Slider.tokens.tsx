@@ -1,4 +1,4 @@
-import { IToken } from '@fluentui/react-theming'
+import { IToken } from '@fluentui/react-theming';
 
 export interface ISliderTokens {
   railBorderRadius: IToken;
@@ -53,6 +53,6 @@ const SliderTokens = {
   trackColorHovered: 'rgb(0, 120, 212)',
   trackColorPressed: { dependsOn: 'trackColorHovered' },
   trackSize: 4,
-}
+};
 
-export default SliderTokens
+export default SliderTokens;

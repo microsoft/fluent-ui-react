@@ -1,4 +1,4 @@
-import { IToken } from '@fluentui/react-theming'
+import { IToken } from '@fluentui/react-theming';
 
 export interface ILinkTokens {
   // root tokens
@@ -30,6 +30,6 @@ const LinkTokens = {
   // Disabled Link tokens
   // root
   colorDisabled: '#a19f9d',
-}
+};
 
-export default LinkTokens
+export default LinkTokens;

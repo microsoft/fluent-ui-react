@@ -1,5 +1,5 @@
-import { IResolvedTokens } from '@fluentui/react-theming'
-import { ILinkTokens } from './Link.tokens'
+import { IResolvedTokens } from '@fluentui/react-theming';
+import { ILinkTokens } from './Link.tokens';
 
 const styles = (t: IResolvedTokens<ILinkTokens>) => ({
   root: {
@@ -25,6 +25,6 @@ const styles = (t: IResolvedTokens<ILinkTokens>) => ({
       pointerEvents: 'none',
     },
   },
-})
+});
 
-export default styles
+export default styles;

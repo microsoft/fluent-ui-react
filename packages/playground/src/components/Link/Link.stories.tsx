@@ -1,17 +1,17 @@
-import React from 'react'
-import { createTheme, ITheme, ThemeProvider } from '@fluentui/react-theming'
-import { Link } from './Link'
-import { LinkBase } from './Link.base'
+import React from 'react';
+import { createTheme, ITheme, ThemeProvider } from '@fluentui/react-theming';
+import { Link } from './Link';
+import { LinkBase } from './Link.base';
 
 export default {
   component: 'Link',
   title: 'Link',
-}
+};
 
 const defaultColorRamp = {
   values: [],
   index: -1,
-}
+};
 
 const fluentLight: ITheme = createTheme({
   direction: 'ltr',
@@ -63,13 +63,13 @@ const fluentLight: ITheme = createTheme({
       },
     },
   },
-})
+});
 
-const Wrapper = (p: React.HTMLAttributes<any>) => <ThemeProvider theme={fluentLight} {...p} />
+const Wrapper = (p: React.HTMLAttributes<any>) => <ThemeProvider theme={fluentLight} {...p} />;
 
-export const baseLink = () => <LinkBase href="https://www.bing.com">Link with href</LinkBase>
+export const baseLink = () => <LinkBase href="https://www.bing.com">Link with href</LinkBase>;
 
-export const baseLinkWithoutHref = () => <LinkBase>Link without href</LinkBase>
+export const baseLinkWithoutHref = () => <LinkBase>Link without href</LinkBase>;
 
 export const fluentLink = () => (
   <Wrapper>
@@ -80,4 +80,4 @@ export const fluentLink = () => (
     </Link>
     .
   </Wrapper>
-)
+);

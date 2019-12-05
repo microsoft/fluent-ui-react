@@ -1,4 +1,4 @@
-import { IClasses, ISlotProps, ISlottableProps } from '@fluentui/react-theming'
+import { IClasses, ISlotProps, ISlottableProps } from '@fluentui/react-theming';
 
 export interface IButtonSlots {
   /** Intended to contain the icon that appears after the specified children. */

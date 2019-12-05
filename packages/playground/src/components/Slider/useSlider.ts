@@ -1,10 +1,10 @@
-import * as React from 'react'
-import { useControlledState } from '../../hooks/useControlledState'
-import { useWindowEvent } from '../../hooks/useWindowEvent'
-import { ISliderProps } from './Slider.types'
-import { mergeSlotProps } from '@fluentui/react-theming'
+import * as React from 'react';
+import { useControlledState } from '../../hooks/useControlledState';
+import { useWindowEvent } from '../../hooks/useWindowEvent';
+import { ISliderProps } from './Slider.types';
+import { mergeSlotProps } from '@fluentui/react-theming';
 
-import cx from 'classnames'
+import cx from 'classnames';
 
 function _getDragValues(
   ev: React.MouseEvent,
@@ -15,7 +15,7 @@ function _getDragValues(
   snapToStep: boolean,
   vertical: boolean,
 ) {
-  const range = max - min
+  const range = max - min;
   const percentage = Math.min(
     1,
     Math.max(
@@ -24,13 +24,13 @@ function _getDragValues(
         ? 1 - (ev.clientY - containerRect.top) / containerRect.height
         : (ev.clientX - containerRect.left) / containerRect.width,
     ),
-  )
-  const value = Math.round(min + (percentage * range) / step) * step
+  );
+  const value = Math.round(min + (percentage * range) / step) * step;
 
   return {
     percentage: snapToStep ? (100 * value) / (max - min) : 100 * percentage,
     value,
-  }
+  };
 }
 
 export interface ISliderState {
@@ -63,109 +63,109 @@ const useSliderState = (userProps: ISliderProps): ISliderState => {
     snapToStep = false,
     onChange,
     defaultValue,
-  } = userProps
-  const [focused, setFocused] = React.useState(false)
-  const [dragging, setDragging] = React.useState(false)
-  const [value, setValue] = useControlledState(controlledValue, defaultValue)
+  } = userProps;
+  const [focused, setFocused] = React.useState(false);
+  const [dragging, setDragging] = React.useState(false);
+  const [value, setValue] = useControlledState(controlledValue, defaultValue);
   const [dragState, setDragState] = React.useState<{
     rootRect: DOMRect | null;
   }>({
     rootRect: null,
-  })
-  const rootRef = React.useRef<HTMLElement>(null)
-  const thumbRef = React.useRef<HTMLElement>(null)
-  const percentage = (100 * (value - min)) / (max - min)
+  });
+  const rootRef = React.useRef<HTMLElement>(null);
+  const thumbRef = React.useRef<HTMLElement>(null);
+  const percentage = (100 * (value - min)) / (max - min);
 
   const _updateValue = React.useCallback(
     (ev, val) => {
       if (onChange) {
-        onChange(ev, val)
+        onChange(ev, val);
       }
 
-      setValue(val)
-      return val
+      setValue(val);
+      return val;
     },
     [onChange, setValue],
-  )
+  );
 
   const onMouseMove = React.useCallback(
     (ev: any, allowDefault: any) => {
       if (dragState && dragState.rootRect) {
-        const drag = _getDragValues(ev, dragState.rootRect, min, max, step, snapToStep, vertical)
+        const drag = _getDragValues(ev, dragState.rootRect, min, max, step, snapToStep, vertical);
 
-        _updateValue(ev, drag.value)
+        _updateValue(ev, drag.value);
       }
 
       if (!allowDefault) {
-        ev.preventDefault()
-        ev.stopPropagation()
+        ev.preventDefault();
+        ev.stopPropagation();
       }
     },
     [dragState, min, max, step, snapToStep, _updateValue, vertical],
-  )
+  );
 
   const onMouseDown = React.useCallback(
     (ev: any) => {
-      const rootRect = rootRef.current!.getBoundingClientRect()
+      const rootRect = rootRef.current!.getBoundingClientRect();
 
-      setDragState({ rootRect })
-      setDragging(true)
-      const drag = _getDragValues(ev, rootRect, min, max, step, snapToStep, vertical)
+      setDragState({ rootRect });
+      setDragging(true);
+      const drag = _getDragValues(ev, rootRect, min, max, step, snapToStep, vertical);
 
-      setImmediate(() => thumbRef.current?.focus())
+      setImmediate(() => thumbRef.current?.focus());
 
-      _updateValue(ev, drag.value)
+      _updateValue(ev, drag.value);
     },
     [_updateValue, max, min, snapToStep, step, setDragging, setDragState, rootRef, vertical],
-  )
+  );
 
   const onMouseUp = React.useCallback(
     (ev: any) => {
-      setDragging(false)
+      setDragging(false);
 
-      ev.preventDefault()
-      ev.stopPropagation()
+      ev.preventDefault();
+      ev.stopPropagation();
     },
     [setDragging],
-  )
+  );
 
-  const onFocus = () => setFocused(true)
-  const onBlur = () => setFocused(false)
+  const onFocus = () => setFocused(true);
+  const onBlur = () => setFocused(false);
 
-  useWindowEvent('mousemove', dragging && onMouseMove)
-  useWindowEvent('mouseup', dragging && onMouseUp)
+  useWindowEvent('mousemove', dragging && onMouseMove);
+  useWindowEvent('mouseup', dragging && onMouseUp);
 
   const onKeyDown = (ev: React.KeyboardEvent) => {
-    let newValue
-    const increment = (ev.shiftKey ? 10 : 1) * step
+    let newValue;
+    const increment = (ev.shiftKey ? 10 : 1) * step;
 
     switch (ev.which) {
       case 36: // home
-        newValue = min
-        break
+        newValue = min;
+        break;
 
       case 35: // end
-        newValue = max
-        break
+        newValue = max;
+        break;
 
       case 37: // left
       case 40: // down
-        newValue = ev.metaKey ? min : Math.max(min, value - increment)
-        break
+        newValue = ev.metaKey ? min : Math.max(min, value - increment);
+        break;
 
       case 38: // up
       case 39: // right
-        newValue = ev.metaKey ? max : Math.min(max, value + increment)
-        break
+        newValue = ev.metaKey ? max : Math.min(max, value + increment);
+        break;
 
       default:
-        return
+        return;
     }
 
-    _updateValue(ev, newValue)
-    ev.preventDefault()
-    ev.stopPropagation()
-  }
+    _updateValue(ev, newValue);
+    ev.preventDefault();
+    ev.stopPropagation();
+  };
 
   return {
     min,
@@ -179,12 +179,12 @@ const useSliderState = (userProps: ISliderProps): ISliderState => {
     onBlur,
     percentage,
     focused,
-  }
-}
+  };
+};
 
 export const useSlider = (props: ISliderProps) => {
-  const { classes = {}, disabled, vertical } = props
-  const state = useSliderState(props)
+  const { classes = {}, disabled, vertical } = props;
+  const state = useSliderState(props);
   const {
     min,
     max,
@@ -197,8 +197,8 @@ export const useSlider = (props: ISliderProps) => {
     onBlur,
     percentage,
     focused,
-  } = state
-  const { rootFocused, rootDisabled, rootVertical } = classes
+  } = state;
+  const { rootFocused, rootDisabled, rootVertical } = classes;
 
   const slotProps = mergeSlotProps(props, {
     root: {
@@ -235,10 +235,10 @@ export const useSlider = (props: ISliderProps) => {
             left: `${percentage}%`,
           },
     },
-  })
+  });
 
   return {
     state,
     slotProps,
-  }
-}
+  };
+};
