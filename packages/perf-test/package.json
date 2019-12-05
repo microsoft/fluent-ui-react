@@ -1,7 +1,7 @@
 {
   "name": "@fluentui/perf-test",
   "description": "Perf tests for fluentui.",
-  "version": "0.0.1",
+  "version": "0.41.0",
   "private": true,
   "dependencies": {
     "react": "^16.8.0",
@@ -13,7 +13,7 @@
     "test": "just-scripts test"
   },
   "devDependencies": {
-    "@fluentui/digest": "^0.0.1",
+    "@fluentui/digest": "^0.41.0",
     "@types/react": "^16.8.10",
     "@types/react-dom": "^16.8.3",
     "flamegrill": "^0.1.3",
