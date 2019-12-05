@@ -4,7 +4,6 @@ import {
   PrimaryButton,
   DefaultButton,
   createTheme,
-  ITheme,
 } from 'office-ui-fabric-react'
 import { Provider, Button } from '@fluentui/react'
 import * as React from 'react'
@@ -79,35 +78,57 @@ theme.siteVariables.brand = {
 
 */
 
-const makeFabricTheme = (theme: any): ITheme => {
-  // const theButtonColors: any = theme.componentVariables.Button(theme.siteVariables)
-  console.log(theme.siteVariables)
-  return createTheme({
+const makeCustomizerProps = (theme: any): any => {
+  const theButtonTokens: any = theme.componentVariables.Button(theme.siteVariables)
+  const theTheme = createTheme({
     palette: {
       themePrimary: theme.siteVariables.colorScheme.brand.background,
-      themeLighterAlt: '#fcf5ff',
-      themeLighter: '#f5d6ff',
-      themeLight: '#ecb3ff',
-      themeTertiary: '#d966ff',
-      themeSecondary: '#c71fff',
-      themeDarkAlt: '#ac00e6',
-      themeDark: '#9100c2',
-      themeDarker: '#6b008f',
-      neutralLighterAlt: '#f8f8f8',
-      neutralLighter: '#f4f4f4',
-      neutralLight: '#eaeaea',
-      neutralQuaternaryAlt: '#dadada',
-      neutralQuaternary: '#d0d0d0',
-      neutralTertiaryAlt: '#c8c8c8',
-      neutralTertiary: '#bab8b7',
-      neutralSecondary: '#a3a2a0',
-      neutralPrimaryAlt: '#8d8b8a',
-      neutralPrimary: '#323130',
-      neutralDark: '#605e5d',
+      themeLighterAlt: theme.siteVariables.colorScheme.brand.background,
+      themeLighter: theme.siteVariables.colorScheme.brand.background,
+      themeLight: theme.siteVariables.colorScheme.brand.background,
+      themeTertiary: theme.siteVariables.colorScheme.brand.background,
+      themeSecondary: theme.siteVariables.colorScheme.brand.background,
+      themeDarkAlt: theme.siteVariables.colorScheme.brand.background,
+      themeDark: theme.siteVariables.colorScheme.brand.background,
+      themeDarker: theme.siteVariables.colorScheme.brand.background,
+      neutralLighterAlt: theme.siteVariables.colorScheme.default.foregroundActive,
+      neutralLighter: theme.siteVariables.colorScheme.default.foregroundActive,
+      neutralLight: theme.siteVariables.colorScheme.default.foregroundActive,
+      neutralQuaternaryAlt: theme.siteVariables.colorScheme.default.foregroundActive,
+      neutralQuaternary: theme.siteVariables.colorScheme.default.foregroundActive,
+      neutralTertiaryAlt: theme.siteVariables.colorScheme.default.foregroundActive,
+      neutralTertiary: theme.siteVariables.colorScheme.default.foregroundActive,
+      neutralSecondary: theme.siteVariables.colorScheme.default.foregroundActive,
+      neutralPrimaryAlt: theme.siteVariables.colorScheme.default.borderPressed,
+      neutralPrimary: theme.siteVariables.colorScheme.default.backgroundHover,
+      neutralDark: theme.siteVariables.colorScheme.default.borderHover,
       black: theme.siteVariables.colorScheme.default.foreground1,
-      white: '#ffffff',
+      white: theme.siteVariables.colorScheme.default.background,
+    },
+    semanticColors: {
+      primaryButtonBackgroundHovered: theButtonTokens.primaryBackgroundColorHover,
     },
   })
+
+  const theProps = {
+    scopedSettings: {
+      PrimaryButton: {
+        styles: {
+          root: {
+            background: theButtonTokens.primaryBackgroundColor,
+            borderRadius: theButtonTokens.borderRadius,
+            boxShadow: theButtonTokens.primaryBoxShadow,
+            fontWeight: theButtonTokens.contentFontWeight,
+          },
+        },
+      },
+    },
+    settings: {
+      theme: theTheme,
+    },
+  }
+
+  return theProps
 }
 
 const ProviderShared = () => (
@@ -116,17 +137,15 @@ const ProviderShared = () => (
       render={theme => (
         <>
           <Fabric>
-            <Customizer settings={{ theme: makeFabricTheme(theme) }}>
+            <Customizer {...makeCustomizerProps(theme)}>
               <PrimaryButton text="primary" />
               <DefaultButton text="default" />
               <PrimaryButton text="just a button inside a context" />
               <Button primary>I am a Teams button</Button>
             </Customizer>
           </Fabric>
-          <code>
-            theme.siteVariables.brand ={' '}
-            {JSON.stringify(theme.componentVariables.Button(theme.siteVariables), null, 2)}
-          </code>
+          <pre>{JSON.stringify(theme.componentVariables.Button(theme.siteVariables), null, 2)}</pre>
+          <pre>{JSON.stringify(theme.siteVariables, null, 2)}</pre>
         </>
       )}
     />
