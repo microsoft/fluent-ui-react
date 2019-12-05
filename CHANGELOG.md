@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Features
+- Add a new experimental @fluentui/react-theming package that includes a `compose()` ([#2152](https://github.com/microsoft/fluent-ui-react/pull/2152))
+
 <!--------------------------------[ v0.41.0 ]------------------------------- -->
 ## [v0.41.0](https://github.com/microsoft/fluent-ui-react/tree/v0.41.0) (2019-12-04)
 [Compare changes](https://github.com/microsoft/fluent-ui-react/compare/v0.40.4...v0.41.0)
