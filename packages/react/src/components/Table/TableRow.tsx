@@ -80,6 +80,7 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
   rowRef = React.createRef<HTMLElement>()
 
   actionHandlers = {
+    // https://github.com/microsoft/fluent-ui-react/issues/2150
     unsetRowTabbable: e => {
       this.rowRef.current.setAttribute('tabindex', '-1')
     },

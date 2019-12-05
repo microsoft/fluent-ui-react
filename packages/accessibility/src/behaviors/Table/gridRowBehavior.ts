@@ -4,11 +4,7 @@ import { FocusZoneMode, FocusZoneDirection } from '../../focusZone/types'
 import * as keyboardKey from 'keyboard-key'
 import gridCellBehavior from './gridCellBehavior'
 
-// add key actions unit tests
-
 /**
- * @description
- * Provides arrow key navigation in horizontal direction.
  * @specification
  * Adds role='row'.
  * Adds attribute 'data-is-focusable=true' to 'root' slot.
@@ -16,7 +12,8 @@ import gridCellBehavior from './gridCellBehavior'
  * Focus can be moved inside a child component with embeded inner FocusZone by pressing a specified key.
  * Provides arrow key navigation in horizontal direction.
  * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'root'.
- * Triggers 'unsetRowTabbable' action using SHIFT + TAB key on 'root'.
+ * Triggers 'unsetRowTabbable' action using 'shiftKey' + 'Tab' key on 'root'.
+ * Applies 'gridCellBehavior' for 'cell' child component.
  */
 const gridRowBehavior: Accessibility = props => ({
   attributes: {

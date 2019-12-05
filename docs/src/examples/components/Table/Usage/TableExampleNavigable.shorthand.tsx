@@ -77,14 +77,14 @@ const rowsPlain = [
     key: 1,
     items: [
       { content: '1', key: '1-1' },
-      { content: 'Roman van von der Longername', key: '1-2' },
+      { content: 'Roman van von der Longername', key: '1-2', id: 'name-1' },
       { content: 'None', key: '1-3' },
-      { content: '30 years', key: '1-4' },
+      { content: '30 years', key: '1-4', id: 'age-1' },
       moreActionableElements,
       moreOptionButton,
     ],
     onClick: () => handleRowClick(1),
-    'aria-label': 'custom text',
+    'aria-labelledby': 'name-1 age-1',
   },
   {
     key: 2,

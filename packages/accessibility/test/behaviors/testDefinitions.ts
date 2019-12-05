@@ -468,6 +468,17 @@ definitions.push({
   },
 })
 
+// Example: Applies 'gridRowBehavior' for 'row' child component.
+definitions.push({
+  regexp: /Applies '(\w+)' for '(\w+)' child component\./g,
+  testMethod: (parameters: TestMethod) => {
+    const [behaviorToBeUsed, childComponent] = parameters.props
+    const property = {}
+    const expectedResult = parameters.behavior(property).childBehaviors[childComponent]
+    expect(expectedResult.name).toBe(behaviorToBeUsed)
+  },
+})
+
 /*
  * ********************** FOCUS ZONE **********************
  */
@@ -609,18 +620,17 @@ definitions.push({
   },
 })
 
-// Triggers 'unsetRowTabbable' action using SHIFT + TAB key on 'root'.
+// Triggers 'unsetRowTabbable' action using 'shiftKey' + 'Tab' key on 'root'.
 definitions.push({
-  regexp: /Triggers '(\w+)' action using SHIFT \+ TAB key on '(\w+)'\./g,
+  regexp: /Triggers '(\w+)' action using '(\w+)' \+ '(\w+)' key on '(\w+)'\./g,
   testMethod: (parameters: TestMethod) => {
-    const [action, elementToPerformAction] = [...parameters.props]
+    const [action, keyModifier, key, elementToPerformAction] = [...parameters.props]
     const property = {}
-    const key = 'Tab'
     const keyCombinations = parameters.behavior(property).keyActions[elementToPerformAction][action]
       .keyCombinations[0]
 
     expect(keyCombinations.keyCode).toBe(keyboardKey[key])
-    expect(keyCombinations.shiftKey).toBe(true)
+    expect(keyCombinations[keyModifier]).toBe(true)
   },
 })
 
