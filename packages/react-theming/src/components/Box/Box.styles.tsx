@@ -1,9 +1,9 @@
-import { ITheme } from '../../theme.types'
+import { ITheme } from '../../theme.types';
 
 // recipes (TODO: move these out.)
-const backgroundColor = (t: ITheme) => t.colors.background
-const bodyText = (t: ITheme) => t.colors.bodyText
-const defaultFontFamily = (t: ITheme) => t.fonts.default
+const backgroundColor = (t: ITheme) => t.colors.background;
+const bodyText = (t: ITheme) => t.colors.bodyText;
+const defaultFontFamily = (t: ITheme) => t.fonts.default;
 
 export const BoxStyles = {
   root: {
@@ -11,6 +11,6 @@ export const BoxStyles = {
     color: bodyText,
     fontFamily: defaultFontFamily,
   },
-}
+};
 
-export default BoxStyles
+export default BoxStyles;

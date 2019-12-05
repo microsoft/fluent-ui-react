@@ -1,14 +1,14 @@
-import { resolveTokens } from './resolveTokens'
-import { ITheme, IColorRamp, IThemeColorDefinition, IToken } from './theme.types'
+import { resolveTokens } from './resolveTokens';
+import { ITheme, IColorRamp, IThemeColorDefinition } from './theme.types';
 
 const reifyTheme = (partial: Partial<ITheme>): ITheme => {
-  const result = { components: {}, ...partial }
+  const result = { components: {}, ...partial };
 
-  return result as ITheme
-}
+  return result as ITheme;
+};
 
 const reifyColors = (partial: Partial<IThemeColorDefinition>): IThemeColorDefinition => {
-  const defaultRamp: IColorRamp = { values: [], index: -1 }
+  const defaultRamp: IColorRamp = { values: [], index: -1 };
   const result: Partial<IThemeColorDefinition> = {
     background: '#000',
     brand: defaultRamp,
@@ -18,16 +18,16 @@ const reifyColors = (partial: Partial<IThemeColorDefinition>): IThemeColorDefini
     warning: defaultRamp,
     danger: defaultRamp,
     ...partial,
-  }
-  return result as IThemeColorDefinition
-}
+  };
+  return result as IThemeColorDefinition;
+};
 
 describe('resolveTokens', () => {
   it('can resolve a literal', () => {
     expect(resolveTokens('', reifyTheme({}), [{ value: 'abc' }])).toEqual({
       value: 'abc',
-    })
-  })
+    });
+  });
 
   it('can resolve a color from the theme', () => {
     expect(
@@ -47,8 +47,8 @@ describe('resolveTokens', () => {
           },
         ],
       ),
-    ).toEqual({ value: '#bbb' })
-  })
+    ).toEqual({ value: '#bbb' });
+  });
 
   it('can resolve a token related to another', () => {
     expect(
@@ -61,8 +61,8 @@ describe('resolveTokens', () => {
           },
         },
       ]),
-    ).toEqual({ value: 'abc', value2: 'abcdef' })
-  })
+    ).toEqual({ value: 'abc', value2: 'abcdef' });
+  });
 
   it('can resolve a token related to a late resolving dependency', () => {
     expect(
@@ -86,8 +86,8 @@ describe('resolveTokens', () => {
           },
         ],
       ),
-    ).toEqual({ value: '#aaa', value2: '#aaadef' })
-  })
+    ).toEqual({ value: '#aaa', value2: '#aaadef' });
+  });
 
   describe('theme overrides', () => {
     it('pulls overrides from theme', () => {
@@ -99,11 +99,11 @@ describe('resolveTokens', () => {
             },
           },
         },
-      })
+      });
       expect(resolveTokens('MyComponent', theme, [{ value: 'foo' }])).toEqual({
         value: 'bar',
-      })
-    })
+      });
+    });
 
     it('lets the theme declare interdependent tokens', () => {
       const theme: ITheme = reifyTheme({
@@ -117,16 +117,16 @@ describe('resolveTokens', () => {
             },
           },
         },
-      })
+      });
       const baseTokens = {
         value: 'foo',
         value2: {
           dependsOn: ['value'],
           resolve: ([value]: any, theme: ITheme) => `${value}foo`,
         },
-      }
-      const result = resolveTokens('MyComponent', theme, [baseTokens])
-      expect(result).toEqual({ value: 'foo', value2: 'foobar' })
-    })
-  })
-})
+      };
+      const result = resolveTokens('MyComponent', theme, [baseTokens]);
+      expect(result).toEqual({ value: 'foo', value2: 'foobar' });
+    });
+  });
+});

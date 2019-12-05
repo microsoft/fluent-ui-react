@@ -81,6 +81,7 @@ module.exports = {
     'no-return-await': 'off',
     'no-return-assign': 'off',
     'no-restricted-globals': 'off',
+    'no-restricted-properties': ['off', { object: 'Math', property: 'pow' }],
     'no-restricted-syntax': 'off',
     'no-throw-literal': 'off',
     'no-sparse-arrays': 'off',

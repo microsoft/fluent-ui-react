@@ -1,1 +1,1 @@
-import '@fluentui/scripts/tasks/preset'
+import '@fluentui/scripts/tasks/preset';

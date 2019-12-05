@@ -1,6 +1,6 @@
-import { IRGB, IHSL } from './color.types'
-import { rgb2hsl, hsl2rgb } from './color.hsl'
-import { cssColor, rgbToString } from './color'
+import { IRGB, IHSL } from './color.types';
+import { rgb2hsl, hsl2rgb } from './color.hsl';
+import { cssColor, rgbToString } from './color';
 
 /**
  * This file contains a set of color/contrast utilities
@@ -15,8 +15,8 @@ import { cssColor, rgbToString } from './color'
  * It is primarily used to denote an acceptable range of relative luminance values
  */
 interface ISuggestionRange {
-  min: number
-  max: number
+  min: number;
+  max: number;
 }
 
 /**
@@ -27,7 +27,7 @@ interface ISuggestionRange {
  * @param c - one of r g or b coming from sRGB
  */
 function standardToLinear(c: number): number {
-  return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4)
+  return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
 }
 
 /**
@@ -44,13 +44,13 @@ export function relativeLuminance(r: number, g: number, b: number): number {
   // relative luminance: http://www.w3.org/TR/2008/REC-WCAG20-20081211/#relativeluminancedef
 
   // get the effective radius for each color
-  const r1 = standardToLinear(r / 255)
-  const g1 = standardToLinear(g / 255)
-  const b1 = standardToLinear(b / 255)
+  const r1 = standardToLinear(r / 255);
+  const g1 = standardToLinear(g / 255);
+  const b1 = standardToLinear(b / 255);
 
   // relative luminance adjusts the R/G/B values by modifiers for their perceived brightness
   // to produce lightness result for how the eye perceives the color
-  return 0.2126 * r1 + 0.7152 * g1 + 0.0722 * b1
+  return 0.2126 * r1 + 0.7152 * g1 + 0.0722 * b1;
 }
 
 /**
@@ -62,9 +62,9 @@ export function relativeLuminance(r: number, g: number, b: number): number {
  * @param relLumB - a relative luminacne value
  */
 export function contrastRatio(relLumA: number, relLumB: number): number {
-  const lighter: number = relLumA > relLumB ? relLumA : relLumB
-  const darker: number = relLumA > relLumB ? relLumB : relLumA
-  return (lighter + 0.05) / (darker + 0.05)
+  const lighter: number = relLumA > relLumB ? relLumA : relLumB;
+  const darker: number = relLumA > relLumB ? relLumB : relLumA;
+  return (lighter + 0.05) / (darker + 0.05);
 }
 
 /**
@@ -74,9 +74,9 @@ export function contrastRatio(relLumA: number, relLumB: number): number {
  * @param c2 - second color value
  */
 export function calcContrastRatio(c1: IRGB, c2: IRGB): number {
-  const relC1: number = relativeLuminance(c1.r, c1.g, c1.b)
-  const relC2: number = relativeLuminance(c2.r, c2.g, c2.b)
-  return contrastRatio(relC1, relC2)
+  const relC1: number = relativeLuminance(c1.r, c1.g, c1.b);
+  const relC2: number = relativeLuminance(c2.r, c2.g, c2.b);
+  return contrastRatio(relC1, relC2);
 }
 
 /**
@@ -93,22 +93,22 @@ export function calcContrastRatio(c1: IRGB, c2: IRGB): number {
  * @param desiredRatio - a contrast ratio (generally from some accesibility standard)
  */
 function getContrastingLuminanceRange(color: IRGB, desiredRatio: number): ISuggestionRange {
-  const relLum: number = relativeLuminance(color.r, color.g, color.b)
+  const relLum: number = relativeLuminance(color.r, color.g, color.b);
 
   // when background is lighter, solve for darker
-  let suggestion: number = (relLum + 0.05) / desiredRatio - 0.05
+  let suggestion: number = (relLum + 0.05) / desiredRatio - 0.05;
   if (suggestion > 0 && suggestion < 1) {
-    return { min: 0, max: suggestion }
+    return { min: 0, max: suggestion };
   }
 
   // when background is darker, text needs to be lighter
-  suggestion = desiredRatio * (relLum + 0.05) - 0.05
+  suggestion = desiredRatio * (relLum + 0.05) - 0.05;
   if (suggestion < 1 && suggestion > 0) {
-    return { min: suggestion, max: 1 }
+    return { min: suggestion, max: 1 };
   }
 
   // We can't achieve the desired ratio
-  return { min: -1, max: -1 }
+  return { min: -1, max: -1 };
 }
 
 /**
@@ -129,39 +129,39 @@ function getContrastingLuminanceRange(color: IRGB, desiredRatio: number): ISugge
  */
 function contrastAdjust(color: IRGB, suggestedRelLuminance: ISuggestionRange): IRGB {
   // it is possible that the current color meets the suggested relative luminance
-  let currRelLuminance: number = relativeLuminance(color.r, color.g, color.b)
+  let currRelLuminance: number = relativeLuminance(color.r, color.g, color.b);
   if (
     currRelLuminance >= suggestedRelLuminance.min &&
     currRelLuminance <= suggestedRelLuminance.max
   ) {
-    return { r: color.r, g: color.g, b: color.b } // make a copy to be safe
+    return { r: color.r, g: color.g, b: color.b }; // make a copy to be safe
   }
 
-  const hsl: IHSL = rgb2hsl(color)
+  const hsl: IHSL = rgb2hsl(color);
 
   // allow for a .01 (totally arbitrary) error bound, also a good cutting off point
   // the error bound is safe as it will eventually result in an overcautios contrast ratio
   // and cap from 0 to 1 as relative luminance is normalized against that range
-  const desiredMin: number = Math.max(suggestedRelLuminance.min - 0.01, 0)
-  const desiredMax: number = Math.min(suggestedRelLuminance.max + 0.01, 1)
+  const desiredMin: number = Math.max(suggestedRelLuminance.min - 0.01, 0);
+  const desiredMax: number = Math.min(suggestedRelLuminance.max + 0.01, 1);
 
   // binary search across l values
-  let minL: number = currRelLuminance < desiredMin ? hsl.l : 0
-  let maxL: number = currRelLuminance > desiredMax ? hsl.l : 1
-  let rgbFinal: IRGB = { r: 0, g: 0, b: 0 } // default to black
+  let minL: number = currRelLuminance < desiredMin ? hsl.l : 0;
+  let maxL: number = currRelLuminance > desiredMax ? hsl.l : 1;
+  let rgbFinal: IRGB = { r: 0, g: 0, b: 0 }; // default to black
 
   while (currRelLuminance < desiredMin || currRelLuminance > desiredMax) {
-    hsl.l = (maxL + minL) / 2
-    rgbFinal = hsl2rgb(hsl)
-    currRelLuminance = relativeLuminance(rgbFinal.r, rgbFinal.g, rgbFinal.b)
+    hsl.l = (maxL + minL) / 2;
+    rgbFinal = hsl2rgb(hsl);
+    currRelLuminance = relativeLuminance(rgbFinal.r, rgbFinal.g, rgbFinal.b);
     if (currRelLuminance > desiredMax) {
-      maxL = (maxL + minL) / 2
+      maxL = (maxL + minL) / 2;
     } else if (currRelLuminance < desiredMin) {
-      minL = (maxL + minL) / 2
+      minL = (maxL + minL) / 2;
     }
   }
 
-  return rgbFinal
+  return rgbFinal;
 }
 
 /**
@@ -175,19 +175,19 @@ function contrastAdjust(color: IRGB, suggestedRelLuminance: ISuggestionRange): I
  * @param desiredRatio - a desired contrast ratio (default is WCAG 2 AA standard for normal text)
  */
 export function adjustForContrast(baseline: IRGB, target: IRGB, desiredRatio: number = 4.5): IRGB {
-  const desiredRelLuminance: ISuggestionRange = getContrastingLuminanceRange(target, desiredRatio)
+  const desiredRelLuminance: ISuggestionRange = getContrastingLuminanceRange(target, desiredRatio);
 
   // default to black or white
   if (desiredRelLuminance.min === -1) {
     // go to black
-    return { r: 0, g: 0, b: 0 }
+    return { r: 0, g: 0, b: 0 };
   }
   if (desiredRelLuminance.min === 2) {
     // go to white
-    return { r: 255, g: 255, b: 255 }
+    return { r: 255, g: 255, b: 255 };
   }
 
-  return contrastAdjust(baseline, desiredRelLuminance)
+  return contrastAdjust(baseline, desiredRelLuminance);
 }
 
 /**
@@ -197,19 +197,19 @@ export function adjustForContrast(baseline: IRGB, target: IRGB, desiredRatio: nu
  */
 function _getRgbForColor(lookup: IContrastCache['rgbLookup'], color: string): IRGB {
   if (!lookup[color]) {
-    const colorAsRgb = cssColor(color)
-    lookup[color] = colorAsRgb || { r: 0, b: 0, g: 0 }
+    const colorAsRgb = cssColor(color);
+    lookup[color] = colorAsRgb || { r: 0, b: 0, g: 0 };
   }
-  return lookup[color]
+  return lookup[color];
 }
 
-export type RequiredContrast = 'low' | 'medium' | 'high'
+export type RequiredContrast = 'low' | 'medium' | 'high';
 
 const _contrastDefaults: { [K in RequiredContrast]: number } = {
   low: 3.0,
   medium: 4.5,
   high: 6.0,
-}
+};
 
 /**
  * internal interface for caching contrast adjusted values.  This has a lookup table for converting
@@ -219,13 +219,13 @@ const _contrastDefaults: { [K in RequiredContrast]: number } = {
  */
 interface IContrastCache {
   rgbLookup: {
-    [color: string]: IRGB
-  }
+    [color: string]: IRGB;
+  };
   cache: {
     [bgColor: string]: {
-      [fgColor: string]: { [K in RequiredContrast]?: string }
-    }
-  }
+      [fgColor: string]: { [K in RequiredContrast]?: string };
+    };
+  };
 }
 
 /**
@@ -234,7 +234,7 @@ interface IContrastCache {
 const _contrastCache: IContrastCache = {
   rgbLookup: {},
   cache: {},
-}
+};
 
 /**
  * Take two strings representing a foreground and background color and potentially return a new foreground
@@ -249,17 +249,18 @@ export function getContrastingColor(
   backgroundColor: string,
   requiredContrast: RequiredContrast = 'medium',
 ): string {
-  const desiredRatio = _contrastDefaults[requiredContrast]
-  const cache = _contrastCache.cache
-  const bgEntry = (cache[backgroundColor] = cache[backgroundColor] || {})
-  const fgEntry = (bgEntry[color] = bgEntry[color] || {})
+  const desiredRatio = _contrastDefaults[requiredContrast];
+  const cache = _contrastCache.cache;
+  /* eslint-disable no-multi-assign */
+  const bgEntry = (cache[backgroundColor] = cache[backgroundColor] || {});
+  const fgEntry = (bgEntry[color] = bgEntry[color] || {});
 
   if (!fgEntry[requiredContrast]) {
-    const rgbLookup = _contrastCache.rgbLookup
-    const fg = _getRgbForColor(rgbLookup, color)
-    const bg = _getRgbForColor(rgbLookup, backgroundColor)
-    const newFg = adjustForContrast(fg, bg, desiredRatio)
-    fgEntry[requiredContrast] = rgbToString(newFg.r, newFg.g, newFg.b)
+    const rgbLookup = _contrastCache.rgbLookup;
+    const fg = _getRgbForColor(rgbLookup, color);
+    const bg = _getRgbForColor(rgbLookup, backgroundColor);
+    const newFg = adjustForContrast(fg, bg, desiredRatio);
+    fgEntry[requiredContrast] = rgbToString(newFg.r, newFg.g, newFg.b);
   }
-  return fgEntry[requiredContrast]!
+  return fgEntry[requiredContrast]!;
 }
