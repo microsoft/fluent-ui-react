@@ -20,3 +20,7 @@ stats/
 .vscode/
 temp/
 *.api.json
+
+# packages that have lib as the output
+packages/digest/lib
+packages/perf-test/lib
