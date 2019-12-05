@@ -13,6 +13,11 @@ const Types = () => (
         examplePath="components/Provider/Types/ProviderExample"
       />
       <ComponentExample
+        title="HACKHACKHACK"
+        description="..."
+        examplePath="components/Provider/Types/ProviderShared"
+      />
+      <ComponentExample
         title="Rtl"
         description="A Provider can specify that the content inside it should be in rtl mode."
         examplePath="components/Provider/Types/ProviderRtlExample"

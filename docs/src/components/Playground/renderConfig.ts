@@ -2,6 +2,7 @@ import * as CodeSandbox from '@fluentui/code-sandbox'
 import * as DocsComponent from '@fluentui/docs-components'
 import * as Stardust from '@fluentui/react'
 import * as ReactFela from 'react-fela'
+import * as OUFR from 'office-ui-fabric-react'
 import * as _ from 'lodash'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
@@ -52,6 +53,10 @@ export const imports: Record<string, { version: string; module: any }> = {
   'react-fela': {
     version: stardustReactPackageJson.dependencies['react-fela'],
     module: ReactFela,
+  },
+  'office-ui-fabric-react': {
+    version: stardustReactPackageJson.dependencies['office-ui-fabric-react'],
+    module: OUFR,
   },
   prettier: {
     version: docsComponentsPackageJson.peerDependencies['prettier'],
