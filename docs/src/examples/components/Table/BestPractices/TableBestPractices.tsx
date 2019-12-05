@@ -11,6 +11,7 @@ const doList = [
   </Text>,
   'Provide label to the Table component using `aria-label` or `aria-labelledby` prop.',
   'Provide label to the Row component using `aria-label` or `aria-labelledby` prop. If not, then each cell of the row is narrated by screen reader.',
+  'Provide label to the table header column, if cell has no content.',
   'Stop event propagation, when you will add actionable element into the grid cell.',
 ]
 

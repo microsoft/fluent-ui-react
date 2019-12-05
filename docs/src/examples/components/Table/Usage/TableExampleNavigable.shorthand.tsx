@@ -44,7 +44,7 @@ const header = {
     { content: 'Picture', key: 'pic' },
     { content: 'Age', key: 'action' },
     { content: 'Tags', key: 'tags' },
-    { key: 'more options' },
+    { key: 'more options', 'aria-label': 'more options' },
   ],
 }
 
