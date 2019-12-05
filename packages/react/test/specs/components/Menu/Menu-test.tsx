@@ -32,7 +32,10 @@ describe('Menu', () => {
       key: 'users',
       content: 'users',
       'data-foo': 'something',
-      menu: [{ key: '1', content: 'Alice' }, { key: '2', content: 'Bob' }],
+      menu: [
+        { key: '1', content: 'Alice' },
+        { key: '2', content: 'Bob' },
+      ],
     },
   ]
 
