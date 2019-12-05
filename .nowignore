@@ -13,6 +13,11 @@ node_modules
 packages/**/dist
 packages/**/test
 perf/dist
+lib/
+!src/**/lib/
+!test/**/lib/
+!src/lib/
+!test/lib/
 
 .editorconfig
 .gitignore

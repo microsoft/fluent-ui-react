@@ -1,4 +1,8 @@
 coverage/
 dist/
 node_modules/
-packages/digest/lib/
+lib/
+!src/**/lib/
+!test/**/lib/
+!src/lib/
+!test/lib/

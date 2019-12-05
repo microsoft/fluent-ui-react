@@ -6,6 +6,12 @@
 coverage/
 dist/
 stats/
+lib/
+!src/**/lib/
+!test/**/lib/
+!src/lib/
+!test/lib/
+
 
 package.json
 

@@ -20,3 +20,8 @@ stats/
 .vscode/
 temp/
 *.api.json
+lib/
+!src/**/lib/
+!test/**/lib/
+!src/lib/
+!test/lib/
