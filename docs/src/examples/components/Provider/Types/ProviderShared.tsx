@@ -1,5 +1,12 @@
-import { Customizer, Fabric, PrimaryButton, DefaultButton } from 'office-ui-fabric-react'
-import { Provider } from '@fluentui/react'
+import {
+  Customizer,
+  Fabric,
+  PrimaryButton,
+  DefaultButton,
+  createTheme,
+  ITheme,
+} from 'office-ui-fabric-react'
+import { Provider, Button } from '@fluentui/react'
 import * as React from 'react'
 
 /*
@@ -72,18 +79,35 @@ theme.siteVariables.brand = {
 
 */
 
-const makeFabricScopedSettings = (theme: any): any => {
-  const theButtonColors: any = theme.componentVariables.Button(theme.siteVariables)
-
-  return {
-    DefaultButton: {
-      styles: {
-        root: {
-          background: theButtonColors.primaryBackgroundColor,
-        },
-      },
+const makeFabricTheme = (theme: any): ITheme => {
+  // const theButtonColors: any = theme.componentVariables.Button(theme.siteVariables)
+  console.log(theme.siteVariables)
+  return createTheme({
+    palette: {
+      themePrimary: theme.siteVariables.colorScheme.brand.background,
+      themeLighterAlt: '#fcf5ff',
+      themeLighter: '#f5d6ff',
+      themeLight: '#ecb3ff',
+      themeTertiary: '#d966ff',
+      themeSecondary: '#c71fff',
+      themeDarkAlt: '#ac00e6',
+      themeDark: '#9100c2',
+      themeDarker: '#6b008f',
+      neutralLighterAlt: '#f8f8f8',
+      neutralLighter: '#f4f4f4',
+      neutralLight: '#eaeaea',
+      neutralQuaternaryAlt: '#dadada',
+      neutralQuaternary: '#d0d0d0',
+      neutralTertiaryAlt: '#c8c8c8',
+      neutralTertiary: '#bab8b7',
+      neutralSecondary: '#a3a2a0',
+      neutralPrimaryAlt: '#8d8b8a',
+      neutralPrimary: '#323130',
+      neutralDark: '#605e5d',
+      black: theme.siteVariables.colorScheme.default.foreground1,
+      white: '#ffffff',
     },
-  }
+  })
 }
 
 const ProviderShared = () => (
@@ -91,15 +115,14 @@ const ProviderShared = () => (
     <Provider.Consumer
       render={theme => (
         <>
-          <div>
-            <Fabric>
-              <Customizer scopedSettings={makeFabricScopedSettings(theme)}>
-                <PrimaryButton text="just a button inside a context" />
-              </Customizer>
-            </Fabric>
-
-            <DefaultButton>Hello World</DefaultButton>
-          </div>
+          <Fabric>
+            <Customizer settings={{ theme: makeFabricTheme(theme) }}>
+              <PrimaryButton text="primary" />
+              <DefaultButton text="default" />
+              <PrimaryButton text="just a button inside a context" />
+              <Button primary>I am a Teams button</Button>
+            </Customizer>
+          </Fabric>
           <code>
             theme.siteVariables.brand ={' '}
             {JSON.stringify(theme.componentVariables.Button(theme.siteVariables), null, 2)}
