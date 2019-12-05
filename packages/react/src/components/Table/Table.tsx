@@ -49,6 +49,10 @@ const handleVariablesOverrides = variables => predefinedProps => ({
 
 /**
  * A Table is used to display data in tabular layout
+ * * @accessibility
+ * Implements ARIA [Data Grid](https://www.w3.org/TR/wai-aria-practices/#dataGrid) design pattern for presenting tabular information.
+ * When gridcell contains actionable element, use [gridCellWithFocusableElementBehavior](/components/table/accessibility#grid-cell-with-focusable-element-behavior-ts). [More information available in aria documentation.](https://www.w3.org/TR/wai-aria-practices/#gridNav_focus)
+ * When gridcell contains more actionable elements, use [gridCellWithFocusableElementBehavior](/components/table/accessibility#gridCellMultipleFocusableBehavior). [More information available in aria documentation.](https://www.w3.org/TR/wai-aria-practices/#gridNav_inside)
  * @accessibilityIssues
  * [NVDA narrate table title(aria-label) twice](https://github.com/nvaccess/nvda/issues/10548)
  * [Accessibility DOM > Table > gridcell > when gridcell is focused, then selected state is send to reader](https://bugs.chromium.org/p/chromium/issues/detail?id=1030378)
