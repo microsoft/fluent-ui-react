@@ -16,3 +16,5 @@ packages/react-theming/lib
 package.json
 
 packages/ability-attributes/src/schema.ts
+
+CHANGELOG.md
