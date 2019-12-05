@@ -13,7 +13,7 @@ import menuButtonBehavior from '../MenuButton/menuButtonBehavior'
  * Adds attribute 'id=menu-id' based on the property 'menuId' to 'menu' slot.
  * Adds attribute 'aria-labelledby=trigger-id' based on the property 'triggerId' to 'menu' slot.
  * Triggers 'closeAndFocusTrigger' action with 'Escape' or 'altKey'+'ArrowUp' or 'Tab' or 'Shift'+'Tab' on 'popup' slot.
- * Triggers 'open' action with 'altKey'+'ArrowDown' on 'trigger' slot.
+ * Triggers 'openAndFocusFirst' action with 'altKey'+'ArrowDown' on 'root' slot.
  *
  * @specification
  * Adds attribute 'tabIndex=-1' to 'toggleButton' slot.
