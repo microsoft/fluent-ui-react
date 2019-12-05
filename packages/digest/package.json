@@ -1,6 +1,6 @@
 {
   "name": "@fluentui/digest",
-  "version": "0.0.1",
+  "version": "0.41.0",
   "private": true,
   "main": "lib/digest.js",
   "module": "lib/digest.js",
@@ -21,7 +21,5 @@
     "just-scripts": "^0.35.0",
     "querystring": "^0.2.0",
     "webpack": "^4.33.0"
-  },
-  "devDependencies": {
   }
 }
