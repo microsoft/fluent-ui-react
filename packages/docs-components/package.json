@@ -1,7 +1,7 @@
 {
   "name": "@fluentui/docs-components",
   "description": "A set of React components to build docs sites.",
-  "version": "0.40.0",
+  "version": "0.41.0",
   "author": "Oleksandr Fediashov <a@fedyashov.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
@@ -20,7 +20,7 @@
   "main": "dist/commonjs/index.js",
   "module": "dist/es/index.js",
   "peerDependencies": {
-    "prettier": "^1.18.2",
+    "prettier": "^1.19.1",
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
   },

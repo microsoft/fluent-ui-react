@@ -1,7 +1,7 @@
 {
   "name": "@fluentui/accessibility",
   "description": "A set of reusable framework accessibility behaviours.",
-  "version": "0.40.2",
+  "version": "0.41.0",
   "author": "Oleksandr Fediashov <olfedias@microsoft.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
@@ -10,7 +10,7 @@
     "lodash": "^4.17.15"
   },
   "devDependencies": {
-    "@fluentui/internal-tooling": "^0.40.0",
+    "@fluentui/internal-tooling": "^0.41.0",
     "lerna-alias": "^3.0.3-0"
   },
   "files": [
