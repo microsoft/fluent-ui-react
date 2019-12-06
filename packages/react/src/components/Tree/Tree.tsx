@@ -17,7 +17,7 @@ import {
   applyAccessibilityKeyHandlers,
   AutoControlledComponent,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import {
   ShorthandRenderFunction,
   WithAsProp,
@@ -25,9 +25,9 @@ import {
   ShorthandCollection,
   ShorthandValue,
 } from '../../types'
-import { hasSubtree, removeItemAtIndex } from './lib'
+import { hasSubtree, removeItemAtIndex } from './utils'
 import TreeTitle, { TreeTitleProps } from './TreeTitle'
-import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
+import { ReactAccessibilityBehavior } from '../../utils/accessibility/reactTypes'
 
 export interface TreeSlotClassNames {
   item: string

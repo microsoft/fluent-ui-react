@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
 
-import { UIComponent, UIComponentProps, commonPropTypes, rtlTextContainer } from '../../lib'
+import { UIComponent, UIComponentProps, commonPropTypes, rtlTextContainer } from '../../utils'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 import { ICSSInJSStyle } from '../../themes/types'
 

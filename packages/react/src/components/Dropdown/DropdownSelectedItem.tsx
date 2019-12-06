@@ -12,14 +12,14 @@ import {
   ComponentKeyboardEventHandler,
   withSafeTypeForAs,
 } from '../../types'
-import { UIComponentProps } from '../../lib/commonPropInterfaces'
+import { UIComponentProps } from '../../utils/commonPropInterfaces'
 import {
   createShorthandFactory,
   UIComponent,
   RenderResultConfig,
   commonPropTypes,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import Icon, { IconProps } from '../Icon/Icon'
 import Image, { ImageProps } from '../Image/Image'
 import Label from '../Label/Label'

@@ -21,7 +21,7 @@ import {
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
   doesNodeContainClick,
-} from '../../lib'
+} from '../../utils'
 import {
   ComponentEventHandler,
   ShorthandValue,
@@ -30,7 +30,7 @@ import {
   Omit,
   ShorthandCollection,
 } from '../../types'
-import { Popper } from '../../lib/positioner'
+import { Popper } from '../../utils/positioner'
 
 import Box, { BoxProps } from '../Box/Box'
 import Icon, { IconProps } from '../Icon/Icon'

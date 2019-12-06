@@ -6,8 +6,8 @@ import {
   ChatMessageState,
 } from '../../../../components/Chat/ChatMessage'
 import { ChatMessageVariables } from './chatMessageVariables'
-import { screenReaderContainerStyles } from '../../../../lib/accessibility/Styles/accessibilityStyles'
-import { pxToRem } from '../../../../lib'
+import { screenReaderContainerStyles } from '../../../../utils/accessibility/Styles/accessibilityStyles'
+import { pxToRem } from '../../../../utils'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 const chatMessageStyles: ComponentSlotStylesPrepared<

@@ -21,8 +21,8 @@ import {
   commonPropTypes,
   ColorComponentProps,
   ShorthandFactory,
-} from '../../lib'
-import { mergeComponentVariables } from '../../lib/mergeThemes'
+} from '../../utils'
+import { mergeComponentVariables } from '../../utils/mergeThemes'
 
 import {
   ComponentEventHandler,
