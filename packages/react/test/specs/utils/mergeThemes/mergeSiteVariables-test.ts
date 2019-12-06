@@ -1,6 +1,9 @@
-import { mergeSiteVariables__PROD, mergeSiteVariables__DEV } from '../../../../src/lib/mergeThemes'
-import * as debugEnabled from 'src/lib/debug/debugEnabled'
-import { withDebugId } from 'src/lib'
+import {
+  mergeSiteVariables__PROD,
+  mergeSiteVariables__DEV,
+} from '../../../../src/utils/mergeThemes'
+import * as debugEnabled from 'src/utils/debug/debugEnabled'
+import { withDebugId } from 'src/utils'
 
 describe('mergeSiteVariables', () => {
   let originalDebugEnabled

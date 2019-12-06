@@ -1,4 +1,4 @@
-import felaExpandCssShorthandsPlugin from 'src/lib/felaExpandCssShorthandsPlugin'
+import felaExpandCssShorthandsPlugin from 'src/utils/felaExpandCssShorthandsPlugin'
 
 const expandCssShorthands = felaExpandCssShorthandsPlugin()
 

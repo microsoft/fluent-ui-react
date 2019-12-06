@@ -1,4 +1,4 @@
-import { pxToRem } from 'src/lib'
+import { pxToRem } from 'src/utils'
 
 describe('fontSizeUtility', () => {
   describe('pxToRem', () => {

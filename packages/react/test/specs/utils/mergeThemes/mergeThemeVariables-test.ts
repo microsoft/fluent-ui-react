@@ -1,7 +1,7 @@
-import { mergeThemeVariables__PROD, mergeThemeVariables__DEV } from 'src/lib/mergeThemes'
+import { mergeThemeVariables__PROD, mergeThemeVariables__DEV } from 'src/utils/mergeThemes'
 import * as _ from 'lodash'
-import { withDebugId } from 'src/lib'
-import * as debugEnabled from 'src/lib/debug/debugEnabled'
+import { withDebugId } from 'src/utils'
+import * as debugEnabled from 'src/utils/debug/debugEnabled'
 
 describe('mergeThemeVariables', () => {
   let originalDebugEnabled

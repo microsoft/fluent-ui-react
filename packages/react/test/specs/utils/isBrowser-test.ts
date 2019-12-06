@@ -1,4 +1,4 @@
-import isBrowser from 'src/lib/isBrowser'
+import isBrowser from 'src/utils/isBrowser'
 
 describe('isBrowser', () => {
   describe('browser', () => {

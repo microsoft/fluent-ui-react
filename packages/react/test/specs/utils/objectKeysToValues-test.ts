@@ -1,4 +1,4 @@
-import objectKeyToValues from 'src/lib/objectKeysToValues'
+import objectKeyToValues from 'src/utils/objectKeysToValues'
 
 describe('objectKeyToValues', () => {
   test('values are replaced by key paths', () => {

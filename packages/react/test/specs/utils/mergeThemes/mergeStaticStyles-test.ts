@@ -1,4 +1,4 @@
-import { mergeStaticStyles } from '../../../../src/lib/mergeThemes'
+import { mergeStaticStyles } from '../../../../src/utils/mergeThemes'
 
 describe('mergeStaticStyles', () => {
   test('returns a compact array', () => {

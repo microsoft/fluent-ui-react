@@ -1,4 +1,4 @@
-import { createAnimationStyles } from 'src/lib'
+import { createAnimationStyles } from 'src/utils'
 
 const theme = {
   siteVariables: { fontSizes: {} },

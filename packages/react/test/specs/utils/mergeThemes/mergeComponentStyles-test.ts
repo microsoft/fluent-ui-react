@@ -1,10 +1,10 @@
 import {
   mergeComponentStyles__PROD,
   mergeComponentStyles__DEV,
-} from '../../../../src/lib/mergeThemes'
+} from '../../../../src/utils/mergeThemes'
 import { ComponentStyleFunctionParam } from 'src/themes/types'
-import * as debugEnabled from 'src/lib/debug/debugEnabled'
-import { withDebugId } from 'src/lib'
+import * as debugEnabled from 'src/utils/debug/debugEnabled'
+import { withDebugId } from 'src/utils'
 
 describe('mergeComponentStyles', () => {
   let originalDebugEnabled

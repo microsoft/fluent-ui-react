@@ -1,4 +1,4 @@
-import deepmerge from 'src/lib/deepmerge'
+import deepmerge from 'src/utils/deepmerge'
 
 describe('deepmerge', () => {
   test(`always returns an object`, () => {

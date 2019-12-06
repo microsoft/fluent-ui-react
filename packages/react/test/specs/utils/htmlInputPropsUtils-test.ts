@@ -1,4 +1,4 @@
-import { partitionHTMLProps } from 'src/lib/htmlPropsUtils'
+import { partitionHTMLProps } from 'src/utils/htmlPropsUtils'
 
 const props = {
   autoFocus: false,

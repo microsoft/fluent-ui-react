@@ -1,5 +1,5 @@
-import mergeProviderContexts, { mergeRenderers } from 'src/lib/mergeProviderContexts'
-import { felaRenderer } from 'src/lib/felaRenderer'
+import mergeProviderContexts, { mergeRenderers } from 'src/utils/mergeProviderContexts'
+import { felaRenderer } from 'src/utils/felaRenderer'
 
 describe('mergeRenderers', () => {
   test(`always uses "next" renderer`, () => {

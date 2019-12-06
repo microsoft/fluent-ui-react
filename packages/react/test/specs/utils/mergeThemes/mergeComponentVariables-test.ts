@@ -1,10 +1,10 @@
 import {
   mergeComponentVariables__PROD,
   mergeComponentVariables__DEV,
-} from '../../../../src/lib/mergeThemes'
-import * as debugEnabled from 'src/lib/debug/debugEnabled'
-import { withDebugId } from 'src/lib'
-import objectKeyToValues from 'src/lib/objectKeysToValues'
+} from '../../../../src/utils/mergeThemes'
+import * as debugEnabled from 'src/utils/debug/debugEnabled'
+import { withDebugId } from 'src/utils'
+import objectKeyToValues from 'src/utils/objectKeysToValues'
 
 describe('mergeComponentVariables', () => {
   let originalDebugEnabled

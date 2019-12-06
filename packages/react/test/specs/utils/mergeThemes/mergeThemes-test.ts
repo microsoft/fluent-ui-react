@@ -1,8 +1,8 @@
-import mergeThemes, { mergeStyles } from 'src/lib/mergeThemes'
+import mergeThemes, { mergeStyles } from 'src/utils/mergeThemes'
 import { ComponentStyleFunctionParam, ICSSInJSStyle, ThemeInput } from 'src/themes/types'
 import * as _ from 'lodash'
 import { callable, themes, withDebugId } from 'src/index'
-import * as debugEnabled from 'src/lib/debug/debugEnabled'
+import * as debugEnabled from 'src/utils/debug/debugEnabled'
 
 describe('mergeThemes', () => {
   test(`always returns an object`, () => {

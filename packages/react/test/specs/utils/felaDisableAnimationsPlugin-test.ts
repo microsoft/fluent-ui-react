@@ -1,4 +1,4 @@
-import felaDisableAnimationsPlugin from 'src/lib/felaDisableAnimationsPlugin'
+import felaDisableAnimationsPlugin from 'src/utils/felaDisableAnimationsPlugin'
 
 const disableAnimationsPlugin = felaDisableAnimationsPlugin()
 

@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { createComponent } from 'src/lib'
+import { createComponent } from 'src/utils'
 
 describe('createComponent', () => {
   describe('className', () => {

@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import * as React from 'react'
 import { shallow, ShallowWrapper } from 'enzyme'
-import { AutoControlledComponent } from 'src/lib'
+import { AutoControlledComponent } from 'src/utils'
 import { consoleUtil } from 'test/utils'
 import { Props } from 'src/types'
 

@@ -1,4 +1,4 @@
-import resolveStylesAndClasses from 'src/lib/resolveStylesAndClasses'
+import resolveStylesAndClasses from 'src/utils/resolveStylesAndClasses'
 import { ComponentSlotStylesPrepared } from 'src/themes/types'
 
 describe('resolveStylesAndClasses', () => {

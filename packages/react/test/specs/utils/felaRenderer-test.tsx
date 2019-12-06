@@ -4,7 +4,7 @@ import { EmptyThemeProvider } from 'test/utils'
 import Box from 'src/components/Box/Box'
 import Provider from 'src/components/Provider/Provider'
 import Text from 'src/components/Text/Text'
-import { felaRenderer } from 'src/lib'
+import { felaRenderer } from 'src/utils'
 
 describe('felaRenderer', () => {
   test('basic styles are rendered', () => {

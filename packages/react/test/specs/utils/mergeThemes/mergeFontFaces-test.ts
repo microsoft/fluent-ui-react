@@ -1,4 +1,4 @@
-import { mergeFontFaces } from '../../../../src/lib/mergeThemes'
+import { mergeFontFaces } from '../../../../src/utils/mergeThemes'
 
 describe('mergeFontFaces', () => {
   test('returns a compact array', () => {

@@ -1,5 +1,5 @@
-import felaInvokeKeyframesPlugin from 'src/lib/felaInvokeKeyframesPlugin'
-import { felaRenderer } from 'src/lib'
+import felaInvokeKeyframesPlugin from 'src/utils/felaInvokeKeyframesPlugin'
+import { felaRenderer } from 'src/utils'
 
 const renderInvokeKeyframes = felaInvokeKeyframesPlugin()
 

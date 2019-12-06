@@ -1,4 +1,4 @@
-import shouldHandleOnKeys from 'src/lib/shouldHandleOnKeys'
+import shouldHandleOnKeys from 'src/utils/shouldHandleOnKeys'
 
 const getEventArg = (
   keyCode: number,

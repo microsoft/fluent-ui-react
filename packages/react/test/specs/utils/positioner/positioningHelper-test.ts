@@ -1,7 +1,7 @@
 import { Placement } from 'popper.js'
 
-import { Alignment, Position } from 'src/lib/positioner'
-import { getPlacement, applyRtlToOffset } from 'src/lib/positioner/positioningHelper'
+import { Alignment, Position } from 'src/utils/positioner'
+import { getPlacement, applyRtlToOffset } from 'src/utils/positioner/positioningHelper'
 
 type PositionTestInput = {
   align: Alignment

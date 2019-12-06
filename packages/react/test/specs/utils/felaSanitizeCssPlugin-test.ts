@@ -1,4 +1,4 @@
-import sanitizeCss from 'src/lib/felaSanitizeCssPlugin'
+import sanitizeCss from 'src/utils/felaSanitizeCssPlugin'
 
 const assertCssPropertyValue = (value: string, isValid: boolean) => {
   test(`assert that '${value}' is ${isValid ? 'valid' : 'invalid'}`, () => {
@@ -60,7 +60,7 @@ describe('felaSanitizeCssPlugin', () => {
     assertCssPropertyValue('rgba(0,0', false)
     assertCssPropertyValue('rgba(0,0}', false)
 
-    assertCssPropertyValue(`url('../../lib')`, true)
+    assertCssPropertyValue(`url('../../utils')`, true)
   })
 
   describe('if array is passed', () => {
