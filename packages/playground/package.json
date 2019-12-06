@@ -25,9 +25,9 @@
     "clean": "just-scripts clean",
     "e2e": "just-scripts e2e",
     "e2e:watch": "just-scripts e2e:watch",
-    "perf": "just-scripts e2e:perf",
     "just": "just-scripts",
     "lint": "just-scripts lint",
+    "perf": "just-scripts e2e:perf",
     "start": "just-scripts storybook:start",
     "start-test": "just-scripts test:watch",
     "test": "just-scripts test",
@@ -37,8 +37,7 @@
     "@fluentui/react-theming": "^0.3.1",
     "@uifabricshared/foundation-composable": "0.5.0",
     "@uifabricshared/foundation-settings": "0.4.0",
-    "classnames": "^2.2.6",
-    "react": "^16.8.0"
+    "classnames": "^2.2.6"
   },
   "devDependencies": {
     "@fluentui/scripts": "0.41.0",
@@ -50,6 +49,10 @@
     "@types/storybook__addon-info": "^5.2.1",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.15.1",
-    "enzyme-to-json": "^3.3.4"
+    "enzyme-to-json": "^3.3.4",
+    "react": "^16.8.0"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0"
   }
 }
