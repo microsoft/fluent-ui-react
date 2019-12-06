@@ -383,6 +383,15 @@ class Sidebar extends React.Component<any, any> {
         },
         public: true,
       },
+      {
+        key: 'table',
+        title: {
+          content: 'Table',
+          as: NavLink,
+          to: '/prototype-table',
+        },
+        public: true,
+      },
     ]
 
     const componentTreeSection = {
