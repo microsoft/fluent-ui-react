@@ -65,6 +65,7 @@ const checkboxStyles: ComponentSlotStylesPrepared<
     color: v.indicatorColor,
     margin: v.margin,
     padding: v.padding,
+    userSelect: 'none',
 
     ...(p.checked && {
       background: v.checkedBackground,
