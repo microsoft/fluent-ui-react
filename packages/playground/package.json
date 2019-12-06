@@ -38,14 +38,14 @@
     "@uifabricshared/foundation-composable": "0.5.0",
     "@uifabricshared/foundation-settings": "0.4.0",
     "classnames": "^2.2.6",
-    "react": "^16.9.0"
+    "react": "^16.8.0"
   },
   "devDependencies": {
     "@fluentui/scripts": "0.41.0",
     "@types/enzyme": "^3.10.3",
     "@types/enzyme-adapter-react-16": "1.0.5",
     "@types/jest": "^24.0.19",
-    "@types/node": "^12.11.1",
+    "@types/node": "^10.3.2",
     "@types/react": "^16.8.10",
     "@types/storybook__addon-info": "^5.2.1",
     "enzyme": "^3.10.0",
