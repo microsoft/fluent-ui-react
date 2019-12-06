@@ -15,6 +15,7 @@ import {
 import cx from 'classnames'
 import * as React from 'react'
 import * as _ from 'lodash'
+// import hash from 'object-hash'
 
 import logProviderMissingWarning from './providerMissingHandler'
 import {
@@ -29,7 +30,7 @@ import {
 import { Props, ProviderContextPrepared } from '../types'
 import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/reactTypes'
 import getKeyDownHandlers from './getKeyDownHandlers'
-import { emptyTheme, mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
+import { emptyTheme, mergeComponentVariables } from './mergeThemes'
 import createAnimationStyles from './createAnimationStyles'
 import { isEnabled as isDebugEnabled } from './debug/debugEnabled'
 import { DebugData } from './debug/debugData'
@@ -182,12 +183,22 @@ const renderComponent = <P extends {}>(
     theme = emptyTheme,
     telemetry = undefined as Telemetry,
     _internal_resolvedComponentVariables: resolvedComponentVariables = {},
+    _internal_resolvedComponentStyles: resolvedComponentStyles = {}, // {{MenuItem: {hash: styleObject} } }
   } = context || {}
 
   const startTime = telemetry && telemetry.enabled ? performance.now() : 0
 
   const ElementType = getElementType(props) as React.ReactType<P>
   const stateAndProps = { ...state, ...props }
+
+  const accessibility: ReactAccessibilityBehavior = getAccessibility(
+    displayName,
+    stateAndProps,
+    actionHandlers,
+    rtl,
+  )
+
+  const unhandledProps = getUnhandledProps(handledProps, props)
 
   // Resolve variables for this component, cache the result in provider
   if (!resolvedComponentVariables[displayName]) {
@@ -207,22 +218,9 @@ const renderComponent = <P extends {}>(
     ? createAnimationStyles(props.animation, context.theme)
     : {}
 
-  // Resolve styles using resolved variables, merge results, allow props.styles to override
-  const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
-    theme.componentStyles[displayName],
-    withDebugId({ root: props.design }, 'props.design'),
-    withDebugId({ root: props.styles }, 'props.styles'),
-    withDebugId({ root: animationCSSProp }, 'props.animation'),
-  )
-
-  const accessibility: ReactAccessibilityBehavior = getAccessibility(
-    displayName,
-    stateAndProps,
-    actionHandlers,
-    rtl,
-  )
-
-  const unhandledProps = getUnhandledProps(handledProps, props)
+  const normalizedStyles = theme.componentStyles[displayName]
+    ? theme.componentStyles[displayName]
+    : { root: {} }
 
   const styleParam: ComponentStyleFunctionParam = {
     displayName,
@@ -243,11 +241,69 @@ const renderComponent = <P extends {}>(
     displayName, // does not affect styles, only used by useEnhancedRenderer in docs
   }
 
-  const { resolvedStyles, resolvedStylesDebug, classes } = resolveStylesAndClasses(
-    mergedStyles,
+  let hashKey = null
+  let cachedStyles = null
+  const propDependencies = theme.propDependencies[displayName]
+  if (propDependencies) {
+    hashKey = ''
+    propDependencies.forEach(prop => {
+      hashKey += `${prop}${
+        styleParam.props[prop] ? styleParam.props[prop].toString() : 'undefined'
+      }`
+    })
+    if (
+      hashKey &&
+      resolvedComponentStyles[displayName] &&
+      resolvedComponentStyles[displayName][hashKey]
+    ) {
+      cachedStyles = resolvedComponentStyles[displayName][hashKey]
+    }
+  }
+
+  const mergeRootWith = []
+  if (props.design) {
+    mergeRootWith.push(withDebugId({ root: props.design }, 'props.design'))
+  }
+  if (props.styles) {
+    mergeRootWith.push(withDebugId({ root: props.styles }, 'props.styles'))
+  }
+  if (animationCSSProp !== {}) {
+    mergeRootWith.push(withDebugId({ root: animationCSSProp }, 'props.animation'))
+  }
+
+  const { resolvedStyles, resolvedStylesDebug, mergedStyles, classes } = resolveStylesAndClasses(
+    normalizedStyles,
     styleParam,
     renderer ? style => renderer.renderRule(() => style, felaParam) : undefined,
+    cachedStyles,
+    mergeRootWith,
   )
+
+  if (
+    hashKey &&
+    (!resolvedComponentStyles[displayName] || !resolvedComponentStyles[displayName][hashKey])
+  ) {
+    if (!resolvedComponentStyles[displayName]) {
+      resolvedComponentStyles[displayName] = { [hashKey]: {} }
+      Object.keys(normalizedStyles).forEach(slotName => {
+        resolvedComponentStyles[displayName][hashKey][slotName] = resolvedStyles[slotName]
+      })
+    } else {
+      resolvedComponentStyles[displayName][hashKey] = {}
+      Object.keys(normalizedStyles).forEach(slotName => {
+        resolvedComponentStyles[displayName][hashKey][slotName] = resolvedStyles[slotName]
+      })
+    }
+  }
+  if (mergedStyles) {
+    resolvedStyles['root__return'] = mergedStyles
+  }
+
+  // TODO: this may need to be removed
+  // if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
+  //   resolvedStylesDebug['root'] = resolvedStyles[slotName]['_debug']
+  //   delete resolvedStyles[slotName]['_debug']
+  // }
 
   classes.root = cx(className, classes.root, props.className)
 

@@ -36,6 +36,7 @@ export const emptyTheme: ThemePrepared = {
   staticStyles: [],
   icons: {},
   animations: {},
+  propDependencies: {},
 }
 
 // ----------------------------------------
@@ -372,6 +373,9 @@ const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
       acc.staticStyles = mergeStaticStyles(...acc.staticStyles, ...(next.staticStyles || []))
 
       acc.animations = mergeAnimations(acc.animations, next.animations)
+
+      // TODO: fix the merging...
+      acc.propDependencies = { ...acc.propDependencies, ...next.propDependencies }
 
       return acc
     },

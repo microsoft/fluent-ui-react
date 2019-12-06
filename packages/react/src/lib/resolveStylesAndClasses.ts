@@ -1,21 +1,40 @@
-import { ComponentSlotClasses, ComponentSlotStylesPrepared, ICSSInJSStyle } from '../themes/types'
+import { ComponentSlotClasses, ICSSInJSStyle } from '../themes/types'
 import { isEnabled as isDebugEnabled } from './debug/debugEnabled'
+import * as _ from 'lodash'
+import callable from '@fluentui/react-bindings/src/utils/callable'
 
 // Both resolvedStyles and classes are objects of getters with lazy evaluation
 const resolveStylesAndClasses = (
-  mergedStyles: ComponentSlotStylesPrepared,
+  styles,
   styleParam,
   renderStyles,
+  resolvedStylesCache,
+  mergeRootWith,
 ): {
   resolvedStyles: ICSSInJSStyle
+  mergedStyles: ICSSInJSStyle
   resolvedStylesDebug: { [key: string]: { styles: Object }[] }
   classes: ComponentSlotClasses
 } => {
   const resolvedStyles = {}
   const resolvedStylesDebug = {}
+  let mergedStyles = null
   const classes = {}
 
-  Object.keys(mergedStyles).forEach(slotName => {
+  resolvedStyles['root__return'] = resolvedStylesCache
+    ? resolvedStylesCache['root']
+    : callable(styles.root)(styleParam)
+
+  if (mergeRootWith.length > 0) {
+    mergedStyles = mergeRootWith.reduce((partStylesPrepared, stylesByPart) => {
+      if (stylesByPart && stylesByPart['root']) {
+        return _.merge(partStylesPrepared, callable(stylesByPart['root'])(styleParam))
+      }
+      return partStylesPrepared
+    }, resolvedStyles['root__return']) // this resolves the getter magic
+  }
+
+  Object.keys(styles).forEach(slotName => {
     // resolve/render slot styles once and cache
     const cacheKey = `${slotName}__return`
 
@@ -31,9 +50,11 @@ const resolveStylesAndClasses = (
           return resolvedStyles[cacheKey]
         }
 
-        // resolve/render slot styles once and cache
-        resolvedStyles[cacheKey] = mergedStyles[slotName](styleParam)
-
+        resolvedStyles[cacheKey] =
+          resolvedStylesCache && resolvedStylesCache[slotName]
+            ? resolvedStylesCache[slotName]
+            : styles[slotName](styleParam)
+        // TODO: this may need to be removed
         if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
           resolvedStylesDebug[slotName] = resolvedStyles[slotName]['_debug']
           delete resolvedStyles[slotName]['_debug']
@@ -56,7 +77,8 @@ const resolveStylesAndClasses = (
         }
 
         // this resolves the getter magic
-        const styleObj = resolvedStyles[slotName]
+        const styleObj =
+          slotName === 'root' && mergedStyles ? mergedStyles : resolvedStyles[slotName]
 
         if (renderStyles && styleObj) {
           classes[cacheKey] = renderStyles(styleObj)
@@ -69,6 +91,7 @@ const resolveStylesAndClasses = (
 
   return {
     resolvedStyles,
+    mergedStyles,
     resolvedStylesDebug,
     classes,
   }

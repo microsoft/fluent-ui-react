@@ -175,4 +175,5 @@ export interface ProviderContextPrepared {
   theme: ThemePrepared
   telemetry: Telemetry | undefined
   _internal_resolvedComponentVariables: Record<string, object>
+  _internal_resolvedComponentStyles: Record<string, object>
 }

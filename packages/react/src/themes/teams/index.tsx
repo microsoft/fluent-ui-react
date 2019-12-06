@@ -58,6 +58,20 @@ const teamsTheme: ThemePrepared = createTheme(
     staticStyles,
     icons,
     animations,
+    propDependencies: {
+      MenuItem: [
+        'iconOnly',
+        'isFromKeyboard',
+        'vertical',
+        'active',
+        'underlined',
+        'primary',
+        'pointing',
+        'disabled',
+      ],
+      Slider: ['vertical', 'fluid', 'disabled'],
+      Box: [],
+    },
   },
   'teams',
 )
