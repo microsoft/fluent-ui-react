@@ -65,6 +65,7 @@ const checkboxStyles: ComponentSlotStylesPrepared<
     color: v.indicatorColor,
     margin: v.margin,
     padding: v.padding,
+    userSelect: 'none',
 
     ...(p.checked && {
       background: v.checkedBackground,
@@ -99,6 +100,7 @@ const checkboxStyles: ComponentSlotStylesPrepared<
     margin: v.toggleMargin,
     padding: v.togglePadding,
     transition: 'padding .3s ease',
+    userSelect: 'none',
 
     [`& svg`]: {
       width: v.toggleIndicatorSize,
