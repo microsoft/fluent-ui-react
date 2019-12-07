@@ -20,6 +20,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### Fixes
 - Prevent text highlight on icon consecutive clicks in `Checkbox` @silviuavram ([#2154](https://github.com/microsoft/fluent-ui-react/pull/2154))
 
+### Features
+- Add `promote-presenter`, `demote-presenter`, `volume-down`, `volume`, `volume-up` icons to Teams theme @codepretty ([#2156](https://github.com/microsoft/fluent-ui-react/pull/2156))
+
 <!--------------------------------[ v0.41.0 ]------------------------------- -->
 ## [v0.41.0](https://github.com/microsoft/fluent-ui-react/tree/v0.41.0) (2019-12-04)
 [Compare changes](https://github.com/microsoft/fluent-ui-react/compare/v0.40.4...v0.41.0)
