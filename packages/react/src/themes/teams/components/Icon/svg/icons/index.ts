@@ -42,6 +42,7 @@ import chevronRightMedium from './chevronRightMedium'
 import clipboardCopiedTo from './clipboardCopiedTo'
 import close from './close'
 import codeSnippet from './codeSnippet'
+import demotePresenter from './demotePresenter'
 import filesAftereffects from './filesAftereffects'
 import filesCode from './filesCode'
 import filesEmpty from './filesEmpty'
@@ -124,6 +125,7 @@ import plugs from './plugs'
 import poll from './poll'
 import presenceAvailable from './presenceAvailable'
 import presenceStroke from './presenceStroke'
+import promotePresenter from './promotePresenter'
 import qna from './qna'
 import questionCircle from './questionCircle'
 import quote from './quote'
@@ -166,6 +168,9 @@ import urgent from './urgent'
 import userBlur from './userBlur'
 import userFriends from './userFriends'
 import videoCameraEmphasis from './videoCameraEmphasis'
+import volume from './volume'
+import volumeDown from './volumeDown'
+import volumeUp from './volumeUp'
 import yammer from './yammer'
 import windowMaximize from './windowMaximize'
 import windowMinimize from './windowMinimize'
@@ -216,6 +221,7 @@ export default {
   'clipboard-copied-to': clipboardCopiedTo,
   close,
   'code-snippet': codeSnippet,
+  'demote-presenter': demotePresenter,
   'files-aftereffects': filesAftereffects,
   'files-code': filesCode,
   'files-empty': filesEmpty,
@@ -287,6 +293,7 @@ export default {
   poll,
   'presence-available': presenceAvailable,
   'presence-stroke': presenceStroke,
+  'promote-presenter': promotePresenter,
   qna,
   'question-circle': questionCircle,
   quote,
@@ -325,6 +332,9 @@ export default {
   'user-blur': userBlur,
   'user-friends': userFriends,
   'video-camera-emphasis': videoCameraEmphasis,
+  volume,
+  'volume-down': volumeDown,
+  'volume-up': volumeUp,
   'window-maximize': windowMaximize,
   'window-minimize': windowMinimize,
   'window-restore': windowRestore,
