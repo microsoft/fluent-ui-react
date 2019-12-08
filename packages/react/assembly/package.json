@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "build:untouched": "asc index.ts -b build/untouched.wasm -t build/untouched.wat --sourceMap --validate --debug",
+    "build:optimized": "asc index.ts -b build/optimized.wasm -t build/optimized.wat --sourceMap --validate --optimize",
+    "build": "npm run build:untouched && npm run build:optimized"
+  }
+}

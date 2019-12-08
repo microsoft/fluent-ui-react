@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "@fluentui/internal-tooling": "^0.41.0",
+    "assemblyscript": "^0.8.1",
     "lerna-alias": "^3.0.3-0",
     "qs": "^6.8.0"
   },
