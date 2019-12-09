@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Icon, Button, Animation, Provider } from '@stardust-ui/react'
+import { Icon, Button, Animation, Provider } from '@fluentui/react'
 
 const spinner = {
   keyframe: {

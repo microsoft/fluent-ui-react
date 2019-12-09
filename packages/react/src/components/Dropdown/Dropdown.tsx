@@ -1,5 +1,5 @@
-import { handleRef, Ref } from '@stardust-ui/react-component-ref'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { handleRef, Ref } from '@fluentui/react-component-ref'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
@@ -95,19 +95,19 @@ export interface DropdownProps
   getA11ySelectionMessage?: {
     /**
      * Callback that creates custom accessibility message a screen reader narrates on item added to selection.
-     * @param {ShorthandValue} item - Dropdown added element.
+     * @param item - Dropdown added element.
      */
     onAdd?: (item: ShorthandValue<DropdownItemProps>) => string
     /**
      * Callback that creates custom accessibility message a screen reader narrates on item removed from selection.
-     * @param {ShorthandValue} item - Dropdown removed element.
+     * @param item - Dropdown removed element.
      */
     onRemove?: (item: ShorthandValue<DropdownItemProps>) => string
   }
 
   /**
    * Callback that provides status announcement message with number of items in the list, using Arrow Up/Down keys to navigate through them and, if multiple, using Arrow Left/Right to navigate through selected items.
-   * @param {DownshiftA11yStatusMessageOptions<ShorthandValue>} messageGenerationProps - Object with properties to generate message from. See getA11yStatusMessage from Downshift repo.
+   * @param messageGenerationProps - Object with properties to generate message from. See getA11yStatusMessage from Downshift repo.
    */
   getA11yStatusMessage?: (
     options: DownshiftA11yStatusMessageOptions<ShorthandValue<DropdownItemProps>>,
@@ -153,22 +153,22 @@ export interface DropdownProps
 
   /**
    * Called when the dropdown opens or closes.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {Object} data - All props, with `open` reflecting the new open state.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props, with `open` reflecting the new open state.
    */
   onOpenChange?: ComponentEventHandler<DropdownProps>
 
   /**
    * Called when the dropdown's search query changes.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {Object} data - All props, with `searchQuery` reflecting its new value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props, with `searchQuery` reflecting its new value.
    */
   onSearchQueryChange?: ComponentEventHandler<DropdownProps>
 
   /**
    * Called when the dropdown's selected item(s) change.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {Object} data - All props and the new selected value(s).
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and the new selected value(s).
    */
   onSelectedChange?: ComponentEventHandler<DropdownProps>
 
@@ -181,18 +181,18 @@ export interface DropdownProps
   /**
    * A render function to customize how items are rendered in the dropdown.
    *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   * @param Component - The computed component for this slot.
+   * @param props - The computed props for this slot.
+   * @param children - The computed children for this slot.
    */
   renderItem?: ShorthandRenderFunction<DropdownItemProps>
 
   /**
    * A custom render function for the selected item. Only applicable with the `multiple` prop.
    *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   * @param Component - The computed component for this slot.
+   * @param props - The computed props for this slot.
+   * @param children - The computed children for this slot.
    */
   renderSelectedItem?: ShorthandRenderFunction<DropdownSelectedItemProps>
 
@@ -491,11 +491,11 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
                   </div>
                   {showClearIndicator
                     ? Icon.create(clearIndicator, {
-                        defaultProps: {
+                        defaultProps: () => ({
                           className: Dropdown.slotClassNames.clearIndicator,
                           styles: styles.clearIndicator,
                           xSpacing: 'none',
-                        },
+                        }),
                         overrideProps: (predefinedProps: IconProps) => ({
                           onClick: (e: React.SyntheticEvent<HTMLElement>, iconProps: IconProps) => {
                             _.invoke(predefinedProps, 'onClick', e, iconProps)
@@ -504,13 +504,13 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
                         }),
                       })
                     : Icon.create(toggleIndicator, {
-                        defaultProps: {
+                        defaultProps: () => ({
                           className: Dropdown.slotClassNames.toggleIndicator,
                           name: 'chevron-down',
                           styles: styles.toggleIndicator,
                           outline: true,
                           size: 'small',
-                        },
+                        }),
                         overrideProps: (predefinedProps: IconProps) => ({
                           onClick: (e, indicatorProps: IconProps) => {
                             _.invoke(predefinedProps, 'onClick', e, indicatorProps)
@@ -576,14 +576,14 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     return (
       <Ref innerRef={this.buttonRef}>
         {Button.create(triggerButton, {
-          defaultProps: {
+          defaultProps: () => ({
             className: Dropdown.slotClassNames.triggerButton,
             content,
             id: triggerButtonId,
             fluid: true,
             styles: styles.triggerButton,
             ...restTriggerButtonProps,
-          },
+          }),
           overrideProps: (predefinedProps: IconProps) => ({
             onClick: e => {
               onClick(e)
@@ -626,13 +626,13 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     const noPlaceholder = searchQuery.length > 0 || (multiple && value.length > 0)
 
     return DropdownSearchInput.create(searchInput || {}, {
-      defaultProps: {
+      defaultProps: () => ({
         className: Dropdown.slotClassNames.searchInput,
         placeholder: noPlaceholder ? '' : placeholder,
         inline,
         variables,
         inputRef: this.inputRef,
-      },
+      }),
       overrideProps: this.handleSearchInputOverrides(
         highlightedIndex,
         rtl,
@@ -728,11 +728,12 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     } = this.props
     const { filteredItems, value } = this.state
 
-    const items = _.map(filteredItems, (item, index) => render =>
-      render(item, () => {
+    const items = _.map(filteredItems, (item, index) => ({
+      children: () => {
         const selected = value.indexOf(item) !== -1
+
         return DropdownItem.create(item, {
-          defaultProps: {
+          defaultProps: () => ({
             className: Dropdown.slotClassNames.item,
             active: highlightedIndex === index,
             selected,
@@ -744,29 +745,29 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
               !item.hasOwnProperty('key') && {
                 key: (item as any).header,
               }),
-          },
+          }),
           overrideProps: this.handleItemOverrides(item, index, getItemProps, selected),
           render: renderItem,
         })
-      }),
-    )
+      },
+    }))
 
     return [
       ...items,
       loading &&
         ListItem.create(loadingMessage, {
-          defaultProps: {
+          defaultProps: () => ({
             key: 'loading-message',
             styles: styles.loadingMessage,
-          },
+          }),
         }),
       !loading &&
         items.length === 0 &&
         ListItem.create(noResultsMessage, {
-          defaultProps: {
+          defaultProps: () => ({
             key: 'no-results-message',
             styles: styles.noResultsMessage,
-          },
+          }),
         }),
     ]
   }
@@ -782,7 +783,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     return value.map((item: DropdownItemProps, index) =>
       // (!) an item matches DropdownItemProps
       DropdownSelectedItem.create(item, {
-        defaultProps: {
+        defaultProps: () => ({
           className: Dropdown.slotClassNames.selectedItem,
           active: this.isSelectedItemActive(index),
           variables,
@@ -790,7 +791,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
             !item.hasOwnProperty('key') && {
               key: (item as any).header,
             }),
-        },
+        }),
         overrideProps: this.handleSelectedItemOverrides(item, rtl),
         render: renderSelectedItem,
       }),
@@ -1190,7 +1191,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
    * Sets highlightedIndex to be the item that starts with the character keys the
    * user has typed. Only used in non-search dropdowns.
    *
-   * @param {string} keystring The string the item needs to start with. It is composed by typing keys in fast succession.
+   * @param keystring - The string the item needs to start with. It is composed by typing keys in fast succession.
    */
   setHighlightedIndexOnCharKeyDown = (keyString: string): void => {
     const { highlightedIndex, filteredItemStrings, startingString } = this.state

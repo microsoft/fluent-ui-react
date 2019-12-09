@@ -1,7 +1,7 @@
-import { Accessibility, tooltipBehavior } from '@stardust-ui/accessibility'
-import { ReactAccessibilityBehavior } from '@stardust-ui/react-bindings'
-import { toRefObject, Ref } from '@stardust-ui/react-component-ref'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, tooltipBehavior } from '@fluentui/accessibility'
+import { ReactAccessibilityBehavior } from '@fluentui/react-bindings'
+import { toRefObject, Ref } from '@fluentui/react-component-ref'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
@@ -283,13 +283,13 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     }
 
     const tooltipContent = Tooltip.Content.create(content, {
-      defaultProps: {
+      defaultProps: () => ({
         ...tooltipContentAttributes,
         open: this.state.open,
         placement,
         pointing,
         pointerRef: this.pointerTargetRef,
-      },
+      }),
       overrideProps: this.getContentProps,
     })
 

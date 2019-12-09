@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import Scrollbars from 'react-custom-scrollbars'
-import { Text, Menu, List, Button, Popup, Dialog } from '@stardust-ui/react'
+import { Text, Menu, List, Button, Popup, Dialog } from '@fluentui/react'
 import { PrototypeSection, ComponentPrototype } from '../Prototypes'
 
 const ScrollbarMenuPrototype = () => {

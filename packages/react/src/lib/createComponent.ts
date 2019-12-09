@@ -1,4 +1,4 @@
-import { AccessibilityActionHandlers } from '@stardust-ui/react-bindings'
+import { AccessibilityActionHandlers } from '@fluentui/react-bindings'
 import * as React from 'react'
 import * as _ from 'lodash'
 // @ts-ignore

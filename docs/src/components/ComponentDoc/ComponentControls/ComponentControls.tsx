@@ -1,5 +1,5 @@
-import { CopyToClipboard } from '@stardust-ui/docs-components'
-import { Menu, Provider, ThemeInput, menuAsToolbarBehavior } from '@stardust-ui/react'
+import { CopyToClipboard } from '@fluentui/docs-components'
+import { Menu, Provider, ThemeInput, menuAsToolbarBehavior } from '@fluentui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
@@ -22,6 +22,7 @@ type ComponentControlsProps = {
   showRtl: boolean
   showVariables: boolean
   showTransparent: boolean
+  toolbarAriaLabel?: string
 }
 
 const controlsTheme: ThemeInput = {
@@ -60,6 +61,7 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
     onShowRtl,
     onShowTransparent,
     onShowVariables,
+    toolbarAriaLabel,
     ...rest
   } = props
 
@@ -70,6 +72,7 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
         fluid
         pills
         accessibility={menuAsToolbarBehavior}
+        aria-label={toolbarAriaLabel || null}
         items={[
           {
             key: 'show-code',

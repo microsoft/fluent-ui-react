@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Text, Icon } from '@stardust-ui/react'
+import { Button, Text, Icon } from '@fluentui/react'
 
 const ButtonExampleText = () => (
   <div>
@@ -14,7 +14,7 @@ const ButtonExampleText = () => (
     </Button>
     <br />
     <br />
-    <Button text iconOnly>
+    <Button text iconOnly title="Video Call">
       <Icon name="call-video" />
     </Button>
     <br />

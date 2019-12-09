@@ -2,10 +2,10 @@ import {
   Accessibility,
   hierarchicalTreeItemBehavior,
   hierarchicalSubtreeBehavior,
-} from '@stardust-ui/accessibility'
-import { getFirstFocusable } from '@stardust-ui/react-bindings'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
-import { Ref } from '@stardust-ui/react-component-ref'
+} from '@fluentui/accessibility'
+import { getFirstFocusable } from '@fluentui/react-bindings'
+import * as customPropTypes from '@fluentui/react-proptypes'
+import { Ref } from '@fluentui/react-component-ref'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -60,9 +60,9 @@ export interface HierarchicalTreeItemProps extends UIComponentProps, ChildrenCom
    * A custom render iterator for rendering each Accordion panel title.
    * The default component, props, and children are available for each panel title.
    *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   * @param Component - The computed component for this slot.
+   * @param props - The computed props for this slot.
+   * @param children - The computed children for this slot.
    */
   renderItemTitle?: ShorthandRenderFunction<HierarchicalTreeTitleProps>
 
@@ -167,24 +167,24 @@ class HierarchicalTreeItem extends UIComponent<WithAsProp<HierarchicalTreeItemPr
     return (
       <>
         {HierarchicalTreeTitle.create(title, {
-          defaultProps: {
+          defaultProps: () => ({
             className: HierarchicalTreeItem.slotClassNames.title,
             open,
             hasSubtree,
             as: hasSubtree ? 'span' : 'a',
-          },
+          }),
           render: renderItemTitle,
           overrideProps: this.handleTitleOverrides,
         })}
         {hasSubtree && open && (
           <Ref innerRef={this.treeRef}>
             {HierarchicalTree.create(items, {
-              defaultProps: {
+              defaultProps: () => ({
                 accessibility: hierarchicalSubtreeBehavior,
                 className: HierarchicalTreeItem.slotClassNames.subtree,
                 exclusive,
                 renderItemTitle,
-              },
+              }),
             })}
           </Ref>
         )}

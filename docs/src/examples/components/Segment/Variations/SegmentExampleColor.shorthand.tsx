@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Segment, ProviderConsumer } from '@stardust-ui/react'
+import { Segment, ProviderConsumer } from '@fluentui/react'
 
 const SegmentExampleColor = () => (
   <ProviderConsumer

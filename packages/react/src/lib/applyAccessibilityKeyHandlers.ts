@@ -1,4 +1,4 @@
-import { AccessibilityHandlerProps, KeyboardEventHandler } from '@stardust-ui/react-bindings'
+import { AccessibilityHandlerProps, KeyboardEventHandler } from '@fluentui/react-bindings'
 import * as _ from 'lodash'
 import * as React from 'react'
 

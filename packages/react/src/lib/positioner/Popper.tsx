@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import PopperJS, * as _PopperJS from 'popper.js'
-import { Ref, isRefObject } from '@stardust-ui/react-component-ref'
+import { Ref, isRefObject } from '@fluentui/react-component-ref'
 
 import { getPlacement, applyRtlToOffset } from './positioningHelper'
 import { PopperProps, PopperChildrenFn } from './types'
@@ -69,6 +69,11 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
   const destroyInstance = React.useCallback(() => {
     if (popperRef.current) {
       popperRef.current.destroy()
+      if (popperRef.current.popper) {
+        // Popper keeps a reference to the DOM node, which needs to be cleaned up
+        // temporarily fix it here until fixed properly in popper
+        popperRef.current.popper = null
+      }
       popperRef.current = null
     }
   }, [])
@@ -92,6 +97,13 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
     const modifiers: PopperJS.Modifiers = _.merge(
       { preventOverflow: { padding: 0 } },
       { flip: { padding: 0, flipVariationsByContent: true } },
+      /**
+       * This prevents blurrines in chrome, when the coordinates are odd numbers
+       * alternative would be to use `fn`, call _PopperJS.default.Defaults.modifiers.computeStyle.fn(data, options)
+       * and manipulate the computeed style or ask popper to fix it
+       * but since there is presumably only handful of poppers displayed on the page, the performance impact should be minimal
+       */
+      { computeStyle: { gpuAcceleration: false } },
       /**
        * When the popper box is placed in the context of a scrollable element, we need to set
        * preventOverflow.escapeWithReference to true and flip.boundariesElement to 'scrollParent' (default is 'viewport')

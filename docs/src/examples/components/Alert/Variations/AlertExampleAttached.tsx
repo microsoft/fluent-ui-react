@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Alert, Input } from '@stardust-ui/react'
+import { Alert, Input } from '@fluentui/react'
 
 const AlertExampleShorthand = () => (
   <>

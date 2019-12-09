@@ -3,9 +3,9 @@ import {
   IS_FOCUSABLE_ATTRIBUTE,
   chatMessageBehavior,
   menuAsToolbarBehavior,
-} from '@stardust-ui/accessibility'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
-import { Ref } from '@stardust-ui/react-component-ref'
+} from '@fluentui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
+import { Ref } from '@fluentui/react-component-ref'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
@@ -81,35 +81,41 @@ export interface ChatMessageProps
 
   /**
    * Called after user's blur.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onBlur?: ComponentEventHandler<ChatMessageProps>
 
   /**
    * Called after user's focus.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onFocus?: ComponentEventHandler<ChatMessageProps>
 
   /**
    * Called after user enters by mouse.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onMouseEnter?: ComponentEventHandler<ChatMessageProps>
+
+  /** Allows suppression of action menu positioning for performance reasons */
+  positionActionMenu?: boolean
 
   /** Reaction group applied to the message. */
   reactionGroup?: ShorthandValue<ReactionGroupProps> | ShorthandCollection<ReactionProps>
 
   /** A message can format the reactions group to appear at the start or the end of the message. */
   reactionGroupPosition?: 'start' | 'end'
+
+  /** Positions an actionMenu slot in "fixed" mode. */
+  unstable_overflow?: boolean
 }
 
 export interface ChatMessageState {
   focused: boolean
-  messageDomNode: HTMLElement
+  messageNode: HTMLElement
 }
 
 class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageState> {
@@ -137,17 +143,20 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     onBlur: PropTypes.func,
     onFocus: PropTypes.func,
     onMouseEnter: PropTypes.func,
+    positionActionMenu: PropTypes.bool,
     reactionGroup: PropTypes.oneOfType([
       customPropTypes.collectionShorthand,
       customPropTypes.itemShorthand,
     ]),
     reactionGroupPosition: PropTypes.oneOf(['start', 'end']),
+    unstable_overflow: PropTypes.bool,
   }
 
   static defaultProps = {
     accessibility: chatMessageBehavior,
     as: 'div',
     badgePosition: 'end',
+    positionActionMenu: true,
     reactionGroupPosition: 'start',
   }
 
@@ -155,8 +164,10 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
 
   state = {
     focused: false,
-    messageDomNode: null,
+    messageNode: null,
   }
+
+  menuRef = React.createRef<HTMLElement>()
 
   actionHandlers = {
     // prevents default FocusZone behavior, e.g., in ChatMessageBehavior, it prevents FocusZone from using arrow keys
@@ -166,8 +177,8 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     },
 
     focus: event => {
-      if (this.state.messageDomNode) {
-        this.state.messageDomNode.focus()
+      if (this.state.messageNode) {
+        this.state.messageNode.focus()
         event.stopPropagation()
       }
     },
@@ -176,10 +187,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
   handleFocus = (e: React.SyntheticEvent) => {
     this.updateActionsMenuPosition()
 
-    this.setState({
-      focused: true,
-    })
-
+    this.setState({ focused: true })
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 
@@ -197,43 +205,67 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     _.invoke(this.props, 'onMouseEnter', e, this.props)
   }
 
+  handleMessageRef = (node: HTMLElement) => this.setState({ messageNode: node })
+
   renderActionMenu(
     actionMenu: ChatMessageProps['actionMenu'],
     styles: ComponentSlotStylesPrepared,
   ) {
+    const { unstable_overflow: overflow, positionActionMenu } = this.props
+    const { messageNode } = this.state
+
     const actionMenuElement = Menu.create(actionMenu, {
-      defaultProps: {
+      defaultProps: () => ({
         [IS_FOCUSABLE_ATTRIBUTE]: true,
         accessibility: menuAsToolbarBehavior,
         className: ChatMessage.slotClassNames.actionMenu,
         styles: styles.actionMenu,
-      },
+      }),
     })
 
     if (!actionMenuElement) {
       return actionMenuElement
     }
 
+    const menuRect: DOMRect = (positionActionMenu &&
+      _.invoke(this.menuRef.current, 'getBoundingClientRect')) || {
+      height: 0,
+    }
+    const messageRect: DOMRect = (positionActionMenu &&
+      _.invoke(messageNode, 'getBoundingClientRect')) || { height: 0 }
+
     return (
       <Popper
+        enabled={positionActionMenu}
         align="end"
-        modifiers={{
-          // https://popper.js.org/popper-documentation.html#modifiers..flip.behavior
-          // Forces to flip only in "top-*" positions
-          flip: { behavior: ['top'] },
-          preventOverflow: {
-            escapeWithReference: false,
-            // https://popper.js.org/popper-documentation.html#modifiers..preventOverflow.priority
-            // Forces to stop prevent overflow on bottom and bottom
-            priority: ['left', 'right'],
-          },
-        }}
+        modifiers={
+          positionActionMenu && {
+            // https://popper.js.org/popper-documentation.html#modifiers..flip.behavior
+            // Forces to flip only in "top-*" positions
+            flip: { behavior: ['top'] },
+            preventOverflow: {
+              escapeWithReference: false,
+              // https://popper.js.org/popper-documentation.html#modifiers..preventOverflow.priority
+              // Forces to stop prevent overflow on bottom and bottom
+              priority: ['left', 'right'],
+
+              // Is required to properly position action items
+              ...(overflow && {
+                boundariesElement: 'scrollParent',
+                escapeWithReference: true,
+                padding: { top: messageRect.height - menuRect.height },
+              }),
+            },
+          }
+        }
         position="above"
-        targetRef={this.state.messageDomNode}
+        positionFixed={overflow}
+        targetRef={messageNode}
       >
         {({ scheduleUpdate }) => {
           this.updateActionsMenuPosition = scheduleUpdate
-          return actionMenuElement
+
+          return <Ref innerRef={this.menuRef}>{actionMenuElement}</Ref>
         }}
       </Popper>
     )
@@ -260,51 +292,47 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     const childrenPropExists = childrenExist(children)
     const className = childrenPropExists ? cx(classes.root, classes.content) : classes.root
     const badgeElement = Label.create(badge, {
-      defaultProps: {
+      defaultProps: () => ({
         className: ChatMessage.slotClassNames.badge,
         styles: styles.badge,
-      },
+      }),
     })
 
     const reactionGroupElement = Reaction.Group.create(reactionGroup, {
-      defaultProps: {
+      defaultProps: () => ({
         className: ChatMessage.slotClassNames.reactionGroup,
         styles: styles.reactionGroup,
-      },
+      }),
     })
 
     const actionMenuElement = this.renderActionMenu(actionMenu, styles)
 
     const authorElement = Text.create(author, {
-      defaultProps: {
+      defaultProps: () => ({
         size: 'small',
         styles: styles.author,
         className: ChatMessage.slotClassNames.author,
-      },
+      }),
     })
 
     const timestampElement = Text.create(timestamp, {
-      defaultProps: {
+      defaultProps: () => ({
         size: 'small',
         styles: styles.timestamp,
         timestamp: true,
         className: ChatMessage.slotClassNames.timestamp,
-      },
+      }),
     })
 
     const messageContent = Box.create(content, {
-      defaultProps: {
+      defaultProps: () => ({
         className: ChatMessage.slotClassNames.content,
         styles: styles.content,
-      },
+      }),
     })
 
     return (
-      <Ref
-        innerRef={domNode => {
-          domNode !== this.state.messageDomNode && this.setState({ messageDomNode: domNode })
-        }}
-      >
+      <Ref innerRef={this.handleMessageRef}>
         <ElementType
           onBlur={this.handleBlur}
           onFocus={this.handleFocus}

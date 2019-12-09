@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Avatar, Grid, Text } from '@stardust-ui/react'
+import { Avatar, Grid, Text } from '@fluentui/react'
 
 const defaultAvatar = (
   <Avatar

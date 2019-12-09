@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Avatar, Popup } from '@stardust-ui/react'
+import { Avatar, Popup } from '@fluentui/react'
 import EmployeeCard, { EmployeeCardProps } from './EmployeeCard'
 import { Extendable } from 'src/types'
 
@@ -55,7 +55,7 @@ class AvatarEmployeeCard extends React.Component<
           this.setState({ popupOpen: newProps.open })
         }}
         trigger={Avatar.create(avatar, {
-          defaultProps: {
+          defaultProps: () => ({
             name: `${firstName} ${lastName}`,
             onMouseEnter: () => {
               this.setPopupOpen(true)
@@ -63,7 +63,7 @@ class AvatarEmployeeCard extends React.Component<
             onMouseLeave: () => {
               this.setPopupOpen(false)
             },
-          },
+          }),
         })}
         content={{
           styles: { marginLeft: '10px' },

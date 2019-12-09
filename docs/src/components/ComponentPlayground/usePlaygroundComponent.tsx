@@ -1,4 +1,4 @@
-import * as Stardust from '@stardust-ui/react'
+import * as Stardust from '@fluentui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 // @ts-ignore
@@ -22,7 +22,7 @@ const usePlaygroundComponent = (componentName: string): [React.ReactElement, str
 
     if (!Stardust[componentName]) {
       throw new Error(
-        `Cannot find an export for "${componentName}", please check that it is exported from "@stardust-ui/react"`,
+        `Cannot find an export for "${componentName}", please check that it is exported from "@fluentui/react"`,
       )
     }
   }

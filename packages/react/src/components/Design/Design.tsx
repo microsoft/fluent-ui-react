@@ -1,4 +1,4 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import * as customPropTypes from '@fluentui/react-proptypes'
 // @ts-ignore
 import { ThemeContext } from 'react-fela'
 import * as React from 'react'

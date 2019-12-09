@@ -8,7 +8,7 @@ import {
   getRenderedAttribute,
 } from 'test/specs/commonTests'
 import { mountWithProvider, mountWithProviderAndGetComponent } from 'test/utils'
-import { toggleButtonBehavior } from '@stardust-ui/accessibility'
+import { toggleButtonBehavior } from '@fluentui/accessibility'
 
 import Button from 'src/components/Button/Button'
 import Icon from 'src/components/Icon/Icon'

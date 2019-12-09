@@ -1,5 +1,5 @@
-import { unstable_useDispatchEffect, useStateManager } from '@stardust-ui/react-bindings'
-import { createManager, ManagerFactory } from '@stardust-ui/state'
+import { unstable_useDispatchEffect, useStateManager } from '@fluentui/react-bindings'
+import { createManager, ManagerFactory } from '@fluentui/state'
 import { shallow } from 'enzyme'
 import * as React from 'react'
 import * as ReactTestUtils from 'react-dom/test-utils'

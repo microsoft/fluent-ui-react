@@ -5,7 +5,7 @@
     "lib": ["es2015", "dom"],
     "baseUrl": "../",
     "paths": {
-      "@stardust-ui/*": ["packages/*/src"]
+      "@fluentui/*": ["packages/*/src"]
     },
     "types": ["node", "jest"],
     "typeRoots": ["../types", "../node_modules/@types"],

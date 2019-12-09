@@ -3,8 +3,8 @@ import DocPage from '../components/DocPage/DocPage'
 import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
 import { link, code } from '../utils/helpers'
 
-import { CodeSnippet } from '@stardust-ui/docs-components'
-import { Header } from '@stardust-ui/react'
+import { CodeSnippet } from '@fluentui/docs-components'
+import { Header } from '@fluentui/react'
 
 const Category = props => <Header as="h2" {...props} />
 const Question = props => <Header as="h3" {...props} />
@@ -176,7 +176,7 @@ export default () => (
           <CodeSnippet
             mode="js"
             value={`
-              import { themes } from '@stardust-ui/react'
+              import { themes } from '@fluentui/react'
 
               // 💡 Your overrides should be defined before rendering any Stardust components
 

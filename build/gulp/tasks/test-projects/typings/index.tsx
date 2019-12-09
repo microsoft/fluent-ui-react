@@ -1,4 +1,4 @@
-import * as Stardust from '@stardust-ui/react'
+import * as Stardust from '@fluentui/react'
 import * as React from 'react'
 
 const App = () => (

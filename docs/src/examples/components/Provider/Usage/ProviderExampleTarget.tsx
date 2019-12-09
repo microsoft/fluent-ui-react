@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { Attachment, Button, Provider, themes } from '@stardust-ui/react'
+import { Attachment, Button, Provider, themes } from '@fluentui/react'
 
 type PortalWindowProps = {
   children: (externalDocument: Document) => React.ReactElement

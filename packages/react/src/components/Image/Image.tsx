@@ -1,4 +1,4 @@
-import { Accessibility, imageBehavior } from '@stardust-ui/accessibility'
+import { Accessibility, imageBehavior } from '@fluentui/accessibility'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 

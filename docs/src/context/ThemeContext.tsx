@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { themes } from '@stardust-ui/react'
+import { themes } from '@fluentui/react'
 
 type ThemeName = keyof typeof themes
 type ThemeOption = { text: string; value: ThemeName }

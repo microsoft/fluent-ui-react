@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Grid, Popup } from '@stardust-ui/react'
+import { Button, Grid, Popup } from '@fluentui/react'
 
 const PopupWithButton = props => (
   <Popup
@@ -18,6 +18,7 @@ const PopupWithButton = props => (
       <Button
         icon={props.icon}
         styles={{ padding: props.padding, height: '64px', minWidth: '64px' }}
+        title="Show popup"
       />
     }
   />

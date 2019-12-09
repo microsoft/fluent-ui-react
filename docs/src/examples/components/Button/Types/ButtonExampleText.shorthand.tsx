@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button } from '@stardust-ui/react'
+import { Button } from '@fluentui/react'
 
 const ButtonExampleTextShorthand = () => (
   <div>
@@ -9,7 +9,7 @@ const ButtonExampleTextShorthand = () => (
     <Button icon="call-video" text content="A text button with an icon" />
     <br />
     <br />
-    <Button icon="team-create" text iconOnly />
+    <Button icon="team-create" text iconOnly title="Create" />
     <br />
     <br />
     <Button icon="call-video" text disabled content="A disabled text button with an icon" />

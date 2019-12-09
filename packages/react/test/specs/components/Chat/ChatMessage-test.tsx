@@ -1,4 +1,4 @@
-import { chatMessageBehavior, AccessibilityDefinition } from '@stardust-ui/accessibility'
+import { chatMessageBehavior, AccessibilityDefinition } from '@fluentui/accessibility'
 import * as React from 'react'
 
 import { handlesAccessibility, implementsShorthandProp, isConformant } from 'test/specs/commonTests'

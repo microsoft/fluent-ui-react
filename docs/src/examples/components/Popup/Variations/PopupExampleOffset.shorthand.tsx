@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Grid, Popup } from '@stardust-ui/react'
+import { Button, Grid, Popup } from '@fluentui/react'
 
 const renderButton = () => (
   <Button
@@ -10,6 +10,7 @@ const renderButton = () => (
       rotate: -45,
     }}
     styles={{ height: '80px', minWidth: '80px', padding: 0 }}
+    title="Show popup"
   />
 )
 

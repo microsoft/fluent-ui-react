@@ -1,5 +1,5 @@
-import { Accessibility, chatBehavior } from '@stardust-ui/accessibility'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, chatBehavior } from '@fluentui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -66,7 +66,9 @@ class Chat extends UIComponent<WithAsProp<ChatProps>, any> {
         {childrenExist(children)
           ? children
           : _.map(items, item =>
-              ChatItem.create(item, { defaultProps: { className: Chat.slotClassNames.item } }),
+              ChatItem.create(item, {
+                defaultProps: () => ({ className: Chat.slotClassNames.item }),
+              }),
             )}
       </ElementType>
     )

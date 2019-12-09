@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Tree } from '@stardust-ui/react'
+import { Tree } from '@fluentui/react'
 
 const items = [
   {
@@ -71,7 +71,7 @@ const items = [
 ]
 
 const TreeInitiallyOpenExampleShorthand = () => (
-  <Tree items={items} defaultActiveItemIds={['1', '12', '2']} />
+  <Tree items={items} aria-label="Initially open" defaultActiveItemIds={['1', '12', '2']} />
 )
 
 export default TreeInitiallyOpenExampleShorthand

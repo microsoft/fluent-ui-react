@@ -7,7 +7,7 @@ import {
   Label,
   gridBehavior,
   gridHorizontalBehavior,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 import * as _ from 'lodash'
 
 const imageNames = [
@@ -51,7 +51,7 @@ const renderImages = () => {
 
 const renderImageButtons = () => {
   return _.map(imageNames, imageName => (
-    <Button key={imageName} styles={imageButtonStyles}>
+    <Button key={imageName} styles={imageButtonStyles} title={imageName}>
       <Image fluid src={`public/images/avatar/large/${imageName}.jpg`} />
     </Button>
   ))

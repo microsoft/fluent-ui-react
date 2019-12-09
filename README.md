@@ -1,7 +1,7 @@
 <!-- Logo -->
 <p align="center">
   <a href="https://microsoft.github.io/fluent-ui-react">
-    <img height="128" width="128" src="https://github.com/stardust-ui/react/raw/master/docs/src/logo.png">
+    <img height="128" width="128" src="https://github.com/microsoft/fluent-ui-react/raw/master/docs/src/logo.png">
   </a>
 </p>
 
@@ -24,8 +24,8 @@
   <a href="https://david-dm.org/stardust-ui/react">
     <img alt="David" src="https://img.shields.io/david/stardust-ui/react.svg?style=flat-square" />
   </a>
-  <a href="https://www.npmjs.com/package/@stardust-ui/react">
-    <img alt="npm" src="https://img.shields.io/npm/v/@stardust-ui/react.svg?style=flat-square" />
+  <a href="https://www.npmjs.com/package/@fluentui/react">
+    <img alt="npm" src="https://img.shields.io/npm/v/@fluentui/react.svg?style=flat-square" />
   </a>
 </p>
 
@@ -95,17 +95,17 @@ You can find Stardust usage examples by accessing the [doc site][5]
 See the [MANIFESTO.md][1] for details. SUIR v2 will be built on the specifications and tools from Stardust.
 
 <!-- REPO -->
-[1]: https://github.com/stardust-ui/react/blob/master/MANIFESTO.md
-[2]: https://github.com/stardust-ui/react/issues/new/choose
-[3]: https://github.com/stardust-ui/react/blob/master/.github/CONTRIBUTING.md
-[4]: https://github.com/stardust-ui/react/blob/master/CHANGELOG.md
-[5]: https://stardust-ui.github.io/react/quick-start
+[1]: https://github.com/microsoft/fluent-ui-react/blob/master/MANIFESTO.md
+[2]: https://github.com/microsoft/fluent-ui-react/issues/new/choose
+[3]: https://github.com/microsoft/fluent-ui-react/blob/master/.github/CONTRIBUTING.md
+[4]: https://github.com/microsoft/fluent-ui-react/blob/master/CHANGELOG.md
+[5]: https://microsoft.github.io/fluent-ui-react
 
 <!-- ISSUE LABELS -->
-[100]: https://github.com/stardust-ui/react/labels/help%20wanted
-[101]: https://github.com/stardust-ui/react/issues?q=is%3Aopen+RFC+label%3ARFC
-[102]: https://github.com/stardust-ui/react/issues?q=is%3Aissue+is%3Aopen+label%3A%22new+component%22
-[103]: https://github.com/stardust-ui/react/labels/good%20first%20issue
+[100]: https://github.com/microsoft/fluent-ui-react/labels/help%20wanted
+[101]: https://github.com/microsoft/fluent-ui-react/issues?q=is%3Aopen+RFC+label%3ARFC
+[102]: https://github.com/microsoft/fluent-ui-react/issues?q=is%3Aissue+is%3Aopen+label%3A%22new+component%22
+[103]: https://github.com/microsoft/fluent-ui-react/labels/good%20first%20issue
 
 <!-- SUIR -->
 [200]: https://github.com/Semantic-Org/Semantic-UI-React

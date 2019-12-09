@@ -1,5 +1,3 @@
-import * as commonPropTypes from './commonPropTypes'
-
 export { default as applyAccessibilityKeyHandlers } from './applyAccessibilityKeyHandlers'
 export { default as AutoControlledComponent } from './AutoControlledComponent'
 export { default as childrenExist } from './childrenExist'
@@ -38,6 +36,17 @@ export { getKindProp } from './getKindProp'
 export * from './whatInput'
 
 export * from './commonPropInterfaces'
-export { commonPropTypes }
+// work around api-extractor limitation
+import {
+  CreateCommonConfig as CreateCommonConfigLocal,
+  createCommon as createCommonLocal,
+} from './commonPropTypes'
+
+export module commonPropTypes {
+  export type CreateCommonConfig = CreateCommonConfigLocal
+  export const createCommon = createCommonLocal
+}
 
 export { default as withDebugId } from './withDebugId'
+export { default as Telemetry } from './Telemetry'
+export { default as debounce } from './debounce'

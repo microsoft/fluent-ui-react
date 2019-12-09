@@ -20,9 +20,7 @@ export { default as Divider } from './components/Divider/dividerVariables'
 export { default as Dropdown } from './components/Dropdown/dropdownVariables'
 export { default as DropdownItem } from './components/Dropdown/dropdownItemVariables'
 export { default as DropdownSearchInput } from './components/Dropdown/dropdownSearchInputVariables'
-export {
-  default as DropdownSelectedItem,
-} from './components/Dropdown/dropdownSelectedItemVariables'
+export { default as DropdownSelectedItem } from './components/Dropdown/dropdownSelectedItemVariables'
 
 export { default as Embed } from './components/Embed/embedVariables'
 
@@ -34,9 +32,7 @@ export { default as Grid } from './components/Grid/gridVariables'
 export { default as Header } from './components/Header/headerVariables'
 export { default as HeaderDescription } from './components/Header/headerDescriptionVariables'
 
-export {
-  default as HierarchicalTreeTitle,
-} from './components/HierarchicalTree/hierarchicalTreeTitleVariables'
+export { default as HierarchicalTreeTitle } from './components/HierarchicalTree/hierarchicalTreeTitleVariables'
 
 export { default as Icon } from './components/Icon/iconVariables'
 
@@ -85,9 +81,7 @@ export { default as ToolbarDivider } from './components/Toolbar/toolbarDividerVa
 export { default as ToolbarMenu } from './components/Toolbar/toolbarMenuVariables'
 export { default as ToolbarMenuDivider } from './components/Toolbar/toolbarMenuDividerVariables'
 export { default as ToolbarMenuItem } from './components/Toolbar/toolbarMenuItemVariables'
-export {
-  default as ToolbarMenuRadioGroup,
-} from './components/Toolbar/toolbarMenuRadioGroupVariables'
+export { default as ToolbarMenuRadioGroup } from './components/Toolbar/toolbarMenuRadioGroupVariables'
 
 export { default as TreeTitle } from './components/Tree/treeTitleVariables'
 
@@ -99,3 +93,12 @@ export { default as Tooltip } from './components/Tooltip/tooltipVariables'
 export { default as TooltipContent } from './components/Tooltip/tooltipContentVariables'
 
 export { default as SplitButton } from './components/SplitButton/splitButtonVariables'
+
+export { default as Carousel } from './components/Carousel/carouselVariables'
+export { default as CarouselItem } from './components/Carousel/carouselItemVariables'
+export { default as CarouselNavigation } from './components/Carousel/carouselNavigationVariables'
+export { default as CarouselNavigationItem } from './components/Carousel/carouselNavigationItemVariables'
+
+export { default as Table } from './components/Table/tableVariables'
+export { default as TableRow } from './components/Table/tableRowVariables'
+export { default as TableCell } from './components/Table/tableCellVariables'

@@ -1,5 +1,5 @@
-import { Accessibility, attachmentBehavior } from '@stardust-ui/accessibility'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, attachmentBehavior } from '@fluentui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
@@ -43,8 +43,8 @@ export interface AttachmentProps extends UIComponentProps, ChildrenComponentProp
 
   /**
    * Called after user's click.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onClick?: ComponentEventHandler<AttachmentProps>
 }
@@ -91,27 +91,27 @@ class Attachment extends UIComponent<WithAsProp<AttachmentProps>> {
       >
         {icon &&
           Icon.create(icon, {
-            defaultProps: { size: 'larger', styles: styles.icon },
+            defaultProps: () => ({ size: 'larger', styles: styles.icon }),
           })}
         {(header || description) && (
           <div className={classes.content}>
             {Text.create(header, {
-              defaultProps: { styles: styles.header },
+              defaultProps: () => ({ styles: styles.header }),
             })}
 
             {Text.create(description, {
-              defaultProps: { styles: styles.description },
+              defaultProps: () => ({ styles: styles.description }),
             })}
           </div>
         )}
         {action &&
           Button.create(action, {
-            defaultProps: {
+            defaultProps: () => ({
               iconOnly: true,
               text: true,
               styles: styles.action,
               className: Attachment.slotClassNames.action,
-            },
+            }),
           })}
         {!_.isNil(progress) && <div className={classes.progress} />}
       </ElementType>

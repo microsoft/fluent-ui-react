@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Tree, treeAsListBehavior } from '@stardust-ui/react'
+import { Tree, treeAsListBehavior } from '@fluentui/react'
 
 const items = [
   {
@@ -70,6 +70,12 @@ const items = [
   },
 ]
 
-const TreeAsListExampleShorthand = () => <Tree items={items} accessibility={treeAsListBehavior} />
+const TreeAsListExampleShorthand = () => (
+  <Tree
+    items={items}
+    aria-label="Tree with list accessibility roles"
+    accessibility={treeAsListBehavior}
+  />
+)
 
 export default TreeAsListExampleShorthand

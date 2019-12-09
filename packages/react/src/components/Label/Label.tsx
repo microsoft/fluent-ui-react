@@ -1,5 +1,5 @@
-import { Accessibility } from '@stardust-ui/accessibility'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility } from '@fluentui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
@@ -100,16 +100,16 @@ class Label extends UIComponent<WithAsProp<LabelProps>, any> {
     }
 
     const imageElement = Image.create(image, {
-      defaultProps: {
+      defaultProps: () => ({
         styles: styles.image,
         variables: variables.image,
-      },
+      }),
     })
     const iconElement = Icon.create(icon, {
-      defaultProps: {
+      defaultProps: () => ({
         styles: styles.icon,
         variables: variables.icon,
-      },
+      }),
       overrideProps: this.handleIconOverrides,
     })
 

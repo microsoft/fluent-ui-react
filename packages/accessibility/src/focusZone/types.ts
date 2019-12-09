@@ -1,3 +1,5 @@
+import * as React from 'react'
+
 export enum FocusZoneMode {
   Custom,
   Wrap,
@@ -61,7 +63,7 @@ export interface FocusZoneProperties {
 
   /**
    * Callback method for determining if focus should indeed be set on the given element.
-   * @param {HTMLElement} element The child element within the zone to focus.
+   * @param element - The child element within the zone to focus.
    * @returns True if focus should be set to the given element, false to avoid setting focus.
    */
   shouldReceiveFocus?: (childElement?: HTMLElement) => boolean
@@ -84,12 +86,12 @@ export interface FocusZoneProperties {
    * Navigation between messages possible with up/down arrow keys, but when pressing Enter, focus should go to
    * focusable elements inside message, for example, a link.
    */
-  shouldEnterInnerZone?: Function
+  shouldEnterInnerZone?: (ev: React.KeyboardEvent<HTMLElement>) => boolean
 
   /**
    * A callback method to determine if the input element should lose focus on arrow keys.
    * For example: use arrow keys to navigate when an input element is empty or when cursor is at the beginning/end of a string.
-   * @param {HTMLInputElement} inputElement The input element which is to lose focus.
+   * @param inputElement - The input element which is to lose focus.
    * @returns True if input element should lose focus or false otherwise.
    */
   shouldInputLoseFocusOnArrowKey?: (inputElement: HTMLInputElement) => boolean

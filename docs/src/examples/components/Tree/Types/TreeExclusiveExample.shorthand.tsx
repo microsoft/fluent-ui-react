@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Tree } from '@stardust-ui/react'
+import { Tree } from '@fluentui/react'
 
 const items = [
   {
@@ -40,6 +40,6 @@ const items = [
   },
 ]
 
-const TreeExclusiveExample = () => <Tree items={items} exclusive />
+const TreeExclusiveExample = () => <Tree aria-label="exclusive" items={items} exclusive />
 
 export default TreeExclusiveExample

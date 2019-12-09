@@ -1,7 +1,4 @@
-import {
-  ReactAccessibilityBehavior,
-  AccessibilityActionHandlers,
-} from '@stardust-ui/react-bindings'
+import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from '@fluentui/react-bindings'
 import createComponentInternal, { CreateComponentReturnType } from './createComponent'
 import * as React from 'react'
 import * as _ from 'lodash'

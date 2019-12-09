@@ -1,8 +1,8 @@
 import keyboardKey from 'keyboard-key'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { toRefObject } from '@stardust-ui/react-component-ref'
-import { EventListener } from '@stardust-ui/react-component-event-listener'
+import { toRefObject } from '@fluentui/react-component-ref'
+import { EventListener } from '@fluentui/react-component-event-listener'
 
 import { isBrowser } from '../../lib'
 import { isEnabled as isDebugEnabled } from '../../lib/debug/debugEnabled'

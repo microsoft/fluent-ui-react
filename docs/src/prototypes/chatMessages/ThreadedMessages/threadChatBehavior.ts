@@ -1,4 +1,4 @@
-import { chatBehavior, Accessibility } from '@stardust-ui/react'
+import { chatBehavior, Accessibility } from '@fluentui/react'
 import classNames from './classNames'
 
 const threadChatBehavior: Accessibility = props => {

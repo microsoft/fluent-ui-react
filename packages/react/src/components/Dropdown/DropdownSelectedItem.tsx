@@ -1,5 +1,5 @@
-import { Ref } from '@stardust-ui/react-component-ref'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Ref } from '@fluentui/react-component-ref'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
@@ -47,24 +47,24 @@ export interface DropdownSelectedItemProps extends UIComponentProps<DropdownSele
   /**
    * Called on selected item click.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onClick?: ComponentEventHandler<DropdownSelectedItemProps>
 
   /**
    * Called on selected item key down.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onKeyDown?: ComponentKeyboardEventHandler<DropdownSelectedItemProps>
 
   /**
    * Called when item is removed from the selection list.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onRemove?: ComponentEventHandler<DropdownSelectedItemProps>
 }
@@ -133,38 +133,39 @@ class DropdownSelectedItem extends UIComponent<WithAsProp<DropdownSelectedItemPr
     const { active, header, icon, image } = this.props
 
     const contentElement = Box.create(header, {
-      defaultProps: {
+      defaultProps: () => ({
         as: 'span',
         className: DropdownSelectedItem.slotClassNames.header,
         styles: styles.header,
-      },
+      }),
     })
-    const renderIcon = _.isNil(icon)
+    const iconProps = _.isNil(icon)
       ? icon
-      : render =>
-          render(icon, (ComponentType, props) =>
+      : {
+          name: null,
+          children: (ComponentType, props) =>
             Icon.create(icon, {
-              defaultProps: {
+              defaultProps: () => ({
                 'aria-label': `Remove ${header} from selection.`, // TODO: Extract this in a behaviour.
                 className: DropdownSelectedItem.slotClassNames.icon,
                 styles: styles.icon,
-              },
+              }),
               overrideProps: this.handleIconOverrides(props),
             }),
-          )
-    const renderImage = _.isNil(image)
+        }
+    const imageProps = _.isNil(image)
       ? image
-      : render =>
-          render(image, (ComponentType, props) =>
+      : {
+          children: (ComponentType, props) =>
             Image.create(image, {
-              defaultProps: {
+              defaultProps: () => ({
                 avatar: true,
                 className: DropdownSelectedItem.slotClassNames.image,
                 styles: styles.image,
-              },
+              }),
               overrideProps: props,
             }),
-          )
+        }
 
     return (
       <Ref innerRef={this.itemRef}>
@@ -176,8 +177,8 @@ class DropdownSelectedItem extends UIComponent<WithAsProp<DropdownSelectedItemPr
           onClick={this.handleClick}
           onKeyDown={this.handleKeyDown}
           content={contentElement}
-          icon={renderIcon}
-          image={renderImage}
+          icon={iconProps}
+          image={imageProps}
           {...unhandledProps}
         />
       </Ref>

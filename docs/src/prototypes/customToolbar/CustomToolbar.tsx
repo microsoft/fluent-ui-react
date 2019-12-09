@@ -11,7 +11,7 @@ import {
   ToolbarItemShorthandKinds,
   SizeValue,
   ShorthandValue,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 
 const tooltips = {
   videoOn: 'Turn camera off',

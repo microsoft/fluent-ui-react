@@ -1,5 +1,5 @@
-import { Accessibility, alertBehavior } from '@stardust-ui/accessibility'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, alertBehavior } from '@fluentui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -80,15 +80,15 @@ export interface AlertProps
 
   /**
    * Called after user will dismiss the alert.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onDismiss?: ComponentEventHandler<AlertProps>
 
   /**
    * Called after the alert is focused.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onFocus?: ComponentEventHandler<AlertProps>
 
@@ -180,18 +180,18 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
     const bodyContent = (
       <>
         {Text.create(header, {
-          defaultProps: {
+          defaultProps: () => ({
             className: Alert.slotClassNames.header,
             styles: styles.header,
             ...accessibility.attributes.header,
-          },
+          }),
         })}
         {Box.create(content, {
-          defaultProps: {
+          defaultProps: () => ({
             className: Alert.slotClassNames.content,
             styles: styles.content,
             ...accessibility.attributes.content,
-          },
+          }),
         })}
       </>
     )
@@ -199,38 +199,38 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
     return (
       <>
         {Icon.create(icon, {
-          defaultProps: {
+          defaultProps: () => ({
             className: Alert.slotClassNames.icon,
             styles: styles.icon,
-          },
+          }),
         })}
         {Box.create(body, {
-          defaultProps: {
+          defaultProps: () => ({
             id: this.state.bodyId,
             className: Alert.slotClassNames.body,
             ...accessibility.attributes.body,
             styles: styles.body,
-          },
+          }),
           overrideProps: {
             children: bodyContent,
           },
         })}
 
         {ButtonGroup.create(actions, {
-          defaultProps: {
+          defaultProps: () => ({
             className: Alert.slotClassNames.actions,
             styles: styles.actions,
-          },
+          }),
         })}
         {dismissible &&
           Button.create(dismissAction, {
-            defaultProps: {
+            defaultProps: () => ({
               iconOnly: true,
               text: true,
               className: Alert.slotClassNames.dismissAction,
               styles: styles.dismissAction,
               ...accessibility.attributes.dismissAction,
-            },
+            }),
             overrideProps: this.handleDismissOverrides,
           })}
       </>

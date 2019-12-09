@@ -1,6 +1,6 @@
 import * as React from 'react'
 import ComponentTableProps from '../ComponentPropsTable'
-import { Divider, Segment } from '@stardust-ui/react/src'
+import { Divider, Segment } from '@fluentui/react/src'
 
 export const cardStyle: React.CSSProperties = {
   boxShadow: '0 1px 2px rgba(0, 0, 0, 0.2)',

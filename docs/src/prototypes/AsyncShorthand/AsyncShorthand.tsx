@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
 import * as React from 'react'
-import { Chat, Menu, Popup, Avatar } from '@stardust-ui/react'
+import { Chat, Menu, Popup, Avatar } from '@fluentui/react'
 
 /**
  * This example shows how to create custom Chat Messages.
@@ -90,10 +90,10 @@ class CustomChatMessage extends React.Component {
               iconOnly
               className="actions"
               items={[
-                { key: 'a', icon: 'thumbs up' },
-                { key: 'b', icon: 'user' },
-                { key: 'c', icon: 'ellipsis horizontal' },
-              ].map(item => render => render(item, this.renderMenuItem))}
+                { key: 'a', icon: 'thumbs up', children: this.renderMenuItem },
+                { key: 'b', icon: 'user', children: this.renderMenuItem },
+                { key: 'c', icon: 'ellipsis horizontal', children: this.renderMenuItem },
+              ]}
             />
           </div>
         }

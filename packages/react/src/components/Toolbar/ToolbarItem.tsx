@@ -1,11 +1,11 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
-import { Accessibility, toolbarItemBehavior } from '@stardust-ui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
+import { Accessibility, toolbarItemBehavior } from '@fluentui/accessibility'
 import cx from 'classnames'
-import { Ref, toRefObject } from '@stardust-ui/react-component-ref'
-import { EventListener } from '@stardust-ui/react-component-event-listener'
+import { Ref, toRefObject } from '@fluentui/react-component-ref'
+import { EventListener } from '@fluentui/react-component-event-listener'
 
 import {
   UIComponent,
@@ -35,12 +35,8 @@ import Box, { BoxProps } from '../Box/Box'
 import Popup, { PopupProps } from '../Popup/Popup'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 import { ToolbarMenuItemProps } from '../Toolbar/ToolbarMenuItem'
-import { ToolbarItemShorthandKinds } from '@stardust-ui/react'
-import {
-  GetRefs,
-  NodeRef,
-  Unstable_NestingAuto,
-} from '@stardust-ui/react-component-nesting-registry'
+import { GetRefs, NodeRef, Unstable_NestingAuto } from '@fluentui/react-component-nesting-registry'
+import { ToolbarItemShorthandKinds } from './Toolbar'
 
 export interface ToolbarItemProps
   extends UIComponentProps,
@@ -71,30 +67,30 @@ export interface ToolbarItemProps
 
   /**
    * Event for request to change 'menuOpen' value.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onMenuOpenChange?: ComponentEventHandler<ToolbarItemProps>
 
   /**
    * Called on click.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onClick?: ComponentEventHandler<ToolbarItemProps>
 
   /**
    * Called after user's focus.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onFocus?: ComponentEventHandler<ToolbarItemProps>
 
   /**
    * Called after item blur.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onBlur?: ComponentEventHandler<ToolbarItemProps>
 
@@ -161,11 +157,12 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
       event.preventDefault()
       this.handleClick(event)
     },
+    performWrapperClick: event => {
+      this.handleWrapperClick(event)
+    },
     closeMenuAndFocusTrigger: event => {
       this.trySetMenuOpen(false, event)
-      if (this.itemRef) {
-        this.itemRef.current.focus()
-      }
+      _.invoke(this.itemRef.current, 'focus')
     },
     doNotNavigateNextToolbarItem: event => {
       event.stopPropagation()
@@ -173,8 +170,9 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
   }
 
   itemRef = React.createRef<HTMLElement>()
+  menuRef = React.createRef<HTMLElement>() as React.MutableRefObject<HTMLElement>
 
-  handleMenuOverrides = (getRefs: GetRefs, variables) => (predefinedProps: ToolbarItemProps) => ({
+  handleMenuOverrides = (getRefs: GetRefs, variables) => (predefinedProps: ToolbarMenuProps) => ({
     onBlur: (e: React.FocusEvent) => {
       const isInside = _.some(getRefs(), (childRef: NodeRef) => {
         return childRef.current.contains(e.relatedTarget as HTMLElement)
@@ -184,15 +182,16 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
         this.trySetMenuOpen(false, e)
       }
     },
-    onItemClick: (e, itemProps: ToolbarItemProps) => {
+    onItemClick: (e, itemProps: ToolbarMenuItemProps) => {
+      const { popup, menuOpen } = itemProps
       _.invoke(predefinedProps, 'onItemClick', e, itemProps)
-      if (itemProps.popup) {
+      if (popup) {
         return
       }
       // TODO: should we pass toolbarMenuItem to the user callback so he can decide if he wants to close the menu?
-      this.trySetMenuOpen(false, e)
-      if (this.itemRef) {
-        this.itemRef.current.focus()
+      this.trySetMenuOpen(menuOpen, e)
+      if (!menuOpen) {
+        _.invoke(this.itemRef.current, 'focus')
       }
     },
     variables: mergeComponentVariables(variables, predefinedProps.variables),
@@ -220,7 +219,12 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
       <Unstable_NestingAuto>
         {(getRefs, nestingRef) => (
           <>
-            <Ref innerRef={nestingRef}>
+            <Ref
+              innerRef={(node: HTMLElement) => {
+                nestingRef.current = node
+                this.menuRef.current = node
+              }}
+            >
               <Popper
                 align="start"
                 position="above"
@@ -249,9 +253,9 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
 
     if (popup) {
       return Popup.create(popup, {
-        defaultProps: {
+        defaultProps: () => ({
           trapFocus: true,
-        },
+        }),
         overrideProps: {
           trigger: itemElement,
           children: undefined, // force-reset `children` defined for `Popup` as it collides with the `trigger`
@@ -270,13 +274,17 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
 
       if (wrapper) {
         return Box.create(wrapper, {
-          defaultProps: {
+          defaultProps: () => ({
             className: cx(ToolbarItem.slotClassNames.wrapper, classes.wrapper),
             ...accessibility.attributes.wrapper,
             ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, wrapper),
-          },
-          overrideProps: () => ({
+          }),
+          overrideProps: predefinedProps => ({
             children: contentElement,
+            onClick: e => {
+              this.handleWrapperClick(e)
+              _.invoke(predefinedProps, 'onClick', e)
+            },
           }),
         })
       }
@@ -308,6 +316,16 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
     }
 
     _.invoke(this.props, 'onClick', e, this.props)
+  }
+
+  handleWrapperClick = e => {
+    const { menu } = this.props
+    if (menu) {
+      if (doesNodeContainClick(this.menuRef.current, e, this.context.target)) {
+        this.trySetMenuOpen(false, e)
+        _.invoke(this.itemRef.current, 'focus')
+      }
+    }
   }
 
   handleOutsideClick = (getRefs: GetRefs) => (e: MouseEvent) => {

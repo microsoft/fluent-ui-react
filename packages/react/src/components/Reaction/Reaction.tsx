@@ -1,4 +1,4 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as React from 'react'
 
 import {
@@ -12,7 +12,7 @@ import {
   ContentComponentProps,
   ShorthandFactory,
 } from '../../lib'
-import { Accessibility } from '@stardust-ui/accessibility'
+import { Accessibility } from '@fluentui/accessibility'
 
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Icon, { IconProps } from '../Icon/Icon'
@@ -74,16 +74,16 @@ class Reaction extends UIComponent<WithAsProp<ReactionProps>> {
         ) : (
           <>
             {Icon.create(icon, {
-              defaultProps: {
+              defaultProps: () => ({
                 className: Reaction.slotClassNames.icon,
                 styles: styles.icon,
-              },
+              }),
             })}
             {Box.create(content, {
-              defaultProps: {
+              defaultProps: () => ({
                 className: Reaction.slotClassNames.content,
                 styles: styles.content,
-              },
+              }),
             })}
           </>
         )}

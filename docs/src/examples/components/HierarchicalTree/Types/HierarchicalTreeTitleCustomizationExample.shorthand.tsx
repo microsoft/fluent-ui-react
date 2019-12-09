@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Icon, HierarchicalTree } from '@stardust-ui/react'
+import { Icon, HierarchicalTree } from '@fluentui/react'
 
 const items = [
   {
@@ -38,7 +38,7 @@ const titleRenderer = (Component, { content, open, hasSubtree, ...restProps }) =
 )
 
 const TreeTitleCustomizationExample = () => (
-  <HierarchicalTree items={items} renderItemTitle={titleRenderer} />
+  <HierarchicalTree aria-label="Custom Title" items={items} renderItemTitle={titleRenderer} />
 )
 
 export default TreeTitleCustomizationExample

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Avatar, Icon } from '@stardust-ui/react'
+import { Avatar, Icon } from '@fluentui/react'
 
 const AvatarExampleImageCustomizationShorthand = () => (
   <>
@@ -14,10 +14,11 @@ const AvatarExampleImageCustomizationShorthand = () => (
     />
     &emsp;
     <Avatar
-      image={render =>
+      image={{
+        name: 'chess rook',
         // This example does not react to the avatar size variable
         // and otherwise produces bad results when border is applied compared to "normal" image
-        render({ name: 'chess rook' }, (ComponentType, props) => (
+        children: (ComponentType, props) => (
           <Icon
             {...{ ...props, avatar: undefined, fluid: undefined }}
             name="lock"
@@ -26,8 +27,8 @@ const AvatarExampleImageCustomizationShorthand = () => (
             variables={{ color: 'blue' }}
             styles={{ boxSizing: 'border-box', padding: '8px' }}
           />
-        ))
-      }
+        ),
+      }}
       status={{ color: 'green', icon: 'stardust-checkmark', title: 'Available' }}
     />
   </>

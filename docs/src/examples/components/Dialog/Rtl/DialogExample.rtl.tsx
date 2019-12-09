@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Dialog } from '@stardust-ui/react'
+import { Button, Dialog } from '@fluentui/react'
 
 const DialogExampleRtl: React.FC = () => (
   <Dialog

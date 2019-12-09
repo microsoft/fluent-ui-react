@@ -1,4 +1,4 @@
-import { KeyCombinations } from '@stardust-ui/accessibility'
+import { KeyCombinations } from '@fluentui/accessibility'
 // @ts-ignore
 import * as keyboardKey from 'keyboard-key'
 import * as React from 'react'

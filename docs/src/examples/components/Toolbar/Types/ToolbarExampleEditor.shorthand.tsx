@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { Toolbar, Input, Button, Form } from '@stardust-ui/react'
-import { useBooleanKnob } from '@stardust-ui/docs-components'
+import { Toolbar, Input, Button, Form } from '@fluentui/react'
+import { useBooleanKnob } from '@fluentui/docs-components'
 
 const fields = [
   {
@@ -73,12 +73,14 @@ const ToolbarExampleShorthand = () => {
   return (
     <>
       <Toolbar
+        aria-label="Text editor"
         items={[
           {
             key: 'bold',
             kind: 'toggle',
             active: isBold,
             icon: { name: 'bold', outline: true },
+            title: 'Toggle bold',
             onClick: () => {
               setBold(!isBold)
             },
@@ -88,6 +90,7 @@ const ToolbarExampleShorthand = () => {
             kind: 'toggle',
             active: isItalic,
             icon: { name: 'italic', outline: true },
+            title: 'Toggle italic',
             onClick: () => {
               setItalic(!isItalic)
             },
@@ -97,6 +100,7 @@ const ToolbarExampleShorthand = () => {
             kind: 'toggle',
             active: isUnderline,
             icon: { name: 'underline', outline: true },
+            title: 'Toggle underline',
             onClick: () => {
               setUnderline(!isUnderline)
             },
@@ -107,6 +111,7 @@ const ToolbarExampleShorthand = () => {
             active: isStrike,
             disabled: true,
             icon: { name: 'strike', outline: true },
+            title: 'Toggle strike',
             onClick: () => {
               setStrike(!isStrike)
             },
@@ -116,6 +121,7 @@ const ToolbarExampleShorthand = () => {
             key: 'highlight',
             icon: { name: 'highlight', outline: true },
             active: highlightOpen,
+            title: 'Highlight',
             popup: {
               content: (
                 <HighlightPopup
@@ -134,6 +140,7 @@ const ToolbarExampleShorthand = () => {
             key: 'font-color',
             icon: { name: 'font-color', outline: true },
             active: fontColorActive,
+            title: 'Font color',
             popup: {
               content: <Input icon="search" placeholder="Search..." />,
               onOpenChange: () => {
@@ -141,8 +148,12 @@ const ToolbarExampleShorthand = () => {
               },
             },
           },
-          { key: 'font-size', icon: { name: 'font-size', outline: true } },
-          { key: 'remove-format', icon: { name: 'remove-format', outline: true } },
+          { key: 'font-size', icon: { name: 'font-size', outline: true }, title: 'Font size' },
+          {
+            key: 'remove-format',
+            icon: { name: 'remove-format', outline: true },
+            title: 'Remove formatting',
+          },
           { key: 'divider2', kind: 'divider' },
           {
             key: 'radiogroup',
@@ -152,6 +163,7 @@ const ToolbarExampleShorthand = () => {
                 key: 'bullets',
                 icon: { name: 'bullets', outline: true },
                 active: bulletListActive,
+                title: 'Bullets',
                 onClick: () => {
                   setBulletListActive(!bulletListActive)
 
@@ -159,12 +171,12 @@ const ToolbarExampleShorthand = () => {
                   setNumberListActive(false)
                   setToDoListActive(false)
                 },
-                'aria-label': 'bullet list',
               },
               {
                 key: 'number-list',
                 icon: { name: 'number-list', outline: true },
                 active: numberListActive,
+                title: 'Number list',
                 onClick: () => {
                   setNumberListActive(!numberListActive)
 
@@ -172,12 +184,12 @@ const ToolbarExampleShorthand = () => {
                   setBulletListActive(false)
                   setToDoListActive(false)
                 },
-                'aria-label': 'number list',
               },
               {
                 key: 'to-do-list',
                 icon: { name: 'to-do-list', outline: true },
                 active: toDoListActive,
+                title: 'ToDo list',
                 onClick: () => {
                   setToDoListActive(!toDoListActive)
 
@@ -185,18 +197,18 @@ const ToolbarExampleShorthand = () => {
                   setBulletListActive(false)
                   setNumberListActive(false)
                 },
-                'aria-label': 'to do list',
               },
             ],
           },
           { key: 'divider3', kind: 'divider' },
-          { key: 'outdent', icon: { name: 'outdent', outline: true } },
-          { key: 'indent', icon: { name: 'indent', outline: true } },
+          { key: 'outdent', icon: { name: 'outdent', outline: true }, title: 'Outdent' },
+          { key: 'indent', icon: { name: 'indent', outline: true }, title: 'Indent' },
           { key: 'divider4', kind: 'divider' },
           {
             key: 'more',
             icon: { name: 'more', outline: true },
             active: moreMenuOpen,
+            title: 'More',
             menu: [
               {
                 content: 'Quote',

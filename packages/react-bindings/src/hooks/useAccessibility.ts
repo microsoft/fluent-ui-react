@@ -1,4 +1,4 @@
-import { Accessibility, AccessibilityAttributesBySlot } from '@stardust-ui/accessibility'
+import { Accessibility, AccessibilityAttributesBySlot } from '@fluentui/accessibility'
 import * as React from 'react'
 
 import getAccessibility from '../accessibility/getAccessibility'
@@ -11,12 +11,17 @@ type UseAccessibilityOptions<Props> = {
   rtl?: boolean
 }
 
+type MergedProps<SlotProps extends Record<string, any>> = SlotProps &
+  Partial<AccessibilityAttributesBySlot> & {
+    onKeyDown?: (e: React.KeyboardEvent, ...args: any[]) => void
+  }
+
 const mergeProps = <SlotProps extends Record<string, any>>(
   slotName: string,
   slotProps: SlotProps,
   definition: ReactAccessibilityBehavior,
-): SlotProps & Partial<AccessibilityAttributesBySlot> => {
-  const finalProps = {
+): MergedProps<SlotProps> => {
+  const finalProps: MergedProps<SlotProps> = {
     ...definition.attributes[slotName],
     ...slotProps,
   }
@@ -24,7 +29,12 @@ const mergeProps = <SlotProps extends Record<string, any>>(
 
   if (slotHandlers) {
     const onKeyDown = (e: React.KeyboardEvent, ...args: any[]) => {
-      definition.keyHandlers[slotName].onKeyDown(e)
+      const keyHandlers = definition.keyHandlers[slotName]
+
+      if (keyHandlers && keyHandlers.onKeyDown) {
+        keyHandlers.onKeyDown(e)
+      }
+
       if (slotProps.onKeyDown) {
         slotProps.onKeyDown(e, ...args)
       }

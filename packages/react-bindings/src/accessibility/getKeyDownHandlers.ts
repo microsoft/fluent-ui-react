@@ -1,4 +1,4 @@
-import { KeyActions } from '@stardust-ui/accessibility'
+import { KeyActions } from '@fluentui/accessibility'
 // @ts-ignore
 import * as keyboardKey from 'keyboard-key'
 import * as React from 'react'

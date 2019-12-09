@@ -1,11 +1,11 @@
-import { knobComponents, KnobsSnippet } from '@stardust-ui/code-sandbox'
+import { knobComponents, KnobsSnippet } from '@fluentui/code-sandbox'
 import {
   CopyToClipboard,
   KnobInspector,
   KnobProvider,
   LogInspector,
-} from '@stardust-ui/docs-components'
-import { Flex, ICSSInJSStyle, Menu, Provider, Segment } from '@stardust-ui/react'
+} from '@fluentui/docs-components'
+import { Flex, ICSSInJSStyle, Menu, Provider, Segment } from '@fluentui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
@@ -38,6 +38,7 @@ export interface ComponentExampleProps
   title: React.ReactNode
   description?: React.ReactNode
   examplePath: string
+  toolbarAriaLabel?: string
 }
 
 interface ComponentExampleState {
@@ -341,8 +342,9 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         onClick: this.resetSourceCode,
         disabled: !wasCodeChanged,
       },
-      render =>
-        render({ content: 'Copy' }, (Component, props) => (
+      {
+        content: 'Copy',
+        children: (Component, props) => (
           <CopyToClipboard key="copy" value={currentCode}>
             {(active, onClick) => (
               <Component
@@ -353,7 +355,8 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
               />
             )}
           </CopyToClipboard>
-        )),
+        ),
+      },
       {
         disabled: currentCodeLanguage !== 'ts',
         icon: 'github',
@@ -436,6 +439,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       onError,
       title,
       wasCodeChanged,
+      toolbarAriaLabel,
     } = this.props
     const {
       anchorName,
@@ -475,6 +479,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
                 <Flex.Item push>
                   <ComponentControls
+                    toolbarAriaLabel={toolbarAriaLabel}
                     anchorName={anchorName}
                     exampleCode={currentCode}
                     exampleLanguage={currentCodeLanguage}

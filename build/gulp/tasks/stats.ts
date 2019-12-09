@@ -139,7 +139,6 @@ function readSummaryPerfStats() {
     .mapKeys((value, key) => _.camelCase(key)) // mongodb does not allow dots in keys
     .mapValues(result => ({
       actualTime: _.omit(result.actualTime, 'values'),
-      baseTime: _.omit(result.baseTime, 'values'),
     }))
     .value()
 }
@@ -149,6 +148,10 @@ function readCurrentBundleStats() {
 }
 
 task('stats:save', async () => {
+  if (!process.env.STATS_URI) {
+    throw 'Cannot save stats because STATS_URI is not set'
+  }
+
   const commandLineArgs = _.pickBy(
     _.pick(argv, ['sha', 'branch', 'tag', 'pr', 'build']),
     val => val !== '', // ignore empty strings
@@ -156,11 +159,15 @@ task('stats:save', async () => {
   const bundleStats = readCurrentBundleStats()
   const perfStats = readSummaryPerfStats()
 
+  const prUrl =
+    process.env.CIRCLE_PULL_REQUEST ||
+    `${process.env.SYSTEM_PULLREQUEST_SOURCEREPOSITORYURI}/pull/${process.env.SYSTEM_PULLREQUEST_PULLREQUESTNUMBER}`
+
   const statsPayload = {
-    sha: process.env.CIRCLE_SHA1,
-    branch: process.env.CIRCLE_BRANCH,
-    pr: process.env.CIRCLE_PULL_REQUEST, // optional
-    build: process.env.CIRCLE_BUILD_NUM,
+    sha: process.env.BUILD_SOURCEVERSION || process.env.CIRCLE_SHA1,
+    branch: process.env.BUILD_SOURCEBRANCHNAME || process.env.CIRCLE_BRANCH,
+    pr: prUrl, // optional
+    build: process.env.BUILD_BUILDID || process.env.CIRCLE_BUILD_NUM,
     ...commandLineArgs, // allow command line overwrites
     bundleSize: bundleStats,
     performance: perfStats,

@@ -1,5 +1,5 @@
-import { Accessibility } from '@stardust-ui/accessibility'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility } from '@fluentui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
@@ -39,8 +39,8 @@ export interface FormProps extends UIComponentProps, ChildrenComponentProps {
 
   /**
    * The HTML form submit handler.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onSubmit?: ComponentEventHandler<FormProps>
 }
@@ -99,7 +99,7 @@ class Form extends UIComponent<WithAsProp<FormProps>, any> {
   renderFields = () => {
     const { fields } = this.props
     return _.map(fields, field =>
-      FormField.create(field, { defaultProps: { className: Form.slotClassNames.field } }),
+      FormField.create(field, { defaultProps: () => ({ className: Form.slotClassNames.field }) }),
     )
   }
 }

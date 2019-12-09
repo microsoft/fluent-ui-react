@@ -29,11 +29,13 @@ export type AriaWidgetRole =
   | 'none'
 
 export type AriaCompositeRole =
+  | 'cell'
   | 'combobox'
   | 'grid'
   | 'row'
   | 'gridcell'
   | 'rowheader'
+  | 'rowgroup'
   | 'columnheader'
   | 'listbox'
   | 'option'
@@ -41,6 +43,7 @@ export type AriaCompositeRole =
   | 'menubar'
   | 'radiogroup'
   | 'radio'
+  | 'table'
   | 'tablist'
   | 'tab'
   | 'tabpanel'
@@ -95,6 +98,7 @@ export interface AriaWidgetAttributes {
   'aria-invalid'?: boolean | 'false' | 'true' | 'grammar' | 'spelling'
   'aria-label'?: string
   'aria-level'?: number
+  'aria-live'?: 'polite' | 'off' | 'assertive'
   'aria-modal'?: boolean
   'aria-multiline'?: boolean | 'false' | 'true'
   'aria-multiselectable'?: boolean | 'false' | 'true'
@@ -128,8 +132,16 @@ export interface AriaRelationshipAttributes {
   'aria-rowspan'?: number
 }
 
-export interface AccessibilityAttributes extends AriaWidgetAttributes, AriaRelationshipAttributes {
-  // Is used in @stardust-ui/ability-attributes for accessibility validations.
+export interface ElementStateAttributes {
+  disabled?: boolean
+  checked?: boolean
+}
+
+export interface AccessibilityAttributes
+  extends AriaWidgetAttributes,
+    AriaRelationshipAttributes,
+    ElementStateAttributes {
+  // Is used in @fluentui/ability-attributes for accessibility validations.
   // Do not set it manually and do not rely on it in production
   'data-aa-class'?: string
 

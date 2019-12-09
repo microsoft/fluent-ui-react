@@ -1,4 +1,4 @@
-import { FocusZoneMode } from '@stardust-ui/accessibility'
+import { FocusZoneMode } from '@fluentui/accessibility'
 import {
   AccessibilityActionHandlers,
   callable,
@@ -9,7 +9,7 @@ import {
   getUnhandledProps,
   ReactAccessibilityBehavior,
   unstable_getAccessibility as getAccessibility,
-} from '@stardust-ui/react-bindings'
+} from '@fluentui/react-bindings'
 import cx from 'classnames'
 import * as React from 'react'
 import * as _ from 'lodash'
@@ -30,6 +30,8 @@ import createAnimationStyles from './createAnimationStyles'
 import { isEnabled as isDebugEnabled } from './debug/debugEnabled'
 import { DebugData } from './debug/debugData'
 import withDebugId from './withDebugId'
+import Telemetry from './Telemetry'
+import resolveStylesAndClasses from './resolveStylesAndClasses'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
@@ -79,8 +81,11 @@ const renderComponent = <P extends {}>(
     renderer = null,
     rtl = false,
     theme = emptyTheme,
+    telemetry = undefined as Telemetry,
     _internal_resolvedComponentVariables: resolvedComponentVariables = {},
   } = context || {}
+
+  const startTime = telemetry && telemetry.enabled ? performance.now() : 0
 
   const ElementType = getElementType(props) as React.ReactType<P>
   const stateAndProps = { ...state, ...props }
@@ -136,25 +141,15 @@ const renderComponent = <P extends {}>(
   const direction = rtl ? 'rtl' : 'ltr'
   const felaParam = {
     theme: { direction },
+    disableAnimations,
     displayName, // does not affect styles, only used by useEnhancedRenderer in docs
   }
 
-  const resolvedStyles: ComponentSlotStylesPrepared = {}
-  const resolvedStylesDebug: { [key: string]: { styles: Object }[] } = {}
-  const classes: ComponentSlotClasses = {}
-
-  Object.keys(mergedStyles).forEach(slotName => {
-    resolvedStyles[slotName] = callable(mergedStyles[slotName])(styleParam)
-
-    if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
-      resolvedStylesDebug[slotName] = resolvedStyles[slotName]['_debug']
-      delete resolvedStyles[slotName]['_debug']
-    }
-
-    if (renderer) {
-      classes[slotName] = renderer.renderRule(callable(resolvedStyles[slotName]), felaParam)
-    }
-  })
+  const { resolvedStyles, resolvedStylesDebug, classes } = resolveStylesAndClasses(
+    mergedStyles,
+    styleParam,
+    renderer ? style => renderer.renderRule(() => style, felaParam) : undefined,
+  )
 
   classes.root = cx(className, classes.root, props.className)
 
@@ -178,11 +173,7 @@ const renderComponent = <P extends {}>(
         resolvedVariables._debug,
         variables => !_.isEmpty(variables.resolved),
       ),
-      componentStyles: _.mapValues(resolvedStylesDebug, v =>
-        _.filter(v, v => {
-          return !_.isEmpty(v.styles)
-        }),
-      ),
+      componentStyles: resolvedStylesDebug,
       siteVariables: _.filter(theme.siteVariables._debug, siteVars => {
         if (_.isEmpty(siteVars) || _.isEmpty(siteVars.resolved)) {
           return false
@@ -200,6 +191,30 @@ const renderComponent = <P extends {}>(
         return true
       }),
     })
+  }
+
+  if (telemetry && telemetry.enabled) {
+    const duration = performance.now() - startTime
+
+    if (telemetry.performance[displayName]) {
+      telemetry.performance[displayName].count++
+      telemetry.performance[displayName].msTotal += duration
+      telemetry.performance[displayName].msMin = Math.min(
+        duration,
+        telemetry.performance[displayName].msMin,
+      )
+      telemetry.performance[displayName].msMax = Math.max(
+        duration,
+        telemetry.performance[displayName].msMax,
+      )
+    } else {
+      telemetry.performance[displayName] = {
+        count: 1,
+        msTotal: duration,
+        msMin: duration,
+        msMax: duration,
+      }
+    }
   }
 
   if (accessibility.focusZone && accessibility.focusZone.mode === FocusZoneMode.Wrap) {

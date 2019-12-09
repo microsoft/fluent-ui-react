@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Toolbar } from '@stardust-ui/react'
+import { Toolbar } from '@fluentui/react'
 
 const ToolbarExampleOverflow = () => {
   const icons = ['bold', 'italic', 'underline']
@@ -9,6 +9,7 @@ const ToolbarExampleOverflow = () => {
     key: `b${i}`,
     content: `${icons[i % icons.length]} #${i}`,
     icon: icons[i % icons.length],
+    title: `${icons[i % icons.length]} #${i}`,
   }))
 
   const toolbarItems = itemData.map(item => {
@@ -18,9 +19,11 @@ const ToolbarExampleOverflow = () => {
 
   return (
     <Toolbar
+      aria-label="Toolbar overflow menu"
       items={toolbarItems}
       overflow
       overflowOpen={overflowOpen}
+      overflowItem={{ title: 'More' }}
       onOverflowOpenChange={(e, { overflowOpen }) => {
         setOverflowOpen(overflowOpen)
       }}

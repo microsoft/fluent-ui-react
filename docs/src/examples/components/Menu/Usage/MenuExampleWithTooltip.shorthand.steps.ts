@@ -1,4 +1,4 @@
-import { Menu } from '@stardust-ui/react'
+import { Menu } from '@fluentui/react'
 
 const selectors = {
   menu: `.${Menu.className}`,

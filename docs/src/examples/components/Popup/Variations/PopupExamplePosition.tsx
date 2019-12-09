@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Button, Grid, Popup, Alignment, Position } from '@stardust-ui/react'
-import { useBooleanKnob, useSelectKnob } from '@stardust-ui/docs-components'
+import { Button, Grid, Popup, Alignment, Position } from '@fluentui/react'
+import { useBooleanKnob, useSelectKnob } from '@fluentui/docs-components'
 
 const PopupExamplePosition = () => {
   const [open] = useBooleanKnob({ name: 'open', initialValue: true })
@@ -34,6 +34,7 @@ const PopupExamplePosition = () => {
         <Button
           icon={{ name: iconNames[position], circular: true, bordered: true }}
           styles={buttonStyles}
+          title="Show popup"
         />
       </Popup>
     </Grid>

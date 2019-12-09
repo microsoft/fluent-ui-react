@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Popup } from '@stardust-ui/react'
+import { Button, Popup } from '@fluentui/react'
 
 export const selectors = {
   triggerButtonId: 'trigger',

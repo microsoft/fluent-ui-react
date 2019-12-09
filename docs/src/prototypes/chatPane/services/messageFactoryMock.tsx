@@ -7,7 +7,7 @@ import {
   ChatMessageProps,
   DividerProps,
   StatusProps,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 import * as React from 'react'
 import * as _ from 'lodash'
 import * as keyboardKey from 'keyboard-key'

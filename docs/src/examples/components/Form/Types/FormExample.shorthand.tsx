@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Form, Button } from '@stardust-ui/react'
+import { Form, Button } from '@fluentui/react'
 
 const fields = [
   {

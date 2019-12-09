@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Dropdown, Grid, Alignment, Position } from '@stardust-ui/react'
-import { useSelectKnob, useBooleanKnob } from '@stardust-ui/docs-components'
+import { Dropdown, Grid, Alignment, Position } from '@fluentui/react'
+import { useSelectKnob, useBooleanKnob } from '@fluentui/docs-components'
 
 const inputItems = ['Bruce Wayne', 'Natasha Romanoff', 'Steven Strange']
 

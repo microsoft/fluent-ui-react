@@ -3,7 +3,7 @@ import {
   AccessibilityAttributes,
   AccessibilityAttributesBySlot,
   AccessibilityDefinition,
-} from '@stardust-ui/accessibility'
+} from '@fluentui/accessibility'
 
 import getKeyDownHandlers from './getKeyDownHandlers'
 import { AccessibilityActionHandlers, ReactAccessibilityBehavior } from './types'

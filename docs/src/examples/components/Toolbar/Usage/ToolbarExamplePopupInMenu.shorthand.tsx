@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Toolbar, ToolbarItemShorthandKinds, Input } from '@stardust-ui/react'
+import { Toolbar, ToolbarItemShorthandKinds, Input } from '@fluentui/react'
 
 const ToolbarExamplePopupInMenu = () => {
   const [menu1Open, setMenu1Open] = React.useState(false)
@@ -7,11 +7,13 @@ const ToolbarExamplePopupInMenu = () => {
 
   return (
     <Toolbar
+      aria-label="Popup in menu"
       items={[
         {
           key: 'menu1',
           icon: 'more',
           active: menu1Open,
+          title: 'More',
           menu: [
             {
               key: 'popup',
@@ -28,11 +30,13 @@ const ToolbarExamplePopupInMenu = () => {
           key: 'italic',
           kind: 'toggle' as ToolbarItemShorthandKinds,
           icon: { name: 'italic', outline: true },
+          title: 'Italic',
         },
         {
           key: 'menu2',
           icon: 'more',
           active: menu2Open,
+          title: 'More',
           menu: [
             {
               key: 'popup',

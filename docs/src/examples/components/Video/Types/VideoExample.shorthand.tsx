@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Video, Text, Flex } from '@stardust-ui/react'
+import { Video, Text, Flex } from '@fluentui/react'
 
 const VideoExample = () => (
   <Flex column>

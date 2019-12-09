@@ -32,6 +32,7 @@ export default {
     gridColumn: '1 / span 2',
     gridRow: 2,
     justifySelf: 'left',
+    width: '100%',
   }),
 
   header: ({ variables: v }: DialogStyleParams): ICSSInJSStyle => ({

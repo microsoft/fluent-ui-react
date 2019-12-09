@@ -1,5 +1,5 @@
-import { Accessibility, splitButtonBehavior } from '@stardust-ui/accessibility'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, splitButtonBehavior } from '@fluentui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
@@ -55,23 +55,23 @@ export interface SplitButtonProps
   /**
    * Called after user's click on the main button.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onMainButtonClick?: ComponentEventHandler<ButtonProps>
 
   /**
    * Called after user's click on a menu item.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onMenuItemClick?: ComponentEventHandler<MenuItemProps>
 
   /**
    * Event for request to change 'open' value.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onOpenChange?: ComponentEventHandler<SplitButtonProps>
 
@@ -173,12 +173,12 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
   }: RenderResultConfig<MenuButtonProps>): React.ReactNode {
     const { button, disabled, menu, primary, secondary, toggleButton } = this.props
     const trigger = Button.create(button, {
-      defaultProps: {
+      defaultProps: () => ({
         styles: styles.button,
         primary,
         secondary,
         disabled,
-      },
+      }),
       overrideProps: this.handleMenuButtonTriggerOverrides,
     })
 
@@ -187,7 +187,7 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
         {MenuButton.create(
           {},
           {
-            defaultProps: {
+            defaultProps: () => ({
               accessibility: accessibility.childBehaviors
                 ? accessibility.childBehaviors.menuButton
                 : undefined,
@@ -196,12 +196,12 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
               on: [],
               open: this.state.open,
               trigger,
-            },
+            }),
             overrideProps: this.handleMenuButtonOverrides,
           },
         )}
         {Button.create(toggleButton, {
-          defaultProps: {
+          defaultProps: () => ({
             className: SplitButton.slotClassNames.toggleButton,
             disabled,
             icon: 'stardust-arrow-down',
@@ -209,7 +209,7 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
             primary,
             secondary,
             ...accessibility.attributes.toggleButton,
-          },
+          }),
           overrideProps: (predefinedProps: ButtonProps) => ({
             onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
               _.invoke(predefinedProps, 'onClick', e, buttonProps)

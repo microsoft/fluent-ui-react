@@ -1,5 +1,5 @@
-import { useBooleanKnob, useRangeKnob } from '@stardust-ui/docs-components'
-import { List, Image, ButtonGroup } from '@stardust-ui/react'
+import { useBooleanKnob, useRangeKnob } from '@fluentui/docs-components'
+import { List, Image, ButtonGroup } from '@fluentui/react'
 import * as React from 'react'
 
 const actions = (
@@ -9,11 +9,13 @@ const actions = (
         icon: 'stardust-checkmark',
         iconOnly: true,
         text: true,
+        title: 'Check',
       },
       {
         icon: 'stardust-close',
         iconOnly: true,
         text: true,
+        title: 'Close',
       },
     ]}
   />

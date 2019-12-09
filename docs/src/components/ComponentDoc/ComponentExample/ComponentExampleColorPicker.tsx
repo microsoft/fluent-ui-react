@@ -1,4 +1,4 @@
-import { ProviderContextPrepared } from '@stardust-ui/react'
+import { ProviderContextPrepared } from '@fluentui/react'
 import * as Color from 'color'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -12,9 +12,7 @@ type ComponentExampleColorPickerProps = {
   variableValue: string
 }
 
-const ComponentExampleColorPicker: React.FunctionComponent<
-  ComponentExampleColorPickerProps
-> = props => {
+const ComponentExampleColorPicker: React.FunctionComponent<ComponentExampleColorPickerProps> = props => {
   const { onChange, variableValue } = props
   const { theme } = React.useContext<ProviderContextPrepared>(ThemeContext)
 

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { mergeThemes, callable, ComponentStyleFunctionParam, themes } from '@stardust-ui/react'
+import { mergeThemes, callable, ComponentStyleFunctionParam, themes } from '@fluentui/react'
 import * as _ from 'lodash'
 
 /**
@@ -8,9 +8,11 @@ import * as _ from 'lodash'
 const providerMergeThemesPerf = () => {
   const merged = mergeThemes(..._.times(100, n => themes.teams))
   const resolvedStyles = _.mapValues(merged.componentStyles, (componentStyle, componentName) => {
-    const compVariables = _.get(merged.componentVariables, componentName, callable({}))(
-      merged.siteVariables,
-    )
+    const compVariables = _.get(
+      merged.componentVariables,
+      componentName,
+      callable({}),
+    )(merged.siteVariables)
     const styleParam: ComponentStyleFunctionParam = {
       displayName: componentName,
       props: {},

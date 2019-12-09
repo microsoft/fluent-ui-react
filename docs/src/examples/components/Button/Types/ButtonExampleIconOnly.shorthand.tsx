@@ -1,14 +1,14 @@
 import * as React from 'react'
-import { Button, Flex, Text } from '@stardust-ui/react'
+import { Button, Flex, Text } from '@fluentui/react'
 
 const ButtonExampleIconOnly = () => (
   <div>
     <Flex gap="gap.large" vAlign="center">
-      <Button icon="stardust-close" iconOnly />
+      <Button icon="stardust-close" iconOnly title="Close" />
       <Text content="AS A DEFAULT BUTTON" weight="bold" />
     </Flex>
     <Flex gap="gap.large" vAlign="center">
-      <Button icon="stardust-close" text iconOnly />
+      <Button icon="stardust-close" text iconOnly title="Close" />
       <Text content="AS A TEXT BUTTON" weight="bold" />
     </Flex>
   </div>

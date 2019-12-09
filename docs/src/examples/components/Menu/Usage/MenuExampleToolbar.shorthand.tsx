@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Menu, menuAsToolbarBehavior, MenuItemProps, ShorthandCollection } from '@stardust-ui/react'
+import { Menu, menuAsToolbarBehavior, MenuItemProps, ShorthandCollection } from '@fluentui/react'
 
 const items: ShorthandCollection<MenuItemProps> = [
   {

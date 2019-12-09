@@ -1,6 +1,6 @@
-import { createCallbackLogFormatter } from '@stardust-ui/code-sandbox'
-import { useLogKnob } from '@stardust-ui/docs-components'
-import { Toolbar } from '@stardust-ui/react'
+import { createCallbackLogFormatter } from '@fluentui/code-sandbox'
+import { useLogKnob } from '@fluentui/docs-components'
+import { Toolbar } from '@fluentui/react'
 import * as React from 'react'
 
 const ToolbarExampleMenuShorthand = () => {
@@ -15,11 +15,13 @@ const ToolbarExampleMenuShorthand = () => {
 
   return (
     <Toolbar
+      aria-label="Toolbar can contain a menu"
       items={[
         {
           key: 'more',
           icon: 'more',
           active: menuOpen,
+          title: 'More',
           menu: {
             items: [
               { key: 'play', content: 'Play', icon: 'play' },

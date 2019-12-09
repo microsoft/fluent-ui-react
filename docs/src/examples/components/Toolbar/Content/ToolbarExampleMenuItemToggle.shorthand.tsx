@@ -1,4 +1,4 @@
-import { Toolbar, ToolbarMenuItemProps } from '@stardust-ui/react'
+import { Toolbar, ToolbarMenuItemProps } from '@fluentui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 
@@ -16,11 +16,13 @@ const ToolbarExampleMenuItemToggle = () => {
 
   return (
     <Toolbar
+      aria-label="Toolbar can contain toggle items in a menu"
       items={[
         {
           key: 'more',
           active: menuOpen,
           icon: 'more',
+          title: 'More',
           menu: [
             {
               key: 'bold',

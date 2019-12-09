@@ -1,4 +1,4 @@
-import { Toolbar } from '@stardust-ui/react'
+import { Toolbar } from '@fluentui/react'
 import * as React from 'react'
 
 const ToolbarExampleMenuRadioGroup = () => {
@@ -7,11 +7,13 @@ const ToolbarExampleMenuRadioGroup = () => {
 
   return (
     <Toolbar
+      aria-label="Toolbar can contain a radio group in a menu"
       items={[
         {
           key: 'more',
           active: menuOpen,
           icon: 'more',
+          title: 'More',
           menu: [
             {
               key: 'group',

@@ -1,9 +1,9 @@
-import { Accessibility, dialogBehavior } from '@stardust-ui/accessibility'
-import { FocusTrapZoneProps } from '@stardust-ui/react-bindings'
-import { Unstable_NestingAuto } from '@stardust-ui/react-component-nesting-registry'
-import { EventListener } from '@stardust-ui/react-component-event-listener'
-import { Ref, toRefObject } from '@stardust-ui/react-component-ref'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, dialogBehavior } from '@fluentui/accessibility'
+import { FocusTrapZoneProps } from '@fluentui/react-bindings'
+import { Unstable_NestingAuto } from '@fluentui/react-component-nesting-registry'
+import { EventListener } from '@fluentui/react-component-event-listener'
+import { Ref, toRefObject } from '@fluentui/react-component-ref'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -70,22 +70,22 @@ export interface DialogProps
 
   /**
    * Called after a user clicks the cancel button.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onCancel?: ComponentEventHandler<DialogProps>
 
   /**
    * Called after a user clicks the confirm button.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onConfirm?: ComponentEventHandler<DialogProps>
 
   /**
    * Called after a user opens the dialog.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onOpen?: ComponentEventHandler<DialogProps>
 
@@ -261,18 +261,18 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       overrideProps: this.handleCancelButtonOverrides,
     })
     const confirmElement = Button.create(confirmButton, {
-      defaultProps: {
+      defaultProps: () => ({
         primary: true,
-      },
+      }),
       overrideProps: this.handleConfirmButtonOverrides,
     })
 
     const dialogActions =
       (cancelElement || confirmElement) &&
       ButtonGroup.create(actions, {
-        defaultProps: {
+        defaultProps: () => ({
           styles: styles.actions,
-        },
+        }),
         overrideProps: {
           content: (
             <Flex gap="gap.smaller">
@@ -294,29 +294,29 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.popup, unhandledProps)}
         >
           {Header.create(header, {
-            defaultProps: {
+            defaultProps: () => ({
               as: 'h2',
               className: Dialog.slotClassNames.header,
               styles: styles.header,
               ...accessibility.attributes.header,
-            },
+            }),
           })}
           {Button.create(headerAction, {
-            defaultProps: {
+            defaultProps: () => ({
               className: Dialog.slotClassNames.headerAction,
               styles: styles.headerAction,
               text: true,
               iconOnly: true,
               ...accessibility.attributes.headerAction,
-            },
+            }),
           })}
 
           {Box.create(content, {
-            defaultProps: {
+            defaultProps: () => ({
               styles: styles.content,
               className: Dialog.slotClassNames.content,
               ...accessibility.attributes.content,
-            },
+            }),
           })}
 
           {DialogFooter.create(footer, {
@@ -355,10 +355,10 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
                 }}
               >
                 {Box.create(overlay, {
-                  defaultProps: {
+                  defaultProps: () => ({
                     className: Dialog.slotClassNames.overlay,
                     styles: styles.overlay,
-                  },
+                  }),
                   overrideProps: { content: dialogContent },
                 })}
               </Ref>
