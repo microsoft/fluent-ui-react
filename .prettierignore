@@ -7,6 +7,14 @@ coverage/
 dist/
 stats/
 
+# packages that have lib as the output
+packages/digest/lib
+packages/perf-test/lib
+packages/playground/lib
+packages/react-theming/lib
+
 package.json
 
 packages/ability-attributes/src/schema.ts
+
+CHANGELOG.md

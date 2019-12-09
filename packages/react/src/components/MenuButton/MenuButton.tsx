@@ -169,24 +169,23 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
   menuRef = React.createRef<HTMLElement>()
 
   actionHandlers = {
-    closeMenu: () => this.closeMenu(),
+    closeMenu: e => this.closeMenu(e),
     openAndFocusFirst: e => this.openAndFocus(e, 'first'),
     openAndFocusLast: e => this.openAndFocus(e, 'last'),
   }
 
-  closeMenu() {
-    this.setState({ open: false })
+  closeMenu(e: React.KeyboardEvent) {
+    this.handleOpenChange(e, false)
   }
 
   openAndFocus(e: React.KeyboardEvent, which: 'first' | 'last') {
-    const renderCallback = () => focusMenuItem(this.menuRef.current, which)
-    this.setState({ open: true }, renderCallback)
     e.preventDefault()
+    this.handleOpenChange(e, true, () => focusMenuItem(this.menuRef.current, which))
   }
 
-  handleOpenChange = (e, { open }: PopupProps) => {
+  handleOpenChange = (e: React.SyntheticEvent, open: boolean, callback?: () => void) => {
     _.invoke(this.props, 'onOpenChange', e, { ...this.props, open })
-    this.setState({ open })
+    this.setState({ open }, callback)
   }
 
   handleMenuOverrides = (predefinedProps?: MenuProps) => ({
@@ -195,7 +194,7 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
       _.invoke(this.props, 'onMenuItemClick', e, itemProps)
       if (!itemProps || !itemProps.menu) {
         // do not close if clicked on item with submenu
-        this.setState({ open: false })
+        this.handleOpenChange(e, false)
       }
     },
   })
@@ -266,7 +265,9 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
     const overrideProps: PopupProps = {
       accessibility: () => accessibility,
       open: this.state.open,
-      onOpenChange: this.handleOpenChange,
+      onOpenChange: (e, { open }) => {
+        this.handleOpenChange(e, open)
+      },
       content: {
         styles: styles.popupContent,
         content: content && <Ref innerRef={this.menuRef}>{content}</Ref>,

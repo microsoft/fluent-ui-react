@@ -107,4 +107,6 @@ const items = [
 
 const ListPerf = () => <List items={items} />
 
+ListPerf.iterations = 100
+
 export default ListPerf

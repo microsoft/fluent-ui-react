@@ -280,13 +280,9 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
     if (this._root.current) {
       const lastChild = this._root.current && (this._root.current.lastChild as HTMLElement | null)
 
-      return this.focusElement(getPreviousElement(
-        this._root.current,
-        lastChild,
-        true,
-        true,
-        true,
-      ) as HTMLElement)
+      return this.focusElement(
+        getPreviousElement(this._root.current, lastChild, true, true, true) as HTMLElement,
+      )
     }
 
     return false
@@ -513,14 +509,14 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
 
     const doc = getDocument(this._root.current)
 
+    if (this.props.onKeyDown) {
+      this.props.onKeyDown(ev)
+    }
+
     if (doc.activeElement === this._root.current && this._isInnerZone) {
       // If this element has focus, it is being controlled by a parent.
       // Ignore the keystroke.
       return undefined
-    }
-
-    if (this.props.onKeyDown) {
-      this.props.onKeyDown(ev)
     }
 
     // If the default has been prevented, do not process keyboard events.
@@ -542,11 +538,13 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
         }
       } else if (isElementFocusSubZone(ev.target as HTMLElement)) {
         if (
-          !this.focusElement(getNextElement(
-            ev.target as HTMLElement,
-            (ev.target as HTMLElement).firstChild as HTMLElement,
-            true,
-          ) as HTMLElement)
+          !this.focusElement(
+            getNextElement(
+              ev.target as HTMLElement,
+              (ev.target as HTMLElement).firstChild as HTMLElement,
+              true,
+            ) as HTMLElement,
+          )
         ) {
           return undefined
         }
@@ -657,13 +655,9 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
             this._root.current && (this._root.current.lastChild as HTMLElement | null)
           if (
             this._root.current &&
-            this.focusElement(getPreviousElement(
-              this._root.current,
-              lastChild,
-              true,
-              true,
-              true,
-            ) as HTMLElement)
+            this.focusElement(
+              getPreviousElement(this._root.current, lastChild, true, true, true) as HTMLElement,
+            )
           ) {
             break
           }
@@ -789,19 +783,23 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
       this.focusElement(candidateElement)
     } else if (this.props.isCircularNavigation && useDefaultWrap) {
       if (isForward) {
-        return this.focusElement(getNextElement(
-          this._root.current,
-          this._root.current.firstElementChild as HTMLElement,
-          true,
-        ) as HTMLElement)
+        return this.focusElement(
+          getNextElement(
+            this._root.current,
+            this._root.current.firstElementChild as HTMLElement,
+            true,
+          ) as HTMLElement,
+        )
       }
-      return this.focusElement(getPreviousElement(
-        this._root.current,
-        this._root.current.lastElementChild as HTMLElement,
-        true,
-        true,
-        true,
-      ) as HTMLElement)
+      return this.focusElement(
+        getPreviousElement(
+          this._root.current,
+          this._root.current.lastElementChild as HTMLElement,
+          true,
+          true,
+          true,
+        ) as HTMLElement,
+      )
     }
 
     return changedFocus

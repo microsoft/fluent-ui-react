@@ -192,9 +192,7 @@ export { default as HierarchicalTree } from './components/HierarchicalTree/Hiera
 export * from './components/HierarchicalTree/HierarchicalTreeItem'
 export { default as HierarchicalTreeItem } from './components/HierarchicalTree/HierarchicalTreeItem'
 export * from './components/HierarchicalTree/HierarchicalTreeTitle'
-export {
-  default as HierarchicalTreeTitle,
-} from './components/HierarchicalTree/HierarchicalTreeTitle'
+export { default as HierarchicalTreeTitle } from './components/HierarchicalTree/HierarchicalTreeTitle'
 
 export * from './components/Tree/Tree'
 export { default as Tree } from './components/Tree/Tree'

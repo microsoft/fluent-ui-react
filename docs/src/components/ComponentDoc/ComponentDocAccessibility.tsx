@@ -95,7 +95,7 @@ export const ComponentDocAccessibility: React.FC<ComponentDocAccessibility> = ({
     info.behaviors,
   )
 
-  if (!behaviorName && !description && (info.behaviors && info.behaviors.length === 0)) {
+  if (!behaviorName && !description && info.behaviors && info.behaviors.length === 0) {
     return null
   }
 
