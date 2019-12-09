@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { hot } from 'react-hot-loader/root'
-import { themes, Debug } from '@fluentui/react'
+import { themes, Debug, Provider } from '@fluentui/react'
 import { ReactBaseTheme } from '@fluentui/react-base-theme'
 
 import { mergeThemes } from 'src/lib'
@@ -29,9 +29,20 @@ class App extends React.Component<any, ThemeContextData> {
     const { themeName } = this.state
     return (
       <ThemeContext.Provider value={this.state}>
-        <Fabric applyTheme>
-          <ReactBaseTheme
-            fluentOverridesTheme={mergeThemes(themes.fontAwesome, themes[themeName], {
+        {themeName === 'fabric' ? (
+          <Fabric applyTheme>
+            <ReactBaseTheme fluentOverridesTheme={themes['teams']}>
+              <PerfDataProvider>
+                <div>
+                  <Debug />
+                  <Routes />
+                </div>
+              </PerfDataProvider>
+            </ReactBaseTheme>
+          </Fabric>
+        ) : (
+          <Provider
+            theme={mergeThemes(themes.fontAwesome, themes[themeName], {
               staticStyles: [
                 {
                   a: {
@@ -47,8 +58,8 @@ class App extends React.Component<any, ThemeContextData> {
                 <Routes />
               </div>
             </PerfDataProvider>
-          </ReactBaseTheme>
-        </Fabric>
+          </Provider>
+        )}
       </ThemeContext.Provider>
     )
   }

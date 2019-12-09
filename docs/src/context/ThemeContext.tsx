@@ -2,15 +2,15 @@ import * as React from 'react'
 import * as _ from 'lodash'
 import { themes } from '@fluentui/react'
 
-type ThemeName = keyof typeof themes
+type ThemeName = keyof typeof themes | 'fabric'
 type ThemeOption = { text: string; value: ThemeName }
 
 const getThemeOptions = (): ThemeOption[] => {
-  const themesKeys = Object.keys(themes)
+  const themesKeys = [...Object.keys(themes), 'fabric']
 
   if (process.env.NODE_ENV === 'production') {
     // we don't show 'base' and 'fontAwesome' themes in production
-    _.pull(themesKeys, 'base', 'fontAwesome')
+    _.pull(themesKeys, 'base', 'fontAwesome', 'fabric')
   }
 
   return themesKeys.map(key => ({ text: _.startCase(key), value: key as ThemeName }))
