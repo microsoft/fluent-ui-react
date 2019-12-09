@@ -40,34 +40,6 @@ FastDNA Checkbox [docs](https://explore.fast.design/components/Checkbox)
 | Name | Type | Default value |
 | ---- | ---- | ------------- |
 
-
-### Recommended props
-
-| Name                 | Type                                                        |
-| --------------       | ----------------------------------------------------------- |
-| ariaDescribedBy      | string                                                      |
-| ariaLabel            | string                                                      |                                                
-| ariaLabelledBy       | string                                                      |                                                
-| as                   | keyof JSX.IntrinsicElements                                 |
-| checked              | boolean                                                     |      
-| className            | string                                                      |
-| defaultChecked       | boolean                                                     |
-| defaultIndeterminate | boolean                                                     |
-| disabled             | boolean                                                     |
-| indeterminate        | boolean                                                     |
-| label                | string                                                      |
-| name                 | string                                                      |
-| onChange             | (ev: Event, value: boolean) => void                         |
-
-Note: rtl, styles, and theme come from compose or the ThemeProvider. And name has been added to support checkbox in form scenarios.
-
-Removing the following two props because the ARIA spec dictates role='checkbox' doesn't need aria-posinset and aria-setsize. These are only valid for role='option' which is only in the case the checkbox is a part of a listbox, which is not something we need to account for in the base component API. If the user does need to provide these two props, slotProps could be used to apply additional props to any slot.
-
-| Name                                  | Concern                                                           |
-| ------------------------------------- | ----------------------------------------------------------------- |
-| ariaPositionInset                     | if checkbox is in a set, should be up to the user to provide a11y |             
-| ariaSetSize                           | same as above                                                     |
-
 ### Fabric Checkbox props
 
 https://developer.microsoft.com/en-us/fabric#/controls/web/checkbox
@@ -144,13 +116,60 @@ https://developer.microsoft.com/en-us/fabric#/controls/web/checkbox
 | theme                | ITheme                                                      |                                                                                |
 | toggle               | boolean                                                     | default false                                                                  |  
 | variables            | any                                                         |                                                                                |
+ 
+### Recommended props
+
+| Name                 | Type                                                        |
+| --------------       | ----------------------------------------------------------- |
+| ariaDescribedBy      | string                                                      |
+| ariaLabel            | string                                                      |                                                
+| ariaLabelledBy       | string                                                      |                                                
+| as                   | keyof JSX.IntrinsicElements                                 |
+| checked              | boolean                                                     |      
+| className            | string                                                      |
+| defaultChecked       | boolean                                                     |
+| defaultIndeterminate | boolean                                                     |
+| disabled             | boolean                                                     |
+| indeterminate        | boolean                                                     |
+| label                | string                                                      |
+| name                 | string                                                      |
+| onChange             | (ev: Event, value: boolean) => void                         |
+
+Note: rtl, styles, and theme come from compose or the ThemeProvider. And name has been added to support checkbox in form scenarios.
+
+Removing the following two props because the ARIA spec dictates role='checkbox' doesn't need aria-posinset and aria-setsize. These are only valid for role='option' which is only in the case the checkbox is a part of a listbox, which is not something we need to account for in the base component API. If the user does need to provide these two props, slotProps could be used to apply additional props to any slot.
+
+| Name                                  | Concern                                                           |
+| ------------------------------------- | ----------------------------------------------------------------- |
+| ariaPositionInset                     | if checkbox is in a set, should be up to the user to provide a11y |             
+| ariaSetSize                           | same as above                                                     |
 
 ### Conversion process from Fabric 7 to Fluent UI Checkbox
 
-Props being changed:
+#### CheckboxProps interface
 
-Some props, like style & className, should always go into the root or to the applicable element like name into the box element (replacing input).
-Data-attributes will be spread using slotProps. 
+| Name                         | Action to take/taken | Property transitioned? | Breaking change? | Codemod/Shim created? |
+| -----------------------------| -------------------- | :--------------------: | :--------------: | :-------------------: |
+| `ariaDescribedBy`            | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
+| `ariaLabel`                  | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
+| `ariaLabelledBy`             | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
+| `ariaPositionInSet`          | Won't be transitioned| &#x274C;               | &#x274C;         | &#x274C;              |
+| `ariaSetSize`                | Won't be transitioned| &#x274C;               | &#x274C;         | &#x274C;              |
+| `boxSide`                    | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
+| `checked`                    | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
+| `checkmarkIconProps`         | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
+| `className`                  | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
+| `componentRef`               | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
+| `defaultChecked`             | Won't be transitioned| &#x274C;               | &#x274C;         | &#x274C;              |
+| `defaultIndetermiante`       | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
+| `disabled`                   | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
+| `indeterminate`              | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
+| `keytipProps`                | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
+| `label`                      | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
+| `onChange`                   | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
+| `onRenderLabel`              | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
+| `styles`                     | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
+| `theme`                      | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
 
 Props being removed:
 
