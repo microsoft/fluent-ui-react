@@ -33,9 +33,15 @@ const getKeyDownHandlers = (
 
   Object.keys(behaviorActions).forEach(slotName => {
     const behaviorSlotActions = behaviorActions[slotName]
-    const handledActions = Object.keys(behaviorSlotActions).filter(
-      actionName => componentHandlerNames.indexOf(actionName) !== -1,
-    )
+    const handledActions = Object.keys(behaviorSlotActions).filter(actionName => {
+      const slotAction = behaviorSlotActions[actionName]
+
+      const actionHasKeyCombinations =
+        Array.isArray(slotAction.keyCombinations) && slotAction.keyCombinations.length > 0
+      const actionHandledByComponent = componentHandlerNames.indexOf(actionName) !== -1
+
+      return actionHasKeyCombinations && actionHandledByComponent
+    })
 
     if (handledActions.length > 0) {
       slotKeyHandlers[slotName] = {
