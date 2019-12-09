@@ -1,3 +1,5 @@
+import * as React from 'react'
+
 export enum FocusZoneMode {
   Custom,
   Wrap,
@@ -84,7 +86,7 @@ export interface FocusZoneProperties {
    * Navigation between messages possible with up/down arrow keys, but when pressing Enter, focus should go to
    * focusable elements inside message, for example, a link.
    */
-  shouldEnterInnerZone?: Function
+  shouldEnterInnerZone?: (ev: React.KeyboardEvent<HTMLElement>) => boolean
 
   /**
    * A callback method to determine if the input element should lose focus on arrow keys.

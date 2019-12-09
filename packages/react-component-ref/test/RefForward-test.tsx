@@ -11,7 +11,7 @@ describe('RefForward', () => {
       const innerRef = React.createRef()
 
       mount(
-        <RefForward innerRef={innerRef}>{<ForwardedRef ref={forwardedRef} /> as any}</RefForward>,
+        <RefForward innerRef={innerRef}>{(<ForwardedRef ref={forwardedRef} />) as any}</RefForward>,
       )
 
       expect(forwardedRef.current).toBeInstanceOf(Element)

@@ -15,7 +15,7 @@ type ShorthandConfig = {
   defaultProps?: () => Props
   mappedProp?: string
   mappedArrayProp?: string
-  overrideProps?: Props & ((props: Props) => Props) | Props
+  overrideProps?: (Props & ((props: Props) => Props)) | Props
   generateKey?: boolean
   valueOrRenderCallback?: ShorthandValue<Props>
   render?: ShorthandRenderFunction
