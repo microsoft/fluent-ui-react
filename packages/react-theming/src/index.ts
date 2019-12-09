@@ -12,11 +12,15 @@ export {
   ITokenResolver,
 } from './theme.types';
 export { mergeSlotProps } from './utilities/mergeSlotProps';
+export { compose } from './compose';
+
 // Workaround for webpack warnings
 import { IStandardProps as P } from './utilities/mergeSlotProps';
+import { ForwardRefComponent as ForwardRefComponentInternal } from './compose';
 
 export type IStandardProps = P;
-export { compose, ForwardRefComponent } from './compose';
+export type ForwardRefComponent<TProps, TElement> = ForwardRefComponentInternal<TProps, TElement>;
+
 export { ThemeContext } from './themeContext';
 export { ThemeProvider } from './components/ThemeProvider/ThemeProvider';
 export { Box } from './components/Box/Box';
