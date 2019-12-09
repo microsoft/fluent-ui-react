@@ -26,7 +26,8 @@
     "popper.js": "^1.15.0",
     "prop-types": "^15.7.2",
     "react-fela": "^10.6.1",
-    "react-is": "^16.6.3"
+    "react-is": "^16.6.3",
+    "react-transition-group": "^4.3.0"
   },
   "devDependencies": {
     "@fluentui/internal-tooling": "^0.41.0",

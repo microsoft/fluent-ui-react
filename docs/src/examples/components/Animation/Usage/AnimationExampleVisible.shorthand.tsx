@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { Provider, Animation, Icon, Button } from '@stardust-ui/react'
-import { useLogKnob } from '@stardust-ui/docs-components'
+import { Provider, Animation, Icon, Button } from '@fluentui/react'
+import { useLogKnob } from '@fluentui/docs-components'
 import { easeEasy } from 'src/themes/teams/animations/timingFunctions'
 
 const AnimationExampleVisible = () => {
