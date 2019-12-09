@@ -6,6 +6,7 @@ import {
 } from '@fluentui/accessibility'
 
 import AdvancedTable, { stringCellComparator } from './AdvancedTable'
+import chatProtoStyle from '.././chatPane/chatProtoStyle'
 
 function tagButton(tagName: string) {
   return (
@@ -180,6 +181,12 @@ const StaticTable = () => (
     <AdvancedTable columns={columnsMembers} rows={rowsMembers} label="Channel members" />
     <br />
     <AdvancedTable columns={columnsChannels} rows={rowsChannels} label="Channels" />
+    <div
+      id="ariaLive"
+      aria-live="polite"
+      aria-atomic="true"
+      style={chatProtoStyle.screenReaderContainerStyles}
+    />
   </>
 )
 

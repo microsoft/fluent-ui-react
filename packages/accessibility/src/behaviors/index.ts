@@ -91,3 +91,4 @@ export {
 export {
   default as gridCellWithFocusableElementBehavior,
 } from './Table/gridCellWithFocusableElementBehavior'
+export { default as gridHeaderCellSortableBehavior } from './Table/gridHeaderCellSortableBehavior'

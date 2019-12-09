@@ -3,6 +3,7 @@ import { Accessibility, tableCellBehavior } from '@fluentui/accessibility'
 import { Ref } from '@fluentui/react-component-ref'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import * as _ from 'lodash'
 import {
   UIComponent,
   childrenExist,
@@ -79,6 +80,16 @@ class TableCell extends UIComponent<WithAsProp<any>, any> {
       e.preventDefault()
       this.cellRef.current.focus()
     },
+    performClick: e => {
+      this.handleClick(e)
+    },
+  }
+
+  handleClick = (e: React.SyntheticEvent) => {
+    if (e.currentTarget === e.target) {
+      _.invoke(this.props, 'onClick', e, this.props)
+      e.preventDefault()
+    }
   }
 
   renderComponent({
