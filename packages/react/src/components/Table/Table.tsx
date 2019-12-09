@@ -57,6 +57,7 @@ const handleVariablesOverrides = variables => predefinedProps => ({
  * [NVDA narrate table title(aria-label) twice](https://github.com/nvaccess/nvda/issues/10548)
  * [Accessibility DOM > Table > gridcell > when gridcell is focused, then selected state is send to reader](https://bugs.chromium.org/p/chromium/issues/detail?id=1030378)
  * [JAWS narrate grid name twice, once as table and second time as grid](https://github.com/FreedomScientific/VFO-standards-support/issues/346)
+ * [JAWS doesn't narrate grid column name, when focus is on actionable element in the cell] (https://github.com/FreedomScientific/VFO-standards-support/issues/348)
  * [aria-sort is not output at child elements](https://github.com/FreedomScientific/VFO-standards-support/issues/319)
  */
 class Table extends UIComponent<WithAsProp<TableProps>> {
