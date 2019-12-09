@@ -1,20 +1,11 @@
 import * as React from 'react'
+import { Button, Provider, Flex, Avatar, Text, Dropdown, Checkbox, Icon } from '@fluentui/react'
 import {
-  Table,
-  Button,
-  Provider,
-  Flex,
-  Avatar,
-  Text,
-  Dropdown,
-  Checkbox,
-  Icon,
-} from '@fluentui/react'
-import {
-  gridNestedBehavior,
   gridCellWithFocusableElementBehavior,
   gridCellMultipleFocusableBehavior,
 } from '@fluentui/accessibility'
+
+import AdvancedTable, { stringCellComparator } from './AdvancedTable'
 
 function tagButton(tagName: string) {
   return (
@@ -67,27 +58,13 @@ const tagButtons = {
   accessibility: gridCellMultipleFocusableBehavior,
 }
 
-const sortColumnHeader = (title, order, onOrderChange) => ({
-  content: (
-    <Flex gap="gap.small">
-      <Text content={title} />
-      {order !== 0 ? <Icon name={order === 1 ? 'arrow-up' : 'arrow-down'} /> : ''}
-    </Flex>
-  ),
-  key: title,
-  onClick: () => onOrderChange(order === 0 ? 1 : -order),
-})
-
-const headerMembers = {
-  key: 'header',
-  items: [
-    { content: 'Name', key: 'name' },
-    { content: 'Title', key: 'title' },
-    { content: 'Location', key: 'location' },
-    { content: 'Tags', key: 'tags' },
-    { content: 'Role', key: 'role' },
-  ],
-}
+const columnsMembers = [
+  { title: 'Name', key: 'name', name: 'name' },
+  { title: 'Title', key: 'title', name: 'title', cellComparator: stringCellComparator },
+  { title: 'Location', key: 'location', name: 'location', cellComparator: stringCellComparator },
+  { title: 'Tags', key: 'tags', name: 'tags' },
+  { title: 'Role', key: 'role', name: 'roles' },
+]
 
 const rowsMembers = [
   {
@@ -160,18 +137,20 @@ const moreOptionButton = {
   },
 }
 
-const headerChannels = {
-  key: 'header',
-  items: [
-    sortColumnHeader('Name', 1, order => alert(`Sort ${order}`)),
-    sortColumnHeader('Show for me', 0, order => alert(`Sort ${order}`)),
-    sortColumnHeader('Show for members', 0, order => alert(`Sort ${order}`)),
-    sortColumnHeader('Description', 0, order => alert(`Sort ${order}`)),
-    sortColumnHeader('Type', 0, order => alert(`Sort ${order}`)),
-    sortColumnHeader('Last activity', 0, order => alert(`Sort ${order}`)),
-    { 'aria-label': 'More options' },
-  ],
-}
+const columnsChannels = [
+  { key: 'Name', name: 'Name', title: 'Name' },
+  { key: 'show-for-me', name: 'show-for-me', title: 'Show for me' },
+  { key: 'show-for-members', name: 'show-for-members', title: 'Show for members' },
+  {
+    key: 'Description',
+    name: 'Description',
+    title: 'Description',
+    cellComparator: stringCellComparator,
+  },
+  { key: 'Type', name: 'Type', title: 'Type', cellComparator: stringCellComparator },
+  { key: 'Last activity', name: 'Last activity', title: 'Last activity' },
+  { key: 'more-options', name: 'more-options', title: 'More options' },
+]
 
 const rowsChannels = [
   {
@@ -198,21 +177,9 @@ const rowsChannels = [
 
 const StaticTable = () => (
   <>
-    <Table
-      variables={{ cellContentOverflow: 'none' }}
-      header={headerMembers}
-      rows={rowsMembers}
-      aria-label="Channel members"
-      accessibility={gridNestedBehavior}
-    />
+    <AdvancedTable columns={columnsMembers} rows={rowsMembers} label="Channel members" />
     <br />
-    <Table
-      variables={{ cellContentOverflow: 'none' }}
-      header={headerChannels}
-      rows={rowsChannels}
-      aria-label="Channels"
-      accessibility={gridNestedBehavior}
-    />
+    <AdvancedTable columns={columnsChannels} rows={rowsChannels} label="Channels" />
   </>
 )
 
