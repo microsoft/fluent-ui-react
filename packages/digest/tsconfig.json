@@ -8,6 +8,7 @@
     "skipLibCheck": true,
     "types": ["node", "react"],
     "baseUrl": ".",
+    "allowSyntheticDefaultImports": true,
     "paths": {
       "stories/*": ["src/*"]
     }
