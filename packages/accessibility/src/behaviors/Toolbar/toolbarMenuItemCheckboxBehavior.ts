@@ -7,9 +7,7 @@ import { Accessibility } from '../../types'
  *  Adds role='menuitemcheckbox'.
  * Adds role 'presentation' to 'wrapper' slot.
  */
-const toolbarMenuItemCheckboxBehavior: Accessibility<
-  ToolbarMenuItemCheckboxBehaviorProps
-> = props => ({
+const toolbarMenuItemCheckboxBehavior: Accessibility<ToolbarMenuItemCheckboxBehaviorProps> = props => ({
   attributes: {
     wrapper: {
       role: 'presentation',

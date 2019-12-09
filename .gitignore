@@ -1,5 +1,6 @@
 *.log*
 *.iml
+*.tsbuildinfo
 
 .DS_Store
 .idea/
@@ -24,3 +25,6 @@ temp/
 # packages that have lib as the output
 packages/digest/lib
 packages/perf-test/lib
+packages/playground/lib
+packages/react-theming/lib
+

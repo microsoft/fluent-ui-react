@@ -568,9 +568,11 @@ describe('mergeThemes', () => {
       const resolvedStyles = _.mapValues(
         merged.componentStyles,
         (componentStyle, componentName) => {
-          const compVariables = _.get(merged.componentVariables, componentName, callable({}))(
-            merged.siteVariables,
-          )
+          const compVariables = _.get(
+            merged.componentVariables,
+            componentName,
+            callable({}),
+          )(merged.siteVariables)
           const styleParam: ComponentStyleFunctionParam = {
             displayName: componentName,
             props: {},
