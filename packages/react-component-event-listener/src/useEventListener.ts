@@ -22,7 +22,7 @@ const useEventListener = <T extends EventTypes>(options: EventListenerOptions<T>
       ;(targetRef.current as NonNullable<Node>).addEventListener(type, eventHandler, capture)
     } else if (process.env.NODE_ENV !== 'production') {
       throw new Error(
-        '@stardust-ui/react-component-event-listener: Passed `targetRef` is not valid or does not support `addEventListener()` method.',
+        '@fluentui/react-component-event-listener: Passed `targetRef` is not valid or does not support `addEventListener()` method.',
       )
     }
 
@@ -31,7 +31,7 @@ const useEventListener = <T extends EventTypes>(options: EventListenerOptions<T>
         ;(targetRef.current as NonNullable<Node>).removeEventListener(type, eventHandler, capture)
       } else if (process.env.NODE_ENV !== 'production') {
         throw new Error(
-          '@stardust-ui/react-component-event-listener: Passed `targetRef` is not valid or does not support `removeEventListener()` method.',
+          '@fluentui/react-component-event-listener: Passed `targetRef` is not valid or does not support `removeEventListener()` method.',
         )
       }
     }

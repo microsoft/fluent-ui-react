@@ -1,7 +1,7 @@
 {
-  "name": "@stardust-ui/ability-attributes",
+  "name": "@fluentui/ability-attributes",
   "description": "Accessibility attributes schema for Stardust UI",
-  "version": "0.40.0",
+  "version": "0.41.0",
   "author": "Marat Abdullin <marata@microsoft.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {

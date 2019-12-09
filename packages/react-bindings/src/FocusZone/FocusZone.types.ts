@@ -2,7 +2,7 @@ import {
   FocusZoneDirection,
   FocusZoneProperties,
   FocusZoneTabbableElements,
-} from '@stardust-ui/accessibility'
+} from '@fluentui/accessibility'
 import * as React from 'react'
 
 import FocusZone from './FocusZone'
@@ -13,7 +13,7 @@ import FocusZone from './FocusZone'
 export interface IFocusZone {
   /**
    * Sets focus to the first tabbable item in the zone.
-   * @param {boolean} forceIntoFirstElement If true, focus will be forced into the first element, even if focus is already in the focus zone.
+   * @param forceIntoFirstElement - If true, focus will be forced into the first element, even if focus is already in the focus zone.
    * @returns True if focus could be set to an active element, false if no operation was taken.
    */
   focus(forceIntoFirstElement?: boolean): boolean
@@ -28,7 +28,7 @@ export interface IFocusZone {
    * Sets focus to a specific child element within the zone. This can be used in conjunction with
    * onBeforeFocus to created delayed focus scenarios (like animate the scroll position to the correct
    * location and then focus.)
-   * @param {HTMLElement} element The child element within the zone to focus.
+   * @param element - The child element within the zone to focus.
    * @returns True if focus could be set to an active element, false if no operation was taken.
    */
   focusElement(childElement?: HTMLElement): boolean
@@ -113,7 +113,7 @@ export interface FocusZoneProps
 
   /**
    * Callback method for determining if focus should indeed be set on the given element.
-   * @param {HTMLElement} element The child element within the zone to focus.
+   * @param element - The child element within the zone to focus.
    * @returns True if focus should be set to the given element, false to avoid setting focus.
    */
   shouldReceiveFocus?: (childElement?: HTMLElement) => boolean
@@ -132,7 +132,7 @@ export interface FocusZoneProps
   /**
    * A callback method to determine if the input element should lose focus on arrow keys.
    * For example: use arrow keys to navigate when an input element is empty or when cursor is at the beginning/end of a string.
-   * @param {HTMLInputElement} inputElement The input element which is to lose focus.
+   * @param inputElement - The input element which is to lose focus.
    * @returns True if input element should lose focus or false otherwise.
    */
   shouldInputLoseFocusOnArrowKey?: (inputElement: HTMLInputElement) => boolean
@@ -144,7 +144,7 @@ export interface FocusZoneProps
 
   /**
    * Callback called when "focus" event triggered in FocusZone.
-   * @param {FocusEvent} event - React's original FocusEvent.
+   * @param event - React's original FocusEvent.
    */
   onFocus?: (event: React.FocusEvent<HTMLElement | FocusZone>) => void
 

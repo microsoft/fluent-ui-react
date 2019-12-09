@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Grid, Icon } from '@stardust-ui/react'
+import { Grid, Icon } from '@fluentui/react'
 
 const IconExampleSize = () => (
   <Grid rows={2} styles={{ textAlign: 'center' }}>

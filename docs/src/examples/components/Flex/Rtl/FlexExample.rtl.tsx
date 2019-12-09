@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Flex, Image, Text, Header } from '@stardust-ui/react'
+import { Flex, Image, Text, Header } from '@fluentui/react'
 
 const FlexExampleMediaCard = () => (
   <Flex gap="gap.medium" padding="padding.medium" debug>

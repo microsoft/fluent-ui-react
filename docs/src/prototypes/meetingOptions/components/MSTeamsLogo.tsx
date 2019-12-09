@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Provider, Text, Icon, IconProps } from '@stardust-ui/react'
+import { Provider, Text, Icon, IconProps } from '@fluentui/react'
 import { ShorthandValue } from 'src/types'
 
 export interface LogoProps {

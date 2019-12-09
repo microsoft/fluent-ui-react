@@ -1,4 +1,4 @@
-import { Provider, ProviderContextPrepared } from '@stardust-ui/react'
+import { Provider, ProviderContextPrepared } from '@fluentui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 // @ts-ignore

@@ -1,4 +1,4 @@
-import { Dropdown, DropdownSearchInput } from '@stardust-ui/react'
+import { Dropdown, DropdownSearchInput } from '@fluentui/react'
 
 const selectors = {
   toggleIndicator: `.${Dropdown.slotClassNames.toggleIndicator}`,

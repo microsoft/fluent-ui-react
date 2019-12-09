@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Grid, Input } from '@stardust-ui/react'
+import { Grid, Input } from '@fluentui/react'
 
 const InputExample = () => (
   <div>

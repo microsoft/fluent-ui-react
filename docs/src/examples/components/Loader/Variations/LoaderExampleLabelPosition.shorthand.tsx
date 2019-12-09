@@ -1,4 +1,4 @@
-import { Grid, Loader } from '@stardust-ui/react'
+import { Grid, Loader } from '@fluentui/react'
 import * as React from 'react'
 
 const LoaderExampleLabel: React.FC = () => (

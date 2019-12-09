@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Dropdown, Flex, Text } from '@stardust-ui/react'
+import { Dropdown, Flex, Text } from '@fluentui/react'
 
 const inputItems = ['Bruce Wayne', 'Natasha Romanoff', 'Steven Strange', 'Alfred Pennyworth']
 

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Extendable, ShorthandValue } from 'src/types'
-import { Avatar, AvatarProps, Divider, Grid } from '@stardust-ui/react'
+import { Avatar, AvatarProps, Divider, Grid } from '@fluentui/react'
 import Text from './Text'
 
 export interface EmployeeCardProps {

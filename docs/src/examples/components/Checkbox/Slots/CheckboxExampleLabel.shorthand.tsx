@@ -1,4 +1,4 @@
-import { Checkbox, Flex } from '@stardust-ui/react'
+import { Checkbox, Flex } from '@fluentui/react'
 import * as React from 'react'
 
 const CheckboxExampleLabel = () => (

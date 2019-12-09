@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Flex, Text } from '@stardust-ui/react'
+import { Button, Flex, Text } from '@fluentui/react'
 
 const ButtonExampleIconOnly = () => (
   <div>

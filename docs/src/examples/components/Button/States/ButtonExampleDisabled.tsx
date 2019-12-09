@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Flex, Icon, Text } from '@stardust-ui/react'
+import { Button, Flex, Icon, Text } from '@fluentui/react'
 
 const ButtonExampleDisabled = () => (
   <Flex column gap="gap.smaller">

@@ -177,11 +177,10 @@ export const types = {
 
 /**
  * Determine if an event object has the shape of the event type specified.
- * @param {Object} event The event object to test.
- * @param {String|Object} type The string name of the event shape or actual event shape to compare against.
- * @returns {Boolean}
+ * @param event - The event object to test.
+ * @param type - The string name of the event shape or actual event shape to compare against.
  */
-export const hasShape = (event, type) => {
+export const hasShape = (event: object, type: string | object): boolean => {
   const shape = typeof type === 'string' ? types[type].shape : type
   return Object.keys(event).every(key => key in shape)
 }

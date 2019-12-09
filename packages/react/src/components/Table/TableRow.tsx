@@ -1,4 +1,4 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -14,11 +14,7 @@ import {
   childrenExist,
 } from '../../lib'
 import { ShorthandCollection, WithAsProp } from '../../types'
-import {
-  Accessibility,
-  tableHeaderCellBehavior,
-  tableRowBehavior,
-} from '@stardust-ui/accessibility'
+import { Accessibility, tableHeaderCellBehavior, tableRowBehavior } from '@fluentui/accessibility'
 import { ComponentVariablesObject } from '../../themes/types'
 import { mergeComponentVariables } from '../../lib/mergeThemes'
 

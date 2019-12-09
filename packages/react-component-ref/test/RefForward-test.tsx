@@ -1,4 +1,4 @@
-import { RefForward } from '@stardust-ui/react-component-ref'
+import { RefForward } from '@fluentui/react-component-ref'
 import { mount } from 'enzyme'
 import * as React from 'react'
 
@@ -11,7 +11,7 @@ describe('RefForward', () => {
       const innerRef = React.createRef()
 
       mount(
-        <RefForward innerRef={innerRef}>{<ForwardedRef ref={forwardedRef} /> as any}</RefForward>,
+        <RefForward innerRef={innerRef}>{(<ForwardedRef ref={forwardedRef} />) as any}</RefForward>,
       )
 
       expect(forwardedRef.current).toBeInstanceOf(Element)

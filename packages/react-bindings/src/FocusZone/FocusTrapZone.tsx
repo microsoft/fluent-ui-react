@@ -1,4 +1,4 @@
-import { EventListener } from '@stardust-ui/react-component-event-listener'
+import { EventListener } from '@fluentui/react-component-event-listener'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'

@@ -15,7 +15,7 @@ import { Accessibility, AccessibilityAttributes } from '../../types'
  * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'root' slot.
  * Adds attribute 'aria-controls' based on the property 'aria-controls' to 'root' slot.
  * Adds attribute 'aria-disabled=true' to 'root' slot based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
- * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'wrapper'.
+ * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'root'.
  */
 const tabBehavior: Accessibility<TabBehaviorProps> = props => ({
   attributes: {
@@ -36,7 +36,7 @@ const tabBehavior: Accessibility<TabBehaviorProps> = props => ({
   },
 
   keyActions: {
-    wrapper: {
+    root: {
       performClick: {
         keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
       },

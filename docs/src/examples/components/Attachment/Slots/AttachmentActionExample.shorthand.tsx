@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Attachment } from '@stardust-ui/react'
+import { Attachment } from '@fluentui/react'
 
 class AttachmentActionExampleShorthand extends React.Component {
   handleClick = action => () => alert(`'${action}' was clicked`)

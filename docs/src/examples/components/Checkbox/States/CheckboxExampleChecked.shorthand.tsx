@@ -1,5 +1,5 @@
-import { useBooleanKnob } from '@stardust-ui/docs-components'
-import { Checkbox } from '@stardust-ui/react'
+import { useBooleanKnob } from '@fluentui/docs-components'
+import { Checkbox } from '@fluentui/react'
 import * as React from 'react'
 
 const CheckboxExampleChecked = () => {

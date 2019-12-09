@@ -1,6 +1,6 @@
-import { useBooleanKnob } from '@stardust-ui/docs-components'
+import { useBooleanKnob } from '@fluentui/docs-components'
 import * as React from 'react'
-import { Button, Dropdown, Popup, Flex } from '@stardust-ui/react'
+import { Button, Dropdown, Popup, Flex } from '@fluentui/react'
 
 const inputItems = [
   {

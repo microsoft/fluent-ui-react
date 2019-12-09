@@ -1,4 +1,4 @@
-import { Checkbox } from '@stardust-ui/react'
+import { Checkbox } from '@fluentui/react'
 import * as React from 'react'
 
 const CheckboxExampleDisabled = () => (

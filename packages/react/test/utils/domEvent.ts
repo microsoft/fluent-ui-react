@@ -6,12 +6,12 @@ import simulant from 'simulant'
 
 /**
  * Generic method for dispatching an event on a DOM node.
- * @param {String|Object} node A querySelector string or DOM node.
- * @param {String} eventType A DOMString
- * @param {Object} [data] Additional event data.
- * @returns {Object} The event
+ * @param node - A querySelector string or DOM node.
+ * @param eventType - A DOMString
+ * @param data - Additional event data.
+ * @returns The event
  */
-export const fire = (node, eventType, data = {}) => {
+export const fire = (node: Element | string, eventType: string, data: any = {}) => {
   const DOMNode = typeof node === 'string' ? document.querySelector(node) : node
   const event = simulant(eventType, data)
 
@@ -20,67 +20,67 @@ export const fire = (node, eventType, data = {}) => {
 
 /**
  * Dispatch a 'click' event on a DOM node.
- * @param {String|Object} node A querySelector string or DOM node.
- * @param {Object} [data] Additional event data.
- * @returns {Object} The event
+ * @param node - A querySelector string or DOM node.
+ * @param data - Additional event data.
+ * @returns The event
  */
-export const click = (node, data?: any) => fire(node, 'click', data)
+export const click = (node: Element | string, data?: any) => fire(node, 'click', data)
 
 /**
  * Dispatch a 'keydown' event on a DOM node.
- * @param {String|Object} node A querySelector string or DOM node.
- * @param {Object} [data] Additional event data.
- * @returns {Object} The event
+ * @param node - A querySelector string or DOM node.
+ * @param data - Additional event data.
+ * @returns The event
  */
-export const keyDown = (node, data?: any) => fire(node, 'keydown', data)
+export const keyDown = (node: Element | string, data?: any) => fire(node, 'keydown', data)
 
 /**
  * Dispatch a 'mouseenter' event on a DOM node.
- * @param {String|Object} node A querySelector string or DOM node.
- * @param {Object} [data] Additional event data.
- * @returns {Object} The event
+ * @param node - A querySelector string or DOM node.
+ * @param data - Additional event data.
+ * @returns The event
  */
-export const mouseEnter = (node, data?: any) => fire(node, 'mouseenter', data)
+export const mouseEnter = (node: Element | string, data?: any) => fire(node, 'mouseenter', data)
 
 /**
  * Dispatch a 'mouseleave' event on a DOM node.
- * @param {String|Object} node A querySelector string or DOM node.
- * @param {Object} [data] Additional event data.
- * @returns {Object} The event
+ * @param node - A querySelector string or DOM node.
+ * @param data - Additional event data.
+ * @returns The event
  */
-export const mouseLeave = (node, data?: any) => fire(node, 'mouseleave', data)
+export const mouseLeave = (node: Element | string, data?: any) => fire(node, 'mouseleave', data)
 
 /**
  * Dispatch a 'mouseover' event on a DOM node.
- * @param {String|Object} node A querySelector string or DOM node.
- * @param {Object} [data] Additional event data.
- * @returns {Object} The event
+ * @param node - A querySelector string or DOM node.
+ * @param data - Additional event data.
+ * @returns The event
  */
-export const mouseOver = (node, data?: any) => fire(node, 'mouseover', data)
+export const mouseOver = (node: Element | string, data?: any) => fire(node, 'mouseover', data)
 
 /**
  * Dispatch a 'mouseup' event on a DOM node.
- * @param {String|Object} node A querySelector string or DOM node.
- * @param {Object} [data] Additional event data.
- * @returns {Object} The event
+ * @param node - A querySelector string or DOM node.
+ * @param data - Additional event data.
+ * @returns The event
  */
-export const mouseUp = (node, data?: any) => fire(node, 'mouseup', data)
+export const mouseUp = (node: Element | string, data?: any) => fire(node, 'mouseup', data)
 
 /**
  * Dispatch a 'resize' event on a DOM node.
- * @param {String|Object} node A querySelector string or DOM node.
- * @param {Object} [data] Additional event data.
- * @returns {Object} The event
+ * @param node - A querySelector string or DOM node.
+ * @param data - Additional event data.
+ * @returns The event
  */
-export const resize = (node, data?: any) => fire(node, 'resize', data)
+export const resize = (node: Element | string, data?: any) => fire(node, 'resize', data)
 
 /**
  * Dispatch a 'scroll' event on a DOM node.
- * @param {String|Object} node A querySelector string or DOM node.
- * @param {Object} [data] Additional event data.
- * @returns {Object} The event
+ * @param node - A querySelector string or DOM node.
+ * @param data - Additional event data.
+ * @returns The event
  */
-export const scroll = (node, data?: any) => fire(node, 'scroll', data)
+export const scroll = (node: Element | string, data?: any) => fire(node, 'scroll', data)
 
 export default {
   fire,

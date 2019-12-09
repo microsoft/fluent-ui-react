@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Reaction } from '@stardust-ui/react'
+import { Reaction } from '@fluentui/react'
 
 const ReactionGroupExample = () => (
   <Reaction.Group

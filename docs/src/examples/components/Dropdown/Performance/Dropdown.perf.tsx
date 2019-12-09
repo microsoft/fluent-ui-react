@@ -1,4 +1,4 @@
-import { Dropdown } from '@stardust-ui/react'
+import { Dropdown } from '@fluentui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 

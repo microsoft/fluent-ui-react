@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Text } from '@stardust-ui/react'
+import { Text } from '@fluentui/react'
 
 const [notTruncatedText, truncatedText] = [
   'Some long text here to see how it looks when not truncated',

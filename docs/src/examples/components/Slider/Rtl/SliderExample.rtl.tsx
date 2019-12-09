@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Slider } from '@stardust-ui/react'
+import { Slider } from '@fluentui/react'
 
 const SliderExampleRtl = () => <Slider />
 

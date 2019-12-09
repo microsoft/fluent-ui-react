@@ -1,4 +1,4 @@
-import { List } from '@stardust-ui/react'
+import { List } from '@fluentui/react'
 
 const selectors = {
   list: `.${List.className}`,

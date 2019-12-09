@@ -1,4 +1,4 @@
-import { AnyAction, SideEffect } from '@stardust-ui/state'
+import { AnyAction, SideEffect } from '@fluentui/state'
 import * as React from 'react'
 
 type Dispatch<Action extends AnyAction> = (

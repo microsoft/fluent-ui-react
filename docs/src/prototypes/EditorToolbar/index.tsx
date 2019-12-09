@@ -1,16 +1,11 @@
-import { KnobsSnippet } from '@stardust-ui/code-sandbox'
-import {
-  CodeSnippet,
-  KnobInspector,
-  KnobProvider,
-  useBooleanKnob,
-} from '@stardust-ui/docs-components'
+import { KnobsSnippet } from '@fluentui/code-sandbox'
+import { CodeSnippet, KnobInspector, KnobProvider, useBooleanKnob } from '@fluentui/docs-components'
 import * as React from 'react'
 
 import { ComponentPrototype, PrototypeSection } from 'docs/src/prototypes/Prototypes'
 import EditorToolbar from './EditorToolbar'
 import { editorToolbarReducer, initialState } from './editorToolbarReducer'
-import { Button, Divider, Provider, themes } from '@stardust-ui/react'
+import { Button, Divider, Provider, themes } from '@fluentui/react'
 import PortalWindow from './PortalWindow'
 
 const EditorToolbarPrototype = () => {

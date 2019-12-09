@@ -10,7 +10,7 @@ import {
   Flex,
   Box,
   HierarchicalTreeTitleProps,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 import { ShorthandValue } from '../../../../packages/react/src/types'
 import Logo from 'docs/src/components/Logo/Logo'
 import { getComponentPathname } from 'docs/src/utils'
@@ -220,6 +220,15 @@ class Sidebar extends React.Component<any, any> {
               as: NavLink,
               activeClassName: 'active',
               to: '/integrate-custom-components',
+            },
+          },
+          {
+            key: 'performance',
+            title: {
+              content: 'Performance',
+              as: NavLink,
+              activeClassName: 'active',
+              to: '/performance',
             },
           },
         ],

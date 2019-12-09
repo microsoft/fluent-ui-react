@@ -1,5 +1,5 @@
-import { useSelectKnob } from '@stardust-ui/docs-components'
-import * as StardustUI from '@stardust-ui/react'
+import { useSelectKnob } from '@fluentui/docs-components'
+import * as StardustUI from '@fluentui/react'
 
 import componentInfoContext from 'docs/src/utils/componentInfoContext'
 import useComponentProps from './useComponentProps'

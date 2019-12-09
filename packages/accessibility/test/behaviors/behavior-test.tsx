@@ -66,11 +66,13 @@ import {
   treeAsListBehavior,
   treeItemAsListItemBehavior,
   treeTitleAsListItemTitleBehavior,
+  carouselItemBehavior,
+  carouselBehavior,
   tableBehavior,
   tableCellBehavior,
   tableHeaderCellBehavior,
   tableRowBehavior,
-} from '@stardust-ui/accessibility'
+} from '@fluentui/accessibility'
 import { TestHelper } from './testHelper'
 import definitions from './testDefinitions'
 
@@ -140,6 +142,8 @@ testHelper.addBehavior('textAreaBehavior', textAreaBehavior)
 testHelper.addBehavior('treeAsListBehavior', treeAsListBehavior)
 testHelper.addBehavior('treeItemAsListItemBehavior', treeItemAsListItemBehavior)
 testHelper.addBehavior('treeTitleAsListItemTitleBehavior', treeTitleAsListItemTitleBehavior)
+testHelper.addBehavior('carouselItemBehavior', carouselItemBehavior)
+testHelper.addBehavior('carouselBehavior', carouselBehavior)
 testHelper.addBehavior('tableBehavior', tableBehavior)
 testHelper.addBehavior('tableCellBehavior', tableCellBehavior)
 testHelper.addBehavior('tableHeaderCellBehavior', tableHeaderCellBehavior)

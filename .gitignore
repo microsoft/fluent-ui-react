@@ -1,5 +1,6 @@
 *.log*
 *.iml
+*.tsbuildinfo
 
 .DS_Store
 .idea/
@@ -18,3 +19,9 @@ node_modules/
 report.*.json
 stats/
 .vscode/
+temp/
+*.api.json
+
+# packages that have lib as the output
+packages/digest/lib
+packages/perf-test/lib
