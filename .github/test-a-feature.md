@@ -250,12 +250,13 @@ Performance tests will measure performance, set a baseline for performance and h
 - Formatting follows [Storybook CSF convention](https://storybook.js.org/docs/formats/component-story-format/) with special support for `iterations` metadata which tells the performance testing package how many iterations of your component to render:
 
 ```tsx
+// If this file is named ButtonBasic.perf.tsx, it will be picked up as kind of 'ButtonBasic' with story names of 'Blank' and 'WithText'.
 export default {
   iterations: 5000,
 }
 
-export const Fabric = () => <ButtonFabric />
-export const Fluent = () => <ButtonFluent />
+export const Blank = () => <Button />
+export const WithText = () => <Button content="Click here" />
 ```
 
 Finding the right number of `iterations` is a balancing act between having a fast test and getting enough information from the results. For more complex scenarios and components 1 iteration may be enough, while simple components with simple stories may need as many as 5,000.
