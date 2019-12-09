@@ -1,8 +1,10 @@
-import { mergeThemes, Provider, ThemeInput, themes, ButtonProps } from '@fluentui/react'
+import { mergeThemes, Provider, ThemeInput, ButtonProps } from '@fluentui/react'
 import { Customizations, CustomizerContext, ITheme } from 'office-ui-fabric-react'
 import * as React from 'react'
 
-interface ReactBaseThemeProps {}
+interface ReactBaseThemeProps {
+  fluentOverridesTheme?: ThemeInput
+}
 
 export function useTheme(): ITheme {
   const customizerContext = React.useContext(CustomizerContext)
@@ -15,7 +17,7 @@ export function useTheme(): ITheme {
 }
 
 // https://github.com/microsoft/fluent-ui-react/blob/master/packages/react/src/themes/teams/components/Button/buttonVariables.ts
-function makeFluentTheme(fabricTheme: ITheme): any {
+function makeFluentTheme(fabricTheme: ITheme, baseTheme: ThemeInput): any {
   const {
     primaryButtonBackground,
     primaryButtonBackgroundDisabled,
@@ -62,11 +64,12 @@ function makeFluentTheme(fabricTheme: ITheme): any {
     },
   }
 
-  return mergeThemes(themes.teams, buttonOverrides)
+  return mergeThemes(baseTheme, buttonOverrides)
 }
 
 export const ReactBaseTheme: React.FunctionComponent<ReactBaseThemeProps> = props => {
+  const { fluentOverridesTheme } = props
   const theme = useTheme()
-  const generatedTheme = makeFluentTheme(theme)
+  const generatedTheme = makeFluentTheme(theme, fluentOverridesTheme)
   return <Provider theme={generatedTheme}>{props.children}</Provider>
 }

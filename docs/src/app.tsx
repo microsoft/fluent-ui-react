@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { hot } from 'react-hot-loader/root'
-import { Provider, Debug, themes } from '@fluentui/react'
+import { themes, Debug } from '@fluentui/react'
+import { ReactBaseTheme } from '@fluentui/react-base-theme'
 
 import { mergeThemes } from 'src/lib'
 import { ThemeContext, ThemeContextData, themeContextDefaults } from './context/ThemeContext'
@@ -9,6 +10,7 @@ import { PerfDataProvider } from './components/ComponentDoc/PerfChart'
 
 // Experimental dev-time accessibility attributes integrity validation.
 import { setup } from '@fluentui/ability-attributes'
+import { Fabric } from 'office-ui-fabric-react'
 
 // Temporarily disabling the validation for Screener.
 if (process.env.NODE_ENV !== 'production' && !process.env.SCREENER) {
@@ -27,25 +29,26 @@ class App extends React.Component<any, ThemeContextData> {
     const { themeName } = this.state
     return (
       <ThemeContext.Provider value={this.state}>
-        <Provider
-          as={React.Fragment}
-          theme={mergeThemes(themes.fontAwesome, themes[themeName], {
-            staticStyles: [
-              {
-                a: {
-                  textDecoration: 'none',
+        <Fabric applyTheme>
+          <ReactBaseTheme
+            fluentOverridesTheme={mergeThemes(themes.fontAwesome, themes[themeName], {
+              staticStyles: [
+                {
+                  a: {
+                    textDecoration: 'none',
+                  },
                 },
-              },
-            ],
-          })}
-        >
-          <PerfDataProvider>
-            <div>
-              <Debug />
-              <Routes />
-            </div>
-          </PerfDataProvider>
-        </Provider>
+              ],
+            })}
+          >
+            <PerfDataProvider>
+              <div>
+                <Debug />
+                <Routes />
+              </div>
+            </PerfDataProvider>
+          </ReactBaseTheme>
+        </Fabric>
       </ThemeContext.Provider>
     )
   }
