@@ -73,9 +73,5 @@ export { default as gridHeaderRowBehavior } from './Table/gridHeaderRowBehavior'
 export { default as gridHeaderCellBehavior } from './Table/gridHeaderCellBehavior'
 export { default as gridRowBehavior } from './Table/gridRowBehavior'
 export { default as gridCellBehavior } from './Table/gridCellBehavior'
-export {
-  default as gridCellMultipleFocusableBehavior,
-} from './Table/gridCellMultipleFocusableBehavior'
-export {
-  default as gridCellWithFocusableElementBehavior,
-} from './Table/gridCellWithFocusableElementBehavior'
+export { default as gridCellMultipleFocusableBehavior } from './Table/gridCellMultipleFocusableBehavior'
+export { default as gridCellWithFocusableElementBehavior } from './Table/gridCellWithFocusableElementBehavior'
