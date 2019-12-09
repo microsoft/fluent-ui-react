@@ -29,7 +29,7 @@
     "stats:save": "gulp stats:save",
     "satisfied": "satisfied --skip-invalid",
     "pretest": "yarn satisfied && yarn syncpack list-mismatches",
-    "test": "gulp test",
+    "test": "gulp test && lerna run test --stream",
     "test:e2e": "gulp test:e2e",
     "test:e2e:serve": "gulp test:e2e:serve",
     "test:watch": "gulp test:watch",
