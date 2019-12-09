@@ -106,14 +106,15 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
         }),
       }
       const overrideProps = handleVariablesOverrides(variables)
+
       return TableCell.create(item, {
         defaultProps: () => ({
-          cellProps,
-          overrideProps,
+          ...cellProps,
           accessibility: accessibility.childBehaviors
             ? accessibility.childBehaviors.cell
             : undefined,
         }),
+        overrideProps,
       })
     })
   }

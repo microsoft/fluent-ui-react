@@ -105,12 +105,12 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
       const overrideProps = handleVariablesOverrides(variables)
       return TableRow.create(row, {
         defaultProps: () => ({
-          props,
-          overrideProps,
+          ...props,
           accessibility: accessibility.childBehaviors
             ? accessibility.childBehaviors.row
             : undefined,
         }),
+        overrideProps,
       })
     })
   }
@@ -131,12 +131,12 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
 
     return TableRow.create(header, {
       defaultProps: () => ({
-        headerRowProps,
+        ...headerRowProps,
         accessibility: accessibility.childBehaviors
           ? accessibility.childBehaviors.headerRow
           : undefined,
-        overrideProps,
       }),
+      overrideProps,
     })
   }
 
