@@ -19,6 +19,7 @@ import calendar from './calendar'
 import call from './call'
 import callBlocked from './callBlocked'
 import callParking from './callParking'
+import callControlCloseTray from './callControlCloseTray'
 import callControlRelease from './callControlRelease'
 import callControlRequest from './callControlRequest'
 import callControlPresentNew from './callControlPresentNew'
@@ -42,7 +43,6 @@ import chevronRightMedium from './chevronRightMedium'
 import clipboardCopiedTo from './clipboardCopiedTo'
 import close from './close'
 import codeSnippet from './codeSnippet'
-import demotePresenter from './demotePresenter'
 import filesAftereffects from './filesAftereffects'
 import filesCode from './filesCode'
 import filesEmpty from './filesEmpty'
@@ -104,14 +104,14 @@ import menu from './menu'
 import messageSeen from './messageSeen'
 import mic from './mic'
 import micOff from './micOff'
+import microsoftStream from './microsoftStream'
 import more from './more'
+import noPresenter from './noPresenter'
 import notes from './notes'
 import notificationsMuted from './notificationsMuted'
-import oneDrive from './oneDrive'
-import microsoftStream from './microsoftStream'
-import userPhone from './userPhone'
-import speakerMute from './speakerMute'
 import numberList from './numberList'
+import oneDrive from './oneDrive'
+import userPhone from './userPhone'
 import outdent from './outdent'
 import openOutside from './openOutside'
 import pause from './pause'
@@ -125,7 +125,7 @@ import plugs from './plugs'
 import poll from './poll'
 import presenceAvailable from './presenceAvailable'
 import presenceStroke from './presenceStroke'
-import promotePresenter from './promotePresenter'
+import presenter from './presenter'
 import qna from './qna'
 import questionCircle from './questionCircle'
 import quote from './quote'
@@ -142,7 +142,7 @@ import snooze from './snooze'
 import search from './search'
 import send from './send'
 import settings from './settings'
-import callControlCloseTray from './callControlCloseTray'
+import speakerMute from './speakerMute'
 import star from './star'
 import stardustCircle from './stardustCircle'
 import sticker from './sticker'
@@ -221,7 +221,6 @@ export default {
   'clipboard-copied-to': clipboardCopiedTo,
   close,
   'code-snippet': codeSnippet,
-  'demote-presenter': demotePresenter,
   'files-aftereffects': filesAftereffects,
   'files-code': filesCode,
   'files-empty': filesEmpty,
@@ -271,6 +270,7 @@ export default {
   menu,
   'message-seen': messageSeen,
   mic,
+  'no-presenter': noPresenter,
   notes,
   'speaker-mute': speakerMute,
   hand,
@@ -293,7 +293,7 @@ export default {
   poll,
   'presence-available': presenceAvailable,
   'presence-stroke': presenceStroke,
-  'promote-presenter': promotePresenter,
+  presenter,
   qna,
   'question-circle': questionCircle,
   quote,
