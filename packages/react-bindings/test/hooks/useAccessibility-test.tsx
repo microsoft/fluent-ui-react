@@ -1,5 +1,5 @@
-import { Accessibility } from '@stardust-ui/accessibility'
-import { useAccessibility } from '@stardust-ui/react-bindings'
+import { Accessibility } from '@fluentui/accessibility'
+import { useAccessibility } from '@fluentui/react-bindings'
 import { shallow } from 'enzyme'
 // @ts-ignore
 import * as keyboardKey from 'keyboard-key'
