@@ -1,4 +1,4 @@
-import { Toolbar } from '@stardust-ui/react'
+import { Toolbar } from '@fluentui/react'
 import * as React from 'react'
 
 const ToolbarExampleMenuRadioGroup = () => {

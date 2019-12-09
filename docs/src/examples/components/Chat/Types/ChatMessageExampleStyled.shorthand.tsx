@@ -6,7 +6,7 @@ import {
   Provider,
   ReactionProps,
   ShorthandCollection,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 
 const reactions: ShorthandCollection<ReactionProps> = [
   { key: 'up', icon: 'like', content: '1K' },

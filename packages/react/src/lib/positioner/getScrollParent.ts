@@ -1,7 +1,7 @@
 /**
  * Returns the parent node or the host of the node argument.
- * @argument {Node} node - DOM node.
- * @returns {Node} - parent DOM node.
+ * @param node - DOM node.
+ * @returns - parent DOM node.
  */
 const getParentNode = (node: Node): Node => {
   if (node.nodeName === 'HTML') return node
@@ -10,8 +10,8 @@ const getParentNode = (node: Node): Node => {
 
 /**
  * Returns CSS styles of the given node.
- * @argument {Node} node - DOM node.
- * @returns {Partial<CSSStyleDeclaration>} - CSS styles.
+ * @param node - DOM node.
+ * @returns - CSS styles.
  */
 const getStyleComputedProperty = (node: Node): Partial<CSSStyleDeclaration> => {
   if (node.nodeType !== 1) return {}
@@ -22,8 +22,8 @@ const getStyleComputedProperty = (node: Node): Partial<CSSStyleDeclaration> => {
 
 /**
  * Returns the first scrollable parent of the given element.
- * @argument {Node} node - DOM node.
- * @returns {Node} - the first scrollable parent.
+ * @param node - DOM node.
+ * @returns - the first scrollable parent.
  */
 const getScrollParent = (node: Node): Node => {
   // Return body, `getScroll` will take care to get the correct `scrollTop` from it

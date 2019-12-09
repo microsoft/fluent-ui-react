@@ -1,7 +1,7 @@
 module.exports = {
   extends: ['airbnb', 'prettier'],
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'jest', 'import', 'react-hooks', '@stardust-ui'],
+  plugins: ['@typescript-eslint', 'jest', 'import', 'react-hooks', '@fluentui'],
   env: {
     browser: true,
     'jest/globals': true,
@@ -81,6 +81,7 @@ module.exports = {
     'no-return-await': 'off',
     'no-return-assign': 'off',
     'no-restricted-globals': 'off',
+    'no-restricted-properties': ['off', { object: 'Math', property: 'pow' }],
     'no-restricted-syntax': 'off',
     'no-throw-literal': 'off',
     'no-sparse-arrays': 'off',
@@ -112,7 +113,7 @@ module.exports = {
     {
       files: '**/*.tsx',
       rules: {
-        '@stardust-ui/no-visibility-modifiers': 'error',
+        '@fluentui/no-visibility-modifiers': 'error',
       },
     },
     {

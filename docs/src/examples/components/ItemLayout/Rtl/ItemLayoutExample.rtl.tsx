@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { ItemLayout, Icon } from '@stardust-ui/react'
+import { ItemLayout, Icon } from '@fluentui/react'
 
 const ItemLayoutExampleRtlShorthand = () => (
   <>

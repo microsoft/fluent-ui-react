@@ -14,20 +14,28 @@ import PerfChartTooltip from './PerfChartTooltip'
 import { PerfData } from './PerfDataContext'
 import { curveBundle } from 'd3-shape'
 
+export type PerfChartProps = { perfData: PerfData }
+
+const sampleToXAxis = sample => {
+  return new Date(sample.ts).getTime()
+}
+
+const formatXAxis = val => {
+  const date = new Date(val)
+  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+}
+
 /**
  * Draws a performance chart for all items in perfData.performance.
  * Shows tooltip with details for selected build on mouse hover.
  * x-axis is a build number
  * y-axis is a render time
  */
-const PerfChart: React.FC<{ perfData: PerfData }> = ({ perfData }) => {
+const PerfChart: React.FC<PerfChartProps> = ({ perfData }) => {
   const availableCharts: string[] = perfData
-    .reduce(
-      (acc, next) => {
-        return Array.from(new Set([...acc, ...Object.keys(next.performance)]))
-      },
-      [] as string[],
-    )
+    .reduce((acc, next) => {
+      return Array.from(new Set([...acc, ...Object.keys(next.performance)]))
+    }, [] as string[])
     .sort()
 
   const [nearestX, setNearestX] = React.useState<number>()
@@ -42,9 +50,9 @@ const PerfChart: React.FC<{ perfData: PerfData }> = ({ perfData }) => {
       <LineSeries
         {...props}
         key={chartName + key}
-        data={perfData.map(entry => ({
-          x: entry.build,
-          y: _.get(entry, `performance.${chartName}.actualTime.${data}`, 0),
+        data={perfData.map(sample => ({
+          x: sampleToXAxis(sample),
+          y: _.get(sample, `performance.${chartName}.actualTime.${data}`, 0),
         }))}
         {...(index === 0 && {
           onNearestX: (d: { x: number }) => {
@@ -67,17 +75,21 @@ const PerfChart: React.FC<{ perfData: PerfData }> = ({ perfData }) => {
         style={{ position: 'absolute', top: 0, right: 0, background: 'white' }}
       />
       <YAxis title="ms" />
-      <XAxis title="version / build" />
+      <XAxis tickFormat={formatXAxis} tickLabelAngle={-30} />
 
       <HorizontalGridLines />
 
       {/* git tags */}
       {perfData
-        .filter(entry => entry.tag)
-        .map(entry => {
-          const data = [{ x: entry.build, y: 0 }, { x: entry.build, y: 1000 }]
+        .filter(sample => sample.tag)
+        .map(sample => {
+          const data = [
+            { x: sampleToXAxis(sample), y: 0 },
+            { x: sampleToXAxis(sample), y: 1000 },
+          ]
           return (
             <DecorativeAxis
+              key={sample.build}
               style={{
                 ticks: { display: 'none' },
                 text: { display: 'none' },
@@ -93,11 +105,11 @@ const PerfChart: React.FC<{ perfData: PerfData }> = ({ perfData }) => {
       <LabelSeries
         allowOffsetToBeReversed
         data={perfData
-          .filter(entry => entry.tag)
-          .map(entry => ({
-            x: entry.build,
+          .filter(sample => sample.tag)
+          .map(sample => ({
+            x: sampleToXAxis(sample),
             y: 0,
-            label: entry.tag,
+            label: sample.tag,
             style: {
               fontSize: 10,
               fill: tagColor,
@@ -118,7 +130,6 @@ const PerfChart: React.FC<{ perfData: PerfData }> = ({ perfData }) => {
       {lineSeries('curve-median', 'median', {
         stroke: medColor,
         strokeWidth: '2px',
-        curve: curveBundle.beta(1),
       })}
 
       {lineSeries('curve-min', 'min', {
@@ -129,7 +140,10 @@ const PerfChart: React.FC<{ perfData: PerfData }> = ({ perfData }) => {
       })}
 
       {nearestX && (
-        <PerfChartTooltip x={nearestX} data={perfData.find(entry => entry.build === nearestX)} />
+        <PerfChartTooltip
+          x={nearestX}
+          data={perfData.find(sample => sampleToXAxis(sample) === nearestX)}
+        />
       )}
     </FlexibleXYPlot>
   )

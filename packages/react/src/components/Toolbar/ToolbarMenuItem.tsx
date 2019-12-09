@@ -1,18 +1,14 @@
-import { Accessibility, toolbarMenuItemBehavior } from '@stardust-ui/accessibility'
+import { Accessibility, toolbarMenuItemBehavior } from '@fluentui/accessibility'
 import * as React from 'react'
 import * as _ from 'lodash'
 import cx from 'classnames'
 import * as PropTypes from 'prop-types'
 
-import { EventListener } from '@stardust-ui/react-component-event-listener'
-import { Ref, toRefObject } from '@stardust-ui/react-component-ref'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
-import { focusAsync } from '@stardust-ui/react-bindings'
-import {
-  GetRefs,
-  NodeRef,
-  Unstable_NestingAuto,
-} from '@stardust-ui/react-component-nesting-registry'
+import { EventListener } from '@fluentui/react-component-event-listener'
+import { Ref, toRefObject } from '@fluentui/react-component-ref'
+import * as customPropTypes from '@fluentui/react-proptypes'
+import { focusAsync } from '@fluentui/react-bindings'
+import { GetRefs, NodeRef, Unstable_NestingAuto } from '@fluentui/react-component-nesting-registry'
 
 import {
   ChildrenComponentProps,
@@ -89,8 +85,8 @@ export interface ToolbarMenuItemProps
   /**
    * Called on click.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onClick?: ComponentEventHandler<ToolbarMenuItemProps>
 
@@ -300,21 +296,23 @@ class ToolbarMenuItem extends AutoControlledComponent<
           children
         ) : (
           <>
-            {Icon.create(icon, { defaultProps: { xSpacing: !!content ? 'after' : 'none' } })}
+            {Icon.create(icon, {
+              defaultProps: () => ({ xSpacing: !!content ? 'after' : 'none' }),
+            })}
             {content}
             {active &&
               Icon.create(activeIndicator, {
-                defaultProps: {
+                defaultProps: () => ({
                   className: ToolbarMenuItem.slotClassNames.activeIndicator,
                   styles: styles.activeIndicator,
-                },
+                }),
               })}
             {menu &&
               Icon.create(submenuIndicator, {
-                defaultProps: {
+                defaultProps: () => ({
                   name: 'stardust-menu-arrow-end',
                   styles: styles.submenuIndicator,
-                },
+                }),
               })}
           </>
         )}
@@ -325,12 +323,12 @@ class ToolbarMenuItem extends AutoControlledComponent<
 
     if (popup && !hasChildren) {
       return Popup.create(popup, {
-        defaultProps: {
+        defaultProps: () => ({
           trapFocus: true,
           onOpenChange: e => {
             e.stopPropagation()
           },
-        },
+        }),
         overrideProps: {
           trigger: elementType,
           children: undefined, // force-reset `children` defined for `Popup` as it collides with the `trigger`
@@ -353,12 +351,12 @@ class ToolbarMenuItem extends AutoControlledComponent<
               >
                 <Popper align="top" position={rtl ? 'before' : 'after'} targetRef={this.itemRef}>
                   {ToolbarMenu.create(menu, {
-                    defaultProps: {
+                    defaultProps: () => ({
                       className: ToolbarMenuItem.slotClassNames.submenu,
                       styles: styles.menu,
                       submenu: true,
                       submenuIndicator,
-                    },
+                    }),
                     overrideProps: this.handleMenuOverrides(getRefs),
                   })}
                 </Popper>
@@ -378,11 +376,11 @@ class ToolbarMenuItem extends AutoControlledComponent<
     }
 
     return Box.create(wrapper, {
-      defaultProps: {
+      defaultProps: () => ({
         className: cx(ToolbarMenuItem.slotClassNames.wrapper, classes.wrapper),
         ...accessibility.attributes.wrapper,
         ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, wrapper),
-      },
+      }),
       overrideProps: () => ({
         children: (
           <>

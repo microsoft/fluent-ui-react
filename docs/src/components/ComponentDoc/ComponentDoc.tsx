@@ -10,7 +10,7 @@ import {
   Grid,
   Menu,
   Box,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 
 import { getFormattedHash } from 'docs/src/utils'
 import ComponentDocLinks from './ComponentDocLinks'

@@ -1,4 +1,4 @@
-import { themes } from '@stardust-ui/react'
+import { themes } from '@fluentui/react'
 
 //
 // Typings for `screener-runner`

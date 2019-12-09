@@ -3,13 +3,13 @@ import {
   toolbarBehavior,
   toggleButtonBehavior,
   IS_FOCUSABLE_ATTRIBUTE,
-} from '@stardust-ui/accessibility'
+} from '@fluentui/accessibility'
 import * as React from 'react'
 import * as _ from 'lodash'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
-import { Ref, toRefObject } from '@stardust-ui/react-component-ref'
-import { EventListener } from '@stardust-ui/react-component-event-listener'
+import { Ref, toRefObject } from '@fluentui/react-component-ref'
+import { EventListener } from '@fluentui/react-component-event-listener'
 
 import {
   childrenExist,
@@ -85,8 +85,8 @@ export interface ToolbarProps
 
   /**
    * Event for request to change 'overflowOpen' value.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onOverflowOpenChange?: ComponentEventHandler<ToolbarProps>
 
@@ -167,7 +167,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
             return ToolbarRadioGroup.create(item, { overrideProps: itemOverridesFn })
           case 'toggle':
             return ToolbarItem.create(item, {
-              defaultProps: { accessibility: toggleButtonBehavior },
+              defaultProps: () => ({ accessibility: toggleButtonBehavior }),
               overrideProps: itemOverridesFn,
             })
           case 'custom':
@@ -471,9 +471,9 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
     return (
       <Ref innerRef={this.overflowItemRef}>
         {ToolbarItem.create(overflowItem, {
-          defaultProps: {
+          defaultProps: () => ({
             icon: { name: 'more', outline: true },
-          },
+          }),
           overrideProps: {
             menu: this.props.overflowOpen ? this.getOverflowItems() : [],
             menuOpen: this.props.overflowOpen,

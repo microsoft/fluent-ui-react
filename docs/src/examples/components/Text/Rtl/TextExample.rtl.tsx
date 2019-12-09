@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Flex, Text } from '@stardust-ui/react'
+import { Flex, Text } from '@fluentui/react'
 
 const TextExampleRtl = () => (
   <Flex column gap="gap.small">

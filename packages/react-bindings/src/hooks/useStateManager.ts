@@ -1,4 +1,4 @@
-import { AnyAction, EnhancedActions, Manager, ManagerFactory, SideEffect } from '@stardust-ui/state'
+import { AnyAction, EnhancedActions, Manager, ManagerFactory, SideEffect } from '@fluentui/state'
 import * as React from 'react'
 
 type UseStateManagerOptions<State> = {
@@ -12,7 +12,7 @@ const getDefinedProps = <Props extends Record<string, any>>(props: Props): Parti
 
   Object.keys(props).forEach(propName => {
     if (props[propName] !== undefined) {
-      definedProps[propName] = props[propName]
+      ;(<Record<string, any>>definedProps)[propName] = props[propName]
     }
   })
 

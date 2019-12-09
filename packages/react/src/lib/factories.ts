@@ -16,7 +16,7 @@ type ShorthandProp = 'children' | 'src' | 'type'
 
 interface CreateShorthandOptions<P> {
   /** Default props object */
-  defaultProps?: Partial<Props<P>>
+  defaultProps?: () => Partial<Props<P>>
 
   /** Override props object or function (called with regular props) */
   overrideProps?: Partial<Props<P>> | ((props: P) => Partial<Props<P>>)
@@ -58,6 +58,16 @@ export function createShorthand<P>({
   const valIsRenderFunction =
     typeof valueOrRenderCallback === 'function' && !React.isValidElement(valueOrRenderCallback)
   if (valIsRenderFunction) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.warn(
+        [
+          '@stardust-ui/react:',
+          'The usage of render callback is deprecated and will be removed soon. Please use render props for shorthands instead.',
+          'See: https://stardust-ui.github.io/react/shorthand-props',
+        ].join(' '),
+      )
+    }
+
     return createShorthandFromRenderCallback({
       allowsJSX,
       Component,
@@ -86,20 +96,20 @@ export type ShorthandFactory<P> = (
 // Factory Creators
 // ============================================================
 /**
- * @param {Object} config Options passed to factory
- * @param {React.ElementType} config.Component A ReactClass or string
- * @param {string} config.mappedProp A function that maps a primitive value to the Component props
- * @param {string} config.mappedArrayProp A function that maps an array value to the Component props
- * @param {string} config.allowsJSX Indicates if factory supports React Elements
- * @returns {function} A shorthand factory function waiting for `val` and `defaultProps`.
+ * @param config - Options passed to factory
+ * @returns A shorthand factory function waiting for `val` and `defaultProps`.
  */
 export function createShorthandFactory<
   TStringElement extends keyof JSX.IntrinsicElements,
   P
 >(config: {
+  /** A ReactClass or string */
   Component: TStringElement
+  /** A function that maps a primitive value to the Component props */
   mappedProp?: keyof PropsOf<TStringElement>
+  /** A function that maps an array value to the Component props */
   mappedArrayProp?: keyof PropsOf<TStringElement>
+  /** Indicates if factory supports React Elements */
   allowsJSX?: boolean
 }): ShorthandFactory<P>
 export function createShorthandFactory<
@@ -194,7 +204,7 @@ function createShorthandFromValue<P>({
   // ----------------------------------------
   // Build up props
   // ----------------------------------------
-  const defaultProps = options.defaultProps || ({} as Props<P>)
+  const defaultProps = options.defaultProps ? options.defaultProps() : ({} as Props<P>)
 
   // User's props
   const usersProps =
@@ -215,12 +225,12 @@ function createShorthandFromValue<P>({
 
   // Map prop for primitive value
   if (valIsPrimitive || valIsReactElement) {
-    props[mappedHTMLProps || mappedProp || 'children'] = value
+    ;(props as any)[mappedHTMLProps || mappedProp || 'children'] = value
   }
 
   // Map prop for array value
   if (valIsArray) {
-    props[mappedHTMLProps || mappedArrayProp || 'children'] = value
+    ;(props as any)[mappedHTMLProps || mappedArrayProp || 'children'] = value
   }
 
   // Merge className
@@ -230,17 +240,21 @@ function createShorthandFromValue<P>({
       overrideProps.className,
       usersProps.className,
     )
-    props.className = _.uniq(mergedClassesNames.split(' ')).join(' ')
+    ;(props as any).className = _.uniq(mergedClassesNames.split(' ')).join(' ')
   }
 
   // Merge style
   if (defaultProps.style || overrideProps.style || usersProps.style) {
-    props.style = { ...defaultProps.style, ...usersProps.style, ...overrideProps.style }
+    ;(props as any).style = { ...defaultProps.style, ...usersProps.style, ...overrideProps.style }
   }
 
   // Merge styles
   if (defaultProps.styles || overrideProps.styles || usersProps.styles) {
-    props.styles = mergeStyles(defaultProps.styles, usersProps.styles, overrideProps.styles)
+    ;(props as any).styles = mergeStyles(
+      defaultProps.styles,
+      usersProps.styles,
+      overrideProps.styles,
+    )
   }
 
   // ----------------------------------------
@@ -252,7 +266,7 @@ function createShorthandFromValue<P>({
   if (generateKey && _.isNil(props.key)) {
     if (valIsPrimitive) {
       // use string/number shorthand values as the key
-      props.key = value
+      ;(props as any).key = value
     }
 
     if (valIsReactElement) {
@@ -263,7 +277,7 @@ function createShorthandFromValue<P>({
       const isNullKey = elementKey === null
 
       if (!isNullKey) {
-        props.key = elementKey
+        ;(props as any).key = elementKey
       }
     }
   }
@@ -277,6 +291,10 @@ function createShorthandFromValue<P>({
   const { render } = options
   if (render) {
     return render(Component, props)
+  }
+
+  if (typeof props.children === 'function') {
+    return props.children(Component, { ...props, children: undefined })
   }
 
   if (!allowsJSX && valIsReactElement) {

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Header, Portal } from '@stardust-ui/react'
+import { Button, Header, Portal } from '@fluentui/react'
 
 class PortalExamplePortal extends React.Component {
   state = { open: false }

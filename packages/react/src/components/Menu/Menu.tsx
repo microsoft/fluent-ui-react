@@ -1,5 +1,5 @@
-import { Accessibility, menuBehavior } from '@stardust-ui/accessibility'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, menuBehavior } from '@fluentui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -62,8 +62,8 @@ export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Called when a panel title is clicked.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All item props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All item props.
    */
   onItemClick?: ComponentEventHandler<MenuItemProps>
 
@@ -197,7 +197,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
 
       if (kind === 'divider') {
         return MenuDivider.create(item, {
-          defaultProps: {
+          defaultProps: () => ({
             className: Menu.slotClassNames.divider,
             primary,
             secondary,
@@ -207,7 +207,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
             accessibility: accessibility.childBehaviors
               ? accessibility.childBehaviors.divider
               : undefined,
-          },
+          }),
           overrideProps: overrideDividerProps,
         })
       }
@@ -215,7 +215,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
       itemPosition++
 
       return MenuItem.create(item, {
-        defaultProps: {
+        defaultProps: () => ({
           className: Menu.slotClassNames.item,
           iconOnly,
           pills,
@@ -233,7 +233,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
           accessibility: accessibility.childBehaviors
             ? accessibility.childBehaviors.item
             : undefined,
-        },
+        }),
         overrideProps: overrideItemProps,
       })
     })

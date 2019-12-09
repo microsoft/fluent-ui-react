@@ -47,8 +47,11 @@ const packStardustPackages = async (logger: Function): Promise<PackedPackages> =
   const stardustPackages = lernaAliases({ sourceDirectory: false })
 
   // We don't want to pack a package with our dev tools
-  delete stardustPackages['@stardust-ui/eslint-plugin']
-  delete stardustPackages['@stardust-ui/internal-tooling']
+  delete stardustPackages['@fluentui/eslint-plugin']
+  delete stardustPackages['@fluentui/internal-tooling']
+  delete stardustPackages['@fluentui/scripts']
+  delete stardustPackages['@fluentui/digest']
+  delete stardustPackages['@fluentui/perf-test']
 
   await Promise.all(
     Object.keys(stardustPackages).map(async (packageName: string) => {
@@ -149,7 +152,7 @@ task('test:projects:cra-ts', async () => {
 
   const packedPackages = await packStardustPackages(logger)
   await addResolutionPathsForStardustPackages(testAppPath(), packedPackages)
-  await runInTestApp(`yarn add ${packedPackages['@stardust-ui/react']}`)
+  await runInTestApp(`yarn add ${packedPackages['@fluentui/react']}`)
   logger(`✔️Stardust UI packages were added to dependencies`)
 
   logger("STEP 3. Reference Stardust components in test project's App.tsx")
@@ -184,7 +187,7 @@ task('test:projects:rollup', async () => {
 
   const packedPackages = await packStardustPackages(logger)
   await addResolutionPathsForStardustPackages(tmpDirectory, packedPackages)
-  await runIn(tmpDirectory)(`yarn add ${packedPackages['@stardust-ui/react']}`)
+  await runIn(tmpDirectory)(`yarn add ${packedPackages['@fluentui/react']}`)
   logger(`✔️Stardust UI packages were added to dependencies`)
 
   fs.copyFileSync(scaffoldPath('app.js'), path.resolve(tmpDirectory, 'app.js'))
@@ -219,7 +222,7 @@ task('test:projects:typings', async () => {
 
   const packedPackages = await packStardustPackages(logger)
   await addResolutionPathsForStardustPackages(tmpDirectory, packedPackages)
-  await runIn(tmpDirectory)(`yarn add ${packedPackages['@stardust-ui/react']}`)
+  await runIn(tmpDirectory)(`yarn add ${packedPackages['@fluentui/react']}`)
   logger(`✔️Stardust UI packages were added to dependencies`)
 
   fs.mkdirSync(path.resolve(tmpDirectory, 'src'))

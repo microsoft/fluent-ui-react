@@ -1,5 +1,5 @@
-import { callable } from '@stardust-ui/react-bindings'
-import { ComponentSlotStylesPrepared, Renderer } from '@stardust-ui/react'
+import { callable } from '@fluentui/react-bindings'
+import { ComponentSlotStylesPrepared, Renderer } from '@fluentui/react'
 import flat from 'flat'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -25,15 +25,18 @@ const useEnhancedRenderRule = (
 
   const renderRule: Renderer['renderRule'] = React.useCallback(
     (rule, props) => {
-      const componentName: string = props.displayName
+      const componentName: string = (props as any).displayName
       variables.current[componentName] = variables.current[componentName] || {}
 
       // Maps all variable values with matching strings:
       // { color: 'blue' } => { color: 'variable.color' }
-      const mappedVariables = _.mapValues(props.variables, (variableValue, variableName) => {
-        // Temporary workaround until variables be flat
-        return typeof variableValue === 'string' ? `<<variable:${variableName}>>` : variableValue
-      })
+      const mappedVariables = _.mapValues(
+        (props as any).variables,
+        (variableValue, variableName) => {
+          // Temporary workaround until variables be flat
+          return typeof variableValue === 'string' ? `<<variable:${variableName}>>` : variableValue
+        },
+      )
 
       const resolvedStyles: ComponentSlotStylesPrepared = callable(rule)({
         ...props,

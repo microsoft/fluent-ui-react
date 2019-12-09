@@ -1,6 +1,6 @@
 import '@babel/polyfill'
 
-import { Provider, themes } from '@stardust-ui/react'
+import { Provider, themes } from '@fluentui/react'
 import * as _ from 'lodash'
 import * as minimatch from 'minimatch'
 import * as React from 'react'

@@ -1,6 +1,6 @@
-import { Accessibility, inputBehavior } from '@stardust-ui/accessibility'
-import { handleRef, Ref } from '@stardust-ui/react-component-ref'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, inputBehavior } from '@fluentui/accessibility'
+import { handleRef, Ref } from '@fluentui/react-component-ref'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
@@ -60,8 +60,8 @@ export interface InputProps
   /**
    * Called on change.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onChange?: ComponentEventHandler<InputProps & { value: string }>
 
@@ -141,7 +141,7 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
     const [htmlInputProps, restProps] = partitionHTMLProps(unhandledProps)
 
     return Box.create(wrapper, {
-      defaultProps: {
+      defaultProps: () => ({
         ...accessibility.attributes.root,
         className: cx(Input.className, className),
         children: (
@@ -153,7 +153,7 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
               }}
             >
               {Box.create(input || type, {
-                defaultProps: {
+                defaultProps: () => ({
                   ...htmlInputProps,
                   as: 'input',
                   type,
@@ -162,21 +162,21 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
                   styles: styles.input,
                   onChange: this.handleChange,
                   ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.input, htmlInputProps),
-                },
+                }),
               })}
             </Ref>
             {Icon.create(this.computeIcon(), {
-              defaultProps: {
+              defaultProps: () => ({
                 styles: styles.icon,
                 variables: variables.icon,
-              },
+              }),
               overrideProps: this.handleIconOverrides,
             })}
           </>
         ),
         styles: styles.root,
         ...restProps,
-      },
+      }),
       overrideProps: {
         as: (wrapper && (wrapper as any).as) || ElementType,
       },

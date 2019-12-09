@@ -1,4 +1,4 @@
-require('@stardust-ui/internal-tooling/babel/register')
+require('@fluentui/internal-tooling/babel/register')
 
 const config = require('../../config').default
 const { compilerOptions } = require('../../build/tsconfig.docs.json')

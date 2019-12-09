@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { List, Image } from '@stardust-ui/react'
+import { List, Image } from '@fluentui/react'
 
 const avatars = {
   ade:
@@ -106,5 +106,7 @@ const items = [
 ]
 
 const ListPerf = () => <List items={items} />
+
+ListPerf.iterations = 100
 
 export default ListPerf

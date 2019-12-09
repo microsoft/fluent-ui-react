@@ -1,5 +1,5 @@
-import { Accessibility, loaderBehavior } from '@stardust-ui/accessibility'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, loaderBehavior } from '@fluentui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
@@ -117,7 +117,7 @@ class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
     const { visible } = this.state
 
     const svgElement = Box.create(svg, {
-      defaultProps: { className: Loader.slotClassNames.svg, styles: styles.svg },
+      defaultProps: () => ({ className: Loader.slotClassNames.svg, styles: styles.svg }),
     })
 
     return (
@@ -128,14 +128,14 @@ class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
           {...unhandledProps}
         >
           {Box.create(indicator, {
-            defaultProps: {
+            defaultProps: () => ({
               children: svgElement,
               className: Loader.slotClassNames.indicator,
               styles: styles.indicator,
-            },
+            }),
           })}
           {Text.create(label, {
-            defaultProps: { className: Loader.slotClassNames.label, styles: styles.label },
+            defaultProps: () => ({ className: Loader.slotClassNames.label, styles: styles.label }),
           })}
         </ElementType>
       )

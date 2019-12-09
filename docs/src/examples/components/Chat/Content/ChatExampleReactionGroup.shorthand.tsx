@@ -1,4 +1,4 @@
-import { Avatar, Chat, ChatItemProps, ReactionProps, ShorthandCollection } from '@stardust-ui/react'
+import { Avatar, Chat, ChatItemProps, ReactionProps, ShorthandCollection } from '@fluentui/react'
 import * as React from 'react'
 
 const reactions: ShorthandCollection<ReactionProps> = [

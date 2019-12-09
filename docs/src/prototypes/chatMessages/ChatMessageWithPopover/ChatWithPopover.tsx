@@ -5,11 +5,11 @@ import {
   ChatMessageProps,
   ShorthandCollection,
   ReactionProps,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 import * as React from 'react'
 import Popover from './Popover'
 import ReactionPopup from './ReactionPopup'
-import { Ref } from '@stardust-ui/react-component-ref'
+import { Ref } from '@fluentui/react-component-ref'
 
 const reactions: ShorthandCollection<ReactionProps> = [
   {
@@ -137,16 +137,16 @@ const TeamsChatMessage: React.FC<ChatMessageProps> = (props: ChatMessageProps) =
     <Ref innerRef={setChatMessageElement}>
       <Chat.Message
         {...props}
-        actionMenu={render =>
-          render({}, (ComponentType, props) => (
+        actionMenu={{
+          children: (Component, props) => (
             <Popover
               chatMessageElement={chatMessageElement}
               onForceShowActionMenuChange={setForceShowActionMenu}
               onShowActionMenuChange={setShowActionMenu}
               {...props}
             />
-          ))
-        }
+          ),
+        }}
         onMouseEnter={() => setShowActionMenu(true)}
         onMouseLeave={() => !forceShowActionMenu && setShowActionMenu(false)}
         onFocus={() => setShowActionMenu(true)}

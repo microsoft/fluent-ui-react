@@ -22,7 +22,7 @@ import {
   mergeThemes,
   Tooltip,
   tooltipAsLabelBehavior,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 
 type CustomStatusVariables = {
   isRecordingIndicator?: boolean
@@ -517,48 +517,49 @@ const layouts: Record<CustomToolbarProps['layout'], CustomToolbarLayout> = {
 const CustomToolbar: React.FunctionComponent<CustomToolbarProps> = props => {
   const { layout = 'standard' } = props
 
-  const items = layouts[layout](props).map(item =>
-    _.isNil((item as any).tooltip)
-      ? item
-      : render =>
-          render(
-            item, // rendering Tooltip for the Toolbar Item
-            (ToolbarItem, props) => {
-              const { tooltip, key, ...rest } = props // Adding tooltipAsLabelBehavior as the ToolbarItems contains only icon
+  const items = layouts[layout](props).map((item: ToolbarItemProps) => ({
+    ...item,
+    children: (item as any).tooltip
+      ? (ToolbarItem, props) => {
+          const { tooltip, key, ...rest } = props // Adding tooltipAsLabelBehavior as the ToolbarItems contains only icon
 
-              return (
-                <Tooltip
-                  key={key}
-                  trigger={<ToolbarItem {...rest} />}
-                  accessibility={tooltipAsLabelBehavior}
-                  content={tooltip}
-                />
-              )
-            },
-          ),
-  )
+          return (
+            <Tooltip
+              key={key}
+              trigger={<ToolbarItem {...rest} />}
+              accessibility={tooltipAsLabelBehavior}
+              content={tooltip}
+            />
+          )
+        }
+      : null,
+  }))
 
   return <Toolbar variables={{ isCt: true }} items={items} />
 }
 
 const CustomToolbarPrototype: React.FunctionComponent = () => {
-  let theme = {}
-  theme = mergeThemes(themes.teamsDark, darkThemeOverrides)
+    let theme = {}
+    theme = mergeThemes(themes.teamsDark, darkThemeOverrides)
 
-  return (
-    <Provider theme={theme}>
-      <CustomToolbar
-        layout="standard"
-        isRecording={true}
-        cameraActive={true}
-        micActive={true}
-        screenShareActive={true}
-        sidebarSelected={false}
-        chatHasNotification={true}
-        pptSlide={`${1} of ${2}`}
-      />
-    </Provider>
-  )
-}
+    return (
+      <Provider theme={theme}>
+        <CustomToolbar
+          layout="standard"
+          isRecording={true}
+          cameraActive={true}
+          micActive={true}
+          screenShareActive={true}
+          sidebarSelected={false}
+          chatHasNotification={true}
+          pptSlide={`${1} of ${2}`}
+        />
+      </Provider>
+    )
+  }
+
+  // Perf stories should be modified to follow Storybook CSF for supporting metadata.
+  // For now cast as any to add metadata to default export.
+;(CustomToolbarPrototype as any).iterations = 100
 
 export default CustomToolbarPrototype

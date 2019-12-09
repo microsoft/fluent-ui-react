@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Flex, Header } from '@stardust-ui/react'
+import { Flex, Header } from '@fluentui/react'
 
 import pkg from '../../../packages/react/package.json'
 import Logo from '../components/Logo/Logo'

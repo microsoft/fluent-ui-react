@@ -1,4 +1,4 @@
-import { Checkbox } from '@stardust-ui/react'
+import { Checkbox } from '@fluentui/react'
 
 const getScreenerSteps = (): ScreenerSteps => [
   builder => builder.click(`.${Checkbox.className}`).snapshot('Checks checkbox'),

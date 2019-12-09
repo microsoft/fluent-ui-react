@@ -1,4 +1,4 @@
-import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
+import { documentRef, EventListener } from '@fluentui/react-component-event-listener'
 import { mount } from 'enzyme'
 import * as React from 'react'
 import * as simulant from 'simulant'

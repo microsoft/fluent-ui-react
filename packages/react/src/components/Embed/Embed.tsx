@@ -1,8 +1,8 @@
-import { Accessibility, embedBehavior } from '@stardust-ui/accessibility'
+import { Accessibility, embedBehavior } from '@fluentui/accessibility'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import * as customPropTypes from '@fluentui/react-proptypes'
 
 import {
   createShorthandFactory,
@@ -17,7 +17,7 @@ import Image from '../Image/Image'
 import Video, { VideoProps } from '../Video/Video'
 import Box, { BoxProps } from '../Box/Box'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
-import { Ref } from '@stardust-ui/react-component-ref'
+import { Ref } from '@fluentui/react-component-ref'
 
 export interface EmbedSlotClassNames {
   control: string
@@ -41,16 +41,16 @@ export interface EmbedProps extends UIComponentProps {
 
   /**
    * Event for request to change 'active' value.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onActiveChanged?: ComponentEventHandler<EmbedProps>
 
   /**
    * Called when is clicked.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All item props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All item props.
    */
   onClick?: ComponentEventHandler<EmbedProps>
 
@@ -167,7 +167,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
         {active && (
           <>
             {Video.create(video, {
-              defaultProps: {
+              defaultProps: () => ({
                 autoPlay: true,
                 controls: false,
                 loop: true,
@@ -178,15 +178,15 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
                   width: variables.width,
                   height: variables.height,
                 },
-              },
+              }),
             })}
             {iframe && (
               <Ref innerRef={this.frameRef}>
                 {Box.create(iframe, {
-                  defaultProps: {
+                  defaultProps: () => ({
                     as: 'iframe',
                     styles: styles.iframe,
-                  },
+                  }),
                   overrideProps: this.handleFrameOverrides,
                 })}
               </Ref>
@@ -197,13 +197,13 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
         {placeholderVisible && placeholderElement}
         {controlVisible &&
           Icon.create(control, {
-            defaultProps: {
+            defaultProps: () => ({
               className: Embed.slotClassNames.control,
               circular: true,
               name: active ? 'stardust-pause' : 'stardust-play',
               size: 'largest',
               styles: styles.control,
-            },
+            }),
           })}
       </ElementType>
     )

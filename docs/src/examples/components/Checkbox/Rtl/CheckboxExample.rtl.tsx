@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Checkbox, Divider, Flex } from '@stardust-ui/react'
+import { Checkbox, Divider, Flex } from '@fluentui/react'
 
 const CheckboxExampleRtl = () => (
   <Flex column hAlign="start">

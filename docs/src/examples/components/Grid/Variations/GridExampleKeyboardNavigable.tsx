@@ -7,7 +7,7 @@ import {
   Label,
   gridBehavior,
   gridHorizontalBehavior,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 import * as _ from 'lodash'
 
 const imageNames = [

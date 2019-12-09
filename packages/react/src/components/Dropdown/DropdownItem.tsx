@@ -1,4 +1,4 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
@@ -52,8 +52,8 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
   /**
    * Called on dropdown item click.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onClick?: ComponentEventHandler<DropdownItemProps>
 
@@ -108,32 +108,32 @@ class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
         styles={styles.root}
         onClick={this.handleClick}
         header={Box.create(header, {
-          defaultProps: {
+          defaultProps: () => ({
             className: DropdownItem.slotClassNames.header,
             styles: styles.header,
-          },
+          }),
         })}
         media={Image.create(image, {
-          defaultProps: {
+          defaultProps: () => ({
             avatar: true,
             className: DropdownItem.slotClassNames.image,
             styles: styles.image,
-          },
+          }),
         })}
         content={Box.create(content, {
-          defaultProps: {
+          defaultProps: () => ({
             className: DropdownItem.slotClassNames.content,
             styles: styles.content,
-          },
+          }),
         })}
         endMedia={
           selected &&
           checkable && {
             content: Icon.create(checkableIndicator, {
-              defaultProps: {
+              defaultProps: () => ({
                 className: DropdownItem.slotClassNames.checkableIndicator,
                 styles: styles.checkableIndicator,
-              },
+              }),
             }),
             styles: styles.endMedia,
           }

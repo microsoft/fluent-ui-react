@@ -1,5 +1,5 @@
-import { KnobInspector, unstable_KnobContext } from '@stardust-ui/docs-components'
-import { Grid, Header, Segment } from '@stardust-ui/react'
+import { KnobInspector, unstable_KnobContext } from '@fluentui/docs-components'
+import { Grid, Header, Segment } from '@fluentui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 
@@ -22,9 +22,7 @@ const NoopKnobProvider: React.FunctionComponent = props => {
   )
 }
 
-const ComponentPlaygroundTemplate: React.FunctionComponent<
-  ComponentPlaygroundTemplateProps
-> = props => (
+const ComponentPlaygroundTemplate: React.FunctionComponent<ComponentPlaygroundTemplateProps> = props => (
   <Grid columns="1fr 300px" rows="1fr auto" styles={{ gridColumnGap: '1rem' }}>
     <Segment
       styles={{

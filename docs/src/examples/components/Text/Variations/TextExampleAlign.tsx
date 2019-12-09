@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Text } from '@stardust-ui/react'
+import { Text } from '@fluentui/react'
 
 const HeaderExampleAlign = () => <Text align="end">Text aligned to end</Text>
 

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Icon, Menu, MenuShorthandKinds } from '@stardust-ui/react'
+import { Icon, Menu, MenuShorthandKinds } from '@fluentui/react'
 
 const items = [
   { key: 'editorials', content: 'Editorials' },

@@ -8,8 +8,7 @@ import { ProviderContextPrepared } from '../../types'
 export interface ProviderConsumerProps {
   /**
    * Uses the function children pattern to access theme.
-   * @param {object} theme
-   * @param {object} theme.siteVariables - The siteVariables passed from the nearest Provider.
+   * `theme.siteVariables` contains the siteVariables passed from the nearest Provider.
    */
   render: (theme: ThemePrepared) => React.ReactNode
 }

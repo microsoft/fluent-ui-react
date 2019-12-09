@@ -1,4 +1,4 @@
-import { KeyActions } from '@stardust-ui/accessibility'
+import { KeyActions } from '@fluentui/accessibility'
 import * as _ from 'lodash'
 import * as keyboardKey from 'keyboard-key'
 import * as React from 'react'
@@ -14,9 +14,9 @@ const rtlKeyMap = {
 /**
  * Assigns onKeyDown handler to the slot element, based on Component's actions
  * and keys mappings defined in Accessibility behavior
- * @param {AccessibilityActionHandlers} componentActionHandlers Actions handlers defined in a component.
- * @param {KeyActions} behaviorKeyActions Mappings of actions and keys defined in Accessibility behavior.
- * @param {boolean} isRtlEnabled Indicates if Left and Right arrow keys should be swapped in RTL mode.
+ * @param componentActionHandlers - Actions handlers defined in a component.
+ * @param behaviorKeyActions - Mappings of actions and keys defined in Accessibility behavior.
+ * @param isRtlEnabled - Indicates if Left and Right arrow keys should be swapped in RTL mode.
  */
 const getKeyDownHandlers = (
   componentActionHandlers: AccessibilityActionHandlers,

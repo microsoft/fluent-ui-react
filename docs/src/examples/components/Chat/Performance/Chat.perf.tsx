@@ -1,4 +1,4 @@
-import { Avatar, Chat, Provider } from '@stardust-ui/react'
+import { Avatar, Chat, Provider } from '@fluentui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 

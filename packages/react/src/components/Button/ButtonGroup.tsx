@@ -1,5 +1,5 @@
-import { Accessibility } from '@stardust-ui/accessibility'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility } from '@fluentui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
@@ -76,10 +76,10 @@ class ButtonGroup extends UIComponent<WithAsProp<ButtonGroupProps>, any> {
       <ElementType {...unhandledProps} className={classes.root}>
         {_.map(buttons, (button, idx) =>
           Button.create(button, {
-            defaultProps: {
+            defaultProps: () => ({
               circular,
               styles: this.getStyleForButtonIndex(styles, idx === 0, idx === buttons.length - 1),
-            },
+            }),
           }),
         )}
       </ElementType>

@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { useRangeKnob } from '@stardust-ui/docs-components'
-import { TextArea } from '@stardust-ui/react'
+import { useRangeKnob } from '@fluentui/docs-components'
+import { TextArea } from '@fluentui/react'
 
 const TextAreaExampleHeight = () => {
   const [height] = useRangeKnob({

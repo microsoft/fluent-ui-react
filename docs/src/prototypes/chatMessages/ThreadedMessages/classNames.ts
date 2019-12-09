@@ -1,4 +1,4 @@
-import { Button, ChatMessage, ChatItem } from '@stardust-ui/react'
+import { Button, ChatMessage, ChatItem } from '@fluentui/react'
 
 const classNames = {
   threadedMessage: {

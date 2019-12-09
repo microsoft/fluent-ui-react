@@ -1,4 +1,4 @@
-import { prettifyCode } from '@stardust-ui/docs-components'
+import { prettifyCode } from '@fluentui/docs-components'
 import * as _ from 'lodash'
 import * as React from 'react'
 

@@ -1,9 +1,9 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
-import { Accessibility, menuButtonBehavior } from '@stardust-ui/accessibility'
-import { Ref } from '@stardust-ui/react-component-ref'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, menuButtonBehavior } from '@fluentui/accessibility'
+import { Ref } from '@fluentui/react-component-ref'
+import * as customPropTypes from '@fluentui/react-proptypes'
 
 import {
   AutoControlledComponent,
@@ -57,15 +57,15 @@ export interface MenuButtonProps extends StyledComponentProps<MenuButtonProps>, 
   /**
    * Called after user's click on a menu item.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onMenuItemClick?: ComponentEventHandler<MenuItemProps>
 
   /**
    * Event for request to change 'open' value.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onOpenChange?: ComponentEventHandler<PopupProps>
 
@@ -169,24 +169,23 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
   menuRef = React.createRef<HTMLElement>()
 
   actionHandlers = {
-    closeMenu: () => this.closeMenu(),
+    closeMenu: e => this.closeMenu(e),
     openAndFocusFirst: e => this.openAndFocus(e, 'first'),
     openAndFocusLast: e => this.openAndFocus(e, 'last'),
   }
 
-  closeMenu() {
-    this.setState({ open: false })
+  closeMenu(e: React.KeyboardEvent) {
+    this.handleOpenChange(e, false)
   }
 
   openAndFocus(e: React.KeyboardEvent, which: 'first' | 'last') {
-    const renderCallback = () => focusMenuItem(this.menuRef.current, which)
-    this.setState({ open: true }, renderCallback)
     e.preventDefault()
+    this.handleOpenChange(e, true, () => focusMenuItem(this.menuRef.current, which))
   }
 
-  handleOpenChange = (e, { open }: PopupProps) => {
+  handleOpenChange = (e: React.SyntheticEvent, open: boolean, callback?: () => void) => {
     _.invoke(this.props, 'onOpenChange', e, { ...this.props, open })
-    this.setState({ open })
+    this.setState({ open }, callback)
   }
 
   handleMenuOverrides = (predefinedProps?: MenuProps) => ({
@@ -195,7 +194,7 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
       _.invoke(this.props, 'onMenuItemClick', e, itemProps)
       if (!itemProps || !itemProps.menu) {
         // do not close if clicked on item with submenu
-        this.setState({ open: false })
+        this.handleOpenChange(e, false)
       }
     },
   })
@@ -256,17 +255,19 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
     }
 
     const content = Menu.create(menu, {
-      defaultProps: {
+      defaultProps: () => ({
         ...accessibility.attributes.menu,
         vertical: true,
-      },
+      }),
       overrideProps: this.handleMenuOverrides,
     })
 
     const overrideProps: PopupProps = {
       accessibility: () => accessibility,
       open: this.state.open,
-      onOpenChange: this.handleOpenChange,
+      onOpenChange: (e, { open }) => {
+        this.handleOpenChange(e, open)
+      },
       content: {
         styles: styles.popupContent,
         content: content && <Ref innerRef={this.menuRef}>{content}</Ref>,

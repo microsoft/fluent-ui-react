@@ -104,7 +104,7 @@ type MaybeIntersectType = ts.Type & { types?: ts.Type[] }
 
 /**
  * Parses a file with default TS options
- * @param filePath component file that should be parsed
+ * @param filePath - component file that should be parsed
  */
 export function parse(
   filePathOrPaths: string | string[],
@@ -558,23 +558,20 @@ export class Parser {
   }
 
   public getPropMap(properties: ts.NodeArray<ts.PropertyAssignment>): StringIndexedObject<string> {
-    const propMap = properties.reduce(
-      (acc, property) => {
-        if (ts.isSpreadAssignment(property) || !property.name) {
-          return acc
-        }
-
-        const literalValue = this.getLiteralValueFromPropertyAssignment(property)
-        const propertyName = getPropertyName(property.name)
-
-        if (typeof literalValue === 'string' && propertyName !== null) {
-          acc[propertyName] = literalValue
-        }
-
+    const propMap = properties.reduce((acc, property) => {
+      if (ts.isSpreadAssignment(property) || !property.name) {
         return acc
-      },
-      {} as StringIndexedObject<string>,
-    )
+      }
+
+      const literalValue = this.getLiteralValueFromPropertyAssignment(property)
+      const propertyName = getPropertyName(property.name)
+
+      if (typeof literalValue === 'string' && propertyName !== null) {
+        acc[propertyName] = literalValue
+      }
+
+      return acc
+    }, {} as StringIndexedObject<string>)
     return propMap
   }
 }

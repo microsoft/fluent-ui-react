@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Provider, Text } from '@stardust-ui/react'
+import { Provider, Text } from '@fluentui/react'
 
 const TextSizesExample = () => (
   <Provider.Consumer

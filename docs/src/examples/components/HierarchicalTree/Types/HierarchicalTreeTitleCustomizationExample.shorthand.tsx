@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Icon, HierarchicalTree } from '@stardust-ui/react'
+import { Icon, HierarchicalTree } from '@fluentui/react'
 
 const items = [
   {

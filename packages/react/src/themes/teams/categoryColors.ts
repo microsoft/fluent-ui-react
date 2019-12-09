@@ -466,7 +466,7 @@ export const categoryColors: TeamsCategoryColors = {
     350: '#C1CACC',
     400: '#ACABBB',
     450: '#A9B5B9',
-    500: '#A2A0B2',
+    500: '#A0AEB2',
     550: '#919DA1',
     600: '#8F9C9F',
     650: '#637074',

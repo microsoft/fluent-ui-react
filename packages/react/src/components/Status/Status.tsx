@@ -1,5 +1,5 @@
-import { Accessibility, statusBehavior } from '@stardust-ui/accessibility'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, statusBehavior } from '@fluentui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import Icon, { IconProps } from '../Icon/Icon'
@@ -61,12 +61,12 @@ class Status extends UIComponent<WithAsProp<StatusProps>, any> {
     return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
         {Icon.create(icon, {
-          defaultProps: {
+          defaultProps: () => ({
             size: 'smallest',
             styles: styles.icon,
             variables: variables.icon,
             xSpacing: 'none',
-          },
+          }),
         })}
       </ElementType>
     )

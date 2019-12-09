@@ -1,10 +1,11 @@
+import * as React from 'react'
+
 /**
  * Tests if children are nil in React and Preact.
  *
- * @param {Object} children The children prop of a component.
- * @returns {Boolean}
+ * @param children - The children prop of a component.
  */
-const childrenExist = children => {
+const childrenExist = (children: React.ReactNode): boolean => {
   if (children === null || children === undefined) return false
 
   if (typeof children === 'number') return !isNaN(children)

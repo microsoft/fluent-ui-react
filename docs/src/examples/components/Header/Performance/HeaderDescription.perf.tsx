@@ -1,4 +1,4 @@
-import { Header } from '@stardust-ui/react'
+import { Header } from '@fluentui/react'
 import * as React from 'react'
 
 const HeaderDescriptionPerf = () => (
@@ -8,5 +8,7 @@ const HeaderDescriptionPerf = () => (
     description="Manage your account settings and set email preferences."
   />
 )
+
+HeaderDescriptionPerf.iterations = 5000
 
 export default HeaderDescriptionPerf
