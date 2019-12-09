@@ -53,6 +53,7 @@ export interface DropdownSlotClassNames {
   selectedItem: string
   selectedItems: string
   triggerButton: string
+  inverted: string
 }
 
 export interface DropdownProps
@@ -121,6 +122,9 @@ export interface DropdownProps
 
   /** A dropdown can be formatted to appear inline next to other elements. */
   inline?: boolean
+
+  /** It can be on a dark background */
+  inverted?: boolean
 
   /** Array of props for generating list options (Dropdown.Item[]) and selected item labels (Dropdown.SelectedItem[]), if it's a multiple selection. */
   items?: ShorthandCollection<DropdownItemProps>
@@ -233,6 +237,7 @@ export interface DropdownState {
   value: ShorthandCollection<DropdownItemProps>
   itemIsFromKeyboard: boolean
   isFromKeyboard: boolean
+  inverted: boolean
 }
 
 class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, DropdownState> {
@@ -277,6 +282,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     highlightFirstItemOnOpen: PropTypes.bool,
     highlightedIndex: PropTypes.number,
     inline: PropTypes.bool,
+    inverted: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     itemToString: PropTypes.func,
     itemToValue: PropTypes.func,
@@ -358,6 +364,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       value: [],
       itemIsFromKeyboard: false,
       isFromKeyboard: false,
+      inverted: false,
     }
   }
 
@@ -506,10 +513,10 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
                     : Icon.create(toggleIndicator, {
                         defaultProps: () => ({
                           className: Dropdown.slotClassNames.toggleIndicator,
-                          name: 'chevron-down',
+                          name: 'chevron-down-medium',
                           styles: styles.toggleIndicator,
                           outline: true,
-                          size: 'small',
+                          size: 'medium',
                         }),
                         overrideProps: (predefinedProps: IconProps) => ({
                           onClick: (e, indicatorProps: IconProps) => {
@@ -1374,6 +1381,7 @@ Dropdown.slotClassNames = {
   selectedItem: `${Dropdown.className}__selecteditem`,
   selectedItems: `${Dropdown.className}__selected-items`,
   triggerButton: `${Dropdown.className}__trigger-button`,
+  inverted: '',
 }
 
 /**

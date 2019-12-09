@@ -3,13 +3,8 @@ import {
   ICSSInJSStyle,
   ComponentSlotStyleFunction,
 } from '../../../types'
-import {
-  default as Dropdown,
-  DropdownProps,
-  DropdownState,
-} from '../../../../components/Dropdown/Dropdown'
+import { DropdownProps, DropdownState } from '../../../../components/Dropdown/Dropdown'
 import { DropdownVariables } from './dropdownVariables'
-import { pxToRem } from '../../../../lib'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 type DropdownPropsAndState = DropdownProps & DropdownState
@@ -43,7 +38,7 @@ const getIndicatorStyles: ComponentSlotStyleFunction<DropdownPropsAndState, Drop
 
   margin: 0,
   position: 'absolute',
-  right: pxToRem(-2),
+  right: 0,
   height: '100%',
   width: v.toggleIndicatorSize,
 })
@@ -65,8 +60,6 @@ const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, Dropdow
     ...(p.inline && { display: 'inline-flex' }),
   }),
 
-  clearIndicator: getIndicatorStyles,
-
   container: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
     display: 'flex',
     flexWrap: 'wrap',
@@ -83,11 +76,12 @@ const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, Dropdow
     ...(p.open && p.position === 'below' && { borderRadius: v.openBelowContainerBorderRadius }),
     ':hover': {
       backgroundColor: v.backgroundColorHover,
-      [`& .${Dropdown.slotClassNames.triggerButton}`]: {
-        // reset all styles
-      },
+    },
+    ':active': {
+      backgroundColor: v.backgroundColor,
     },
     ...(p.focused && {
+      backgroundColor: v.backgroundColor,
       ...(p.search && { borderBottomColor: v.borderColorFocus }),
       ...(!p.search &&
         !p.open &&
@@ -97,6 +91,9 @@ const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, Dropdow
     ...(p.inline && {
       ...transparentColorStyleObj,
       alignItems: 'center',
+    }),
+    ...(p.inverted && {
+      backgroundColor: v.backgroundColorInverted,
     }),
   }),
 
@@ -113,6 +110,7 @@ const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, Dropdow
     return {
       overflow: 'hidden',
       boxShadow: 'none',
+      ...transparentColorStyleObj,
       margin: '0',
       justifyContent: 'left',
       padding: v.comboboxPaddingButton,
@@ -120,6 +118,7 @@ const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, Dropdow
       ...transparentColorStyleObj,
       ':focus': {
         color: v.color,
+        ...transparentColorStyleObj,
       },
       ':focus-visible': {
         color: v.color,
@@ -130,7 +129,11 @@ const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, Dropdow
         ':before': {
           borderColor: 'transparent',
         },
-        ':active': transparentColorStyle,
+      },
+      ':active': {
+        ...transparentColorStyle,
+        animationName: 'unset',
+        animationDuration: 'unset',
       },
       ':hover': {
         ...transparentColorStyle,
@@ -139,6 +142,9 @@ const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, Dropdow
         paddingLeft: 0,
         paddingRight: 0,
         width: 'initial',
+      }),
+      ...(p.inverted && {
+        backgroundColor: v.backgroundColorInverted,
       }),
     }
   },
@@ -170,6 +176,7 @@ const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, Dropdow
     fontWeight: 'bold',
   }),
 
+  clearIndicator: getIndicatorStyles,
   toggleIndicator: getIndicatorStyles,
 }
 
