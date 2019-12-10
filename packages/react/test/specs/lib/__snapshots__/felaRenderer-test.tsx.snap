@@ -148,13 +148,13 @@ exports[`felaRenderer styles are expanded to longhand values 1`] = `
   border-top-color: rgba(51, 204, 51, 1);
 }
 .f {
-  border-right-color: rgba(51, 204, 51, 1);
+  border-right-color: rgba(51, 0, 204, 1);
 }
 .g {
   border-bottom-color: rgba(51, 204, 51, 1);
 }
 .h {
-  border-left-color: rgba(51, 204, 51, 1);
+  border-left-color: rgba(51, 0, 204, 1);
 }
 
 

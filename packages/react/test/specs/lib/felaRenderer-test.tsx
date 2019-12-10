@@ -121,7 +121,8 @@ describe('felaRenderer', () => {
         <Box
           styles={{
             borderStyle: 'solid',
-            borderColor: 'rgba(51,204, 51, 1)', // spaces in color value are important
+            // spaces in color value are important
+            borderColor: 'rgba(51,204, 51, 1) rgba(51,0,204, 1)',
           }}
         />
       </EmptyThemeProvider>,
