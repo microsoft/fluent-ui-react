@@ -130,3 +130,34 @@ exports[`felaRenderer marginLeft is rendered into marginRight due to RTL 1`] = `
 </div>;
 "
 `;
+
+exports[`felaRenderer styles are expanded to longhand values 1`] = `
+".a {
+  border-top-style: solid;
+}
+.b {
+  border-right-style: solid;
+}
+.c {
+  border-bottom-style: solid;
+}
+.d {
+  border-left-style: solid;
+}
+.e {
+  border-top-color: rgba(51, 204, 51, 1);
+}
+.f {
+  border-right-color: rgba(51, 204, 51, 1);
+}
+.g {
+  border-bottom-color: rgba(51, 204, 51, 1);
+}
+.h {
+  border-left-color: rgba(51, 204, 51, 1);
+}
+
+
+<div className=ui-box a b c d e f g h />;
+"
+`;
