@@ -1,5 +1,5 @@
 import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../../../utils'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 import { TreeItemProps } from '../../../../components/Tree/TreeItem'
 import TreeTitle from '../../../../components/Tree/TreeTitle'

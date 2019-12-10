@@ -1,7 +1,7 @@
 import { ICSSInJSStyle, ComponentSlotStylesPrepared } from '../../../types'
 import { ChatItemVariables } from './chatItemVariables'
 import { ChatItemProps } from '../../../../components/Chat/ChatItem'
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../../../utils'
 
 const chatItemStyles: ComponentSlotStylesPrepared<ChatItemProps, ChatItemVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({

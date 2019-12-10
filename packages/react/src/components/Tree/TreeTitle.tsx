@@ -13,7 +13,7 @@ import {
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import { Accessibility, treeTitleBehavior } from '@fluentui/accessibility'
 import { ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
 

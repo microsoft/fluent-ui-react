@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import { pxToRem, createAnimationStyles } from '../../../../lib'
+import { pxToRem, createAnimationStyles } from '../../../../utils'
 import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import Loader from '../../../../components/Loader/Loader'
 import { ButtonProps } from '../../../../components/Button/Button'

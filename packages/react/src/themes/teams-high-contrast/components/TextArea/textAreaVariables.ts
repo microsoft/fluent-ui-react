@@ -1,4 +1,4 @@
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../../../utils'
 import { TextAreaVariables } from '../../../teams/components/TextArea/textAreaVariables'
 
 export default (siteVars: any): Partial<TextAreaVariables> => {

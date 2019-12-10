@@ -11,7 +11,7 @@ import {
   ContentComponentProps,
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import { ShorthandValue, WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Box, { BoxProps } from '../Box/Box'
 

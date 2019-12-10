@@ -10,7 +10,7 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
 import * as _ from 'lodash'
-import { Popper } from '../../lib/positioner'
+import { Popper } from '../../utils/positioner'
 
 import {
   childrenExist,
@@ -24,7 +24,7 @@ import {
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import {
   WithAsProp,
   ShorthandValue,

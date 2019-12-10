@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import NestingContext from '../NestingContext'
 import { NestedContextProps } from '../types'
-import RefStack from '../lib/RefStack'
+import RefStack from '../utils/RefStack'
 import { UseNestingHookResult } from './types'
 
 const registrySet = new RefStack()

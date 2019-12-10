@@ -4777,25 +4777,6 @@
     prop-types "^15.5.10"
     tslib "^1.7.1"
 
-"@uifabricshared/foundation-composable@0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@uifabricshared/foundation-composable/-/foundation-composable-0.5.0.tgz#67b6658a2c28fba3de746979ddf7da52b899514a"
-  integrity sha512-WM48YB/IrYlB4S8ApJDlq1WgZ/5vJY8fh+ERL3Y7QX8PAS9vyfhG8GDZt/+EeYdaDSPhbjy74YArv3gMay0jeg==
-  dependencies:
-    "@uifabricshared/foundation-settings" "^0.4.0"
-
-"@uifabricshared/foundation-settings@0.4.0", "@uifabricshared/foundation-settings@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@uifabricshared/foundation-settings/-/foundation-settings-0.4.0.tgz#551061dbd1fcdf15eda6d9301dd1cf6d641d4ab6"
-  integrity sha512-eF9MF8Cn4cxvQET9qZFMNnRfeui/1Jq7LsmlKs7Ki8PgVLHZ4gmOGc4fw0oHsMFmDQXkkrCKDNfODRjwakgD5w==
-  dependencies:
-    "@uifabricshared/immutable-merge" "^0.2.0"
-
-"@uifabricshared/immutable-merge@^0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@uifabricshared/immutable-merge/-/immutable-merge-0.2.0.tgz#2fe146a052fa80fef6e38e2de537aecd699e670f"
-  integrity sha512-tgFRM2d7HsDUHtMDnI0DPcteTARvmtPOkRuaRuSfdSlbidpJBQtlQeP6B8iPHbrgF3er/I8tkRVe18qbSNC9uA==
-
 "@webassemblyjs/ast@1.8.5":
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.8.5.tgz#51b1c5fe6576a34953bf4b253df9f0d490d9e359"

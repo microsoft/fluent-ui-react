@@ -9,7 +9,7 @@ import {
   commonPropTypes,
   ShorthandFactory,
   childrenExist,
-} from '../../lib'
+} from '../../utils'
 
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 

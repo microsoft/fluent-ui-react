@@ -75,8 +75,8 @@ export default [
   // entire package
   makeConfig('index', 'bundle-stardust-ui-react'),
 
-  // lib (core)
-  makeConfig('lib/index', 'bundle-stardust-ui-core'),
+  // utils (core)
+  makeConfig('utils/index', 'bundle-stardust-ui-core'),
 
   // individual components
   ...fs

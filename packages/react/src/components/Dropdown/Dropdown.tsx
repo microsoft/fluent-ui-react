@@ -31,17 +31,17 @@ import {
   commonPropTypes,
   UIComponentProps,
   isFromKeyboard,
-} from '../../lib'
+} from '../../utils'
 import List from '../List/List'
 import DropdownItem, { DropdownItemProps } from './DropdownItem'
 import DropdownSelectedItem, { DropdownSelectedItemProps } from './DropdownSelectedItem'
 import DropdownSearchInput, { DropdownSearchInputProps } from './DropdownSearchInput'
 import Button, { ButtonProps } from '../Button/Button'
-import { screenReaderContainerStyles } from '../../lib/accessibility/Styles/accessibilityStyles'
+import { screenReaderContainerStyles } from '../../utils/accessibility/Styles/accessibilityStyles'
 import ListItem, { ListItemProps } from '../List/ListItem'
 import Icon, { IconProps } from '../Icon/Icon'
 import Portal from '../Portal/Portal'
-import { ALIGNMENTS, POSITIONS, Popper, PositioningProps } from '../../lib/positioner'
+import { ALIGNMENTS, POSITIONS, Popper, PositioningProps } from '../../utils/positioner'
 
 export interface DropdownSlotClassNames {
   clearIndicator: string
