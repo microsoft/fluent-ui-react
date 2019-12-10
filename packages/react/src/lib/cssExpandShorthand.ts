@@ -911,8 +911,4 @@ function index(property, value) {
   })
 }
 
-// console.log(index('border-color', 'rgba(1,1,1, 1)'))
-// console.log(index('border-color', 'transparent  rgba(1,1,1, 1)'))
-// console.log(normalize('rgba(1, 1, 1, 1) rgb(1, 1,1)'))
-
 export default index
