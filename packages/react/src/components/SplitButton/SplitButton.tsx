@@ -29,6 +29,7 @@ import { PopupProps } from '../Popup/Popup'
 
 export interface SplitButtonSlotClassNames {
   toggleButton: string
+  size?: string
 }
 
 export interface SplitButtonProps
@@ -85,7 +86,7 @@ export interface SplitButtonProps
   secondary?: boolean
 
   /** A split button can be small */
-  small?: boolean
+  size?: string
 
   /** Shorthand for the toggle button. */
   toggleButton?: ShorthandValue<ButtonProps>
@@ -121,7 +122,7 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
     onMenuItemClick: PropTypes.func,
     onOpenChange: PropTypes.func,
     open: PropTypes.bool,
-    small: PropTypes.bool,
+    size: PropTypes.string,
     primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
     secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
     toggleButton: customPropTypes.itemShorthand,

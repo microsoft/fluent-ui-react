@@ -13,7 +13,7 @@ const SplitButtonExampleSmallShorthand = () => (
         'aria-roledescription': 'splitbutton',
         'aria-describedby': 'instruction-message',
       }}
-      small
+      size="small"
       toggleButton={{ 'aria-label': 'expand options menu' }}
       onMainButtonClick={() => alert('button was clicked')}
     />

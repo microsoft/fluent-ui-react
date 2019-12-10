@@ -9,7 +9,7 @@ const splitButtonStyles = {
     borderRightWidth: 0,
     padding: v.padding,
 
-    ...(p.small && {
+    ...(p.size === 'small' && {
       height: v.smallDimension,
       padding: v.smallPadding,
       minWidth: v.smallMinWidth,
@@ -50,7 +50,7 @@ const splitButtonStyles = {
       borderColor: v.borderColorDisabled,
     }),
 
-    ...(p.small && {
+    ...(p.size === 'small' && {
       height: v.smallDimension,
       width: v.smallDimension,
       minWidth: v.smallMinWidth,
