@@ -1,5 +1,5 @@
 import { TextAlignProperty as RealTextAlignProperty } from 'csstype'
-import { AlignValue } from '../lib'
+import { AlignValue } from '../utils'
 
 /** Copy of TextAlignProperty from csstype (works around TS error) */
 // This is probably removable if we turn off isolatedModules in the future (then we can just

@@ -3,7 +3,6 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
 - [Propose feature](#propose-feature)
 - [Prototype](#prototype)
 - [Spec out the API](#spec-out-the-api)
@@ -68,7 +67,7 @@ const Button: React.FunctionalComponent = props => {
 Stateful components should be classes:
 
 ```tsx
-import { AutoControlledComponent as Component } from '../../lib'
+import { AutoControlledComponent as Component } from '../../utils'
 
 class Dropdown extends AutoControlledComponent {
   // ...
@@ -101,7 +100,7 @@ import {
  ContentComponentProps,
  UIComponentProps,
  commonPropTypes,
-} from '../../lib'
+} from '../../utils'
 
 export interface DividerProps
  extends UIComponentProps,
@@ -193,7 +192,7 @@ After iterating on the feature with the maintainers, you will add full test cove
 
 [1]: https://github.com/stardust-ui/react/issues
 [2]: https://github.com/stardust-ui/react/pull/73
-[3]: https://github.com/stardust-ui/react/blob/master/src/lib/AutoControlledComponent.tsx
+[3]: https://github.com/stardust-ui/react/blob/master/packages/react/src/utils/AutoControlledComponent.tsx
 [4]: https://facebook.github.io/react/docs/forms.html#controlled-components
 [5]: https://facebook.github.io/react/docs/forms.html#uncontrolled-components
 [6]: https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit

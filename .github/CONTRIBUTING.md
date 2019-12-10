@@ -1,9 +1,7 @@
-CONTRIBUTING
-============
+# CONTRIBUTING
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-
 
 - [Getting started](#getting-started)
   - [Useful Commands](#useful-commands)
@@ -31,7 +29,7 @@ You can contribute to Stardust by being an official [contributor](setup-local-de
 
 ### Useful Commands
 
->This list contains the most useful commands. You should run `yarn run` to see all scripts.
+> This list contains the most useful commands. You should run `yarn run` to see all scripts.
 
 ```sh
 yarn start                 // run doc site
@@ -66,7 +64,7 @@ These guides will walk your through various activities for contributing:
 
 ## Accessibility
 
-Stardust implements accessibility using accessibility behaviors. The behaviors add attributes to the DOM elements (mainly role and aria-* properties) as well as handle keyboard interaction and focus. Every accessible component has a default behavior, which can be overriden using the `accessibility` prop. You can choose a behavior from the ones provided by Stardust or you can implement a new behavior.
+Stardust implements accessibility using accessibility behaviors. The behaviors add attributes to the DOM elements (mainly role and aria-\* properties) as well as handle keyboard interaction and focus. Every accessible component has a default behavior, which can be overriden using the `accessibility` prop. You can choose a behavior from the ones provided by Stardust or you can implement a new behavior.
 
 Behaviors apply properties, focus handling and keyboard handlers to the component slots. When developing a component, the properties and keyboard handlers need to be spread to the corresponding slots.
 
@@ -83,13 +81,15 @@ ARIA [roles][3] and [attributes][4] provide necessary semantics for assistive te
 In addition to behaviors, ARIA [landmarks][5] and [naming props][6] need to be added to the components/elements to form the page structure and provide textual information.
 
 For example, to make an icon-only Button accessible, `aria-label` prop needs to be used:
+
 ```html
-  <Button icon="star" iconOnly aria-label='Favorites' primary />
+<button icon="star" iconOnly aria-label="Favorites" primary />
 ```
 
 ### Focus
 
 An application should always have an element with [focus][7] when in use. The user can change the focused element by:
+
 - pressing TAB/shift+TAB keys to navigate through the components
 - pressing arrow keys to navigate through children (for example menu items in menu)
 - using the screen reader with or without virtual cursor
@@ -98,7 +98,7 @@ Stardust uses Office UI Fabric [FocusZone][8] for basic TAB and arrow key focus 
 
 Focused component needs to be clearly visible. This is handled in Stardust by focus indicator functionality. Focus indicator will be displayed only if the application is in keyboard mode. Application switches to keyboard mode when a key relevant to navigation is pressed. It disables keyboard mode on mouse click events.
 
- To style the focused component, you can use the `isFromKeyboard` utility and prop. See [Button component][10] and [Button style][11] for reference.
+To style the focused component, you can use the `isFromKeyboard` utility and prop. See [Button component][10] and [Button style][11] for reference.
 
 ### Keyboard handling
 
@@ -111,7 +111,7 @@ We are using [Lerna][14] to manage our packages and [Yarn Workspaces][15] to lin
 ### Add a new package
 
 #### Run `lerna create`
- 
+
 You should to run `lerna create` command to create a new package
 
 - we are using `@fluentui` namespace on NPM to publish our packages
@@ -126,6 +126,7 @@ lerna create @fluentui/react-proptypes react-proptypes
 ```
 
 ##### Example input
+
 ```
 lerna notice cli v3.11.1
 package name: (@fluentui/react-proptypes)
@@ -179,10 +180,7 @@ If your package uses TypeScript, please also create a new `tsconfig.json` and pl
 ```json
 {
   "extends": "../../build/tsconfig.common",
-  "include": [
-    "src",
-    "test"
-  ]
+  "include": ["src", "test"]
 }
 ```
 
@@ -225,10 +223,10 @@ lerna add @fluentui/react-proptypes packages/react
 [6]: https://www.w3.org/TR/wai-aria-1.1/#namecalculation
 [7]: https://www.w3.org/TR/wai-aria-1.1/#managingfocus
 [8]: https://developer.microsoft.com/en-us/fabric#/components/focuszone
-[9]: https://github.com/stardust-ui/react/blob/master/src/lib/accessibility/Behaviors/Menu/MenuBehavior.ts
+[9]: https://github.com/stardust-ui/react/blob/master/packages/react/src/utils/accessibility/Behaviors/Menu/MenuBehavior.ts
 [10]: https://github.com/stardust-ui/react/blob/master/src/components/Button/Button.tsx
 [11]: https://github.com/stardust-ui/react/blob/master/src/themes/teams/components/Button/buttonStyles.ts
-[12]: https://github.com/stardust-ui/react/blob/master/src/lib/accessibility/Behaviors/Menu/MenuItemBehavior.ts
+[12]: https://github.com/stardust-ui/react/blob/master/packages/react/src/utils/accessibility/Behaviors/Menu/MenuItemBehavior.ts
 [13]: https://github.com/stardust-ui/react/blob/master/src/components/Menu/MenuItem.tsx
 [14]: https://lernajs.io/
 [15]: https://yarnpkg.com/en/docs/workspaces

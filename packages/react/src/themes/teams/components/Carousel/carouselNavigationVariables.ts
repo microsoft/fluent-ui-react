@@ -1,4 +1,4 @@
-import { pxToRem, stringLiteralsArray } from '../../../../lib'
+import { pxToRem, stringLiteralsArray } from '../../../../utils'
 import { extendColorScheme, pickValuesFromColorScheme } from '../../../colorUtils'
 import { ItemType } from '../../../types'
 import { TeamsSchemeMappingWithAreas } from '../../types'

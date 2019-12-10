@@ -18,7 +18,7 @@ import {
   getOrGenerateIdFromShorthand,
   createShorthandFactory,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import { ShorthandValue, Props } from '../../types'
 import {
   ALIGNMENTS,
@@ -26,10 +26,10 @@ import {
   Popper,
   BasicPositioningProps,
   PopperChildrenProps,
-} from '../../lib/positioner'
+} from '../../utils/positioner'
 import TooltipContent, { TooltipContentProps } from './TooltipContent'
 import { Accessibility, tooltipBehavior } from '@fluentui/accessibility'
-import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
+import { ReactAccessibilityBehavior } from '../../utils/accessibility/reactTypes'
 import PortalInner from '../Portal/PortalInner'
 
 export interface TooltipSlotClassNames {

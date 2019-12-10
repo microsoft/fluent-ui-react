@@ -1,4 +1,4 @@
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../../../utils'
 import { SiteVariablesPrepared } from '../../../types'
 
 export interface SliderVariables {

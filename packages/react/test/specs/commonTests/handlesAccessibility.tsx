@@ -9,7 +9,7 @@ import * as React from 'react'
 import * as keyboardKey from 'keyboard-key'
 
 import { mountWithProviderAndGetComponent, mountWithProvider } from 'test/utils'
-import { UIComponent } from 'src/lib'
+import { UIComponent } from 'src/utils'
 import { EVENT_TARGET_ATTRIBUTE, getEventTargetComponent } from './eventTarget'
 
 export const getRenderedAttribute = (renderedComponent, propName, partSelector) => {

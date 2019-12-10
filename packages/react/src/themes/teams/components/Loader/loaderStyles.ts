@@ -6,7 +6,7 @@ import {
 import { FlexDirectionProperty } from 'csstype'
 import { LoaderProps } from '../../../../components/Loader/Loader'
 import { LoaderVariables } from './loaderVariables'
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../../../utils'
 import { ObjectOf } from '../../../../types'
 
 const rootFlexDirections: ObjectOf<FlexDirectionProperty> = {

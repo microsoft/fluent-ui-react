@@ -11,7 +11,7 @@ import {
   ContentComponentProps,
   rtlTextContainer,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import Layout from '../Layout/Layout'
 import { ComponentSlotClasses } from '../../themes/types'
 import { WithAsProp, withSafeTypeForAs } from '../../types'

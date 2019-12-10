@@ -15,7 +15,7 @@ import {
   rtlTextContainer,
   createShorthandFactory,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import Button, { ButtonProps } from './Button'
 
 export interface ButtonGroupProps

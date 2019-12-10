@@ -4,8 +4,8 @@ import * as React from 'react'
 import { toRefObject } from '@fluentui/react-component-ref'
 import { EventListener } from '@fluentui/react-component-event-listener'
 
-import { isBrowser } from '../../lib'
-import { isEnabled as isDebugEnabled } from '../../lib/debug/debugEnabled'
+import { isBrowser } from '../../utils'
+import { isEnabled as isDebugEnabled } from '../../utils/debug/debugEnabled'
 
 import DebugPanel from './DebugPanel'
 import FiberNavigator from './FiberNavigator'

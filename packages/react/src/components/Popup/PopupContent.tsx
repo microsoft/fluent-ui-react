@@ -21,9 +21,9 @@ import {
   commonPropTypes,
   rtlTextContainer,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import { Accessibility } from '@fluentui/accessibility'
-import { PopperChildrenProps } from '../../lib/positioner'
+import { PopperChildrenProps } from '../../utils/positioner'
 import { WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 
 export interface PopupContentSlotClassNames {

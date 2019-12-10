@@ -12,7 +12,7 @@ import {
   ShorthandFactory,
   createShorthandFactory,
   applyAccessibilityKeyHandlers,
-} from '../../lib'
+} from '../../utils'
 import Box, { BoxProps } from '../Box/Box'
 import { WithAsProp, ShorthandValue } from '../../types'
 import { Accessibility, tableCellBehavior } from '@fluentui/accessibility'
