@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { hot } from 'react-hot-loader/root'
 import { themes, Debug, Provider } from '@fluentui/react'
-import { FabricToTeamsProvider, TeamsToFabricProvider } from '@fluentui/react-base-theme'
+import { FabricToTeamsProvider, TeamsToFabricProvider } from '@fluentui/react-theming-adapters'
 
 import { mergeThemes } from 'src/lib'
 import { ThemeContext, ThemeContextData, themeContextDefaults } from './context/ThemeContext'

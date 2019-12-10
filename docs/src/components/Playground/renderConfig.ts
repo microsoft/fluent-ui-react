@@ -2,7 +2,7 @@ import * as CodeSandbox from '@fluentui/code-sandbox'
 import * as DocsComponent from '@fluentui/docs-components'
 import * as Stardust from '@fluentui/react'
 import * as ReactFela from 'react-fela'
-import * as ReactBaseTheme from '@fluentui/react-base-theme'
+import * as ReactThemingAdapters from '@fluentui/react-theming-adapters'
 import * as _ from 'lodash'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
@@ -34,6 +34,10 @@ export const imports: Record<string, { version: string; module: any }> = {
     version: stardustReactPackageJson.version,
     module: Stardust,
   },
+  '@fluentui/react-theming-adapters': {
+    version: stardustReactPackageJson.dependencies['react-base-theme'],
+    module: ReactThemingAdapters,
+  },
   classnames: {
     version: stardustReactPackageJson.dependencies['classnames'],
     module: Classnames,
@@ -53,10 +57,6 @@ export const imports: Record<string, { version: string; module: any }> = {
   'react-fela': {
     version: stardustReactPackageJson.dependencies['react-fela'],
     module: ReactFela,
-  },
-  'react-base-theme': {
-    version: stardustReactPackageJson.dependencies['react-base-theme'],
-    module: ReactBaseTheme,
   },
   prettier: {
     version: docsComponentsPackageJson.peerDependencies['prettier'],

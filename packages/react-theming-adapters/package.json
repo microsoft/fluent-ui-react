@@ -18,7 +18,7 @@
   "license": "MIT",
   "main": "dist/commonjs/index.js",
   "module": "dist/es/index.js",
-  "name": "@fluentui/react-base-theme",
+  "name": "@fluentui/react-theming-adapters",
   "peerDependencies": {
     "react": "^16.8.0",
     "react-dom": "^16.8.0"

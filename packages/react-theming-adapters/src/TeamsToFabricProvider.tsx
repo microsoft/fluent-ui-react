@@ -57,7 +57,7 @@ const makeCustomizerProps = (theme: any): any => {
   return theProps
 }
 
-export const TeamsToFabricProvider: React.FunctionComponent<FluentToFabricProviderProps> = props => (
+const TeamsToFabricProvider: React.FunctionComponent<FluentToFabricProviderProps> = props => (
   <Provider.Consumer
     render={theme => (
       <Fabric>
@@ -66,3 +66,5 @@ export const TeamsToFabricProvider: React.FunctionComponent<FluentToFabricProvid
     )}
   />
 )
+
+export default TeamsToFabricProvider
