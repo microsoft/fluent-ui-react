@@ -269,6 +269,8 @@ cd packages/perf-test
 yarn just perf-test
 ```
 
+After running `perf-test`, results can be viewed in the `packages/perf-test/dist` folder with the main entry file being `packages/perf-test/dist/perfCounts.html`.
+
 There are more detailed commands as well (these must be run from `packages/perf-test` directory):
 
 | Command | Description |
