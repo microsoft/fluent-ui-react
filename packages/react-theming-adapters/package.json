@@ -1,11 +1,11 @@
 {
-  "author": "Levi Thomason <me@levithomason.com>",
-  "bugs": "https://github.com/stardust-ui/react/issues",
+  "author": "Marija Najdova <mnajdova@gmail.com>",
+  "bugs": "https://github.com/microsoft/fluent-ui-react/issues",
   "dependencies": {
     "@fluentui/react": "^0.41.0",
     "office-ui-fabric-react": "^7.44.0"
   },
-  "description": "A base theme for Fluent and Fabric",
+  "description": "Adapters for interop for the Teams and Fabric themes.",
   "devDependencies": {
     "@fluentui/internal-tooling": "^0.41.0",
     "lerna-alias": "^3.0.3-0"
@@ -13,7 +13,7 @@
   "files": [
     "dist"
   ],
-  "homepage": "https://github.com/stardust-ui/react#readme",
+  "homepage": "https://github.com/microsoft/fluent-ui-react#readme",
   "jsnext:main": "dist/es/index.js",
   "license": "MIT",
   "main": "dist/commonjs/index.js",
