@@ -6,7 +6,6 @@ export interface SplitButtonVariables {
   borderColorPrimary: string
   borderColor: string
   borderColorDisabled: string
-  borderWidthLeftOnly: string
   smallDimension: string
   smallPadding: string
   smallMinWidth: string
@@ -20,7 +19,6 @@ export default (siteVars: SiteVariablesPrepared): SplitButtonVariables => {
     borderColor: siteVars.colorScheme.default.border,
     borderColorPrimary: siteVars.colors.brand[500],
     borderColorDisabled: siteVars.colorScheme.brand.foregroundDisabled,
-    borderWidthLeftOnly: '0 0 0 .1rem',
     smallDimension: pxToRem(24),
     smallPadding: `0 ${pxToRem(8)}`,
     smallMinWidth: '0',

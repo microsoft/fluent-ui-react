@@ -34,19 +34,19 @@ const splitButtonStyles = {
     },
   }),
 
-  toggleButton: ({ props: p, variables: v }): ICSSInJSStyle => ({
+  toggleButton: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
     borderTopLeftRadius: 0,
     borderBottomLeftRadius: 0,
     borderColor: v.borderColor,
     ...getIconFillOrOutlineStyles({ outline: true }),
 
     ...(p.primary && {
-      borderWidth: v.borderWidthLeftOnly,
+      borderWidth: `0 0 0 ${siteVariables.borderWidth}`,
       borderColor: v.borderColorPrimary,
     }),
 
     ...(p.disabled && {
-      borderWidth: v.borderWidthLeftOnly,
+      borderWidth: `0 0 0 ${siteVariables.borderWidth}`,
       borderColor: v.borderColorDisabled,
     }),
 
