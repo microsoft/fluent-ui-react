@@ -9,9 +9,9 @@ import {
   createShorthandFactory,
   commonPropTypes,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import { ShorthandValue, ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
-import { UIComponentProps } from '../../lib/commonPropInterfaces'
+import { UIComponentProps } from '../../utils/commonPropInterfaces'
 import ListItem from '../List/ListItem'
 import Icon, { IconProps } from '../Icon/Icon'
 import Image, { ImageProps } from '../Image/Image'

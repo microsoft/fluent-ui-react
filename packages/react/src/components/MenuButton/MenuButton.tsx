@@ -12,15 +12,15 @@ import {
   getOrGenerateIdFromShorthand,
   commonPropTypes,
   StyledComponentProps,
-} from '../../lib'
+} from '../../utils'
 import { ShorthandValue, ComponentEventHandler, ShorthandCollection } from '../../types'
 
-import { createShorthandFactory, ShorthandFactory } from '../../lib/factories'
+import { createShorthandFactory, ShorthandFactory } from '../../utils/factories'
 import Popup, { PopupProps, PopupEvents, PopupEventsArray } from '../Popup/Popup'
 import Menu, { MenuProps } from '../Menu/Menu'
 import { MenuItemProps } from '../Menu/MenuItem'
 import { focusMenuItem } from './focusUtils'
-import { ALIGNMENTS, POSITIONS, PositioningProps } from '../../lib/positioner'
+import { ALIGNMENTS, POSITIONS, PositioningProps } from '../../utils/positioner'
 
 export interface MenuButtonSlotClassNames {
   menu: string

@@ -11,7 +11,7 @@ import {
   ColorComponentProps,
   SizeValue,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'

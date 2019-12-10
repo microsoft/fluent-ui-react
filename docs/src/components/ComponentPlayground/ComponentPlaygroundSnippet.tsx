@@ -11,9 +11,7 @@ type ComponentPlaygroundSnippetProps = {
 /**
  * This component uses `react-element-to-jsx-string` to get a generated markup with props.
  */
-const ComponentPlaygroundSnippet: React.FunctionComponent<
-  ComponentPlaygroundSnippetProps
-> = props => {
+const ComponentPlaygroundSnippet: React.FunctionComponent<ComponentPlaygroundSnippetProps> = props => {
   const { element, component, ...rest } = props
 
   if (process.env.NODE_ENV !== 'production') {

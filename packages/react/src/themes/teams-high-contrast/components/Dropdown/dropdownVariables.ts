@@ -1,5 +1,5 @@
 import { DropdownVariables } from '../../../teams/components/Dropdown/dropdownVariables'
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../../../utils'
 
 export interface DropdownVariablesHC extends DropdownVariables {
   borderColorHover: string

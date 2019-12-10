@@ -12,7 +12,7 @@ import {
   ShorthandFactory,
   applyAccessibilityKeyHandlers,
   UIComponent,
-} from '../../lib'
+} from '../../utils'
 import {
   ComponentEventHandler,
   ShorthandCollection,
@@ -26,7 +26,7 @@ import {
   toolbarMenuItemRadioBehavior,
 } from '@fluentui/accessibility'
 import ToolbarMenuItem, { ToolbarMenuItemProps } from './ToolbarMenuItem'
-import { mergeComponentVariables } from '../../lib/mergeThemes'
+import { mergeComponentVariables } from '../../utils/mergeThemes'
 import Box, { BoxProps } from '../Box/Box'
 
 export interface ToolbarMenuRadioGroupProps

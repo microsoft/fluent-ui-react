@@ -14,11 +14,11 @@ import {
   getKindProp,
   rtlTextContainer,
   ShorthandFactory,
-} from '../../lib'
-import { mergeComponentVariables } from '../../lib/mergeThemes'
+} from '../../utils'
+import { mergeComponentVariables } from '../../utils/mergeThemes'
 
 import MenuItem, { MenuItemProps } from './MenuItem'
-import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
+import { ReactAccessibilityBehavior } from '../../utils/accessibility/reactTypes'
 import { ComponentVariablesObject, ComponentSlotStylesPrepared } from '../../themes/types'
 import {
   WithAsProp,

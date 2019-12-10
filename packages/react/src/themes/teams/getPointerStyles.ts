@@ -1,4 +1,4 @@
-import { PopperChildrenProps } from '../../lib/positioner'
+import { PopperChildrenProps } from '../../utils/positioner'
 
 const rtlMapping = {
   left: 'right',

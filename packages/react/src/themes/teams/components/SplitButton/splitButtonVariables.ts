@@ -1,6 +1,6 @@
 import { SiteVariablesPrepared } from '../../../types'
 
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../../../utils'
 
 export interface SplitButtonVariables {
   borderRadius: string

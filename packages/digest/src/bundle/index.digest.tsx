@@ -6,24 +6,14 @@ import config from 'stories/config'
 
 const { stories, decorator } = config
 
-// TODO: Remove once digest can pass along story information to consumer.
-// Temporary code to spit out object for copy/pasting into consumer until story data can be shared.
-// let storiesString = '{';
-// Object.keys(stories).forEach(kind => {
-//   storiesString += `${kind}: {`;
-//   Object.keys(stories[kind]).forEach(story => {
-//     storiesString += `${story}: ''`;
-//   })
-//   storiesString += '},';
-// })
-// storiesString += '};';
-// console.log(storiesString);
-
-// TODO: going to need to support story setup like initializeIcons for Fabric.
+// TODO:
+// going to need to support story setup like initializeIcons for Fabric.
+// or leave it up to static init in the story? assuming it doesn't run for all stories..
 
 const div = document.createElement('div')
 document.body.appendChild(div)
 
+// TODO: use iterations from story object
 const defaultIterations = 1
 
 // This is structure to follow storybook conventions to take advantage of existing storybook CSFs.
@@ -57,20 +47,24 @@ if (selectedKind && selectedStory) {
             <div>
               <br />
               <b>Kind: {kindKey}</b>
-              {Object.keys(stories[kindKey]).map(storyKey => {
-                return (
-                  <div>
-                    <br />
+              {Object.keys(stories[kindKey])
+                .filter(storyKey => typeof stories[kindKey][storyKey] === 'function')
+                .map(storyKey => {
+                  return (
                     <div>
-                      Story:{' '}
-                      <a href={`?selectedKind=${kindKey}&selectedStory=${storyKey}&iterations=50`}>
-                        {storyKey}
-                      </a>
+                      <br />
+                      <div>
+                        Story:{' '}
+                        <a
+                          href={`?selectedKind=${kindKey}&selectedStory=${storyKey}&iterations=50`}
+                        >
+                          {storyKey}
+                        </a>
+                      </div>
+                      <div>{stories[kindKey][storyKey]()}</div>
                     </div>
-                    <div>{stories[kindKey][storyKey]()}</div>
-                  </div>
-                )
-              })}
+                  )
+                })}
             </div>
           )
         })}

@@ -15,9 +15,7 @@ export { default as Segment } from './components/Segment/segmentVariables'
 export { default as Text } from './components/Text/textVariables'
 export { default as TextArea } from './components/TextArea/textAreaVariables'
 export { default as Toolbar } from './components/Toolbar/toolbarVariables'
-export {
-  default as HierarchicalTreeTitle,
-} from './components/HierarchicalTree/hierarchicalTreeTitleVariables'
+export { default as HierarchicalTreeTitle } from './components/HierarchicalTree/hierarchicalTreeTitleVariables'
 export { default as Status } from './components/Status/statusVariables'
 export { default as Reaction } from './components/Reaction/reactionVariables'
 export { default as Alert } from './components/Alert/alertVariables'

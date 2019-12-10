@@ -15,7 +15,7 @@ import {
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import RadioGroupItem, { RadioGroupItemProps } from './RadioGroupItem'
 import {
   WithAsProp,

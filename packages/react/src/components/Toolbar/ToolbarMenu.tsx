@@ -14,8 +14,8 @@ import {
   ContentComponentProps,
   ShorthandFactory,
   applyAccessibilityKeyHandlers,
-} from '../../lib'
-import { mergeComponentVariables } from '../../lib/mergeThemes'
+} from '../../utils'
+import { mergeComponentVariables } from '../../utils/mergeThemes'
 
 import {
   ComponentEventHandler,

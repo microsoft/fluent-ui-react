@@ -39,11 +39,17 @@ export const suggest = (suggestions: string[]) => {
           const suggestionWords = suggestion.split(' ')
 
           const propValueScore = _.sum(
-            _.map(_.map(propValueWords, x => _.map(suggestionWords, y => leven(x, y))), _.min),
+            _.map(
+              _.map(propValueWords, x => _.map(suggestionWords, y => leven(x, y))),
+              _.min,
+            ),
           )
 
           const suggestionScore = _.sum(
-            _.map(_.map(suggestionWords, x => _.map(propValueWords, y => leven(x, y))), _.min),
+            _.map(
+              _.map(suggestionWords, x => _.map(propValueWords, y => leven(x, y))),
+              _.min,
+            ),
           )
 
           return { suggestion, score: propValueScore + suggestionScore }

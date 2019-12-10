@@ -1,0 +1,6 @@
+{
+  "extends": ["../internal-tooling/eslint/index.js"],
+  "rules": {
+    "semi": ["error", "always"]
+  }
+}

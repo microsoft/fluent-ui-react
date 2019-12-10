@@ -10,7 +10,7 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
 import * as _ from 'lodash'
-import { Popper } from '../../lib/positioner'
+import { Popper } from '../../utils/positioner'
 
 import {
   childrenExist,
@@ -24,7 +24,7 @@ import {
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import {
   WithAsProp,
   ShorthandValue,
@@ -173,7 +173,10 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     // prevents default FocusZone behavior, e.g., in ChatMessageBehavior, it prevents FocusZone from using arrow keys
     // as navigation (only Tab key should work)
     preventDefault: event => {
-      event.preventDefault()
+      // preventDefault only if event coming from inside the message
+      if (event.currentTarget !== event.target) {
+        event.preventDefault()
+      }
     },
 
     focus: event => {

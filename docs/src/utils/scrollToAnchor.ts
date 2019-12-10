@@ -16,7 +16,7 @@ const scrollToAnchor = (lastOffsetY?, lastAcceleration = 0.1) => {
 
   const elementTop = Math.round(anchor.getBoundingClientRect().top)
   const scrollStep = Math.ceil(Math.abs(elementTop / 8)) * mathSign(elementTop)
-  const acceleration = Math.min(1, (lastAcceleration * 100) ** 1.1 / 100)
+  const acceleration = Math.min(1, Math.pow(lastAcceleration * 100, 1.1) / 100)
 
   // if our last step was not applied, stop
   // we've either hit the top, bottom, or arrived at the element
