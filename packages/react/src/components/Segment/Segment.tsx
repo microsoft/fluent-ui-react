@@ -9,7 +9,7 @@ import {
   commonPropTypes,
   rtlTextContainer,
   ColorComponentProps,
-} from '../../lib'
+} from '../../utils'
 import { Accessibility } from '@fluentui/accessibility'
 
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'

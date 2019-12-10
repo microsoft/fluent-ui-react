@@ -12,7 +12,7 @@ import {
   commonPropTypes,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
-} from '../../lib'
+} from '../../utils'
 import AccordionTitle, { AccordionTitleProps } from './AccordionTitle'
 import AccordionContent, { AccordionContentProps } from './AccordionContent'
 
@@ -23,7 +23,7 @@ import {
   ShorthandRenderFunction,
   withSafeTypeForAs,
 } from '../../types'
-import { ContainerFocusHandler } from '../../lib/accessibility/FocusHandling/FocusContainer'
+import { ContainerFocusHandler } from '../../utils/accessibility/FocusHandling/FocusContainer'
 
 export interface AccordionSlotClassNames {
   content: string

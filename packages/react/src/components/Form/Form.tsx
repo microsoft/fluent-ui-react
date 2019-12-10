@@ -12,7 +12,7 @@ import {
   commonPropTypes,
   rtlTextContainer,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import {
   ComponentEventHandler,
   WithAsProp,

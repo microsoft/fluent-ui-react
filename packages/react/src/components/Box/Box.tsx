@@ -7,8 +7,8 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   rtlTextContainer,
-} from '../../lib'
-import createComponent from '../../lib/createComponent'
+} from '../../utils'
+import createComponent from '../../utils/createComponent'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface BoxProps

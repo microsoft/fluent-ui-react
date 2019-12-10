@@ -12,11 +12,11 @@ import {
   commonPropTypes,
   UIComponentProps,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Icon, { IconProps } from '../Icon/Icon'
 import Text, { TextProps } from '../Text/Text'
-import { SupportedIntrinsicInputProps } from '../../lib/htmlPropsUtils'
+import { SupportedIntrinsicInputProps } from '../../utils/htmlPropsUtils'
 
 export interface CheckboxSlotClassNames {
   label: string
