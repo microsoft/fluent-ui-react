@@ -27,29 +27,25 @@ class App extends React.Component<any, ThemeContextData> {
 
   render() {
     const { selectedTheme } = this.state
+    const content = (
+      <PerfDataProvider>
+        <div>
+          <Debug />
+          <Routes />
+        </div>
+      </PerfDataProvider>
+    )
     return (
       <ThemeContext.Provider value={this.state}>
         {selectedTheme.value === 'fabricToTeams' ? (
           <Fabric applyTheme>
             <FabricToTeamsProvider fluentOverridesTheme={themes['teams']}>
-              <PerfDataProvider>
-                <div>
-                  <Debug />
-                  <Routes />
-                </div>
-              </PerfDataProvider>
+              {content}
             </FabricToTeamsProvider>
           </Fabric>
         ) : selectedTheme.value === 'teamsToFabric' ? (
           <Provider theme={themes['teams']}>
-            <TeamsToFabricProvider>
-              <PerfDataProvider>
-                <div>
-                  <Debug />
-                  <Routes />
-                </div>
-              </PerfDataProvider>
-            </TeamsToFabricProvider>
+            <TeamsToFabricProvider>{content}</TeamsToFabricProvider>
           </Provider>
         ) : (
           <Provider
@@ -63,12 +59,7 @@ class App extends React.Component<any, ThemeContextData> {
               ],
             })}
           >
-            <PerfDataProvider>
-              <div>
-                <Debug />
-                <Routes />
-              </div>
-            </PerfDataProvider>
+            {content}
           </Provider>
         )}
       </ThemeContext.Provider>
