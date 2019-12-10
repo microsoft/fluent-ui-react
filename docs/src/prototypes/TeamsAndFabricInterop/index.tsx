@@ -6,14 +6,14 @@ import ComponentDocThemeSwitcher from '../../components/ComponentDoc/ComponentDo
 const generateRow = (text, fabricControl, teamsControl) => {
   return (
     <>
-      <Text content="Default button" />
+      <Text content={text} />
       <div>{fabricControl}</div>
       <div>{teamsControl}</div>
     </>
   )
 }
 
-const FluentAndFabricInterop: React.FunctionComponent = () => (
+const TeamsAndFabricInterop: React.FunctionComponent = () => (
   <Flex column padding="padding.medium" gap="gap.medium">
     <Flex.Item>
       <Text content="Choose Teams to Fabric or Fabric to Teams to explore components interop" />
@@ -39,4 +39,4 @@ const FluentAndFabricInterop: React.FunctionComponent = () => (
   </Flex>
 )
 
-export default FluentAndFabricInterop
+export default TeamsAndFabricInterop

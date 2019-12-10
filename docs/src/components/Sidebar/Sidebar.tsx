@@ -384,11 +384,11 @@ class Sidebar extends React.Component<any, any> {
         public: true,
       },
       {
-        key: 'fluent-and-fabric-interop',
+        key: 'teams-and-fabric-interop',
         title: {
-          content: 'Fluent and Fabric interop',
+          content: 'Teams and Fabric Interop',
           as: NavLink,
-          to: '/fluent-and-fabric-interop',
+          to: '/teams-and-fabric-interop',
         },
         public: false,
       },
