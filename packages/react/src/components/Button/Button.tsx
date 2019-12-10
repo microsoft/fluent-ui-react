@@ -16,7 +16,7 @@ import {
   applyAccessibilityKeyHandlers,
   SizeValue,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import Icon, { IconProps } from '../Icon/Icon'
 import Box, { BoxProps } from '../Box/Box'
 import Loader, { LoaderProps } from '../Loader/Loader'

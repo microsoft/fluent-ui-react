@@ -15,6 +15,7 @@ docs/src/currentBundleStats.json
 docs/src/exampleMenus
 docs/src/exampleSources
 docs/dist/
+# lib/
 node_modules/
 report.*.json
 stats/

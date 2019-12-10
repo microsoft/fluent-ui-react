@@ -14,7 +14,7 @@ import {
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import { ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface HierarchicalTreeTitleProps

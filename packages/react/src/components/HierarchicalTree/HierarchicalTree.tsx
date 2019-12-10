@@ -16,7 +16,7 @@ import {
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import {
   ShorthandValue,
   ShorthandRenderFunction,

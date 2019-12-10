@@ -7,7 +7,7 @@ import {
   UIComponent,
   commonPropTypes,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import { Accessibility } from '@fluentui/accessibility'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 

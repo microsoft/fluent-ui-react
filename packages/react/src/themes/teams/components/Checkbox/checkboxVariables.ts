@@ -1,4 +1,4 @@
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../../../utils'
 import * as _ from 'lodash'
 
 export type CheckboxVariables = {

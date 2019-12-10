@@ -1,5 +1,5 @@
 import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../../../utils'
 import Embed, { EmbedProps, EmbedState } from '../../../../components/Embed/Embed'
 import { EmbedVariables } from './embedVariables'
 import getBorderFocusStyles from '../../getBorderFocusStyles'

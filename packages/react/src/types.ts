@@ -4,7 +4,7 @@
 
 import * as React from 'react'
 import { ThemeInput, Renderer, ThemePrepared } from './themes/types'
-import Telemetry from './lib/Telemetry'
+import Telemetry from './utils/Telemetry'
 
 export type Extendable<T, V = any> = T & {
   [key: string]: V

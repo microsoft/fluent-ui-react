@@ -10,7 +10,7 @@ import {
   commonPropTypes,
   SizeValue,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Box, { BoxProps } from '../Box/Box'
 import Text, { TextProps } from '../Text/Text'

@@ -20,7 +20,7 @@ import {
   isFromKeyboard,
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import Icon, { IconProps } from '../Icon/Icon'
 import Menu, { MenuProps, MenuShorthandKinds } from './Menu'
 import Box, { BoxProps } from '../Box/Box'
@@ -31,7 +31,7 @@ import {
   ShorthandCollection,
   withSafeTypeForAs,
 } from '../../types'
-import { Popper } from '../../lib/positioner'
+import { Popper } from '../../utils/positioner'
 
 export interface MenuItemSlotClassNames {
   wrapper: string

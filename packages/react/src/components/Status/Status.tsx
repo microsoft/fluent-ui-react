@@ -11,7 +11,7 @@ import {
   commonPropTypes,
   SizeValue,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 
 export interface StatusProps extends UIComponentProps {
