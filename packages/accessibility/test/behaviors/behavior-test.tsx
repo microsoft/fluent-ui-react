@@ -75,7 +75,7 @@ import {
   gridNestedBehavior,
   gridHeaderRowBehavior,
   gridHeaderCellBehavior,
-  gridRowBehavior,
+  gridRowNestedBehavior,
   gridCellBehavior,
   gridCellMultipleFocusableBehavior,
   gridCellWithFocusableElementBehavior,
@@ -158,7 +158,7 @@ testHelper.addBehavior('tableRowBehavior', tableRowBehavior)
 testHelper.addBehavior('gridNestedBehavior', gridNestedBehavior)
 testHelper.addBehavior('gridHeaderRowBehavior', gridHeaderRowBehavior)
 testHelper.addBehavior('gridHeaderCellBehavior', gridHeaderCellBehavior)
-testHelper.addBehavior('gridRowBehavior', gridRowBehavior)
+testHelper.addBehavior('gridRowNestedBehavior', gridRowNestedBehavior)
 testHelper.addBehavior('gridCellBehavior', gridCellBehavior)
 testHelper.addBehavior('gridCellMultipleFocusableBehavior', gridCellMultipleFocusableBehavior)
 testHelper.addBehavior('gridCellWithFocusableElementBehavior', gridCellWithFocusableElementBehavior)

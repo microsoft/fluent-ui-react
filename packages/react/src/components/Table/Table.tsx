@@ -132,9 +132,7 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
     return TableRow.create(header, {
       defaultProps: () => ({
         ...headerRowProps,
-        accessibility: accessibility.childBehaviors
-          ? accessibility.childBehaviors.headerRow
-          : undefined,
+        accessibility: accessibility.childBehaviors ? accessibility.childBehaviors.row : undefined,
       }),
       overrideProps,
     })

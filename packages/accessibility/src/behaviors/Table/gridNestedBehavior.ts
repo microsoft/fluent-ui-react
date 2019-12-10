@@ -1,7 +1,6 @@
 import { Accessibility } from '../../types'
 import * as keyboardKey from 'keyboard-key'
 import { FocusZoneMode, FocusZoneDirection } from '../../focusZone/types'
-import gridHeaderRowBehavior from './gridHeaderRowBehavior'
 import gridRowBehavior from './gridRowBehavior'
 
 /**
@@ -12,7 +11,6 @@ import gridRowBehavior from './gridRowBehavior'
  * Provides arrow key navigation in vertical direction.
  * Focused active element of the component is reset when TAB from the component.
  * Triggers 'focus' action with 'Escape' on 'root'.
- * Applies 'gridHeaderRowBehavior' for 'headerRow' child component.
  * Applies 'gridRowBehavior' for 'row' child component.
  */
 
@@ -38,7 +36,6 @@ const gridNestedBehavior: Accessibility = props => ({
     },
   },
   childBehaviors: {
-    headerRow: gridHeaderRowBehavior,
     row: gridRowBehavior,
   },
 })
