@@ -9,4 +9,6 @@ const HeaderDescriptionPerf = () => (
   />
 )
 
+HeaderDescriptionPerf.iterations = 5000
+
 export default HeaderDescriptionPerf

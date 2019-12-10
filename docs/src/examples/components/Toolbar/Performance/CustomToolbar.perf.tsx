@@ -539,23 +539,27 @@ const CustomToolbar: React.FunctionComponent<CustomToolbarProps> = props => {
 }
 
 const CustomToolbarPrototype: React.FunctionComponent = () => {
-  let theme = {}
-  theme = mergeThemes(themes.teamsDark, darkThemeOverrides)
+    let theme = {}
+    theme = mergeThemes(themes.teamsDark, darkThemeOverrides)
 
-  return (
-    <Provider theme={theme}>
-      <CustomToolbar
-        layout="standard"
-        isRecording={true}
-        cameraActive={true}
-        micActive={true}
-        screenShareActive={true}
-        sidebarSelected={false}
-        chatHasNotification={true}
-        pptSlide={`${1} of ${2}`}
-      />
-    </Provider>
-  )
-}
+    return (
+      <Provider theme={theme}>
+        <CustomToolbar
+          layout="standard"
+          isRecording={true}
+          cameraActive={true}
+          micActive={true}
+          screenShareActive={true}
+          sidebarSelected={false}
+          chatHasNotification={true}
+          pptSlide={`${1} of ${2}`}
+        />
+      </Provider>
+    )
+  }
+
+  // Perf stories should be modified to follow Storybook CSF for supporting metadata.
+  // For now cast as any to add metadata to default export.
+;(CustomToolbarPrototype as any).iterations = 100
 
 export default CustomToolbarPrototype

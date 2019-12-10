@@ -173,7 +173,10 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
     // prevents default FocusZone behavior, e.g., in ChatMessageBehavior, it prevents FocusZone from using arrow keys
     // as navigation (only Tab key should work)
     preventDefault: event => {
-      event.preventDefault()
+      // preventDefault only if event coming from inside the message
+      if (event.currentTarget !== event.target) {
+        event.preventDefault()
+      }
     },
 
     focus: event => {
