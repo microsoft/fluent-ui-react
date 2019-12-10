@@ -14,6 +14,7 @@
   - [Using prop interfaces and propTypes](#using-prop-interfaces-and-proptypes)
   - [State](#state)
   - [Conformance Test](#conformance-test)
+  - [Performance Test](#performance-test)
   - [Add doc site example](#add-doc-site-example)
   - [Commit Messages](#commit-messages)
 - [Open PR](#open-pr)
@@ -162,6 +163,10 @@ class MyComponent extends AutoControlledComponent<MyComponentProps> {
 ### Conformance Test
 
 Review [common tests](test-a-feature.md#common-tests) below. You should now add the [`isConformant()`](test-a-feature.md#isconformant-required) common test and get it to pass. This will validate the `displayName` and `className` and multiple other aspects to help you get your component off the ground.
+
+### Performance Test
+
+Add a [performance test](test-a-feature.md#performance-tests) to set a baseline performance measurement for your component and guard against future regressions.
 
 ### Add doc site example
 
