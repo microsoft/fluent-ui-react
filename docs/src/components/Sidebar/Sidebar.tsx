@@ -383,6 +383,15 @@ class Sidebar extends React.Component<any, any> {
         },
         public: true,
       },
+      {
+        key: 'fluent-and-fabric-interop',
+        title: {
+          content: 'Fluent and Fabric interop',
+          as: NavLink,
+          to: '/fluent-and-fabric-interop',
+        },
+        public: false,
+      },
     ]
 
     const componentTreeSection = {

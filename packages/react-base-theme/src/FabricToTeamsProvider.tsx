@@ -67,7 +67,7 @@ function makeFluentTheme(fabricTheme: ITheme, baseTheme: ThemeInput): any {
   return mergeThemes(baseTheme, buttonOverrides)
 }
 
-export const ReactBaseTheme: React.FunctionComponent<ReactBaseThemeProps> = props => {
+export const FabricToTeamsProvider: React.FunctionComponent<ReactBaseThemeProps> = props => {
   const { fluentOverridesTheme } = props
   const theme = useTheme()
   const generatedTheme = makeFluentTheme(theme, fluentOverridesTheme)

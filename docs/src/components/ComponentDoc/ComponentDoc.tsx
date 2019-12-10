@@ -1,16 +1,6 @@
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
-import {
-  tabListBehavior,
-  Flex,
-  Header,
-  Icon,
-  Dropdown,
-  Text,
-  Grid,
-  Menu,
-  Box,
-} from '@fluentui/react'
+import { tabListBehavior, Flex, Header, Icon, Text, Grid, Menu, Box } from '@fluentui/react'
 
 import { getFormattedHash } from 'docs/src/utils'
 import ComponentDocLinks from './ComponentDocLinks'
@@ -18,12 +8,12 @@ import ComponentDocSee from './ComponentDocSee'
 import { ComponentExamples } from './ComponentExamples'
 import ComponentProps from './ComponentProps'
 import { ComponentDocAccessibility } from './ComponentDocAccessibility'
-import { ThemeContext } from 'docs/src/context/ThemeContext'
 import ExampleContext from 'docs/src/context/ExampleContext'
 import ComponentPlayground from 'docs/src/components/ComponentPlayground/ComponentPlayground'
 import { ComponentInfo } from 'docs/src/types'
 import ComponentBestPractices from './ComponentBestPractices'
 import * as _ from 'lodash'
+import ComponentDocThemeSwitcher from './ComponentDocThemeSwitcher'
 
 const exampleEndStyle: React.CSSProperties = {
   textAlign: 'center',
@@ -116,32 +106,6 @@ class ComponentDoc extends React.Component<ComponentDocProps, ComponentDocState>
   }
 
   render() {
-    const getA11ySelectionMessage = {
-      onAdd: item => `${item} has been selected.`,
-      onRemove: item => `${item} has been removed.`,
-    }
-
-    const getA11yStatusMessage = ({
-      isOpen,
-      itemToString,
-      previousResultCount,
-      resultCount,
-      selectedItem,
-    }) => {
-      if (!isOpen) {
-        return selectedItem ? itemToString(selectedItem) : ''
-      }
-      if (!resultCount) {
-        return 'No results are available.'
-      }
-      if (resultCount !== previousResultCount) {
-        return `${resultCount} result${
-          resultCount === 1 ? ' is' : 's are'
-        } available, use up and down arrow keys to navigate. Press Enter key to select.`
-      }
-      return ''
-    }
-
     const { info, tabs } = this.props
     const { activePath, currentTabIndex } = this.state
 
@@ -149,18 +113,7 @@ class ComponentDoc extends React.Component<ComponentDocProps, ComponentDocState>
       <div style={{ padding: '20px' }}>
         <Flex column styles={{ paddingBottom: '1rem' }}>
           <Flex.Item padding="padding.medium">
-            <ThemeContext.Consumer>
-              {({ changeTheme, themeOptions }) => (
-                <Dropdown
-                  getA11yStatusMessage={getA11yStatusMessage}
-                  getA11ySelectionMessage={getA11ySelectionMessage}
-                  noResultsMessage="We couldn't find any matches."
-                  placeholder="Theme"
-                  onSelectedChange={changeTheme}
-                  items={themeOptions.map(({ text, value }) => ({ header: text, value }))}
-                />
-              )}
-            </ThemeContext.Consumer>
+            <ComponentDocThemeSwitcher excludeOptions={['teamsToFabric', 'fabricToTeams']} />
           </Flex.Item>
           <Flex.Item>
             <>

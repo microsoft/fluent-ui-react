@@ -2,28 +2,28 @@ import * as React from 'react'
 import * as _ from 'lodash'
 import { themes } from '@fluentui/react'
 
-type ThemeName = keyof typeof themes | 'fabric'
-type ThemeOption = { text: string; value: ThemeName }
+export type ThemeName = keyof typeof themes | 'fabricToTeams' | 'teamsToFabric'
+type ThemeOption = { header: string; value: ThemeName }
 
 const getThemeOptions = (): ThemeOption[] => {
-  const themesKeys = [...Object.keys(themes), 'fabric']
+  const themesKeys = [...Object.keys(themes), 'fabricToTeams', 'teamsToFabric']
 
   if (process.env.NODE_ENV === 'production') {
     // we don't show 'base' and 'fontAwesome' themes in production
-    _.pull(themesKeys, 'base', 'fontAwesome', 'fabric')
+    _.pull(themesKeys, 'base', 'fontAwesome', 'fabricToTeams', 'teamsToFabric')
   }
 
-  return themesKeys.map(key => ({ text: _.startCase(key), value: key as ThemeName }))
+  return themesKeys.map(key => ({ header: _.startCase(key), value: key as ThemeName }))
 }
 
 export type ThemeContextData = {
-  themeName: ThemeName
+  selectedTheme: ThemeOption
   themeOptions: ThemeOption[]
   changeTheme: (event: React.SyntheticEvent, data: { value: ThemeOption }) => void
 }
 
 export const themeContextDefaults: ThemeContextData = {
-  themeName: 'teams',
+  selectedTheme: { header: 'Teams', value: 'teams' },
   themeOptions: getThemeOptions(),
   changeTheme: () => {},
 }
