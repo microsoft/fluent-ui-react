@@ -3,7 +3,7 @@ import * as React from 'react'
 
 export default {
   iterations: 5000,
-  filename: 'ButtonSlotsPerf.perf.tsx',
+  filename: 'ButtonSlots.perf.tsx',
 }
 
 export const ButtonSlotsPerf = () => (
