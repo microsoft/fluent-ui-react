@@ -507,11 +507,16 @@ function repeat(ele, num) {
 
 function directional(value) {
   let values = value.split(/\s+/)
-  if (values.length === 1) values = repeat(values[0], 4)
-  else if (values.length === 2) values = values.concat(values)
-  else if (values.length === 3) values.push(values[1])
-  // @ts-ignore
-  else if (values.length > 4) return
+  if (values.length === 1) {
+    values = repeat(values[0], 4)
+  } else if (values.length === 2) {
+    values = values.concat(values)
+  } else if (values.length === 3) {
+    values.push(values[1])
+  } else if (values.length > 4) {
+    return null
+  }
+
   return ['top', 'right', 'bottom', 'left'].reduce(function(acc, direction, i) {
     acc[direction] = values[i]
     return acc
@@ -566,9 +571,11 @@ let WIDTH = /^(thin|medium|thick)$/
 let STYLE = /^(none|hidden|dotted|dashed|solid|double|groove|ridge|inset|outset)$/i
 let KEYWORD = /^(inherit|initial)$/i
 
-let suffix = function suffix(_suffix) {
+let borderSuffix = function borderSuffix(_suffix, shouldNormalizeColor = false) {
   return function(value) {
-    let longhand = directional(value)
+    const normalizedValue = shouldNormalizeColor ? normalize(value) : value
+    const longhand = directional(normalizedValue)
+
     return (
       longhand &&
       mapObj(longhand, function(key, value) {
@@ -646,11 +653,11 @@ let border = function border(value) {
 }
 
 // @ts-ignore
-border.width = suffix('width')
+border.width = borderSuffix('width')
 // @ts-ignore
-border.style = suffix('style')
+border.style = borderSuffix('style')
 // @ts-ignore
-border.color = suffix('color')
+border.color = borderSuffix('color', true)
 // @ts-ignore
 border.top = direction('top')
 // @ts-ignore
