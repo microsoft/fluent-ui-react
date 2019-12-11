@@ -1,9 +1,9 @@
 import { TextArea } from '@fluentui/react'
 import * as React from 'react'
 
-export default {
-  iterations: 5000,
-  filename: 'TextAreaMinimal.perf.tsx',
-}
+const TextAreaMinimalPerf = () => <TextArea />
 
-export const TextAreaMinimalPerf = () => <TextArea />
+TextAreaMinimalPerf.iterations = 5000
+TextAreaMinimalPerf.filename = 'TextAreaMinimal.perf.tsx'
+
+export default TextAreaMinimalPerf

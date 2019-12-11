@@ -1,9 +1,9 @@
 import { Tooltip } from '@fluentui/react'
 import * as React from 'react'
 
-export default {
-  iterations: 5000,
-  filename: 'TooltipMinimal.perf.tsx',
-}
+const TooltipMinimalPerf = () => <Tooltip />
 
-export const TooltipMinimalPerf = () => <Tooltip />
+TooltipMinimalPerf.iterations = 5000
+TooltipMinimalPerf.filename = 'TooltipMinimal.perf.tsx'
+
+export default TooltipMinimalPerf

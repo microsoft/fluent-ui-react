@@ -1,9 +1,9 @@
 import { Carousel } from '@fluentui/react'
 import * as React from 'react'
 
-export default {
-  iterations: 5000,
-  filename: 'CarouselMinimal.perf.tsx',
-}
+const CarouselMinimalPerf = () => <Carousel />
 
-export const CarouselMinimalPerf = () => <Carousel />
+CarouselMinimalPerf.iterations = 5000
+CarouselMinimalPerf.filename = 'CarouselMinimal.perf.tsx'
+
+export default CarouselMinimalPerf

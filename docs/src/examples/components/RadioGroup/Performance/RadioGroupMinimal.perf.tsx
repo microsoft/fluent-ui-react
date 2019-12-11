@@ -1,9 +1,9 @@
 import { RadioGroup } from '@fluentui/react'
 import * as React from 'react'
 
-export default {
-  iterations: 5000,
-  filename: 'RadioGroupMinimal.perf.tsx',
-}
+const RadioGroupMinimalPerf = () => <RadioGroup />
 
-export const RadioGroupMinimalPerf = () => <RadioGroup />
+RadioGroupMinimalPerf.iterations = 5000
+RadioGroupMinimalPerf.filename = 'RadioGroupMinimal.perf.tsx'
+
+export default RadioGroupMinimalPerf

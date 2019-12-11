@@ -1,9 +1,9 @@
 import { Dialog } from '@fluentui/react'
 import * as React from 'react'
 
-export default {
-  iterations: 5000,
-  filename: 'DialogMinimal.perf.tsx',
-}
+const DialogMinimalPerf = () => <Dialog />
 
-export const DialogMinimalPerf = () => <Dialog />
+DialogMinimalPerf.iterations = 5000
+DialogMinimalPerf.filename = 'DialogMinimal.perf.tsx'
+
+export default DialogMinimalPerf

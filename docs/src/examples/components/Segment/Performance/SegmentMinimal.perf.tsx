@@ -1,9 +1,9 @@
 import { Segment } from '@fluentui/react'
 import * as React from 'react'
 
-export default {
-  iterations: 5000,
-  filename: 'SegmentMinimal.perf.tsx',
-}
+const SegmentMinimalPerf = () => <Segment />
 
-export const SegmentMinimalPerf = () => <Segment />
+SegmentMinimalPerf.iterations = 5000
+SegmentMinimalPerf.filename = 'SegmentMinimal.perf.tsx'
+
+export default SegmentMinimalPerf

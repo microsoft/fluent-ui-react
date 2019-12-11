@@ -1,9 +1,9 @@
 import { Status } from '@fluentui/react'
 import * as React from 'react'
 
-export default {
-  iterations: 5000,
-  filename: 'StatusMinimal.perf.tsx',
-}
+const StatusMinimalPerf = () => <Status />
 
-export const StatusMinimalPerf = () => <Status />
+StatusMinimalPerf.iterations = 5000
+StatusMinimalPerf.filename = 'StatusMinimal.perf.tsx'
+
+export default StatusMinimalPerf

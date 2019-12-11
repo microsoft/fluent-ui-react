@@ -1,9 +1,9 @@
 import { Grid } from '@fluentui/react'
 import * as React from 'react'
 
-export default {
-  iterations: 5000,
-  filename: 'GridMinimal.perf.tsx',
-}
+const GridMinimalPerf = () => <Grid />
 
-export const GridMinimalPerf = () => <Grid />
+GridMinimalPerf.iterations = 5000
+GridMinimalPerf.filename = 'GridMinimal.perf.tsx'
+
+export default GridMinimalPerf

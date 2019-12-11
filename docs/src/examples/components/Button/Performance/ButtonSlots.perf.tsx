@@ -1,12 +1,7 @@
 import { Button } from '@fluentui/react'
 import * as React from 'react'
 
-export default {
-  iterations: 5000,
-  filename: 'ButtonSlots.perf.tsx',
-}
-
-export const ButtonSlotsPerf = () => (
+const ButtonSlotsPerf = () => (
   <Button
     icon="play"
     content="Click here"
@@ -19,3 +14,8 @@ export const ButtonSlotsPerf = () => (
     }}
   />
 )
+
+ButtonSlotsPerf.iterations = 5000
+ButtonSlotsPerf.filename = 'ButtonSlots.perf.tsx'
+
+export default ButtonSlotsPerf

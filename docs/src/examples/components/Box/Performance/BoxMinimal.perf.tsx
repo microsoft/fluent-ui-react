@@ -1,9 +1,9 @@
 import { Box } from '@fluentui/react'
 import * as React from 'react'
 
-export default {
-  iterations: 5000,
-  filename: 'BoxMinimal.perf.tsx',
-}
+const BoxMinimalPerf = () => <Box />
 
-export const BoxMinimalPerf = () => <Box />
+BoxMinimalPerf.iterations = 5000
+BoxMinimalPerf.filename = 'BoxMinimal.perf.tsx'
+
+export default BoxMinimalPerf

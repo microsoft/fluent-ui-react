@@ -1,9 +1,9 @@
 import { Text } from '@fluentui/react'
 import * as React from 'react'
 
-export default {
-  iterations: 5000,
-  filename: 'TextMinimal.perf.tsx',
-}
+const TextMinimalPerf = () => <Text />
 
-export const TextMinimalPerf = () => <Text />
+TextMinimalPerf.iterations = 5000
+TextMinimalPerf.filename = 'TextMinimal.perf.tsx'
+
+export default TextMinimalPerf

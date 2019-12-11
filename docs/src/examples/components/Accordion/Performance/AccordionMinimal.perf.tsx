@@ -1,9 +1,9 @@
 import { Accordion } from '@fluentui/react'
 import * as React from 'react'
 
-export default {
-  iterations: 5000,
-  filename: 'AccordionMinimal.perf.tsx',
-}
+const AccordionMinimalPerf = () => <Accordion />
 
-export const AccordionMinimalPerf = () => <Accordion />
+AccordionMinimalPerf.iterations = 5000
+AccordionMinimalPerf.filename = 'AccordionMinimal.perf.tsx'
+
+export default AccordionMinimalPerf

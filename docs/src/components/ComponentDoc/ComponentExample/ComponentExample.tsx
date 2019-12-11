@@ -436,7 +436,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       error,
       description,
       defaultExport,
-      namedExports,
       onError,
       title,
       wasCodeChanged,
@@ -466,11 +465,6 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         backgroundRepeat: 'repeat',
       }),
     }
-
-    // Heads Up!
-    // Component Story Format (CSF) uses named function exports for stories.
-    // We also allow the default export to be the example, if not following CSF first.
-    const component = _.find(namedExports, _.isFunction) || defaultExport
 
     return (
       <Flex column>
@@ -525,7 +519,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                       resolver={importResolver}
                     />
                   ) : (
-                    React.createElement(component)
+                    React.createElement(defaultExport)
                   )}
                 </VariableResolver>
               </Provider>

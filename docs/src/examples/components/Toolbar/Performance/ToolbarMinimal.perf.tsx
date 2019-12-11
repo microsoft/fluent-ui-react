@@ -1,9 +1,9 @@
 import { Toolbar } from '@fluentui/react'
 import * as React from 'react'
 
-export default {
-  iterations: 5000,
-  filename: 'ToolbarMinimal.perf.tsx',
-}
+const ToolbarMinimalPerf = () => <Toolbar />
 
-export const ToolbarMinimalPerf = () => <Toolbar />
+ToolbarMinimalPerf.iterations = 5000
+ToolbarMinimalPerf.filename = 'ToolbarMinimal.perf.tsx'
+
+export default ToolbarMinimalPerf

@@ -1,9 +1,9 @@
 import { Layout } from '@fluentui/react'
 import * as React from 'react'
 
-export default {
-  iterations: 5000,
-  filename: 'LayoutMinimal.perf.tsx',
-}
+const LayoutMinimalPerf = () => <Layout />
 
-export const LayoutMinimalPerf = () => <Layout />
+LayoutMinimalPerf.iterations = 5000
+LayoutMinimalPerf.filename = 'LayoutMinimal.perf.tsx'
+
+export default LayoutMinimalPerf

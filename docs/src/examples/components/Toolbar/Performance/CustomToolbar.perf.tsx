@@ -24,11 +24,6 @@ import {
   tooltipAsLabelBehavior,
 } from '@fluentui/react'
 
-export default {
-  iterations: 100,
-  filename: 'CustomToolbar.perf.tsx',
-}
-
 type CustomStatusVariables = {
   isRecordingIndicator?: boolean
 
@@ -543,7 +538,7 @@ const CustomToolbar: React.FunctionComponent<CustomToolbarProps> = props => {
   return <Toolbar variables={{ isCt: true }} items={items} />
 }
 
-export const CustomToolbarPrototype: React.FunctionComponent = () => {
+const CustomToolbarPrototype = () => {
   let theme = {}
   theme = mergeThemes(themes.teamsDark, darkThemeOverrides)
 
@@ -562,3 +557,8 @@ export const CustomToolbarPrototype: React.FunctionComponent = () => {
     </Provider>
   )
 }
+
+CustomToolbarPrototype.iterations = 100
+CustomToolbarPrototype.filename = 'CustomToolbar.perf.tsx'
+
+export default CustomToolbarPrototype

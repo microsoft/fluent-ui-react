@@ -1,9 +1,9 @@
 import { Video } from '@fluentui/react'
 import * as React from 'react'
 
-export default {
-  iterations: 5000,
-  filename: 'VideoMinimal.perf.tsx',
-}
+const VideoMinimalPerf = () => <Video />
 
-export const VideoMinimalPerf = () => <Video />
+VideoMinimalPerf.iterations = 5000
+VideoMinimalPerf.filename = 'VideoMinimal.perf.tsx'
+
+export default VideoMinimalPerf

@@ -1,9 +1,9 @@
 import { Dropdown } from '@fluentui/react'
 import * as React from 'react'
 
-export default {
-  iterations: 5000,
-  filename: 'DropdownMinimal.perf.tsx',
-}
+const DropdownMinimalPerf = () => <Dropdown />
 
-export const DropdownMinimalPerf = () => <Dropdown />
+DropdownMinimalPerf.iterations = 5000
+DropdownMinimalPerf.filename = 'DropdownMinimal.perf.tsx'
+
+export default DropdownMinimalPerf

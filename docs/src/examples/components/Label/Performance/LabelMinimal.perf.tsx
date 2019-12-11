@@ -1,9 +1,9 @@
 import { Label } from '@fluentui/react'
 import * as React from 'react'
 
-export default {
-  iterations: 5000,
-  filename: 'LabelMinimal.perf.tsx',
-}
+const LabelMinimalPerf = () => <Label />
 
-export const LabelMinimalPerf = () => <Label />
+LabelMinimalPerf.iterations = 5000
+LabelMinimalPerf.filename = 'LabelMinimal.perf.tsx'
+
+export default LabelMinimalPerf

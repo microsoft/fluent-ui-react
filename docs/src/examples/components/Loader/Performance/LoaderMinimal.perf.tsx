@@ -1,9 +1,9 @@
 import { Loader } from '@fluentui/react'
 import * as React from 'react'
 
-export default {
-  iterations: 5000,
-  filename: 'LoaderMinimal.perf.tsx',
-}
+const LoaderMinimalPerf = () => <Loader />
 
-export const LoaderMinimalPerf = () => <Loader />
+LoaderMinimalPerf.iterations = 5000
+LoaderMinimalPerf.filename = 'LoaderMinimal.perf.tsx'
+
+export default LoaderMinimalPerf

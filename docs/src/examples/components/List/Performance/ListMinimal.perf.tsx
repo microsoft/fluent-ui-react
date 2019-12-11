@@ -1,9 +1,9 @@
 import { List } from '@fluentui/react'
 import * as React from 'react'
 
-export default {
-  iterations: 5000,
-  filename: 'ListMinimal.perf.tsx',
-}
+const ListMinimalPerf = () => <List />
 
-export const ListMinimalPerf = () => <List />
+ListMinimalPerf.iterations = 5000
+ListMinimalPerf.filename = 'ListMinimal.perf.tsx'
+
+export default ListMinimalPerf

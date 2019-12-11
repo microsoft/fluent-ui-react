@@ -1,9 +1,9 @@
 import { Button } from '@fluentui/react'
 import * as React from 'react'
 
-export default {
-  iterations: 5000,
-  filename: 'ButtonMinimal.perf.tsx',
-}
+const ButtonMinimalPerf = () => <Button />
 
-export const ButtonMinimalPerf = () => <Button />
+ButtonMinimalPerf.iterations = 5000
+ButtonMinimalPerf.filename = 'ButtonMinimal.perf.tsx'
+
+export default ButtonMinimalPerf

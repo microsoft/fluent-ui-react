@@ -1,9 +1,9 @@
 import { MenuButton } from '@fluentui/react'
 import * as React from 'react'
 
-export default {
-  iterations: 5000,
-  filename: 'MenuButtonMinimal.perf.tsx',
-}
+const MenuButtonMinimalPerf = () => <MenuButton />
 
-export const MenuButtonMinimalPerf = () => <MenuButton />
+MenuButtonMinimalPerf.iterations = 5000
+MenuButtonMinimalPerf.filename = 'MenuButtonMinimal.perf.tsx'
+
+export default MenuButtonMinimalPerf

@@ -1,9 +1,9 @@
 import { Input } from '@fluentui/react'
 import * as React from 'react'
 
-export default {
-  iterations: 5000,
-  filename: 'InputMinimal.perf.tsx',
-}
+const InputMinimalPerf = () => <Input />
 
-export const InputMinimalPerf = () => <Input />
+InputMinimalPerf.iterations = 5000
+InputMinimalPerf.filename = 'InputMinimal.perf.tsx'
+
+export default InputMinimalPerf

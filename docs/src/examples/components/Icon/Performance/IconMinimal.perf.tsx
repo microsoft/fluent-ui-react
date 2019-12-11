@@ -1,9 +1,9 @@
 import { Icon } from '@fluentui/react'
 import * as React from 'react'
 
-export default {
-  iterations: 5000,
-  filename: 'IconMinimal.perf.tsx',
-}
+const IconMinimalPerf = () => <Icon name="user" />
 
-export const IconMinimalPerf = () => <Icon name="user" />
+IconMinimalPerf.iterations = 5000
+IconMinimalPerf.filename = 'IconMinimal.perf.tsx'
+
+export default IconMinimalPerf

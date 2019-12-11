@@ -1,9 +1,9 @@
 import { Divider } from '@fluentui/react'
 import * as React from 'react'
 
-export default {
-  iterations: 5000,
-  filename: 'DividerMinimal.perf.tsx',
-}
+const DividerMinimalPerf = () => <Divider />
 
-export const DividerMinimalPerf = () => <Divider />
+DividerMinimalPerf.iterations = 5000
+DividerMinimalPerf.filename = 'DividerMinimal.perf.tsx'
+
+export default DividerMinimalPerf

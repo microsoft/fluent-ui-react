@@ -1,13 +1,13 @@
 import { Ref } from '@fluentui/react'
 import * as React from 'react'
 
-export default {
-  iterations: 5000,
-  filename: 'RefMinimal.perf.tsx',
-}
-
-export const RefMinimalPerf = () => (
+const RefMinimalPerf = () => (
   <Ref innerRef={React.createRef()}>
     <div />
   </Ref>
 )
+
+RefMinimalPerf.iterations = 5000
+RefMinimalPerf.filename = 'RefMinimal.perf.tsx'
+
+export default RefMinimalPerf

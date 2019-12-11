@@ -1,9 +1,9 @@
 import { Portal } from '@fluentui/react'
 import * as React from 'react'
 
-export default {
-  iterations: 5000,
-  filename: 'PortalMinimal.perf.tsx',
-}
+const PortalMinimalPerf = () => <Portal />
 
-export const PortalMinimalPerf = () => <Portal />
+PortalMinimalPerf.iterations = 5000
+PortalMinimalPerf.filename = 'PortalMinimal.perf.tsx'
+
+export default PortalMinimalPerf

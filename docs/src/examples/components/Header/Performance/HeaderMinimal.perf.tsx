@@ -1,9 +1,9 @@
 import { Header } from '@fluentui/react'
 import * as React from 'react'
 
-export default {
-  iterations: 5000,
-  filename: 'HeaderMinimal.perf.tsx',
-}
+const HeaderMinimalPerf = () => <Header />
 
-export const HeaderMinimalPerf = () => <Header />
+HeaderMinimalPerf.iterations = 5000
+HeaderMinimalPerf.filename = 'HeaderMinimal.perf.tsx'
+
+export default HeaderMinimalPerf

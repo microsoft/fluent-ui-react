@@ -1,9 +1,9 @@
 import { Alert } from '@fluentui/react'
 import * as React from 'react'
 
-export default {
-  iterations: 5000,
-  filename: 'AlertMinimal.perf.tsx',
-}
+const AlertMinimalPerf = () => <Alert />
 
-export const AlertMinimalPerf = () => <Alert />
+AlertMinimalPerf.iterations = 5000
+AlertMinimalPerf.filename = 'AlertMinimal.perf.tsx'
+
+export default AlertMinimalPerf

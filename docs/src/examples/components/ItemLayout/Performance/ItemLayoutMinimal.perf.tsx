@@ -1,9 +1,9 @@
 import { ItemLayout } from '@fluentui/react'
 import * as React from 'react'
 
-export default {
-  iterations: 5000,
-  filename: 'ItemLayoutMinimal.perf.tsx',
-}
+const ItemLayoutMinimalPerf = () => <ItemLayout />
 
-export const ItemLayoutMinimalPerf = () => <ItemLayout />
+ItemLayoutMinimalPerf.iterations = 5000
+ItemLayoutMinimalPerf.filename = 'ItemLayoutMinimal.perf.tsx'
+
+export default ItemLayoutMinimalPerf

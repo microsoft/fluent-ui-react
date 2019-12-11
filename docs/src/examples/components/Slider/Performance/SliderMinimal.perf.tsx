@@ -1,9 +1,9 @@
 import { Slider } from '@fluentui/react'
 import * as React from 'react'
 
-export default {
-  iterations: 5000,
-  filename: 'SliderMinimal.perf.tsx',
-}
+const SliderMinimalPerf = () => <Slider />
 
-export const SliderMinimalPerf = () => <Slider />
+SliderMinimalPerf.iterations = 5000
+SliderMinimalPerf.filename = 'SliderMinimal.perf.tsx'
+
+export default SliderMinimalPerf
