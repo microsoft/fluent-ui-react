@@ -3,7 +3,7 @@ import * as React from 'react'
 
 const DropdownMinimalPerf = () => <Dropdown />
 
-DropdownMinimalPerf.iterations = 5000
+DropdownMinimalPerf.iterations = 1000
 DropdownMinimalPerf.filename = 'DropdownMinimal.perf.tsx'
 
 export default DropdownMinimalPerf

@@ -166,7 +166,7 @@ const ChatWithPopoverPerf = () => {
   )
 }
 
-ChatWithPopoverPerf.iterations = 5000
+ChatWithPopoverPerf.iterations = 1
 ChatWithPopoverPerf.filename = 'ChatWithPopover.perf.tsx'
 
 export default ChatWithPopoverPerf

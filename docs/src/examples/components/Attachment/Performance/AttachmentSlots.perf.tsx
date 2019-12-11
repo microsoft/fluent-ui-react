@@ -12,7 +12,7 @@ const AttachmentSlotsPerf = () => (
   />
 )
 
-AttachmentSlotsPerf.iterations = 5000
+AttachmentSlotsPerf.iterations = 1000
 AttachmentSlotsPerf.filename = 'AttachmentSlots.perf.tsx'
 
 export default AttachmentSlotsPerf

@@ -52,6 +52,7 @@ function loadStories() {
         }
 
         if (stories[kindName]) {
+          // TODO: this should fail build or show a more visible warning
           console.error(`Kind ${kindName} already exists! Please ensure unique naming.`)
         }
 

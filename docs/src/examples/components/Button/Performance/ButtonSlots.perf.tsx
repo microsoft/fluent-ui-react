@@ -15,7 +15,7 @@ const ButtonSlotsPerf = () => (
   />
 )
 
-ButtonSlotsPerf.iterations = 5000
+ButtonSlotsPerf.iterations = 1000
 ButtonSlotsPerf.filename = 'ButtonSlots.perf.tsx'
 
 export default ButtonSlotsPerf
