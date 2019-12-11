@@ -25,9 +25,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - name: Install dependencies
-        uses: ianwalter/puppeteer@v2.0.0
-        with:
-          args: yarn
+        run: yarn install
+        env:
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
       - name: Run perf tests
         uses: ianwalter/puppeteer@v2.0.0
         with:
