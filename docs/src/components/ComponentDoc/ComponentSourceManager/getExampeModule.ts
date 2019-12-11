@@ -7,7 +7,13 @@ import { componentAPIs, ComponentAPIs } from './componentAPIs'
 const getExampleModule = (
   examplePath: string,
   componentAPI: keyof ComponentAPIs,
-): { component: React.ElementType; source: ExampleSource } | undefined => {
+):
+  | {
+      defaultExport: React.ElementType
+      namedExports: { [key: string]: React.ElementType }
+      source: ExampleSource
+    }
+  | undefined => {
   const fileSuffix = componentAPIs[componentAPI].fileSuffix
 
   const sourcePath = `${examplePath.replace(/^components/, '.')}${fileSuffix}.source.json`
@@ -15,7 +21,8 @@ const getExampleModule = (
 
   try {
     return {
-      component: examplesContext(modulePath).default,
+      defaultExport: examplesContext(modulePath).default,
+      namedExports: examplesContext(modulePath),
       source: exampleSourcesContext(sourcePath),
     }
   } catch (e) {

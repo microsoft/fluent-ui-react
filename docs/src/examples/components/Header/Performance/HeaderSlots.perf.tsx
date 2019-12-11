@@ -1,14 +1,14 @@
 import { Header } from '@fluentui/react'
 import * as React from 'react'
 
-const HeaderDescriptionPerf = () => (
+const HeaderSlotsPerf = () => (
   <Header
-    as="h2"
     content="Account Settings"
     description="Manage your account settings and set email preferences."
   />
 )
 
-HeaderDescriptionPerf.iterations = 5000
+HeaderSlotsPerf.iterations = 5000
+HeaderSlotsPerf.filename = 'HeaderSlots.perf.tsx'
 
-export default HeaderDescriptionPerf
+export default HeaderSlotsPerf
