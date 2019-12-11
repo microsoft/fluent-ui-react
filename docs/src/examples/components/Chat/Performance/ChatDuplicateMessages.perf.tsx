@@ -48,7 +48,7 @@ const ChatDuplicateMessagesPerf = () => {
   )
 }
 
-ChatDuplicateMessagesPerf.iterations = 5000
+ChatDuplicateMessagesPerf.iterations = 1
 ChatDuplicateMessagesPerf.filename = 'ChatDuplicateMessages.perf.tsx'
 
 export default ChatDuplicateMessagesPerf
