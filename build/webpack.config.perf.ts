@@ -10,7 +10,7 @@ const { paths } = config
 const webpackConfig: any = {
   name: 'client',
   target: 'web',
-  mode: 'development',
+  mode: argv.memory ? 'production' : 'development',
   entry: {
     app: paths.perfSrc('index'),
   },
@@ -20,7 +20,7 @@ const webpackConfig: any = {
     pathinfo: true,
     publicPath: config.compiler_public_path,
   },
-  devtool: config.compiler_devtool,
+  ...(!argv.memory && { devtool: config.compiler_devtool }),
   node: {
     fs: 'empty',
     module: 'empty',
@@ -68,6 +68,8 @@ const webpackConfig: any = {
   },
   optimization: {
     nodeEnv: !!argv.debug ? 'development' : 'production',
+    // We don't want to run Terser on perf tests
+    minimize: false,
   },
 }
 

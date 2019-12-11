@@ -1,6 +1,7 @@
 import { ThemeInput, ThemePrepared } from './types'
+import withMemoryId from '../utils/withMemoryId'
 import withDebugId from '../utils/withDebugId'
 
 export const createTheme = <T = ThemeInput | ThemePrepared>(themeInput: T, debugId): T => {
-  return withDebugId(themeInput, debugId)
+  return withMemoryId(withDebugId(themeInput, debugId))
 }

@@ -2,6 +2,7 @@ import { ProviderContextPrepared, ProviderContextInput } from '../types'
 import { Renderer } from '../themes/types'
 import { createRenderer, felaRenderer } from './felaRenderer'
 import mergeThemes from './mergeThemes'
+import withMemoryId from './withMemoryId'
 
 const registeredRenderers = new WeakMap<Document, Renderer>()
 
@@ -55,7 +56,7 @@ const mergeProviderContexts = (
     disableAnimations: false,
     target: document, // eslint-disable-line no-undef
     telemetry: undefined,
-    _internal_resolvedComponentVariables: {},
+    _internal_resolvedComponentVariables: withMemoryId({}),
     renderer: undefined,
   }
 

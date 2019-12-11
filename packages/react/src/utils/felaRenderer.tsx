@@ -11,6 +11,7 @@ import felaExpandCssShorthandsPlugin from './felaExpandCssShorthandsPlugin'
 import felaFocusVisibleEnhancer from './felaFocusVisibleEnhancer'
 import felaInvokeKeyframesPlugin from './felaInvokeKeyframesPlugin'
 import felaSanitizeCss from './felaSanitizeCssPlugin'
+import withMemoryId from './withMemoryId'
 
 let felaDevMode = false
 
@@ -77,6 +78,6 @@ const rendererConfig = {
   ],
 }
 
-export const createRenderer = (): Renderer => createFelaRenderer(rendererConfig)
+export const createRenderer = (): Renderer => withMemoryId(createFelaRenderer(rendererConfig))
 
 export const felaRenderer = createRenderer()

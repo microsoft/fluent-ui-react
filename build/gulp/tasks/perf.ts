@@ -117,6 +117,37 @@ task('perf:build', cb => {
   webpackPlugin(require('../../../build/webpack.config.perf').default, cb)
 })
 
+task('perf:run-memory', async () => {
+  const browser = await puppeteer.launch(safeLaunchOptions())
+  const context = await browser.createIncognitoBrowserContext()
+  const page = await context.newPage()
+
+  const client = await page.target().createCDPSession()
+  await client.send('HeapProfiler.enable')
+
+  const chunks: string[] = []
+
+  client.on('HeapProfiler.addHeapSnapshotChunk', ({ chunk }) => {
+    chunks.push(chunk)
+  })
+
+  await page.goto(`http://${config.server_host}:${config.perf_port}`)
+
+  await page.evaluate(() => window.runMeasures())
+  await page.evaluate(() => gc()) // collect garbage manually
+
+  await client.send('HeapProfiler.takeHeapSnapshot', { reportProgress: false })
+
+  await context.close()
+  await browser.close()
+
+  const heapSnapshot = chunks.join('')
+  const resultsFile = paths.perfDist('result.heapsnapshot')
+
+  fs.writeFileSync(resultsFile, heapSnapshot)
+  log(colors.green('Snapshot is written to "%s"'), resultsFile)
+})
+
 task('perf:run', async () => {
   const measures: ProfilerMeasureCycle[] = []
   const times = (argv.times as string) || DEFAULT_RUN_TIMES
@@ -126,7 +157,7 @@ task('perf:run', async () => {
     ? { tick: _.noop }
     : new ProgressBar(':bar :current/:total', { total: times })
 
-  let browser
+  let browser: puppeteer.Browser
 
   try {
     browser = await puppeteer.launch(safeLaunchOptions())
@@ -171,4 +202,9 @@ task('perf:serve:stop', cb => {
 })
 
 task('perf', series('perf:clean', 'perf:build', 'perf:serve', 'perf:run', 'perf:serve:stop'))
+
 task('perf:debug', series('perf:clean', 'perf:build', 'perf:serve'))
+task(
+  'perf:memory',
+  series('perf:clean', 'perf:build', 'perf:serve', 'perf:run-memory', 'perf:serve:stop'),
+)

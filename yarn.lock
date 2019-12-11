@@ -6899,6 +6899,11 @@ chownr@^1.0.1, chownr@^1.1.1:
   resolved "https://registry.yarnpkg.com/chownr/-/chownr-1.1.1.tgz#54726b8b8fff4df053c42187e801fb4412df1494"
   integrity sha512-j38EvO5+LHX84jlo6h4UzmOwi0UgW61WRyPtJz4qaadK5eY3BTS5TY/S1Stc3Uk2lIM6TPevAlULiEJwie860g==
 
+chrome-heap-snapshot-parser@^1.0.0-rc.2:
+  version "1.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/chrome-heap-snapshot-parser/-/chrome-heap-snapshot-parser-1.0.0-rc.2.tgz#0d61936875055f64eaa18bb1fcb1fc75274396d2"
+  integrity sha512-sir6w6qsqCgJk6Y8ZmwhZ/9eoRntwbFxH7FYi5AcrM60hh2fDKSymqOuZ+J7OQI68v/Z9XYmG1dKjPBxx3i2VQ==
+
 chrome-trace-event@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/chrome-trace-event/-/chrome-trace-event-1.0.0.tgz#45a91bd2c20c9411f0963b5aaeb9a1b95e09cc48"

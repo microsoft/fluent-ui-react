@@ -1,14 +1,11 @@
-name: Screener
+name: Perf
 on:
   pull_request:
     types: [opened, synchronize, reopened]
-  push:
-    branches:
-      - master
 
 jobs:
   test:
-    name: Test visuals on Screener
+    name: Create a heap snapshot from perf tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
@@ -25,7 +22,10 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - run: yarn install
-      - run: yarn test:visual
+      - run: yarn perf:memory
         env:
           CI: true
-          SCREENER_API_KEY: ${{secrets.SCREENER_API_KEY}}
+      - uses: actions/upload-artifact@v1
+        with:
+          name: perf.heapsnapshot
+          path: perf/dist/result.heapsnapshot
