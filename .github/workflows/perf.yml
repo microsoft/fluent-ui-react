@@ -32,6 +32,8 @@ jobs:
         uses: ianwalter/puppeteer@v2.0.0
         with:
           args: yarn perf:memory
+        env:
+          CI: true
       - name: Save heap snapshot
         uses: actions/upload-artifact@v1
         with:
