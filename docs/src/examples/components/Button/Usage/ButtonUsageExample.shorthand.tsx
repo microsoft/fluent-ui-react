@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Provider } from '@fluentui/react'
+import { Button, Flex, Provider } from '@fluentui/react'
 
 const ButtonUsageExampleShorthand = () => (
   <div>
@@ -22,9 +22,11 @@ const ButtonUsageExampleShorthand = () => (
         },
       }}
     >
-      <Button content="Tinted Button" /> <Button disabled content="Tinted Button Disabled" />
+      <Flex gap="gap.smaller">
+        <Button content="Tinted Button" />
+        <Button disabled content="Tinted Button Disabled" />
+      </Flex>
     </Provider>
-    This button's styling is using color scheme variables.
   </div>
 )
 
