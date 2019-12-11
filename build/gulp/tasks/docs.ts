@@ -28,11 +28,11 @@ const g = require('gulp-load-plugins')()
 
 const { log } = g.util
 
-const logWatchAdd = filePath => log('Created', chalk.blue(path.basename(filePath)))
-const logWatchChange = filePath => log('Changed', chalk.magenta(path.basename(filePath)))
-const logWatchUnlink = filePath => log('Deleted', chalk.red(path.basename(filePath)))
+const logWatchAdd = (filePath: string) => log('Created', chalk.blue(path.basename(filePath)))
+const logWatchChange = (filePath: string) => log('Changed', chalk.magenta(path.basename(filePath)))
+const logWatchUnlink = (filePath: string) => log('Deleted', chalk.red(path.basename(filePath)))
 
-const handleWatchUnlink = (group, filePath) => {
+const handleWatchUnlink = (group: any, filePath: string) => {
   logWatchUnlink(filePath)
   remember.forget(group, filePath)
 }
@@ -220,7 +220,7 @@ task('serve:docs:hot', async () => {
           noInfo: true, // must be quite for hot middleware to show overlay
           lazy: false,
           stats: config.compiler_stats,
-        }),
+        } as WebpackDevMiddleware.Options),
       )
       .use(WebpackHotMiddleware(compiler)),
   )

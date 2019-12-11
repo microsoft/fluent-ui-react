@@ -36,30 +36,37 @@ const envConfig = {
 // ------------------------------------
 // Paths
 // ------------------------------------
-const base = (...args) => path.resolve(...[envConfig.path_base, ...args])
+const base = (...paths: string[]) => path.resolve(envConfig.path_base, ...paths)
+const fromBase = (...paths: string[]) => (...subPaths: string[]) => base(...paths, ...subPaths)
 
-const paths = {
-  base,
-  build: base.bind(null, envConfig.dir_build),
-  docsDist: base.bind(null, envConfig.dir_docs_dist),
-  docsSrc: base.bind(null, envConfig.dir_docs_src),
-  e2e: base.bind(null, envConfig.dir_e2e),
-  e2eSrc: base.bind(null, envConfig.dir_e2e_src),
-  e2eDist: base.bind(null, envConfig.dir_e2e_dist),
+const tempPaths = {
+  build: fromBase(envConfig.dir_build),
+  docsDist: fromBase(envConfig.dir_docs_dist),
+  docsSrc: fromBase(envConfig.dir_docs_src),
+  e2e: fromBase(envConfig.dir_e2e),
+  e2eSrc: fromBase(envConfig.dir_e2e_src),
+  e2eDist: fromBase(envConfig.dir_e2e_dist),
   packageDist: (packageName: string, ...paths: string[]) =>
     base(envConfig.dir_packages, packageName, 'dist', ...paths),
   packageSrc: (packageName: string, ...paths: string[]) =>
     base(envConfig.dir_packages, packageName, 'src', ...paths),
-  packages: base.bind(null, envConfig.dir_packages),
-  perfDist: base.bind(null, envConfig.dir_perf_dist),
-  perfSrc: base.bind(null, envConfig.dir_perf_src),
-  umdDist: base.bind(null, envConfig.dir_umd_dist),
-  ciArtifacts: base.bind(null, envConfig.dir_ci_artifacts),
-  withRootAt: (root, ...subpaths) => (...args) => path.resolve(root, ...subpaths, ...args),
-  posix: undefined, // all the sibling values, but with forward slashes regardless the OS
+  packages: fromBase(envConfig.dir_packages),
+  perfDist: fromBase(envConfig.dir_perf_dist),
+  perfSrc: fromBase(envConfig.dir_perf_src),
+  umdDist: fromBase(envConfig.dir_umd_dist),
+  ciArtifacts: fromBase(envConfig.dir_ci_artifacts),
+  withRootAt: (root: string, ...subpaths: string[]) => (...args: string[]) =>
+    path.resolve(root, ...subpaths, ...args),
 }
 
-paths.posix = _.mapValues(paths, func => (...args) => func(...args).replace(/\\/g, '/'))
+const paths = {
+  base,
+  ...tempPaths,
+  // all the sibling values, but with forward slashes regardless the OS
+  posix: _.mapValues(tempPaths, (func: (...args: string[]) => string) => (...args: string[]) =>
+    func(...args).replace(/\\/g, '/'),
+  ),
+}
 
 const config = {
   ...envConfig,

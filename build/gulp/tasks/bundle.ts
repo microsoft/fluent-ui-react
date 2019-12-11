@@ -51,7 +51,7 @@ task('bundle:package:commonjs', () =>
 
 task('bundle:package:es', () =>
   src(componentsSrc)
-    .pipe(babel({ caller: { useESModules: true } }))
+    .pipe(babel({ caller: { useESModules: true } } as any))
     .pipe(dest(paths.packageDist(packageName, 'es'))),
 )
 
