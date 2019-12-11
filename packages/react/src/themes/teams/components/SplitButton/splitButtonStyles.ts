@@ -84,7 +84,12 @@ const splitButtonStyles = {
       display: 'inline-block',
 
       ':focus-within': {
-        ...borderFocusStyles[':focus-visible'],
+        boxShadow: 'none',
+        ...(p.isFromKeyboard && {
+          // make sure focus is coming from keyboard before applying the focus styles
+          // otherwise focus state is applied only to the button and not the toggle
+          ...borderFocusStyles[':focus-visible'],
+        }),
       },
     }
   },
