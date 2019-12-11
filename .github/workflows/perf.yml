@@ -6,7 +6,7 @@ on:
 jobs:
   test:
     name: Create a heap snapshot from perf tests
-    runs-on: ubuntu-latest
+    runs-on: circleci/node:10-browsers
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
@@ -22,12 +22,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - run: yarn install
-        env:
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
-      - name: Test
-        uses: ianwalter/puppeteer@v2.0.0
-        with:
-          args: yarn perf:memory
+      - run: yarn perf:memory
         env:
           CI: true
       - uses: actions/upload-artifact@v1
