@@ -11,7 +11,8 @@
   "scripts": {
     "build": "just-scripts build",
     "clean": "just-scripts clean",
-    "test": "just-scripts test"
+    "test": "just-scripts test",
+    "perf:test": "just-scripts perf-test"
   },
   "devDependencies": {
     "@fluentui/digest": "^0.41.1",

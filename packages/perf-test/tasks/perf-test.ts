@@ -1,8 +1,20 @@
 import fs from 'fs'
 import path from 'path'
+import _ from 'lodash'
 import flamegrill, { CookResult, CookResults, ScenarioConfig, Scenarios } from 'flamegrill'
 
 import { generateUrl } from '@fluentui/digest'
+
+type ExtendedCookResult = CookResult & {
+  extended: {
+    kind: string
+    story: string
+    iterations: number
+    tpi?: number
+    fabricTpi?: number
+  }
+}
+type ExtendedCookResults = Record<string, ExtendedCookResult>
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 // TODO:
@@ -84,13 +96,21 @@ export default async function getPerfRegressions() {
   const scenarioConfig: ScenarioConfig = { outDir, tempDir }
   const scenarioResults = await flamegrill.cook(scenarios, scenarioConfig)
 
-  const comment = createReport(stories, scenarioResults)
+  const extendedCookResults = extendCookResults(stories, scenarioResults)
+  fs.writeFileSync(
+    path.join(outDir, 'perfCounts.json'),
+    JSON.stringify(extendedCookResults),
+    null,
+    2,
+  )
+
+  const comment = createReport(stories, extendedCookResults)
 
   // TODO: determine status according to perf numbers
   const status = 'success'
 
   console.log(`Perf evaluation status: ${status}`)
-  console.log(`Writing comment to file:\n${comment}`)
+  // console.log(`Writing comment to file:\n${comment}`)
 
   // Write results to file
   fs.writeFileSync(path.join(outDir, 'perfCounts.html'), comment)
@@ -101,13 +121,35 @@ export default async function getPerfRegressions() {
   console.log(`##vso[task.setvariable variable=PerfCommentStatus;]${status}`)
 }
 
+function extendCookResults(stories, testResults: CookResults): ExtendedCookResults {
+  return _.mapValues(testResults, (testResult, resultKey) => {
+    const kind = getKindKey(resultKey)
+    const story = getStoryKey(resultKey)
+    const iterations = getIterations(stories, kind, story)
+    const tpi = getTpiResult(testResults, stories, kind, story) // || 'n/a'
+    const fabricTpi = getTpiResult(testResults, stories, kind, 'Fabric') // || ''
+
+    return {
+      ...testResult,
+      extended: {
+        kind,
+        story,
+        iterations,
+        tpi,
+        fabricTpi,
+        docsite: stories[kind][story].docsite,
+      },
+    }
+  })
+}
+
 /**
  * Create test summary based on test results.
  *
  * @param {CookResults} testResults
  * @returns {string}
  */
-function createReport(stories, testResults: CookResults): string {
+function createReport(stories, testResults: ExtendedCookResults): string {
   const report = ''
 
     // TODO: We can't do CI, measure baseline or do regression analysis until master & PR files are deployed and publicly accessible.
@@ -131,7 +173,7 @@ function createReport(stories, testResults: CookResults): string {
  * @param {boolean} showAll Show only significant results by default.
  * @returns {string}
  */
-function createScenarioTable(stories, testResults: CookResults, showAll: boolean): string {
+function createScenarioTable(stories, testResults: ExtendedCookResults, showAll: boolean): string {
   const resultsToDisplay = Object.keys(testResults)
     .filter(
       key =>
@@ -191,18 +233,29 @@ function createScenarioTable(stories, testResults: CookResults, showAll: boolean
     resultsToDisplay
       .map(resultKey => {
         const testResult = testResults[resultKey]
-        const kind = getKindKey(resultKey)
-        const story = getStoryKey(resultKey)
-        const iterations = getIterations(stories, kind, story)
-        const tpi = getTpiResult(testResults, stories, kind, story) || 'n/a'
-        const fabricTpi = getTpiResult(testResults, stories, kind, 'Fabric') || ''
+        const tpi = testResult.extended.tpi
+          ? linkifyResult(
+              testResult,
+              testResult.extended.tpi.toLocaleString('en', { maximumSignificantDigits: 2 }),
+              false,
+            )
+          : 'n/a'
+        const fabricTpi = testResult.extended.fabricTpi
+          ? linkifyResult(
+              testResult,
+              testResult.extended.fabricTpi.toLocaleString('en', { maximumSignificantDigits: 2 }),
+              false,
+            )
+          : ''
+
+        console.log('MX', testResult, tpi)
 
         return `<tr>
-            <td>${kind}</td>
-            <td>${story}</td>
+            <td>${testResult.extended.kind}</td>
+            <td>${testResult.extended.story}</td>
             <td>${fabricTpi}</td>
             <td>${tpi}</td>
-            <td>${iterations}</td>
+            <td>${testResult.extended.iterations}</td>
             <td>${getTicksResult(testResult, false)}</td>
            </tr>`
       })
@@ -223,23 +276,19 @@ function getStoryKey(resultKey: string): string {
   return story
 }
 
-function getTpiResult(testResults, stories, kind, story): string | undefined {
+function getTpiResult(testResults, stories, kind, story): number | undefined {
   let tpi = undefined
   if (stories[kind][story]) {
     const resultKey = `${kind}.${story}`
     const testResult = testResults[resultKey]
     const ticks = getTicks(testResult)
     const iterations = getIterations(stories, kind, story)
-    tpi =
-      ticks &&
-      iterations &&
-      (ticks / iterations).toLocaleString('en', { maximumSignificantDigits: 2 })
-    tpi = linkifyResult(testResult, tpi, false)
+    tpi = ticks && iterations && Math.round((ticks / iterations) * 100) / 100
   }
   return tpi
 }
 
-function getIterations(stories, kind, story) {
+function getIterations(stories, kind, story): number {
   // Give highest priority to most localized definition of iterations. Story => kind => default.
   return (
     stories[kind][story].iterations ||
