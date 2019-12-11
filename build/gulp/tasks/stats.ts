@@ -143,6 +143,34 @@ function readSummaryPerfStats() {
     .value()
 }
 
+function readPerfTestStats() {
+  return require(paths.packageDist('perf-test', 'perfCounts.json'))
+}
+
+// 1. iterate over all perf-test results
+// 2. the ones which have filename are docsite perf examples
+//    -> use camelCase name (docsite perf examples convention)
+//    -> and merge yarn perf (summaryPerf) and yarn perf:test (perfTest) data
+// 3. the others are perf-test only examples -> store
+function mergePerfStats(summaryPerfStats, perfTestStats) {
+  return _.transform(
+    perfTestStats,
+    (result, value, key: string) => {
+      const perfTest = _.pick(value, ['profile.metrics', 'analysis', 'extended'])
+      if (value['extended'].filename) {
+        const docsiteFilename = _.camelCase(value['extended'].filename)
+        result[docsiteFilename] = {
+          ...summaryPerfStats[docsiteFilename],
+          perfTest,
+        }
+      } else {
+        result[key.replace(/\./g, '_')] = { perfTest } // mongodb does not allow dots in keys
+      }
+    },
+    {},
+  )
+}
+
 function readCurrentBundleStats() {
   return _.mapKeys(require(currentStatsFilePath), (value, key) => _.camelCase(key)) // mongodb does not allow dots in keys
 }
@@ -158,6 +186,9 @@ task('stats:save', async () => {
   )
   const bundleStats = readCurrentBundleStats()
   const perfStats = readSummaryPerfStats()
+  const perfTestStats = readPerfTestStats()
+
+  const mergedPerfStats = mergePerfStats(perfStats, perfTestStats)
 
   const prUrl =
     process.env.CIRCLE_PULL_REQUEST ||
@@ -170,7 +201,7 @@ task('stats:save', async () => {
     build: process.env.BUILD_BUILDID || process.env.CIRCLE_BUILD_NUM,
     ...commandLineArgs, // allow command line overwrites
     bundleSize: bundleStats,
-    performance: perfStats,
+    performance: mergedPerfStats,
     ts: new Date(),
   }
 

@@ -12,6 +12,7 @@ type ExtendedCookResult = CookResult & {
     iterations: number
     tpi?: number
     fabricTpi?: number
+    filename?: number
   }
 }
 type ExtendedCookResults = Record<string, ExtendedCookResult>
@@ -99,9 +100,7 @@ export default async function getPerfRegressions() {
   const extendedCookResults = extendCookResults(stories, scenarioResults)
   fs.writeFileSync(
     path.join(outDir, 'perfCounts.json'),
-    JSON.stringify(extendedCookResults),
-    null,
-    2,
+    JSON.stringify(extendedCookResults, null, 2),
   )
 
   const comment = createReport(stories, extendedCookResults)
@@ -137,7 +136,7 @@ function extendCookResults(stories, testResults: CookResults): ExtendedCookResul
         iterations,
         tpi,
         fabricTpi,
-        docsite: stories[kind][story].docsite,
+        filename: stories[kind][story].filename,
       },
     }
   })
