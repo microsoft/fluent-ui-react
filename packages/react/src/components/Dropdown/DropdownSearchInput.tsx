@@ -9,9 +9,9 @@ import {
   createShorthandFactory,
   commonPropTypes,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import { ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
-import { UIComponentProps } from '../../lib/commonPropInterfaces'
+import { UIComponentProps } from '../../utils/commonPropInterfaces'
 import Input from '../Input/Input'
 
 export interface DropdownSearchInputSlotClassNames {

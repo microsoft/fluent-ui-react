@@ -99,10 +99,13 @@ const createMarkdownTable = (
 
   return markdownTable([
     ['Example', ...fieldLabels],
-    ..._.map(exampleMeasures, (exampleMeasure, exampleName) => [
-      exampleName,
-      ...fieldValues[exampleName],
-    ]),
+    ..._.sortBy(
+      _.map(exampleMeasures, (exampleMeasure, exampleName) => [
+        exampleName,
+        ...fieldValues[exampleName],
+      ]),
+      row => -row[fields.indexOf('median')],
+    ),
   ])
 }
 

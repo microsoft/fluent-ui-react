@@ -16,7 +16,7 @@ import {
   getOrGenerateIdFromShorthand,
   AutoControlledComponent,
   debounce,
-} from '../../lib'
+} from '../../utils'
 import {
   WithAsProp,
   withSafeTypeForAs,

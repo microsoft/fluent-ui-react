@@ -11,8 +11,8 @@ import {
   commonPropTypes,
   childrenExist,
   rtlTextContainer,
-} from '../../lib'
-import { RenderResultConfig } from '../../lib/renderComponent'
+} from '../../utils'
+import { RenderResultConfig } from '../../utils/renderComponent'
 import {
   ComponentEventHandler,
   WithAsProp,

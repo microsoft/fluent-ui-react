@@ -10,7 +10,7 @@ import {
   RenderResultConfig,
   AutoControlledComponent,
   applyAccessibilityKeyHandlers,
-} from '../../lib'
+} from '../../utils'
 
 export interface TextAreaProps extends UIComponentProps, ChildrenComponentProps {
   /** Accessibility behavior if overridden by the user. */

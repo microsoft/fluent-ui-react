@@ -1,6 +1,6 @@
 import { ItemType } from '../../../../themes/types'
 import { TeamsSchemeMappingWithAreas } from '../../types'
-import { stringLiteralsArray } from '../../../../lib'
+import { stringLiteralsArray } from '../../../../utils'
 import { pickValuesFromColorScheme } from '../../../colorUtils'
 
 export const textColorAreas = stringLiteralsArray('foreground')

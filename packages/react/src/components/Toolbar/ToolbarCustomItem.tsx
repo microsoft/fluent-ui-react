@@ -12,7 +12,7 @@ import {
   childrenExist,
   commonPropTypes,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 
 import { ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
 

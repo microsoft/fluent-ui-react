@@ -11,7 +11,7 @@ import {
   commonPropTypes,
   ContentComponentProps,
   rtlTextContainer,
-} from '../../lib'
+} from '../../utils'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface GridProps extends UIComponentProps, ChildrenComponentProps, ContentComponentProps {

@@ -1,4 +1,4 @@
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../../../utils'
 import { FlexProps } from '../../../../components/Flex/Flex'
 
 type GapValues = Record<FlexProps['gap'], string>

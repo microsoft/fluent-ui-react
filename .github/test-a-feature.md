@@ -17,7 +17,7 @@ Test a feature
     - [Important mentions:](#important-mentions)
   - [Run Screener tests](#run-screener-tests)
     - [Local run command](#local-run-command)
-- [Behavior tets](#behavior-tets)
+- [Behavior Tests](#behavior-tests)
   - [Adding test(s)](#adding-tests)
   - [Running test(s)](#running-tests)
   - [Troubleshooting](#troubleshooting)
@@ -25,6 +25,9 @@ Test a feature
     - [I am not sure if my line was executed](#i-am-not-sure-if-my-line-was-executed)
     - [I want to add any description which should not be consider as unit test](#i-want-to-add-any-description-which-should-not-be-consider-as-unit-test)
     - [I want to create unit tests in separate file not through the regex](#i-want-to-create-unit-tests-in-separate-file-not-through-the-regex)
+- [Performance Tests](#performance-tests)
+  - [Adding a Perf Test](#adding-a-perf-test)
+  - [Running Perf Tests](#running-perf-tests)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -172,7 +175,7 @@ When ran locally, not all the tests may be needed to run, only the ones added/ed
 yarn test:visual
 ```
 
-## Behavior tets
+## Behavior Tests
 
 Behavior unit tests are generated from the specification written in each behavior file.
 Each line under the `@specification` tag is taken and matched against the regex expression written in `testDefinitions.ts` file.
@@ -236,3 +239,42 @@ Add description under the `@description` tag. Like:
 
 #### I want to create unit tests in separate file not through the regex
 Add your spec file into the array of files `skipSpecChecksForFiles` in `testHelper.tsx`. And put description in behavior file under `@description` tag.
+
+## Performance Tests
+
+Performance tests will measure performance, set a baseline for performance and help guard against regressions. 
+
+### Adding a Perf Test
+
+- To add a perf test, simply add a file with `.perf.` in its naming. (As of writing, `.perf.` files in `docs/src` and `packages/perf-test` are automatically consumed.)
+- Formatting follows [Storybook CSF convention](https://storybook.js.org/docs/formats/component-story-format/) with special support for `iterations` metadata which tells the performance testing package how many iterations of your component to render:
+
+```tsx
+// If this file is named ButtonBasic.perf.tsx, it will be picked up as kind of 'ButtonBasic' with story names of 'Blank' and 'WithText'.
+export default {
+  iterations: 5000,
+}
+
+export const Blank = () => <Button />
+export const WithText = () => <Button content="Click here" />
+```
+
+Finding the right number of `iterations` is a balancing act between having a fast test and getting enough information from the results. For more complex scenarios and components 1 iteration may be enough, while simple components with simple stories may need as many as 5,000.
+
+### Running Perf Tests
+
+Run test and watch:
+```
+cd packages/perf-test
+yarn just perf-test
+```
+
+After running `perf-test`, results can be viewed in the `packages/perf-test/dist` folder with the main entry file being `packages/perf-test/dist/perfCounts.html`.
+
+There are more detailed commands as well (these must be run from `packages/perf-test` directory):
+
+| Command | Description |
+|---------|-------------|
+| `yarn just perf-test:bundle` | Recreates story bundle. Required if perf stories are added or modified. |
+| `yarn just perf-test:run` | Runs flamegrill against story bundle and generates results. |
+| `yarn just perf-test` | Executes both `:bundle` and `:run`. |
