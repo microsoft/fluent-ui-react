@@ -146,7 +146,7 @@ Removing the following two props because the ARIA spec dictates role='checkbox' 
 
 ### Conversion process from Fabric 7 to Fluent UI Checkbox
 
-#### CheckboxProps interface
+#### Fluent Checkbox recommended props interface
 
 | Name                         | Action to take/taken | Property transitioned? | Breaking change? | Codemod/Shim created? |
 | -----------------------------| -------------------- | :--------------------: | :--------------: | :-------------------: |
@@ -160,7 +160,7 @@ Removing the following two props because the ARIA spec dictates role='checkbox' 
 | `checkmarkIconProps`         | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
 | `className`                  | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
 | `componentRef`               | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
-| `defaultChecked`             | Won't be transitioned| &#x274C;               | &#x274C;         | &#x274C;              |
+| `defaultChecked`             | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
 | `defaultIndetermiante`       | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
 | `disabled`                   | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
 | `indeterminate`              | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
@@ -174,8 +174,6 @@ Removing the following two props because the ARIA spec dictates role='checkbox' 
 Props being removed:
 
 ariaPoisitionInSet and ariaSetSize - when writing parent component, user should set these on the checkbox.
-animations: remnant pattern of semantic UI, don't need animations for checkbox theming
-defaultChecked: overloading with checked - can just set default value of checked.
 
 ## Slots
 
