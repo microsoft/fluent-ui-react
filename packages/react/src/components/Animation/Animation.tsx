@@ -9,7 +9,7 @@ import {
   commonPropTypes,
   ChildrenComponentProps,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface AnimationProps

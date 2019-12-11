@@ -13,11 +13,11 @@ import {
   createShorthandFactory,
   applyAccessibilityKeyHandlers,
   childrenExist,
-} from '../../lib'
+} from '../../utils'
 import { ShorthandCollection, WithAsProp } from '../../types'
 import { Accessibility, tableRowBehavior } from '@fluentui/accessibility'
 import { ComponentVariablesObject } from '../../themes/types'
-import { mergeComponentVariables } from '../../lib/mergeThemes'
+import { mergeComponentVariables } from '../../utils/mergeThemes'
 
 export interface TableRowProps extends UIComponentProps {
   /**

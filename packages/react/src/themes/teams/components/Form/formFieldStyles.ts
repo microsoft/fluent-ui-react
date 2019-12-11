@@ -1,6 +1,6 @@
 import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { FormProps } from '../../../../components/Form/Form'
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../../../utils'
 
 const formFieldStyles: ComponentSlotStylesPrepared<FormProps, any> = {
   root: ({ props, variables }): ICSSInJSStyle => ({}),

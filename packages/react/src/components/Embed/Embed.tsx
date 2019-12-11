@@ -11,7 +11,7 @@ import {
   commonPropTypes,
   AutoControlledComponent,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import Icon, { IconProps } from '../Icon/Icon'
 import Image from '../Image/Image'
 import Video, { VideoProps } from '../Video/Video'

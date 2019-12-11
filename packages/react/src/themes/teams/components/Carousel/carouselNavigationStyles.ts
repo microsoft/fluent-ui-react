@@ -1,7 +1,7 @@
 import { CarouselNavigationProps } from '../../../../components/Carousel/CarouselNavigation'
 import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { CarouselNavigationVariables } from './carouselNavigationVariables'
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../../../utils'
 import { getColorScheme } from '../../colors'
 
 const carouselNavigationStyles: ComponentSlotStylesPrepared<

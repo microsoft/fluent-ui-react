@@ -13,7 +13,7 @@ import {
   commonPropTypes,
   rtlTextContainer,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import { WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 
 export interface AccordionContentProps

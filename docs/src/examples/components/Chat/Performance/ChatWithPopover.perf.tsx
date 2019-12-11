@@ -1,7 +1,7 @@
 import { Accessibility, Avatar, Chat, Menu, Provider, menuAsToolbarBehavior } from '@fluentui/react'
 import * as _ from 'lodash'
-import * as React from 'react'
 import cx from 'classnames'
+import * as React from 'react'
 
 const avatars = {
   ade:
@@ -96,7 +96,7 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
   }
 }
 
-const ChatWithPopover = () => {
+const ChatWithPopoverPerf = () => {
   return (
     <Provider
       theme={{
@@ -166,4 +166,7 @@ const ChatWithPopover = () => {
   )
 }
 
-export default ChatWithPopover
+ChatWithPopoverPerf.iterations = 5000
+ChatWithPopoverPerf.filename = 'ChatWithPopover.perf.tsx'
+
+export default ChatWithPopoverPerf

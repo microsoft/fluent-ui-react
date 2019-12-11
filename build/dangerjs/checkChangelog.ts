@@ -20,8 +20,8 @@ const hasAddedLinesAfterVersionInChangelog = async (danger): Promise<boolean> =>
 }
 
 const getMalformedChangelogEntries = async (danger): Promise<string[]> => {
-  // +- description @githubname ([#DDDD](https://github.com/stardust-ui/react/pull/DDDD))
-  const validEntry = /^\+- .*@\S+ \(\[#(\d+)]\(https:\/\/github\.com\/(?:stardust-ui\/react|microsoft\/fluent-ui-react)\/pull\/\1\)\)$/
+  // +- description @githubname ([#DDDD](https://github.com/microsoft/fluent-ui-react/pull/DDDD))
+  const validEntry = /^\+- .*@\S+ \(\[#(\d+)]\(https:\/\/github\.com\/microsoft\/fluent-ui-react\/pull\/\1\)\)$/
 
   const addedLines = await getAddedLinesFromChangelog(danger)
 
@@ -50,7 +50,9 @@ export default async ({ danger, fail, warn }: DangerJS) => {
   } else {
     const malformedChangelogEntries = await getMalformedChangelogEntries(danger)
     malformedChangelogEntries.forEach(entry => {
-      fail(`Invalid entry format in ${CHANGELOG_FILE}: >${entry}<`)
+      fail(`Invalid entry format in ${CHANGELOG_FILE}: >${entry}<
+
+The correct format is: \`- description @githubname ([#DDDD](https://github.com/microsoft/fluent-ui-react/pull/DDDD)\``)
     })
 
     const hasLine = await hasAddedLinesAfterVersionInChangelog(danger)

@@ -5,7 +5,7 @@ import {
   KnobRangeKnobComponentProps,
   LogInspectorProps,
 } from './types'
-import parseValue from './lib/parseRangeValue'
+import parseValue from './utils/parseRangeValue'
 
 const KnobField: React.FunctionComponent<KnobComponentProps> = props => (
   <div

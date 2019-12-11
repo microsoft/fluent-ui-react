@@ -12,7 +12,7 @@ import {
   commonPropTypes,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
-} from '../../lib'
+} from '../../utils'
 import ListItem, { ListItemProps } from './ListItem'
 import {
   WithAsProp,
