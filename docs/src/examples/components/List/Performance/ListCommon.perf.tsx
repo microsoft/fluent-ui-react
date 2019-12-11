@@ -1,5 +1,5 @@
-import * as React from 'react'
 import { List, Image } from '@fluentui/react'
+import * as React from 'react'
 
 const avatars = {
   ade:
@@ -105,8 +105,9 @@ const items = [
   },
 ]
 
-const ListPerf = () => <List items={items} />
+const ListCommonPerf = () => <List items={items} />
 
-ListPerf.iterations = 100
+ListCommonPerf.iterations = 100
+ListCommonPerf.filename = 'ListCommon.perf.tsx'
 
-export default ListPerf
+export default ListCommonPerf

@@ -12,7 +12,7 @@ const janeAvatar = {
   status: { color: 'green', icon: 'stardust-checkmark' },
 }
 
-const ChatExample = () => {
+const ChatDuplicateMessagesPerf = () => {
   return (
     <Provider
       theme={{
@@ -48,4 +48,7 @@ const ChatExample = () => {
   )
 }
 
-export default ChatExample
+ChatDuplicateMessagesPerf.iterations = 1
+ChatDuplicateMessagesPerf.filename = 'ChatDuplicateMessages.perf.tsx'
+
+export default ChatDuplicateMessagesPerf
