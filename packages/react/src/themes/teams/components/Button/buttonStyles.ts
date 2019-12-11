@@ -154,7 +154,7 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
 
       ...(p.secondaryAlt && {
         color: siteVariables.colorScheme.silver.foreground,
-        borderColor: siteVariables.colorScheme.silver.borderColor,
+        borderColor: siteVariables.colorScheme.silver.border,
         backgroundColor: siteVariables.colorScheme.silver.background,
 
         ':active': {
@@ -163,6 +163,7 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         },
 
         ':hover': {
+          color: siteVariables.colorScheme.silver.foregroundHover,
           backgroundColor: siteVariables.colorScheme.silver.backgroundHover,
         },
 
@@ -174,12 +175,8 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         ':focus-visible': {
           ...borderFocusStyles[':focus-visible'],
           backgroundColor: siteVariables.colorScheme.silver.backgroundPressed,
+          color: siteVariables.colorScheme.silver.foregroundHover,
         },
-
-        ...(p.disabled && {
-          color: siteVariables.colorScheme.silver.foregroundDisabled,
-          background: siteVariables.colorScheme.silver.backgroundDisabled,
-        }),
       }),
 
       // Overrides for "disabled" buttons
@@ -194,6 +191,7 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
 
         ...(p.text && {
           color: v.textColorDisabled,
+          backgroundColor: 'transparent',
           ':hover': {
             color: v.textColorDisabled,
           },
@@ -202,15 +200,6 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         ...(!p.text && {
           backgroundColor: v.backgroundColorDisabled,
           borderColor: v.borderColorDisabled,
-          ':hover': {
-            backgroundColor: v.backgroundColorDisabled,
-          },
-          ...(p.primary && {
-            backgroundColor: v.primaryBackgroundColorDisabled,
-            ':hover': {
-              backgroundColor: v.primaryBackgroundColorDisabled,
-            },
-          }),
         }),
       }),
 
