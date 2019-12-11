@@ -22,7 +22,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
       - run: yarn install
-      - run: yarn perf:memory
+        env:
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: 'true'
+      - name: Test
+        uses: ianwalter/puppeteer@v2.0.0
+        with:
+          args: yarn perf:memory
         env:
           CI: true
       - uses: actions/upload-artifact@v1
