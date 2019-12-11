@@ -109,7 +109,6 @@ export default async function getPerfRegressions() {
   const status = 'success'
 
   console.log(`Perf evaluation status: ${status}`)
-  // console.log(`Writing comment to file:\n${comment}`)
 
   // Write results to file
   fs.writeFileSync(path.join(outDir, 'perfCounts.html'), comment)
