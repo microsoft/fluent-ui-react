@@ -3,7 +3,7 @@ import * as _ from 'lodash'
 import * as React from 'react'
 
 export default {
-  iterations: 1000,
+  iterations: 5000,
   filename: 'ChatDuplicateMessages.perf.tsx',
 }
 

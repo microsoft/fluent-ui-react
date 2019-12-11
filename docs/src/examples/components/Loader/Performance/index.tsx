@@ -8,7 +8,7 @@ const Performance = () => (
     <ComponentPerfExample
       title="Default"
       description="A default test."
-      examplePath="components/Loader/Performance/LoaderBase.perf"
+      examplePath="components/Loader/Performance/LoaderMinimal.perf"
     />
   </NonPublicSection>
 )

@@ -4,7 +4,7 @@ import cx from 'classnames'
 import * as React from 'react'
 
 export default {
-  iterations: 1000,
+  iterations: 5000,
   filename: 'ChatWithPopover.perf.tsx',
 }
 

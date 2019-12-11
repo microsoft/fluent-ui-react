@@ -2,7 +2,7 @@ import { Attachment } from '@fluentui/react'
 import * as React from 'react'
 
 export default {
-  iterations: 1000,
+  iterations: 5000,
   filename: 'AttachmentSlots.perf.tsx',
 }
 
