@@ -118,7 +118,13 @@ task('perf:build', cb => {
 })
 
 task('perf:run-memory', async () => {
-  const browser = await puppeteer.launch(safeLaunchOptions())
+  const browser = await puppeteer.launch(
+    safeLaunchOptions(
+      process.env.CI && {
+        executablePath: 'google-chrome-unstable',
+      },
+    ),
+  )
   const context = await browser.createIncognitoBrowserContext()
   const page = await context.newPage()
 

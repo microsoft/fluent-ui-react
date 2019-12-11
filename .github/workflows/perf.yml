@@ -8,25 +8,32 @@ jobs:
     name: Create a heap snapshot from perf tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - name: Checkout from Git
+        uses: actions/checkout@v1
+      - name: Setup Node
+        uses: actions/setup-node@v1
         with:
           node-version: 10
-      - id: yarn-cache
+      - name: Set Yarn cache directory
+        id: yarn-cache
         run: echo "::set-output name=dir::$(yarn cache dir)"
-      - uses: actions/cache@v1
+      - name: Get Yarn cache
+        uses: actions/cache@v1
         with:
           path: ${{ steps.yarn-cache.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
-      - uses: ianwalter/puppeteer@v2.0.0
+      - name: Install dependencies
+        uses: ianwalter/puppeteer@v2.0.0
         with:
           args: yarn
-      - uses: ianwalter/puppeteer@v2.0.0
+      - name: Run perf tests
+        uses: ianwalter/puppeteer@v2.0.0
         with:
           args: yarn perf:memory
-      - uses: actions/upload-artifact@v1
+      - name: Save heap snapshot
+        uses: actions/upload-artifact@v1
         with:
           name: perf.heapsnapshot
           path: perf/dist/result.heapsnapshot
