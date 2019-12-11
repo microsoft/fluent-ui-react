@@ -12,7 +12,7 @@ import {
   ContentComponentProps,
   rtlTextContainer,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface MenuDividerProps

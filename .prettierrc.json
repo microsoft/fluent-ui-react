@@ -8,7 +8,7 @@
   "trailingComma": "all",
   "overrides": [
     {
-      "files": "packages/react-theming/**/*",
+      "files": ["packages/react-theming/**/*", "packages/playground/**/*"],
       "options": {
         "semi": true
       }

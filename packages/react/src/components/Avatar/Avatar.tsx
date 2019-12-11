@@ -13,7 +13,7 @@ import {
   commonPropTypes,
   SizeValue,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 
 export interface AvatarProps extends UIComponentProps {
   /**

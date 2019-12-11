@@ -8,8 +8,8 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   ShorthandFactory,
-} from '../../lib'
-import { mergeStyles } from '../../lib/mergeThemes'
+} from '../../utils'
+import { mergeStyles } from '../../utils/mergeThemes'
 import { ComponentSlotStylesPrepared } from '../../themes/types'
 
 type ChildrenFunction = (params: {

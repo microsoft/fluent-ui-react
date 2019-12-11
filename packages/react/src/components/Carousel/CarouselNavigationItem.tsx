@@ -16,7 +16,7 @@ import {
   applyAccessibilityKeyHandlers,
   SizeValue,
   UIComponent,
-} from '../../lib'
+} from '../../utils'
 import { withSafeTypeForAs, WithAsProp, ShorthandValue, ComponentEventHandler } from '../../types'
 import Icon, { IconProps } from '../Icon/Icon'
 import Box from '../Box/Box'

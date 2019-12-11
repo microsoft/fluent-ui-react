@@ -14,8 +14,8 @@ import {
   commonPropTypes,
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
-} from '../../lib'
-import { mergeComponentVariables } from '../../lib/mergeThemes'
+} from '../../utils'
+import { mergeComponentVariables } from '../../utils/mergeThemes'
 
 import { ShorthandCollection, WithAsProp, withSafeTypeForAs } from '../../types'
 import {

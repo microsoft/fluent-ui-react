@@ -8,7 +8,7 @@ import {
   UIComponentProps,
   commonPropTypes,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface ImageProps extends UIComponentProps {

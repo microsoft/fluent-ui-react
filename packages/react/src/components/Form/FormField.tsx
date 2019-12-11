@@ -11,7 +11,7 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Text, { TextProps } from '../Text/Text'

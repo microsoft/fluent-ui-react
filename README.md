@@ -29,14 +29,14 @@
   </a>
 </p>
 
->Hey, we're in development:
+> Hey, we're in development:
 >
->1. **MINOR** versions represent **breaking changes**
->1. **PATCH** versions represent **fixes _and_ features**
->1. There are **no deprecation warnings** between releases
->1. Consult the [**CHANGELOG**][4] and related issues/PRs for more information
+> 1.  **MINOR** versions represent **breaking changes**
+> 1.  **PATCH** versions represent **fixes _and_ features**
+> 1.  There are **no deprecation warnings** between releases
+> 1.  Consult the [**CHANGELOG**][4] and related issues/PRs for more information
 
-***
+---
 
 Fluent UI React represents a set of specifications and tools for building UI libraries.
 
@@ -44,7 +44,7 @@ Fluent UI React represents a set of specifications and tools for building UI lib
 
 ### [Voice Your Opinion][101]
 
-Help shape this library by weighing in on our [RFC (request for comments)][101] issues. 
+Help shape this library by weighing in on our [RFC (request for comments)][101] issues.
 
 ### [Contribute][3]
 
@@ -52,11 +52,11 @@ Our [CONTRIBUTING.md][3] is a step-by-step setup and development guide.
 
 ### [Good First Issue][103]
 
-Issues labeled [`good first issue`][103] are a great way to ease into development on this project. 
+Issues labeled [`good first issue`][103] are a great way to ease into development on this project.
 
 ### [New Components][102]
 
-There is an issue for every new component labeled [`new component`][102].  Just comment on the issue you'd like to take.
+There is an issue for every new component labeled [`new component`][102]. Just comment on the issue you'd like to take.
 
 ### [Help Wanted Label][100]
 
@@ -64,7 +64,7 @@ Any other issue labeled [`help wanted`][100] is also ready for a PR.
 
 ## Why?
 
-There are a number of packages that a UI library needs to create great UI components. Take a look at SUIR's [`/src/lib`][201] as an example. This core library enables the SUIR features we love today such as shorthand props, event stack handling, auto controlled state, controlling the rendered component, and more.
+There are a number of packages that a UI library needs to create great UI components. Take a look at SUIR's [`/src/utils`][201] as an example. This core library enables the SUIR features we love today such as shorthand props, event stack handling, auto controlled state, controlling the rendered component, and more.
 
 Other libraries in the wild have some of these features and some of their own. It is our desire that the community share the best UI component practices in a core library to the greater benefit of the web.
 
@@ -95,6 +95,7 @@ You can find Stardust usage examples by accessing the [doc site][5]
 See the [MANIFESTO.md][1] for details. SUIR v2 will be built on the specifications and tools from Stardust.
 
 <!-- REPO -->
+
 [1]: https://github.com/microsoft/fluent-ui-react/blob/master/MANIFESTO.md
 [2]: https://github.com/microsoft/fluent-ui-react/issues/new/choose
 [3]: https://github.com/microsoft/fluent-ui-react/blob/master/.github/CONTRIBUTING.md
@@ -102,15 +103,18 @@ See the [MANIFESTO.md][1] for details. SUIR v2 will be built on the specificatio
 [5]: https://microsoft.github.io/fluent-ui-react
 
 <!-- ISSUE LABELS -->
+
 [100]: https://github.com/microsoft/fluent-ui-react/labels/help%20wanted
 [101]: https://github.com/microsoft/fluent-ui-react/issues?q=is%3Aopen+RFC+label%3ARFC
 [102]: https://github.com/microsoft/fluent-ui-react/issues?q=is%3Aissue+is%3Aopen+label%3A%22new+component%22
 [103]: https://github.com/microsoft/fluent-ui-react/labels/good%20first%20issue
 
 <!-- SUIR -->
+
 [200]: https://github.com/Semantic-Org/Semantic-UI-React
-[201]: https://github.com/Semantic-Org/Semantic-UI-React/tree/master/src/lib
+[201]: https://github.com/Semantic-Org/Semantic-UI-React/tree/master/packages/react/src/utils
 
 <!-- EXTERNAL -->
+
 [300]: https://developer.microsoft.com/en-us/fabric
 [301]: https://products.office.com/en-US/microsoft-teams/group-chat-software
