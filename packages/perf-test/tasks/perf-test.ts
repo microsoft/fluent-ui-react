@@ -248,8 +248,6 @@ function createScenarioTable(stories, testResults: ExtendedCookResults, showAll:
             )
           : ''
 
-        console.log('MX', testResult, tpi)
-
         return `<tr>
             <td>${testResult.extended.kind}</td>
             <td>${testResult.extended.story}</td>
