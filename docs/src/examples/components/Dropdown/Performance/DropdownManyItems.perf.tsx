@@ -12,6 +12,6 @@ const DropdownManyItemsPerf = () => (
   <Dropdown defaultOpen items={inputItems} placeholder="Select your hero" />
 )
 
-DropdownManyItemsPerf.filename = 'DropdownManyItemsPerf.perf.tsx'
+DropdownManyItemsPerf.filename = 'DropdownManyItems.perf.tsx'
 
 export default DropdownManyItemsPerf

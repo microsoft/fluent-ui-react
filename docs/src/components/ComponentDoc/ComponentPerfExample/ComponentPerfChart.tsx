@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import { Box, Flex, RadioGroup, Text } from '@fluentui/react'
+import { Box, Flex, RadioGroup, Text, Checkbox } from '@fluentui/react'
 import { PerfChart, usePerfData } from 'docs/src/components/ComponentDoc/PerfChart'
 import * as React from 'react'
 import { PerfData, PerfSample } from 'docs/src/components/ComponentDoc/PerfChart/PerfDataContext'
@@ -15,6 +15,7 @@ export const ComponentPerfChart = ({ perfTestName }) => {
   const { loading, error, data } = usePerfData(perfTestName)
 
   const [filterBy, setFilterBy] = React.useState(FILTER_BY.CI_BUILD)
+  const [withExtremes, setWithExtremes] = React.useState(false)
 
   let filteredData: PerfData = data
 
@@ -88,16 +89,23 @@ export const ComponentPerfChart = ({ perfTestName }) => {
 
   return (
     <div>
-      <RadioGroup
-        defaultCheckedValue={FILTER_BY.CI_BUILD}
-        checkedValueChanged={handleFilterChange}
-        items={[
-          { label: FILTER_BY.CI_BUILD, value: FILTER_BY.CI_BUILD },
-          { label: FILTER_BY.RELEASE, value: FILTER_BY.RELEASE },
-          { label: FILTER_BY.DAY, value: FILTER_BY.DAY },
-          { label: FILTER_BY.MONTH, value: FILTER_BY.MONTH },
-        ]}
-      />
+      <Flex vAlign="center" gap="gap.large">
+        <RadioGroup
+          defaultCheckedValue={FILTER_BY.CI_BUILD}
+          checkedValueChanged={handleFilterChange}
+          items={[
+            { key: 'ci-build', label: FILTER_BY.CI_BUILD, value: FILTER_BY.CI_BUILD },
+            { key: 'release', label: FILTER_BY.RELEASE, value: FILTER_BY.RELEASE },
+            { key: 'day', label: FILTER_BY.DAY, value: FILTER_BY.DAY },
+            { key: 'month', label: FILTER_BY.MONTH, value: FILTER_BY.MONTH },
+          ]}
+        />
+        <Checkbox
+          label="Show extremes"
+          defaultChecked={withExtremes}
+          onChange={(e, { checked }) => setWithExtremes(checked)}
+        />
+      </Flex>
 
       <Box
         styles={{
@@ -126,7 +134,7 @@ export const ComponentPerfChart = ({ perfTestName }) => {
           ) : error ? (
             <Text error content={`Error: ${error.message}`} />
           ) : (
-            <PerfChart perfData={filteredData} />
+            <PerfChart perfData={filteredData} withExtremes={withExtremes} />
           )}
         </Flex>
       </Box>
