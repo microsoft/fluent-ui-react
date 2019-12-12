@@ -217,11 +217,11 @@ export default () => (
       value={`
       const overridenMenuBehavior: Accessibility = (props: any) => {
         const behavior = menuBehavior(props)
-      
+
         behavior.focusZone.props.defaultTabbableElement = (root: HTMLElement): HTMLElement => {
           return root.querySelector(".ui-menu__item__wrapper:last-child")
         }
-      
+
         return behavior
       }
       `}
@@ -232,7 +232,7 @@ export default () => (
       All Stardust behaviors implementations can be found on the{' '}
       {link(
         'GitHub',
-        'https://github.com/stardust-ui/react/tree/master/packages/react/src/lib/accessibility/Behaviors',
+        'https://github.com/stardust-ui/react/tree/master/packages/react/src/utils/accessibility/Behaviors',
       )}
       .
     </p>

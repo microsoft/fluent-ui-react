@@ -92,7 +92,7 @@ export default () => (
         <CodeSnippet
           label="html"
           value={`
-          <ul role="menu" class="ui-menu">---> FocusZone's attributes/events listeners applied here 
+          <ul role="menu" class="ui-menu">---> FocusZone's attributes/events listeners applied here
             <li class="ui-menu__item ..." role="presentation">
             </li>
             <li class="ui-menu__item ..." role="presentation">
@@ -107,7 +107,7 @@ export default () => (
         <CodeSnippet
           label="html"
           value={`
-            <div>---> FocusZone's attributes/events listeners applied here            
+            <div>---> FocusZone's attributes/events listeners applied here
               <ul role="menu" class="ui-menu">
                 <li class="ui-menu__item ..." role="presentation">
                 </li>
@@ -124,7 +124,7 @@ export default () => (
       The following props can be applied (
       {link(
         'lookup for API on GitHub',
-        'https://github.com/stardust-ui/react/blob/master/packages/react/src/lib/accessibility/FocusZone/FocusZone.types.ts',
+        'https://github.com/stardust-ui/react/blob/master/packages/react/src/utils/accessibility/FocusZone/FocusZone.types.ts',
       )}
       ):
     </p>
@@ -142,11 +142,11 @@ export default () => (
       value={`
       const overridenMenuBehavior: Accessibility = (props: any) => {
         const behavior = menuBehavior(props)
-      
+
         behavior.focusZone.props.defaultTabbableElement = (root: HTMLElement): HTMLElement => {
           return root.querySelector(".ui-menu__item__wrapper:last-child")
         }
-      
+
         return behavior
       }
       `}
@@ -175,7 +175,7 @@ export default () => (
       {code('FocusZone')} code on{' '}
       {link(
         'GitHub.',
-        'https://github.com/stardust-ui/react/blob/master/packages/react/src/lib/accessibility/FocusZone/FocusZone.tsx',
+        'https://github.com/stardust-ui/react/blob/master/packages/react/src/utils/accessibility/FocusZone/FocusZone.tsx',
       )}
     </p>
   </DocPage>

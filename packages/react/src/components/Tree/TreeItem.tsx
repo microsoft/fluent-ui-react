@@ -17,7 +17,7 @@ import {
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import {
   ComponentEventHandler,
   WithAsProp,
@@ -26,7 +26,7 @@ import {
   withSafeTypeForAs,
   ShorthandCollection,
 } from '../../types'
-import { hasSubtree } from './lib'
+import { hasSubtree } from './utils'
 
 export interface TreeItemSlotClassNames {
   title: string

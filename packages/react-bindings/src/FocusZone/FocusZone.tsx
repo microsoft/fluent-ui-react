@@ -509,14 +509,14 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
 
     const doc = getDocument(this._root.current)
 
+    if (this.props.onKeyDown) {
+      this.props.onKeyDown(ev)
+    }
+
     if (doc.activeElement === this._root.current && this._isInnerZone) {
       // If this element has focus, it is being controlled by a parent.
       // Ignore the keystroke.
       return undefined
-    }
-
-    if (this.props.onKeyDown) {
-      this.props.onKeyDown(ev)
     }
 
     // If the default has been prevented, do not process keyboard events.

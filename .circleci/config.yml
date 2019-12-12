@@ -61,6 +61,9 @@ jobs:
           name: Circular Dependencies Tests
           command: yarn test:circulars
       - run:
+          name: Flamegrill
+          command: yarn perf:test
+      - run:
           name: Bundle Statistics (master only)
           command: |
             if [ $CIRCLE_BRANCH == 'master' ]; then

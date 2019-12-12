@@ -1,4 +1,4 @@
-import parseValue from './lib/parseRangeValue'
+import parseValue from './utils/parseRangeValue'
 import { UseKnobOptions } from './types'
 import useKnob from './useKnob'
 

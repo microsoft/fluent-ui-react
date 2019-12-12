@@ -19,7 +19,7 @@ import {
   commonPropTypes,
   ContentComponentProps,
   rtlTextContainer,
-} from '../../lib'
+} from '../../utils'
 import PortalInner from './PortalInner'
 
 export type TriggerAccessibility = {

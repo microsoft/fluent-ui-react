@@ -8,7 +8,7 @@ const Performance = () => (
     <ComponentPerfExample
       title="Default"
       description="A default test."
-      examplePath="components/Dropdown/Performance/Dropdown.perf"
+      examplePath="components/Dropdown/Performance/DropdownManyItems.perf"
     />
   </NonPublicSection>
 )

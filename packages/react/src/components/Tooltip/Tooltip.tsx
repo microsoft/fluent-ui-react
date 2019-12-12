@@ -20,7 +20,7 @@ import {
   getOrGenerateIdFromShorthand,
   createShorthandFactory,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import { ShorthandValue, Props } from '../../types'
 import {
   ALIGNMENTS,
@@ -28,7 +28,7 @@ import {
   Popper,
   BasicPositioningProps,
   PopperChildrenProps,
-} from '../../lib/positioner'
+} from '../../utils/positioner'
 import TooltipContent, { TooltipContentProps } from './TooltipContent'
 import PortalInner from '../Portal/PortalInner'
 

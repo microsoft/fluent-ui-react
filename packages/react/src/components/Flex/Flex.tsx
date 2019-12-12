@@ -2,7 +2,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { UIComponent, commonPropTypes, UIComponentProps, ChildrenComponentProps } from '../../lib'
+import { UIComponent, commonPropTypes, UIComponentProps, ChildrenComponentProps } from '../../utils'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 import FlexItem from './FlexItem'
 

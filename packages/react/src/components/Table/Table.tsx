@@ -1,3 +1,4 @@
+import { Accessibility, tableBehavior } from '@fluentui/accessibility'
 import { ReactAccessibilityBehavior } from '@fluentui/react-bindings'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
@@ -11,13 +12,12 @@ import {
   UIComponent,
   applyAccessibilityKeyHandlers,
   childrenExist,
-} from '../../lib'
+} from '../../utils'
 import { ComponentVariablesObject } from '../../themes/types'
-import { mergeComponentVariables } from '../../lib/mergeThemes'
+import { mergeComponentVariables } from '../../utils/mergeThemes'
 import TableRow, { TableRowProps } from './TableRow'
 import TableCell from './TableCell'
 import { WithAsProp, ShorthandCollection, ShorthandValue } from '../../types'
-import { Accessibility, tableBehavior } from '@fluentui/accessibility'
 
 export interface TableSlotClassNames {
   header: string

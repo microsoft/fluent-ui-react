@@ -3,9 +3,10 @@ import { Provider, themes } from '@fluentui/react'
 
 const reqContexts = [
   // TODO: Relative pathing isn't the best here, but docs containing perf stories isn't a package that can be added as a dep.
-  // TODO: existing perf stories are temporarily disabled to emphasize component implementations.
-  // require.context('../../../docs/src', true, /\.perf\.tsx$/),
+  require.context('../../../docs/src', true, /\.perf\.tsx$/),
   require.context('..', true, /\.perf\.tsx$/),
+  // TODO: why does this break index.html?? seems to pull in stories the same way...
+  // require.context('../stories', true, /\.perf\.tsx$/),
 ]
 
 // TODO: can comment this out to remove Provider. this should be made part of URL / digest bundle.
@@ -43,31 +44,34 @@ function loadStories() {
 
         // Attempt to read story name from file with fallback to file naming.
         // https://storybook.js.org/docs/formats/component-story-format/
-        if (reqContext(fileKey).default && reqContext(fileKey).default.component) {
-          kindName = reqContext(fileKey).default.component
+        // TODO: this should have typing (ideally from storybook)
+        if (reqContext(fileKey).default && reqContext(fileKey).default.name) {
+          kindName = reqContext(fileKey).default.name
         } else {
           kindName = fileKey.substr(fileKey.lastIndexOf('/') + 1).replace('.perf.tsx', '')
         }
 
-        if (!stories[fileKey]) {
-          stories[kindName] = {}
+        if (stories[kindName]) {
+          // TODO: this should fail build or show a more visible warning
+          console.error(`Kind ${kindName} already exists! Please ensure unique naming.`)
         }
+
+        stories[kindName] = {}
 
         // TODO: React docs impl was treating all defaults as stories, even if they were not functions.
         // This code ignores exports that aren't functions to more closely align with CSF format for storybook compatibility.
         Object.keys(reqContext(fileKey)).forEach(exportKey => {
           const StoryExport = reqContext(fileKey)[exportKey]
 
-          if (StoryExport && isFunctionalComponent(StoryExport)) {
+          // Assign default objects to kind even if they're not functions. Leave it up to bundle
+          // render to detect and not render 'default' if it is not a function.
+          if ((StoryExport && isFunctionalComponent(StoryExport)) || exportKey === 'default') {
             stories[kindName][exportKey] = StoryExport
           }
         })
       }
     })
   })
-
-  console.log('stories:')
-  console.dir(stories)
 
   // TODO: If storybook has strongly defined types for kind/story structures, we should probably use them.
   // For now, return a simple nested dictionary backed by types.

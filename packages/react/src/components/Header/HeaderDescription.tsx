@@ -12,7 +12,7 @@ import {
   ColorComponentProps,
   rtlTextContainer,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 

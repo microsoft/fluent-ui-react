@@ -14,7 +14,7 @@ import qs from 'qs'
 import SourceRender from 'react-source-render'
 
 import { examplePathToHash, getFormattedHash, scrollToAnchor } from 'docs/src/utils'
-import { constants } from 'src/lib'
+import { constants } from '@fluentui/react/src/utils'
 import Editor, { EDITOR_BACKGROUND_COLOR, EDITOR_GUTTER_COLOR } from 'docs/src/components/Editor'
 import { babelConfig, importResolver } from 'docs/src/components/Playground/renderConfig'
 import ExampleContext, { ExampleContextValue } from 'docs/src/context/ExampleContext'
@@ -429,13 +429,13 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
   render() {
     const {
-      component,
       children,
       currentCode,
       currentCodeLanguage,
       currentCodePath,
       error,
       description,
+      defaultExport,
       onError,
       title,
       wasCodeChanged,
@@ -519,7 +519,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                       resolver={importResolver}
                     />
                   ) : (
-                    React.createElement(component)
+                    React.createElement(defaultExport)
                   )}
                 </VariableResolver>
               </Provider>

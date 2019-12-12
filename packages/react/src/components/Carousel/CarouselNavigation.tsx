@@ -13,7 +13,7 @@ import {
   rtlTextContainer,
   ShorthandFactory,
   UIComponent,
-} from '../../lib'
+} from '../../utils'
 import { tabListBehavior } from '@fluentui/accessibility'
 import {
   withSafeTypeForAs,
@@ -23,7 +23,7 @@ import {
 } from '../../types'
 import CarouselNavigationItem, { CarouselNavigationItemProps } from './CarouselNavigationItem'
 import { ComponentVariablesObject } from '../../themes/types'
-import { mergeComponentVariables } from '../../lib/mergeThemes'
+import { mergeComponentVariables } from '../../utils/mergeThemes'
 
 export interface CarouselNavigationProps extends UIComponentProps, ChildrenComponentProps {
   /** Index of the currently active item. */

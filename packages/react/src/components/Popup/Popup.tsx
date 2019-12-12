@@ -25,7 +25,7 @@ import {
   isFromKeyboard,
   doesNodeContainClick,
   setWhatInputSource,
-} from '../../lib'
+} from '../../utils'
 import { ComponentEventHandler, ShorthandValue } from '../../types'
 import {
   ALIGNMENTS,
@@ -33,12 +33,12 @@ import {
   Popper,
   PositioningProps,
   PopperChildrenProps,
-} from '../../lib/positioner'
+} from '../../utils/positioner'
 import PopupContent, { PopupContentProps } from './PopupContent'
 
-import { createShorthandFactory, ShorthandFactory } from '../../lib/factories'
+import { createShorthandFactory, ShorthandFactory } from '../../utils/factories'
 import createReferenceFromContextClick from './createReferenceFromContextClick'
-import isRightClick from '../../lib/isRightClick'
+import isRightClick from '../../utils/isRightClick'
 import PortalInner from '../Portal/PortalInner'
 
 export type PopupEvents = 'click' | 'hover' | 'focus' | 'context'

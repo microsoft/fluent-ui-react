@@ -236,12 +236,12 @@ export { default as TableCell } from './components/Table/TableCell'
 //
 // Utilities
 //
-export { default as mergeThemes } from './lib/mergeThemes'
-export * from './lib/createStardustComponent'
-export * from './lib'
+export { default as mergeThemes } from './utils/mergeThemes'
+export * from './utils/createStardustComponent'
+export * from './utils'
 export * from './types'
-export { Popper as UNSTABLE_Popper } from './lib/positioner'
-export * from './lib/positioner/types'
+export { Popper as UNSTABLE_Popper } from './utils/positioner'
+export * from './utils/positioner/types'
 
 //
 // FocusZone

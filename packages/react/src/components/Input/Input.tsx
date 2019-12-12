@@ -14,8 +14,8 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   applyAccessibilityKeyHandlers,
-} from '../../lib'
-import { SupportedIntrinsicInputProps } from '../../lib/htmlPropsUtils'
+} from '../../utils'
+import { SupportedIntrinsicInputProps } from '../../utils/htmlPropsUtils'
 import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Icon, { IconProps } from '../Icon/Icon'
 import Box, { BoxProps } from '../Box/Box'

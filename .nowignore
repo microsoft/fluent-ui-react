@@ -9,13 +9,11 @@ docs/src/currentBundleStats.json
 docs/src/exampleMenus
 docs/src/exampleSources
 e2e
+lib/
 node_modules
 packages/**/dist
 packages/**/test
 perf/dist
-
-packages/digest/lib
-packages/perf-test/lib
 
 .editorconfig
 .gitignore

@@ -15,8 +15,8 @@ import {
   getKindProp,
   rtlTextContainer,
   ShorthandFactory,
-} from '../../lib'
-import { mergeComponentVariables } from '../../lib/mergeThemes'
+} from '../../utils'
+import { mergeComponentVariables } from '../../utils/mergeThemes'
 
 import MenuItem, { MenuItemProps } from './MenuItem'
 import { ComponentVariablesObject, ComponentSlotStylesPrepared } from '../../themes/types'
