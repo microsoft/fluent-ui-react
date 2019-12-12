@@ -1,4 +1,7 @@
 import * as _ from 'lodash'
+import * as fs from 'fs-extra'
+import * as path from 'path'
+
 import { DangerJS } from './types'
 import config from '../../config'
 
@@ -21,9 +24,19 @@ function fluentFabricComparision(danger, markdown, warn) {
         fluentTpi,
         fabricTpi,
         fluentToFabric: Math.round((fluentTpi / fabricTpi) * 100) / 100,
+        fluentFlamegraphFile: _.get(stats, 'processed.output.flamegraphFile'),
       }
     },
   )
+
+  fs.mkdirpSync(config.paths.ciArtifacts('perf'))
+
+  _.forEach(results, value => {
+    fs.copyFileSync(
+      value.fluentFlamegraphFile,
+      config.paths.ciArtifacts('perf', path.basename(value.fluentFlamegraphFile)),
+    )
+  })
 
   markdown(
     [
