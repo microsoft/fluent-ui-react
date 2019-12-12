@@ -5,6 +5,7 @@ export interface DropdownVariables {
   backgroundColorHover: string
   backgroundColorInverted: string
   borderColor: string
+  borderColorHover: string
   borderColorFocus: string
   borderWidth: string
   containerBorderRadius: string
@@ -40,7 +41,6 @@ export interface DropdownVariables {
   selectedItemBackgroundColorFocus: string
   selectedItemsMaxHeight: string
   toggleIndicatorSize: string
-  triggerButtonColorHover: string
   width: string
 }
 
@@ -49,15 +49,16 @@ const [cornerRadius, _12px_asRem] = [3, 12].map(v => pxToRem(v))
 export default (siteVars): DropdownVariables => ({
   backgroundColor: siteVars.colorScheme.default.background2,
   backgroundColorInverted: siteVars.colorScheme.default.background,
-  backgroundColorHover: siteVars.colorScheme.default.backgroundHover1,
-  borderColor: siteVars.colorScheme.default.backgroundFocus2,
-  borderColorFocus: siteVars.colorScheme.brand.borderFocus1,
+  backgroundColorHover: siteVars.colorScheme.default.background3,
+  borderColor: 'transparent',
+  borderColorHover: 'transparent',
+  borderColorFocus: 'transparent',
   borderWidth: '1px',
+  color: siteVars.colorScheme.default.foreground1,
   containerBorderRadius: `${cornerRadius}`,
   openAboveContainerBorderRadius: `0 0 ${cornerRadius} ${cornerRadius}`,
   openBelowContainerBorderRadius: `${cornerRadius} ${cornerRadius} 0 0`,
   searchBorderBottomWidth: pxToRem(2),
-  color: siteVars.colorScheme.default.foreground1,
   selectedItemColor: siteVars.colorScheme.default.foreground,
   comboboxPaddingButton: `0 ${_12px_asRem}`,
   comboboxFlexBasis: pxToRem(50),
@@ -74,16 +75,15 @@ export default (siteVars): DropdownVariables => ({
   listItemBackgroundColor: 'transparent',
   listItemBackgroundColorHover: siteVars.colorScheme.default.backgroundHover,
   listItemBackgroundColorActive: siteVars.colorScheme.default.backgroundActive,
-  listItemColorActive: siteVars.colorScheme.default.foregroundActive,
-  listItemColorHover: siteVars.colorScheme.default.foregroundHover,
+  listItemColorActive: siteVars.colorScheme.default.foreground1,
+  listItemColorHover: siteVars.colorScheme.default.foreground1,
+  listItemSelectedColor: siteVars.colorScheme.default.foreground,
   listItemSelectedFontWeight: siteVars.fontWeightSemibold,
-  listItemSelectedColor: siteVars.colorScheme.default.foregroundActive,
   selectedItemBackgroundColor: 'undefined',
   selectedItemColorFocus: siteVars.colorScheme.default.foreground,
   selectedItemBackgroundColorFocus: siteVars.colorScheme.default.backgroundPressed,
   selectedItemsMaxHeight: pxToRem(82),
   toggleIndicatorSize: pxToRem(32),
-  triggerButtonColorHover: siteVars.colorScheme.default.foreground,
   width: pxToRem(356),
 
   // these should only apply when there is content in the image/media slot:

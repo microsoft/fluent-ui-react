@@ -76,6 +76,7 @@ const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, Dropdow
     ...(p.open && p.position === 'below' && { borderRadius: v.openBelowContainerBorderRadius }),
     ':hover': {
       backgroundColor: v.backgroundColorHover,
+      borderColor: v.borderColorHover,
     },
     ':active': {
       backgroundColor: v.backgroundColor,
@@ -136,6 +137,7 @@ const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, Dropdow
         animationDuration: 'unset',
       },
       ':hover': {
+        color: v.color, // shouldn't be necessary but required for HC ?
         ...transparentColorStyle,
       },
       ...(p.inline && {
