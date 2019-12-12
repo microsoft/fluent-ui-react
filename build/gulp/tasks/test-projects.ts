@@ -44,28 +44,28 @@ const addResolutionPathsForStardustPackages = async (
 const packStardustPackages = async (logger: Function): Promise<PackedPackages> => {
   // packages/react/src -> packages/react,
   // as lernaAliases append 'src' by default
-  const stardustPackages = lernaAliases({ sourceDirectory: false })
+  const projectPackages = lernaAliases({ sourceDirectory: false })
 
   // We don't want to pack a package with our dev tools
-  delete stardustPackages['@fluentui/eslint-plugin']
-  delete stardustPackages['@fluentui/internal-tooling']
-  delete stardustPackages['@fluentui/scripts']
-  delete stardustPackages['@fluentui/digest']
-  delete stardustPackages['@fluentui/perf-test']
+  delete projectPackages['@fluentui/eslint-plugin']
+  delete projectPackages['@fluentui/internal-tooling']
+  delete projectPackages['@fluentui/scripts']
+  delete projectPackages['@fluentui/digest']
+  delete projectPackages['@fluentui/perf-test']
 
   await Promise.all(
-    Object.keys(stardustPackages).map(async (packageName: string) => {
+    Object.keys(projectPackages).map(async (packageName: string) => {
       const filename = tmp.tmpNameSync({ prefix: `project-`, postfix: '.tgz' })
-      const directory = stardustPackages[packageName]
+      const directory = projectPackages[packageName]
 
       await runIn(directory)(`yarn pack --filename ${filename}`)
       logger(`✔️Package "${packageName}" was packed to ${filename}`)
 
-      stardustPackages[packageName] = filename
+      projectPackages[packageName] = filename
     }),
   )
 
-  return stardustPackages
+  return projectPackages
 }
 
 const createReactApp = async (atTempDirectory: string, appName: string): Promise<string> => {
@@ -133,7 +133,7 @@ const performBrowserTest = async (publicDirectory: string, listenPort: number) =
 // Tests the following scenario
 //  - Create a new react test app
 //  - Add Fluent UI as a app's dependency
-//  - Update the App.tsx to include some stardust imports
+//  - Update the App.tsx to include some project imports
 //  - Try and run a build
 task('test:projects:cra-ts', async () => {
   const logger = log('test:projects:cra-ts')
@@ -148,14 +148,14 @@ task('test:projects:cra-ts', async () => {
   const runInTestApp = runIn(testAppPath())
   logger(`Test React project is successfully created: ${testAppPath()}`)
 
-  logger('STEP 2. Add Stardust dependency to test project..')
+  logger('STEP 2. Add Fluent UI dependency to test project..')
 
   const packedPackages = await packStardustPackages(logger)
   await addResolutionPathsForStardustPackages(testAppPath(), packedPackages)
   await runInTestApp(`yarn add ${packedPackages['@fluentui/react']}`)
   logger(`✔️Stardust UI packages were added to dependencies`)
 
-  logger("STEP 3. Reference Stardust components in test project's App.tsx")
+  logger("STEP 3. Reference Fluent UI components in test project's App.tsx")
   fs.copyFileSync(scaffoldPath('App.tsx'), testAppPath('src', 'App.tsx'))
 
   logger('STEP 4. Build test project..')
