@@ -9,7 +9,7 @@ import Logo from '../components/Logo/Logo'
 const Introduction = () => (
   <div style={{ margin: '0 225px', fontSize: '1.125em', maxWidth: '100ch' }}>
     <Flex column hAlign="center" padding="padding.medium">
-      <Logo width="150px" />
+      <Logo styles={{ width: '150px' }} />
       <Header
         as="h1"
         styles={{

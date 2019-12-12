@@ -412,6 +412,7 @@ class Sidebar extends React.Component<any, any> {
 
     const logoStyles: ICSSInJSStyle = {
       marginRight: '0.5rem',
+      width: '36px',
     }
 
     const changeLogUrl: string = `${constants.repoURL}/blob/master/CHANGELOG.md`
@@ -478,7 +479,7 @@ class Sidebar extends React.Component<any, any> {
     return (
       <Segment styles={sidebarStyles}>
         <Flex column hAlign="center" styles={{ padding: '1rem', background: 'black' }}>
-          <Logo flavor="white" width="36px" styles={logoStyles} />
+          <Logo flavor="white" styles={logoStyles} />
           <Text
             role="heading"
             aria-level={1}
