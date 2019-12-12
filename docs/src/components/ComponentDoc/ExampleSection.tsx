@@ -4,7 +4,8 @@ import { Grid, Header } from '@fluentui/react'
 import { Extendable } from 'src/types'
 
 const headerStyle: React.CSSProperties = {
-  marginBottom: '1.5em',
+  marginTop: '1.5em',
+  marginBottom: '0.5em',
   color: '#999',
   textTransform: 'uppercase',
 }
