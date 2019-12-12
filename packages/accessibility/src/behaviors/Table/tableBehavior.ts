@@ -1,19 +1,21 @@
 import { Accessibility } from '../../types'
+import tableRowBehavior from './tableRowBehavior'
+
 /**
  * @description
  * Basic behavior for static table - a static tabular structure containing one or more rows that each contain one or more cells; it is not an interactive widget
  * @specification
  * Adds role='table'.
- * Adds role 'row' to 'row' slot.
+ * Applies 'tableRowBehavior' for 'row' child component.
  */
 const tableBehavior: Accessibility = props => ({
   attributes: {
     root: {
       role: 'table',
     },
-    row: {
-      role: 'row',
-    },
+  },
+  childBehaviors: {
+    row: tableRowBehavior,
   },
 })
 
