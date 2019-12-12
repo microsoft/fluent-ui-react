@@ -6,7 +6,7 @@ const menuItem = (index: number) => `#${selectors.menuItemId(index)}`
 const itemPopup = (index: number) => `#${selectors.popupContentId(index)}`
 const popupContent = `.${selectors.popupContentClass}`
 
-// https://github.com/stardust-ui/react/issues/557
+// https://github.com/microsoft/fluent-ui-react/issues/557
 describe('Popup of menu item', () => {
   beforeEach(async () => {
     await e2e.gotoTestCase(__filename, menu)

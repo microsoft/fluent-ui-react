@@ -35,7 +35,7 @@ const Introduction = () => (
       language.
     </p>
     <p>
-      Stardust UI React is being built as an exemplar of the Stardust UI design language, component
+      Fluent UI React is being built as an exemplar of the Stardust UI design language, component
       specifications, and utilities.
     </p>
 

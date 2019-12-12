@@ -178,7 +178,7 @@ import windowMinimize from './windowMinimize'
 import windowRestore from './windowRestore'
 
 export default {
-  'stardust-circle': stardustCircle,
+  'icon-circle': stardustCircle,
   accept,
   add,
   'arrow-up': arrowUp,

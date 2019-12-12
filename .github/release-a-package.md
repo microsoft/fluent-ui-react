@@ -1,11 +1,11 @@
 # How to release a new library version
 
-This documentation is intended for core Stardust contributors and describes `@fluentui/react` NPM package release process.
+This documentation is intended for core Fluent UI contributors and describes `@fluentui/react` NPM package release process.
 
-## Prerequisities
+## Prerequisites
 
 1. You need NPM account and npm configured with your token.
-2. You must be a member of stardust-ui organization on [npmjs.com](https://www.npmjs.com).
+2. You must be a member of `@fluentui` organization on [npmjs.com](https://www.npmjs.com).
 3. You must have access rights to commit changes directly to `master` (be an admin).
 
 ## Define new version number
@@ -31,4 +31,4 @@ The release command in step 4 will handle tagging and releasing flow entirely. J
 
 ## Verification after release
 1. Verify NPM package has been released: https://www.npmjs.com/package/@fluentui/react
-2. Verify new docsite version has been published: https://stardust-ui.github.io/react/  
+2. Verify new docsite version has been published: https://microsoft.github.io/fluent-ui-react/  

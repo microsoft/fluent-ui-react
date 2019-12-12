@@ -568,14 +568,14 @@ export type ThemeIconSpec = {
 }
 
 export type RequiredIconNames =
-  | 'stardust-checkmark'
-  | 'stardust-circle'
-  | 'stardust-close'
-  | 'stardust-arrow-end'
-  | 'stardust-arrow-up'
-  | 'stardust-arrow-down'
-  | 'stardust-pause'
-  | 'stardust-play'
+  | 'icon-checkmark'
+  | 'icon-circle'
+  | 'icon-close'
+  | 'icon-arrow-end'
+  | 'icon-arrow-up'
+  | 'icon-arrow-down'
+  | 'icon-pause'
+  | 'icon-play'
   | 'stardust-chevron-start'
   | 'stardust-chevron-end'
 

@@ -9,7 +9,7 @@ const items = [
   },
   {
     key: 'skyler',
-    media: <Status state="success" icon="stardust-checkmark" />,
+    media: <Status state="success" icon="icon-checkmark" />,
     header: 'Skyler Parks',
   },
   {

@@ -31,7 +31,7 @@ Build a minimal prototype showcasing the proposed feature. Do not worry about te
 
 ## Spec out the API
 
-Review the documentation for the component. Spec out the component's proposed API. The spec should demonstrate how component's API you are proposing will be used by Stardust consumer. You can reference this [API proposal][2] for the Menu Icons.
+Review the documentation for the component. Spec out the component's proposed API. The spec should demonstrate how component's API you are proposing will be used by Fluent UI consumer. You can reference this [API proposal][2] for the Menu Icons.
 
 Once the component spec is solidified, it's time to write some code. The following sections cover everything you'll need to spec and build your awesome component.
 
@@ -190,11 +190,11 @@ After iterating on the feature with the maintainers, you will add full test cove
 - [Test a component](test-a-feature.md)
 - [Writing documentation](document-a-feature.md)
 
-[1]: https://github.com/stardust-ui/react/issues
-[2]: https://github.com/stardust-ui/react/pull/73
-[3]: https://github.com/stardust-ui/react/blob/master/packages/react/src/utils/AutoControlledComponent.tsx
+[1]: https://github.com/microsoft/fluent-ui-react/issues
+[2]: https://github.com/microsoft/fluent-ui-react/pull/73
+[3]: https://github.com/microsoft/fluent-ui-react/blob/master/packages/react/src/utils/AutoControlledComponent.tsx
 [4]: https://facebook.github.io/react/docs/forms.html#controlled-components
 [5]: https://facebook.github.io/react/docs/forms.html#uncontrolled-components
 [6]: https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit
-[7]: https://stardust-ui.github.io/react/glossary
+[7]: https://microsoft.github.io/fluent-ui-react/glossary
 [8]: https://github.com/Semantic-Org/Semantic-UI-React/issues/607

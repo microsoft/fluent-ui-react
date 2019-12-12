@@ -55,7 +55,7 @@ const packStardustPackages = async (logger: Function): Promise<PackedPackages> =
 
   await Promise.all(
     Object.keys(stardustPackages).map(async (packageName: string) => {
-      const filename = tmp.tmpNameSync({ prefix: `stardust-`, postfix: '.tgz' })
+      const filename = tmp.tmpNameSync({ prefix: `project-`, postfix: '.tgz' })
       const directory = stardustPackages[packageName]
 
       await runIn(directory)(`yarn pack --filename ${filename}`)
@@ -132,7 +132,7 @@ const performBrowserTest = async (publicDirectory: string, listenPort: number) =
 
 // Tests the following scenario
 //  - Create a new react test app
-//  - Add Stardust as a app's dependency
+//  - Add Fluent UI as a app's dependency
 //  - Update the App.tsx to include some stardust imports
 //  - Try and run a build
 task('test:projects:cra-ts', async () => {
@@ -142,7 +142,7 @@ task('test:projects:cra-ts', async () => {
   logger('STEP 1. Create test React project with TSX scripts..')
 
   const testAppPath = paths.withRootAt(
-    await createReactApp(tmp.dirSync({ prefix: 'stardust-' }).name, 'test-app'),
+    await createReactApp(tmp.dirSync({ prefix: 'project-' }).name, 'test-app'),
   )
 
   const runInTestApp = runIn(testAppPath())
@@ -169,7 +169,7 @@ task('test:projects:rollup', async () => {
   const logger = log('test:projects:rollup')
 
   const scaffoldPath = paths.base.bind(null, 'build/gulp/tasks/test-projects/rollup')
-  const tmpDirectory = tmp.dirSync({ prefix: 'stardust-' }).name
+  const tmpDirectory = tmp.dirSync({ prefix: 'project-' }).name
 
   logger(`✔️Temporary directory was created: ${tmpDirectory}`)
 
@@ -206,7 +206,7 @@ task('test:projects:typings', async () => {
   const logger = log('test:projects:typings')
 
   const scaffoldPath = paths.base.bind(null, 'build/gulp/tasks/test-projects/typings')
-  const tmpDirectory = tmp.dirSync({ prefix: 'stardust-' }).name
+  const tmpDirectory = tmp.dirSync({ prefix: 'project-' }).name
 
   logger(`✔️Temporary directory was created: ${tmpDirectory}`)
 

@@ -1,4 +1,4 @@
-import * as Stardust from '@fluentui/react'
+import * as FluentUI from '@fluentui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 // @ts-ignore
@@ -10,7 +10,7 @@ import componentInfoContext from 'docs/src/utils/componentInfoContext'
 import createHookGenerator from './createHookGenerator'
 
 const usePlaygroundComponent = (componentName: string): [React.ReactElement, string[]] => {
-  const context: Stardust.ProviderContextPrepared = React.useContext(ThemeContext)
+  const context: FluentUI.ProviderContextPrepared = React.useContext(ThemeContext)
   const componentInfo: ComponentInfo = componentInfoContext.byDisplayName[componentName]
 
   if (process.env.NODE_ENV !== 'production') {

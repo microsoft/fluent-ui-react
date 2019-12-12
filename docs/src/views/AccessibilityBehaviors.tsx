@@ -232,7 +232,7 @@ export default () => (
       All Stardust behaviors implementations can be found on the{' '}
       {link(
         'GitHub',
-        'https://github.com/stardust-ui/react/tree/master/packages/react/src/utils/accessibility/Behaviors',
+        'https://github.com/microsoft/fluent-ui-react/tree/master/packages/react/src/utils/accessibility/Behaviors',
       )}
       .
     </p>

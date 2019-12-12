@@ -445,7 +445,7 @@ class Sidebar extends React.Component<any, any> {
     }
 
     // TODO: remove after the issue with TreeItem will be fixed
-    // https://github.com/stardust-ui/react/issues/1613
+    // https://github.com/microsoft/fluent-ui-react/issues/1613
     this.addItemKeyCallbacks(allSections)
 
     this.addItemOnClickCallbacks(allSections)
@@ -454,7 +454,7 @@ class Sidebar extends React.Component<any, any> {
       <Component open={open} hasSubtree={hasSubtree} {...restProps}>
         <span>{content}</span>
         {hasSubtree && this.state.query === '' && (
-          <Icon name={open ? 'stardust-arrow-up' : 'stardust-arrow-down'} />
+          <Icon name={open ? 'icon-arrow-up' : 'icon-arrow-down'} />
         )}
       </Component>
     )
@@ -475,7 +475,7 @@ class Sidebar extends React.Component<any, any> {
             role="heading"
             aria-level={1}
             color="white"
-            content="Stardust UI React &nbsp;"
+            content="Fluent UI React &nbsp;"
             styles={logoStyles}
           />
           <Text color="white" content={pkg.version} size="medium" styles={logoStyles} />

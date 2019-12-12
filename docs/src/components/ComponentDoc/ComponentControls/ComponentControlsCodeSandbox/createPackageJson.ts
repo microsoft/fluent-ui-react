@@ -5,11 +5,11 @@ import { ComponentSourceManagerLanguage } from 'docs/src/components/ComponentDoc
 
 const name = 'stardust-ui-example'
 const description =
-  'An exported example from Stardust UI React, https://stardust-ui.github.io/react/'
+  'An exported example from Fluent UI React, https://microsoft.github.io/fluent-ui-react/'
 const dependencies = {
   ..._.mapValues(imports, pkg => pkg.version),
   // required to enable all features due old templates in https://github.com/codesandbox/codesandbox-importers
-  // https://github.com/stardust-ui/react/issues/1519
+  // https://github.com/microsoft/fluent-ui-react/issues/1519
   'react-scripts': 'latest',
 }
 

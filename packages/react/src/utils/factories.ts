@@ -61,9 +61,9 @@ export function createShorthand<P>({
     if (process.env.NODE_ENV !== 'production') {
       console.warn(
         [
-          '@stardust-ui/react:',
+          '@microsoft/fluent-ui-react:',
           'The usage of render callback is deprecated and will be removed soon. Please use render props for shorthands instead.',
-          'See: https://stardust-ui.github.io/react/shorthand-props',
+          'See: https://microsoft.github.io/fluent-ui-react/shorthand-props',
         ].join(' '),
       )
     }

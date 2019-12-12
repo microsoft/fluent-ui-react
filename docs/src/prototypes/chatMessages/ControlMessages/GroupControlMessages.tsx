@@ -39,7 +39,7 @@ const GroupControlMessages = (props: GroupControlMessagesProps) => {
       }}
     >
       <Icon
-        name={expanded ? 'stardust-arrow-down' : 'stardust-arrow-end'}
+        name={expanded ? 'icon-arrow-down' : 'icon-arrow-end'}
         onClick={() => setExpanded(!expanded)}
       />
       <Icon name="participant-add" />

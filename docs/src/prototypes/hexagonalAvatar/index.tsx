@@ -4,7 +4,7 @@ import { Flex, StatusProps, WithAsProp, Extendable, Text } from '@fluentui/react
 import Avatar from './CustomAvatar'
 
 const statusProps: Extendable<WithAsProp<StatusProps>> = {
-  icon: 'stardust-checkmark',
+  icon: 'icon-checkmark',
   state: 'success',
   title: 'Available',
 }
