@@ -45,7 +45,7 @@ export default () => (
       </li>
     </ul>
     <p>
-      Stardust leverages {code('FocusZone')} component which is based on the{' '}
+      Fluent UI leverages {code('FocusZone')} component which is based on the{' '}
       {link(
         'Focus Zone from Office UI Fabric.',
         'https://developer.microsoft.com/en-us/fabric#/components/focuszone',
@@ -54,7 +54,7 @@ export default () => (
     </p>
     <Header as="h2">Usage</Header>
     <div>
-      In Stardust, Focus Zone is assigned to components through accessibility behaviors
+      In Fluent UI, Focus Zone is assigned to components through accessibility behaviors
       <CodeSnippet
         label="menuBehavior.ts"
         value={`
@@ -124,7 +124,7 @@ export default () => (
       The following props can be applied (
       {link(
         'lookup for API on GitHub',
-        'https://github.com/stardust-ui/react/blob/master/packages/react/src/utils/accessibility/FocusZone/FocusZone.types.ts',
+        'https://github.com/microsoft/fluent-ui-react/blob/master/packages/react/src/utils/accessibility/FocusZone/FocusZone.types.ts',
       )}
       ):
     </p>
@@ -175,7 +175,7 @@ export default () => (
       {code('FocusZone')} code on{' '}
       {link(
         'GitHub.',
-        'https://github.com/stardust-ui/react/blob/master/packages/react/src/utils/accessibility/FocusZone/FocusZone.tsx',
+        'https://github.com/microsoft/fluent-ui-react/blob/master/packages/react/src/utils/accessibility/FocusZone/FocusZone.tsx',
       )}
     </p>
   </DocPage>

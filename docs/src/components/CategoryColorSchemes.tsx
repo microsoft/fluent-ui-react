@@ -28,7 +28,7 @@ export const colorVariantsStyles: ComponentSlotStylesInput<ColorVariantsProps> =
 
 const CategoryColorSchemes = createComponent<ColorVariantsProps>({
   displayName: 'ColorVariants',
-  render: ({ name, themes, headers, stardust: { classes } }) => {
+  render: ({ name, themes, headers, config: { classes } }) => {
     if (themes.length === 0) return <></>
 
     const colorSchemes = _.map(themes, theme => theme.siteVariables.categoryColorScheme[name])

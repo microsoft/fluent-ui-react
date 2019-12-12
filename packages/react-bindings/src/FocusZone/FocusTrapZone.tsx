@@ -405,7 +405,7 @@ export default class FocusTrapZone extends React.Component<FocusTrapZoneProps, {
     }
 
     // do not propogate keyboard events outside focus trap zone
-    // https://github.com/stardust-ui/react/pull/1180
+    // https://github.com/microsoft/fluent-ui-react/pull/1180
     ev.stopPropagation()
   }
 

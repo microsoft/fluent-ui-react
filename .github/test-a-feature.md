@@ -120,7 +120,7 @@ yarn test
 yarn test:watch
 ```
 
-[1]: https://github.com/stardust-ui/react/tree/master/test/specs/commonTests
+[1]: https://github.com/microsoft/fluent-ui-react/tree/master/test/specs/commonTests
 
 ## Screener Tests
 
