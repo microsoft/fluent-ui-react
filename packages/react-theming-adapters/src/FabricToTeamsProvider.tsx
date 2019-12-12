@@ -19,6 +19,7 @@ export function useTheme(): ITheme {
 // https://github.com/microsoft/fluent-ui-react/blob/master/packages/react/src/themes/teams/components/Button/buttonVariables.ts
 function makeFluentTheme(fabricTheme: ITheme, baseTheme: ThemeInput): any {
   const {
+    buttonBorder,
     primaryButtonBackground,
     primaryButtonBackgroundDisabled,
     primaryButtonBackgroundPressed,
@@ -39,6 +40,7 @@ function makeFluentTheme(fabricTheme: ITheme, baseTheme: ThemeInput): any {
       Button: {
         padding: '0 20px',
         minWidth: '80px',
+        borderColor: buttonBorder,
         colorActive: primaryButtonTextPressed,
         textPrimaryColor: primaryButtonText,
         textPrimaryColorHover: primaryButtonTextHovered,
@@ -49,6 +51,7 @@ function makeFluentTheme(fabricTheme: ITheme, baseTheme: ThemeInput): any {
         primaryBackgroundColorHover: primaryButtonBackgroundHovered,
         primaryBackgroundColorDisabled: primaryButtonBackgroundDisabled,
         primaryBoxShadow: 'none',
+        boxShadow: 'none',
       },
     },
     // Just a showcase of how we can further customize the styles for the buttons...
@@ -59,6 +62,9 @@ function makeFluentTheme(fabricTheme: ITheme, baseTheme: ThemeInput): any {
           ...(p.primary && {
             border: 0,
           }),
+          ':active': {
+            animation: 'unset',
+          },
         }),
       },
     },

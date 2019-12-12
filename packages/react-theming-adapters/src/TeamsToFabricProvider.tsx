@@ -41,10 +41,18 @@ const makeCustomizerProps = (theme: any): any => {
       PrimaryButton: {
         styles: {
           root: {
+            color: theButtonTokens.primaryColor,
             background: theButtonTokens.primaryBackgroundColor,
             borderRadius: theButtonTokens.borderRadius,
             boxShadow: theButtonTokens.primaryBoxShadow,
             fontWeight: theButtonTokens.contentFontWeight,
+          },
+        },
+      },
+      DefaultButton: {
+        styles: {
+          root: {
+            color: theButtonTokens.color,
           },
         },
       },
