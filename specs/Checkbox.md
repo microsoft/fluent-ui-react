@@ -134,6 +134,7 @@ https://developer.microsoft.com/en-us/fabric#/controls/web/checkbox
 | label                | string                                                      |
 | name                 | string                                                      |
 | onChange             | (ev: Event, value: boolean) => void                         |
+| labelPosition        | start or end                                                |
 
 Note: rtl, styles, and theme come from compose or the ThemeProvider. And name has been added to support checkbox in form scenarios.
 
@@ -150,24 +151,23 @@ Removing the following two props because the ARIA spec dictates role='checkbox' 
 
 | Name                         | Action to take/taken | Property transitioned? | Breaking change? | Codemod/Shim created? |
 | -----------------------------| -------------------- | :--------------------: | :--------------: | :-------------------: |
-| `ariaDescribedBy`            | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
-| `ariaLabel`                  | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
-| `ariaLabelledBy`             | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
+| `ariaDescribedBy`            | User provided        | &#x274C;               | &#x274C;         | &#x274C;              |
+| `ariaLabel`                  | User provided        | &#x274C;               | &#x274C;         | &#x274C;              |
+| `ariaLabelledBy`             | User provided        | &#x274C;               | &#x274C;         | &#x274C;              |
 | `ariaPositionInSet`          | Won't be transitioned| &#x274C;               | &#x274C;         | &#x274C;              |
 | `ariaSetSize`                | Won't be transitioned| &#x274C;               | &#x274C;         | &#x274C;              |
-| `boxSide`                    | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
-| `checked`                    | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
-| `checkmarkIconProps`         | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
-| `className`                  | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
-| `componentRef`               | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
-| `defaultChecked`             | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
-| `defaultIndetermiante`       | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
-| `disabled`                   | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
-| `indeterminate`              | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
+| `boxSide`                    | No; labelPosition    | &#x274C;               | &#x274C;         | &#x274C;              |
+| `checked`                    | Yes - native         | &#x274C;               | &#x274C;         | &#x274C;              |
+| `checkmarkIconProps`         | No                   | &#x274C;               | &#x274C;         | &#x274C;              |
+| `className`                  | Yes - native         | &#x274C;               | &#x274C;         | &#x274C;              |
+| `defaultChecked`             | Yes                  | &#x274C;               | &#x274C;         | &#x274C;              |
+| `defaultIndetermiante`       | Yes                  | &#x274C;               | &#x274C;         | &#x274C;              |
+| `disabled`                   | Yes - native         | &#x274C;               | &#x274C;         | &#x274C;              |
+| `indeterminate`              | Yes - native         | &#x274C;               | &#x274C;         | &#x274C;              |
 | `keytipProps`                | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
-| `label`                      | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
-| `onChange`                   | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
-| `onRenderLabel`              | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
+| `label`                      | Yes - native         | &#x274C;               | &#x274C;         | &#x274C;              |
+| `onChange`                   | Yes - native         | &#x274C;               | &#x274C;         | &#x274C;              |
+| `onRenderLabel`              | No; shorthand        | &#x274C;               | &#x274C;         | &#x274C;              |
 | `styles`                     | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
 | `theme`                      | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
 
