@@ -65,7 +65,7 @@ class Debug extends React.Component<DebugProps, DebugState> {
       )
       return
     }
-    if (!r.stardustDebug) {
+    if (!r.fluentUIDebug) {
       console.error('Not a debuggable component. Try selecting some Stardust component.')
       return
     }
@@ -82,7 +82,7 @@ class Debug extends React.Component<DebugProps, DebugState> {
       return
     }
 
-    fiberNav = fiberNav.findOwner(fiber => fiber.stardustDebug)
+    fiberNav = fiberNav.findOwner(fiber => fiber.fluentUIDebug)
 
     if (fiberNav !== this.state.fiberNav) {
       this.setState({ fiberNav })
@@ -174,7 +174,7 @@ class Debug extends React.Component<DebugProps, DebugState> {
               onClose={this.close}
               // TODO: Integrate CSS in JS Styles for Host Components (DOM nodes)
               // cssStyles={stylesForNode(stardustDOMNode)}
-              debugData={fiberNav.stardustDebug}
+              debugData={fiberNav.fluentUIDebug}
               position={debugPanelPosition || 'right'}
               onPositionLeft={this.positionLeft}
               onPositionRight={this.positionRight}

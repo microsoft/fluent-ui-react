@@ -3,14 +3,14 @@ const { rollup: lernaAliases } = require('lerna-alias')
 
 // packages/react/src -> packages/react,
 // as lernaAliases append 'src' by default
-const stardustPackages = lernaAliases({ sourceDirectory: false })
+const projectPackages = lernaAliases({ sourceDirectory: false })
 
-// Excludes the non-stardust packages
+// Excludes the non-project packages
 const excluded = ['@fluentui/playground', '@fluentui/react-theming']
 
-const projects = Object.keys(stardustPackages)
+const projects = Object.keys(projectPackages)
   .filter(p => !excluded.includes(p))
-  .map(packageName => stardustPackages[packageName])
+  .map(packageName => projectPackages[packageName])
 
 module.exports = {
   coverageReporters,

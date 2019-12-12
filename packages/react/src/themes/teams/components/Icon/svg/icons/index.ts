@@ -145,7 +145,7 @@ import send from './send'
 import settings from './settings'
 import speakerMute from './speakerMute'
 import star from './star'
-import stardustCircle from './stardustCircle'
+import iconCircle from './iconCircle'
 import sticker from './sticker'
 import strike from './strike'
 import sync from './sync'
@@ -178,7 +178,7 @@ import windowMinimize from './windowMinimize'
 import windowRestore from './windowRestore'
 
 export default {
-  'icon-circle': stardustCircle,
+  'icon-circle': iconCircle,
   accept,
   add,
   'arrow-up': arrowUp,
