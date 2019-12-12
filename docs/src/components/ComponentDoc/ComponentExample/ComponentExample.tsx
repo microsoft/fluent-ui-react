@@ -429,13 +429,13 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
   render() {
     const {
-      component,
       children,
       currentCode,
       currentCodeLanguage,
       currentCodePath,
       error,
       description,
+      defaultExport,
       onError,
       title,
       wasCodeChanged,
@@ -519,7 +519,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                       resolver={importResolver}
                     />
                   ) : (
-                    React.createElement(component)
+                    React.createElement(defaultExport)
                   )}
                 </VariableResolver>
               </Provider>

@@ -1,4 +1,6 @@
 import * as customPropTypes from '@fluentui/react-proptypes'
+import { Accessibility, tableCellBehavior } from '@fluentui/accessibility'
+import { Ref } from '@fluentui/react-component-ref'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import {
@@ -15,7 +17,6 @@ import {
 } from '../../utils'
 import Box, { BoxProps } from '../Box/Box'
 import { WithAsProp, ShorthandValue } from '../../types'
-import { Accessibility, tableCellBehavior } from '@fluentui/accessibility'
 
 export interface TableCellProps
   extends UIComponentProps,
@@ -71,6 +72,15 @@ class TableCell extends UIComponent<WithAsProp<any>, any> {
     accessibility: tableCellBehavior as Accessibility,
   }
 
+  cellRef = React.createRef<HTMLElement>()
+
+  actionHandlers = {
+    focusCell: e => {
+      e.preventDefault()
+      this.cellRef.current.focus()
+    },
+  }
+
   renderComponent({
     accessibility,
     ElementType,
@@ -82,18 +92,20 @@ class TableCell extends UIComponent<WithAsProp<any>, any> {
     const hasChildren = childrenExist(children)
 
     return (
-      <ElementType
-        className={classes.root}
-        {...accessibility.attributes.root}
-        {...unhandledProps}
-        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
-      >
-        {hasChildren
-          ? children
-          : Box.create(content, {
-              defaultProps: () => ({ as: 'div', styles: styles.content }),
-            })}
-      </ElementType>
+      <Ref innerRef={this.cellRef}>
+        <ElementType
+          className={classes.root}
+          {...accessibility.attributes.root}
+          {...unhandledProps}
+          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
+        >
+          {hasChildren
+            ? children
+            : Box.create(content, {
+                defaultProps: () => ({ as: 'div', styles: styles.content }),
+              })}
+        </ElementType>
+      </Ref>
     )
   }
 }

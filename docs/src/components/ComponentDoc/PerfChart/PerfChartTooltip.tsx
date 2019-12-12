@@ -7,7 +7,7 @@ const PerfChartTooltip = ({ x, data, ...rest }: { x: number; data: PerfSample })
   return (
     <Crosshair {...rest} values={[{ x, y: 20 }]}>
       <div style={{ background: '#555', color: 'white', padding: '.5em' }}>
-        <div>Build:&nbsp;{x}</div>
+        <div>Build:&nbsp;{data.build}</div>
         <div>Date:&nbsp;{data.ts}</div>
         <table className="tooltip">
           <thead>
@@ -16,6 +16,7 @@ const PerfChartTooltip = ({ x, data, ...rest }: { x: number; data: PerfSample })
               <th>Min</th>
               <th>Median</th>
               <th>Max</th>
+              <th>TPI</th>
             </tr>
           </thead>
           <tbody>
@@ -27,6 +28,7 @@ const PerfChartTooltip = ({ x, data, ...rest }: { x: number; data: PerfSample })
                   <td>{_.get(data, `performance.${chartName}.actualTime.min`, '-')}</td>
                   <td>{_.get(data, `performance.${chartName}.actualTime.median`, '-')}</td>
                   <td>{_.get(data, `performance.${chartName}.actualTime.max`, '-')}</td>
+                  <td>{_.get(data, `performance.${chartName}.flamegrill.extended.tpi`, '-')}</td>
                 </tr>
               ))}
           </tbody>
