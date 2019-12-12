@@ -149,7 +149,7 @@ Removing the following two props because the ARIA spec dictates role='checkbox' 
 
 #### Fluent Checkbox recommended props interface
 
-| Name                         | Action to take/taken | Property transitioned? | Breaking change? | Codemod/Shim created? |
+| Name                         | To transition or not?| Property transitioned? | Breaking change? | Codemod/Shim created? |
 | -----------------------------| -------------------- | :--------------------: | :--------------: | :-------------------: |
 | `ariaDescribedBy`            | User provided        | &#x274C;               | &#x274C;         | &#x274C;              |
 | `ariaLabel`                  | User provided        | &#x274C;               | &#x274C;         | &#x274C;              |
@@ -160,11 +160,11 @@ Removing the following two props because the ARIA spec dictates role='checkbox' 
 | `checked`                    | Yes - native         | &#x274C;               | &#x274C;         | &#x274C;              |
 | `checkmarkIconProps`         | No                   | &#x274C;               | &#x274C;         | &#x274C;              |
 | `className`                  | Yes - native         | &#x274C;               | &#x274C;         | &#x274C;              |
-| `defaultChecked`             | Yes                  | &#x274C;               | &#x274C;         | &#x274C;              |
-| `defaultIndetermiante`       | Yes                  | &#x274C;               | &#x274C;         | &#x274C;              |
+| `defaultChecked`             | Yes - native         | &#x274C;               | &#x274C;         | &#x274C;              |
+| `defaultIndetermiante`       | Yes - native         | &#x274C;               | &#x274C;         | &#x274C;              |
 | `disabled`                   | Yes - native         | &#x274C;               | &#x274C;         | &#x274C;              |
 | `indeterminate`              | Yes - native         | &#x274C;               | &#x274C;         | &#x274C;              |
-| `keytipProps`                | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
+| `keytipProps`                | Yes - redesign       | &#x274C;               | &#x274C;         | &#x274C;              |
 | `label`                      | Yes - native         | &#x274C;               | &#x274C;         | &#x274C;              |
 | `onChange`                   | Yes - native         | &#x274C;               | &#x274C;         | &#x274C;              |
 | `onRenderLabel`              | No; shorthand        | &#x274C;               | &#x274C;         | &#x274C;              |
