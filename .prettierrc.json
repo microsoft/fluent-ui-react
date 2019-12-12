@@ -5,5 +5,13 @@
   "semi": false,
   "singleQuote": true,
   "tabWidth": 2,
-  "trailingComma": "all"
+  "trailingComma": "all",
+  "overrides": [
+    {
+      "files": ["packages/react-theming/**/*", "packages/playground/**/*"],
+      "options": {
+        "semi": true
+      }
+    }
+  ]
 }

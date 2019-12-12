@@ -1,5 +1,5 @@
 import { FontWeightProperty } from 'csstype'
-import { pxToRem, stringLiteralsArray } from '../../../../lib'
+import { pxToRem, stringLiteralsArray } from '../../../../utils'
 import { ItemType } from '../../../types'
 import { TeamsSchemeMappingWithAreas } from '../../types'
 import { pickValuesFromColorScheme } from '../../../colorUtils'

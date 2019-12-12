@@ -21,7 +21,7 @@ import {
   isFromKeyboard,
   doesNodeContainClick,
   setWhatInputSource,
-} from '../../lib'
+} from '../../utils'
 import { ComponentEventHandler, ShorthandValue } from '../../types'
 import {
   ALIGNMENTS,
@@ -29,13 +29,13 @@ import {
   Popper,
   PositioningProps,
   PopperChildrenProps,
-} from '../../lib/positioner'
+} from '../../utils/positioner'
 import PopupContent, { PopupContentProps } from './PopupContent'
 
-import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
-import { createShorthandFactory, ShorthandFactory } from '../../lib/factories'
+import { ReactAccessibilityBehavior } from '../../utils/accessibility/reactTypes'
+import { createShorthandFactory, ShorthandFactory } from '../../utils/factories'
 import createReferenceFromContextClick from './createReferenceFromContextClick'
-import isRightClick from '../../lib/isRightClick'
+import isRightClick from '../../utils/isRightClick'
 import PortalInner from '../Portal/PortalInner'
 
 export type PopupEvents = 'click' | 'hover' | 'focus' | 'context'
@@ -195,6 +195,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
 
   actionHandlers = {
     closeAndFocusTrigger: e => {
+      e.preventDefault()
       this.close(e, () => _.invoke(this.triggerFocusableDomElement, 'focus'))
     },
     close: e => {
@@ -214,7 +215,12 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   }
 
   componentDidMount() {
-    const { inline, trapFocus, autoFocus } = this.props
+    const { inline, trapFocus, autoFocus, open } = this.props
+
+    if (open) {
+      // when new state 'open' === 'true', save the last focused element
+      this.updateTriggerFocusableDomElement()
+    }
 
     if (process.env.NODE_ENV !== 'production') {
       if (inline && trapFocus) {
@@ -227,6 +233,13 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
           'Beware, "autoFocus" prop will just grab focus at the moment of mount and will not trap it. As user is able to TAB out from popup, better use "inline" prop to keep correct tab order.',
         )
       }
+    }
+  }
+
+  componentDidUpdate({ open }) {
+    if (open) {
+      // when new state 'open' === 'true', save the last focused element
+      this.updateTriggerFocusableDomElement()
     }
   }
 

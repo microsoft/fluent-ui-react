@@ -1,7 +1,6 @@
 import { Accessibility } from '../../types'
 
 /**
- * @description
  * @specification
  * Adds role='gridcell'.
  */

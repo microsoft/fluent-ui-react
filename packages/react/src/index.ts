@@ -192,9 +192,7 @@ export { default as HierarchicalTree } from './components/HierarchicalTree/Hiera
 export * from './components/HierarchicalTree/HierarchicalTreeItem'
 export { default as HierarchicalTreeItem } from './components/HierarchicalTree/HierarchicalTreeItem'
 export * from './components/HierarchicalTree/HierarchicalTreeTitle'
-export {
-  default as HierarchicalTreeTitle,
-} from './components/HierarchicalTree/HierarchicalTreeTitle'
+export { default as HierarchicalTreeTitle } from './components/HierarchicalTree/HierarchicalTreeTitle'
 
 export * from './components/Tree/Tree'
 export { default as Tree } from './components/Tree/Tree'
@@ -238,12 +236,12 @@ export { default as TableCell } from './components/Table/TableCell'
 //
 // Utilities
 //
-export { default as mergeThemes } from './lib/mergeThemes'
-export * from './lib/createStardustComponent'
-export * from './lib'
+export { default as mergeThemes } from './utils/mergeThemes'
+export * from './utils/createStardustComponent'
+export * from './utils'
 export * from './types'
-export { Popper as UNSTABLE_Popper } from './lib/positioner'
-export * from './lib/positioner/types'
+export { Popper as UNSTABLE_Popper } from './utils/positioner'
+export * from './utils/positioner/types'
 
 //
 // FocusZone

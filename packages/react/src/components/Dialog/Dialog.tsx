@@ -17,7 +17,7 @@ import {
   doesNodeContainClick,
   applyAccessibilityKeyHandlers,
   getOrGenerateIdFromShorthand,
-} from '../../lib'
+} from '../../utils'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Button, { ButtonProps } from '../Button/Button'
 import ButtonGroup from '../Button/ButtonGroup'

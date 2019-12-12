@@ -37,7 +37,7 @@ describe('SplitButtonBehavior.ts', () => {
     const property = {}
     const supportedKeys = [{ altKey: true, keyCode: keyboardKey.ArrowDown }]
     const keysFromBehavior = splitButtonBehavior(property)['childBehaviors']['menuButton'](property)
-      .keyActions.trigger.open.keyCombinations
+      .keyActions.root.openAndFocusFirst.keyCombinations
     verifyKeys(supportedKeys, keysFromBehavior)
   })
 })

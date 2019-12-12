@@ -4,7 +4,6 @@ import { FocusZoneMode, FocusZoneDirection } from '../../focusZone/types'
 import * as keyboardKey from 'keyboard-key'
 
 /**
- * @description
  * @specification
  * Adds role='gridcell'.
  * Adds attribute 'data-is-focusable=true' to 'root' slot.

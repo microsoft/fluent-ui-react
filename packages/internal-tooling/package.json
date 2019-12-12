@@ -1,6 +1,6 @@
 {
   "name": "@fluentui/internal-tooling",
-  "version": "0.40.0",
+  "version": "0.41.1",
   "dependencies": {
     "@babel/core": "^7.6.4",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
@@ -9,7 +9,7 @@
     "@babel/preset-env": "^7.6.3",
     "@babel/preset-react": "^7.6.3",
     "@babel/preset-typescript": "^7.6.0",
-    "@fluentui/eslint-plugin": "^0.40.0",
+    "@fluentui/eslint-plugin": "^0.41.1",
     "@types/jest": "^24.0.19",
     "@types/jest-axe": "^2.2.3",
     "@typescript-eslint/eslint-plugin": "^2.5.0",

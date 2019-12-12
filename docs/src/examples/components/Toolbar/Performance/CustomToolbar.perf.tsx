@@ -538,7 +538,7 @@ const CustomToolbar: React.FunctionComponent<CustomToolbarProps> = props => {
   return <Toolbar variables={{ isCt: true }} items={items} />
 }
 
-const CustomToolbarPrototype: React.FunctionComponent = () => {
+const CustomToolbarPrototype = () => {
   let theme = {}
   theme = mergeThemes(themes.teamsDark, darkThemeOverrides)
 
@@ -557,5 +557,8 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
     </Provider>
   )
 }
+
+CustomToolbarPrototype.iterations = 100
+CustomToolbarPrototype.filename = 'CustomToolbar.perf.tsx'
 
 export default CustomToolbarPrototype

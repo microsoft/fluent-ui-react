@@ -13,12 +13,12 @@ import {
   createShorthandFactory,
   applyAccessibilityKeyHandlers,
   childrenExist,
-} from '../../lib'
+} from '../../utils'
 import { ShorthandCollection, WithAsProp } from '../../types'
-import { Accessibility, tableHeaderCellBehavior, tableRowBehavior } from '@fluentui/accessibility'
+import { Accessibility, tableRowBehavior } from '@fluentui/accessibility'
 import { ComponentVariablesObject } from '../../themes/types'
-import { mergeComponentVariables } from '../../lib/mergeThemes'
-import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
+import { mergeComponentVariables } from '../../utils/mergeThemes'
+import { ReactAccessibilityBehavior } from '../../utils/accessibility/reactTypes'
 
 export interface TableRowProps extends UIComponentProps {
   /**
@@ -80,6 +80,7 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
   rowRef = React.createRef<HTMLElement>()
 
   actionHandlers = {
+    // https://github.com/microsoft/fluent-ui-react/issues/2150
     unsetRowTabbable: e => {
       this.rowRef.current.setAttribute('tabindex', '-1')
     },
@@ -96,23 +97,21 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
   }
 
   renderCells(accessibility: ReactAccessibilityBehavior, variables: ComponentVariablesObject) {
-    const { items, header } = this.props
+    const { items } = this.props
+
+    const cellAccessibility = accessibility.childBehaviors
+      ? accessibility.childBehaviors.cell
+      : undefined
 
     return _.map(items, (item: TableCellProps, index: number) => {
       const cellProps = {
-        ...(header && {
-          accessibility: tableHeaderCellBehavior as Accessibility,
-        }),
+        accessibility: cellAccessibility as Accessibility,
       }
       const overrideProps = handleVariablesOverrides(variables)
+
       return TableCell.create(item, {
-        defaultProps: () => ({
-          cellProps,
-          overrideProps,
-          accessibility: accessibility.childBehaviors
-            ? accessibility.childBehaviors.cell
-            : undefined,
-        }),
+        defaultProps: () => cellProps,
+        overrideProps,
       })
     })
   }

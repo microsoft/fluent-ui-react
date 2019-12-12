@@ -8,7 +8,7 @@ const Performance = () => (
     <ComponentPerfExample
       title="Default"
       description="A default test."
-      examplePath="components/Divider/Performance/Divider.perf"
+      examplePath="components/Divider/Performance/DividerMinimal.perf"
     />
   </NonPublicSection>
 )

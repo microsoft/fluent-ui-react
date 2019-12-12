@@ -10,11 +10,11 @@ import {
   commonPropTypes,
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import Icon, { IconProps } from '../Icon/Icon'
 import Button, { ButtonProps } from '../Button/Button'
 import Text, { TextProps } from '../Text/Text'
-import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
+import { UIComponentProps, ChildrenComponentProps } from '../../utils/commonPropInterfaces'
 
 export interface AttachmentProps extends UIComponentProps, ChildrenComponentProps {
   /** Accessibility behavior if overridden by the user. */

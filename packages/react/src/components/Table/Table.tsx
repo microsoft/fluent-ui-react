@@ -10,14 +10,14 @@ import {
   UIComponent,
   applyAccessibilityKeyHandlers,
   childrenExist,
-} from '../../lib'
+} from '../../utils'
 import { ComponentVariablesObject } from '../../themes/types'
-import { mergeComponentVariables } from '../../lib/mergeThemes'
+import { mergeComponentVariables } from '../../utils/mergeThemes'
 import TableRow, { TableRowProps } from './TableRow'
 import TableCell from './TableCell'
 import { WithAsProp, ShorthandCollection, ShorthandValue } from '../../types'
 import { Accessibility, tableBehavior } from '@fluentui/accessibility'
-import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
+import { ReactAccessibilityBehavior } from '../../utils/accessibility/reactTypes'
 
 export interface TableSlotClassNames {
   header: string
@@ -49,10 +49,16 @@ const handleVariablesOverrides = variables => predefinedProps => ({
 
 /**
  * A Table is used to display data in tabular layout
+ * * @accessibility
+ * Implements ARIA [Data Grid](https://www.w3.org/TR/wai-aria-practices/#dataGrid) design pattern for presenting tabular information.
+ * When gridcell contains actionable element, use [gridCellWithFocusableElementBehavior](/components/table/accessibility#grid-cell-with-focusable-element-behavior-ts). [More information available in aria documentation.](https://www.w3.org/TR/wai-aria-practices/#gridNav_focus)
+ * When gridcell contains more actionable elements, use [gridCellWithFocusableElementBehavior](/components/table/accessibility#gridCellMultipleFocusableBehavior). [More information available in aria documentation.](https://www.w3.org/TR/wai-aria-practices/#gridNav_inside)
  * @accessibilityIssues
  * [NVDA narrate table title(aria-label) twice](https://github.com/nvaccess/nvda/issues/10548)
  * [Accessibility DOM > Table > gridcell > when gridcell is focused, then selected state is send to reader](https://bugs.chromium.org/p/chromium/issues/detail?id=1030378)
  * [JAWS narrate grid name twice, once as table and second time as grid](https://github.com/FreedomScientific/VFO-standards-support/issues/346)
+ * [JAWS doesn't narrate grid column name, when focus is on actionable element in the cell] (https://github.com/FreedomScientific/VFO-standards-support/issues/348)
+ * [aria-sort is not output at child elements](https://github.com/FreedomScientific/VFO-standards-support/issues/319)
  */
 class Table extends UIComponent<WithAsProp<TableProps>> {
   static displayName = 'Table'
@@ -99,12 +105,12 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
       const overrideProps = handleVariablesOverrides(variables)
       return TableRow.create(row, {
         defaultProps: () => ({
-          props,
-          overrideProps,
+          ...props,
           accessibility: accessibility.childBehaviors
             ? accessibility.childBehaviors.row
             : undefined,
         }),
+        overrideProps,
       })
     })
   }
@@ -125,12 +131,10 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
 
     return TableRow.create(header, {
       defaultProps: () => ({
-        headerRowProps,
-        accessibility: accessibility.childBehaviors
-          ? accessibility.childBehaviors.headerRow
-          : undefined,
-        overrideProps,
+        ...headerRowProps,
+        accessibility: accessibility.childBehaviors ? accessibility.childBehaviors.row : undefined,
       }),
+      overrideProps,
     })
   }
 

@@ -1,50 +1,18 @@
 import { Accessibility } from '../../types'
-import { IS_FOCUSABLE_ATTRIBUTE } from '../../attributes'
-import { FocusZoneMode, FocusZoneDirection } from '../../focusZone/types'
-import * as keyboardKey from 'keyboard-key'
-import gridCellBehavior from './gridCellBehavior'
-
-// add key actions unit tests
+import gridRowNestedBehavior from './gridRowNestedBehavior'
+import gridHeaderRowBehavior from './gridHeaderRowBehavior'
 
 /**
  * @description
- * Provides arrow key navigation in horizontal direction.
- * @specification
- * Adds role='row'.
- * Adds attribute 'data-is-focusable=true' to 'root' slot.
- * Embeds component into FocusZone.
- * Focus can be moved inside a child component with embeded inner FocusZone by pressing a specified key.
- * Provides arrow key navigation in horizontal direction.
- * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'root'.
- * Triggers 'unsetRowTabbable' action using SHIFT + TAB key on 'root'.
+ * Defines a behavior "gridHeaderRowBehavior" or "gridRowNestedBehavior" based on "header" property.
  */
-const gridRowBehavior: Accessibility = props => ({
-  attributes: {
-    root: {
-      [IS_FOCUSABLE_ATTRIBUTE]: true,
-      role: 'row',
-    },
-  },
-  focusZone: {
-    mode: FocusZoneMode.Embed,
-    props: {
-      shouldEnterInnerZone: event => keyboardKey.getCode(event) === keyboardKey.Enter,
-      direction: FocusZoneDirection.horizontal,
-    },
-  },
-  keyActions: {
-    root: {
-      unsetRowTabbable: {
-        keyCombinations: [{ keyCode: keyboardKey.Tab, shiftKey: true }],
-      },
-      performClick: {
-        keyCombinations: [{ keyCode: keyboardKey.Enter }, { keyCode: keyboardKey.Spacebar }],
-      },
-    },
-  },
-  childBehaviors: {
-    cell: gridCellBehavior,
-  },
-})
+
+const gridRowBehavior: Accessibility<GridRowBehaviorProps> = props =>
+  props.header ? gridHeaderRowBehavior(props) : gridRowNestedBehavior(props)
 
 export default gridRowBehavior
+
+export type GridRowBehaviorProps = {
+  /** Indicates if a table row is header. */
+  header?: boolean
+}
