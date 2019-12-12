@@ -42,7 +42,7 @@ const PerfChart: React.FC<PerfChartProps> = ({ perfData, withExtremes }) => {
 
   const maxColor = '#ff8080'
   const medColor = '#555555'
-  const tpiColor = '#ff0000'
+  const tpiColor = '#387fc2'
   const minColor = '#59b359'
   const tagColor = '#888888'
 
@@ -130,6 +130,7 @@ const PerfChart: React.FC<PerfChartProps> = ({ perfData, withExtremes }) => {
         })}
 
       {lineSeries('curve-median', 'actualTime.median', {
+        opacity: 0.8,
         stroke: medColor,
         strokeWidth: '2px',
       })}
@@ -143,6 +144,7 @@ const PerfChart: React.FC<PerfChartProps> = ({ perfData, withExtremes }) => {
         })}
 
       {lineSeries('curve-tpi', 'flamegrill.extended.tpi', {
+        opacity: 0.8,
         stroke: tpiColor,
         strokeWidth: '2px',
       })}
