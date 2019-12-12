@@ -153,18 +153,19 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         }),
 
       ...(p.secondaryAlt && {
-        color: siteVariables.colorScheme.silver.foreground,
-        borderColor: siteVariables.colorScheme.silver.border,
         backgroundColor: siteVariables.colorScheme.silver.background,
+        borderColor: siteVariables.colorScheme.silver.border,
+        color: siteVariables.colorScheme.silver.foreground,
 
         ':active': {
           ...createAnimationStyles('scaleDownSoft', theme),
           backgroundColor: siteVariables.colorScheme.silver.backgroundPressed,
+          color: siteVariables.colorScheme.silver.foregroundHover,
         },
 
         ':hover': {
-          color: siteVariables.colorScheme.silver.foregroundHover,
           backgroundColor: siteVariables.colorScheme.silver.backgroundHover,
+          color: siteVariables.colorScheme.silver.foregroundHover,
         },
 
         ':focus': {
