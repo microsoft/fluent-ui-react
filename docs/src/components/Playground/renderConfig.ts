@@ -23,7 +23,7 @@ export const babelConfig = {
 
 export const imports: Record<string, { version: string; module: any }> = {
   '@fluentui/accessibility': {
-    version: stardustReactPackageJson.version,
+    version: projectPackageJson.version,
     module: Accessibility,
   },
 
