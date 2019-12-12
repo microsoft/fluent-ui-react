@@ -1,16 +1,16 @@
 {
   "name": "@fluentui/react-bindings",
   "description": "A set of components and hooks to build components libraries and UI kits.",
-  "version": "0.41.0",
+  "version": "0.41.1",
   "author": "Oleksandr Fediashov <a@fedyashov.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "@fluentui/accessibility": "^0.41.0",
-    "@fluentui/state": "^0.41.0"
+    "@fluentui/accessibility": "^0.41.1",
+    "@fluentui/state": "^0.41.1"
   },
   "devDependencies": {
-    "@fluentui/internal-tooling": "^0.41.0",
+    "@fluentui/internal-tooling": "^0.41.1",
     "lerna-alias": "^3.0.3-0"
   },
   "files": [
