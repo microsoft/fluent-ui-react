@@ -473,28 +473,26 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
             {/* Ensure anchor links don't occlude card shadow effect */}
             <div id={anchorName} style={{ position: 'relative', bottom: '1rem' }} />
 
-            <Segment styles={{ borderBottom: '1px solid #ddd' }}>
-              <Flex>
+            <Segment styles={{ padding: 0, borderBottom: '1px solid #ddd' }}>
+              <Flex space="between" style={{ padding: '10px 20px' }}>
                 <ComponentExampleTitle description={description} title={title} />
 
-                <Flex.Item push>
-                  <ComponentControls
-                    toolbarAriaLabel={toolbarAriaLabel}
-                    anchorName={anchorName}
-                    exampleCode={currentCode}
-                    exampleLanguage={currentCodeLanguage}
-                    examplePath={currentCodePath}
-                    onShowCode={this.handleShowCodeClick}
-                    onCopyLink={this.handleDirectLinkClick}
-                    onShowRtl={this.handleShowRtlClick}
-                    onShowVariables={this.handleShowVariablesClick}
-                    onShowTransparent={this.handleShowTransparentClick}
-                    showCode={showCode}
-                    showRtl={showRtl}
-                    showVariables={showVariables}
-                    showTransparent={showTransparent}
-                  />
-                </Flex.Item>
+                <ComponentControls
+                  toolbarAriaLabel={toolbarAriaLabel}
+                  anchorName={anchorName}
+                  exampleCode={currentCode}
+                  exampleLanguage={currentCodeLanguage}
+                  examplePath={currentCodePath}
+                  onShowCode={this.handleShowCodeClick}
+                  onCopyLink={this.handleDirectLinkClick}
+                  onShowRtl={this.handleShowRtlClick}
+                  onShowVariables={this.handleShowVariablesClick}
+                  onShowTransparent={this.handleShowTransparentClick}
+                  showCode={showCode}
+                  showRtl={showRtl}
+                  showVariables={showVariables}
+                  showTransparent={showTransparent}
+                />
               </Flex>
 
               <KnobInspector>
