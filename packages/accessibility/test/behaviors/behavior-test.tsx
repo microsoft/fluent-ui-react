@@ -72,6 +72,13 @@ import {
   tableCellBehavior,
   tableHeaderCellBehavior,
   tableRowBehavior,
+  gridNestedBehavior,
+  gridHeaderRowBehavior,
+  gridHeaderCellBehavior,
+  gridRowNestedBehavior,
+  gridCellBehavior,
+  gridCellMultipleFocusableBehavior,
+  gridCellWithFocusableElementBehavior,
 } from '@fluentui/accessibility'
 import { TestHelper } from './testHelper'
 import definitions from './testDefinitions'
@@ -148,5 +155,12 @@ testHelper.addBehavior('tableBehavior', tableBehavior)
 testHelper.addBehavior('tableCellBehavior', tableCellBehavior)
 testHelper.addBehavior('tableHeaderCellBehavior', tableHeaderCellBehavior)
 testHelper.addBehavior('tableRowBehavior', tableRowBehavior)
+testHelper.addBehavior('gridNestedBehavior', gridNestedBehavior)
+testHelper.addBehavior('gridHeaderRowBehavior', gridHeaderRowBehavior)
+testHelper.addBehavior('gridHeaderCellBehavior', gridHeaderCellBehavior)
+testHelper.addBehavior('gridRowNestedBehavior', gridRowNestedBehavior)
+testHelper.addBehavior('gridCellBehavior', gridCellBehavior)
+testHelper.addBehavior('gridCellMultipleFocusableBehavior', gridCellMultipleFocusableBehavior)
+testHelper.addBehavior('gridCellWithFocusableElementBehavior', gridCellWithFocusableElementBehavior)
 
 testHelper.run(behaviorMenuItems)
