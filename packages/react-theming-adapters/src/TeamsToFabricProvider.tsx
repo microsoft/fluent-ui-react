@@ -53,6 +53,8 @@ const makeCustomizerProps = (theme: any): any => {
         styles: {
           root: {
             color: theButtonTokens.color,
+            boxShadow: theButtonTokens.boxShadow,
+            borderColor: theButtonTokens.borderColor,
           },
         },
       },
