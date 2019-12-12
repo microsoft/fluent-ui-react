@@ -8,8 +8,10 @@ const inputItems = _.times(300, (i: number) => ({
   header: `header: ${i}`,
 }))
 
-const DropdownPerf = () => (
+const DropdownManyItemsPerf = () => (
   <Dropdown defaultOpen items={inputItems} placeholder="Select your hero" />
 )
 
-export default DropdownPerf
+DropdownManyItemsPerf.filename = 'DropdownManyItems.perf.tsx'
+
+export default DropdownManyItemsPerf

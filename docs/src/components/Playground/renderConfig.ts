@@ -1,3 +1,4 @@
+import * as Accessibility from '@fluentui/accessibility'
 import * as CodeSandbox from '@fluentui/code-sandbox'
 import * as DocsComponent from '@fluentui/docs-components'
 import * as FluentUI from '@fluentui/react'
@@ -21,6 +22,11 @@ export const babelConfig = {
 }
 
 export const imports: Record<string, { version: string; module: any }> = {
+  '@fluentui/accessibility': {
+    version: stardustReactPackageJson.version,
+    module: Accessibility,
+  },
+
   '@fluentui/code-sandbox': {
     version: 'latest',
     module: CodeSandbox,
@@ -59,4 +65,9 @@ export const imports: Record<string, { version: string; module: any }> = {
   },
 }
 
-export const importResolver = importName => imports[importName].module
+export const importResolver = importName => {
+  if (imports[importName]) {
+    return imports[importName].module
+  }
+  throw new Error(`Module '${importName}' was not found. Please check renderConfig.ts`)
+}
