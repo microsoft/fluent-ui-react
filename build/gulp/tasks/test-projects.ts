@@ -26,7 +26,7 @@ const log = (context: string) => (message: string) => {
 
 export const runIn = targetPath => cmd => sh(`cd ${targetPath} && ${cmd}`)
 
-const addResolutionPathsForStardustPackages = async (
+const addResolutionPathsForProjectPackages = async (
   testProjectDir: string,
   packedPackages: PackedPackages,
 ) => {
@@ -41,7 +41,7 @@ const addResolutionPathsForStardustPackages = async (
   fs.writeFileSync(packageJsonPath, JSON.stringify(packageJson, null, 2))
 }
 
-const packStardustPackages = async (logger: Function): Promise<PackedPackages> => {
+const packProjectPackages = async (logger: Function): Promise<PackedPackages> => {
   // packages/react/src -> packages/react,
   // as lernaAliases append 'src' by default
   const projectPackages = lernaAliases({ sourceDirectory: false })
@@ -150,10 +150,10 @@ task('test:projects:cra-ts', async () => {
 
   logger('STEP 2. Add Fluent UI dependency to test project..')
 
-  const packedPackages = await packStardustPackages(logger)
-  await addResolutionPathsForStardustPackages(testAppPath(), packedPackages)
+  const packedPackages = await packProjectPackages(logger)
+  await addResolutionPathsForProjectPackages(testAppPath(), packedPackages)
   await runInTestApp(`yarn add ${packedPackages['@fluentui/react']}`)
-  logger(`✔️Stardust UI packages were added to dependencies`)
+  logger(`✔️Fluent UI packages were added to dependencies`)
 
   logger("STEP 3. Reference Fluent UI components in test project's App.tsx")
   fs.copyFileSync(scaffoldPath('App.tsx'), testAppPath('src', 'App.tsx'))
@@ -185,10 +185,10 @@ task('test:projects:rollup', async () => {
   await runIn(tmpDirectory)(`yarn add ${dependencies}`)
   logger(`✔️Dependencies were installed`)
 
-  const packedPackages = await packStardustPackages(logger)
-  await addResolutionPathsForStardustPackages(tmpDirectory, packedPackages)
+  const packedPackages = await packProjectPackages(logger)
+  await addResolutionPathsForProjectPackages(tmpDirectory, packedPackages)
   await runIn(tmpDirectory)(`yarn add ${packedPackages['@fluentui/react']}`)
-  logger(`✔️Stardust UI packages were added to dependencies`)
+  logger(`✔️Fluent UI packages were added to dependencies`)
 
   fs.copyFileSync(scaffoldPath('app.js'), path.resolve(tmpDirectory, 'app.js'))
   fs.copyFileSync(scaffoldPath('rollup.config.js'), path.resolve(tmpDirectory, 'rollup.config.js'))
@@ -220,10 +220,10 @@ task('test:projects:typings', async () => {
   await runIn(tmpDirectory)(`yarn add ${dependencies}`)
   logger(`✔️Dependencies were installed`)
 
-  const packedPackages = await packStardustPackages(logger)
-  await addResolutionPathsForStardustPackages(tmpDirectory, packedPackages)
+  const packedPackages = await packProjectPackages(logger)
+  await addResolutionPathsForProjectPackages(tmpDirectory, packedPackages)
   await runIn(tmpDirectory)(`yarn add ${packedPackages['@fluentui/react']}`)
-  logger(`✔️Stardust UI packages were added to dependencies`)
+  logger(`✔️Fluent UI packages were added to dependencies`)
 
   fs.mkdirSync(path.resolve(tmpDirectory, 'src'))
   fs.copyFileSync(scaffoldPath('index.tsx'), path.resolve(tmpDirectory, 'src/index.tsx'))

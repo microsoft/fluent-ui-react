@@ -39,9 +39,9 @@ const SandboxApp: React.FunctionComponent = props => {
 
       <KnobProvider components={knobComponents}>
         <div>
-          <Header>Stardust UI @ {pkg.version}</Header>
+          <Header>Fluent UI @ {pkg.version}</Header>
           <p>
-            This example is powered by Stardust UI, check{' '}
+            This example is powered by Fluent UI, check{' '}
             <Text as="a" href="https://microsoft.github.io/fluent-ui-react/">
               our docs
             </Text>{' '}

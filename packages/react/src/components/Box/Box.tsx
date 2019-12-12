@@ -8,7 +8,7 @@ import {
   commonPropTypes,
   rtlTextContainer,
 } from '../../utils'
-import createComponent from '../../utils/createComponent'
+import createComponentPrivate from '../../utils/createComponentPrivate'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface BoxProps
@@ -16,7 +16,7 @@ export interface BoxProps
     ContentComponentProps,
     ChildrenComponentProps {}
 
-const Box = createComponent<WithAsProp<BoxProps>>({
+const Box = createComponentPrivate<WithAsProp<BoxProps>>({
   displayName: 'Box',
 
   className: 'ui-box',

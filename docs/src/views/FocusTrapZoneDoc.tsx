@@ -25,7 +25,7 @@ export default () => (
       propagated outside {code('FocusTrapZone')}, hence {code('Popup')} or {code('Dialog')}.
     </p>
     <p>
-      Stardust leverages Focus Trap Zone component which is based on the{' '}
+      Fluent UI leverages Focus Trap Zone component which is based on the{' '}
       {link(
         'Focus Trap Zone from Office UI Fabric.',
         'https://developer.microsoft.com/en-us/fabric#/components/focustrapzone',

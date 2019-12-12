@@ -5,7 +5,7 @@ import {
   ChildrenComponentProps,
   UIComponentProps,
 } from '../../utils'
-import createComponent from '../../utils/createComponent'
+import createComponentPrivate from '../../utils/createComponentPrivate'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface ProviderBoxProps
@@ -13,7 +13,7 @@ export interface ProviderBoxProps
     ContentComponentProps,
     ChildrenComponentProps {}
 
-const ProviderBox = createComponent<WithAsProp<ProviderBoxProps>>({
+const ProviderBox = createComponentPrivate<WithAsProp<ProviderBoxProps>>({
   displayName: 'ProviderBox',
 
   className: 'ui-provider__box',

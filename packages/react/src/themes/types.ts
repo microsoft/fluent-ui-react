@@ -275,13 +275,13 @@ export interface ICSSPseudoElementStyle extends ICSSInJSStyle {
 
 type AnimationKeyFrame = Record<'from' | 'to' | string, ICSSInJSStyle>
 
-export interface StardustAnimationName<P = Record<string, any>> {
+export interface AnimationName<P = Record<string, any>> {
   keyframe?: AnimationKeyFrame | ((params: P) => AnimationKeyFrame)
   params?: P
 }
 
 export type CSSProperties = Omit<React.CSSProperties, 'animationName'> & {
-  animationName?: StardustAnimationName | AnimationKeyFrame | string | 'none'
+  animationName?: AnimationName | AnimationKeyFrame | string | 'none'
 }
 
 export interface ICSSInJSStyle extends CSSProperties {
@@ -576,8 +576,8 @@ export type RequiredIconNames =
   | 'icon-arrow-down'
   | 'icon-pause'
   | 'icon-play'
-  | 'stardust-chevron-start'
-  | 'stardust-chevron-end'
+  | 'icon-chevron-start'
+  | 'icon-chevron-end'
 
 export type ThemeIcons = Partial<Record<RequiredIconNames, ThemeIconSpec>> & {
   [iconName: string]: ThemeIconSpec

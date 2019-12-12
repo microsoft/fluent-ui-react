@@ -1,3 +1,3 @@
-import * as Stardust from './index'
+import * as FluentUI from './index'
 
-module.exports = Stardust
+module.exports = FluentUI

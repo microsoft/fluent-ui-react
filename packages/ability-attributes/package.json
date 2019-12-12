@@ -1,6 +1,6 @@
 {
   "name": "@fluentui/ability-attributes",
-  "description": "Accessibility attributes schema for Stardust UI",
+  "description": "Accessibility attributes schema for Fluent UI",
   "version": "0.41.1",
   "author": "Marat Abdullin <marata@microsoft.com>",
   "bugs": "https://github.com/microsoft/fluent-ui-react/issues",

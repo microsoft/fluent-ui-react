@@ -1,6 +1,6 @@
 {
   "name": "@fluentui/react-proptypes",
-  "description": "Set of custom reusable PropTypes for React components, some of them are specific for Stardust UI.",
+  "description": "Set of custom reusable PropTypes for React components, some of them are specific for Fluent UI.",
   "version": "0.41.1",
   "author": "Oleksandr Fediashov <olfedias@microsoft.com>",
   "bugs": "https://github.com/microsoft/fluent-ui-react/issues",

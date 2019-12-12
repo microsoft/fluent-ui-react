@@ -20,7 +20,7 @@ const usePlaygroundComponent = (componentName: string): [React.ReactElement, str
       )
     }
 
-    if (!Stardust[componentName]) {
+    if (!FluentUI[componentName]) {
       throw new Error(
         `Cannot find an export for "${componentName}", please check that it is exported from "@fluentui/react"`,
       )
@@ -54,7 +54,7 @@ const usePlaygroundComponent = (componentName: string): [React.ReactElement, str
     unsupportedProps.push(propDef.name)
   })
 
-  const element = React.createElement(Stardust[componentName], propValues)
+  const element = React.createElement(FluentUI[componentName], propValues)
 
   return [element, unsupportedProps]
 }

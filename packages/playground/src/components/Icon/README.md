@@ -461,7 +461,7 @@ type FontIconSpec = ObjectOrFunc<{
 ```
 
 Below are wiki and code references into this process:
-- [SVG icon processing](https://github.com/microsoft/fluent-ui-react/blob/21c2f9e3e495b3094e0db4610e9f8834cdc135b0/packages/react/src/themes/teams/components/Icon/svg/ProcessedIcons/stardust-icons.sh#L36)
+- [SVG icon processing](https://github.com/microsoft/fluent-ui-react/blob/21c2f9e3e495b3094e0db4610e9f8834cdc135b0/packages/react/src/themes/teams/components/Icon/svg/ProcessedIcons/process-icons.sh#L36)
 - [Instructions on adding new SVG Icon](https://github.com/microsoft/fluent-ui-react/pull/585)
 - [Font icon registration into the theme (fontAwesome theme example)](https://github.com/microsoft/fluent-ui-react/blob/feat/generate-css/src/themes/teams/components/Icon/fontAwesomeIconStyles.ts)
 - [Font vs SVG icon rendering](https://github.com/microsoft/fluent-ui-react/blob/master/packages/react/src/themes/teams/components/Icon/iconStyles.ts)

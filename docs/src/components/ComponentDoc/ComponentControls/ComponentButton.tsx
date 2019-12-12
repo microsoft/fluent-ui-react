@@ -9,7 +9,7 @@ interface LabelledButtonProps {
 
 const ComponentButton = createComponent<LabelledButtonProps>({
   displayName: 'ComponentButton',
-  render: ({ stardust, ...props }) => {
+  render: ({ config, ...props }) => {
     const { iconName, label, onClick } = props
     return (
       <Flex column gap="gap.small" hAlign="center" onClick={onClick}>

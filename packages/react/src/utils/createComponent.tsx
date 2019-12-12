@@ -1,4 +1,4 @@
-import createComponentInternal, { CreateComponentReturnType } from './createComponent'
+import createComponentInternal, { CreateComponentReturnType } from './createComponentPrivate'
 import * as React from 'react'
 import * as _ from 'lodash'
 
@@ -6,7 +6,7 @@ import { ComponentSlotClasses, ComponentSlotStylesPrepared } from '../themes/typ
 import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/reactTypes'
 import { ObjectOf } from '../types'
 
-export interface RenderResultConfig {
+export interface CreateComponentRenderConfig {
   accessibility: ReactAccessibilityBehavior
   classes: ComponentSlotClasses
   rtl: boolean
@@ -16,7 +16,7 @@ export interface RenderResultConfig {
 export interface CreateComponentConfig<P> {
   displayName: string
   className?: string
-  render: (props: P & { config: RenderResultConfig }) => React.ReactNode
+  render: (props: P & { config: CreateComponentRenderConfig }) => React.ReactNode
   defaultProps?: any
   actionHandlers?: AccessibilityActionHandlers
 }

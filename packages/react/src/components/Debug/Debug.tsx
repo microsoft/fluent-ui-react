@@ -55,18 +55,18 @@ class Debug extends React.Component<DebugProps, DebugState> {
   debugReactComponent = r => {
     if (!r) {
       console.error(
-        "No React component selected. Please select a Stardust component from the React's Component panel.",
+        "No React component selected. Please select a Fluent UI component from the React's Component panel.",
       )
       return
     }
     if (!r._reactInternalFiber) {
       console.error(
-        'React does not provide data for debugging for this component. Try selecting some Stardust component.',
+        'React does not provide data for debugging for this component. Try selecting some Fluent UI component.',
       )
       return
     }
     if (!r.fluentUIDebug) {
-      console.error('Not a debuggable component. Try selecting some Stardust component.')
+      console.error('Not a debuggable component. Try selecting some Fluent UI component.')
       return
     }
 
@@ -109,7 +109,7 @@ class Debug extends React.Component<DebugProps, DebugState> {
     this.debugDOMNode(e.target)
   }
 
-  handleStardustDOMNodeClick = e => {
+  handleDOMNodeClick = e => {
     e.preventDefault()
     e.stopPropagation()
 
@@ -161,7 +161,7 @@ class Debug extends React.Component<DebugProps, DebugState> {
           {isSelecting && fiberNav && fiberNav.domNode && (
             <EventListener
               targetRef={toRefObject(fiberNav.domNode)}
-              listener={this.handleStardustDOMNodeClick}
+              listener={this.handleDOMNodeClick}
               type="click"
             />
           )}
@@ -173,7 +173,7 @@ class Debug extends React.Component<DebugProps, DebugState> {
               onActivateDebugSelectorClick={this.startSelecting}
               onClose={this.close}
               // TODO: Integrate CSS in JS Styles for Host Components (DOM nodes)
-              // cssStyles={stylesForNode(stardustDOMNode)}
+              // cssStyles={stylesForNode(domNode)}
               debugData={fiberNav.fluentUIDebug}
               position={debugPanelPosition || 'right'}
               onPositionLeft={this.positionLeft}

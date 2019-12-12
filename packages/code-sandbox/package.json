@@ -1,6 +1,6 @@
 {
   "name": "@fluentui/code-sandbox",
-  "description": "Stardust UI tools for CodeSandbox.",
+  "description": "Fluent UI tools for CodeSandbox.",
   "version": "0.41.1",
   "author": "Oleksandr Fediashov <a@fedyashov.com>",
   "bugs": "https://github.com/microsoft/fluent-ui-react/issues",
