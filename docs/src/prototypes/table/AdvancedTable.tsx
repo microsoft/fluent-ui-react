@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Table, Flex, Text, Icon } from '@fluentui/react'
-import { gridNestedBehavior, gridHeaderCellSortableBehavior } from '@fluentui/accessibility'
+import { gridNestedBehavior } from '@fluentui/accessibility'
 
 type TableCellComparator<T> = (cell1: T, cell2: T) => number
 
@@ -54,7 +54,6 @@ const AdvancedTable = (props: AdvancedTableProps) => {
     key: title,
     onClick: () => onOrderChange(order === 0 ? 1 : -order),
     'aria-sort': order !== 0 ? (order > 0 ? 'ascending' : 'descending') : undefined,
-    accessibility: gridHeaderCellSortableBehavior,
   })
 
   const header = {
