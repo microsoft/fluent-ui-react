@@ -62,6 +62,7 @@ const AdvancedTable = (props: AdvancedTableProps) => {
       sortColumnHeader(c.title, c.name === sortColumn ? sortDirection : 0, newSortDirection => {
         setSortColumn(c.name)
         setSortDirection(newSortDirection)
+        // Use react-aria-live or similar component to announce change the order
         document.getElementById('ariaLive').innerText =
           newSortDirection > 0 ? 'sorted ascending' : 'sorted descending'
       }),
