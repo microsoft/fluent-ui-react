@@ -114,4 +114,21 @@ describe('felaRenderer', () => {
     )
     expect(snapshot).toMatchSnapshot()
   })
+
+  test('styles are expanded to longhand values', () => {
+    const snapshot = createSnapshot(
+      <EmptyThemeProvider>
+        <Box
+          styles={{
+            borderStyle: 'solid',
+            // spaces in color value are important
+            borderColor: 'rgba(51,204, 51, 1) rgba(51,0,204, 1)',
+          }}
+        />
+      </EmptyThemeProvider>,
+      {},
+      felaRenderer,
+    )
+    expect(snapshot).toMatchSnapshot()
+  })
 })

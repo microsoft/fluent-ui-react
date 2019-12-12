@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixes
+- Fix colors expand for `border-color` shorthand @layershifter ([#2160](https://github.com/microsoft/fluent-ui-react/pull/2160))
+
 ### Features
 - Adding `table` navigation @kolaps33 ([#2147](https://github.com/microsoft/fluent-ui-react/pull/2147))
 
