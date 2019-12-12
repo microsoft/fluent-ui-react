@@ -17,11 +17,11 @@ export default () => (
       <li>
         {link('General', '#General')}
         <ul>
-          <li>{link('Does Stardust support mobile?', '#does-stardust-support-mobile')}</li>
+          <li>{link('Does Fluent UI support mobile?', '#does-fluent-ui-support-mobile')}</li>
           <li>
             {link(
-              "How can @mixins be used in the Stardust's styles?",
-              '#how-can-mixins-be-used-in-the-stardusts-styles',
+              "How can @mixins be used in the Fluent UI's styles?",
+              '#how-can-mixins-be-used-in-the-fluent-uis-styles',
             )}
           </li>
           <li>
@@ -50,23 +50,23 @@ export default () => (
       <li>
         {link('Teams Specific', '#teams-specific')}
         <ul>
-          <li>{link('How to add Icons to Stardust?', '#how-to-add-icons-to-stardust')}</li>
+          <li>{link('How to add Icons to Fluent UI?', '#how-to-add-icons-to-fluent-ui')}</li>
         </ul>
       </li>
     </ul>
 
     <Category content="General" />
-    <Question content="Does Stardust support mobile?" />
+    <Question content="Does Fluent UI support mobile?" />
     <Answer content="No. Scope is limited to Web / Desktop at present." />
 
-    <Question content="How can @mixins be used in the Stardust's styles" />
+    <Question content="How can @mixins be used in the Fluent UI's styles" />
     <Answer
       content={
         <p>
-          As the styles in Stardust are defined using CSS in JS, mixins can be defined as simple
+          As the styles in Fluent UI are defined using CSS in JS, mixins can be defined as simple
           functions that can be reused on multiple places.
           <br />
-          For example, in Stardust the method 'getBorderFocusStyles' is re-used multiple times in
+          For example, in Fluent UI the method 'getBorderFocusStyles' is re-used multiple times in
           many component styles.
         </p>
       }
@@ -106,7 +106,7 @@ export default () => (
     <Answer
       content={
         <p>
-          Just as with vanilla React, all HTML props are supported on all Stardust components. Just
+          Just as with vanilla React, all HTML props are supported on all Fluent UI components. Just
           pass onLoad or onError to the component you want to put the prop on.
           <CodeSnippet
             value={`
@@ -138,7 +138,7 @@ export default () => (
             component.
           </p>
           <p>
-            {code('Box')} is a utility component that is often used by Stardust to implement
+            {code('Box')} is a utility component that is often used by Fluent UI to implement
             higher-level components. By default, it renders styled {code('div')} element.
           </p>
           <p>
@@ -158,7 +158,7 @@ export default () => (
     />
 
     <Category content="Teams Specific" />
-    <Question content="How to add Icons to Stardust" />
+    <Question content="How to add Icons to Fluent UI" />
     <Answer
       content={
         <p>
@@ -178,7 +178,7 @@ export default () => (
             value={`
               import { themes } from '@fluentui/react'
 
-              // 💡 Your overrides should be defined before rendering any Stardust components
+              // 💡 Your overrides should be defined before rendering any Fluent UI components
 
               // will remove all existing fontFaces
               themes.teams.fontFaces = []

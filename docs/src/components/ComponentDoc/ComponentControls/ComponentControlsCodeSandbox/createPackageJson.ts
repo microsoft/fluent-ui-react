@@ -3,7 +3,7 @@ import * as _ from 'lodash'
 import { imports } from 'docs/src/components/Playground/renderConfig'
 import { ComponentSourceManagerLanguage } from 'docs/src/components/ComponentDoc/ComponentSourceManager'
 
-const name = 'stardust-ui-example'
+const name = 'fluent-ui-example'
 const description =
   'An exported example from Fluent UI React, https://microsoft.github.io/fluent-ui-react/'
 const dependencies = {
