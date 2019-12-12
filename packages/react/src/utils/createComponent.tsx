@@ -1,4 +1,4 @@
-import createComponentInternal, { CreateComponentReturnType } from './createComponentPrivate'
+import createComponentInternal, { CreateComponentReturnType } from './createComponentInternal'
 import * as React from 'react'
 import * as _ from 'lodash'
 

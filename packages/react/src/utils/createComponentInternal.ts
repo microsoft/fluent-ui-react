@@ -24,7 +24,7 @@ export type CreateComponentReturnType<P> = React.FunctionComponent<P> & {
   create: ShorthandFactory<P>
 }
 
-const createComponentPrivate = <P extends ObjectOf<any> = any>({
+const createComponentInternal = <P extends ObjectOf<any> = any>({
   displayName = 'FluentComponent',
   className = 'fluent-ui-component',
   shorthandPropName = 'children',
@@ -77,4 +77,4 @@ const createComponentPrivate = <P extends ObjectOf<any> = any>({
   return FluentComponent
 }
 
-export default createComponentPrivate
+export default createComponentInternal
