@@ -91,6 +91,7 @@ jobs:
             fi
       - store_artifacts:
           path: dist/artifacts
+          destination: artifacts
       - run:
           name: Publish npm package (master only)
           command: |
