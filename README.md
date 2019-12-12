@@ -1,7 +1,7 @@
 <!-- Logo -->
 <p align="center">
   <a href="https://microsoft.github.io/fluent-ui-react">
-    <img height="128" width="128" src="https://github.com/microsoft/fluent-ui-react/raw/master/docs/src/logo.png">
+    <img height="128" width="128" src="https://github.com/microsoft/fluent-ui-react/raw/master/docs/src/public/images/fluent-ui-logo.png">
   </a>
 </p>
 

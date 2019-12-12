@@ -16,6 +16,7 @@ const Introduction = () => (
           marginTop: '24px',
           marginBottom: '0px',
           fontSize: '2rem',
+          textAlign: 'center',
         }}
       >
         {_.capitalize(pkg.name)}

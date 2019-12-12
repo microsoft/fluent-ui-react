@@ -25,7 +25,7 @@ export type CreateComponentReturnType<P> = React.FunctionComponent<P> & {
 }
 
 const createComponentInternal = <P extends ObjectOf<any> = any>({
-  displayName = 'FluentComponent',
+  displayName = 'FluentUIComponent',
   className = 'fluent-ui-component',
   shorthandPropName = 'children',
   defaultProps = {},
