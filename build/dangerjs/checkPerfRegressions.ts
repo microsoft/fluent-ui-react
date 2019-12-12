@@ -20,21 +20,21 @@ function fluentFabricComparision(danger, markdown, warn) {
         iterations: stats.extended.iterations,
         fluentTpi,
         fabricTpi,
-        fluentToFabric: Math.round((fluentTpi / fabricTpi) * 100),
+        fluentToFabric: Math.round((fluentTpi / fabricTpi) * 100) / 100,
       }
     },
   )
 
   markdown(
     [
-      '## Fluent UI to Fabric perf comparision',
+      '## Perf comparision',
       '',
-      'Kind | Fluent UI | Fabric | % | iterations | PR Ticks',
+      'Scenario | Fluent TPI | Fabric TPI | Ratio | Iterations | Ticks',
       '--- | ---:| ---:| ---:| ---:| ---:',
       ..._.map(
         results,
         (result, key) =>
-          `${key} | ${result.fluentTpi} | ${result.fabricTpi} | ${result.fluentToFabric} | ${result.iterations} | ${result.numTicks}`,
+          `${key} | ${result.fluentTpi} | ${result.fabricTpi} | ${result.fluentToFabric}:1 | ${result.iterations} | ${result.numTicks}`,
       ),
     ].join('\n'),
   )
