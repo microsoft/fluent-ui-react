@@ -13,7 +13,7 @@ function handleRowClick(index) {
 }
 
 const roleDropdown = {
-  content: <Dropdown inline items={['Owner', 'Member']} value="Owner" />,
+  content: <Dropdown inline items={['Owner', 'Member']} defaultValue={'Owner'} />,
   truncateContent: false,
   key: '1-6',
   accessibility: gridCellWithFocusableElementBehavior,
