@@ -13,9 +13,11 @@ const declareSvg = (svgIcon: SvgIconSpec, exportedAs?: string): ThemeProcessedIc
   exportedAs,
 })
 
-const processedIcons: ThemeIcons = Object.keys(svgIconsAndStyles as {
-  [iconName: string]: TeamsProcessedSvgIconSpec
-}).reduce<ThemeIcons>((accIcons, iconName) => {
+const processedIcons: ThemeIcons = Object.keys(
+  svgIconsAndStyles as {
+    [iconName: string]: TeamsProcessedSvgIconSpec
+  },
+).reduce<ThemeIcons>((accIcons, iconName) => {
   const iconAndMaybeStyles = svgIconsAndStyles[iconName]
 
   const icon: SvgIconSpec = getIcon(iconAndMaybeStyles)

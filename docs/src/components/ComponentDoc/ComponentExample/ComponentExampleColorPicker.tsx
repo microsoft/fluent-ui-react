@@ -12,9 +12,7 @@ type ComponentExampleColorPickerProps = {
   variableValue: string
 }
 
-const ComponentExampleColorPicker: React.FunctionComponent<
-  ComponentExampleColorPickerProps
-> = props => {
+const ComponentExampleColorPicker: React.FunctionComponent<ComponentExampleColorPickerProps> = props => {
   const { onChange, variableValue } = props
   const { theme } = React.useContext<ProviderContextPrepared>(ThemeContext)
 

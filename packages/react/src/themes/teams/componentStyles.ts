@@ -41,12 +41,8 @@ export { default as Header } from './components/Header/headerStyles'
 export { default as HeaderDescription } from './components/Header/headerDescriptionStyles'
 
 export { default as HierarchicalTree } from './components/HierarchicalTree/hierarchicalTreeStyles'
-export {
-  default as HierarchicalTreeItem,
-} from './components/HierarchicalTree/hierarchicalTreeItemStyles'
-export {
-  default as HierarchicalTreeTitle,
-} from './components/HierarchicalTree/hierarchicalTreeTitleStyles'
+export { default as HierarchicalTreeItem } from './components/HierarchicalTree/hierarchicalTreeItemStyles'
+export { default as HierarchicalTreeTitle } from './components/HierarchicalTree/hierarchicalTreeTitleStyles'
 
 export { default as Icon } from './components/Icon/iconStyles'
 
@@ -117,9 +113,7 @@ export { default as TooltipContent } from './components/Tooltip/tooltipContentSt
 export { default as Carousel } from './components/Carousel/carouselStyles'
 export { default as CarouselItem } from './components/Carousel/carouselItemStyles'
 export { default as CarouselNavigation } from './components/Carousel/carouselNavigationStyles'
-export {
-  default as CarouselNavigationItem,
-} from './components/Carousel/carouselNavigationItemStyles'
+export { default as CarouselNavigationItem } from './components/Carousel/carouselNavigationItemStyles'
 
 export { default as Table } from './components/Table/tableStyles'
 export { default as TableRow } from './components/Table/tableRowStyles'
