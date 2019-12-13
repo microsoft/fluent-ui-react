@@ -153,6 +153,7 @@ import tabs from './tabs'
 import table from './table'
 import tableAdd from './tableAdd'
 import tableDelete from './tableDelete'
+import tag from './tag'
 import teamCreate from './teamCreate'
 import teams from './teams'
 import toDoList from './toDoList'
@@ -318,6 +319,7 @@ export default {
   table,
   'table-add': tableAdd,
   'table-delete': tableDelete,
+  tag,
   teams,
   thumbtack,
   'thumbtack-slash': thumbtackSlash,
