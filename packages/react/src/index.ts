@@ -237,7 +237,7 @@ export { default as TableCell } from './components/Table/TableCell'
 // Utilities
 //
 export { default as mergeThemes } from './utils/mergeThemes'
-export * from './utils/createStardustComponent'
+export * from './utils/createComponent'
 export * from './utils'
 export * from './types'
 export { Popper as UNSTABLE_Popper } from './utils/positioner'

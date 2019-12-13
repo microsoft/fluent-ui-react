@@ -135,7 +135,7 @@ class RadioGroupItem extends AutoControlledComponent<
           {...unhandledProps}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         >
-          {Icon.create(icon || 'stardust-circle', {
+          {Icon.create(icon || 'icon-circle', {
             defaultProps: () => ({
               size: 'small',
               styles: styles.icon,

@@ -2,14 +2,14 @@
 
 *You can't improve what you can't measure.*
 
-As part of Stardust build pipeline we run a set of performance tests in order to avoid any regressions. This document describes the workflow.
+As part of Fluent UI build pipeline we run a set of performance tests in order to avoid any regressions. This document describes the workflow.
 
 ## Measures
 
 ### Performance examples
-For individual Stardust components there are usage examples in public docsite. Besides these *usage* examples there are also *performance* examples (currently not available in the public docsite). Compared to *usage* examples, *performance* examples render components with more data (ie list of 30 chat messages) so it takes more time (~100ms) to render them and makes any changes in render times visible (and distinguishable from jitter).
+For individual Fluent UI components there are usage examples in public docsite. Besides these *usage* examples there are also *performance* examples (currently not available in the public docsite). Compared to *usage* examples, *performance* examples render components with more data (ie list of 30 chat messages) so it takes more time (~100ms) to render them and makes any changes in render times visible (and distinguishable from jitter).
 
-Current perf examples measure performance of a single component. At the moment there are no compound perf examples, like a whole page built using several Stardust components. 
+Current perf examples measure performance of a single component. At the moment there are no compound perf examples, like a whole page built using several Fluent UI components. 
 
 ### Getting the numbers
 To get a performance number, [Puppeteer](https://github.com/GoogleChrome/puppeteer) is used to render a performance example in headless Chrome and measure the **first render time**.
@@ -19,7 +19,7 @@ To stabilize the numbers, the example is rendered 50 times and median value is u
 ## Workflow
 1. With each GIT commit, build pipeline is executed in CircleCI. As part of the build, we run the performance tests for all performance examples.
 2. Performance results are then stored to an external storage.
-3. In Stardust docsite running locally (not currently available in public docsite, https://stardust-ui.github.io/react/) for each measured component a performance chart is displayed, showing measures from the last 50 test runs.
+3. In Fluent UI docsite running locally (not currently available in public docsite, https://microsoft.github.io/fluent-ui-react/) for each measured component a performance chart is displayed, showing measures from the last 50 test runs.
 
 The following picture shows a chart for `Chat` component:
 ![Chart example](perf_chart.png)
@@ -46,8 +46,8 @@ Bundle size numbers are stored at the same infrastructure used for storing perfo
 ## Future plans
 - explore possible ways to make the measurements more stable
 - add perf examples (charts) for more components and more variants
-- add perf examples for compound examples (whole app page example built with multiple Stardust components)
-- make perf charts available in public docsite (https://stardust-ui.github.io/react/)
+- add perf examples for compound examples (whole app page example built with multiple Fluent UI components)
+- make perf charts available in public docsite (https://microsoft.github.io/fluent-ui-react/)
 - make bundle size charts available in docsite
 
 ## FAQ

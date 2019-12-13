@@ -8,7 +8,7 @@ import {
   commonPropTypes,
   rtlTextContainer,
 } from '../../utils'
-import createComponent from '../../utils/createComponent'
+import createComponentInternal from '../../utils/createComponentInternal'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface BoxProps
@@ -16,7 +16,7 @@ export interface BoxProps
     ContentComponentProps,
     ChildrenComponentProps {}
 
-const Box = createComponent<WithAsProp<BoxProps>>({
+const Box = createComponentInternal<WithAsProp<BoxProps>>({
   displayName: 'Box',
 
   className: 'ui-box',
@@ -44,7 +44,7 @@ const Box = createComponent<WithAsProp<BoxProps>>({
 Box.create = createShorthandFactory({ Component: Box })
 
 /**
- * A Box is a basic component, commonly used for slots in other Stardust components.
+ * A Box is a basic component, commonly used for slots in other Fluent UI components.
  * By default it just renders a `div`.
  */
 export default withSafeTypeForAs<typeof Box, BoxProps>(Box)

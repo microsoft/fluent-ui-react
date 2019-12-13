@@ -13,7 +13,7 @@ export default () => (
 
     <p>
       A Theme is used to ensure design consistency accross an application. It can define styles that
-      are common accross the application and for particular component types. Stardust will provide
+      are common accross the application and for particular component types. Fluent UI will provide
       some parameterizable standard themes or you can create your own.
     </p>
     <p>
@@ -21,7 +21,7 @@ export default () => (
       <NavLink to="theming#styles">styles</NavLink>) and{' '}
       <NavLink to="theming#variables">variables</NavLink>.
     </p>
-    <p>Stardust supports four levels of theming:</p>
+    <p>Fluent UI supports four levels of theming:</p>
     <ol>
       <li>
         <strong>Default</strong> - for users who just need a good first run experience.

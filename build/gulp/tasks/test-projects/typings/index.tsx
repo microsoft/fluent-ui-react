@@ -1,10 +1,10 @@
-import * as Stardust from '@fluentui/react'
+import * as FluentUI from '@fluentui/react'
 import * as React from 'react'
 
 const App = () => (
-  <Stardust.Provider theme={Stardust.themes.teams}>
-    <Stardust.Button accessibility={Stardust.buttonBehavior} content="Click me" />
-  </Stardust.Provider>
+  <FluentUI.Provider theme={FluentUI.themes.teams}>
+    <FluentUI.Button accessibility={FluentUI.buttonBehavior} content="Click me" />
+  </FluentUI.Provider>
 )
 
 export default App

@@ -4,7 +4,7 @@ const popupTrigger = `#${selectors.popupTriggerId}`
 const popupContent = `.${selectors.popupContentClass}`
 const dropdownTriggerButton = `.${selectors.dropdownTriggerClass}`
 
-// https://github.com/stardust-ui/react/issues/1079
+// https://github.com/microsoft/fluent-ui-react/issues/1079
 describe('Popup - on ESC key press', () => {
   beforeEach(async () => {
     await e2e.gotoTestCase(__filename, popupTrigger)
