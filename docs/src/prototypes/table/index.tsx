@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Provider, Flex, Avatar, Text, Dropdown, Checkbox, Icon } from '@fluentui/react'
+import { Button, Menu, Flex, Avatar, Text, Dropdown, Checkbox, Icon } from '@fluentui/react'
 import {
   gridCellWithFocusableElementBehavior,
   gridCellMultipleFocusableBehavior,
@@ -7,32 +7,6 @@ import {
 
 import AdvancedTable, { stringCellComparator } from './AdvancedTable'
 import chatProtoStyle from '.././chatPane/chatProtoStyle'
-
-function tagButton(tagName: string) {
-  return (
-    <Provider
-      theme={{
-        componentVariables: {
-          Button: siteVars => ({
-            color: siteVars.colorScheme.brand.foreground,
-            colorHover: siteVars.colorScheme.brand.foreground,
-            colorFocus: siteVars.colorScheme.default.foreground,
-            colorDisabled: siteVars.colorScheme.brandForegroundDisabled,
-            backgroundColor: siteVars.colorScheme.default.background,
-            backgroundColorActive: siteVars.colorScheme.brandBorderPressed,
-            backgroundColorHover: siteVars.colorScheme.brand.backgroundHover1,
-            backgroundColorFocus: siteVars.colorScheme.default.background,
-            backgroundColorDisabled: siteVars.colorScheme.brand.backgroundDisabled,
-            borderColor: siteVars.colorScheme.brandBorder2,
-            borderColorHover: siteVars.colorScheme.brandBorderHover,
-          }),
-        },
-      }}
-    >
-      <Button size="small" content={tagName} />
-    </Provider>
-  )
-}
 
 function handleRowClick(index) {
   alert(`OnClick on the row ${index} executed.`)
@@ -49,10 +23,11 @@ const roleDropdown = {
 const tagButtons = {
   content: (
     <Flex gap="gap.small" vAlign="center">
-      {tagButton('tag 1')}
-      {tagButton('tag 2')}
-      {/* table layout not support now more content in the cell */}
-      {/* <Button tabIndex={-1} icon="edit" circular text iconOnly title="edit tags" /> */}
+      <Menu
+        variables={{ horizontalPadding: '0.5rem 0.5rem' }}
+        items={['tag 1', 'tag 2']}
+        data-is-focusable={true}
+      />
     </Flex>
   ),
   key: '1-5',
