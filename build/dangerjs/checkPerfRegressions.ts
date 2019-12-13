@@ -5,6 +5,20 @@ import * as path from 'path'
 import { DangerJS } from './types'
 import config from '../../config'
 
+function linkToFlamegraph(value, filename) {
+  // This as well as the whole flamegrill URL is hardcoded to only work with CircleCI.
+  const build = process.env.CIRCLE_BUILD_NUM
+  const GITHUB_REPO_ID = '141743704'
+
+  if (_.isUndefined(build) || _.isUndefined(filename)) {
+    return value
+  }
+
+  return `[${value}](https://${build}-${GITHUB_REPO_ID}-gh.circle-artifacts.com/0/artifacts/perf/${path.basename(
+    filename,
+  )})`
+}
+
 function fluentFabricComparision(danger, markdown, warn) {
   let perfCounts
   try {
@@ -46,8 +60,10 @@ function fluentFabricComparision(danger, markdown, warn) {
       '--- | ---:| ---:| ---:| ---:| ---:',
       ..._.map(
         results,
-        (result, key) =>
-          `${key} | ${result.fluentTpi} | ${result.fabricTpi} | ${result.fluentToFabric}:1 | ${result.iterations} | ${result.numTicks}`,
+        (value, key) =>
+          `${key} | ${linkToFlamegraph(value.fluentTpi, value.fluentFlamegraphFile)} | ${
+            value.fabricTpi
+          } | ${value.fluentToFabric}:1 | ${value.iterations} | ${value.numTicks}`,
       ),
     ].join('\n'),
   )
