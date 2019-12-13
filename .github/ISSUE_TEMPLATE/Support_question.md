@@ -9,5 +9,5 @@ We primarily use GitHub as an issue tracker; for usage and support questions, pl
 
 ---
 
-* Gitter Community Chat: https://gitter.im/stardust-ui/react
-* Also have a look at our docs: https://stardust-ui.github.io/react
+* Gitter Community Chat: https://gitter.im/microsoft/fluent-ui-react
+* Also have a look at our docs: https://microsoft.github.io/fluent-ui-react

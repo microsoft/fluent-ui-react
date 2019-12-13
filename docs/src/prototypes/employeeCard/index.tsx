@@ -11,7 +11,7 @@ class EmployeeCardPrototype extends React.Component<any, { popupOpen: boolean }>
       position: 'SR. SOFTWARE ENGINEER',
       location: 'Prague, Czech Republic',
       status: 'Avaiable',
-      team: 'Stardust UI Engineering',
+      team: 'Fluent UI Engineering',
       email: 'John.Doe@company.com',
       avatar: {
         label: { variables: { backgroundColor: '#00b5ad', color: 'white' } },

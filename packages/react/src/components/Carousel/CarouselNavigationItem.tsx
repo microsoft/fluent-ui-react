@@ -81,7 +81,7 @@ class CarouselNavigationItem extends UIComponent<WithAsProp<CarouselNavigationIt
   static defaultProps = {
     accessibility: tabBehavior as Accessibility,
     as: 'li',
-    icon: { name: 'stardust-circle', size: 'smallest' as SizeValue },
+    icon: { name: 'icon-circle', size: 'smallest' as SizeValue },
   }
 
   renderComponent({ ElementType, classes, accessibility, styles, variables, unhandledProps }) {

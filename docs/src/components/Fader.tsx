@@ -28,7 +28,7 @@ export const faderStyles: ComponentSlotStylesInput<FaderProps> = {
 
 const Fader = createComponent<FaderProps>({
   displayName: 'Fader',
-  render: ({ children, url, stardust: { classes } }) => {
+  render: ({ children, url, config: { classes } }) => {
     return (
       <Flex column hAlign="center" vAlign="center">
         <div className={classes.fader}>{children}</div>

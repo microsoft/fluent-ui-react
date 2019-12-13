@@ -30,6 +30,7 @@ const envConfig = {
   dir_perf_dist: 'perf/dist',
   dir_perf_src: 'perf/src',
   dir_umd_dist: 'dist/umd',
+  dir_ci_artifacts: 'dist/artifacts',
 }
 
 // ------------------------------------
@@ -53,6 +54,7 @@ const paths = {
   perfDist: base.bind(null, envConfig.dir_perf_dist),
   perfSrc: base.bind(null, envConfig.dir_perf_src),
   umdDist: base.bind(null, envConfig.dir_umd_dist),
+  ciArtifacts: base.bind(null, envConfig.dir_ci_artifacts),
   withRootAt: (root, ...subpaths) => (...args) => path.resolve(root, ...subpaths, ...args),
   posix: undefined, // all the sibling values, but with forward slashes regardless the OS
 }

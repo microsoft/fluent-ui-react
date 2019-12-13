@@ -73,7 +73,7 @@ const Colors = () => (
           <Header as="h2">Introduction</Header>
           <p>
             The organizing of the colors for an application has many requirements and constraints.
-            In Stardust, the colors mechanisms are completely based on the{' '}
+            In Fluent UI, the colors mechanisms are completely based on the{' '}
             <code>siteVariables</code>.
           </p>
           <p>

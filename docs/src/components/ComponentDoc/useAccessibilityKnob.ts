@@ -1,10 +1,10 @@
 import { useSelectKnob } from '@fluentui/docs-components'
-import * as StardustUI from '@fluentui/react'
+import * as FluentUI from '@fluentui/react'
 
 import componentInfoContext from 'docs/src/utils/componentInfoContext'
 import useComponentProps from './useComponentProps'
 
-const useAccessibilityKnob = (componentName: string): StardustUI.Accessibility => {
+const useAccessibilityKnob = (componentName: string): FluentUI.Accessibility => {
   const componentProps = useComponentProps(componentName)
   const accessibilityProp = componentProps.find(propDef => propDef.name === 'accessibility')
 
@@ -22,7 +22,7 @@ const useAccessibilityKnob = (componentName: string): StardustUI.Accessibility =
     values: behaviorNames,
   })
 
-  return StardustUI[behaviorName]
+  return FluentUI[behaviorName]
 }
 
 export default useAccessibilityKnob
