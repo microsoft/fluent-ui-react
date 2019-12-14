@@ -3,7 +3,7 @@ import { Avatar as AvatarFabric } from 'office-ui-fabric-react'
 import { Avatar as AvatarFluent } from '@fluentui/react'
 
 export default {
-  iterations: 5000,
+  iterations: 2000,
 }
 
 export const Fabric = () => <AvatarFabric />

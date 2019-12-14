@@ -3,7 +3,7 @@ import { Dropdown as DropdownFabric } from 'office-ui-fabric-react'
 import { Dropdown as DropdownFluent } from '@fluentui/react'
 
 export default {
-  iterations: 5000,
+  iterations: 1000,
 }
 
 export const Fabric = () => <DropdownFabric />
