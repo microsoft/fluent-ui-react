@@ -6,5 +6,5 @@ export default {
   iterations: 1000,
 }
 
-export const Fabric = () => <DropdownFabric />
-export const Fluent = () => <DropdownFluent />
+export const Fabric = () => <DropdownFabric options={[]} />
+export const Fluent = () => <DropdownFluent items={[]} />
