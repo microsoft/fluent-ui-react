@@ -52,19 +52,27 @@ function fluentFabricComparision(danger, markdown, warn) {
     )
   })
 
+  const getStatus = fluentToFabric =>
+    fluentToFabric > 1 ? '🔧' : fluentToFabric >= 0.7 ? '🎯' : '🦄'
+
   markdown(
     [
-      '## Perf comparision',
+      '## Perf comparison',
       '',
-      'Scenario | Fluent TPI | Fabric TPI | Ratio | Iterations | Ticks',
-      '--- | ---:| ---:| ---:| ---:| ---:',
-      ..._.map(
-        results,
-        (value, key) =>
-          `${key} | ${linkToFlamegraph(value.fluentTpi, value.fluentFlamegraphFile)} | ${
-            value.fabricTpi
-          } | ${value.fluentToFabric}:1 | ${value.iterations} | ${value.numTicks}`,
+      'Status | Scenario | Fluent TPI | Fabric TPI | Ratio | Iterations | Ticks',
+      ':---: | :--- | ---:| ---:| ---:| ---:| ---:',
+      ..._.map(results, (value, key) =>
+        [
+          getStatus(value.fluentToFabric),
+          key,
+          linkToFlamegraph(value.fluentTpi, value.fluentFlamegraphFile),
+          value.fabricTpi,
+          `${value.fluentToFabric}:1`,
+          value.iterations,
+          value.numTicks,
+        ].join(' | '),
       ),
+      '>🔧 Needs work &nbsp; &nbsp; 🎯 On target &nbsp; &nbsp; 🦄 Amazing',
     ].join('\n'),
   )
 }
