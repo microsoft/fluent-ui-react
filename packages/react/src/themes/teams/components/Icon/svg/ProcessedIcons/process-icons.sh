@@ -1,8 +1,8 @@
 # export template="import * as React from 'react'\nimport { TeamsSvgIconSpec } from '../types'\n\nexport default (\n  SVG\n) as TeamsSvgIconSpec\n"
 export template="import * as React from 'react'\nimport { TeamsSvgIconSpec } from '../types'\n\nexport default {\nicon:({classes}) => (\n  SVG\n),\nstyles:{},\n} as TeamsSvgIconSpec"
 
-mkdir StardustSVGs
-mkdir StardustSVGs/non-standard
+mkdir SVGs
+mkdir SVGs/non-standard
 mkdir OptimizedSVGs
 
 for svg in $(ls *.html); do
@@ -16,7 +16,7 @@ for svg in $(ls *.html); do
   svgo $svg -o $SvgFileName --pretty --indent=2 --enable={removeXMLNS,removeDoctype,removeTitle,removeUnusedNS,removeUselessDefs,removeComments,removeEditorsNSData}
   echo "SVGO just optimized the SVG and saved to $SvgFileName"
 
-  # TURN SVG INTO STARDUST TSX FORMAT
+  # TURN SVG INTO TSX FORMAT
   echo -e "${template/SVG/$(cat $SvgFileName)}" > $TsxFileName;
   echo "Created $TsxFileName for templatized new SVG"
 
@@ -55,10 +55,10 @@ for svg in $(ls *.html); do
   # MOVE TSX FILE TO NEW FOLDER
   if grep "viewBox=\"0 0 32 32\"" $SvgFileName; then
     echo "found in $SvgFileName"
-    mv $TsxFileName ./StardustSVGs;
+    mv $TsxFileName ./SVGs;
   else
     echo "not found in $SvgFileName"
-    mv $TsxFileName ./StardustSVGs/non-standard;
+    mv $TsxFileName ./SVGs/non-standard;
   fi
 
   # MOVE SVG FILE TO NEW FOLDER

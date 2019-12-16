@@ -43,7 +43,7 @@ describe('Tooltip', () => {
       )
     })
 
-    // https://github.com/stardust-ui/react/pull/619
+    // https://github.com/microsoft/fluent-ui-react/pull/619
     test('is called on hover when controlled', () => {
       const onOpenChange = jest.fn()
 

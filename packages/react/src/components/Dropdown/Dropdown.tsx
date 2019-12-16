@@ -315,8 +315,8 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
   static defaultProps = {
     align: 'start',
     as: 'div',
-    checkableIndicator: 'stardust-checkmark',
-    clearIndicator: 'stardust-close',
+    checkableIndicator: 'icon-checkmark',
+    clearIndicator: 'icon-close',
     itemToString: item => {
       if (!item || React.isValidElement(item)) {
         return ''

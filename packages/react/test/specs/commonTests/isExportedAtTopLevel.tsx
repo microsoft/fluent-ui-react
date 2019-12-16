@@ -1,12 +1,12 @@
 import * as _ from 'lodash'
-import * as stardust from 'src/index'
+import * as FluentUI from 'src/index'
 
 // ----------------------------------------
 // Is exported or private
 // ----------------------------------------
-// detect components like: stardust.H1
+
 export default (constructorName: string, displayName: string) => {
-  const isTopLevelAPIProp = _.has(stardust, constructorName)
+  const isTopLevelAPIProp = _.has(FluentUI, constructorName)
 
   // require all components to be exported at the top level
   test('is exported at the top level', () => {

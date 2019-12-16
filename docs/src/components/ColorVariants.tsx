@@ -20,7 +20,7 @@ export const colorVariantsStyles: ComponentSlotStylesInput<ColorVariantsProps> =
 
 const ColorVariants = createComponent<ColorVariantsProps>({
   displayName: 'ColorVariants',
-  render: ({ name, headerOnly, size, stardust: { classes } }) => (
+  render: ({ name, headerOnly, size, config: { classes } }) => (
     <ProviderConsumer
       render={({ siteVariables: { colors } }) => (
         <div className={classes.root}>

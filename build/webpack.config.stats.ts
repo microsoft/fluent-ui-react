@@ -73,10 +73,10 @@ const makeConfig = (srcPath, name) => ({
 
 export default [
   // entire package
-  makeConfig('index', 'bundle-stardust-ui-react'),
+  makeConfig('index', 'bundle-react'),
 
   // utils (core)
-  makeConfig('utils/index', 'bundle-stardust-ui-core'),
+  makeConfig('utils/index', 'bundle-utils'),
 
   // individual components
   ...fs

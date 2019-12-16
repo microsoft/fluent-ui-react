@@ -131,7 +131,7 @@ describe('Input', () => {
       const inputComp = mount(<Input clearable />)
       const domNode = getInputDomNode(inputComp)
       setUserInputValue(inputComp, testValue) // user types into the input
-      const iconComp = inputComp.find('Icon[name="stardust-close"]')
+      const iconComp = inputComp.find('Icon[name="icon-close"]')
 
       expect(domNode.value).toEqual(testValue) // input value is the one typed by the user
       expect(iconComp.length).toBeGreaterThan(0) // the 'x' icon appears
@@ -139,7 +139,7 @@ describe('Input', () => {
       iconComp.simulate('click') // user clicks on 'x' icon
 
       expect(domNode.value).toEqual('') // input value gets cleared
-      expect(inputComp.find('Icon[name="stardust-close"]').length).toEqual(0) // the 'x' icon disappears
+      expect(inputComp.find('Icon[name="icon-close"]').length).toEqual(0) // the 'x' icon disappears
     })
   })
 })

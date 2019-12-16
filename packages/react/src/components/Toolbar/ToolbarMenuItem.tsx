@@ -155,8 +155,8 @@ class ToolbarMenuItem extends AutoControlledComponent<
   static defaultProps = {
     as: 'button',
     accessibility: toolbarMenuItemBehavior as Accessibility,
-    activeIndicator: 'stardust-checkmark',
-    submenuIndicator: 'stardust-menu-arrow-end',
+    activeIndicator: 'icon-checkmark',
+    submenuIndicator: 'icon-menu-arrow-end',
     wrapper: { as: 'li' },
   }
 
@@ -310,7 +310,7 @@ class ToolbarMenuItem extends AutoControlledComponent<
             {menu &&
               Icon.create(submenuIndicator, {
                 defaultProps: () => ({
-                  name: 'stardust-menu-arrow-end',
+                  name: 'icon-menu-arrow-end',
                   styles: styles.submenuIndicator,
                 }),
               })}
