@@ -39,14 +39,14 @@ const SandboxApp: React.FunctionComponent = props => {
 
       <KnobProvider components={knobComponents}>
         <div>
-          <Header>Stardust UI @ {pkg.version}</Header>
+          <Header>Fluent UI @ {pkg.version}</Header>
           <p>
-            This example is powered by Stardust UI, check{' '}
-            <Text as="a" href="https://stardust-ui.github.io/react/">
+            This example is powered by Fluent UI, check{' '}
+            <Text as="a" href="https://microsoft.github.io/fluent-ui-react/">
               our docs
             </Text>{' '}
             and{' '}
-            <Text as="a" href="https://github.com/stardust-ui/react">
+            <Text as="a" href="https://github.com/microsoft/fluent-ui-react">
               GitHub
             </Text>
             .

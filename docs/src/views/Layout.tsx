@@ -18,7 +18,7 @@ const links = {
 export default () => (
   <DocPage title="Layout Components">
     <Header as="h2">Overview</Header>
-    <p>The following components are introduced by Stardust to handle layout aspects:</p>
+    <p>The following components are introduced by Fluent UI to handle layout aspects:</p>
     <ul>
       <li>{links.flex} - designed for layout in one dimension, either a row or a column.</li>
       <li>
@@ -100,7 +100,7 @@ export default () => (
       wrong for the following reason:
     </p>
     <blockquote>
-      Stardust makes it very important to{' '}
+      Fluent UI makes it very important to{' '}
       <strong>follow component's semantics at the first place</strong>, and only then consider the
       visual aspects.
     </blockquote>

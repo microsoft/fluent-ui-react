@@ -16,6 +16,6 @@ module.exports = {
   },
   coverageDirectory: './coverage/',
   coverageReporters: ['json', 'lcov'],
-  setupFilesAfterEnv: [path.join(__dirname, 'jestSetup.stardust-ui.js')],
+  setupFilesAfterEnv: [path.join(__dirname, 'jestSetup.fluent-ui-react.js')],
   verbose: false,
 }

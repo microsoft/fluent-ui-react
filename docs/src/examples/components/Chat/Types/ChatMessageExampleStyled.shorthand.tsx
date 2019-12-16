@@ -15,7 +15,7 @@ const reactions: ShorthandCollection<ReactionProps> = [
 
 const janeAvatar: AvatarProps = {
   image: 'public/images/avatar/small/ade.jpg',
-  status: { color: 'green', icon: 'stardust-checkmark' },
+  status: { color: 'green', icon: 'icon-checkmark' },
 }
 
 const content = (

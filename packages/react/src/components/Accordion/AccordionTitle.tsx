@@ -107,7 +107,7 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
 
   renderComponent({ ElementType, classes, unhandledProps, styles, accessibility }) {
     const { contentRef, children, content, indicator, active } = this.props
-    const defaultIndicator = { name: active ? 'stardust-arrow-down' : 'stardust-arrow-end' }
+    const defaultIndicator = { name: active ? 'icon-arrow-down' : 'icon-arrow-end' }
     const indicatorWithDefaults = indicator === undefined ? defaultIndicator : indicator
 
     const contentElement = (

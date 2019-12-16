@@ -87,7 +87,7 @@ const CustomToolbarPrototype: React.FunctionComponent = () => {
       { count: 0, msTotal: 0 },
     )
 
-    console.log(`Rendered ${totals.count} Stardust components in ${totals.msTotal} ms`)
+    console.log(`Rendered ${totals.count} Fluent UI components in ${totals.msTotal} ms`)
     console.table(telemetry.performance)
   })
 

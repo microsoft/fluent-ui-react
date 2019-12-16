@@ -1,10 +1,10 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { Flex, StatusProps, WithAsProp, Extendable, Text } from '@fluentui/react'
-import Avatar from './CustomAvatar'
+import CustomAvatar from './CustomAvatar'
 
 const statusProps: Extendable<WithAsProp<StatusProps>> = {
-  icon: 'stardust-checkmark',
+  icon: 'icon-checkmark',
   state: 'success',
   title: 'Available',
 }
@@ -28,12 +28,16 @@ const HexagonalAvatarPrototype = () => {
         <div>
           <Text content="Hexagonal Avatar" />
           &emsp;
-          <Avatar hexagonal image="public/images/avatar/small/matt.jpg" status={statusProps} />
+          <CustomAvatar
+            hexagonal
+            image="public/images/avatar/small/matt.jpg"
+            status={statusProps}
+          />
         </div>
         <div>
           <Text content="Regular Avatar" />
           &emsp;
-          <Avatar image="public/images/avatar/small/matt.jpg" status={statusProps} />
+          <CustomAvatar image="public/images/avatar/small/matt.jpg" status={statusProps} />
         </div>
       </Flex>
     </div>

@@ -1,5 +1,5 @@
-# Stardust E2E tests
-This directory provides end-to-end (in-browser) tests for critical scenarios for Stardust.
+# Fluent UI E2E tests
+This directory provides end-to-end (in-browser) tests for critical scenarios for Fluent UI.
 All test scripts, as well as examples this scripts are running against, are contained in `./tests` directory.
 
 ## Run browser tests

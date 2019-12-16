@@ -44,7 +44,7 @@ The following section documents links to different UI libraries implementations 
 
 ## Props
 
-The following section documents the properties that will become part of the new component, as well as the process for mitigating all changes when moving from Fabric and Stardust to Fluent UI.
+The following section documents the properties that will become part of the new component, as well as the process for mitigating all changes when moving from Fabric and Fluent UI to Fluent UI.
 
 ### Recommended component props
 
@@ -94,9 +94,9 @@ https://developer.microsoft.com/en-us/fabric#/controls/web/link
 | `styles`       | `IStyleFunctionOrObject<ILinkStyleProps, ILinkStyles>`       | Should be deprecated in favor of recomposition.        |
 | `theme`        | `ITheme`                                                     | Should not show up in the public props contract.       |
 
-### Stardust Link props
+### Fluent UI Link props
 
-Stardust does not currently have a `Link` component implementation.
+Fluent UI does not currently have a `Link` component implementation.
 
 ### Conversion process from Fabric 7 to Fluent UI Link
 
@@ -117,9 +117,9 @@ Stardust does not currently have a `Link` component implementation.
 | `styles`       | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
 | `theme`        | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
 
-### Conversion process from Stardust to Fluent UI Link
+### Conversion process from Fluent UI to Fluent UI Link
 
-Stardust does not currently have a `Link` component implementation.
+Fluent UI does not currently have a `Link` component implementation.
 
 ## DOM Structure
 

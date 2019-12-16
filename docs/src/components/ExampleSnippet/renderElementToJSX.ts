@@ -26,7 +26,7 @@ const renderElementToJSX = (element: React.ReactNode, triggerErrorOnRenderFn: bo
       // MDX props
       'mdxType',
       'originalType',
-      // Stardust props
+      // Fluent UI props
       'accessibility',
       'onClick',
       'onChange',

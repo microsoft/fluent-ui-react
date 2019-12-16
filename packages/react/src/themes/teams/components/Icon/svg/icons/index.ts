@@ -145,7 +145,7 @@ import send from './send'
 import settings from './settings'
 import speakerMute from './speakerMute'
 import star from './star'
-import stardustCircle from './stardustCircle'
+import iconCircle from './iconCircle'
 import sticker from './sticker'
 import strike from './strike'
 import sync from './sync'
@@ -179,7 +179,7 @@ import windowMinimize from './windowMinimize'
 import windowRestore from './windowRestore'
 
 export default {
-  'stardust-circle': stardustCircle,
+  'icon-circle': iconCircle,
   accept,
   add,
   'arrow-up': arrowUp,
@@ -216,8 +216,8 @@ export default {
   'canvas-add-page': canvasAddPage,
   chat,
   'chevron-down': chevronDown,
-  'stardust-chevron-start': chevronStart,
-  'stardust-chevron-end': chevronEnd,
+  'icon-chevron-start': chevronStart,
+  'icon-chevron-end': chevronEnd,
   'chevron-down-medium': chevronDownMedium,
   'chevron-right-medium': chevronRightMedium,
   'clipboard-copied-to': clipboardCopiedTo,
