@@ -1,11 +1,13 @@
 import { CopyToClipboard } from '@fluentui/docs-components'
-import { Icon, Menu, menuAsToolbarBehavior, Tooltip } from '@fluentui/react'
+import { Menu, menuAsToolbarBehavior, Tooltip } from '@fluentui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { ComponentSourceManagerLanguage } from 'docs/src/components/ComponentDoc/ComponentSourceManager'
-import ComponentControlsCodeSandbox from './ComponentControlsCodeSandbox/ComponentControlsCodeSandbox'
+import ComponentControlsCodeSandbox, {
+  CodeSandboxState,
+} from './ComponentControlsCodeSandbox/ComponentControlsCodeSandbox'
 
 type ComponentControlsProps = {
   exampleCode: string
@@ -116,50 +118,57 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
         },
         {
           key: 'show-codesandbox',
-          content: (
+          children: (Component, props) => (
             <ComponentControlsCodeSandbox
               exampleCode={exampleCode}
               exampleLanguage={exampleLanguage}
               exampleName={examplePath}
-            />
+            >
+              {(state, onClick) => (
+                <Tooltip
+                  content={
+                    state === CodeSandboxState.Default
+                      ? 'CodeSandbox'
+                      : state === CodeSandboxState.Loading
+                      ? 'Exporting...'
+                      : 'Click to open'
+                  }
+                  trigger={<Component {...props} onClick={onClick} />}
+                />
+              )}
+            </ComponentControlsCodeSandbox>
           ),
         },
-
+        //   return (
+        // <Tooltip
+        //   trigger={<Icon name="checkmark" onClick={this.handleClick} />}
+        //   content="Click to open"
+        // />
+        //     <Tooltip
+        //   trigger={<Icon name={loading ? 'spinner' : 'connectdevelop'} />}
+        // content={loading ? 'Exporting...' : 'CodeSandbox'}
+        // />
         {
           key: 'copy-link',
           icon: { name: 'linkify', style: { width: '20px', height: '20px' } },
-          onClick: onCopyLink,
           children: (Component, props) => (
             <CopyToClipboard value={anchorName}>
               {(active, onClick) => (
                 <Tooltip
                   content={active ? 'Copied!' : 'Permalink'}
-                  trigger={<Component onClick={onClick} {...props} />}
-                />
-              )}
-            </CopyToClipboard>
-          ),
-        },
-
-        {
-          key: 'copy-link',
-          content: (
-            <CopyToClipboard value={anchorName}>
-              {(active, onClick) => (
-                <Tooltip
-                  content={active ? 'Copied!' : 'Permalink'}
                   trigger={
-                    <Icon
-                      name="linkify"
-                      onClick={onClick}
-                      style={{ width: '20px', height: '20px' }}
+                    <Component
+                      {...props}
+                      onClick={(e: React.SyntheticEvent) => {
+                        onClick()
+                        onCopyLink(e)
+                      }}
                     />
                   }
                 />
               )}
             </CopyToClipboard>
           ),
-          onClick: onCopyLink,
         },
       ]}
     />

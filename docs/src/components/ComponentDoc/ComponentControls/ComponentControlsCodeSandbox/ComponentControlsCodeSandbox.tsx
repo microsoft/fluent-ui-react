@@ -4,9 +4,15 @@ import CodeSandboxer from 'react-codesandboxer'
 import { ComponentSourceManagerLanguage } from 'docs/src/components/ComponentDoc/ComponentSourceManager'
 import { appTemplate } from './indexTemplates'
 import createPackageJson from './createPackageJson'
-import { Icon, Tooltip } from 'src/index'
+
+export enum CodeSandboxState {
+  Default = 'DEFAULT',
+  Loading = 'LOADING',
+  Success = 'SUCCESS',
+}
 
 type ComponentControlsCodeSandboxProps = {
+  children: (state: CodeSandboxState, onClick: (e: React.SyntheticEvent) => void) => React.ReactNode
   exampleCode: string
   exampleLanguage: ComponentSourceManagerLanguage
   exampleName: string
@@ -46,26 +52,22 @@ class ComponentControlsCodeSandbox extends React.PureComponent<
     this.setState({ sandboxUrl })
   }
 
-  handleClick = e => {
+  handleClick = (e: React.SyntheticEvent) => {
     const { sandboxUrl } = this.state
+
     e.preventDefault()
     window.open(sandboxUrl)
   }
 
   render() {
-    const { exampleLanguage, exampleCode, exampleName } = this.props
+    const { children, exampleLanguage, exampleCode, exampleName } = this.props
     const { examplePath, sandboxUrl } = this.state
 
     const main = exampleLanguage === 'ts' ? 'index.tsx' : 'index.js'
     const template = exampleLanguage === 'ts' ? 'create-react-app-typescript' : 'create-react-app'
 
     if (sandboxUrl) {
-      return (
-        <Tooltip
-          trigger={<Icon name="checkmark" onClick={this.handleClick} />}
-          content="Click to open"
-        />
-      )
+      return children(CodeSandboxState.Success, this.handleClick)
     }
 
     return (
@@ -83,11 +85,10 @@ class ComponentControlsCodeSandbox extends React.PureComponent<
       >
         {({ isLoading, isDeploying }) => {
           const loading = isLoading || isDeploying
-          return (
-            <Tooltip
-              trigger={<Icon name={loading ? 'spinner' : 'connectdevelop'} />}
-              content={loading ? 'Exporting...' : 'CodeSandbox'}
-            />
+
+          return children(
+            loading ? CodeSandboxState.Loading : CodeSandboxState.Default,
+            this.handleClick,
           )
         }}
       </CodeSandboxer>
