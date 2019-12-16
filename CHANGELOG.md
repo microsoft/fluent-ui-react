@@ -18,7 +18,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### BREAKING CHANGE
-- Adding logic for mounting/removing elements when they are shown/hidden using the `Animation` component @mnajdova ([#2115](https://github.com/microsoft/fluent-ui-react/pull/2115))
+- Add logic for mounting/removing elements when they are shown/hidden using the `Animation` component @mnajdova ([#2115](https://github.com/microsoft/fluent-ui-react/pull/2115))
 
 <!--------------------------------[ v0.42.0 ]------------------------------- -->
 ## [v0.42.0](https://github.com/microsoft/fluent-ui-react/tree/v0.42.0) (2019-12-12)
