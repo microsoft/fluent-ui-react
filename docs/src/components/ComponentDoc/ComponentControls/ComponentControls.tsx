@@ -52,25 +52,22 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
       items={[
         {
           key: 'show-code',
-          content: (
-            <Tooltip
-              content="Try it"
-              trigger={<Icon name="code" style={{ width: '20px', height: '20px' }} />}
-            />
-          ),
+          icon: { name: 'code', style: { width: '20px', height: '20px' } },
           onClick: onShowCode,
           active: showCode,
+          children: (Component, props) => (
+            <Tooltip content="Try it" trigger={<Component {...props} />} />
+          ),
         },
+
         {
           key: 'show-variables',
-          content: (
-            <Tooltip
-              content="Theme it"
-              trigger={<Icon name="paint brush" style={{ width: '20px', height: '20px' }} />}
-            />
-          ),
+          icon: { name: 'paint brush', style: { width: '20px', height: '20px' } },
           onClick: onShowVariables,
           active: showVariables,
+          children: (Component, props) => (
+            <Tooltip content="Theme it" trigger={<Component {...props} />} />
+          ),
         },
         {
           key: 'divider-1',
@@ -79,33 +76,28 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
         },
         {
           key: 'show-transparent',
-          content: (
-            <Tooltip
-              content="Transparent"
-              trigger={<Icon name="adjust" style={{ width: '20px', height: '20px' }} />}
-            />
-          ),
+          icon: { name: 'adjust', style: { width: '20px', height: '20px' } },
           onClick: onShowTransparent,
           active: showTransparent,
+          children: (Component, props) => (
+            <Tooltip content="Transparent" trigger={<Component {...props} />} />
+          ),
         },
         {
           key: 'show-rtl',
-          content: (
-            <Tooltip
-              content="RTL"
-              trigger={<Icon name="align right" style={{ width: '20px', height: '20px' }} />}
-            />
-          ),
+          icon: { name: 'align right', style: { width: '20px', height: '20px' } },
           onClick: onShowRtl,
           active: showRtl,
+          children: (Component, props) => (
+            <Tooltip content="RTL" trigger={<Component {...props} />} />
+          ),
         },
+
         {
           key: 'maximize',
-          content: (
-            <Tooltip
-              content="Popout"
-              trigger={<Icon name="external alternate" style={{ width: '20px', height: '20px' }} />}
-            />
+          icon: { name: 'external alternate', style: { width: '20px', height: '20px' } },
+          children: (Component, props) => (
+            <Tooltip content="Popout" trigger={<Component {...props} />} />
           ),
           as: NavLink,
           to: `/maximize/${_.kebabCase(
@@ -132,6 +124,23 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
             />
           ),
         },
+
+        {
+          key: 'copy-link',
+          icon: { name: 'linkify', style: { width: '20px', height: '20px' } },
+          onClick: onCopyLink,
+          children: (Component, props) => (
+            <CopyToClipboard value={anchorName}>
+              {(active, onClick) => (
+                <Tooltip
+                  content={active ? 'Copied!' : 'Permalink'}
+                  trigger={<Component onClick={onClick} {...props} />}
+                />
+              )}
+            </CopyToClipboard>
+          ),
+        },
+
         {
           key: 'copy-link',
           content: (
