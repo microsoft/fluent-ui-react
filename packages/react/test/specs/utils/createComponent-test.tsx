@@ -20,7 +20,7 @@ describe('createComponent', () => {
         render: () => <div>Hello</div>,
       })
 
-      expect(TestComponent.className).toBe('ui-stardust-component')
+      expect(TestComponent.className).toBe('fluent-ui-component')
     })
   })
 })

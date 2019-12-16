@@ -31,7 +31,7 @@ export { default as doesNodeContainClick } from './doesNodeContainClick'
 
 export { pxToRem } from './fontSizeUtility'
 export { default as createAnimationStyles } from './createAnimationStyles'
-export { default as createComponent } from './createStardustComponent'
+export { default as createComponent } from './createComponent'
 export { getKindProp } from './getKindProp'
 export * from './whatInput'
 

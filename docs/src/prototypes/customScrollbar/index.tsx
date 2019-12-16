@@ -75,7 +75,7 @@ const CustomScrollbarPrototypes: React.FC = () => {
   return (
     <PrototypeSection title="Custom Scrollbar">
       <Text>
-        Note: Stardust does not provide custom scrollbars. It is possible to integrate Stardust
+        Note: Fluent UI does not provide custom scrollbars. It is possible to integrate Fluent UI
         components with any custom scrollbars framework.
       </Text>
       <ComponentPrototype title="Menu" description="Scrollbar can be integrated in Menu">

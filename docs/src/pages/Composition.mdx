@@ -8,11 +8,11 @@ export const meta = {
 
 ## `as` prop
 
-Stardust UI provides a way to compose React components through the `as` prop. It allows to compose component features and props without adding extra nested components.
+Fluent UI provides a way to compose React components through the `as` prop. It allows to compose component features and props without adding extra nested components.
 
 ```jsx
 <>
-  {/* 🧱 Each Stardust UI component has a default value for `as` prop */}
+  {/* 🧱 Each Fluent UI component has a default value for `as` prop */}
   {/* Will output: <h1 class="ui-header" /> */}
   <Header />
   {/* Uses another tag: <h2 class="ui-header" /> */}
@@ -30,7 +30,7 @@ Stardust UI provides a way to compose React components through the `as` prop. It
 
 ## Unhandled props & DOM attributes
 
-Our components handle only props that are defined in their interfaces, all unhandled props are passed to the component you are rendering `as`. It means that all HTML props are supported on all Stardust UI components.
+Our components handle only props that are defined in their interfaces, all unhandled props are passed to the component you are rendering `as`. It means that all HTML props are supported on all Fluent UI components.
 
 ```jsx
 <>

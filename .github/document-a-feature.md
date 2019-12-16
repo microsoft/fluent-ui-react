@@ -82,4 +82,4 @@ Usage examples for a component live in `docs/src/examples`. The examples follow 
 Adding documentation for new components is a bit tedious. The best way to do this (for now) is to copy an existing
 component's and update it.
 
-[1]: https://stardust-ui.github.io/react/components/button
+[1]: https://microsoft.github.io/fluent-ui-react/components/button

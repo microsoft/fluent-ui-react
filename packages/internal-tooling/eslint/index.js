@@ -13,7 +13,7 @@ module.exports = {
 
     'import/no-unresolved': 'off',
     'react/jsx-filename-extension': ['error', { extensions: ['.js', '.tsx'] }],
-    'no-shadow': 'off', // https://github.com/stardust-ui/react/pull/1261#pullrequestreview-231005092
+    'no-shadow': 'off', // https://github.com/microsoft/fluent-ui-react/pull/1261#pullrequestreview-231005092
     'no-unused-vars': 'off', // we use @typescript-eslint/no-unused-vars instead
     semi: ['error', 'never'],
 

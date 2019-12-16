@@ -46,7 +46,7 @@ export const NotificationProvider: React.FC = props => {
 
 export const Notification = createComponent<NotificationProps>({
   displayName: 'Notification',
-  render: ({ target, trigger, content, stardust: { classes } }) => {
+  render: ({ target, trigger, content, config: { classes } }) => {
     const tooltipProps: TooltipProps = {
       content,
       open: true,

@@ -18,7 +18,7 @@ class RadioGroupColorPickerExample extends React.Component {
             name: color,
             'aria-label': color,
             icon: {
-              name: 'stardust-circle',
+              name: 'icon-circle',
               variables: {
                 color,
               },

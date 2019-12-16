@@ -14,7 +14,7 @@ export interface ProviderConsumerProps {
 }
 
 /**
- * A ProviderConsumer is used to consume Stardust context from Provider.
+ * A ProviderConsumer is used to consume Fluent UI context from Provider.
  */
 const ProviderConsumer: React.FunctionComponent<ProviderConsumerProps> = ({ render }) => (
   <FelaTheme>{(context: ProviderContextPrepared) => render(context.theme)}</FelaTheme>

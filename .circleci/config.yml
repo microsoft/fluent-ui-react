@@ -89,6 +89,9 @@ jobs:
             if [ ! -z $CIRCLE_PULL_REQUEST ] && [ ! -z $DANGER_GITHUB_API_TOKEN ]; then
               yarn danger ci
             fi
+      - store_artifacts:
+          path: dist/artifacts
+          destination: artifacts
       - run:
           name: Publish npm package (master only)
           command: |

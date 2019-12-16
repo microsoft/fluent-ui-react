@@ -3,6 +3,7 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+
 - [Getting started](#getting-started)
   - [Useful Commands](#useful-commands)
 - [Workflow](#workflow)
@@ -25,7 +26,7 @@
 
 Make sure you have [Node.js][1] version v8 or later installed.
 
-You can contribute to Stardust by being an official [contributor](setup-local-development.md#contributors) or without permissions, as a [collaborator](setup-local-development.md#collaborators)
+You can contribute to Fluent UI by being an official [contributor](setup-local-development.md#contributors) or without permissions, as a [collaborator](setup-local-development.md#collaborators)
 
 ### Useful Commands
 
@@ -64,7 +65,7 @@ These guides will walk your through various activities for contributing:
 
 ## Accessibility
 
-Stardust implements accessibility using accessibility behaviors. The behaviors add attributes to the DOM elements (mainly role and aria-\* properties) as well as handle keyboard interaction and focus. Every accessible component has a default behavior, which can be overriden using the `accessibility` prop. You can choose a behavior from the ones provided by Stardust or you can implement a new behavior.
+Fluent UI implements accessibility using accessibility behaviors. The behaviors add attributes to the DOM elements (mainly role and aria-\* properties) as well as handle keyboard interaction and focus. Every accessible component has a default behavior, which can be overridden using the `accessibility` prop. You can choose a behavior from the ones provided by Fluent UI or you can implement a new behavior.
 
 Behaviors apply properties, focus handling and keyboard handlers to the component slots. When developing a component, the properties and keyboard handlers need to be spread to the corresponding slots.
 
@@ -94,9 +95,9 @@ An application should always have an element with [focus][7] when in use. The us
 - pressing arrow keys to navigate through children (for example menu items in menu)
 - using the screen reader with or without virtual cursor
 
-Stardust uses Office UI Fabric [FocusZone][8] for basic TAB and arrow key focus handling. To use the focus zone, you can use the `focusZone` configuration in the behavior (for example see [MenuItemBehavior][9]).
+Fluent UI uses Office UI Fabric [FocusZone][8] for basic TAB and arrow key focus handling. To use the focus zone, you can use the `focusZone` configuration in the behavior (for example see [MenuItemBehavior][9]).
 
-Focused component needs to be clearly visible. This is handled in Stardust by focus indicator functionality. Focus indicator will be displayed only if the application is in keyboard mode. Application switches to keyboard mode when a key relevant to navigation is pressed. It disables keyboard mode on mouse click events.
+Focused component needs to be clearly visible. This is handled in Fluent UI by focus indicator functionality. Focus indicator will be displayed only if the application is in keyboard mode. Application switches to keyboard mode when a key relevant to navigation is pressed. It disables keyboard mode on mouse click events.
 
 To style the focused component, you can use the `isFromKeyboard` utility and prop. See [Button component][10] and [Button style][11] for reference.
 
@@ -118,7 +119,7 @@ You should to run `lerna create` command to create a new package
 - the directory name should not contain any namespace prefix and can be prefixed with the library name if the
   implementation is not framework agnostic
 - please provide a meaningful description to a package in the matched field
-- use `https://github.com/stardust-ui/react/tree/master/packages/__DIRECTORY_NAME__` as `homepage`
+- use `https://github.com/microsoft/fluent-ui-react/tree/master/packages/__DIRECTORY_NAME__` as `homepage`
 - our packages are currently published with MIT license, please follow it until you will have specific legal requirements
 
 ```sh
@@ -133,10 +134,10 @@ package name: (@fluentui/react-proptypes)
 version: (0.21.1)
 description: Set of custom reusable PropTypes for React components.
 keywords:
-homepage: https://github.com/stardust-ui/react/tree/master/packages/react-proptypes
+homepage: https://github.com/microsoft/fluent-ui-react/tree/master/packages/react-proptypes
 license: (ISC) MIT
 entry point: (lib/react-proptypes.js)
-git repository: (https://github.com/stardust-ui/react.git)
+git repository: (https://github.com/microsoft/fluent-ui-react.git)
 ```
 
 #### Update `package.json`
@@ -223,11 +224,11 @@ lerna add @fluentui/react-proptypes packages/react
 [6]: https://www.w3.org/TR/wai-aria-1.1/#namecalculation
 [7]: https://www.w3.org/TR/wai-aria-1.1/#managingfocus
 [8]: https://developer.microsoft.com/en-us/fabric#/components/focuszone
-[9]: https://github.com/stardust-ui/react/blob/master/packages/react/src/utils/accessibility/Behaviors/Menu/MenuBehavior.ts
-[10]: https://github.com/stardust-ui/react/blob/master/src/components/Button/Button.tsx
-[11]: https://github.com/stardust-ui/react/blob/master/src/themes/teams/components/Button/buttonStyles.ts
-[12]: https://github.com/stardust-ui/react/blob/master/packages/react/src/utils/accessibility/Behaviors/Menu/MenuItemBehavior.ts
-[13]: https://github.com/stardust-ui/react/blob/master/src/components/Menu/MenuItem.tsx
+[9]: https://github.com/microsoft/fluent-ui-react/blob/master/packages/react/src/utils/accessibility/Behaviors/Menu/MenuBehavior.ts
+[10]: https://github.com/microsoft/fluent-ui-react/blob/master/src/components/Button/Button.tsx
+[11]: https://github.com/microsoft/fluent-ui-react/blob/master/src/themes/teams/components/Button/buttonStyles.ts
+[12]: https://github.com/microsoft/fluent-ui-react/blob/master/packages/react/src/utils/accessibility/Behaviors/Menu/MenuItemBehavior.ts
+[13]: https://github.com/microsoft/fluent-ui-react/blob/master/src/components/Menu/MenuItem.tsx
 [14]: https://lernajs.io/
 [15]: https://yarnpkg.com/en/docs/workspaces
 [16]: https://github.com/lerna/lerna/tree/master/commands/add
