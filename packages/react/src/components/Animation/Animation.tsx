@@ -170,12 +170,6 @@ class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
 
     const child =
       childrenExist(children) && (React.Children.only(children) as React.ReactElement<any>)
-    const result = child
-      ? React.cloneElement(child, {
-          ...unhandledProps,
-          className: cx(classes.root, child.props.className),
-        })
-      : ''
 
     return (
       <Transition
@@ -190,8 +184,10 @@ class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
         onExit={onExit}
         onExiting={onExiting}
         onExited={onExited}
+        {...unhandledProps}
+        className={cx(classes.root, child.props.className)}
       >
-        {state => result}
+        {child}
       </Transition>
     )
   }
