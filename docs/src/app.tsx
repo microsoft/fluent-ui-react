@@ -1,11 +1,8 @@
 import * as React from 'react'
 import { hot } from 'react-hot-loader/root'
-import { Provider, Debug, themes } from '@fluentui/react'
 
-import { mergeThemes } from '@fluentui/react/src/utils'
-import { ThemeContext, ThemeContextData, themeContextDefaults } from './context/ThemeContext'
+import { ThemeContextData, themeContextDefaults } from './context/ThemeContext'
 import Routes from './routes'
-import { PerfDataProvider } from './components/ComponentDoc/PerfChart'
 
 // Experimental dev-time accessibility attributes integrity validation.
 import { setup } from '@fluentui/ability-attributes'
@@ -24,30 +21,7 @@ class App extends React.Component<any, ThemeContextData> {
   }
 
   render() {
-    const { themeName } = this.state
-    return (
-      <ThemeContext.Provider value={this.state}>
-        <Provider
-          as={React.Fragment}
-          theme={mergeThemes(themes.fontAwesome, themes[themeName], {
-            staticStyles: [
-              {
-                a: {
-                  textDecoration: 'none',
-                },
-              },
-            ],
-          })}
-        >
-          <PerfDataProvider>
-            <div>
-              <Debug />
-              <Routes />
-            </div>
-          </PerfDataProvider>
-        </Provider>
-      </ThemeContext.Provider>
-    )
+    return <Routes />
   }
 }
 

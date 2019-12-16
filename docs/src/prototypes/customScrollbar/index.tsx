@@ -1,100 +1,121 @@
 import * as React from 'react'
-import * as _ from 'lodash'
-import Scrollbars from 'react-custom-scrollbars'
-import { Text, Menu, List, Button, Popup, Dialog } from '@fluentui/react'
-import { PrototypeSection, ComponentPrototype } from '../Prototypes'
+import { SandboxApp } from '@fluentui/code-sandbox'
+import { Button, Flex, Input, Menu, Toolbar, Provider, themes } from '@fluentui/react'
 
-const ScrollbarMenuPrototype = () => {
-  const items = [
-    {
-      key: 'with-scrollbar',
-      content: 'Submenu with scrollbar',
-      menu: {
-        as: Scrollbars,
-        items: _.times(50, (i: number) => `Menu Item No. ${i}`),
-        style: { height: '20rem' },
-      },
-    },
-    {
-      key: 'without-scrollbar',
-      content: 'Submenu without scrollbar',
-      menu: _.times(5, (i: number) => `Menu Item No. ${i}`),
-    },
-  ]
-
-  return <Menu items={items} />
-}
-
-const ScrollbarPopupPrototype = () => {
-  const lines = _.times(50, i => <p key={i}>Long long text line {i}</p>)
-
+const PopupBoard = () => {
+  const [textValue, updateText] = React.useState('')
+  React.useLayoutEffect(() => {
+    // const canvas = document.getElementById("123canvas");
+    // const ctx = canvas.getContext("2d");
+    // ctx.fillStyle = "#FFa4a2";
+    // ctx.fillRect(0, 0, 300, 150);
+    // ctx.font = "30px TImes New Roman";
+    // ctx.fillStyle = "black";
+    // ctx.textAlign = "center";
+    // ctx.fillText(textValue, canvas.width / 2, canvas.height / 2);
+    // console.log(textValue);
+  })
   return (
-    <Popup
-      trigger={<Button content="Open popup" />}
-      content={{
-        // NOTE: because scrollbars uses an abs positioned container to fake scroll
-        //       the consumer must specify a width/height value to show the scrollable area
-        styles: { width: '20rem' },
-        content: <Scrollbars style={{ height: '20rem' }}>{lines}</Scrollbars>,
-      }}
-    />
+    <Flex
+      vAlign="center"
+      space="between"
+      gap="gap.small"
+      design={{ height: '200px', width: '400px' }}
+    >
+      <Menu
+        fluid
+        vertical
+        pointing
+        defaultActiveIndex={0}
+        styles={{
+          borderRightWidth: '0.5px',
+          borderRightStyle: 'solid',
+          borderRightColor: '#F6F2F2',
+          padding: '0px',
+          margin: '0px',
+        }}
+        items={[
+          { content: 'Apples', key: 'a' },
+          { content: 'Oranges', key: 'o' },
+        ]}
+      />
+      <Flex column padding="padding.medium" gap="gap.medium">
+        {/* <Flex.Item> */}
+        {/* <canvas id="123canvas" style={{ width: "100%" }} /> */}
+        {/* </Flex.Item> */}
+        <Flex>
+          <Input
+            value={textValue}
+            onChange={e => updateText(e.target.value)}
+            fluid
+            input={{
+              as: 'textarea',
+              rows: '4',
+              styles: { resize: 'none', width: '100%' },
+            }}
+          />
+        </Flex>
+        <Flex.Item>
+          <Flex gap="gap.small">
+            <Flex.Item>
+              <Button content="Done" primary />
+            </Flex.Item>
+            <Flex.Item>
+              <Button content="Cancel" />
+            </Flex.Item>
+          </Flex>
+        </Flex.Item>
+      </Flex>
+    </Flex>
   )
 }
 
-const ScrollbarDialogPrototype = () => {
-  const lines = _.times(50, i => <p key={i}>Long long text line {i}</p>)
-
+const BodyWrap = () => {
   return (
-    <Dialog
-      trigger={<Button content="Open dialog" />}
-      header="Dialog with scrollbar"
-      cancelButton="Close"
-      content={{
-        styles: { width: '100%' },
-        content: <Scrollbars style={{ height: '20rem' }}>{lines}</Scrollbars>,
-      }}
-    />
+    <SandboxApp>
+      <Provider theme={themes.teams} styles={{ padding: '2rem' }} rtl>
+        <Flex
+          vAlign="end"
+          style={{
+            backgroundColor: '#B8887D',
+            height: '50%',
+            width: '80%',
+
+            // height: '400px',
+            // width: '400px',
+
+            position: 'fixed',
+          }}
+        >
+          <Flex
+            style={{
+              height: '20px',
+              backgroundColor: '#F5E8E5',
+              width: '100%',
+            }}
+          >
+            <Toolbar
+              items={[
+                {
+                  key: 'read',
+                  style: { width: '100px', border: '1px solid red' },
+                  icon: 'read-aloud',
+                  popup: { content: <PopupBoard /> },
+                },
+              ]}
+            />
+          </Flex>
+        </Flex>
+      </Provider>
+    </SandboxApp>
   )
 }
 
-const ScrollbarListPrototype = () => {
-  const items = _.times(50, (i: number) => ({
-    header: `Header ${i}`,
-    content: `Content ${i}`,
-    key: `item-${i}`,
-  }))
+const PopupExampleInline = () => (
+  <>
+    {/* <Popup trigger={<Button icon="more" />} content={<PopupBoard />} /> */}
+    <BodyWrap />
+  </>
+)
 
-  return (
-    <Scrollbars style={{ height: '20rem' }}>
-      <List selectable items={items} />
-    </Scrollbars>
-  )
-}
-
-const CustomScrollbarPrototypes: React.FC = () => {
-  return (
-    <PrototypeSection title="Custom Scrollbar">
-      <Text>
-        Note: Fluent UI does not provide custom scrollbars. It is possible to integrate Fluent UI
-        components with any custom scrollbars framework.
-      </Text>
-      <ComponentPrototype title="Menu" description="Scrollbar can be integrated in Menu">
-        <ScrollbarMenuPrototype />
-      </ComponentPrototype>
-      <ComponentPrototype title="Popup" description="Scrollbar can be integrated in Popup content">
-        <ScrollbarPopupPrototype />
-      </ComponentPrototype>
-      <ComponentPrototype
-        title="Dialog"
-        description="Scrollbar can be integrated in Dialog content"
-      >
-        <ScrollbarDialogPrototype />
-      </ComponentPrototype>
-      <ComponentPrototype title="List" description="Scrollbar can be integrated in selectable List">
-        <ScrollbarListPrototype />
-      </ComponentPrototype>
-    </PrototypeSection>
-  )
-}
-
-export default CustomScrollbarPrototypes
+export default PopupExampleInline

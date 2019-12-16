@@ -18,9 +18,19 @@ const createPopper = (
     ...options,
     eventsEnabled: false,
   })
+
+  const originalUpdate = instance.update
+  instance.update = () => {
+    popper.style.left = 0
+    popper.style.top = 0
+
+    originalUpdate()
+  }
+
   const actualWindow = popper.ownerDocument.defaultView
   instance.scheduleUpdate = () => actualWindow.requestAnimationFrame(instance.update)
   instance.enableEventListeners()
+
   return instance
 }
 /**
