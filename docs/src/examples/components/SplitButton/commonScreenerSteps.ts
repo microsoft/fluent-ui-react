@@ -13,6 +13,7 @@ const getScreenerSteps = (): ScreenerSteps => [
       .click(selectors.toggleButton)
       .snapshot('Clicks on toggle button should show menu')
       .keys(selectors.toggleButton, keys.downArrow)
+      .keys(selectors.toggleButton, keys.downArrow)
       .snapshot('Navigates through menu of toggle button'),
 ]
 
