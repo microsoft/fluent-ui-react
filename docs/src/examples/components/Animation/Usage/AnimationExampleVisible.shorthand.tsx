@@ -6,13 +6,13 @@ import { easeEasy } from 'src/themes/teams/animations/timingFunctions'
 const AnimationExampleVisible = () => {
   const [visible, setVisible] = React.useState(false)
 
-  const onEnter = useLogKnob('onEnter', () => {})
-  const onEntering = useLogKnob('onEntering', () => {})
-  const onEntered = useLogKnob('onEntered', () => {})
+  const onEnter = useLogKnob('onEnter')
+  const onEntering = useLogKnob('onEntering')
+  const onEntered = useLogKnob('onEntered')
 
-  const onExit = useLogKnob('onExit', () => {})
-  const onExiting = useLogKnob('onExiting', () => {})
-  const onExited = useLogKnob('onExited', () => {})
+  const onExit = useLogKnob('onExit')
+  const onExiting = useLogKnob('onExiting')
+  const onExited = useLogKnob('onExited')
 
   return (
     <Provider
