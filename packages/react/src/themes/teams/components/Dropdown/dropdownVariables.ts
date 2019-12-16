@@ -53,7 +53,8 @@ export default (siteVars): DropdownVariables => ({
   borderColor: 'transparent',
   borderColorHover: 'transparent',
   borderColorFocus: 'transparent',
-  borderWidth: '1px',
+  borderWidth: '0',
+  // might need to be 1px
   color: siteVars.colorScheme.default.foreground1,
   containerBorderRadius: `${cornerRadius}`,
   openAboveContainerBorderRadius: `0 0 ${cornerRadius} ${cornerRadius}`,
@@ -89,6 +90,6 @@ export default (siteVars): DropdownVariables => ({
   // these should only apply when there is content in the image/media slot:
   listItemHeaderFontSize: siteVars.fontSizes.medium,
   listItemHeaderColor: siteVars.colorScheme.default.foreground1, // this is to be updated
-  listItemContentFontSize: siteVars.fontSizes.medium,
+  listItemContentFontSize: siteVars.fontSizes.small,
   listItemContentColor: siteVars.colorScheme.default.foreground2,
 })
