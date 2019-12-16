@@ -9,7 +9,7 @@ const innerHeader = `#${selectors.innerHeader}`
 const innerTrigger = `#${selectors.innerTrigger}`
 const innerOverlay = `#${selectors.innerOverlay}`
 
-// https://github.com/stardust-ui/react/issues/1674
+// https://github.com/microsoft/fluent-ui-react/issues/1674
 describe('Dialog in Dialog', () => {
   beforeEach(async () => {
     await e2e.gotoTestCase(__filename, outerTrigger)

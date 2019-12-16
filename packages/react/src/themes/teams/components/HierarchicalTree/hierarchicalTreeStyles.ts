@@ -1,5 +1,5 @@
 import { ICSSInJSStyle } from '../../../types'
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../../../utils'
 
 const hierarchicalTreeStyles = {
   root: (): ICSSInJSStyle => ({

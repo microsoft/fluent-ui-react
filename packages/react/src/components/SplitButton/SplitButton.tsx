@@ -20,7 +20,7 @@ import {
   AutoControlledComponent,
   RenderResultConfig,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import Button, { ButtonProps } from '../Button/Button'
 import MenuButton, { MenuButtonProps } from '../MenuButton/MenuButton'
 import { MenuProps } from '../Menu/Menu'
@@ -204,7 +204,7 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
           defaultProps: () => ({
             className: SplitButton.slotClassNames.toggleButton,
             disabled,
-            icon: 'stardust-arrow-down',
+            icon: 'icon-arrow-down',
             iconOnly: true,
             primary,
             secondary,

@@ -6,7 +6,7 @@ import * as React from 'react'
 // @ts-ignore
 import { RendererProvider, ThemeProvider, ThemeContext } from 'react-fela'
 
-import { ChildrenComponentProps, setUpWhatInput, tryCleanupWhatInput } from '../../lib'
+import { ChildrenComponentProps, setUpWhatInput, tryCleanupWhatInput } from '../../utils'
 
 import {
   ThemePrepared,
@@ -20,7 +20,7 @@ import {
 } from '../../themes/types'
 
 import ProviderConsumer from './ProviderConsumer'
-import { mergeSiteVariables } from '../../lib/mergeThemes'
+import { mergeSiteVariables } from '../../utils/mergeThemes'
 import ProviderBox, { ProviderBoxProps } from './ProviderBox'
 import {
   WithAsProp,
@@ -28,8 +28,8 @@ import {
   ProviderContextPrepared,
   withSafeTypeForAs,
 } from '../../types'
-import mergeContexts from '../../lib/mergeProviderContexts'
-import Telemetry from '../../lib/Telemetry'
+import mergeContexts from '../../utils/mergeProviderContexts'
+import Telemetry from '../../utils/Telemetry'
 
 export interface ProviderProps extends ChildrenComponentProps {
   renderer?: Renderer
@@ -43,7 +43,7 @@ export interface ProviderProps extends ChildrenComponentProps {
 }
 
 /**
- * The Provider passes the CSS-in-JS renderer, theme styles and other settings to Stardust components.
+ * The Provider passes the CSS-in-JS renderer, theme styles and other settings to Fluent UI components.
  */
 class Provider extends React.Component<WithAsProp<ProviderProps>> {
   static displayName = 'Provider'

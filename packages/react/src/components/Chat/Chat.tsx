@@ -10,11 +10,11 @@ import {
   commonPropTypes,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
-} from '../../lib'
+} from '../../utils'
 import ChatItem, { ChatItemProps } from './ChatItem'
 import ChatMessage from './ChatMessage'
 import { WithAsProp, withSafeTypeForAs, ShorthandCollection } from '../../types'
-import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
+import { UIComponentProps, ChildrenComponentProps } from '../../utils/commonPropInterfaces'
 
 export interface ChatSlotClassNames {
   item: string

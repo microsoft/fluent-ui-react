@@ -1,4 +1,4 @@
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../../../utils'
 import { CarouselNavigationItemProps } from '../../../../components/Carousel/CarouselNavigationItem'
 import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { CarouselNavigationVariables } from './carouselNavigationVariables'

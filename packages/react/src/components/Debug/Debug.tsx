@@ -4,8 +4,8 @@ import * as React from 'react'
 import { toRefObject } from '@fluentui/react-component-ref'
 import { EventListener } from '@fluentui/react-component-event-listener'
 
-import { isBrowser } from '../../lib'
-import { isEnabled as isDebugEnabled } from '../../lib/debug/debugEnabled'
+import { isBrowser } from '../../utils'
+import { isEnabled as isDebugEnabled } from '../../utils/debug/debugEnabled'
 
 import DebugPanel from './DebugPanel'
 import FiberNavigator from './FiberNavigator'
@@ -55,18 +55,18 @@ class Debug extends React.Component<DebugProps, DebugState> {
   debugReactComponent = r => {
     if (!r) {
       console.error(
-        "No React component selected. Please select a Stardust component from the React's Component panel.",
+        "No React component selected. Please select a Fluent UI component from the React's Component panel.",
       )
       return
     }
     if (!r._reactInternalFiber) {
       console.error(
-        'React does not provide data for debugging for this component. Try selecting some Stardust component.',
+        'React does not provide data for debugging for this component. Try selecting some Fluent UI component.',
       )
       return
     }
-    if (!r.stardustDebug) {
-      console.error('Not a debuggable component. Try selecting some Stardust component.')
+    if (!r.fluentUIDebug) {
+      console.error('Not a debuggable component. Try selecting some Fluent UI component.')
       return
     }
 
@@ -82,7 +82,7 @@ class Debug extends React.Component<DebugProps, DebugState> {
       return
     }
 
-    fiberNav = fiberNav.findOwner(fiber => fiber.stardustDebug)
+    fiberNav = fiberNav.findOwner(fiber => fiber.fluentUIDebug)
 
     if (fiberNav !== this.state.fiberNav) {
       this.setState({ fiberNav })
@@ -109,7 +109,7 @@ class Debug extends React.Component<DebugProps, DebugState> {
     this.debugDOMNode(e.target)
   }
 
-  handleStardustDOMNodeClick = e => {
+  handleDOMNodeClick = e => {
     e.preventDefault()
     e.stopPropagation()
 
@@ -161,7 +161,7 @@ class Debug extends React.Component<DebugProps, DebugState> {
           {isSelecting && fiberNav && fiberNav.domNode && (
             <EventListener
               targetRef={toRefObject(fiberNav.domNode)}
-              listener={this.handleStardustDOMNodeClick}
+              listener={this.handleDOMNodeClick}
               type="click"
             />
           )}
@@ -173,8 +173,8 @@ class Debug extends React.Component<DebugProps, DebugState> {
               onActivateDebugSelectorClick={this.startSelecting}
               onClose={this.close}
               // TODO: Integrate CSS in JS Styles for Host Components (DOM nodes)
-              // cssStyles={stylesForNode(stardustDOMNode)}
-              debugData={fiberNav.stardustDebug}
+              // cssStyles={stylesForNode(domNode)}
+              debugData={fiberNav.fluentUIDebug}
               position={debugPanelPosition || 'right'}
               onPositionLeft={this.positionLeft}
               onPositionRight={this.positionRight}

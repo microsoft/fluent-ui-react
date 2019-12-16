@@ -15,9 +15,9 @@ import {
   commonPropTypes,
   ContentComponentProps,
   rtlTextContainer,
-} from '../../lib'
+} from '../../utils'
 import PortalInner from './PortalInner'
-import { AccessibilityHandlerProps } from '../../lib/accessibility/reactTypes'
+import { AccessibilityHandlerProps } from '../../utils/accessibility/reactTypes'
 
 export type TriggerAccessibility = {
   attributes?: AccessibilityAttributes

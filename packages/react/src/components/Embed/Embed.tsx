@@ -11,7 +11,7 @@ import {
   commonPropTypes,
   AutoControlledComponent,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import Icon, { IconProps } from '../Icon/Icon'
 import Image from '../Image/Image'
 import Video, { VideoProps } from '../Video/Video'
@@ -200,7 +200,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
             defaultProps: () => ({
               className: Embed.slotClassNames.control,
               circular: true,
-              name: active ? 'stardust-pause' : 'stardust-play',
+              name: active ? 'icon-pause' : 'icon-play',
               size: 'largest',
               styles: styles.control,
             }),

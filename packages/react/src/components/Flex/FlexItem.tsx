@@ -8,8 +8,8 @@ import {
   UIComponentProps,
   ChildrenComponentProps,
   ShorthandFactory,
-} from '../../lib'
-import { mergeStyles } from '../../lib/mergeThemes'
+} from '../../utils'
+import { mergeStyles } from '../../utils/mergeThemes'
 import { ComponentSlotStylesPrepared } from '../../themes/types'
 
 type ChildrenFunction = (params: {
@@ -122,7 +122,7 @@ const applyStyles = (
     })
   }
 
-  // assuming element is Stardust element
+  // assuming element is Fluent UI element
   return React.cloneElement(element, {
     styles: mergeStyles(styles.root || {}, element.props.styles),
   })

@@ -17,7 +17,7 @@ import {
 } from 'test/utils'
 import helpers from './commonHelpers'
 
-import * as stardust from 'src/index'
+import * as FluentUI from 'src/index'
 import { getEventTargetComponent, EVENT_TARGET_ATTRIBUTE } from './eventTarget'
 
 export interface Conformant {
@@ -41,7 +41,7 @@ export interface Conformant {
  */
 export default function isConformant(
   Component: React.ComponentType<any> & {
-    handledProps: stardust.ObjectOf<any>
+    handledProps: FluentUI.ObjectOf<any>
     autoControlledProps: string[]
     className: string
   },
@@ -163,8 +163,8 @@ export default function isConformant(
     expect(constructorName).toEqual(info.filenameWithoutExt)
   })
 
-  // find the apiPath in the stardust object
-  const foundAsSubcomponent = _.isFunction(_.get(stardust, info.apiPath))
+  // find the apiPath in the top level API
+  const foundAsSubcomponent = _.isFunction(_.get(FluentUI, info.apiPath))
 
   exportedAtTopLevel && isExportedAtTopLevel(constructorName, info.displayName)
   if (info.isChild) {
@@ -335,7 +335,7 @@ export default function isConformant(
       expect(element.prop('role')).toBe(role)
     })
 
-    test("client's attributes override the ones provided by Stardust", () => {
+    test("client's attributes override the ones provided by Fluent UI", () => {
       const wrapperProps = { ...requiredProps, [IS_FOCUSABLE_ATTRIBUTE]: false }
       const wrapper = mount(<Component {...wrapperProps} accessibility={noopBehavior} />)
       const element = getComponent(wrapper)

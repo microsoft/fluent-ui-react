@@ -16,7 +16,7 @@ import {
   getOrGenerateIdFromShorthand,
   AutoControlledComponent,
   debounce,
-} from '../../lib'
+} from '../../utils'
 import {
   WithAsProp,
   withSafeTypeForAs,
@@ -329,7 +329,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
             defaultProps: () => ({
               className: Carousel.slotClassNames.paddlePrevious,
               iconOnly: true,
-              icon: 'stardust-chevron-start',
+              icon: 'icon-chevron-start',
               styles: styles.paddlePrevious,
               ...accessibility.attributes.paddlePrevious,
               ...applyAccessibilityKeyHandlers(
@@ -346,7 +346,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
             defaultProps: () => ({
               className: Carousel.slotClassNames.paddleNext,
               iconOnly: true,
-              icon: 'stardust-chevron-end',
+              icon: 'icon-chevron-end',
               styles: styles.paddleNext,
               ...accessibility.attributes.paddleNext,
               ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.paddleNext, paddleNext),

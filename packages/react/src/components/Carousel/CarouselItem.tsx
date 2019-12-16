@@ -12,8 +12,8 @@ import {
   createShorthandFactory,
   ContentComponentProps,
   ChildrenComponentProps,
-} from '../../lib'
-import { screenReaderContainerStyles } from '../../lib/accessibility/Styles/accessibilityStyles'
+} from '../../utils'
+import { screenReaderContainerStyles } from '../../utils/accessibility/Styles/accessibilityStyles'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface CarouselItemSlotClassNames {

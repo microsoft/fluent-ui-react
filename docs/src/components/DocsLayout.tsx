@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom'
 
 import Sidebar from 'docs/src/components/Sidebar/Sidebar'
 import { scrollToAnchor } from 'docs/src/utils'
-import { mergeThemes } from 'src/lib'
+import { mergeThemes } from '@fluentui/react/src/utils'
 
 const anchors = new AnchorJS({
   class: 'anchor-link',

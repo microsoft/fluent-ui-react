@@ -15,7 +15,7 @@ import {
   UIComponentProps,
   RenderResultConfig,
   setWhatInputSource,
-} from '../../lib'
+} from '../../utils'
 import {
   ComponentEventHandler,
   ShorthandValue,
@@ -23,7 +23,7 @@ import {
   withSafeTypeForAs,
   Omit,
 } from '../../types'
-import { SupportedIntrinsicInputProps } from '../../lib/htmlPropsUtils'
+import { SupportedIntrinsicInputProps } from '../../utils/htmlPropsUtils'
 import Box, { BoxProps } from '../Box/Box'
 
 const processInputValues = (

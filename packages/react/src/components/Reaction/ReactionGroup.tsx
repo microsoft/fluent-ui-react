@@ -13,7 +13,7 @@ import {
   rtlTextContainer,
   createShorthandFactory,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import { Accessibility } from '@fluentui/accessibility'
 import Reaction, { ReactionProps } from './Reaction'
 

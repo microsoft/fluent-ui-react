@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
 
-import { childrenExist, pxToRem } from '../../../../lib'
+import { childrenExist, pxToRem } from '../../../../utils'
 import {
   ComponentSlotStylesPrepared,
   ICSSInJSStyle,

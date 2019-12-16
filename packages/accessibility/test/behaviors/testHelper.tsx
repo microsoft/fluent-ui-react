@@ -24,6 +24,7 @@ const skipSpecChecksForFiles = [
   'sliderBehavior.ts', // tests are written in sliderBehavior-test.ts
   'treeItemAsListItemBehavior.ts', // tests are written in treeItemAsListItemBehavior-test.ts
   'treeTitleAsListItemTitleBehavior.ts', // tests are written in treeTitleAsListItemTitleBehavior-test.ts
+  'gridRowBehavior.ts', // tests are written in gridRowBehavior-test.ts
 ]
 
 export class TestHelper {

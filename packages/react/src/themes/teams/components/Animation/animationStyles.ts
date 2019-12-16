@@ -1,5 +1,5 @@
 import { AnimationProp } from '../../../types'
-import createAnimationStyles from '../../../../lib/createAnimationStyles'
+import createAnimationStyles from '../../../../utils/createAnimationStyles'
 
 export default {
   root: ({ props: p, theme }) => {

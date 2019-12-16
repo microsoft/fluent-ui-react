@@ -14,8 +14,8 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   applyAccessibilityKeyHandlers,
-} from '../../lib'
-import { SupportedIntrinsicInputProps } from '../../lib/htmlPropsUtils'
+} from '../../utils'
+import { SupportedIntrinsicInputProps } from '../../utils/htmlPropsUtils'
 import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Icon, { IconProps } from '../Icon/Icon'
 import Box, { BoxProps } from '../Box/Box'
@@ -211,7 +211,7 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
     const { value } = this.state
 
     if (clearable && (value as string).length !== 0) {
-      return 'stardust-close'
+      return 'icon-close'
     }
 
     return icon || null
