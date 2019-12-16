@@ -204,7 +204,7 @@ describe('Carousel', () => {
 
   describe('navigation', () => {
     const navigation = {
-      items: items.map(item => ({ key: item.key, icon: { name: 'stardust-circle' } })),
+      items: items.map(item => ({ key: item.key, icon: { name: 'icon-circle' } })),
     }
 
     afterEach(() => {

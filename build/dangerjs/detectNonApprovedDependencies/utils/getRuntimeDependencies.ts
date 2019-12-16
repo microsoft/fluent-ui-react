@@ -9,10 +9,10 @@ const { paths } = config
  * This task relies on Webpack to crawl the imported modules, but when this is run from DangerJS process, there is no crawling happening.
  * This is because of the way DangerJS handles imports: https://spectrum.chat/danger/javascript/danger-js-actually-runs-your-imports-as-globals~0a005b56-31ec-4919-9a28-ced623949d4d
  */
-const getRuntimeDependencies = (stardustPackageName: string) => {
+const getRuntimeDependencies = (packageName: string) => {
   const dependencyRegex = /^dependency:\s+(.*)$/
   const result = spawnSync(
-    `yarn gulp test:dependencies:list --prefix="dependency: " --package=${stardustPackageName}`,
+    `yarn gulp test:dependencies:list --prefix="dependency: " --package=${packageName}`,
     {
       shell: true,
       cwd: paths.base(),

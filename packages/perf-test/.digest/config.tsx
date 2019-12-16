@@ -37,7 +37,7 @@ function loadStories() {
       // https://github.com/storybookjs/storybook/blob/5484720791e7621e9a164d58fbe79db49db1522d/lib/client-api/src/story_store.ts#L191
       // This code should behave the same way.
       if (matches) {
-        // TODO: stardust-ui storybook "config" seems to assume differing story file formats from CSF: only one story per file, naming, etc.
+        // TODO: fluent-ui storybook "config" seems to assume differing story file formats from CSF: only one story per file, naming, etc.
         // This code was modified to support multiple stories per file. Variable naming follows storybook CSF convention.
         // https://storybook.js.org/docs/testing/automated-visual-testing/#custom-solutions
         let kindName

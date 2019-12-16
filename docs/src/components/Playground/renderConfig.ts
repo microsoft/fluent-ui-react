@@ -1,7 +1,7 @@
 import * as Accessibility from '@fluentui/accessibility'
 import * as CodeSandbox from '@fluentui/code-sandbox'
 import * as DocsComponent from '@fluentui/docs-components'
-import * as Stardust from '@fluentui/react'
+import * as FluentUI from '@fluentui/react'
 import * as ReactFela from 'react-fela'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -9,7 +9,7 @@ import * as ReactDOM from 'react-dom'
 import * as Classnames from 'classnames'
 
 const docsComponentsPackageJson = require('@fluentui/docs-components/package.json')
-const stardustReactPackageJson = require('@fluentui/react/package.json')
+const projectPackageJson = require('@fluentui/react/package.json')
 
 export const babelConfig = {
   plugins: [
@@ -23,7 +23,7 @@ export const babelConfig = {
 
 export const imports: Record<string, { version: string; module: any }> = {
   '@fluentui/accessibility': {
-    version: stardustReactPackageJson.version,
+    version: projectPackageJson.version,
     module: Accessibility,
   },
 
@@ -36,27 +36,27 @@ export const imports: Record<string, { version: string; module: any }> = {
     module: DocsComponent,
   },
   '@fluentui/react': {
-    version: stardustReactPackageJson.version,
-    module: Stardust,
+    version: projectPackageJson.version,
+    module: FluentUI,
   },
   classnames: {
-    version: stardustReactPackageJson.dependencies['classnames'],
+    version: projectPackageJson.dependencies['classnames'],
     module: Classnames,
   },
   lodash: {
-    version: stardustReactPackageJson.dependencies['lodash'],
+    version: projectPackageJson.dependencies['lodash'],
     module: _,
   },
   react: {
-    version: stardustReactPackageJson.peerDependencies['react'],
+    version: projectPackageJson.peerDependencies['react'],
     module: React,
   },
   'react-dom': {
-    version: stardustReactPackageJson.peerDependencies['react-dom'],
+    version: projectPackageJson.peerDependencies['react-dom'],
     module: ReactDOM,
   },
   'react-fela': {
-    version: stardustReactPackageJson.dependencies['react-fela'],
+    version: projectPackageJson.dependencies['react-fela'],
     module: ReactFela,
   },
   prettier: {

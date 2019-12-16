@@ -17,6 +17,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.42.0 ]------------------------------- -->
+## [v0.42.0](https://github.com/microsoft/fluent-ui-react/tree/v0.42.0) (2019-12-12)
+[Compare changes](https://github.com/microsoft/fluent-ui-react/compare/v0.41.01..v0.42.0)
+
+### BREAKING CHANGES
+- Rename all "Stardust UI" references to "Fluent UI" @levithomason ([#2165](https://github.com/microsoft/fluent-ui-react/pull/2165))
+
 ### Fixes
 - Fix colors expand for `border-color` shorthand @layershifter ([#2160](https://github.com/microsoft/fluent-ui-react/pull/2160))
 - Updating `splitButton` component to match Teams redlines @notandrew ([#2108](https://github.com/microsoft/fluent-ui-react/pull/2108))

@@ -30,7 +30,7 @@ const DebugComponentViewer: React.FC<DebugComponentViewerProps> = props => {
     let parentNav = fiberNav.parent
 
     while (parentNav && !parentNav.isEqual(ownerNav)) {
-      if (parentNav.stardustDebug) parentNavs.unshift(parentNav)
+      if (parentNav.fluentUIDebug) parentNavs.unshift(parentNav)
       parentNav = parentNav.parent
     }
   }
@@ -41,7 +41,7 @@ const DebugComponentViewer: React.FC<DebugComponentViewerProps> = props => {
     <ScrollToBottom style={style}>
       <DebugLine
         indent={0}
-        {...(ownerNav.stardustDebug && {
+        {...(ownerNav.fluentUIDebug && {
           actionable: true,
           tabIndex: 0,
           onClick: e => {

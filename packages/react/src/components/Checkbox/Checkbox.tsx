@@ -164,7 +164,7 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
             outline: toggle && !this.state.checked,
             size: toggle ? 'medium' : 'smaller',
             className: Checkbox.slotClassNames.indicator,
-            name: toggle ? 'stardust-circle' : 'stardust-checkmark',
+            name: toggle ? 'icon-circle' : 'icon-checkmark',
             styles: toggle ? styles.toggle : styles.checkbox,
           }),
         })}

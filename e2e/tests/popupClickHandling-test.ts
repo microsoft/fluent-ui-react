@@ -4,7 +4,7 @@ const popupTrigger = `#${selectors.triggerButtonId}`
 const popupContent = `.${selectors.popupContentClass}`
 const popupContentButton = `#${selectors.popupContentButtonId}`
 
-// https://github.com/stardust-ui/react/issues/1324
+// https://github.com/microsoft/fluent-ui-react/issues/1324
 describe('Popup - on content click', () => {
   beforeEach(async () => {
     await e2e.gotoTestCase(__filename, popupTrigger)

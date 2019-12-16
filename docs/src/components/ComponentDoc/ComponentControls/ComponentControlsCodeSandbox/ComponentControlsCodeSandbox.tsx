@@ -3,8 +3,8 @@ import CodeSandboxer from 'react-codesandboxer'
 
 import { ComponentSourceManagerLanguage } from 'docs/src/components/ComponentDoc/ComponentSourceManager'
 import { appTemplate } from './indexTemplates'
-import ComponentButton from '../ComponentButton'
 import createPackageJson from './createPackageJson'
+import { Icon, Tooltip } from 'src/index'
 
 type ComponentControlsCodeSandboxProps = {
   exampleCode: string
@@ -61,7 +61,10 @@ class ComponentControlsCodeSandbox extends React.PureComponent<
 
     if (sandboxUrl) {
       return (
-        <ComponentButton label="Click to open" onClick={this.handleClick} iconName="checkmark" />
+        <Tooltip
+          trigger={<Icon name="checkmark" onClick={this.handleClick} />}
+          content="Click to open"
+        />
       )
     }
 
@@ -81,9 +84,9 @@ class ComponentControlsCodeSandbox extends React.PureComponent<
         {({ isLoading, isDeploying }) => {
           const loading = isLoading || isDeploying
           return (
-            <ComponentButton
-              iconName={loading ? 'spinner' : 'connectdevelop'}
-              label={loading ? 'Exporting...' : 'CodeSandbox'}
+            <Tooltip
+              trigger={<Icon name={loading ? 'spinner' : 'connectdevelop'} />}
+              content={loading ? 'Exporting...' : 'CodeSandbox'}
             />
           )
         }}
