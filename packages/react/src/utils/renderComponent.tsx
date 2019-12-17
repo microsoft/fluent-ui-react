@@ -237,16 +237,16 @@ const renderComponent = <P extends {}>(
   // Our API should be aligned with it
   // Heads Up! Keep in sync with Design.tsx render logic
   const direction = rtl ? 'rtl' : 'ltr'
-  // const felaParam = {
-  //   theme: { direction },
-  //   disableAnimations,
-  //   displayName, // does not affect styles, only used by useEnhancedRenderer in docs
-  // }
+  const felaParam = {
+    theme: { direction },
+    disableAnimations,
+    displayName, // does not affect styles, only used by useEnhancedRenderer in docs
+  }
 
   let renderFn = undefined
 
   if (renderer) {
-    renderFn = style => renderer.unstable_memoizedRenderRule(style, direction)
+    renderFn = style => renderer.unstable_memoizedRenderRule(style, felaParam)
     // renderFn = style => renderer.renderRule(() => style, felaParam)
   }
 

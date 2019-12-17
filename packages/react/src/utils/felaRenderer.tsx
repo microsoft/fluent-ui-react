@@ -82,10 +82,8 @@ const rendererConfig = {
 export const createRenderer = (): Renderer => {
   const renderer = createFelaRenderer(rendererConfig) as Renderer
 
-  renderer.unstable_memoizedRenderRule = memoize((styles, direction) => {
-    return renderer.renderRule(callable(styles), {
-      theme: { direction },
-    })
+  renderer.unstable_memoizedRenderRule = memoize((styles, options) => {
+    return renderer.renderRule(callable(styles), options)
   })
   return renderer
 }
