@@ -11,11 +11,18 @@ export default {
     outline: 'none',
     padding: v.rootPadding,
     position: 'relative',
-    width: v.rootWidth,
+    width: v.rootWidthSmall,
     display: 'grid',
     gridTemplateColumns: '1fr auto',
     boxShadow: v.boxShadow,
     color: v.foregroundColor,
+
+    '@media (min-width: 768px)': {
+      width: v.rootWidthMedium,
+    },
+    '@media (min-width: 1280px)': {
+      width: v.rootWidth,
+    },
   }),
 
   footer: (): ICSSInJSStyle => ({
