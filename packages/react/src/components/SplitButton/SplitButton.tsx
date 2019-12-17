@@ -30,7 +30,7 @@ import { PopupProps } from '../Popup/Popup'
 
 export interface SplitButtonSlotClassNames {
   toggleButton: string
-  size?: string
+  size?: SizeValue
 }
 
 export interface SplitButtonProps
