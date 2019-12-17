@@ -20,6 +20,7 @@ import {
   AutoControlledComponent,
   RenderResultConfig,
   ShorthandFactory,
+  SizeValue,
 } from '../../utils'
 import Button, { ButtonProps } from '../Button/Button'
 import MenuButton, { MenuButtonProps } from '../MenuButton/MenuButton'
@@ -85,8 +86,8 @@ export interface SplitButtonProps
   /** A split button can be formatted to show different levels of emphasis. */
   secondary?: boolean
 
-  /** A split button can be small */
-  size?: string
+  /** A split button can be sized */
+  size?: SizeValue
 
   /** Shorthand for the toggle button. */
   toggleButton?: ShorthandValue<ButtonProps>
