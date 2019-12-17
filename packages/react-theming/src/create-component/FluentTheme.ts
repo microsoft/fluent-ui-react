@@ -1,4 +1,4 @@
-import { IFluentThemeShape, ColorRamp } from './FluentThemeShape'
+import { IFluentThemeShape, ColorRamp } from './FluentThemeShape';
 
 export const FluentTheme: IFluentThemeShape = {
   colors: {
@@ -9,7 +9,7 @@ export const FluentTheme: IFluentThemeShape = {
     ramp: [8, 10, 12, 16, 24, 36, 48, 128],
     fontFace: 'Futura',
   },
-}
+};
 
 export const FluentButtonTheme = {
   styles: ({ typography, colors }: any) => ({
@@ -46,14 +46,15 @@ export const FluentButtonTheme = {
       },
     },
     beautiful: {
-      true: {
+      true: props => ({
+        // bigIcon: true, size: m, shadowed: false
         root: {
           border: '3px solid pink',
         },
-      },
+      }),
     },
   },
-}
+};
 
 export const PlannerFluentTheme: IFluentThemeShape = {
   colors: {
@@ -96,4 +97,4 @@ export const PlannerFluentTheme: IFluentThemeShape = {
       },
     },
   },
-}
+};

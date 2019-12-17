@@ -26,4 +26,10 @@ export { ThemeProvider } from './components/ThemeProvider/ThemeProvider';
 export { Box } from './components/Box/Box';
 export { createTheme } from './utilities/createTheme';
 
+export { FluentButton } from './components/Button/FluentButton';
+export { FluentMenu } from './components/Menu/FluentMenu';
+export { FluentMenuItem } from './components/Menu/FluentMenuItem';
+export { Provider } from './components/ThemeProvider/Provider';
+export { FluentTheme, PlannerFluentTheme } from './create-component/FluentTheme';
+
 jss.setup(preset());

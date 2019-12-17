@@ -1,3 +1,3 @@
 export interface IBaseThemeShape {
-  components?: any
+  components?: any;
 }

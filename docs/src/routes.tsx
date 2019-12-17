@@ -48,6 +48,7 @@ import ParticipantsListPrototype from './prototypes/ParticipantsList'
 import CustomScrollbarPrototype from './prototypes/customScrollbar'
 import EditorToolbarPrototype from './prototypes/EditorToolbar'
 import HexagonalAvatarPrototype from './prototypes/hexagonalAvatar'
+import CreateComponentPrototype from './prototypes/createComponent'
 
 const Routes = () => (
   <BrowserRouter basename={__BASENAME__}>
@@ -87,6 +88,7 @@ const Routes = () => (
           />
           <Route exact path="/virtualized-tree" component={VirtualizedTreePrototype} />
           <Route exact path="/prototype-copy-to-clipboard" component={CopyToClipboardPrototype} />
+          <Route exact path="/prototype-create-component" component={CreateComponentPrototype} />
           <Route exact path="/faq" component={FAQ} />
           <Route exact path="/accessibility" component={Accessibility} />
           <Route exact path="/accessibility-behaviors" component={AccessibilityBehaviors} />

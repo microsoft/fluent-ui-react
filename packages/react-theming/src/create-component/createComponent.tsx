@@ -1,7 +1,7 @@
-import * as React from 'react'
-import { ProviderContext } from './Provider'
-import { mergeCss } from '@uifabric/merge-styles'
-import { VariantBasedCacheKeyStrategy, ClassCache } from './ClassCache'
+import * as React from 'react';
+import { ProviderContext } from '../components/ThemeProvider/Provider';
+import { mergeCss } from '@uifabric/merge-styles';
+import { VariantBasedCacheKeyStrategy, ClassCache } from './ClassCache';
 
 // TODO:
 // 1. how do we know the slots for component?
@@ -32,17 +32,17 @@ const getProps = (cssMap: any, props: any, slots: any = {}) => {
     ...props,
     slotProps: props.slotProps || {},
     slots: { ...props.slots, ...slots },
-  }
+  };
   Object.keys(cssMap).forEach(slotName => {
     if (!newProps.slotProps[slotName]) {
-      newProps.slotProps[slotName] = {}
+      newProps.slotProps[slotName] = {};
     }
     newProps.slotProps[slotName].className = `${newProps.slotProps[slotName].className ||
-      ''} ${cssMap[slotName] || ''}`
-  })
+      ''} ${cssMap[slotName] || ''}`;
+  });
 
-  return newProps
-}
+  return newProps;
+};
 
 export const getClassName = (
   cache: ClassCache,
@@ -51,8 +51,8 @@ export const getClassName = (
   componentName: string,
   cssRenderer: (args: any) => string = mergeCss,
 ) => {
-  const stylesAdditions: any = {}
-  const variantNames: string[] = []
+  const stylesAdditions: any = {};
+  const variantNames: string[] = [];
 
   const componentStyles =
     theme &&
@@ -63,9 +63,9 @@ export const getClassName = (
           typography: theme.typography,
           colors: theme.colors,
         })
-      : {}
+      : {};
 
-  const slotNames: string[] = Object.keys(componentStyles)
+  const slotNames: string[] = Object.keys(componentStyles);
 
   if (
     theme &&
@@ -74,29 +74,29 @@ export const getClassName = (
     theme.components[componentName].variants
   ) {
     Object.keys(theme.components[componentName].variants).forEach(variantName => {
-      stylesAdditions[variantName] = {}
-      variantNames.push(variantName)
+      stylesAdditions[variantName] = {};
+      variantNames.push(variantName);
       Object.keys(theme.components[componentName].variants[variantName]).forEach(enumValue => {
-        const variant: any = {}
-        stylesAdditions[variantName][enumValue] = variant
+        const variant: any = {};
+        stylesAdditions[variantName][enumValue] = variant;
 
         Object.keys(theme.components[componentName].variants[variantName][enumValue]).forEach(
           slotName => {
             if (!slotNames.find(s => s === slotName)) {
-              slotNames.push(slotName)
+              slotNames.push(slotName);
             }
             variant[slotName] =
-              theme.components[componentName].variants[variantName][enumValue][slotName]
+              theme.components[componentName].variants[variantName][enumValue][slotName];
           },
-        )
-      })
-    })
+        );
+      });
+    });
   }
 
-  const mergedSlotStyles: any = {}
+  const mergedSlotStyles: any = {};
 
   slotNames.forEach(slotName => {
-    mergedSlotStyles[slotName] = componentStyles[slotName] || {}
+    mergedSlotStyles[slotName] = componentStyles[slotName] || {};
     // eslint-disable-next-line array-callback-return
     variantNames.map(v => {
       if (
@@ -107,30 +107,34 @@ export const getClassName = (
         mergedSlotStyles[slotName] = {
           ...mergedSlotStyles[slotName],
           ...stylesAdditions[v][componentProps[v]][slotName],
-        }
+        };
       }
-    })
-  })
+    });
+  });
 
-  const mutableCacheEntry: any = {}
-  const cacheKey = new VariantBasedCacheKeyStrategy(variantNames, componentProps)
-  const cacheEntry = cache.getOrSet(theme, cacheKey.toString(), mutableCacheEntry)
+  const mutableCacheEntry: any = {};
+  const cacheKey = new VariantBasedCacheKeyStrategy(variantNames, componentProps);
+  const cacheEntry = cache.getOrSet(theme, cacheKey.toString(), mutableCacheEntry);
 
   if (cacheEntry !== mutableCacheEntry) {
-    return cacheEntry
+    return cacheEntry;
   }
   slotNames.forEach(slotName => {
-    mutableCacheEntry[slotName] = cssRenderer(mergedSlotStyles[slotName])
-  })
-  return mutableCacheEntry
-}
+    mutableCacheEntry[slotName] = cssRenderer(mergedSlotStyles[slotName]);
+  });
+  return mutableCacheEntry;
+};
 
-export const compose = (displayName: string, BaseComponent: any, settings = { slots: {} }) => {
-  const cache = new ClassCache()
+export const createComponent = (
+  displayName: string,
+  BaseComponent: any,
+  settings = { slots: {} },
+) => {
+  const cache = new ClassCache();
   return (props: any) => {
-    const theme = (React.useContext(ProviderContext) as any)!
-    const cssMap = getClassName(cache, theme, props, displayName)
-    const newProps = getProps(cssMap, props, settings.slots)
-    return <BaseComponent {...newProps} />
-  }
-}
+    const theme = (React.useContext(ProviderContext) as any)!;
+    const cssMap = getClassName(cache, theme, props, displayName);
+    const newProps = getProps(cssMap, props, settings.slots);
+    return <BaseComponent {...newProps} />;
+  };
+};

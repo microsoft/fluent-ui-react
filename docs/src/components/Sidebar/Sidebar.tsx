@@ -384,6 +384,15 @@ class Sidebar extends React.Component<any, any> {
         },
         public: true,
       },
+      {
+        key: 'prototype-create-component',
+        title: {
+          content: 'Create component',
+          as: NavLink,
+          to: 'prototype-create-component',
+        },
+        public: false,
+      },
     ]
 
     const componentTreeSection = {
