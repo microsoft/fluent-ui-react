@@ -101,6 +101,8 @@ const checkboxStyles: ComponentSlotStylesPrepared<
     padding: v.togglePadding,
     transition: 'padding .3s ease',
     userSelect: 'none',
+    width: v.toggleWidth,
+    height: v.toggleHeight,
 
     [`& svg`]: {
       width: v.toggleIndicatorSize,
