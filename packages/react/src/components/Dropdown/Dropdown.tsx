@@ -513,7 +513,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
                     : Icon.create(toggleIndicator, {
                         defaultProps: () => ({
                           className: Dropdown.slotClassNames.toggleIndicator,
-                          name: 'chevron-down-medium',
+                          name: 'icon-chevron-down-medium',
                           styles: styles.toggleIndicator,
                           outline: true,
                           size: 'medium',
