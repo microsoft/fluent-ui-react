@@ -18,7 +18,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### Fixes
-- Updating `splitButton` component to match Teams redlines @notandrew ([#2108](https://github.com/microsoft/fluent-ui-react/pull/2108))
+- Update `SplitButton` styles in Teams theme [redlines] @notandrew ([#2108](https://github.com/microsoft/fluent-ui-react/pull/2108))
 
 <!--------------------------------[ v0.42.0 ]------------------------------- -->
 ## [v0.42.0](https://github.com/microsoft/fluent-ui-react/tree/v0.42.0) (2019-12-12)
