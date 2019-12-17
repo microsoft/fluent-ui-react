@@ -90,6 +90,7 @@ class Header extends UIComponent<WithAsProp<HeaderProps>, any> {
                 ...(v.descriptionColor && { color: v.descriptionColor }),
               },
             }),
+            generateKey: false,
           })}
       </ElementType>
     )

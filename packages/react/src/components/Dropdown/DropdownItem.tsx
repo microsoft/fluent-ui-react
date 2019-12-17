@@ -112,6 +112,7 @@ class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
             className: DropdownItem.slotClassNames.header,
             styles: styles.header,
           }),
+          generateKey: false,
         })}
         media={Image.create(image, {
           defaultProps: () => ({
@@ -119,12 +120,14 @@ class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
             className: DropdownItem.slotClassNames.image,
             styles: styles.image,
           }),
+          generateKey: false,
         })}
         content={Box.create(content, {
           defaultProps: () => ({
             className: DropdownItem.slotClassNames.content,
             styles: styles.content,
           }),
+          generateKey: false,
         })}
         endMedia={
           selected &&
@@ -134,6 +137,7 @@ class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
                 className: DropdownItem.slotClassNames.checkableIndicator,
                 styles: styles.checkableIndicator,
               }),
+              generateKey: false,
             }),
             styles: styles.endMedia,
           }

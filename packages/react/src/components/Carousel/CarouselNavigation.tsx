@@ -105,6 +105,7 @@ class CarouselNavigation extends UIComponent<WithAsProp<CarouselNavigationProps>
             ? accessibility.childBehaviors.item
             : undefined,
         }),
+        generateKey: false,
         overrideProps: this.handleItemOverrides(variables),
       }),
     )

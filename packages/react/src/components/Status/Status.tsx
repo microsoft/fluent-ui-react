@@ -67,6 +67,7 @@ class Status extends UIComponent<WithAsProp<StatusProps>, any> {
             variables: variables.icon,
             xSpacing: 'none',
           }),
+          generateKey: false,
         })}
       </ElementType>
     )

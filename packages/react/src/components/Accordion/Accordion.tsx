@@ -267,6 +267,7 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
             id: titleId,
             accordionContentId: contentId,
           }),
+          generateKey: true,
           overrideProps: this.handleTitleOverrides,
           render: renderPanelTitle,
         }),
@@ -279,6 +280,7 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
             id: contentId,
             accordionTitleId: titleId,
           }),
+          generateKey: true,
           render: renderPanelContent,
         }),
       )

@@ -138,6 +138,7 @@ class DropdownSelectedItem extends UIComponent<WithAsProp<DropdownSelectedItemPr
         className: DropdownSelectedItem.slotClassNames.header,
         styles: styles.header,
       }),
+      generateKey: false,
     })
     const iconProps = _.isNil(icon)
       ? icon
@@ -150,6 +151,7 @@ class DropdownSelectedItem extends UIComponent<WithAsProp<DropdownSelectedItemPr
                 className: DropdownSelectedItem.slotClassNames.icon,
                 styles: styles.icon,
               }),
+              generateKey: false,
               overrideProps: this.handleIconOverrides(props),
             }),
         }
@@ -163,6 +165,7 @@ class DropdownSelectedItem extends UIComponent<WithAsProp<DropdownSelectedItemPr
                 className: DropdownSelectedItem.slotClassNames.image,
                 styles: styles.image,
               }),
+              generateKey: false,
               overrideProps: props,
             }),
         }

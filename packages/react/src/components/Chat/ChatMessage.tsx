@@ -224,6 +224,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
         className: ChatMessage.slotClassNames.actionMenu,
         styles: styles.actionMenu,
       }),
+      generateKey: false,
     })
 
     if (!actionMenuElement) {
@@ -299,6 +300,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
         className: ChatMessage.slotClassNames.badge,
         styles: styles.badge,
       }),
+      generateKey: false,
     })
 
     const reactionGroupElement = Reaction.Group.create(reactionGroup, {
@@ -306,6 +308,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
         className: ChatMessage.slotClassNames.reactionGroup,
         styles: styles.reactionGroup,
       }),
+      generateKey: false,
     })
 
     const actionMenuElement = this.renderActionMenu(actionMenu, styles)
@@ -316,6 +319,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
         styles: styles.author,
         className: ChatMessage.slotClassNames.author,
       }),
+      generateKey: false,
     })
 
     const timestampElement = Text.create(timestamp, {
@@ -325,6 +329,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
         timestamp: true,
         className: ChatMessage.slotClassNames.timestamp,
       }),
+      generateKey: false,
     })
 
     const messageContent = Box.create(content, {
@@ -332,6 +337,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
         className: ChatMessage.slotClassNames.content,
         styles: styles.content,
       }),
+      generateKey: false,
     })
 
     return (

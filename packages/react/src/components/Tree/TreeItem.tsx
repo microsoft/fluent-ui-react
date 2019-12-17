@@ -208,6 +208,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>, TreeItemState> {
           ? accessibility.childBehaviors.title
           : undefined,
       }),
+      generateKey: false,
       render: renderItemTitle,
       overrideProps: this.handleTitleOverrides,
     })

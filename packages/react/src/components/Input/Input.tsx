@@ -163,6 +163,7 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
                   onChange: this.handleChange,
                   ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.input, htmlInputProps),
                 }),
+                generateKey: false,
               })}
             </Ref>
             {Icon.create(this.computeIcon(), {
@@ -170,6 +171,7 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
                 styles: styles.icon,
                 variables: variables.icon,
               }),
+              generateKey: false,
               overrideProps: this.handleIconOverrides,
             })}
           </>
@@ -177,6 +179,7 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
         styles: styles.root,
         ...restProps,
       }),
+      generateKey: false,
       overrideProps: {
         as: (wrapper && (wrapper as any).as) || ElementType,
       },

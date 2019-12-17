@@ -23,6 +23,7 @@ class MSTeamsLogo extends React.Component<LogoProps, any> {
                   xSpacing: 'after',
                   styles: { verticalAlign: 'middle' },
                 }),
+                generateKey: false,
               })}
               <Text
                 styles={{

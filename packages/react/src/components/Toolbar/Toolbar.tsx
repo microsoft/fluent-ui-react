@@ -162,18 +162,28 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
 
         switch (kind) {
           case 'divider':
-            return ToolbarDivider.create(item, { overrideProps: itemOverridesFn })
+            return ToolbarDivider.create(item, {
+              generateKey: true,
+              overrideProps: itemOverridesFn,
+            })
           case 'group':
-            return ToolbarRadioGroup.create(item, { overrideProps: itemOverridesFn })
+            return ToolbarRadioGroup.create(item, {
+              generateKey: true,
+              overrideProps: itemOverridesFn,
+            })
           case 'toggle':
             return ToolbarItem.create(item, {
               defaultProps: () => ({ accessibility: toggleButtonBehavior }),
+              generateKey: true,
               overrideProps: itemOverridesFn,
             })
           case 'custom':
-            return ToolbarCustomItem.create(item, { overrideProps: itemOverridesFn })
+            return ToolbarCustomItem.create(item, {
+              generateKey: true,
+              overrideProps: itemOverridesFn,
+            })
           default:
-            return ToolbarItem.create(item, { overrideProps: itemOverridesFn })
+            return ToolbarItem.create(item, { generateKey: true, overrideProps: itemOverridesFn })
         }
       },
     )
@@ -474,6 +484,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
           defaultProps: () => ({
             icon: { name: 'more', outline: true },
           }),
+          generateKey: false,
           overrideProps: {
             menu: this.props.overflowOpen ? this.getOverflowItems() : [],
             menuOpen: this.props.overflowOpen,

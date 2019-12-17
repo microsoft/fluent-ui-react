@@ -125,7 +125,7 @@ class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> 
       this.itemRefs[index] = ref
 
       if (kind === 'divider') {
-        return ToolbarDivider.create(item, { overrideProps: itemOverridesFn })
+        return ToolbarDivider.create(item, { generateKey: true, overrideProps: itemOverridesFn })
       }
 
       const toolbarItem = ToolbarItem.create(item, {
@@ -133,6 +133,7 @@ class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> 
           accessibility: toolbarRadioGroupItemBehavior,
           active: activeIndex === index,
         }),
+        generateKey: true,
         overrideProps: itemOverridesFn,
       })
 

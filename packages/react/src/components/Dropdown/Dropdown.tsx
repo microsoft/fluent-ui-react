@@ -496,6 +496,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
                           styles: styles.clearIndicator,
                           xSpacing: 'none',
                         }),
+                        generateKey: false,
                         overrideProps: (predefinedProps: IconProps) => ({
                           onClick: (e: React.SyntheticEvent<HTMLElement>, iconProps: IconProps) => {
                             _.invoke(predefinedProps, 'onClick', e, iconProps)
@@ -511,6 +512,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
                           outline: true,
                           size: 'small',
                         }),
+                        generateKey: false,
                         overrideProps: (predefinedProps: IconProps) => ({
                           onClick: (e, indicatorProps: IconProps) => {
                             _.invoke(predefinedProps, 'onClick', e, indicatorProps)
@@ -584,6 +586,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
             styles: styles.triggerButton,
             ...restTriggerButtonProps,
           }),
+          generateKey: false,
           overrideProps: (predefinedProps: IconProps) => ({
             onClick: e => {
               onClick(e)
@@ -633,6 +636,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
         variables,
         inputRef: this.inputRef,
       }),
+      generateKey: false,
       overrideProps: this.handleSearchInputOverrides(
         highlightedIndex,
         rtl,
@@ -746,6 +750,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
                 key: (item as any).header,
               }),
           }),
+          generateKey: true,
           overrideProps: this.handleItemOverrides(item, index, getItemProps, selected),
           render: renderItem,
         })
@@ -760,6 +765,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
             key: 'loading-message',
             styles: styles.loadingMessage,
           }),
+          generateKey: false,
         }),
       !loading &&
         items.length === 0 &&
@@ -768,6 +774,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
             key: 'no-results-message',
             styles: styles.noResultsMessage,
           }),
+          generateKey: false,
         }),
     ]
   }
@@ -792,6 +799,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
               key: (item as any).header,
             }),
         }),
+        generateKey: true,
         overrideProps: this.handleSelectedItemOverrides(item, rtl),
         render: renderSelectedItem,
       }),

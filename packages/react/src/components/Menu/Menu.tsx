@@ -208,6 +208,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
               ? accessibility.childBehaviors.divider
               : undefined,
           }),
+          generateKey: true,
           overrideProps: overrideDividerProps,
         })
       }
@@ -234,6 +235,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
             ? accessibility.childBehaviors.item
             : undefined,
         }),
+        generateKey: true,
         overrideProps: overrideItemProps,
       })
     })

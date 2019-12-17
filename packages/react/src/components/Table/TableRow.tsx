@@ -111,6 +111,7 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
 
       return TableCell.create(item, {
         defaultProps: () => cellProps,
+        generateKey: true,
         overrideProps,
       })
     })

@@ -140,11 +140,13 @@ class RadioGroupItem extends AutoControlledComponent<
               size: 'small',
               styles: styles.icon,
             }),
+            generateKey: false,
           })}
           {Box.create(label, {
             defaultProps: () => ({
               as: 'span',
             }),
+            generateKey: false,
           })}
         </ElementType>
       </Ref>

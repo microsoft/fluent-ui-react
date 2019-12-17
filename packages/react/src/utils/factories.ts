@@ -22,7 +22,7 @@ interface CreateShorthandOptions<P> {
   overrideProps?: Partial<Props<P>> | ((props: P) => Partial<Props<P>>)
 
   /** Whether or not automatic key generation is allowed */
-  generateKey?: boolean
+  generateKey: boolean
 
   /** Override the default render implementation. */
   render?: ShorthandRenderFunction<P>
@@ -46,7 +46,7 @@ export function createShorthand<P>({
   mappedProp,
   mappedArrayProp,
   valueOrRenderCallback,
-  options = {},
+  options = { generateKey: false },
 }: {
   Component: React.ElementType
   allowsJSX?: boolean
@@ -258,12 +258,9 @@ function createShorthandFromValue<P>({
   }
 
   // ----------------------------------------
-  // Get key
-  // ----------------------------------------
-  const { generateKey = true } = options
-
   // Use key or generate key
-  if (generateKey && _.isNil(props.key)) {
+  // ----------------------------------------
+  if (options.generateKey && _.isNil(props.key)) {
     if (valIsPrimitive) {
       // use string/number shorthand values as the key
       ;(props as any).key = value

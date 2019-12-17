@@ -290,6 +290,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
         pointing,
         pointerRef: this.pointerTargetRef,
       }),
+      generateKey: false,
       overrideProps: this.getContentProps,
     })
 

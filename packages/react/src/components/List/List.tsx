@@ -170,6 +170,7 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
 
       return ListItem.create(item, {
         defaultProps: itemProps,
+        generateKey: true,
         overrideProps: this.handleItemOverrides,
       })
     })

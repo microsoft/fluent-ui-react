@@ -237,9 +237,11 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
               xSpacing: !!content ? 'after' : 'none',
               styles: styles.icon,
             }),
+            generateKey: false,
           })}
           {Box.create(content, {
             defaultProps: () => ({ as: 'span', styles: styles.content }),
+            generateKey: false,
           })}
           {menu &&
             Icon.create(indicatorWithDefaults, {
@@ -247,6 +249,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
                 name: vertical ? 'icon-menu-arrow-end' : 'icon-menu-arrow-down',
                 styles: styles.indicator,
               }),
+              generateKey: false,
             })}
         </ElementType>
       </Ref>
@@ -271,6 +274,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
                   submenu: true,
                   indicator,
                 }),
+                generateKey: false,
               })}
             </Popper>
           </Ref>
@@ -295,6 +299,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
           onClick: this.handleClick,
           onBlur: this.handleWrapperBlur,
         }),
+        generateKey: false,
       })
     }
     return menuItemInner

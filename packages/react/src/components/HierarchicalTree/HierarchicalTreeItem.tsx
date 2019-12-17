@@ -173,6 +173,7 @@ class HierarchicalTreeItem extends UIComponent<WithAsProp<HierarchicalTreeItemPr
             hasSubtree,
             as: hasSubtree ? 'span' : 'a',
           }),
+          generateKey: false,
           render: renderItemTitle,
           overrideProps: this.handleTitleOverrides,
         })}
@@ -185,6 +186,7 @@ class HierarchicalTreeItem extends UIComponent<WithAsProp<HierarchicalTreeItemPr
                 exclusive,
                 renderItemTitle,
               }),
+              generateKey: false,
             })}
           </Ref>
         )}

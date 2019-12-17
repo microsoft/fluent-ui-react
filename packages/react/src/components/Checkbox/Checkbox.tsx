@@ -146,6 +146,7 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
         styles: styles.label,
         className: Checkbox.slotClassNames.label,
       }),
+      generateKey: false,
     })
 
     return (
@@ -167,6 +168,7 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
             name: toggle ? 'icon-circle' : 'icon-checkmark',
             styles: toggle ? styles.toggle : styles.checkbox,
           }),
+          generateKey: false,
         })}
         {labelPosition === 'end' && labelElement}
       </ElementType>

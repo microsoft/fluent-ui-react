@@ -5,5 +5,6 @@ export default props => {
     defaultProps: () => ({
       variables: { dividerColor: 'transparent' },
     }),
+    generateKey: false,
   })
 }

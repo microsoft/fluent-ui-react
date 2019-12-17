@@ -179,6 +179,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
                   height: variables.height,
                 },
               }),
+              generateKey: false,
             })}
             {iframe && (
               <Ref innerRef={this.frameRef}>
@@ -187,6 +188,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
                     as: 'iframe',
                     styles: styles.iframe,
                   }),
+                  generateKey: false,
                   overrideProps: this.handleFrameOverrides,
                 })}
               </Ref>
@@ -204,6 +206,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
               size: 'largest',
               styles: styles.control,
             }),
+            generateKey: false,
           })}
       </ElementType>
     )

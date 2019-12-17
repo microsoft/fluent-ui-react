@@ -259,6 +259,7 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
         ...accessibility.attributes.menu,
         vertical: true,
       }),
+      generateKey: false,
       overrideProps: this.handleMenuOverrides,
     })
 
@@ -285,7 +286,7 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
           }),
     }
 
-    const popup = Popup.create(popupProps, { overrideProps })
+    const popup = Popup.create(popupProps, { generateKey: false, overrideProps })
 
     if (contextMenu) {
       return popup

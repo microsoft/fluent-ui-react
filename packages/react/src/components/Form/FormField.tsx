@@ -90,16 +90,19 @@ class FormField extends UIComponent<WithAsProp<FormFieldProps>, any> {
         htmlFor: id,
         styles: styles.label,
       }),
+      generateKey: false,
     })
 
     const messageElement = Text.create(message, {
       defaultProps: () => ({
         styles: styles.message,
       }),
+      generateKey: false,
     })
 
     const controlElement = Box.create(control || {}, {
       defaultProps: () => ({ required, id, name, type, styles: styles.control }),
+      generateKey: false,
     })
 
     const content = (

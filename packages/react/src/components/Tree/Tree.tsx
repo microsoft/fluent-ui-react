@@ -315,6 +315,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
               contentRef: elementRef,
               ...restItemForRender,
             }),
+            generateKey: true,
             overrideProps: this.handleTreeItemOverrides,
           })
 

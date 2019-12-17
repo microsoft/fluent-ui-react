@@ -105,9 +105,11 @@ class CarouselNavigationItem extends UIComponent<WithAsProp<CarouselNavigationIt
             xSpacing: !!content ? 'after' : 'none',
             styles: styles.icon,
           }),
+          generateKey: false,
         })}
         {Box.create(content, {
           defaultProps: () => ({ as: 'span', styles: styles.content }),
+          generateKey: false,
         })}
       </ElementType>
     )

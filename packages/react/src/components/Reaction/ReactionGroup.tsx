@@ -70,6 +70,7 @@ class ReactionGroup extends UIComponent<WithAsProp<ReactionGroupProps>> {
             defaultProps: () => ({
               styles: styles.reaction,
             }),
+            generateKey: true,
           }),
         )}
       </ElementType>

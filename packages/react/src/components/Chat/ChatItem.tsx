@@ -92,6 +92,7 @@ class ChatItem extends UIComponent<WithAsProp<ChatItemProps>, any> {
       gutter &&
       Box.create(gutter, {
         defaultProps: () => ({ className: ChatItem.slotClassNames.gutter, styles: styles.gutter }),
+        generateKey: false,
       })
 
     const messageElement = this.setAttachedPropValueForChatMessage(styles)
@@ -112,6 +113,7 @@ class ChatItem extends UIComponent<WithAsProp<ChatItemProps>, any> {
         className: ChatItem.slotClassNames.message,
         styles: styles.message,
       }),
+      generateKey: false,
     })
 
     // the element is ChatMessage

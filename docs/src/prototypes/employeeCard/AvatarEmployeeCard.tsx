@@ -64,6 +64,7 @@ class AvatarEmployeeCard extends React.Component<
               this.setPopupOpen(false)
             },
           }),
+          generateKey: false,
         })}
         content={{
           styles: { marginLeft: '10px' },

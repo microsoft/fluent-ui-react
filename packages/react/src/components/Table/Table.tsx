@@ -110,6 +110,7 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
             ? accessibility.childBehaviors.row
             : undefined,
         }),
+        generateKey: true,
         overrideProps,
       })
     })
@@ -134,6 +135,7 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
         ...headerRowProps,
         accessibility: accessibility.childBehaviors ? accessibility.childBehaviors.row : undefined,
       }),
+      generateKey: false,
       overrideProps,
     })
   }

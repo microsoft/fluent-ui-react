@@ -113,14 +113,21 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
 
       switch (kind) {
         case 'divider':
-          return ToolbarMenuDivider.create(item, { overrideProps: dividerOverridesFn })
+          return ToolbarMenuDivider.create(item, {
+            generateKey: true,
+            overrideProps: dividerOverridesFn,
+          })
 
         case 'group':
-          return ToolbarMenuRadioGroup.create(item, { overrideProps: radioGroupOverrides })
+          return ToolbarMenuRadioGroup.create(item, {
+            generateKey: true,
+            overrideProps: radioGroupOverrides,
+          })
 
         case 'toggle':
           return ToolbarMenuItem.create(item, {
             defaultProps: () => ({ accessibility: toolbarMenuItemCheckboxBehavior }),
+            generateKey: true,
             overrideProps: itemOverridesFn,
           })
 
@@ -130,6 +137,7 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
               submenuIndicator,
               inSubmenu: submenu,
             }),
+            generateKey: true,
             overrideProps: itemOverridesFn,
           })
       }

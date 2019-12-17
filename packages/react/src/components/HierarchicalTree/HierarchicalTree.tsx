@@ -180,6 +180,7 @@ class HierarchicalTree extends AutoControlledComponent<
           renderItemTitle,
           open: exclusive ? index === activeIndex : _.includes(activeIndexes, index),
         }),
+        generateKey: true,
         overrideProps: this.handleTreeItemOverrides,
       }),
     )

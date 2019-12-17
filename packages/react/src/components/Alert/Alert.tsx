@@ -185,6 +185,7 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
             styles: styles.header,
             ...accessibility.attributes.header,
           }),
+          generateKey: false,
         })}
         {Box.create(content, {
           defaultProps: () => ({
@@ -192,6 +193,7 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
             styles: styles.content,
             ...accessibility.attributes.content,
           }),
+          generateKey: false,
         })}
       </>
     )
@@ -203,6 +205,7 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
             className: Alert.slotClassNames.icon,
             styles: styles.icon,
           }),
+          generateKey: false,
         })}
         {Box.create(body, {
           defaultProps: () => ({
@@ -211,6 +214,7 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
             ...accessibility.attributes.body,
             styles: styles.body,
           }),
+          generateKey: false,
           overrideProps: {
             children: bodyContent,
           },
@@ -221,6 +225,7 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
             className: Alert.slotClassNames.actions,
             styles: styles.actions,
           }),
+          generateKey: false,
         })}
         {dismissible &&
           Button.create(dismissAction, {
@@ -231,6 +236,7 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
               styles: styles.dismissAction,
               ...accessibility.attributes.dismissAction,
             }),
+            generateKey: false,
             overrideProps: this.handleDismissOverrides,
           })}
       </>

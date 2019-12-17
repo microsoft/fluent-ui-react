@@ -258,12 +258,14 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
     const { open } = this.state
 
     const cancelElement = Button.create(cancelButton, {
+      generateKey: false,
       overrideProps: this.handleCancelButtonOverrides,
     })
     const confirmElement = Button.create(confirmButton, {
       defaultProps: () => ({
         primary: true,
       }),
+      generateKey: false,
       overrideProps: this.handleConfirmButtonOverrides,
     })
 
@@ -273,6 +275,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
         defaultProps: () => ({
           styles: styles.actions,
         }),
+        generateKey: false,
         overrideProps: {
           content: (
             <Flex gap="gap.smaller">
@@ -300,6 +303,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
               styles: styles.header,
               ...accessibility.attributes.header,
             }),
+            generateKey: false,
           })}
           {Button.create(headerAction, {
             defaultProps: () => ({
@@ -309,6 +313,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
               iconOnly: true,
               ...accessibility.attributes.headerAction,
             }),
+            generateKey: false,
           })}
 
           {Box.create(content, {
@@ -317,6 +322,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
               className: Dialog.slotClassNames.content,
               ...accessibility.attributes.content,
             }),
+            generateKey: false,
           })}
 
           {DialogFooter.create(footer, {
@@ -325,6 +331,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
               className: Dialog.slotClassNames.footer,
               styles: styles.footer,
             },
+            generateKey: false,
           })}
         </ElementType>
       </Ref>
@@ -359,6 +366,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
                     className: Dialog.slotClassNames.overlay,
                     styles: styles.overlay,
                   }),
+                  generateKey: false,
                   overrideProps: { content: dialogContent },
                 })}
               </Ref>

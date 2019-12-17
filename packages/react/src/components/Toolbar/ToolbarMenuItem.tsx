@@ -298,6 +298,7 @@ class ToolbarMenuItem extends AutoControlledComponent<
           <>
             {Icon.create(icon, {
               defaultProps: () => ({ xSpacing: !!content ? 'after' : 'none' }),
+              generateKey: false,
             })}
             {content}
             {active &&
@@ -306,6 +307,7 @@ class ToolbarMenuItem extends AutoControlledComponent<
                   className: ToolbarMenuItem.slotClassNames.activeIndicator,
                   styles: styles.activeIndicator,
                 }),
+                generateKey: false,
               })}
             {menu &&
               Icon.create(submenuIndicator, {
@@ -313,6 +315,7 @@ class ToolbarMenuItem extends AutoControlledComponent<
                   name: 'icon-menu-arrow-end',
                   styles: styles.submenuIndicator,
                 }),
+                generateKey: false,
               })}
           </>
         )}
@@ -329,6 +332,7 @@ class ToolbarMenuItem extends AutoControlledComponent<
             e.stopPropagation()
           },
         }),
+        generateKey: false,
         overrideProps: {
           trigger: elementType,
           children: undefined, // force-reset `children` defined for `Popup` as it collides with the `trigger`
@@ -357,6 +361,7 @@ class ToolbarMenuItem extends AutoControlledComponent<
                       submenu: true,
                       submenuIndicator,
                     }),
+                    generateKey: false,
                     overrideProps: this.handleMenuOverrides(getRefs),
                   })}
                 </Popper>
@@ -381,6 +386,7 @@ class ToolbarMenuItem extends AutoControlledComponent<
         ...accessibility.attributes.wrapper,
         ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, wrapper),
       }),
+      generateKey: false,
       overrideProps: () => ({
         children: (
           <>

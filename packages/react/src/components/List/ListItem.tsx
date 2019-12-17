@@ -123,36 +123,42 @@ class ListItem extends UIComponent<WithAsProp<ListItemProps>> {
         className: ListItem.slotClassNames.content,
         styles: styles.content,
       }),
+      generateKey: false,
     })
     const contentMediaElement = Box.create(contentMedia, {
       defaultProps: () => ({
         className: ListItem.slotClassNames.contentMedia,
         styles: styles.contentMedia,
       }),
+      generateKey: false,
     })
     const headerElement = Box.create(header, {
       defaultProps: () => ({
         className: ListItem.slotClassNames.header,
         styles: styles.header,
       }),
+      generateKey: false,
     })
     const headerMediaElement = Box.create(headerMedia, {
       defaultProps: () => ({
         className: ListItem.slotClassNames.headerMedia,
         styles: styles.headerMedia,
       }),
+      generateKey: false,
     })
     const endMediaElement = Box.create(endMedia, {
       defaultProps: () => ({
         className: ListItem.slotClassNames.endMedia,
         styles: styles.endMedia,
       }),
+      generateKey: false,
     })
     const mediaElement = Box.create(media, {
       defaultProps: () => ({
         className: ListItem.slotClassNames.media,
         styles: styles.media,
       }),
+      generateKey: false,
     })
 
     return (

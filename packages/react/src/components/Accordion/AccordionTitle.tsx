@@ -122,6 +122,7 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
             defaultProps: () => ({
               styles: styles.indicator,
             }),
+            generateKey: false,
           })}
           main={rtlTextContainer.createFor({ element: content })}
         />

@@ -118,6 +118,7 @@ class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
 
     const svgElement = Box.create(svg, {
       defaultProps: () => ({ className: Loader.slotClassNames.svg, styles: styles.svg }),
+      generateKey: false,
     })
 
     return (
@@ -133,9 +134,11 @@ class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
               className: Loader.slotClassNames.indicator,
               styles: styles.indicator,
             }),
+            generateKey: false,
           })}
           {Text.create(label, {
             defaultProps: () => ({ className: Loader.slotClassNames.label, styles: styles.label }),
+            generateKey: false,
           })}
         </ElementType>
       )

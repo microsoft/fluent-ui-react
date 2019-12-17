@@ -236,6 +236,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
                 targetRef={this.itemRef}
               >
                 {ToolbarMenu.create(menu, {
+                  generateKey: false,
                   overrideProps: this.handleMenuOverrides(getRefs, variables),
                 })}
               </Popper>
@@ -256,6 +257,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
         defaultProps: () => ({
           trapFocus: true,
         }),
+        generateKey: false,
         overrideProps: {
           trigger: itemElement,
           children: undefined, // force-reset `children` defined for `Popup` as it collides with the `trigger`
@@ -279,6 +281,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
             ...accessibility.attributes.wrapper,
             ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, wrapper),
           }),
+          generateKey: false,
           overrideProps: predefinedProps => ({
             children: contentElement,
             onClick: e => {

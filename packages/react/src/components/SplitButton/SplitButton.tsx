@@ -179,6 +179,7 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
         secondary,
         disabled,
       }),
+      generateKey: false,
       overrideProps: this.handleMenuButtonTriggerOverrides,
     })
 
@@ -197,6 +198,7 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
               open: this.state.open,
               trigger,
             }),
+            generateKey: false,
             overrideProps: this.handleMenuButtonOverrides,
           },
         )}
@@ -210,6 +212,7 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
             secondary,
             ...accessibility.attributes.toggleButton,
           }),
+          generateKey: false,
           overrideProps: (predefinedProps: ButtonProps) => ({
             onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
               _.invoke(predefinedProps, 'onClick', e, buttonProps)

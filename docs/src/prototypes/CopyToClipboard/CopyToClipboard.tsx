@@ -54,6 +54,7 @@ const CopyToClipboard: React.FC<CopyToClipboardProps> = props => {
   }
 
   return Tooltip.create(tooltip, {
+    generateKey: false,
     overrideProps: {
       trigger: renderedTrigger,
       children: undefined, // force-reset `children` defined for `Tooltip` as it collides with the `trigger

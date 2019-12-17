@@ -92,15 +92,18 @@ class Attachment extends UIComponent<WithAsProp<AttachmentProps>> {
         {icon &&
           Icon.create(icon, {
             defaultProps: () => ({ size: 'larger', styles: styles.icon }),
+            generateKey: false,
           })}
         {(header || description) && (
           <div className={classes.content}>
             {Text.create(header, {
               defaultProps: () => ({ styles: styles.header }),
+              generateKey: false,
             })}
 
             {Text.create(description, {
               defaultProps: () => ({ styles: styles.description }),
+              generateKey: false,
             })}
           </div>
         )}
@@ -112,6 +115,7 @@ class Attachment extends UIComponent<WithAsProp<AttachmentProps>> {
               styles: styles.action,
               className: Attachment.slotClassNames.action,
             }),
+            generateKey: false,
           })}
         {!_.isNil(progress) && <div className={classes.progress} />}
       </ElementType>

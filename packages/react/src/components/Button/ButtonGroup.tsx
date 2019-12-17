@@ -80,6 +80,7 @@ class ButtonGroup extends UIComponent<WithAsProp<ButtonGroupProps>, any> {
               circular,
               styles: this.getStyleForButtonIndex(styles, idx === 0, idx === buttons.length - 1),
             }),
+            generateKey: true,
           }),
         )}
       </ElementType>

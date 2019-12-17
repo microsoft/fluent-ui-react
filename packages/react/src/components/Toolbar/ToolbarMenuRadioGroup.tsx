@@ -114,6 +114,7 @@ class ToolbarMenuRadioGroup extends UIComponent<WithAsProp<ToolbarMenuRadioGroup
               active: activeIndex === index,
               index,
             }),
+            generateKey: true,
             overrideProps: this.handleItemOverrides(variables),
           }),
         )}
@@ -128,6 +129,7 @@ class ToolbarMenuRadioGroup extends UIComponent<WithAsProp<ToolbarMenuRadioGroup
         ...accessibility.attributes.wrapper,
         ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.wrapper, wrapper),
       }),
+      generateKey: false,
       overrideProps: {
         children: content,
       },

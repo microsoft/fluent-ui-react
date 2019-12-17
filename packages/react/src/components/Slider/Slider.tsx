@@ -205,6 +205,7 @@ class Slider extends AutoControlledComponent<WithAsProp<SliderProps>, SliderStat
                 styles: styles.input,
                 ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.input, htmlInputProps),
               }),
+              generateKey: false,
               overrideProps: this.handleInputOverrides,
             })}
           </Ref>

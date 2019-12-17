@@ -103,6 +103,7 @@ class TableCell extends UIComponent<WithAsProp<any>, any> {
             ? children
             : Box.create(content, {
                 defaultProps: () => ({ as: 'div', styles: styles.content }),
+                generateKey: false,
               })}
         </ElementType>
       </Ref>

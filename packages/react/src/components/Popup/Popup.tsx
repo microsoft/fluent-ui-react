@@ -519,6 +519,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
         trapFocus,
         autoFocus,
       }),
+      generateKey: false,
       overrideProps: this.getContentProps,
     })
 

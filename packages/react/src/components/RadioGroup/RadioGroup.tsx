@@ -183,6 +183,7 @@ class RadioGroup extends AutoControlledComponent<WithAsProp<RadioGroupProps>, an
           vertical,
           ...(index === 0 && isNoneValueSelected && { tabIndex: 0 }),
         }),
+        generateKey: true,
         overrideProps: this.handleItemOverrides,
       }),
     )

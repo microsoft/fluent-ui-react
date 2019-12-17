@@ -78,12 +78,14 @@ class Reaction extends UIComponent<WithAsProp<ReactionProps>> {
                 className: Reaction.slotClassNames.icon,
                 styles: styles.icon,
               }),
+              generateKey: false,
             })}
             {Box.create(content, {
               defaultProps: () => ({
                 className: Reaction.slotClassNames.content,
                 styles: styles.content,
               }),
+              generateKey: false,
             })}
           </>
         )}

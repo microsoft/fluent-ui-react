@@ -280,6 +280,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
                         itemPositionText: getItemPositionText(index, items.length),
                       }),
                     }),
+                    generateKey: false,
                   })}
                 </Ref>
               )
@@ -337,6 +338,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
                 paddlePrevious,
               ),
             }),
+            generateKey: false,
             overrideProps: (predefinedProps: ButtonProps) =>
               this.handlePaddleOverrides(predefinedProps, 'paddlePrevious'),
           })}
@@ -351,6 +353,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
               ...accessibility.attributes.paddleNext,
               ...applyAccessibilityKeyHandlers(accessibility.keyHandlers.paddleNext, paddleNext),
             }),
+            generateKey: false,
             overrideProps: (predefinedProps: ButtonProps) =>
               this.handlePaddleOverrides(predefinedProps, 'paddleNext'),
           })}
@@ -375,6 +378,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
           iconOnly: true,
           activeIndex,
         }),
+        generateKey: false,
         overrideProps: (predefinedProps: CarouselNavigationItemProps) => ({
           onItemClick: (e: React.SyntheticEvent, itemProps: CarouselNavigationItemProps) => {
             const { index } = itemProps

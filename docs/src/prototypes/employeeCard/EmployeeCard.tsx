@@ -74,6 +74,7 @@ class EmployeeCard extends React.Component<Extendable<EmployeeCardProps>, any> {
             size: 'largest',
             name: `${firstName} ${lastName}`,
           }),
+          generateKey: false,
         })}
       </Grid>
     )

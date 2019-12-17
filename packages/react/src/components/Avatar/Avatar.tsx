@@ -97,6 +97,7 @@ class Avatar extends UIComponent<WithAsProp<AvatarProps>, any> {
             title: name,
             styles: styles.image,
           }),
+          generateKey: false,
         })}
         {!image &&
           Label.create(label || {}, {
@@ -106,6 +107,7 @@ class Avatar extends UIComponent<WithAsProp<AvatarProps>, any> {
               title: name,
               styles: styles.label,
             }),
+            generateKey: false,
           })}
         {Status.create(status, {
           defaultProps: () => ({
@@ -116,6 +118,7 @@ class Avatar extends UIComponent<WithAsProp<AvatarProps>, any> {
               borderWidth: variables.statusBorderWidth,
             },
           }),
+          generateKey: false,
         })}
       </ElementType>
     )
