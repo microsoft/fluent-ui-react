@@ -1,8 +1,9 @@
-import { SplitButton } from '@fluentui/react'
+import { SplitButton, MenuButton } from '@fluentui/react'
 
 const selectors = {
   button: `.${SplitButton.className}`,
   toggleButton: `.${SplitButton.slotClassNames.toggleButton}`,
+  menu: `.${MenuButton.slotClassNames.menu}`,
 }
 
 const getScreenerSteps = (): ScreenerSteps => [
@@ -12,8 +13,7 @@ const getScreenerSteps = (): ScreenerSteps => [
       .snapshot('Hovers split button')
       .click(selectors.toggleButton)
       .snapshot('Clicks on toggle button should show menu')
-      .keys(selectors.toggleButton, keys.downArrow)
-      .keys(selectors.toggleButton, keys.downArrow)
+      .keys(selectors.menu, keys.downArrow)
       .snapshot('Navigates through menu of toggle button'),
 ]
 
