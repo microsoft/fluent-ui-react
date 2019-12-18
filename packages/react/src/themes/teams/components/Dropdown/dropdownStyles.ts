@@ -132,12 +132,13 @@ const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, Dropdow
         },
       },
       ':active': {
+        color: v.color, // required for HC theme
         ...transparentColorStyle,
         animationName: 'unset',
         animationDuration: 'unset',
       },
       ':hover': {
-        color: v.color, // shouldn't be necessary but required for HC ?
+        color: v.color, // required for HC theme
         ...transparentColorStyle,
       },
       ...(p.inline && {

@@ -8,4 +8,6 @@ export interface DropdownVariablesHC extends DropdownVariables {
 export default (siteVars): Partial<DropdownVariablesHC> => ({
   borderColor: siteVars.colors.white,
   borderColorHover: siteVars.accessibleYellow,
+  borderWidth: '1px',
+  listBorderWidth: '1px',
 })
