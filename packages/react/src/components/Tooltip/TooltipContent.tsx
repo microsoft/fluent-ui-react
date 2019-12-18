@@ -78,7 +78,7 @@ class TooltipContent extends UIComponent<WithAsProp<TooltipContentProps>> {
   }
 }
 
-TooltipContent.create = createShorthandFactory({ Component: TooltipContent, mappedProp: 'content' })
+TooltipContent.create = createShorthandFactory({ Component: TooltipContent })
 
 /**
  * A TooltipContent contains the content of a Tooltip component.

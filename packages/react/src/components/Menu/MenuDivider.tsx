@@ -64,7 +64,7 @@ class MenuDivider extends UIComponent<WithAsProp<MenuDividerProps>> {
   }
 }
 
-MenuDivider.create = createShorthandFactory({ Component: MenuDivider, mappedProp: 'content' })
+MenuDivider.create = createShorthandFactory({ Component: MenuDivider })
 
 /**
  * A MenuDivider is non-actionable element that visually segments items of Menu.

@@ -154,7 +154,7 @@ DropdownItem.slotClassNames = {
   checkableIndicator: `${DropdownItem.className}__checkable-indicator`,
 }
 
-DropdownItem.create = createShorthandFactory({ Component: DropdownItem, mappedProp: 'header' })
+DropdownItem.create = createShorthandFactory({ Component: DropdownItem })
 
 /**
  * A DropdownItem represents an option of Dropdown list.

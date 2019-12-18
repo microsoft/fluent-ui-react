@@ -211,10 +211,7 @@ class HierarchicalTreeItem extends UIComponent<WithAsProp<HierarchicalTreeItemPr
   }
 }
 
-HierarchicalTreeItem.create = createShorthandFactory({
-  Component: HierarchicalTreeItem,
-  mappedProp: 'title',
-})
+HierarchicalTreeItem.create = createShorthandFactory({ Component: HierarchicalTreeItem })
 
 /**
  * A TreeItem renders an item of a Tree.

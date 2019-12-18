@@ -359,10 +359,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
   }
 }
 
-Tree.create = createShorthandFactory({
-  Component: Tree,
-  mappedArrayProp: 'items',
-})
+Tree.create = createShorthandFactory({ Component: Tree })
 
 /**
  * A Tree displays data organised in tree hierarchy.

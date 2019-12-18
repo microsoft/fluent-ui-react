@@ -366,7 +366,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
   }
 }
 
-ChatMessage.create = createShorthandFactory({ Component: ChatMessage, mappedProp: 'content' })
+ChatMessage.create = createShorthandFactory({ Component: ChatMessage })
 ChatMessage.slotClassNames = {
   actionMenu: `${ChatMessage.className}__actions`,
   author: `${ChatMessage.className}__author`,

@@ -323,4 +323,4 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
   }
 }
 
-Tooltip.create = createShorthandFactory({ Component: Tooltip, mappedProp: 'content' })
+Tooltip.create = createShorthandFactory({ Component: Tooltip })

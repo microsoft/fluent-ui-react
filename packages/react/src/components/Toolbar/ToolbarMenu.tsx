@@ -151,7 +151,7 @@ class ToolbarMenu extends UIComponent<ToolbarMenuProps> {
   }
 }
 
-ToolbarMenu.create = createShorthandFactory({ Component: ToolbarMenu, mappedArrayProp: 'items' })
+ToolbarMenu.create = createShorthandFactory({ Component: ToolbarMenu })
 
 /**
  * A ToolbarMenu creates a pop-up menu attached to a ToolbarItem.

@@ -186,7 +186,7 @@ class ListItem extends UIComponent<WithAsProp<ListItemProps>> {
   }
 }
 
-ListItem.create = createShorthandFactory({ Component: ListItem, mappedProp: 'content' })
+ListItem.create = createShorthandFactory({ Component: ListItem })
 ListItem.slotClassNames = {
   header: `${ListItem.className}__header`,
   headerMedia: `${ListItem.className}__headerMedia`,

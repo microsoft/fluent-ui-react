@@ -143,7 +143,7 @@ class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
   }
 }
 
-Loader.create = createShorthandFactory({ Component: Loader, mappedProp: 'label' })
+Loader.create = createShorthandFactory({ Component: Loader })
 
 /**
  * A Loader alerts a user to wait for an activity to complete.

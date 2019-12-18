@@ -345,7 +345,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
   }
 }
 
-ToolbarItem.create = createShorthandFactory({ Component: ToolbarItem, mappedProp: 'content' })
+ToolbarItem.create = createShorthandFactory({ Component: ToolbarItem })
 
 /**
  * A ToolbarItem renders Toolbar item as a button with an icon.

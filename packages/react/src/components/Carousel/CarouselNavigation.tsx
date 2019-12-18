@@ -125,10 +125,7 @@ class CarouselNavigation extends UIComponent<WithAsProp<CarouselNavigationProps>
   }
 }
 
-CarouselNavigation.create = createShorthandFactory({
-  Component: CarouselNavigation,
-  mappedArrayProp: 'items',
-})
+CarouselNavigation.create = createShorthandFactory({ Component: CarouselNavigation })
 
 /**
  * A Carousel navigation helps switching between Carousel items.

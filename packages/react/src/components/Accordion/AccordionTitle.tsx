@@ -142,7 +142,7 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
   }
 }
 
-AccordionTitle.create = createShorthandFactory({ Component: AccordionTitle, mappedProp: 'content' })
+AccordionTitle.create = createShorthandFactory({ Component: AccordionTitle })
 
 AccordionTitle.slotClassNames = {
   content: `${AccordionTitle.className}__content`,

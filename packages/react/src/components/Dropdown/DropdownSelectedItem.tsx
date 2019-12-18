@@ -192,10 +192,7 @@ DropdownSelectedItem.slotClassNames = {
   image: `${DropdownSelectedItem.className}__image`,
 }
 
-DropdownSelectedItem.create = createShorthandFactory({
-  Component: DropdownSelectedItem,
-  mappedProp: 'header',
-})
+DropdownSelectedItem.create = createShorthandFactory({ Component: DropdownSelectedItem })
 
 /**
  * A DropdownSelectedItem represents a selected item of 'multiple-selection' Dropdown.

@@ -96,7 +96,7 @@ class Header extends UIComponent<WithAsProp<HeaderProps>, any> {
   }
 }
 
-Header.create = createShorthandFactory({ Component: Header, mappedProp: 'content' })
+Header.create = createShorthandFactory({ Component: Header })
 
 /**
  * A Header organises the content by declaring a content's topic.

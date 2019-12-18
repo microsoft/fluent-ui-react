@@ -87,10 +87,7 @@ class HierarchicalTreeTitle extends UIComponent<WithAsProp<HierarchicalTreeTitle
   }
 }
 
-HierarchicalTreeTitle.create = createShorthandFactory({
-  Component: HierarchicalTreeTitle,
-  mappedProp: 'content',
-})
+HierarchicalTreeTitle.create = createShorthandFactory({ Component: HierarchicalTreeTitle })
 
 /**
  * A TreeTitle renders a title of TreeItem.

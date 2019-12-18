@@ -61,7 +61,7 @@ class Image extends UIComponent<WithAsProp<ImageProps>, any> {
   }
 }
 
-Image.create = createShorthandFactory({ Component: Image, mappedProp: 'src', allowsJSX: false })
+Image.create = createShorthandFactory({ Component: Image, allowsJSX: false })
 
 /**
  * An Image is a graphic representation of something.

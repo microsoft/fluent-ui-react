@@ -71,7 +71,7 @@ class Divider extends UIComponent<WithAsProp<DividerProps>, any> {
   }
 }
 
-Divider.create = createShorthandFactory({ Component: Divider, mappedProp: 'content' })
+Divider.create = createShorthandFactory({ Component: Divider })
 
 /**
  * A Divider visually segments content.

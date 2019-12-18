@@ -47,10 +47,7 @@ class ToolbarMenuDivider extends UIComponent<WithAsProp<ToolbarMenuDividerProps>
   }
 }
 
-ToolbarMenuDivider.create = createShorthandFactory({
-  Component: ToolbarMenuDivider,
-  mappedProp: 'content',
-})
+ToolbarMenuDivider.create = createShorthandFactory({ Component: ToolbarMenuDivider })
 
 /**
  * A ToolbarMenuDivider adds non-actionable separator between items of ToolbarMenu.

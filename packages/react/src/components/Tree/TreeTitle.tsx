@@ -99,10 +99,7 @@ class TreeTitle extends UIComponent<WithAsProp<TreeTitleProps>> {
   }
 }
 
-TreeTitle.create = createShorthandFactory({
-  Component: TreeTitle,
-  mappedProp: 'content',
-})
+TreeTitle.create = createShorthandFactory({ Component: TreeTitle })
 
 /**
  * A TreeTitle renders a title of TreeItem.

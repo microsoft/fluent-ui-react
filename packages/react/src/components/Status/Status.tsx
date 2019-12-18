@@ -73,7 +73,7 @@ class Status extends UIComponent<WithAsProp<StatusProps>, any> {
   }
 }
 
-Status.create = createShorthandFactory({ Component: Status, mappedProp: 'state' })
+Status.create = createShorthandFactory({ Component: Status })
 
 /**
  * A Status represents someone's or something's state.

@@ -13,8 +13,6 @@ import { consoleUtil } from 'test/utils'
 type ShorthandConfig = {
   Component?: React.ReactType
   defaultProps?: () => Props
-  mappedProp?: string
-  mappedArrayProp?: string
   overrideProps?: (Props & ((props: Props) => Props)) | Props
   generateKey?: boolean
   valueOrRenderCallback?: ShorthandValue<Props>
@@ -27,8 +25,6 @@ type ShorthandConfig = {
 const getShorthand = ({
   Component = 'div',
   defaultProps,
-  mappedProp = '',
-  mappedArrayProp = '',
   overrideProps,
   generateKey,
   valueOrRenderCallback,
@@ -36,8 +32,6 @@ const getShorthand = ({
 }: ShorthandConfig) =>
   createShorthand({
     Component,
-    mappedProp,
-    mappedArrayProp,
     valueOrRenderCallback,
     options: {
       defaultProps,
@@ -93,19 +87,10 @@ const itAppliesDefaultProps = (valueOrRenderCallback: ShorthandValue<Props>) => 
   })
 }
 
-const itDoesNotIncludePropsFromMappedProp = valueOrRenderCallback => {
-  test('does not include props from mappedProp', () => {
-    const mappedProp = 'data-foo'
-    const wrapper = shallow(getShorthand({ valueOrRenderCallback, mappedProp }))
-
-    expect(wrapper.prop(mappedProp)).not.toBeDefined()
-  })
-}
-
 const itMergesClassNames = (
   classNameSource: string,
   extraClassName: string,
-  shorthandConfig: { valueOrRenderCallback?: ShorthandValue<Props>; mappedProp?: string },
+  shorthandConfig: { valueOrRenderCallback?: ShorthandValue<Props> },
 ) => {
   test(`merges defaultProps className and ${classNameSource} className`, () => {
     const defaultProps = () => ({ className: 'default' })
@@ -124,26 +109,10 @@ const itMergesClassNames = (
   })
 }
 
-const itAppliesProps = (
-  propsSource: string,
-  expectedProps: Props,
-  shorthandConfig: ShorthandConfig,
-) => {
-  test(`applies props from the ${propsSource} props`, () => {
-    testCreateShorthand(shorthandConfig, expectedProps)
-  })
-}
-
 const itOverridesDefaultProps = (propsSource, defaultProps, expectedProps, shorthandConfig) => {
   test(`overrides defaultProps with ${propsSource} props`, () => {
     testCreateShorthand({ defaultProps, ...shorthandConfig }, expectedProps)
   })
-}
-
-const mappedProps = {
-  iframe: 'src',
-  img: 'src',
-  input: 'type',
 }
 
 const itOverridesDefaultPropsWithFalseyProps = (propsSource, shorthandConfig) => {
@@ -166,20 +135,13 @@ describe('factories', () => {
     })
 
     test('does not throw if passed a function Component', () => {
-      const goodUsage = () =>
-        createShorthandFactory({ Component: () => <div />, mappedProp: 'children' })
+      const goodUsage = () => createShorthandFactory({ Component: () => <div /> })
 
       expect(goodUsage).not.toThrowError()
     })
 
     test('does not throw if passed a string Component', () => {
-      const goodUsage = () => createShorthandFactory({ Component: 'div', mappedProp: 'className' })
-
-      expect(goodUsage).not.toThrowError()
-    })
-
-    test('does not throw if do not passed `mappedProp`', () => {
-      const goodUsage = () => createShorthandFactory({ Component: () => <div /> })
+      const goodUsage = () => createShorthandFactory({ Component: 'div' })
 
       expect(goodUsage).not.toThrowError()
     })
@@ -189,7 +151,7 @@ describe('factories', () => {
       const badComponents: any = [undefined, null, true, false, [], {}, 123]
 
       _.each(badComponents, badComponent => {
-        const badUsage = () => createShorthandFactory({ Component: badComponent, mappedProp: '' })
+        const badUsage = () => createShorthandFactory({ Component: badComponent })
 
         expect(badUsage).toThrowError()
       })
@@ -202,13 +164,13 @@ describe('factories', () => {
     })
 
     test('does not throw if passed a function Component', () => {
-      const goodUsage = () => createShorthand({ Component: () => <div />, mappedProp: '' })
+      const goodUsage = () => createShorthand({ Component: () => <div /> })
 
       expect(goodUsage).not.toThrowError()
     })
 
     test('does not throw if passed a string Component', () => {
-      const goodUsage = () => createShorthand({ Component: 'div', mappedProp: '' })
+      const goodUsage = () => createShorthand({ Component: 'div' })
 
       expect(goodUsage).not.toThrowError()
     })
@@ -218,7 +180,7 @@ describe('factories', () => {
       const badComponents: any[] = [undefined, null, true, false, [], {}, 123]
 
       _.each(badComponents, badComponent => {
-        const badUsage = () => createShorthand({ Component: badComponent, mappedProp: '' })
+        const badUsage = () => createShorthand({ Component: badComponent })
 
         expect(badUsage).toThrowError()
       })
@@ -613,137 +575,13 @@ describe('factories', () => {
     describe('from an element', () => {
       itReturnsAValidElement(<div />)
       itAppliesDefaultProps(<div />)
-      itMergesClassNames('mappedProp', 'mapped', {
-        valueOrRenderCallback: <div />,
-        mappedProp: 'className',
-      })
-
-      itAppliesProps(
-        'mappedProp',
-        { 'data-prop': <div /> },
-        {
-          valueOrRenderCallback: <div />,
-          mappedProp: 'data-prop',
-        },
-      )
-      itOverridesDefaultProps(
-        'mappedProp',
-        () => ({ some: 'defaults', overridden: null }),
-        { some: 'defaults', overridden: <div /> },
-        {
-          valueOrRenderCallback: <div />,
-          mappedProp: 'overridden',
-        },
-      )
     })
 
     describe('from a string', () => {
       itReturnsAValidElement('foo')
       itAppliesDefaultProps('foo')
-      itMergesClassNames('mappedProp', 'mapped', {
-        valueOrRenderCallback: 'foo',
-        mappedProp: 'className',
-      })
 
-      itAppliesProps(
-        'mappedProp',
-        { 'data-prop': 'foo' },
-        {
-          valueOrRenderCallback: 'foo',
-          mappedProp: 'data-prop',
-        },
-      )
-
-      itOverridesDefaultProps(
-        'mappedProp',
-        () => ({ some: 'defaults', overridden: 'false' }),
-        { some: 'defaults', overridden: 'true' },
-        {
-          valueOrRenderCallback: 'true',
-          mappedProp: 'overridden',
-        },
-      )
-
-      const mappedProp = 'test-mapped-prop'
       const value = 'test-value'
-
-      describe(`when sending HTML tag `, () => {
-        _.forEach(mappedProps, (val, as) => {
-          const testMsg = `spreads { ${[mappedProps[as]]}: '${value}' }`
-
-          describe(`'${as}' as 'as' prop to defaultProps`, () => {
-            test(`overrides ${mappedProp} and ${testMsg}`, () => {
-              testCreateShorthand(
-                { mappedProp, valueOrRenderCallback: value, defaultProps: () => ({ as }) },
-                { as, [mappedProps[as]]: value },
-              )
-            })
-          })
-
-          describe(`'${as}' as 'as' prop to overrideProps`, () => {
-            test(`overrides ${mappedProp} and ${testMsg}`, () => {
-              testCreateShorthand(
-                { mappedProp, valueOrRenderCallback: value, overrideProps: { as } },
-                { as, [mappedProps[as]]: value },
-              )
-            })
-          })
-
-          describe(`'${as}' as 'as' prop to overrideProps`, () => {
-            test(`overrides defaultProps, ${mappedProp} and ${testMsg}`, () => {
-              testCreateShorthand(
-                {
-                  mappedProp,
-                  valueOrRenderCallback: value,
-                  defaultProps: () => ({ as: 'overriden' }),
-                  overrideProps: { as },
-                },
-                { as, [mappedProps[as]]: value },
-              )
-            })
-          })
-        })
-      })
-
-      describe(`when sending ${mappedProp} as mappedProp`, () => {
-        const testMsg = `spreads { ${[mappedProp]}: '${value}' }`
-
-        describe(`and an unsupported tag as 'as' prop to defaultProps`, () => {
-          test(testMsg, () => {
-            testCreateShorthand(
-              {
-                mappedProp,
-                valueOrRenderCallback: value,
-                defaultProps: () => ({ as: 'unsupported' }),
-              },
-              { as: 'unsupported', [mappedProp]: value },
-            )
-          })
-        })
-
-        describe(`and an unsupported tag as 'as' prop to overrideProps`, () => {
-          test(testMsg, () => {
-            testCreateShorthand(
-              { mappedProp, valueOrRenderCallback: value, overrideProps: { as: 'unsupported' } },
-              { as: 'unsupported', [mappedProp]: value },
-            )
-          })
-        })
-
-        describe(`an unsupported tag as 'as' prop to overrideProps and a supported tag to defaultProps`, () => {
-          test(testMsg, () => {
-            testCreateShorthand(
-              {
-                mappedProp,
-                valueOrRenderCallback: value,
-                defaultProps: () => ({ as: 'div' }),
-                overrideProps: { as: 'unsupported' },
-              },
-              { as: 'unsupported', [mappedProp]: value },
-            )
-          })
-        })
-      })
 
       describe(`when sending no mappedProp`, () => {
         const testMsg = `spreads { children: '${value}' } by default`
@@ -784,7 +622,6 @@ describe('factories', () => {
     describe('from a props object', () => {
       itReturnsAValidElement({})
       itAppliesDefaultProps({})
-      itDoesNotIncludePropsFromMappedProp({})
       itMergesClassNames('props object', 'user', {
         valueOrRenderCallback: { className: 'user' },
       })
@@ -800,28 +637,6 @@ describe('factories', () => {
 
       itOverridesDefaultPropsWithFalseyProps('props object', {
         valueOrRenderCallback: { undef: undefined, nil: null, zero: 0, empty: '' },
-      })
-    })
-
-    describe('from an array', () => {
-      const mappedArrayProp = 'test-mapped-prop-ar-array'
-      const value = ['test-value']
-
-      describe(`when sending mappedArrayProp`, () => {
-        const testMsg = `spreads { ${mappedArrayProp}: '${value}' }`
-
-        describe(`and an unsupported tag as 'as' prop to defaultProps`, () => {
-          test(testMsg, () => {
-            testCreateShorthand(
-              {
-                mappedArrayProp,
-                valueOrRenderCallback: value,
-                defaultProps: () => ({ as: 'unsupported' }),
-              },
-              { as: 'unsupported', [mappedArrayProp]: value },
-            )
-          })
-        })
       })
     })
 

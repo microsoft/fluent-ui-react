@@ -179,10 +179,7 @@ Checkbox.slotClassNames = {
   indicator: `${Checkbox.className}__indicator`,
 }
 
-Checkbox.create = createShorthandFactory({
-  Component: Checkbox,
-  mappedProp: 'label',
-})
+Checkbox.create = createShorthandFactory({ Component: Checkbox })
 
 /**
  * A Checkbox allows a user to make a choice between two mutually exclusive options.

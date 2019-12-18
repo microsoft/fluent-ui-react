@@ -141,7 +141,7 @@ class Attachment extends UIComponent<WithAsProp<AttachmentProps>> {
   }
 }
 
-Attachment.create = createShorthandFactory({ Component: Attachment, mappedProp: 'header' })
+Attachment.create = createShorthandFactory({ Component: Attachment })
 Attachment.slotClassNames = {
   action: `${Attachment.className}__action`,
 }

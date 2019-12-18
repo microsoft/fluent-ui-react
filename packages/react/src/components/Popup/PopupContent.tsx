@@ -148,7 +148,7 @@ PopupContent.slotClassNames = {
   content: `${PopupContent.className}__content`,
 }
 
-PopupContent.create = createShorthandFactory({ Component: PopupContent, mappedProp: 'content' })
+PopupContent.create = createShorthandFactory({ Component: PopupContent })
 
 /**
  * A PopupContent displays the content of a Popup component.

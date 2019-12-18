@@ -195,7 +195,7 @@ class Button extends UIComponent<WithAsProp<ButtonProps>> {
   }
 }
 
-Button.create = createShorthandFactory({ Component: Button, mappedProp: 'content' })
+Button.create = createShorthandFactory({ Component: Button })
 
 /**
  * A Button enables users to take an action, such as submitting a form, opening a dialog, etc.

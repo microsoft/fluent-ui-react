@@ -202,10 +202,7 @@ class HierarchicalTree extends AutoControlledComponent<
   }
 }
 
-HierarchicalTree.create = createShorthandFactory({
-  Component: HierarchicalTree,
-  mappedArrayProp: 'items',
-})
+HierarchicalTree.create = createShorthandFactory({ Component: HierarchicalTree })
 
 /**
  * (DEPRECATED) A Tree displays data organised in tree hierarchy.

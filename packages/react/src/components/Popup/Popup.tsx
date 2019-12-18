@@ -634,4 +634,4 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   }
 }
 
-Popup.create = createShorthandFactory({ Component: Popup, mappedProp: 'content' })
+Popup.create = createShorthandFactory({ Component: Popup })

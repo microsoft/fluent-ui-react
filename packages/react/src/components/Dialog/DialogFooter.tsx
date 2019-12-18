@@ -39,7 +39,7 @@ class DialogFooter extends UIComponent<WithAsProp<DialogFooterProps>> {
   }
 }
 
-DialogFooter.create = createShorthandFactory({ Component: DialogFooter, mappedProp: 'content' })
+DialogFooter.create = createShorthandFactory({ Component: DialogFooter })
 
 /**
  * A DialogFooter represents footer content in Dialog, usually shows dialog actions.

@@ -130,10 +130,7 @@ class CarouselNavigationItem extends UIComponent<WithAsProp<CarouselNavigationIt
   }
 }
 
-CarouselNavigationItem.create = createShorthandFactory({
-  Component: CarouselNavigationItem,
-  mappedArrayProp: 'content',
-})
+CarouselNavigationItem.create = createShorthandFactory({ Component: CarouselNavigationItem })
 
 /**
  * A CarouselItem is an actionable item within a Carousel.

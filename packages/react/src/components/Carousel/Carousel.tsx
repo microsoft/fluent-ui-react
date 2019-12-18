@@ -416,10 +416,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
   }
 }
 
-Carousel.create = createShorthandFactory({
-  Component: Carousel,
-  mappedArrayProp: 'items',
-})
+Carousel.create = createShorthandFactory({ Component: Carousel })
 
 /**
  * A Carousel displays data organised as a gallery.

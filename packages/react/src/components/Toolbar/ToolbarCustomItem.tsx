@@ -93,10 +93,7 @@ class ToolbarCustomItem extends UIComponent<WithAsProp<ToolbarCustomItemProps>> 
   }
 }
 
-ToolbarCustomItem.create = createShorthandFactory({
-  Component: ToolbarCustomItem,
-  mappedProp: 'content',
-})
+ToolbarCustomItem.create = createShorthandFactory({ Component: ToolbarCustomItem })
 
 /**
  * A ToolbarCustomItem renders Toolbar item as a non-actionable `div` with custom content inside.

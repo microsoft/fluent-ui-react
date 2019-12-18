@@ -110,6 +110,6 @@ class TableCell extends UIComponent<WithAsProp<any>, any> {
   }
 }
 
-TableCell.create = createShorthandFactory({ Component: TableCell, mappedProp: 'content' })
+TableCell.create = createShorthandFactory({ Component: TableCell })
 
 export default TableCell

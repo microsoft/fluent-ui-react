@@ -417,10 +417,7 @@ class ToolbarMenuItem extends AutoControlledComponent<
   }
 }
 
-ToolbarMenuItem.create = createShorthandFactory({
-  Component: ToolbarMenuItem,
-  mappedProp: 'content',
-})
+ToolbarMenuItem.create = createShorthandFactory({ Component: ToolbarMenuItem })
 
 /**
  * A ToolbarMenuItem renders ToolbarMenu item as button.

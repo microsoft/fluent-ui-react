@@ -304,4 +304,4 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
   }
 }
 
-MenuButton.create = createShorthandFactory({ Component: MenuButton, mappedProp: 'menu' })
+MenuButton.create = createShorthandFactory({ Component: MenuButton })

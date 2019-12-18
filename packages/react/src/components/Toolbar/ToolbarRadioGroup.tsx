@@ -160,10 +160,7 @@ class ToolbarRadioGroup extends UIComponent<WithAsProp<ToolbarRadioGroupProps>> 
   }
 }
 
-ToolbarRadioGroup.create = createShorthandFactory({
-  Component: ToolbarRadioGroup,
-  mappedProp: 'content',
-})
+ToolbarRadioGroup.create = createShorthandFactory({ Component: ToolbarRadioGroup })
 
 /**
  * A ToolbarRadioGroup renders Toolbar item as a group of mutually exclusive options.

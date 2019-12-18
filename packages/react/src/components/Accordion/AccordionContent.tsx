@@ -75,10 +75,7 @@ class AccordionContent extends UIComponent<WithAsProp<AccordionContentProps>, an
   }
 }
 
-AccordionContent.create = createShorthandFactory({
-  Component: AccordionContent,
-  mappedProp: 'content',
-})
+AccordionContent.create = createShorthandFactory({ Component: AccordionContent })
 
 /**
  * An AccordionContent displays content hosted in an Accordion.

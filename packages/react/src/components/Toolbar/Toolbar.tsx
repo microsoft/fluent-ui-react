@@ -536,7 +536,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
   }
 }
 
-Toolbar.create = createShorthandFactory({ Component: Toolbar, mappedProp: 'content' })
+Toolbar.create = createShorthandFactory({ Component: Toolbar })
 
 /**
  * A Toolbar is a container for grouping a set of controls, often action controls (e.g. buttons) or input controls (e.g. checkboxes).

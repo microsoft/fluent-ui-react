@@ -103,8 +103,6 @@ class ButtonGroup extends UIComponent<WithAsProp<ButtonGroupProps>, any> {
 
 ButtonGroup.create = createShorthandFactory({
   Component: ButtonGroup,
-  mappedProp: 'content',
-  mappedArrayProp: 'buttons',
 })
 
 /**

@@ -90,7 +90,7 @@ class Icon extends UIComponent<WithAsProp<IconProps>, any> {
   }
 }
 
-Icon.create = createShorthandFactory({ Component: Icon, mappedProp: 'name', allowsJSX: false })
+Icon.create = createShorthandFactory({ Component: Icon, allowsJSX: false })
 
 /**
  * An Icon displays a pictogram with semantic meaning.

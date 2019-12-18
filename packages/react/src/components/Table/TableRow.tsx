@@ -143,6 +143,6 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
   }
 }
 
-TableRow.create = createShorthandFactory({ Component: TableRow, mappedArrayProp: 'items' })
+TableRow.create = createShorthandFactory({ Component: TableRow })
 
 export default TableRow

@@ -124,7 +124,7 @@ class FormField extends UIComponent<WithAsProp<FormFieldProps>, any> {
   }
 }
 
-FormField.create = createShorthandFactory({ Component: FormField, mappedProp: 'label' })
+FormField.create = createShorthandFactory({ Component: FormField })
 
 /**
  * A FormField represents a Form element containing a label and an input.

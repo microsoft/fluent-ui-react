@@ -76,7 +76,7 @@ class CarouselItem extends UIComponent<WithAsProp<CarouselItemProps>> {
   }
 }
 
-CarouselItem.create = createShorthandFactory({ Component: CarouselItem, mappedProp: 'content' })
+CarouselItem.create = createShorthandFactory({ Component: CarouselItem })
 
 /**
  * A Carousel displays data organised as a gallery.

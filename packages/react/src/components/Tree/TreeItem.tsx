@@ -231,10 +231,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>, TreeItemState> {
   }
 }
 
-TreeItem.create = createShorthandFactory({
-  Component: TreeItem,
-  mappedProp: 'title',
-})
+TreeItem.create = createShorthandFactory({ Component: TreeItem })
 
 /**
  * A TreeItem renders an item of a Tree.

@@ -77,11 +77,7 @@ class ReactionGroup extends UIComponent<WithAsProp<ReactionGroupProps>> {
   }
 }
 
-ReactionGroup.create = createShorthandFactory({
-  Component: ReactionGroup,
-  mappedProp: 'content',
-  mappedArrayProp: 'items',
-})
+ReactionGroup.create = createShorthandFactory({ Component: ReactionGroup })
 
 /**
  * A ReactionGroup groups multiple Reaction elements.

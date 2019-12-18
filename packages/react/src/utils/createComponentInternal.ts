@@ -63,10 +63,7 @@ const createComponentInternal = <P extends ObjectOf<any> = any>({
 
   FluentComponent.className = className
 
-  FluentComponent.create = createShorthandFactory({
-    Component: mergedDefaultProps.as,
-    mappedProp: shorthandPropName,
-  })
+  FluentComponent.create = createShorthandFactory({ Component: mergedDefaultProps.as })
 
   FluentComponent.displayName = displayName
 

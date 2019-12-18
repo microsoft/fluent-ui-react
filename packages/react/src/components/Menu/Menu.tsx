@@ -254,7 +254,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
   }
 }
 
-Menu.create = createShorthandFactory({ Component: Menu, mappedArrayProp: 'items' })
+Menu.create = createShorthandFactory({ Component: Menu })
 
 /**
  * A Menu is a component that offers a grouped list of choices to the user.

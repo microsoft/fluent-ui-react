@@ -148,7 +148,7 @@ class Label extends UIComponent<WithAsProp<LabelProps>, any> {
   }
 }
 
-Label.create = createShorthandFactory({ Component: Label, mappedProp: 'content' })
+Label.create = createShorthandFactory({ Component: Label })
 
 /**
  * A Label allows user to classify content.

@@ -59,7 +59,6 @@ class HeaderDescription extends UIComponent<WithAsProp<HeaderDescriptionProps>, 
 
 HeaderDescription.create = createShorthandFactory({
   Component: HeaderDescription,
-  mappedProp: 'content',
 })
 
 /**
