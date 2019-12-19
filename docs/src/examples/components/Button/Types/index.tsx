@@ -16,7 +16,7 @@ const Types = () => (
     />
     <ComponentExample
       title="Inverted Button"
-      description="Buttons can have no background"
+      description="A button that inherits its background."
       examplePath="components/Button/Types/ButtonExampleInverted"
     />
     <ComponentExample

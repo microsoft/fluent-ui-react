@@ -6,7 +6,7 @@ const ButtonExampleDisabled = () => (
     <Flex gap="gap.smaller">
       <Button disabled content="Default" />
       <Button disabled content="Primary" primary />
-      <Button disabled inverted content="Secondary Alt" />
+      <Button disabled inverted content="Inverted" />
       <Button disabled icon="emoji" content="Click me" iconPosition="before" primary />
       <Button disabled circular icon="translation" title="Translation" />
       <Button
