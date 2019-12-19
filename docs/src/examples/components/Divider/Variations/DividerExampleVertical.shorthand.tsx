@@ -16,8 +16,8 @@ const DividerVerticalExampleShorthand = () => (
     />
     <Divider vertical />
     <Button icon="chevron-down" text iconOnly title="Close" />
-    <Button icon="stardust-circle" text iconOnly title="Full Screen" />
-    <Button icon="stardust-close" text iconOnly title="Minimize" />
+    <Button icon="icon-circle" text iconOnly title="Full Screen" />
+    <Button icon="icon-close" text iconOnly title="Minimize" />
     <Divider vertical />
   </div>
 )
