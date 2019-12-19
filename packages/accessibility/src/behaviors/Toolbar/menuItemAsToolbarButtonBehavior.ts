@@ -16,7 +16,7 @@ import { MenuItemBehaviorProps } from '../Menu/menuItemBehavior'
  * Adds attribute 'aria-label' based on the property 'aria-label' to 'root' slot.
  * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'root' slot.
  * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'root' slot.
- * Adds attribute 'aria-disabled=true' to 'root' slot based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
+ * Adds attribute 'aria-disabled=true' based on the property 'disabled'. This can be overriden by providing 'aria-disabled' property directly to the component.
  * Adds attribute 'aria-haspopup=true' to 'root' slot if 'menu' property is set.
  * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'wrapper'.
  * Triggers 'closeMenuAndFocusTrigger' action with 'Escape' on 'wrapper'.

@@ -5,7 +5,7 @@ import tooltipBehavior, { TooltipBehaviorProps } from './tooltipBehavior'
  * @specification
  * Adds attribute 'role=tooltip' to 'tooltip' slot.
  * Adds attribute 'aria-hidden=false' to 'tooltip' slot if 'open' property is true. Sets the attribute to 'true' otherwise.
- * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'trigger' slot.
+ * Adds attribute 'aria-labelledby' based on the property 'contentId' to 'trigger' slot. This can be overriden by providing 'aria-labelledby' property directly to the component.
  * Triggers 'close' action with 'Escape' on 'trigger'.
  */
 const tooltipAsLabelBehavior: Accessibility<TooltipBehaviorProps> = props => {
