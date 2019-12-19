@@ -1,5 +1,5 @@
-import { Accessibility } from '@stardust-ui/accessibility'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility } from '@fluentui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
@@ -15,7 +15,7 @@ import {
   rtlTextContainer,
   getElementProp,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import Box, { BoxProps } from '../Box/Box'
 
 import { ComponentSlotStylesPrepared } from '../../themes/types'

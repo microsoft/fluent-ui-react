@@ -1,4 +1,4 @@
-import { Accessibility, listItemBehavior } from '@stardust-ui/accessibility'
+import { Accessibility, listItemBehavior } from '@fluentui/accessibility'
 import cx from 'classnames'
 import * as React from 'react'
 import * as _ from 'lodash'
@@ -11,7 +11,7 @@ import {
   ContentComponentProps,
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import { ShorthandValue, WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Box, { BoxProps } from '../Box/Box'
 
@@ -57,8 +57,8 @@ export interface ListItemProps
   /**
    * Called on click.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onClick?: ComponentEventHandler<ListItemProps>
 }

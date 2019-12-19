@@ -1,4 +1,4 @@
-import { Slider } from '@stardust-ui/react/src'
+import { Slider } from '@fluentui/react/src'
 
 const selectors = {
   input: `.${Slider.slotClassNames.input}`,

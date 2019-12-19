@@ -1,4 +1,4 @@
-import { getElementType } from '@stardust-ui/react-bindings'
+import { getElementType } from '@fluentui/react-bindings'
 
 describe('getElementType', () => {
   test('takes a value from "as" prop', () => {

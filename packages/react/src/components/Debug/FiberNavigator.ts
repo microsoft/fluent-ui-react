@@ -1,3 +1,5 @@
+import * as React from 'react'
+
 // ========================================================
 // react/packages/shared/ReactTypes.js
 // ========================================================
@@ -339,8 +341,8 @@ class FiberNavigator {
     return this.__fiber.elementType
   }
 
-  get stardustDebug() {
-    return this.instance && this.instance.stardustDebug ? this.instance.stardustDebug : null
+  get fluentUIDebug() {
+    return this.instance && this.instance.fluentUIDebug ? this.instance.fluentUIDebug : null
   }
 
   get jsxString() {

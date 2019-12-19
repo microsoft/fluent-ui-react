@@ -1,4 +1,5 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import * as customPropTypes from '@fluentui/react-proptypes'
+import { Ref } from '@fluentui/react-component-ref'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -12,15 +13,12 @@ import {
   createShorthandFactory,
   applyAccessibilityKeyHandlers,
   childrenExist,
-} from '../../lib'
+} from '../../utils'
 import { ShorthandCollection, WithAsProp } from '../../types'
-import {
-  Accessibility,
-  tableHeaderCellBehavior,
-  tableRowBehavior,
-} from '@stardust-ui/accessibility'
+import { Accessibility, tableRowBehavior } from '@fluentui/accessibility'
 import { ComponentVariablesObject } from '../../themes/types'
-import { mergeComponentVariables } from '../../lib/mergeThemes'
+import { mergeComponentVariables } from '../../utils/mergeThemes'
+import { ReactAccessibilityBehavior } from '../../utils/accessibility/reactTypes'
 
 export interface TableRowProps extends UIComponentProps {
   /**
@@ -79,17 +77,42 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
     accessibility: tableRowBehavior as Accessibility,
   }
 
-  renderCells(variables: ComponentVariablesObject) {
-    const { items, header } = this.props
+  rowRef = React.createRef<HTMLElement>()
+
+  actionHandlers = {
+    // https://github.com/microsoft/fluent-ui-react/issues/2150
+    unsetRowTabbable: e => {
+      this.rowRef.current.setAttribute('tabindex', '-1')
+    },
+    performClick: e => {
+      this.handleClick(e)
+    },
+  }
+
+  handleClick = (e: React.SyntheticEvent) => {
+    if (e.currentTarget === e.target) {
+      _.invoke(this.props, 'onClick', e, this.props)
+      e.preventDefault()
+    }
+  }
+
+  renderCells(accessibility: ReactAccessibilityBehavior, variables: ComponentVariablesObject) {
+    const { items } = this.props
+
+    const cellAccessibility = accessibility.childBehaviors
+      ? accessibility.childBehaviors.cell
+      : undefined
 
     return _.map(items, (item: TableCellProps, index: number) => {
       const cellProps = {
-        ...(header && {
-          accessibility: tableHeaderCellBehavior as Accessibility,
-        }),
+        accessibility: cellAccessibility as Accessibility,
       }
       const overrideProps = handleVariablesOverrides(variables)
-      return TableCell.create(item, { defaultProps: () => cellProps, overrideProps })
+
+      return TableCell.create(item, {
+        defaultProps: () => cellProps,
+        overrideProps,
+      })
     })
   }
 
@@ -104,15 +127,18 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
     const hasChildren = childrenExist(children)
 
     return (
-      <ElementType
-        className={classes.root}
-        {...accessibility.attributes.root}
-        {...unhandledProps}
-        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
-      >
-        {hasChildren && children}
-        {!hasChildren && this.renderCells(variables)}
-      </ElementType>
+      <Ref innerRef={this.rowRef}>
+        <ElementType
+          className={classes.root}
+          onClick={this.handleClick}
+          {...accessibility.attributes.root}
+          {...unhandledProps}
+          {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
+        >
+          {hasChildren && children}
+          {!hasChildren && this.renderCells(accessibility, variables)}
+        </ElementType>
+      </Ref>
     )
   }
 }

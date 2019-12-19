@@ -1,5 +1,5 @@
-import { Accessibility, listBehavior } from '@stardust-ui/accessibility'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, listBehavior } from '@fluentui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as _ from 'lodash'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
@@ -12,7 +12,7 @@ import {
   commonPropTypes,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
-} from '../../lib'
+} from '../../utils'
 import ListItem, { ListItemProps } from './ListItem'
 import {
   WithAsProp,
@@ -49,8 +49,8 @@ export interface ListProps extends UIComponentProps, ChildrenComponentProps {
 
   /**
    * Event for request to change 'selectedIndex' value.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onSelectedIndexChange?: ComponentEventHandler<ListProps>
 

@@ -1,11 +1,11 @@
-import { knobComponents, KnobsSnippet } from '@stardust-ui/code-sandbox'
+import { knobComponents, KnobsSnippet } from '@fluentui/code-sandbox'
 import {
   CopyToClipboard,
   KnobInspector,
   KnobProvider,
   LogInspector,
-} from '@stardust-ui/docs-components'
-import { Flex, ICSSInJSStyle, Menu, Provider, Segment } from '@stardust-ui/react'
+} from '@fluentui/docs-components'
+import { Flex, ICSSInJSStyle, Menu, Provider, Segment } from '@fluentui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
@@ -14,7 +14,7 @@ import qs from 'qs'
 import SourceRender from 'react-source-render'
 
 import { examplePathToHash, getFormattedHash, scrollToAnchor } from 'docs/src/utils'
-import { constants } from 'src/lib'
+import { constants } from '@fluentui/react/src/utils'
 import Editor, { EDITOR_BACKGROUND_COLOR, EDITOR_GUTTER_COLOR } from 'docs/src/components/Editor'
 import { babelConfig, importResolver } from 'docs/src/components/Playground/renderConfig'
 import ExampleContext, { ExampleContextValue } from 'docs/src/context/ExampleContext'
@@ -342,8 +342,9 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         onClick: this.resetSourceCode,
         disabled: !wasCodeChanged,
       },
-      render =>
-        render({ content: 'Copy' }, (Component, props) => (
+      {
+        content: 'Copy',
+        children: (Component, props) => (
           <CopyToClipboard key="copy" value={currentCode}>
             {(active, onClick) => (
               <Component
@@ -354,7 +355,8 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
               />
             )}
           </CopyToClipboard>
-        )),
+        ),
+      },
       {
         disabled: currentCodeLanguage !== 'ts',
         icon: 'github',
@@ -427,13 +429,13 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
   render() {
     const {
-      component,
       children,
       currentCode,
       currentCodeLanguage,
       currentCodePath,
       error,
       description,
+      defaultExport,
       onError,
       title,
       wasCodeChanged,
@@ -471,28 +473,26 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
             {/* Ensure anchor links don't occlude card shadow effect */}
             <div id={anchorName} style={{ position: 'relative', bottom: '1rem' }} />
 
-            <Segment styles={{ borderBottom: '1px solid #ddd' }}>
-              <Flex>
+            <Segment styles={{ padding: 0, borderBottom: '1px solid #ddd' }}>
+              <Flex space="between" style={{ padding: '10px 20px' }}>
                 <ComponentExampleTitle description={description} title={title} />
 
-                <Flex.Item push>
-                  <ComponentControls
-                    toolbarAriaLabel={toolbarAriaLabel}
-                    anchorName={anchorName}
-                    exampleCode={currentCode}
-                    exampleLanguage={currentCodeLanguage}
-                    examplePath={currentCodePath}
-                    onShowCode={this.handleShowCodeClick}
-                    onCopyLink={this.handleDirectLinkClick}
-                    onShowRtl={this.handleShowRtlClick}
-                    onShowVariables={this.handleShowVariablesClick}
-                    onShowTransparent={this.handleShowTransparentClick}
-                    showCode={showCode}
-                    showRtl={showRtl}
-                    showVariables={showVariables}
-                    showTransparent={showTransparent}
-                  />
-                </Flex.Item>
+                <ComponentControls
+                  toolbarAriaLabel={toolbarAriaLabel}
+                  anchorName={anchorName}
+                  exampleCode={currentCode}
+                  exampleLanguage={currentCodeLanguage}
+                  examplePath={currentCodePath}
+                  onShowCode={this.handleShowCodeClick}
+                  onCopyLink={this.handleDirectLinkClick}
+                  onShowRtl={this.handleShowRtlClick}
+                  onShowVariables={this.handleShowVariablesClick}
+                  onShowTransparent={this.handleShowTransparentClick}
+                  showCode={showCode}
+                  showRtl={showRtl}
+                  showVariables={showVariables}
+                  showTransparent={showTransparent}
+                />
               </Flex>
 
               <KnobInspector>
@@ -517,7 +517,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                       resolver={importResolver}
                     />
                   ) : (
-                    React.createElement(component)
+                    React.createElement(defaultExport)
                   )}
                 </VariableResolver>
               </Provider>

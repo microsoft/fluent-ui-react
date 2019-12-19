@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Divider, Grid, Ref, Text, Tooltip } from '@stardust-ui/react'
+import { Button, Divider, Grid, Ref, Text, Tooltip } from '@fluentui/react'
 
 const TooltipExampleTarget = () => {
   const [target, setTarget] = React.useState<HTMLElement>(null)

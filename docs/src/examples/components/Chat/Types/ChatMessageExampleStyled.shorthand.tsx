@@ -6,7 +6,7 @@ import {
   Provider,
   ReactionProps,
   ShorthandCollection,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 
 const reactions: ShorthandCollection<ReactionProps> = [
   { key: 'up', icon: 'like', content: '1K' },
@@ -15,7 +15,7 @@ const reactions: ShorthandCollection<ReactionProps> = [
 
 const janeAvatar: AvatarProps = {
   image: 'public/images/avatar/small/ade.jpg',
-  status: { color: 'green', icon: 'stardust-checkmark' },
+  status: { color: 'green', icon: 'icon-checkmark' },
 }
 
 const content = (

@@ -1,8 +1,8 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
-import { Ref } from '@stardust-ui/react-component-ref'
+import * as customPropTypes from '@fluentui/react-proptypes'
+import { Ref } from '@fluentui/react-component-ref'
 
 import {
   ChildrenComponentProps,
@@ -14,15 +14,15 @@ import {
   commonPropTypes,
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
-} from '../../lib'
-import { mergeComponentVariables } from '../../lib/mergeThemes'
+} from '../../utils'
+import { mergeComponentVariables } from '../../utils/mergeThemes'
 
 import { ShorthandCollection, WithAsProp, withSafeTypeForAs } from '../../types'
 import {
   Accessibility,
   toolbarRadioGroupBehavior,
   toolbarRadioGroupItemBehavior,
-} from '@stardust-ui/accessibility'
+} from '@fluentui/accessibility'
 
 import ToolbarDivider from './ToolbarDivider'
 import ToolbarItem, { ToolbarItemProps } from './ToolbarItem'

@@ -1,10 +1,10 @@
-import { Accessibility, treeItemBehavior } from '@stardust-ui/accessibility'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, treeItemBehavior } from '@fluentui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { Ref } from '@stardust-ui/react-component-ref'
+import { Ref } from '@fluentui/react-component-ref'
 import TreeTitle, { TreeTitleProps } from './TreeTitle'
 import {
   UIComponent,
@@ -16,7 +16,7 @@ import {
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import {
   ComponentEventHandler,
   WithAsProp,
@@ -25,8 +25,8 @@ import {
   withSafeTypeForAs,
   ShorthandCollection,
 } from '../../types'
-import { hasSubtree } from './lib'
-import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
+import { hasSubtree } from './utils'
+import { ReactAccessibilityBehavior } from '../../utils/accessibility/reactTypes'
 
 export interface TreeItemSlotClassNames {
   title: string
@@ -64,8 +64,8 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
   /** Called when the item's parent is about to be focused. */
   onFocusParent?: ComponentEventHandler<TreeItemProps>
 
-  /** Whether or not the item is in the open state. Only makes sense if item has children items. */
-  open?: boolean
+  /** Whether or not the item is in the expanded state. Only makes sense if item has children items. */
+  expanded?: boolean
 
   /** The id of the parent tree item, if any. */
   parent?: ShorthandValue<TreeItemProps>
@@ -77,9 +77,9 @@ export interface TreeItemProps extends UIComponentProps, ChildrenComponentProps 
    * A custom render iterator for rendering each tree title.
    * The default component, props, and children are available for each tree title.
    *
-   * @param {React.ReactType} Component - The computed component for this slot.
-   * @param {object} props - The computed props for this slot.
-   * @param {ReactNode|ReactNodeArray} children - The computed children for this slot.
+   * @param Component - The computed component for this slot.
+   * @param props - The computed props for this slot.
+   * @param children - The computed children for this slot.
    */
   renderItemTitle?: ShorthandRenderFunction<TreeTitleProps>
 
@@ -117,7 +117,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>, TreeItemState> {
     onFocusFirstChild: PropTypes.func,
     onFocusParent: PropTypes.func,
     onSiblingsExpand: PropTypes.func,
-    open: PropTypes.bool,
+    expanded: PropTypes.bool,
     parent: customPropTypes.itemShorthand,
     renderItemTitle: PropTypes.func,
     siblings: customPropTypes.collectionShorthand,
@@ -137,7 +137,7 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>, TreeItemState> {
   static getDerivedStateFromProps(props: TreeItemProps) {
     return {
       hasSubtree: hasSubtree(props),
-      treeSize: props.siblings.length + 1,
+      treeSize: props.siblings ? props.siblings.length + 1 : 1,
     }
   }
 
@@ -192,13 +192,13 @@ class TreeItem extends UIComponent<WithAsProp<TreeItemProps>, TreeItemState> {
   })
 
   renderContent(accessibility: ReactAccessibilityBehavior) {
-    const { title, renderItemTitle, open, level, index } = this.props
+    const { title, renderItemTitle, expanded, level, index } = this.props
     const { hasSubtree, treeSize } = this.state
 
     return TreeTitle.create(title, {
       defaultProps: () => ({
         className: TreeItem.slotClassNames.title,
-        open,
+        expanded,
         hasSubtree,
         as: hasSubtree ? 'span' : 'a',
         level,

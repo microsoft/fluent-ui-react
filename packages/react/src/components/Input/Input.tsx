@@ -1,6 +1,6 @@
-import { Accessibility, inputBehavior } from '@stardust-ui/accessibility'
-import { handleRef, Ref } from '@stardust-ui/react-component-ref'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, inputBehavior } from '@fluentui/accessibility'
+import { handleRef, Ref } from '@fluentui/react-component-ref'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
@@ -14,8 +14,8 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   applyAccessibilityKeyHandlers,
-} from '../../lib'
-import { SupportedIntrinsicInputProps } from '../../lib/htmlPropsUtils'
+} from '../../utils'
+import { SupportedIntrinsicInputProps } from '../../utils/htmlPropsUtils'
 import { WithAsProp, ShorthandValue, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 import Icon, { IconProps } from '../Icon/Icon'
 import Box, { BoxProps } from '../Box/Box'
@@ -60,8 +60,8 @@ export interface InputProps
   /**
    * Called on change.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onChange?: ComponentEventHandler<InputProps & { value: string }>
 
@@ -211,7 +211,7 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
     const { value } = this.state
 
     if (clearable && (value as string).length !== 0) {
-      return 'stardust-close'
+      return 'icon-close'
     }
 
     return icon || null

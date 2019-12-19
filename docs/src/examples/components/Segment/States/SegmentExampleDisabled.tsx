@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Segment } from '@stardust-ui/react'
+import { Segment } from '@fluentui/react'
 
 const SegmentExampleDisabled = () => <Segment disabled>Disabled segment.</Segment>
 

@@ -1,14 +1,7 @@
-import {
-  Accessibility,
-  Avatar,
-  Chat,
-  Menu,
-  Provider,
-  menuAsToolbarBehavior,
-} from '@stardust-ui/react'
+import { Accessibility, Avatar, Chat, Menu, Provider, menuAsToolbarBehavior } from '@fluentui/react'
 import * as _ from 'lodash'
-import * as React from 'react'
 import cx from 'classnames'
+import * as React from 'react'
 
 const avatars = {
   ade:
@@ -17,7 +10,7 @@ const avatars = {
 
 const janeAvatar = {
   image: `data:image/jpeg;base64,${avatars.ade}`,
-  status: { color: 'green', icon: 'stardust-checkmark' },
+  status: { color: 'green', icon: 'icon-checkmark' },
 }
 
 export interface PopoverProps {
@@ -103,7 +96,7 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
   }
 }
 
-const ChatWithPopover = () => {
+const ChatWithPopoverPerf = () => {
   return (
     <Provider
       theme={{
@@ -173,4 +166,7 @@ const ChatWithPopover = () => {
   )
 }
 
-export default ChatWithPopover
+ChatWithPopoverPerf.iterations = 1
+ChatWithPopoverPerf.filename = 'ChatWithPopover.perf.tsx'
+
+export default ChatWithPopoverPerf

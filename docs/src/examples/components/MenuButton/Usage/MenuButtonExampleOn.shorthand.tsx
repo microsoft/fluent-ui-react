@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Alert, Button, Flex, MenuButton } from '@stardust-ui/react'
+import { Alert, Button, Flex, MenuButton } from '@fluentui/react'
 
 class MenuButtonExampleOn extends React.Component {
   state = { alert: false }

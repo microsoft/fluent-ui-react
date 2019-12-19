@@ -1,18 +1,14 @@
-import { Accessibility, toolbarMenuItemBehavior } from '@stardust-ui/accessibility'
+import { Accessibility, toolbarMenuItemBehavior } from '@fluentui/accessibility'
 import * as React from 'react'
 import * as _ from 'lodash'
 import cx from 'classnames'
 import * as PropTypes from 'prop-types'
 
-import { EventListener } from '@stardust-ui/react-component-event-listener'
-import { Ref, toRefObject } from '@stardust-ui/react-component-ref'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
-import { focusAsync } from '@stardust-ui/react-bindings'
-import {
-  GetRefs,
-  NodeRef,
-  Unstable_NestingAuto,
-} from '@stardust-ui/react-component-nesting-registry'
+import { EventListener } from '@fluentui/react-component-event-listener'
+import { Ref, toRefObject } from '@fluentui/react-component-ref'
+import * as customPropTypes from '@fluentui/react-proptypes'
+import { focusAsync } from '@fluentui/react-bindings'
+import { GetRefs, NodeRef, Unstable_NestingAuto } from '@fluentui/react-component-nesting-registry'
 
 import {
   ChildrenComponentProps,
@@ -25,7 +21,7 @@ import {
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
   doesNodeContainClick,
-} from '../../lib'
+} from '../../utils'
 import {
   ComponentEventHandler,
   ShorthandValue,
@@ -34,7 +30,7 @@ import {
   Omit,
   ShorthandCollection,
 } from '../../types'
-import { Popper } from '../../lib/positioner'
+import { Popper } from '../../utils/positioner'
 
 import Box, { BoxProps } from '../Box/Box'
 import Icon, { IconProps } from '../Icon/Icon'
@@ -89,8 +85,8 @@ export interface ToolbarMenuItemProps
   /**
    * Called on click.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onClick?: ComponentEventHandler<ToolbarMenuItemProps>
 
@@ -159,8 +155,8 @@ class ToolbarMenuItem extends AutoControlledComponent<
   static defaultProps = {
     as: 'button',
     accessibility: toolbarMenuItemBehavior as Accessibility,
-    activeIndicator: 'stardust-checkmark',
-    submenuIndicator: 'stardust-menu-arrow-end',
+    activeIndicator: 'icon-checkmark',
+    submenuIndicator: 'icon-menu-arrow-end',
     wrapper: { as: 'li' },
   }
 
@@ -314,7 +310,7 @@ class ToolbarMenuItem extends AutoControlledComponent<
             {menu &&
               Icon.create(submenuIndicator, {
                 defaultProps: () => ({
-                  name: 'stardust-menu-arrow-end',
+                  name: 'icon-menu-arrow-end',
                   styles: styles.submenuIndicator,
                 }),
               })}

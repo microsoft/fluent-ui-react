@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Grid, Popup } from '@stardust-ui/react'
+import { Button, Grid, Popup } from '@fluentui/react'
 
 const PopupWithButton = props => (
   <Popup

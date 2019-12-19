@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Avatar, Chat, ChatItemProps, ShorthandCollection } from '@stardust-ui/react'
+import { Avatar, Chat, ChatItemProps, ShorthandCollection } from '@fluentui/react'
 
 const items: ShorthandCollection<ChatItemProps> = [
   {
@@ -18,7 +18,7 @@ const items: ShorthandCollection<ChatItemProps> = [
     gutter: (
       <Avatar
         image="public/images/avatar/small/ade.jpg"
-        status={{ color: 'green', icon: 'stardust-checkmark' }}
+        status={{ color: 'green', icon: 'icon-checkmark' }}
       />
     ),
     message: (

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Flex, Image, Text, Header } from '@stardust-ui/react'
+import { Flex, Image, Text, Header } from '@fluentui/react'
 
 const FlexExampleMediaCard = () => (
   <Flex gap="gap.medium" padding="padding.medium" debug>
@@ -19,7 +19,7 @@ const FlexExampleMediaCard = () => (
         <Text content="ينا الألم. في بعض الأحيان ونظراً للالتزامات التي يفرضها علينا الواجب والعمل سنتنازل غالباً ونرفض الشعور" />
 
         <Flex.Item push>
-          <Text as="pre" content="حقوق النشر: Stardust-UI Inc." />
+          <Text as="pre" content="حقوق النشر: Fluent UI." />
         </Flex.Item>
       </Flex>
     </Flex.Item>

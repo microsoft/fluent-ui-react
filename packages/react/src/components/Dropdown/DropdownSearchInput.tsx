@@ -1,4 +1,4 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
@@ -9,9 +9,9 @@ import {
   createShorthandFactory,
   commonPropTypes,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import { ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
-import { UIComponentProps } from '../../lib/commonPropInterfaces'
+import { UIComponentProps } from '../../utils/commonPropInterfaces'
 import Input from '../Input/Input'
 
 export interface DropdownSearchInputSlotClassNames {
@@ -35,32 +35,32 @@ export interface DropdownSearchInputProps extends UIComponentProps<DropdownSearc
   /**
    * Called on input element focus.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onFocus?: ComponentEventHandler<DropdownSearchInputProps>
 
   /**
    * Called on input element blur.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onInputBlur?: ComponentEventHandler<DropdownSearchInputProps>
 
   /**
    * Called on input key down event.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onInputKeyDown?: ComponentEventHandler<DropdownSearchInputProps>
 
   /**
    * Called on input key up event.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onKeyUp?: ComponentEventHandler<DropdownSearchInputProps>
 

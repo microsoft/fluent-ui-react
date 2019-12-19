@@ -12,6 +12,11 @@ export type PerfSample = {
         median: number
         max: number
       }
+      flamegrill: {
+        extended: {
+          tpi: number
+        }
+      }
     }
   >
 }

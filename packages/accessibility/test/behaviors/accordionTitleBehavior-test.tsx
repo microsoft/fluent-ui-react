@@ -1,4 +1,4 @@
-import { accordionTitleBehavior } from '@stardust-ui/accessibility'
+import { accordionTitleBehavior } from '@fluentui/accessibility'
 
 describe('AccordionTitleBehavior.ts', () => {
   test('adds role and aria-level attribute if as prop is not a heading', () => {

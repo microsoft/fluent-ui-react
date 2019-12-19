@@ -14,6 +14,7 @@
   - [Using prop interfaces and propTypes](#using-prop-interfaces-and-proptypes)
   - [State](#state)
   - [Conformance Test](#conformance-test)
+  - [Performance Test](#performance-test)
   - [Add doc site example](#add-doc-site-example)
   - [Commit Messages](#commit-messages)
 - [Open PR](#open-pr)
@@ -31,7 +32,7 @@ Build a minimal prototype showcasing the proposed feature. Do not worry about te
 
 ## Spec out the API
 
-Review the documentation for the component. Spec out the component's proposed API. The spec should demonstrate how component's API you are proposing will be used by Stardust consumer. You can reference this [API proposal][2] for the Menu Icons.
+Review the documentation for the component. Spec out the component's proposed API. The spec should demonstrate how component's API you are proposing will be used by Fluent UI consumer. You can reference this [API proposal][2] for the Menu Icons.
 
 Once the component spec is solidified, it's time to write some code. The following sections cover everything you'll need to spec and build your awesome component.
 
@@ -67,7 +68,7 @@ const Button: React.FunctionalComponent = props => {
 Stateful components should be classes:
 
 ```tsx
-import { AutoControlledComponent as Component } from '../../lib'
+import { AutoControlledComponent as Component } from '../../utils'
 
 class Dropdown extends AutoControlledComponent {
   // ...
@@ -100,7 +101,7 @@ import {
  ContentComponentProps,
  UIComponentProps,
  commonPropTypes,
-} from '../../lib'
+} from '../../utils'
 
 export interface DividerProps
  extends UIComponentProps,
@@ -163,6 +164,10 @@ class MyComponent extends AutoControlledComponent<MyComponentProps> {
 
 Review [common tests](test-a-feature.md#common-tests) below. You should now add the [`isConformant()`](test-a-feature.md#isconformant-required) common test and get it to pass. This will validate the `displayName` and `className` and multiple other aspects to help you get your component off the ground.
 
+### Performance Test
+
+Add a [performance test](test-a-feature.md#performance-tests) to set a baseline performance measurement for your component and guard against future regressions.
+
 ### Add doc site example
 
 Create a new documentation example that demonstrates usage of the new feature.
@@ -186,11 +191,11 @@ After iterating on the feature with the maintainers, you will add full test cove
 - [Test a component](test-a-feature.md)
 - [Writing documentation](document-a-feature.md)
 
-[1]: https://github.com/stardust-ui/react/issues
-[2]: https://github.com/stardust-ui/react/pull/73
-[3]: https://github.com/stardust-ui/react/blob/master/src/lib/AutoControlledComponent.tsx
+[1]: https://github.com/microsoft/fluent-ui-react/issues
+[2]: https://github.com/microsoft/fluent-ui-react/pull/73
+[3]: https://github.com/microsoft/fluent-ui-react/blob/master/packages/react/src/utils/AutoControlledComponent.tsx
 [4]: https://facebook.github.io/react/docs/forms.html#controlled-components
 [5]: https://facebook.github.io/react/docs/forms.html#uncontrolled-components
 [6]: https://github.com/angular/angular/blob/master/CONTRIBUTING.md#commit
-[7]: https://stardust-ui.github.io/react/glossary
+[7]: https://microsoft.github.io/fluent-ui-react/glossary
 [8]: https://github.com/Semantic-Org/Semantic-UI-React/issues/607

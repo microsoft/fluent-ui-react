@@ -1,5 +1,5 @@
-import { Accessibility, attachmentBehavior } from '@stardust-ui/accessibility'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, attachmentBehavior } from '@fluentui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
@@ -10,11 +10,11 @@ import {
   commonPropTypes,
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import Icon, { IconProps } from '../Icon/Icon'
 import Button, { ButtonProps } from '../Button/Button'
 import Text, { TextProps } from '../Text/Text'
-import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
+import { UIComponentProps, ChildrenComponentProps } from '../../utils/commonPropInterfaces'
 
 export interface AttachmentProps extends UIComponentProps, ChildrenComponentProps {
   /** Accessibility behavior if overridden by the user. */
@@ -43,8 +43,8 @@ export interface AttachmentProps extends UIComponentProps, ChildrenComponentProp
 
   /**
    * Called after user's click.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onClick?: ComponentEventHandler<AttachmentProps>
 }

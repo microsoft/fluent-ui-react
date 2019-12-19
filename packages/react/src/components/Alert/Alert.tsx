@@ -1,5 +1,5 @@
-import { Accessibility, alertBehavior } from '@stardust-ui/accessibility'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, alertBehavior } from '@fluentui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -11,8 +11,8 @@ import {
   commonPropTypes,
   childrenExist,
   rtlTextContainer,
-} from '../../lib'
-import { RenderResultConfig } from '../../lib/renderComponent'
+} from '../../utils'
+import { RenderResultConfig } from '../../utils/renderComponent'
 import {
   ComponentEventHandler,
   WithAsProp,
@@ -80,15 +80,15 @@ export interface AlertProps
 
   /**
    * Called after user will dismiss the alert.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onDismiss?: ComponentEventHandler<AlertProps>
 
   /**
    * Called after the alert is focused.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onFocus?: ComponentEventHandler<AlertProps>
 

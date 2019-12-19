@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { Toolbar, Input, Button, Form } from '@stardust-ui/react'
-import { useBooleanKnob } from '@stardust-ui/docs-components'
+import { Toolbar, Input, Button, Form } from '@fluentui/react'
+import { useBooleanKnob } from '@fluentui/docs-components'
 
 const fields = [
   {

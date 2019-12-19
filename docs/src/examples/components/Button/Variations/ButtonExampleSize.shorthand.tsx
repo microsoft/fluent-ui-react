@@ -1,4 +1,4 @@
-import { Button, Divider, Flex } from '@stardust-ui/react'
+import { Button, Divider, Flex } from '@fluentui/react'
 import * as React from 'react'
 
 const ButtonExampleSizeShorthand: React.FC = () => (

@@ -2,11 +2,13 @@
 .idea/
 .vscode/
 
-
 coverage/
 dist/
+lib/
 stats/
 
 package.json
 
 packages/ability-attributes/src/schema.ts
+
+CHANGELOG.md

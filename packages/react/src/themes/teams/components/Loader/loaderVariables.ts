@@ -1,4 +1,4 @@
-import { pxToRem, SizeValue } from '../../../../lib'
+import { pxToRem, SizeValue } from '../../../../utils'
 import svgContent from './loaderSvgDataUrl'
 
 export interface LoaderVariables {

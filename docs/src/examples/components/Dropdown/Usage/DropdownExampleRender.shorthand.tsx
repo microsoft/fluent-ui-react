@@ -1,4 +1,4 @@
-import { Dropdown } from '@stardust-ui/react'
+import { Dropdown } from '@fluentui/react'
 import * as React from 'react'
 
 const inputItems = [

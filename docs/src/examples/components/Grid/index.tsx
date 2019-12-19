@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Alert } from '@stardust-ui/react'
+import { Alert } from '@fluentui/react'
 import { Link } from 'react-router-dom'
 
 import Rtl from './Rtl'
@@ -10,7 +10,7 @@ const GridExamples = () => (
   <>
     <Alert styles={{ display: 'block' }}>
       <p>
-        Get more information on Stardust's approach to layout from{' '}
+        Get more information on Fluent UI's approach to layout from{' '}
         <Link to="/layout">Layout guide</Link>.
       </p>
     </Alert>

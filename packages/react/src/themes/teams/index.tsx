@@ -23,9 +23,11 @@ export const getIcon = (iconAndMaybeStyles): SvgIconSpec => {
     : (iconAndMaybeStyles as SvgIconSpec)
 }
 
-const themeIcons: ThemeIcons = Object.keys(svgIconsAndStyles as {
-  [iconName: string]: TeamsSvgIconSpec
-}).reduce<ThemeIcons>((accIcons, iconName) => {
+const themeIcons: ThemeIcons = Object.keys(
+  svgIconsAndStyles as {
+    [iconName: string]: TeamsSvgIconSpec
+  },
+).reduce<ThemeIcons>((accIcons, iconName) => {
   const iconAndMaybeStyles = svgIconsAndStyles[iconName]
 
   const icon: SvgIconSpec = getIcon(iconAndMaybeStyles)
@@ -35,16 +37,16 @@ const themeIcons: ThemeIcons = Object.keys(svgIconsAndStyles as {
 
 const icons: ThemeIcons = {
   ...themeIcons,
-  'stardust-checkmark': themeIcons['accept'],
-  'stardust-circle': themeIcons['stardust-circle'],
-  'stardust-close': themeIcons['close'],
-  'stardust-arrow-up': themeIcons['triangle-up'],
-  'stardust-arrow-down': themeIcons['triangle-down'],
-  'stardust-arrow-end': themeIcons['triangle-right'],
-  'stardust-menu-arrow-down': themeIcons['chevron-down-medium'],
-  'stardust-menu-arrow-end': themeIcons['chevron-right-medium'],
-  'stardust-pause': themeIcons['pause'],
-  'stardust-play': themeIcons['play'],
+  'icon-checkmark': themeIcons['accept'],
+  'icon-circle': themeIcons['icon-circle'],
+  'icon-close': themeIcons['close'],
+  'icon-arrow-up': themeIcons['triangle-up'],
+  'icon-arrow-down': themeIcons['triangle-down'],
+  'icon-arrow-end': themeIcons['triangle-right'],
+  'icon-menu-arrow-down': themeIcons['chevron-down-medium'],
+  'icon-menu-arrow-end': themeIcons['chevron-right-medium'],
+  'icon-pause': themeIcons['pause'],
+  'icon-play': themeIcons['play'],
 }
 
 const teamsTheme: ThemePrepared = createTheme(

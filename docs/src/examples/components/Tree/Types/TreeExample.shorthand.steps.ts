@@ -1,4 +1,4 @@
-import { TreeItem, TreeTitle } from '@stardust-ui/react'
+import { TreeItem, TreeTitle } from '@fluentui/react'
 
 const selectors = {
   treeItem: (itemIndex: number) => `.${TreeItem.className}:nth-of-type(${itemIndex})`,

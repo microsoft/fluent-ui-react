@@ -1,9 +1,10 @@
-import * as themes from './themes'
-
 //
 // Theme
 //
-export { themes }
+// work around api-extractor limitation
+import { fontAwesome, teams, teamsDark, teamsHighContrast } from './themes'
+
+export const themes = { fontAwesome, teams, teamsDark, teamsHighContrast }
 export * from './themes/types'
 export * from './themes/colorUtils'
 export * from './themes/createTheme'
@@ -191,9 +192,7 @@ export { default as HierarchicalTree } from './components/HierarchicalTree/Hiera
 export * from './components/HierarchicalTree/HierarchicalTreeItem'
 export { default as HierarchicalTreeItem } from './components/HierarchicalTree/HierarchicalTreeItem'
 export * from './components/HierarchicalTree/HierarchicalTreeTitle'
-export {
-  default as HierarchicalTreeTitle,
-} from './components/HierarchicalTree/HierarchicalTreeTitle'
+export { default as HierarchicalTreeTitle } from './components/HierarchicalTree/HierarchicalTreeTitle'
 
 export * from './components/Tree/Tree'
 export { default as Tree } from './components/Tree/Tree'
@@ -218,6 +217,15 @@ export { default as Tooltip } from './components/Tooltip/Tooltip'
 export * from './components/Tooltip/TooltipContent'
 export { default as TooltipContent } from './components/Tooltip/TooltipContent'
 
+export * from './components/Carousel/Carousel'
+export { default as Carousel } from './components/Carousel/Carousel'
+export * from './components/Carousel/CarouselItem'
+export { default as CarouselItem } from './components/Carousel/CarouselItem'
+export * from './components/Carousel/CarouselNavigation'
+export { default as CarouselNavigation } from './components/Carousel/CarouselNavigation'
+export * from './components/Carousel/CarouselNavigationItem'
+export { default as CarouselNavigationItem } from './components/Carousel/CarouselNavigationItem'
+
 export * from './components/Table/Table'
 export { default as Table } from './components/Table/Table'
 export * from './components/Table/TableRow'
@@ -228,12 +236,12 @@ export { default as TableCell } from './components/Table/TableCell'
 //
 // Utilities
 //
-export { default as mergeThemes } from './lib/mergeThemes'
-export * from './lib/createStardustComponent'
-export * from './lib'
+export { default as mergeThemes } from './utils/mergeThemes'
+export * from './utils/createComponent'
+export * from './utils'
 export * from './types'
-export { Popper as UNSTABLE_Popper } from './lib/positioner'
-export * from './lib/positioner/types'
+export { Popper as UNSTABLE_Popper } from './utils/positioner'
+export * from './utils/positioner/types'
 
 //
 // FocusZone
@@ -246,7 +254,7 @@ import {
   getNextElement,
   getPreviousElement,
   focusAsync,
-} from '@stardust-ui/react-bindings'
+} from '@fluentui/react-bindings'
 
 export const FocusZoneUtilities = {
   getFirstTabbable,
@@ -258,6 +266,6 @@ export const FocusZoneUtilities = {
   focusAsync,
 }
 
-export * from '@stardust-ui/accessibility'
-export * from '@stardust-ui/react-component-ref'
-export * from '@stardust-ui/react-bindings'
+export * from '@fluentui/accessibility'
+export * from '@fluentui/react-component-ref'
+export * from '@fluentui/react-bindings'

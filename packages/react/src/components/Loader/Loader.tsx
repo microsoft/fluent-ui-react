@@ -1,5 +1,5 @@
-import { Accessibility, loaderBehavior } from '@stardust-ui/accessibility'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, loaderBehavior } from '@fluentui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
@@ -10,7 +10,7 @@ import {
   commonPropTypes,
   SizeValue,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Box, { BoxProps } from '../Box/Box'
 import Text, { TextProps } from '../Text/Text'

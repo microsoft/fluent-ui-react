@@ -1,5 +1,5 @@
-import { Accessibility, splitButtonBehavior } from '@stardust-ui/accessibility'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, splitButtonBehavior } from '@fluentui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
@@ -20,7 +20,7 @@ import {
   AutoControlledComponent,
   RenderResultConfig,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import Button, { ButtonProps } from '../Button/Button'
 import MenuButton, { MenuButtonProps } from '../MenuButton/MenuButton'
 import { MenuProps } from '../Menu/Menu'
@@ -55,23 +55,23 @@ export interface SplitButtonProps
   /**
    * Called after user's click on the main button.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onMainButtonClick?: ComponentEventHandler<ButtonProps>
 
   /**
    * Called after user's click on a menu item.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onMenuItemClick?: ComponentEventHandler<MenuItemProps>
 
   /**
    * Event for request to change 'open' value.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onOpenChange?: ComponentEventHandler<SplitButtonProps>
 
@@ -204,7 +204,7 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
           defaultProps: () => ({
             className: SplitButton.slotClassNames.toggleButton,
             disabled,
-            icon: 'stardust-arrow-down',
+            icon: 'icon-arrow-down',
             iconOnly: true,
             primary,
             secondary,

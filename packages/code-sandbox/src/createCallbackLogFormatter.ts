@@ -1,8 +1,8 @@
-import { formatCode } from '@stardust-ui/docs-components'
+import { formatCode } from '@fluentui/docs-components'
 import * as React from 'react'
 
 /**
- * @param {String[]} props A set of props that should be logged under `data` param.
+ * @param props - A set of props that should be logged under `data` param.
  */
 const createCallbackLogFormatter = (props: string[] = []) => (
   name: string,

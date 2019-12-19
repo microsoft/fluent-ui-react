@@ -8,14 +8,13 @@ import { ProviderContextPrepared } from '../../types'
 export interface ProviderConsumerProps {
   /**
    * Uses the function children pattern to access theme.
-   * @param {object} theme
-   * @param {object} theme.siteVariables - The siteVariables passed from the nearest Provider.
+   * `theme.siteVariables` contains the siteVariables passed from the nearest Provider.
    */
   render: (theme: ThemePrepared) => React.ReactNode
 }
 
 /**
- * A ProviderConsumer is used to consume Stardust context from Provider.
+ * A ProviderConsumer is used to consume Fluent UI context from Provider.
  */
 const ProviderConsumer: React.FunctionComponent<ProviderConsumerProps> = ({ render }) => (
   <FelaTheme>{(context: ProviderContextPrepared) => render(context.theme)}</FelaTheme>

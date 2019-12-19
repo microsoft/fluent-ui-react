@@ -2,7 +2,7 @@ import {
   FocusZoneMode,
   FocusZoneDirection,
   FocusZoneTabbableElements,
-} from '@stardust-ui/accessibility'
+} from '@fluentui/accessibility'
 import * as keyboardKey from 'keyboard-key'
 
 import { TestDefinition, TestMethod, TestHelper } from './testHelper'
@@ -167,11 +167,13 @@ function testMethodConditionallyAddAttribute(
   component,
   propertyDependsOn,
   valueOfProperty,
+  valueOfPropertyOtherwise,
   attributeToBeAdded,
   valueOfAttributeToBeAddedIfTrue,
   valueOfAttributeToBeAddedOtherwise,
 ) {
   const propertyWithAriaSelected = {}
+  propertyWithAriaSelected[propertyDependsOn] = valueOfPropertyOtherwise
   const expectedResultAttributeNotDefined = parameters.behavior(propertyWithAriaSelected)
     .attributes[component][attributeToBeAdded]
   expect(testHelper.convertToMatchingTypeIfApplicable(expectedResultAttributeNotDefined)).toEqual(
@@ -189,7 +191,7 @@ function testMethodConditionallyAddAttribute(
 
 // Example: Adds attribute 'aria-disabled=true' to 'trigger' slot if 'disabled' property is true. Does not set the attribute otherwise.
 definitions.push({
-  regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w-]+)' slot if '([\w-]+)' property is true\. Does not set the attribute otherwise\./g,
+  regexp: /Adds attribute '([\w-]+)=([\w\d-]+)' to '([\w-]+)' slot if '([\w-]+)' property is true\. Does not set the attribute otherwise\./g,
   testMethod: (parameters: TestMethod) => {
     const [
       attributeToBeAdded,
@@ -202,6 +204,31 @@ definitions.push({
       parameters,
       component,
       propertyDependsOn,
+      true,
+      undefined,
+      attributeToBeAdded,
+      valueOfAttributeToBeAdded,
+      undefined,
+    )
+  },
+})
+
+// Example: Adds attribute 'aria-disabled=true' to 'trigger' slot if 'disabled' property is false or undefined. Does not set the attribute if true.
+definitions.push({
+  regexp: /Adds attribute '([\w-]+)=([\w\d-]+)' to '([\w-]+)' slot if '([\w-]+)' property is false or undefined\. Does not set the attribute if true\./g,
+  testMethod: (parameters: TestMethod) => {
+    const [
+      attributeToBeAdded,
+      valueOfAttributeToBeAdded,
+      component,
+      propertyDependsOn,
+    ] = parameters.props
+
+    testMethodConditionallyAddAttribute(
+      parameters,
+      component,
+      propertyDependsOn,
+      undefined,
       true,
       attributeToBeAdded,
       valueOfAttributeToBeAdded,
@@ -212,7 +239,7 @@ definitions.push({
 
 // Example: Adds attribute 'aria-disabled=true' to 'trigger' slot if 'disabled' property is true. Sets the attribute to 'false' otherwise.
 definitions.push({
-  regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w-]+)' slot if '([\w-]+)' property is true\. Sets the attribute to '([\w\d]+)' otherwise\./g,
+  regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w-]+)' slot if '([\w-]+)' property is true\. Sets the attribute to '([\w\d-]+)' otherwise\./g,
   testMethod: (parameters: TestMethod) => {
     const [
       attributeToBeAdded,
@@ -227,6 +254,7 @@ definitions.push({
       component,
       propertyDependsOn,
       true,
+      undefined,
       attributeToBeAdded,
       valueOfAttributeToBeAddedIfTrue,
       valueOfAttributeToBeAddedOtherwise,
@@ -234,7 +262,7 @@ definitions.push({
   },
 })
 
-// Adds attribute 'aria-haspopup=true' to 'root' slot if 'menu' menu property is set.
+// Adds attribute 'aria-haspopup=true' to 'root' slot if 'menu' property is set.
 definitions.push({
   regexp: /Adds attribute '([\w-]+)=([\w\d]+)' to '([\w-]+)' slot if '([\w-]+)' property is set\./g,
   testMethod: (parameters: TestMethod) => {
@@ -251,6 +279,7 @@ definitions.push({
       component,
       propertyDependsOn,
       'custom-value',
+      undefined,
       attributeToBeAdded,
       valueOfAttributeToBeAddedIfTrue,
       valueOfAttributeToBeAddedOtherwise,
@@ -317,6 +346,44 @@ definitions.push({
   },
 })
 
+// Example:  Adds attribute 'aria-expanded=true' based on the property 'open' if the component has 'hasSubtree' property false or undefined. Does not set anything if true.
+definitions.push({
+  regexp: /Adds attribute '([\w-]+)=(\w+)' based on the property '(\w+)' if the component has '(\w+)' property false or undefined. Does not set anything if true\./g,
+  testMethod: (parameters: TestMethod) => {
+    const [
+      attributeToBeAdded,
+      attributeExpectedValue,
+      propertyDependingOnFirst,
+      propertyDependingOnSecond,
+    ] = parameters.props
+
+    const property = {}
+
+    property[propertyDependingOnFirst] = attributeExpectedValue
+    property[propertyDependingOnSecond] = false
+    const actualResultIfFalse = parameters.behavior(property).attributes.root[attributeToBeAdded]
+    expect(testHelper.convertToMatchingTypeIfApplicable(actualResultIfFalse)).toEqual(
+      testHelper.convertToMatchingTypeIfApplicable(attributeExpectedValue),
+    )
+
+    property[propertyDependingOnSecond] = undefined
+    const actualResultIfUndefined = parameters.behavior(property).attributes.root[
+      attributeToBeAdded
+    ]
+    expect(testHelper.convertToMatchingTypeIfApplicable(actualResultIfUndefined)).toEqual(
+      testHelper.convertToMatchingTypeIfApplicable(attributeExpectedValue),
+    )
+
+    const propertyFirstPropUndefined = {}
+    propertyFirstPropUndefined[propertyDependingOnSecond] = true
+    const actualResultFirstPropertyNegateUndefined = parameters.behavior(propertyFirstPropUndefined)
+      .attributes.root[attributeToBeAdded]
+    expect(
+      testHelper.convertToMatchingTypeIfApplicable(actualResultFirstPropertyNegateUndefined),
+    ).toEqual(undefined)
+  },
+})
+
 // Example:  Adds attribute 'aria-expanded=true' based on the property 'open' if the component has 'hasSubtree' property.
 definitions.push({
   regexp: /Adds attribute '([\w-]+)=(\w+)' based on the property '(\w+)' if the component has '(\w+)' property\./g,
@@ -337,16 +404,18 @@ definitions.push({
       testHelper.convertToMatchingTypeIfApplicable(attributeExpectedValue),
     )
 
-    const propertyFirstPropNegate = {}
-    propertyFirstPropNegate[
-      propertyDependingOnFirst
-    ] = !testHelper.convertToMatchingTypeIfApplicable(attributeExpectedValue)
-    propertyFirstPropNegate[propertyDependingOnSecond] = true
-    const actualResultFirstPropertyNegate = parameters.behavior(propertyFirstPropNegate).attributes
-      .root[attributeToBeAdded]
-    expect(testHelper.convertToMatchingTypeIfApplicable(actualResultFirstPropertyNegate)).toEqual(
-      !testHelper.convertToMatchingTypeIfApplicable(attributeExpectedValue),
-    )
+    if (typeof testHelper.convertToMatchingTypeIfApplicable(attributeExpectedValue) === 'boolean') {
+      const propertyFirstPropNegate = {}
+      propertyFirstPropNegate[
+        propertyDependingOnFirst
+      ] = !testHelper.convertToMatchingTypeIfApplicable(attributeExpectedValue)
+      propertyFirstPropNegate[propertyDependingOnSecond] = true
+      const actualResultFirstPropertyNegate = parameters.behavior(propertyFirstPropNegate)
+        .attributes.root[attributeToBeAdded]
+      expect(testHelper.convertToMatchingTypeIfApplicable(actualResultFirstPropertyNegate)).toEqual(
+        !testHelper.convertToMatchingTypeIfApplicable(attributeExpectedValue),
+      )
+    }
 
     const propertyFirstPropUndefined = {}
     propertyFirstPropUndefined[propertyDependingOnFirst] = true
@@ -396,6 +465,17 @@ definitions.push({
     expect(testHelper.convertToMatchingTypeIfApplicable(expectedResultAsButton)).toBe(
       testHelper.convertToMatchingTypeIfApplicable(undefined),
     )
+  },
+})
+
+// Example: Applies 'gridRowBehavior' for 'row' child component.
+definitions.push({
+  regexp: /Applies '(\w+)' for '(\w+)' child component\./g,
+  testMethod: (parameters: TestMethod) => {
+    const [behaviorToBeUsed, childComponent] = parameters.props
+    const property = {}
+    const expectedResult = parameters.behavior(property).childBehaviors[childComponent]
+    expect(expectedResult.name).toBe(behaviorToBeUsed)
   },
 })
 
@@ -540,6 +620,20 @@ definitions.push({
   },
 })
 
+// Triggers 'unsetRowTabbable' action using 'shiftKey' + 'Tab' key on 'root'.
+definitions.push({
+  regexp: /Triggers '(\w+)' action using '(\w+)' \+ '(\w+)' key on '(\w+)'\./g,
+  testMethod: (parameters: TestMethod) => {
+    const [action, keyModifier, key, elementToPerformAction] = [...parameters.props]
+    const property = {}
+    const keyCombinations = parameters.behavior(property).keyActions[elementToPerformAction][action]
+      .keyCombinations[0]
+
+    expect(keyCombinations.keyCode).toBe(keyboardKey[key])
+    expect(keyCombinations[keyModifier]).toBe(true)
+  },
+})
+
 // Triggers 'openMenu' action with 'ArrowDown' on 'root', when orientaton is horizontal.
 definitions.push({
   regexp: /Triggers '(\w+)' action with '(\w+)' on '([\w-]+)', when orientation is horizontal\./g,
@@ -597,7 +691,13 @@ definitions.push({
   regexp: /Triggers '(\w+)' action with '(\w+)' on '([\w-]+)', when has an opened subtree\./g,
   testMethod: (parameters: TestMethod) => {
     const [action, key, elementToPerformAction] = [...parameters.props]
-    const propertyOpenedSubtree = { open: true, items: [{ a: 1 }], siblings: [], hasSubtree: true }
+    const propertyOpenedSubtree = {
+      open: true,
+      expanded: true,
+      items: [{ a: 1 }],
+      siblings: [],
+      hasSubtree: true,
+    }
     const expectedKeyNumberVertical = parameters.behavior(propertyOpenedSubtree).keyActions[
       elementToPerformAction
     ][action].keyCombinations[0].keyCode
@@ -610,7 +710,7 @@ definitions.push({
   regexp: /Triggers '(\w+)' action with '(\w+)' on '([\w-]+)', when has a closed subtree\./g,
   testMethod: (parameters: TestMethod) => {
     const [action, key, elementToPerformAction] = [...parameters.props]
-    const propertyClosedSubtree = { open: false, hasSubtree: false }
+    const propertyClosedSubtree = { open: false, expanded: false, hasSubtree: false }
     const expectedKeyNumberVertical = parameters.behavior(propertyClosedSubtree).keyActions[
       elementToPerformAction
     ][action].keyCombinations[0].keyCode

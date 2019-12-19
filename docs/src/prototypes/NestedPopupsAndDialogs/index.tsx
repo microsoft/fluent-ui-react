@@ -1,4 +1,4 @@
-import { Button, Dialog, Popup } from '@stardust-ui/react'
+import { Button, Dialog, Popup } from '@fluentui/react'
 import * as React from 'react'
 
 import { ComponentPrototype, PrototypeSection } from 'docs/src/prototypes/Prototypes'

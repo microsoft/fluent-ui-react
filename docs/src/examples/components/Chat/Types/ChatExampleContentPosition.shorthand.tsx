@@ -1,12 +1,12 @@
 import * as React from 'react'
-import { Avatar, Chat, ChatItemProps, ShorthandCollection } from '@stardust-ui/react'
+import { Avatar, Chat, ChatItemProps, ShorthandCollection } from '@fluentui/react'
 
 const [janeAvatar, johnAvatar] = [
   'public/images/avatar/small/ade.jpg',
   'public/images/avatar/small/joe.jpg',
 ].map(src => ({
   image: src,
-  status: { color: 'green', icon: 'stardust-checkmark' },
+  status: { color: 'green', icon: 'icon-checkmark' },
 }))
 
 const items: ShorthandCollection<ChatItemProps> = [

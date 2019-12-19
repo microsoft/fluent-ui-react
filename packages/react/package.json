@@ -1,18 +1,18 @@
 {
-  "name": "@stardust-ui/react",
+  "name": "@fluentui/react",
   "description": "A themable React component library.",
-  "version": "0.40.3",
+  "version": "0.42.0",
   "author": "Levi Thomason <me@levithomason.com>",
-  "bugs": "https://github.com/stardust-ui/react/issues",
+  "bugs": "https://github.com/microsoft/fluent-ui-react/issues",
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "@stardust-ui/accessibility": "^0.40.2",
-    "@stardust-ui/react-bindings": "^0.40.2",
-    "@stardust-ui/react-component-event-listener": "^0.40.0",
-    "@stardust-ui/react-component-nesting-registry": "^0.40.0",
-    "@stardust-ui/react-component-ref": "^0.40.0",
-    "@stardust-ui/react-proptypes": "^0.40.0",
-    "classnames": "^2.2.5",
+    "@fluentui/accessibility": "^0.42.0",
+    "@fluentui/react-bindings": "^0.42.0",
+    "@fluentui/react-component-event-listener": "^0.42.0",
+    "@fluentui/react-component-nesting-registry": "^0.42.0",
+    "@fluentui/react-component-ref": "^0.42.0",
+    "@fluentui/react-proptypes": "^0.42.0",
+    "classnames": "^2.2.6",
     "downshift": "3.2.14",
     "fast-memoize": "^2.5.1",
     "fela": "^10.6.1",
@@ -29,14 +29,14 @@
     "react-is": "^16.6.3"
   },
   "devDependencies": {
-    "@stardust-ui/internal-tooling": "^0.40.0",
+    "@fluentui/internal-tooling": "^0.42.0",
     "lerna-alias": "^3.0.3-0",
     "qs": "^6.8.0"
   },
   "files": [
     "dist"
   ],
-  "homepage": "https://github.com/stardust-ui/react#readme",
+  "homepage": "https://github.com/microsoft/fluent-ui-react#readme",
   "jsnext:main": "dist/es/index.js",
   "license": "MIT",
   "main": "dist/commonjs/index.js",
@@ -48,7 +48,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "repository": "stardust-ui/react.git",
+  "repository": "microsoft/fluent-ui-react.git",
   "scripts": {
     "build": "gulp bundle:package --package react"
   },

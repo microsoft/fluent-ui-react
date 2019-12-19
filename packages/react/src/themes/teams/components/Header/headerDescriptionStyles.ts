@@ -3,7 +3,7 @@ import * as _ from 'lodash'
 import { ICSSInJSStyle, ComponentSlotStylesPrepared } from '../../../types'
 import { HeaderDescriptionProps } from '../../../../components/Header/HeaderDescription'
 import { HeaderDescriptionVariables } from './headerDescriptionVariables'
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../../../utils'
 
 const headerStyles: ComponentSlotStylesPrepared<
   HeaderDescriptionProps,

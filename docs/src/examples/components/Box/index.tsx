@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import { Alert } from '@stardust-ui/react'
+import { Alert } from '@fluentui/react'
 
 import Types from './Types'
 import { LayoutSuggestions } from 'docs/src/components/ComponentDoc/Suggestions'

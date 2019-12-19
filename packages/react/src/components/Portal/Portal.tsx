@@ -1,8 +1,8 @@
-import { AccessibilityAttributes } from '@stardust-ui/accessibility'
-import { FocusTrapZone, FocusTrapZoneProps } from '@stardust-ui/react-bindings'
-import { EventListener } from '@stardust-ui/react-component-event-listener'
-import { handleRef, Ref, toRefObject } from '@stardust-ui/react-component-ref'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { AccessibilityAttributes } from '@fluentui/accessibility'
+import { FocusTrapZone, FocusTrapZoneProps } from '@fluentui/react-bindings'
+import { EventListener } from '@fluentui/react-component-event-listener'
+import { handleRef, Ref, toRefObject } from '@fluentui/react-component-ref'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
@@ -15,9 +15,9 @@ import {
   commonPropTypes,
   ContentComponentProps,
   rtlTextContainer,
-} from '../../lib'
+} from '../../utils'
 import PortalInner from './PortalInner'
-import { AccessibilityHandlerProps } from '../../lib/accessibility/reactTypes'
+import { AccessibilityHandlerProps } from '../../utils/accessibility/reactTypes'
 
 export type TriggerAccessibility = {
   attributes?: AccessibilityAttributes
@@ -31,14 +31,14 @@ export interface PortalProps extends ChildrenComponentProps, ContentComponentPro
   /**
    * Called when the portal is mounted on the DOM.
    *
-   * @param {object} data - All props.
+   * @param data - All props.
    */
   onMount?: (props: PortalProps) => void
 
   /**
    * Called when the portal is unmounted from the DOM.
    *
-   * @param {object} data - All props.
+   * @param data - All props.
    */
   onUnmount?: (props: PortalProps) => void
 
@@ -60,14 +60,14 @@ export interface PortalProps extends ChildrenComponentProps, ContentComponentPro
   /**
    * Called when trigger node was clicked.
    *
-   * @param {object} data - All props.
+   * @param data - All props.
    */
   onTriggerClick?: (e: React.MouseEvent) => void
 
   /**
    * Called when `click` event was invoked outside portal or trigger nodes.
    *
-   * @param {object} data - All props.
+   * @param data - All props.
    */
   onOutsideClick?: (e: React.MouseEvent) => void
 }

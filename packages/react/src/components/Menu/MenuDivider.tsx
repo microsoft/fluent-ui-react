@@ -1,4 +1,4 @@
-import { Accessibility, menuDividerBehavior } from '@stardust-ui/accessibility'
+import { Accessibility, menuDividerBehavior } from '@fluentui/accessibility'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
@@ -12,7 +12,7 @@ import {
   ContentComponentProps,
   rtlTextContainer,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface MenuDividerProps

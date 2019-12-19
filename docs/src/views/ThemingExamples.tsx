@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Button, Icon, Label, Provider, Header } from '@stardust-ui/react'
+import { Button, Icon, Label, Provider, Header } from '@fluentui/react'
 
 import DocPage from '../components/DocPage/DocPage'
 import ExampleSnippet from '../components/ExampleSnippet/ExampleSnippet'
@@ -13,7 +13,7 @@ export default () => (
 
     <p>
       A Theme is used to ensure design consistency accross an application. It can define styles that
-      are common accross the application and for particular component types. Stardust will provide
+      are common accross the application and for particular component types. Fluent UI will provide
       some parameterizable standard themes or you can create your own.
     </p>
     <p>
@@ -21,7 +21,7 @@ export default () => (
       <NavLink to="theming#styles">styles</NavLink>) and{' '}
       <NavLink to="theming#variables">variables</NavLink>.
     </p>
-    <p>Stardust supports four levels of theming:</p>
+    <p>Fluent UI supports four levels of theming:</p>
     <ol>
       <li>
         <strong>Default</strong> - for users who just need a good first run experience.
@@ -44,7 +44,7 @@ export default () => (
     <ExampleSnippet
       value={`
         import React from 'react'
-        import { Button, Icon, Label, Provider, themes } from '@stardust-ui/react'
+        import { Button, Icon, Label, Provider, themes } from '@fluentui/react'
 
         export default () =>
          <Provider theme={themes.teams}>
@@ -78,7 +78,7 @@ export default () => (
     <ExampleSnippet
       value={`
         import React from 'react'
-        import { Button } from '@stardust-ui/react'
+        import { Button } from '@fluentui/react'
 
         const styles = {
           color: "coral",
@@ -118,7 +118,7 @@ export default () => (
     <ExampleSnippet
       value={`
         import React from 'react'
-        import { Button } from '@stardust-ui/react'
+        import { Button } from '@fluentui/react'
 
         const btnExample = () => (
         <Button
@@ -187,7 +187,7 @@ export default () => (
     <ExampleSnippet
       value={`
         import React from 'react'
-        import { Button, Icon, Label, Provider } from '@stardust-ui/react'
+        import { Button, Icon, Label, Provider } from '@fluentui/react'
 
         const theme = {
           siteVariables: {

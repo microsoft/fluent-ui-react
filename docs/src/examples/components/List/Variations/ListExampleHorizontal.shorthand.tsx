@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { List, Status } from '@stardust-ui/react'
+import { List, Status } from '@fluentui/react'
 
 const items = [
   {
@@ -9,7 +9,7 @@ const items = [
   },
   {
     key: 'skyler',
-    media: <Status state="success" icon="stardust-checkmark" />,
+    media: <Status state="success" icon="icon-checkmark" />,
     header: 'Skyler Parks',
   },
   {

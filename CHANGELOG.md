@@ -17,6 +17,52 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Features
+- Add `tag` icon in Teams theme @codepretty ([#2180](https://github.com/microsoft/fluent-ui-react/pull/2180))
+- Add `vertical` prop to `Divider` @silviuavram ([#2141](https://github.com/microsoft/fluent-ui-react/pull/2141))
+
+### Fixes
+- Fix `toggle` changing width during animation in Teams theme @mnajdova ([#2189](https://github.com/microsoft/fluent-ui-react/pull/2189))
+- Fix `Popup` positioning in multiple cases @layershifter ([#2187](https://github.com/microsoft/fluent-ui-react/pull/2187))
+
+<!--------------------------------[ v0.42.0 ]------------------------------- -->
+## [v0.42.0](https://github.com/microsoft/fluent-ui-react/tree/v0.42.0) (2019-12-12)
+[Compare changes](https://github.com/microsoft/fluent-ui-react/compare/v0.41.01..v0.42.0)
+
+### BREAKING CHANGES
+- Rename all "Stardust UI" references to "Fluent UI" @levithomason ([#2165](https://github.com/microsoft/fluent-ui-react/pull/2165))
+
+### Fixes
+- Fix colors expand for `border-color` shorthand @layershifter ([#2160](https://github.com/microsoft/fluent-ui-react/pull/2160))
+
+### Features
+- Adding `table` navigation @kolaps33 ([#2147](https://github.com/microsoft/fluent-ui-react/pull/2147))
+
+<!--------------------------------[ v0.41.1 ]------------------------------- -->
+## [v0.41.1](https://github.com/microsoft/fluent-ui-react/tree/v0.41.1) (2019-12-10)
+[Compare changes](https://github.com/microsoft/fluent-ui-react/compare/v0.41.0...v0.41.1)
+
+### Fixes
+- Prevent text highlight on icon consecutive clicks in `Checkbox` @silviuavram ([#2154](https://github.com/microsoft/fluent-ui-react/pull/2154))
+- Always handle provided onKeyDown event be propagated in inner zone @kolaps33 ([#2140](https://github.com/microsoft/fluent-ui-react/pull/2140))
+- Fixed newly packages to have publishConfig set to public @kenotron ([#2161](https://github.com/microsoft/fluent-ui-react/pull/2161))
+- Rename `lib` directories to `utils` @ecraig12345 ([#2153](https://github.com/microsoft/fluent-ui-react/pull/2153))
+
+### Features
+- Add a new experimental @fluentui/react-theming package that includes a `compose()` @kenotron ([#2152](https://github.com/microsoft/fluent-ui-react/pull/2152))
+- Add `closed-captions` icon in Teams theme @codepretty ([#2100](https://github.com/stardust-ui/react/pull/2100))
+
+### Features
+- Add `presenter`, `no-presenter`, `volume-down`, `volume`, `volume-up` icons to Teams theme @codepretty ([#2156](https://github.com/microsoft/fluent-ui-react/pull/2156))
+
+<!--------------------------------[ v0.41.0 ]------------------------------- -->
+## [v0.41.0](https://github.com/microsoft/fluent-ui-react/tree/v0.41.0) (2019-12-04)
+[Compare changes](https://github.com/microsoft/fluent-ui-react/compare/v0.40.4...v0.41.0)
+
+### BREAKING CHANGES
+- Control Tree `activeItemIds` through `expanded` TreeItem prop @silviuavram ([#2061](https://github.com/stardust-ui/react/pull/2061))
+- Rename all @stardust-ui scope to @fluentui ([#2117](https://github.com/microsoft/fluent-ui-react/pull/2117))
+
 ### Fixes
 - Fixing `iconOnly` `text` button styles in Teams theme @codepretty ([#2118](https://github.com/microsoft/fluent-ui-react/pull/2118))
 - Update Silver color scheme, changing `backgroundHover` and `backgroundPressed` for high-contrast theme @pompomon ([#2078](https://github.com/microsoft/fluent-ui-react/pull/2078))
@@ -29,16 +75,30 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add necessary `-ms-grid-` styles to `Layout` for IE11 @jurokapsiar ([#2106](https://github.com/microsoft/fluent-ui-react/pull/2106))
 - Accessibility `splitButton` & `menuButton` - screen reader fixes @kolaps33 ([#2090](https://github.com/microsoft/fluent-ui-react/pull/2090))
 - Accessibility `menuButton` add aria-controls attribute based on `open` prop @kolaps33 ([#2107](https://github.com/microsoft/fluent-ui-react/pull/2107))
+- Fix the 500 color variant for `steelLight` in category color scheme @natashamayurshah ([#2089](https://github.com/microsoft/fluent-ui-react/pull/2089))
+- Fix focus handling cases in `MenuButton` and `SplitButton` @silviuavram ([#2145](https://github.com/microsoft/fluent-ui-react/pull/2145))
 
 ### Features
 - Add `Table` component base implementation @pompomon ([#2099](https://github.com/microsoft/fluent-ui-react/pull/2099))
 - Add bounce animation to button clicks in Teams theme @notandrew ([#1724](https://github.com/stardust-ui/react/pull/1724))
 - Update Silver color scheme, adding `foregroundHover`, `foregroundPressed` and `background` definitions @pompomon ([#2078](https://github.com/microsoft/fluent-ui-react/pull/2078))
 - Expanding experimental accessibility schema to more components @mshoho ([#2052](https://github.com/stardust-ui/react/pull/2052))
+- Add base `Carousel` component @silviuavram ([#1979](https://github.com/microsoft/fluent-ui-react/pull/1979))
+- Add support for render props pattern via `children` prop to shorthands @layershifter ([#1951](https://github.com/stardust-ui/react/pull/1951))
 
 ### Documentation
 - Add usage example for `Tooltip` on disabled elements @mnajdova ([#2091](https://github.com/microsoft/fluent-ui-react/pull/2091))
 - Prototype for hexgonal avatars @mnajdova ([#2093](https://github.com/microsoft/fluent-ui-react/pull/2093))
+
+<!--------------------------------[ v0.40.4 ]------------------------------- -->
+## [v0.40.4](https://github.com/stardust-ui/react/tree/v0.40.4) (2019-11-26)
+[Compare changes](https://github.com/stardust-ui/react/compare/v0.40.3...v0.40.4)
+
+### Fixes
+- Trigger `whatInput` cleanup when last `Provider` with custom `target` gets removed @silviuavram ([#2127](https://github.com/microsoft/fluent-ui-react/pull/2127))
+
+### Performance
+- Allow suppression of action menu positioning in `ChatMessage` @jurokapsiar ([#2126](https://github.com/microsoft/fluent-ui-react/pull/2126))
 
 <!--------------------------------[ v0.40.3 ]------------------------------- -->
 ## [v0.40.3](https://github.com/stardust-ui/react/tree/v0.40.3) (2019-11-08)

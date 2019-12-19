@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Divider, RadioGroup } from '@stardust-ui/react'
+import { Divider, RadioGroup } from '@fluentui/react'
 
 class RadioGroupColorPickerExample extends React.Component {
   state = { selectedValue: '' }
@@ -18,7 +18,7 @@ class RadioGroupColorPickerExample extends React.Component {
             name: color,
             'aria-label': color,
             icon: {
-              name: 'stardust-circle',
+              name: 'icon-circle',
               variables: {
                 color,
               },

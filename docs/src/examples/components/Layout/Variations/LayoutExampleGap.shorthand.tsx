@@ -1,5 +1,5 @@
-import { useBooleanKnob, useRangeKnob } from '@stardust-ui/docs-components'
-import { Layout } from '@stardust-ui/react'
+import { useBooleanKnob, useRangeKnob } from '@fluentui/docs-components'
+import { Layout } from '@fluentui/react'
 import * as React from 'react'
 
 const LayoutExampleGap = () => {

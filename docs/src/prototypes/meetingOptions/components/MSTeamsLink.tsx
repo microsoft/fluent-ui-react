@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Text } from '@stardust-ui/react'
+import { Text } from '@fluentui/react'
 
 export default props => {
   const { content, children } = props

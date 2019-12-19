@@ -1,14 +1,14 @@
-import { CodeSnippet } from '@stardust-ui/docs-components'
+import { CodeSnippet } from '@fluentui/docs-components'
 import * as React from 'react'
 import DocPage from '../components/DocPage/DocPage'
 import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
 import { Link } from 'react-router-dom'
 
 import { code, link } from '../utils/helpers'
-import { Header } from '@stardust-ui/react'
+import { Header } from '@fluentui/react'
 
 export default () => (
-  <DocPage title="Accessibility in Stardust">
+  <DocPage title="Accessibility in Fluent UI">
     <Header as="h2" content="Content" />
     <ul>
       <li>
@@ -56,14 +56,14 @@ export default () => (
 
     <Header as="h2" content="Goals of Accessibility" />
     <p>
-      Stardust components follow{' '}
+      Fluent UI components follow{' '}
       {link('WAI-ARIA 1.1 authoring practises', 'https://www.w3.org/TR/wai-aria-practices-1.1/')}.
       They can be easily composed into accesible experiences with correct keyboard navigation,
       screen reader support, high contrast theme and zooming.
     </p>
     <p>
-      Stardust introduces the concept of accessibility behaviors which are responsible for
-      translating the natural Stardust API into correct ARIA roles, attributes and keyboard key
+      Fluent UI introduces the concept of accessibility behaviors which are responsible for
+      translating the natural Fluent UI API into correct ARIA roles, attributes and keyboard key
       handlers. Default behaviors can be overriden and customized.
     </p>
     <p>
@@ -126,7 +126,7 @@ export default () => (
     <Header as="h3" content="Out of Scope" />
     <p>
       Internationalization, globalization, keyboard shortcuts and language detection are
-      deliberately not part of Stardust and should be handled by the hosting application.
+      deliberately not part of Fluent UI and should be handled by the hosting application.
     </p>
 
     <Header as="h2" content="Making an app / page accessible" />
@@ -141,8 +141,8 @@ export default () => (
     </p>
 
     <p>
-      In some cases, ARIA attributes need to be provided by the consumer of Stardust if the required
-      information cannot be derived from the components.
+      In some cases, ARIA attributes need to be provided by the consumer of Fluent UI if the
+      required information cannot be derived from the components.
     </p>
     <p>
       Focusable elements that do not contain any textual information need to be labelled so that the
@@ -166,7 +166,7 @@ export default () => (
 
     <Header as="h3" content="Semantic HTML" />
     <p>
-      While Stardust goes a long way in making the application accessible by default, it does build
+      While Fluent UI goes a long way in making the application accessible by default, it does build
       on having correct semantic HTML as the base.
     </p>
     <p>
@@ -245,13 +245,13 @@ export default () => (
     <p>
       How does the user expect to navigate this? It looks a bit similar to a breadcrumb-like
       control, but the final element isn't focusable. So should we follow the ARIA recommendations
-      for breadcrumbs or do something else? Both 'Stardust UI' and the '...' menu are actionable, so
-      one approach is for focus to first land on 'Stardust UI', and then when you press{' '}
-      {code('Tab')} to move to '...'. Alternatively, this could be regarded as one control and you
-      would navigate within the control using arrow keys / {code('Enter')} / {code('Escape')} and
-      pressing {code('Tab')} would move you to the next area. When you land on the control in both
-      cases the screen reader needs to give context and announce the team and channel and that there
-      are options available.
+      for breadcrumbs or do something else? Both 'Fluent UI' and the '...' menu are actionable, so
+      one approach is for focus to first land on 'Fluent UI', and then when you press {code('Tab')}{' '}
+      to move to '...'. Alternatively, this could be regarded as one control and you would navigate
+      within the control using arrow keys / {code('Enter')} / {code('Escape')} and pressing{' '}
+      {code('Tab')} would move you to the next area. When you land on the control in both cases the
+      screen reader needs to give context and announce the team and channel and that there are
+      options available.
     </p>
     <p>Similarly, the controls</p>
     <p>
@@ -266,8 +266,9 @@ export default () => (
     </p>
     <p>
       These types of decisions are ultimately what will make the application easy or hard for users
-      to navigate - and although Stardust make this easier to change than pure html implementations,
-      it is still costly in terms of developer time to correctly make these types of changes later.
+      to navigate - and although Fluent UI make this easier to change than pure html
+      implementations, it is still costly in terms of developer time to correctly make these types
+      of changes later.
     </p>
     <p>
       Our strong recommendation here is to have clear accessibility designs and example user flows
@@ -292,7 +293,7 @@ export default () => (
       actionable data on the screen the number of 'focusable' elements can become huge and the
       process of moving between them with {code('Tab')} becomes unusable. This can be solved by
       breaking the application up into 'Zones', and the user navigates with the {code('Tab')} key
-      between the zones, and between the actionable elements with navigation keys. Stardust uses
+      between the zones, and between the actionable elements with navigation keys. Fluent UI uses
       Focus Zones both within it's own library components and as a component that can be added by
       the user.
     </p>
@@ -302,13 +303,13 @@ export default () => (
       Screen readers use different mode of keyboard navigation. They allow the user to navigate
       using their virtual navigation methods and/or list different types of elements (headings,
       buttons, menus). Every screen reader has its own implementation of virtual navigation, but
-      they all operate based on the ARIA roles and attributes. Stardust will render these attributes
-      based on the Accessibility Behaviors of the component.
+      they all operate based on the ARIA roles and attributes. Fluent UI will render these
+      attributes based on the Accessibility Behaviors of the component.
     </p>
 
     <Header as="h3" content="Accessibility Behaviors" />
     <p>
-      In Stardust, accessibility behaviors encapsulate keyboard navigation and screen reader
+      In Fluent UI, accessibility behaviors encapsulate keyboard navigation and screen reader
       navigation. They essentially add ARIA roles, ARIA attributes and event handlers. The idea is
       to compose visual components and apply a behavior on top of them to achieve desired keyboard
       or screen reader navigation. Users can override these and provide their own roles and
@@ -344,7 +345,7 @@ export default () => (
     <p>
       When a user is navigating through the application using the keyboard, it's important to make
       the element that currently has focus clearly visible, so the users can see where they are on
-      the page. This is handled in Stardust by focus indicator functionality. Focus indicator will
+      the page. This is handled in Fluent UI by focus indicator functionality. Focus indicator will
       be displayed only if the application is in keyboard mode. Application switches to keyboard
       mode when a key relevant to navigation is pressed. It disables keyboard mode on mouse click
       events.
@@ -399,7 +400,7 @@ export default () => (
       </li>
     </ul>
     <p>
-      Stardust does not do any assumption and does not try to use the most appropriate option from
+      Fluent UI does not do any assumption and does not try to use the most appropriate option from
       these three. Instead, it is up to the user to decide which option fits best.
     </p>
     <p>Example:</p>
@@ -432,7 +433,7 @@ export default () => (
     </p>
 
     <Header as="h2" content="Zoom" />
-    <p>Stardust components are tested zoomed up to 200%.</p>
+    <p>Fluent UI components are tested zoomed up to 200%.</p>
 
     <Header as="h1" content="Contributing" />
     {link(

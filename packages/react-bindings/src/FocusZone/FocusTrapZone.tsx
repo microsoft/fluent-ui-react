@@ -1,4 +1,4 @@
-import { EventListener } from '@stardust-ui/react-component-event-listener'
+import { EventListener } from '@fluentui/react-component-event-listener'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
@@ -405,7 +405,7 @@ export default class FocusTrapZone extends React.Component<FocusTrapZoneProps, {
     }
 
     // do not propogate keyboard events outside focus trap zone
-    // https://github.com/stardust-ui/react/pull/1180
+    // https://github.com/microsoft/fluent-ui-react/pull/1180
     ev.stopPropagation()
   }
 

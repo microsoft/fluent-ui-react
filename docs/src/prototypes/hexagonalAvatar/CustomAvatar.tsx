@@ -1,12 +1,12 @@
 import * as React from 'react'
-import { Avatar as StardustAvatar, AvatarProps } from '@stardust-ui/react'
+import { Avatar, AvatarProps } from '@fluentui/react'
 
-const Avatar = (props: AvatarProps & { hexagonal?: boolean }) => {
+const CustomAvatar = (props: AvatarProps & { hexagonal?: boolean }) => {
   const { hexagonal, ...rest } = props
 
   if (hexagonal) {
     return (
-      <StardustAvatar
+      <Avatar
         {...rest}
         image={render =>
           render(rest.image, (Component, props) => {
@@ -41,7 +41,7 @@ const Avatar = (props: AvatarProps & { hexagonal?: boolean }) => {
       />
     )
   }
-  return <StardustAvatar {...rest} />
+  return <Avatar {...rest} />
 }
 
-export default Avatar
+export default CustomAvatar

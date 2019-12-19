@@ -6,9 +6,9 @@ general:
 jobs:
   build:
     docker:
-      - image: circleci/node:8-browsers
+      - image: circleci/node:10-browsers
     environment:
-      TZ: "/usr/share/zoneinfo/America/Los_Angeles"
+      TZ: '/usr/share/zoneinfo/America/Los_Angeles'
     steps:
       - run:
           name: Update yarn
@@ -61,6 +61,9 @@ jobs:
           name: Circular Dependencies Tests
           command: yarn test:circulars
       - run:
+          name: Flamegrill
+          command: yarn perf:test
+      - run:
           name: Bundle Statistics (master only)
           command: |
             if [ $CIRCLE_BRANCH == 'master' ]; then
@@ -86,6 +89,9 @@ jobs:
             if [ ! -z $CIRCLE_PULL_REQUEST ] && [ ! -z $DANGER_GITHUB_API_TOKEN ]; then
               yarn danger ci
             fi
+      - store_artifacts:
+          path: dist/artifacts
+          destination: artifacts
       - run:
           name: Publish npm package (master only)
           command: |

@@ -1,14 +1,15 @@
-import * as CodeSandbox from '@stardust-ui/code-sandbox'
-import * as DocsComponent from '@stardust-ui/docs-components'
-import * as Stardust from '@stardust-ui/react'
+import * as Accessibility from '@fluentui/accessibility'
+import * as CodeSandbox from '@fluentui/code-sandbox'
+import * as DocsComponent from '@fluentui/docs-components'
+import * as FluentUI from '@fluentui/react'
 import * as ReactFela from 'react-fela'
 import * as _ from 'lodash'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as Classnames from 'classnames'
 
-const docsComponentsPackageJson = require('@stardust-ui/docs-components/package.json')
-const stardustReactPackageJson = require('@stardust-ui/react/package.json')
+const docsComponentsPackageJson = require('@fluentui/docs-components/package.json')
+const projectPackageJson = require('@fluentui/react/package.json')
 
 export const babelConfig = {
   plugins: [
@@ -21,36 +22,41 @@ export const babelConfig = {
 }
 
 export const imports: Record<string, { version: string; module: any }> = {
-  '@stardust-ui/code-sandbox': {
+  '@fluentui/accessibility': {
+    version: projectPackageJson.version,
+    module: Accessibility,
+  },
+
+  '@fluentui/code-sandbox': {
     version: 'latest',
     module: CodeSandbox,
   },
-  '@stardust-ui/docs-components': {
+  '@fluentui/docs-components': {
     version: docsComponentsPackageJson.version,
     module: DocsComponent,
   },
-  '@stardust-ui/react': {
-    version: stardustReactPackageJson.version,
-    module: Stardust,
+  '@fluentui/react': {
+    version: projectPackageJson.version,
+    module: FluentUI,
   },
   classnames: {
-    version: stardustReactPackageJson.dependencies['classnames'],
+    version: projectPackageJson.dependencies['classnames'],
     module: Classnames,
   },
   lodash: {
-    version: stardustReactPackageJson.dependencies['lodash'],
+    version: projectPackageJson.dependencies['lodash'],
     module: _,
   },
   react: {
-    version: stardustReactPackageJson.peerDependencies['react'],
+    version: projectPackageJson.peerDependencies['react'],
     module: React,
   },
   'react-dom': {
-    version: stardustReactPackageJson.peerDependencies['react-dom'],
+    version: projectPackageJson.peerDependencies['react-dom'],
     module: ReactDOM,
   },
   'react-fela': {
-    version: stardustReactPackageJson.dependencies['react-fela'],
+    version: projectPackageJson.dependencies['react-fela'],
     module: ReactFela,
   },
   prettier: {
@@ -59,4 +65,9 @@ export const imports: Record<string, { version: string; module: any }> = {
   },
 }
 
-export const importResolver = importName => imports[importName].module
+export const importResolver = importName => {
+  if (imports[importName]) {
+    return imports[importName].module
+  }
+  throw new Error(`Module '${importName}' was not found. Please check renderConfig.ts`)
+}

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { RadioGroup } from '@stardust-ui/react'
+import { RadioGroup } from '@fluentui/react'
 
 const handleChange = () => {
   alert('The radio checked value was changed!')

@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 import * as keyboardKey from 'keyboard-key'
 
-import { List, ChatMessageProps, Flex, Icon } from '@stardust-ui/react'
+import { List, ChatMessageProps, Flex, Icon } from '@fluentui/react'
 import ControlMessage from './ControlMessage'
 import controlMessagesGroupBehavior from './controlMessagesGroupBehavior'
 
@@ -39,7 +39,7 @@ const GroupControlMessages = (props: GroupControlMessagesProps) => {
       }}
     >
       <Icon
-        name={expanded ? 'stardust-arrow-down' : 'stardust-arrow-end'}
+        name={expanded ? 'icon-arrow-down' : 'icon-arrow-end'}
         onClick={() => setExpanded(!expanded)}
       />
       <Icon name="participant-add" />

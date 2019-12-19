@@ -1,4 +1,4 @@
-import { Button } from '@stardust-ui/react'
+import { Button } from '@fluentui/react'
 
 const config: ScreenerTestsConfig = {
   steps: [

@@ -1,8 +1,8 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { Icon, Segment, Text, ICSSInJSStyle } from '@stardust-ui/react'
-import { constants } from 'src/lib'
+import { Icon, Segment, Text, ICSSInJSStyle } from '@fluentui/react'
+import { constants } from '@fluentui/react/src/utils'
 
 const wrapStyle: ICSSInJSStyle = { wordBreak: 'break-word' }
 

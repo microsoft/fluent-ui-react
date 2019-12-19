@@ -1,4 +1,4 @@
-import { getUnhandledProps } from '@stardust-ui/react-bindings'
+import { getUnhandledProps } from '@fluentui/react-bindings'
 
 describe('getUnhandledProps', () => {
   test('leaves props that are not defined in handledProps', () => {

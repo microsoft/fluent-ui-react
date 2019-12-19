@@ -1,6 +1,6 @@
-import { createCallbackLogFormatter } from '@stardust-ui/code-sandbox'
-import { useBooleanKnob, useLogKnob } from '@stardust-ui/docs-components'
-import { Button, Dialog } from '@stardust-ui/react'
+import { createCallbackLogFormatter } from '@fluentui/code-sandbox'
+import { useBooleanKnob, useLogKnob } from '@fluentui/docs-components'
+import { Button, Dialog } from '@fluentui/react'
 import * as React from 'react'
 
 const DialogExampleCallbacks = () => {

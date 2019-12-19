@@ -1,4 +1,4 @@
-const commonConfig = require('@stardust-ui/internal-tooling/jest')
+const commonConfig = require('@fluentui/internal-tooling/jest')
 
 module.exports = {
   ...commonConfig,

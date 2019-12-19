@@ -1,7 +1,7 @@
 module.exports = {
   extends: ['airbnb', 'prettier'],
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'jest', 'import', 'react-hooks', '@stardust-ui'],
+  plugins: ['@typescript-eslint', 'jest', 'import', 'react-hooks', '@fluentui'],
   env: {
     browser: true,
     'jest/globals': true,
@@ -13,7 +13,7 @@ module.exports = {
 
     'import/no-unresolved': 'off',
     'react/jsx-filename-extension': ['error', { extensions: ['.js', '.tsx'] }],
-    'no-shadow': 'off', // https://github.com/stardust-ui/react/pull/1261#pullrequestreview-231005092
+    'no-shadow': 'off', // https://github.com/microsoft/fluent-ui-react/pull/1261#pullrequestreview-231005092
     'no-unused-vars': 'off', // we use @typescript-eslint/no-unused-vars instead
     semi: ['error', 'never'],
 
@@ -81,6 +81,7 @@ module.exports = {
     'no-return-await': 'off',
     'no-return-assign': 'off',
     'no-restricted-globals': 'off',
+    'no-restricted-properties': ['off', { object: 'Math', property: 'pow' }],
     'no-restricted-syntax': 'off',
     'no-throw-literal': 'off',
     'no-sparse-arrays': 'off',
@@ -112,7 +113,7 @@ module.exports = {
     {
       files: '**/*.tsx',
       rules: {
-        '@stardust-ui/no-visibility-modifiers': 'error',
+        '@fluentui/no-visibility-modifiers': 'error',
       },
     },
     {

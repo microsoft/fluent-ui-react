@@ -13,9 +13,11 @@ const declareSvg = (svgIcon: SvgIconSpec, exportedAs?: string): ThemeProcessedIc
   exportedAs,
 })
 
-const processedIcons: ThemeIcons = Object.keys(svgIconsAndStyles as {
-  [iconName: string]: TeamsProcessedSvgIconSpec
-}).reduce<ThemeIcons>((accIcons, iconName) => {
+const processedIcons: ThemeIcons = Object.keys(
+  svgIconsAndStyles as {
+    [iconName: string]: TeamsProcessedSvgIconSpec
+  },
+).reduce<ThemeIcons>((accIcons, iconName) => {
   const iconAndMaybeStyles = svgIconsAndStyles[iconName]
 
   const icon: SvgIconSpec = getIcon(iconAndMaybeStyles)
@@ -29,10 +31,12 @@ const processedIcons: ThemeIcons = Object.keys(svgIconsAndStyles as {
 const theme: ThemeInput = {
   icons: {
     ...processedIcons,
-    'stardust-close': processedIcons['close'],
-    'stardust-arrow-up': processedIcons['triangle-up'],
-    'stardust-arrow-down': processedIcons['triangle-down'],
-    'stardust-arrow-end': processedIcons['triangle-right'],
+    'icon-close': processedIcons['close'],
+    'icon-arrow-up': processedIcons['triangle-up'],
+    'icon-arrow-down': processedIcons['triangle-down'],
+    'icon-arrow-end': processedIcons['triangle-right'],
+    'icon-chevron-start': processedIcons['chevron-start'],
+    'icon-chevron-end': processedIcons['chevron-end'],
   },
 }
 

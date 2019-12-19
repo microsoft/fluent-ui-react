@@ -1,12 +1,12 @@
 import * as React from 'react'
-import { Avatar, Grid, Text } from '@stardust-ui/react'
+import { Avatar, Grid, Text } from '@fluentui/react'
 
 const defaultAvatar = (
   <Avatar
     image={{ src: 'public/images/avatar/small/matt.jpg', alt: 'Profile picture of Matt' }}
     status={{
       color: 'green',
-      icon: 'stardust-checkmark',
+      icon: 'icon-checkmark',
       title: 'Available',
     }}
   />
@@ -23,7 +23,7 @@ const AvatarExampleStatusCustomizationShorthand = () => (
       image={{ src: 'public/images/avatar/small/matt.jpg', alt: 'Profile picture of Matt' }}
       status={{
         color: 'green',
-        icon: 'stardust-checkmark',
+        icon: 'icon-checkmark',
         title: 'Available',
       }}
       variables={{ statusBorderColor: 'orange' }}
@@ -35,7 +35,7 @@ const AvatarExampleStatusCustomizationShorthand = () => (
       size="larger"
       status={{
         color: 'green',
-        icon: 'stardust-checkmark',
+        icon: 'icon-checkmark',
         title: 'Available',
       }}
     />
@@ -45,7 +45,7 @@ const AvatarExampleStatusCustomizationShorthand = () => (
       image={{ src: 'public/images/avatar/small/matt.jpg', alt: 'Profile picture of Matt' }}
       status={{
         color: 'green',
-        icon: 'stardust-checkmark',
+        icon: 'icon-checkmark',
         title: 'Available',
         size: 'larger',
       }}
@@ -57,7 +57,7 @@ const AvatarExampleStatusCustomizationShorthand = () => (
       size="larger"
       status={{
         color: 'green',
-        icon: 'stardust-checkmark',
+        icon: 'icon-checkmark',
         title: 'Available',
         size: 'medium',
       }}

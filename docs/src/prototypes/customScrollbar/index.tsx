@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import Scrollbars from 'react-custom-scrollbars'
-import { Text, Menu, List, Button, Popup, Dialog } from '@stardust-ui/react'
+import { Text, Menu, List, Button, Popup, Dialog } from '@fluentui/react'
 import { PrototypeSection, ComponentPrototype } from '../Prototypes'
 
 const ScrollbarMenuPrototype = () => {
@@ -75,7 +75,7 @@ const CustomScrollbarPrototypes: React.FC = () => {
   return (
     <PrototypeSection title="Custom Scrollbar">
       <Text>
-        Note: Stardust does not provide custom scrollbars. It is possible to integrate Stardust
+        Note: Fluent UI does not provide custom scrollbars. It is possible to integrate Fluent UI
         components with any custom scrollbars framework.
       </Text>
       <ComponentPrototype title="Menu" description="Scrollbar can be integrated in Menu">

@@ -1,4 +1,4 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as React from 'react'
 
 import {
@@ -11,8 +11,8 @@ import {
   createShorthandFactory,
   ContentComponentProps,
   ShorthandFactory,
-} from '../../lib'
-import { Accessibility } from '@stardust-ui/accessibility'
+} from '../../utils'
+import { Accessibility } from '@fluentui/accessibility'
 
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Icon, { IconProps } from '../Icon/Icon'

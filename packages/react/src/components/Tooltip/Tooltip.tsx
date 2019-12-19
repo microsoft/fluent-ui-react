@@ -1,5 +1,5 @@
-import { toRefObject, Ref } from '@stardust-ui/react-component-ref'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { toRefObject, Ref } from '@fluentui/react-component-ref'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
@@ -18,7 +18,7 @@ import {
   getOrGenerateIdFromShorthand,
   createShorthandFactory,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import { ShorthandValue, Props } from '../../types'
 import {
   ALIGNMENTS,
@@ -26,10 +26,10 @@ import {
   Popper,
   BasicPositioningProps,
   PopperChildrenProps,
-} from '../../lib/positioner'
+} from '../../utils/positioner'
 import TooltipContent, { TooltipContentProps } from './TooltipContent'
-import { Accessibility, tooltipBehavior } from '@stardust-ui/accessibility'
-import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
+import { Accessibility, tooltipBehavior } from '@fluentui/accessibility'
+import { ReactAccessibilityBehavior } from '../../utils/accessibility/reactTypes'
 import PortalInner from '../Portal/PortalInner'
 
 export interface TooltipSlotClassNames {

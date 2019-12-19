@@ -14,6 +14,7 @@
     "now-build": "cross-env NOW=true yarn predeploy:docs",
     "perf": "cross-env PERF=true gulp perf --times=100",
     "perf:debug": "cross-env PERF=true gulp perf:debug --debug",
+    "perf:test": "yarn lerna run --stream --scope @fluentui/perf-test perf:test",
     "prettier": "prettier --list-different \"**/*.{ts,tsx}\"",
     "prettier:fix": "prettier --write \"**/*.{ts,tsx}\"",
     "precommit": "lint-staged",
@@ -56,6 +57,7 @@
   "devDependencies": {
     "@babel/register": "^7.4.4",
     "@babel/standalone": "^7.3.2",
+    "@microsoft/api-extractor": "^7.5.2",
     "@mdx-js/loader": "^1.0.21",
     "@types/babel__traverse": "^7.0.4",
     "@types/color": "^3.0.0",
@@ -114,7 +116,7 @@
     "merge2": "^1.2.2",
     "normalize.css": "^8.0.0",
     "portfinder": "^1.0.20",
-    "prettier": "^1.18.2",
+    "prettier": "^1.19.1",
     "progress": "^2.0.3",
     "puppeteer": "^1.11.0",
     "react": "^16.8.6",
@@ -124,7 +126,7 @@
     "react-document-title": "^2.0.3",
     "react-dom": "^16.8.6",
     "react-element-to-jsx-string": "^14.0.2",
-    "react-hot-loader": "^4.8.2",
+    "react-hot-loader": "^4.12.15",
     "react-markdown": "^4.0.8",
     "react-router-dom": "^5.0.1",
     "react-source-render": "4.0.0-1",
@@ -146,13 +148,13 @@
     "tslint": "^5.11.0",
     "tslint-config-airbnb": "^5.11.1",
     "tslint-config-prettier": "^1.18.0",
-    "typescript": "^3.3.3333",
+    "typescript": "~3.7.2",
     "webpack": "^4.35.0",
     "webpack-bundle-analyzer": "^3.3.2",
     "webpack-dev-middleware": "^3.6.2",
     "webpack-hot-middleware": "^2.24.3"
   },
-  "workspaces": [
-    "packages/*"
-  ]
+  "workspaces": {
+    "packages": ["packages/*", "scripts"]
+  }
 }

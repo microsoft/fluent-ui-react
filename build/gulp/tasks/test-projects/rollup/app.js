@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Button, Provider, themes } from '@stardust-ui/react'
+import { Button, Provider, themes } from '@fluentui/react'
 
 ReactDOM.render(
   React.createElement(
