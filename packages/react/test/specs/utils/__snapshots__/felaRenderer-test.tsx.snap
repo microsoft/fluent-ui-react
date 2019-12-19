@@ -117,6 +117,20 @@ exports[`felaRenderer keyframe colors are rendered 1`] = `
 "
 `;
 
+exports[`felaRenderer marginLeft is rendered into marginLeft due to RTL with \`noFlip\` 1`] = `
+".a {
+  margin-left: 10px; /* @noflip */
+}
+
+
+<div className=ui-provider__box dir=rtl>
+  <span className=ui-text a dir=auto>
+    Hello
+  </span>
+</div>;
+"
+`;
+
 exports[`felaRenderer marginLeft is rendered into marginRight due to RTL 1`] = `
 ".a {
   margin-right: 10px;
