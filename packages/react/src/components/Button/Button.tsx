@@ -78,7 +78,7 @@ export interface ButtonProps
   secondary?: boolean
 
   /** A button that represents an alternative action and also has contrast against dark backgrounds */
-  secondaryAlt?: boolean
+  inverted?: boolean
 
   /** A button can be sized. */
   size?: SizeValue

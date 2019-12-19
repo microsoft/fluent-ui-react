@@ -152,7 +152,7 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
           },
         }),
 
-      ...(p.secondaryAlt && {
+      ...(p.inverted && {
         backgroundColor: siteVariables.colorScheme.silver.background,
         borderColor: siteVariables.colorScheme.silver.border,
         color: siteVariables.colorScheme.silver.foreground,

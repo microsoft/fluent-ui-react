@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Button, Flex } from '@fluentui/react'
 
-const ButtonExampleSecondaryAlt = () => (
+const ButtonExampleInverted = () => (
   <Flex
     gap="gap.smaller"
     styles={({ theme: { siteVariables } }) => ({
@@ -9,8 +9,8 @@ const ButtonExampleSecondaryAlt = () => (
       padding: '20px',
     })}
   >
-    <Button secondaryAlt content="Secondary Alt" />
+    <Button inverted content="Inverted Button" />
   </Flex>
 )
 
-export default ButtonExampleSecondaryAlt
+export default ButtonExampleInverted
