@@ -1,5 +1,5 @@
 import { Accessibility } from '../../types'
-import tooltipBehavior, { TooltipBehaviorProps } from './tooltipBehavior'
+import tooltipAsDescriptionBehavior, { TooltipBehaviorProps } from './tooltipAsDescriptionBehavior'
 
 /**
  * @specification
@@ -9,7 +9,7 @@ import tooltipBehavior, { TooltipBehaviorProps } from './tooltipBehavior'
  * Triggers 'close' action with 'Escape' on 'trigger'.
  */
 const tooltipAsLabelBehavior: Accessibility<TooltipBehaviorProps> = props => {
-  const behaviorData = tooltipBehavior(props)
+  const behaviorData = tooltipAsDescriptionBehavior(props)
   const defaultAriaLabeledBy = getDefaultAriaLabelledBy(props)
 
   behaviorData.attributes = {
