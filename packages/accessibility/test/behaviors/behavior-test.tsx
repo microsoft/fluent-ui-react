@@ -55,7 +55,7 @@ import {
   toolbarMenuRadioGroupBehavior,
   toolbarRadioGroupBehavior,
   toolbarRadioGroupItemBehavior,
-  tooltipBehavior,
+  tooltipAsDescriptionBehavior,
   tooltipAsLabelBehavior,
   menuButtonBehavior,
   splitButtonBehavior,
@@ -139,7 +139,7 @@ testHelper.addBehavior('toolbarMenuItemRadioBehavior', toolbarMenuItemRadioBehav
 testHelper.addBehavior('toolbarMenuRadioGroupBehavior', toolbarMenuRadioGroupBehavior)
 testHelper.addBehavior('toolbarRadioGroupBehavior', toolbarRadioGroupBehavior)
 testHelper.addBehavior('toolbarRadioGroupItemBehavior', toolbarRadioGroupItemBehavior)
-testHelper.addBehavior('tooltipBehavior', tooltipBehavior)
+testHelper.addBehavior('tooltipAsDescriptionBehavior', tooltipAsDescriptionBehavior)
 testHelper.addBehavior('tooltipAsLabelBehavior', tooltipAsLabelBehavior)
 testHelper.addBehavior('splitButtonBehavior', splitButtonBehavior)
 testHelper.addBehavior('treeBehavior', treeBehavior)

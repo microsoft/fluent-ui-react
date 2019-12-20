@@ -133,15 +133,23 @@ definitions.push({
       attributeToBeAdded,
       valueOfAttributeToBeAdded,
       component,
+      propertyBasedOn,
       overridingProperty,
     ] = parameters.props
+    const propertyWithOverride = { [overridingProperty]: valueOfAttributeToBeAdded }
+    const propertyWithoutOverride = { [propertyBasedOn]: valueOfAttributeToBeAdded }
 
-    const propertyWithOverride = {}
-    propertyWithOverride[overridingProperty] = valueOfAttributeToBeAdded
-    const expectedResultAttributeDefined = parameters.behavior(propertyWithOverride).attributes[
+    const expectedResultPropOveride = parameters.behavior(propertyWithOverride).attributes[
       component
     ][attributeToBeAdded]
-    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResultAttributeDefined)).toEqual(
+    const expectedResultPropBasedOn = parameters.behavior(propertyWithoutOverride).attributes[
+      component
+    ][attributeToBeAdded]
+
+    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResultPropOveride)).toEqual(
+      testHelper.convertToMatchingTypeIfApplicable(valueOfAttributeToBeAdded),
+    )
+    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResultPropBasedOn)).toEqual(
       testHelper.convertToMatchingTypeIfApplicable(valueOfAttributeToBeAdded),
     )
   },
