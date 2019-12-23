@@ -28,7 +28,9 @@ const ExternalExampleLayout: React.FC<ExternalExampleLayoutProps> = props => {
 
   const [error, setError] = React.useState<Error | null>(null)
   const [renderId, setRenderId] = React.useState<number>(0)
-  const [themeName, setThemeName] = React.useState<string>()
+  const [themeName, setThemeName] = React.useState<string>('base')
+  ;(window as any).themeName = themeName
+  ;(window as any).themes = themes
 
   React.useLayoutEffect(() => {
     window.resetExternalLayout = () => setRenderId(prevNumber => prevNumber + 1)
