@@ -1,5 +1,15 @@
 import * as React from 'react'
-import { Button, Menu, Flex, Avatar, Text, Dropdown, Checkbox, Icon } from '@fluentui/react'
+import {
+  Button,
+  Menu,
+  Flex,
+  Avatar,
+  Text,
+  Dropdown,
+  Checkbox,
+  Icon,
+  MenuButton,
+} from '@fluentui/react'
 import {
   gridCellWithFocusableElementBehavior,
   gridCellMultipleFocusableBehavior,
@@ -16,7 +26,7 @@ const roleDropdown = {
   content: <Dropdown inline items={['Owner', 'Member']} defaultValue={'Owner'} />,
   truncateContent: false,
   key: '1-6',
-  accessibility: gridCellWithFocusableElementBehavior,
+  accessibility: gridCellMultipleFocusableBehavior,
   onClick: e => e.stopPropagation(),
 }
 
@@ -102,15 +112,29 @@ const rowsMembers = [
   },
 ]
 
+const menuButton = (
+  <MenuButton
+    trigger={<Button tabIndex={-1} icon="more" circular text iconOnly title="More options" />}
+    menu={[
+      '1',
+      '2',
+      '3',
+      {
+        content: 'submenu',
+        menu: {
+          items: ['4', '5'],
+        },
+      },
+    ]}
+    on="click"
+  />
+)
+
 const moreOptionButton = {
-  content: <Button tabIndex={-1} icon="more" circular text iconOnly title="More options" />,
+  content: menuButton,
   truncateContent: true,
   key: '1-6',
   accessibility: gridCellWithFocusableElementBehavior,
-  onClick: e => {
-    alert('more option button clicked')
-    e.stopPropagation()
-  },
 }
 
 const columnsChannels = [
