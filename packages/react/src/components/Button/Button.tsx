@@ -77,6 +77,9 @@ export interface ButtonProps
   /** A button can emphasize that it represents an alternative action. */
   secondary?: boolean
 
+  /** A button that inherits its background and has a subtle appearance */
+  inverted?: boolean
+
   /** A button can be sized. */
   size?: SizeValue
 }
