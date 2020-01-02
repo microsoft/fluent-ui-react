@@ -13,8 +13,14 @@ const PopupWithoutTriggerExample = () => {
     <>
       <Popup
         open={open}
-        content={{ content: 'Test Content' }}
-        onOpenChange={(e, data) => setOpen(data.open)}
+        content={{
+          content: 'Test Content',
+          styles: { margin: '20px' }, // puppeteer performs a click on 0x0 in boxes, so button and popup content should not collide
+        }}
+        onOpenChange={(e, data) => {
+          e.stopPropagation()
+          setOpen(data.open)
+        }}
       />
       <Button content="Test button" onClick={() => setOpen(!open)} />
     </>
