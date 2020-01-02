@@ -15,6 +15,11 @@ const Types = () => (
       examplePath="components/Button/Types/ButtonExampleEmphasis"
     />
     <ComponentExample
+      title="Inverted Button"
+      description="A button that inherits its background."
+      examplePath="components/Button/Types/ButtonExampleInverted"
+    />
+    <ComponentExample
       title="Text"
       description="A button can be shown in form of a text to indicate some less-pronounced actions."
       examplePath="components/Button/Types/ButtonExampleText"
