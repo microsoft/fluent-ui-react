@@ -1,5 +1,7 @@
 import { ComponentSlotClasses, ComponentSlotStylesPrepared, ICSSInJSStyle } from '../themes/types'
 import { isEnabled as isDebugEnabled } from './debug/debugEnabled'
+import * as _ from 'lodash'
+import { worker } from './styleMapper' // eslint-disable-line import/no-mutable-exports
 
 // Both resolvedStyles and classes are objects of getters with lazy evaluation
 const resolveStylesAndClasses = (
@@ -60,6 +62,25 @@ const resolveStylesAndClasses = (
 
         if (renderStyles && styleObj) {
           classes[cacheKey] = renderStyles(styleObj)
+
+          if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
+            // resolvedStylesDebug[slotName].forEach(debug => {
+            const debugClassName = _.uniqueId(`__debug_${slotName}_`)
+            console.log(resolvedStyles[slotName], debugClassName)
+            const debug = resolvedStyles[slotName].__debugMetadata
+            // if (debug.meta) {
+            if (debug) {
+              worker.postMessage({
+                id: 'add_mapped_class',
+                className: debugClassName,
+                stackInfo: debug.stackInfo,
+                stackIndex: debug.stackIndex,
+              })
+            }
+
+            classes[cacheKey] = `${classes[cacheKey]} ${debugClassName}`
+            // })
+          }
         }
 
         return classes[cacheKey]

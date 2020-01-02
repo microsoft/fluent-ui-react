@@ -114,11 +114,17 @@ export const mergeComponentStyles__DEV = (
         partStylesPrepared[partName] = styleParam => {
           // originalTarget is always prepared, fn is guaranteed, _debug always exists
           const { _debug = undefined, ...styles } = callable(originalSource)(styleParam) || {}
-
+          console.log(originalSource, originalSource.__debugMetadata)
           // new object required to prevent circular JSON structure error in <Debug />
           return {
             ...styles,
-            _debug: _debug || [{ styles: { ...styles }, debugId: stylesByPart._debugId }],
+            _debug: _debug || [
+              {
+                styles: { ...styles },
+                debugId: stylesByPart._debugId,
+                meta: originalSource.__debugMetadata,
+              },
+            ],
           }
         }
 

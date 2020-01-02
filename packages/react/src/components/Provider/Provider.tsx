@@ -30,6 +30,7 @@ import {
 } from '../../types'
 import mergeContexts from '../../utils/mergeProviderContexts'
 import Telemetry from '../../utils/Telemetry'
+import { worker } from '../../utils/styleMapper'
 
 export interface ProviderProps extends ChildrenComponentProps {
   renderer?: Renderer
@@ -142,9 +143,40 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
   }
 
   componentDidMount() {
+    const { target } = this.props
+
     this.renderFontFaces(this.outgoingContext.renderer)
-    if (this.props.target) {
-      setUpWhatInput(this.props.target)
+
+    if (target) {
+      setUpWhatInput(target)
+
+      // @ts-ignore
+      if (!target.__HAS_FLUENT_WORKER) {
+        // @ts-ignore
+        target.__HAS_FLUENT_WORKER = true
+        worker.onmessage = msg => {
+          const { id, css } = msg.data
+
+          if (id === 'render_css' && css) {
+            const style = target.createElement('style')
+
+            style.appendChild(target.createTextNode(css))
+            document.head.appendChild(style) // eslint-disable-line
+          }
+        }
+      }
+    } else {
+      worker.onmessage = msg => {
+        const { id, css } = msg.data
+
+        if (id === 'render_css' && css) {
+          const style = document.createElement('style') // eslint-disable-line
+
+          style.appendChild(document.createTextNode(css)) // eslint-disable-line
+          document.head.appendChild(style) // eslint-disable-line
+          console.log(11, css)
+        }
+      }
     }
   }
 

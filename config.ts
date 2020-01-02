@@ -76,7 +76,7 @@ const config = {
   // ----------------------------------
   // Compiler Configuration
   // ----------------------------------
-  compiler_devtool: __DEV__ && 'eval-source-map',
+  compiler_devtool: __DEV__ && 'source-map',
   compiler_mode: __DEV__ ? 'development' : 'production',
   compiler_globals: {
     __DEV__,

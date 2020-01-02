@@ -249,7 +249,7 @@ const renderComponent = <P extends {}>(
     renderer ? style => renderer.renderRule(() => style, felaParam) : undefined,
   )
 
-  classes.root = cx(className, classes.root, props.className)
+  classes.root = cx(className, classes.root, props.className, '__debug-1')
 
   const resolvedConfig: RenderResultConfig<P> = {
     ElementType,
