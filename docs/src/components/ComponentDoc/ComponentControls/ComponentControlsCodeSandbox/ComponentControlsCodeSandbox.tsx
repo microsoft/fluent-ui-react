@@ -6,7 +6,7 @@ import { appTemplate } from './indexTemplates'
 import createPackageJson from './createPackageJson'
 
 export enum CodeSandboxState {
-  Idle = 'IDLE',
+  Default = 'DEFAULT',
   Loading = 'LOADING',
   Success = 'SUCCESS',
 }
@@ -100,7 +100,7 @@ class ComponentControlsCodeSandbox extends React.Component<
           ref={this.codeSandboxerRef}
           template={template}
         >
-          // CodeSandboxer captures ref from children and binds an event handler directly to DOM, this hack allows to avoid this behavior
+          {/* CodeSandboxer captures ref from children and binds an event handler directly to DOM, this hack allows to avoid this behavior  */}
           {() => null}
         </CodeSandboxer>
         {children(state, this.handleClick)}
