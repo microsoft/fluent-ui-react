@@ -178,14 +178,17 @@ class HierarchicalTreeItem extends UIComponent<WithAsProp<HierarchicalTreeItemPr
         })}
         {hasSubtree && open && (
           <Ref innerRef={this.treeRef}>
-            {HierarchicalTree.create(items, {
-              defaultProps: () => ({
-                accessibility: hierarchicalSubtreeBehavior,
-                className: HierarchicalTreeItem.slotClassNames.subtree,
-                exclusive,
-                renderItemTitle,
-              }),
-            })}
+            {HierarchicalTree.create(
+              { items },
+              {
+                defaultProps: () => ({
+                  accessibility: hierarchicalSubtreeBehavior,
+                  className: HierarchicalTreeItem.slotClassNames.subtree,
+                  exclusive,
+                  renderItemTitle,
+                }),
+              },
+            )}
           </Ref>
         )}
       </>

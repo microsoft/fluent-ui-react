@@ -135,7 +135,7 @@ class Sidebar extends React.Component<any, any> {
     return [
       {
         key: 'concepts',
-        title: 'Concepts',
+        title: { content: 'Concepts' },
         items: [
           {
             key: 'intro',
@@ -169,7 +169,7 @@ class Sidebar extends React.Component<any, any> {
       },
       {
         key: 'guides',
-        title: 'Guides',
+        title: { content: 'Guides' },
         items: [
           {
             key: 'quickstart',
@@ -249,7 +249,7 @@ class Sidebar extends React.Component<any, any> {
     prototypes = this.removePublicTags(prototypes)
     const prototypeTreeSection = {
       key: 'prototypes',
-      title: 'Prototypes',
+      title: { content: 'Prototypes' },
       items: prototypes,
     }
     return currentSections.concat(prototypeTreeSection)
@@ -388,7 +388,7 @@ class Sidebar extends React.Component<any, any> {
 
     const componentTreeSection = {
       key: 'components',
-      title: 'Components',
+      title: { content: 'Components' },
       items: treeItemsByType[0].items,
     }
 
@@ -540,7 +540,7 @@ class Sidebar extends React.Component<any, any> {
             inverted
             fluid
             clearable
-            icon="search"
+            icon={{ name: 'search' }}
             placeholder="Search"
             iconPosition="end"
             role="search"

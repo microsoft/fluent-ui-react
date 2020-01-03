@@ -64,19 +64,19 @@ export type ShorthandRenderer<P> = (
 export type ShorthandRenderCallback<P> = (render: ShorthandRenderer<P>) => React.ReactElement<any>
 
 // The ReactFragment here is replaced from the original typings with ReactNodeArray because of incorrect inheriting of the type when it is defined as {}
-type ReactNode =
-  | React.ReactChild
-  | React.ReactNodeArray
-  | React.ReactPortal
-  | boolean
-  | null
-  | undefined
+// type ReactNode =
+//   | React.ReactChild
+//   | React.ReactNodeArray
+//   | React.ReactPortal
+//   | boolean
+//   | null
+//   | undefined
 
 export type ShorthandRenderProp<P> = (Component: React.ElementType, props: P) => React.ReactNode
 
-export type ShorthandValue<P extends Props> =
-  | ReactNode
-  | (Props<P> & { children?: P['children'] | ShorthandRenderProp<P> })
+export type ShorthandValue<P extends Props> = Props<P> & {
+  children?: P['children'] | ShorthandRenderProp<P>
+}
 export type ShorthandCollection<P, K = never> = ShorthandValue<P & { kind?: K }>[]
 
 // ========================================================

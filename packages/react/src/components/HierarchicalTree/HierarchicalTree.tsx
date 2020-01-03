@@ -44,7 +44,7 @@ export interface HierarchicalTreeProps extends UIComponentProps, ChildrenCompone
   exclusive?: boolean
 
   /** Shorthand array of props for Tree. */
-  items?: ShorthandCollection<HierarchicalTreeItemProps>
+  items?: ShorthandValue<HierarchicalTreeProps> | ShorthandCollection<HierarchicalTreeItemProps>
 
   /**
    * A custom render function for the title slot.

@@ -141,7 +141,7 @@ class ChatItem extends UIComponent<WithAsProp<ChatItemProps>, any> {
   }
 }
 
-ChatItem.create = createShorthandFactory({ Component: ChatItem, mappedProp: 'message' })
+ChatItem.create = createShorthandFactory({ Component: ChatItem })
 ChatItem.slotClassNames = {
   message: `${ChatItem.className}__message`,
   gutter: `${ChatItem.className}__gutter`,

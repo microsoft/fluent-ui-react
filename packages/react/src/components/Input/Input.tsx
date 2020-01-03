@@ -152,7 +152,7 @@ class Input extends AutoControlledComponent<WithAsProp<InputProps>, InputState> 
                 handleRef(inputRef, inputElement)
               }}
             >
-              {Box.create(input || type, {
+              {Box.create(input || { type }, {
                 defaultProps: () => ({
                   ...htmlInputProps,
                   as: 'input',
