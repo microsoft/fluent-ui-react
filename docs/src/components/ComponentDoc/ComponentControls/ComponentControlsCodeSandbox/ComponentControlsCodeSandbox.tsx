@@ -6,7 +6,7 @@ import { appTemplate } from './indexTemplates'
 import createPackageJson from './createPackageJson'
 
 export enum CodeSandboxState {
-  Default = 'DEFAULT',
+  Idle = 'IDLE',
   Loading = 'LOADING',
   Success = 'SUCCESS',
 }
