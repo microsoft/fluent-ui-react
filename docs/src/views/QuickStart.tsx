@@ -49,7 +49,7 @@ export default () => (
         import React from 'react'
         import { Button } from '@fluentui/react'
 
-        export default () => <Button content="Get started" icon="play" iconPosition="after" primary />
+        export default () => <Button content="Get started" icon={{ name: "play" }} iconPosition="after" primary />
       `}
     />
 

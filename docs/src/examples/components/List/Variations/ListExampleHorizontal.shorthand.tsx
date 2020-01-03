@@ -4,12 +4,12 @@ import { List, Status } from '@fluentui/react'
 const items = [
   {
     key: 'irving',
-    media: <Status state="error" icon="error" />,
+    media: <Status state="error" icon={{ name: 'error' }} />,
     header: 'Irving Kuhic',
   },
   {
     key: 'skyler',
-    media: <Status state="success" icon="icon-checkmark" />,
+    media: <Status state="success" icon={{ name: 'icon-checkmark' }} />,
     header: 'Skyler Parks',
   },
   {

@@ -84,7 +84,7 @@ In addition to behaviors, ARIA [landmarks][5] and [naming props][6] need to be a
 For example, to make an icon-only Button accessible, `aria-label` prop needs to be used:
 
 ```html
-<button icon="star" iconOnly aria-label="Favorites" primary />
+<button icon={{ name: "star" }} iconOnly aria-label="Favorites" primary />
 ```
 
 ### Focus

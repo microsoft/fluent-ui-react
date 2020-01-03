@@ -6,13 +6,13 @@ const ButtonExampleDisabled = () => (
     <Flex gap="gap.smaller">
       <Button disabled content="Default" />
       <Button disabled content="Primary" primary />
-      <Button disabled icon="emoji" content="Click me" iconPosition="before" primary />
-      <Button disabled circular icon="translation" title="Translation" />
+      <Button disabled icon={{ name: 'emoji' }} content="Click me" iconPosition="before" primary />
+      <Button disabled circular icon={{ name: 'translation' }} title="Translation" />
       <Button
         disabled
         text
         content="Disabled text button"
-        icon="call-video"
+        icon={{ name: 'call-video' }}
         iconPosition="before"
       />
     </Flex>

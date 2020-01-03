@@ -160,8 +160,8 @@ export default () => (
     <ExampleSnippet
       render={() => (
         <>
-          <Button icon="calendar" content="Profile" />
-          <Button icon="calendar" content="Profile" />
+          <Button icon={{ name: 'calendar' }} content="Profile" />
+          <Button icon={{ name: 'calendar' }} content="Profile" />
 
           <Provider
             theme={{
@@ -175,8 +175,8 @@ export default () => (
             }}
           >
             <span>
-              <Button icon="calendar" content="Profile" />
-              <Button icon="calendar" content="Profile" />
+              <Button icon={{ name: 'calendar' }} content="Profile" />
+              <Button icon={{ name: 'calendar' }} content="Profile" />
             </span>
           </Provider>
         </>

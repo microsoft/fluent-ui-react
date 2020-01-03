@@ -15,14 +15,22 @@ class PopupExampleOnMultiple extends React.Component {
         <Flex gap="gap.smaller" padding="padding.medium">
           <Popup
             trigger={
-              <Button icon="more" content="Click + Focus" aria-label="Click or focus button" />
+              <Button
+                icon={{ name: 'more' }}
+                content="Click + Focus"
+                aria-label="Click or focus button"
+              />
             }
             content="Hello from popup on click!"
             on={['click', 'focus']}
           />
           <Popup
             trigger={
-              <Button icon="more" content="Hover + Focus" aria-label="Hover or focus button" />
+              <Button
+                icon={{ name: 'more' }}
+                content="Hover + Focus"
+                aria-label="Hover or focus button"
+              />
             }
             content="Hello from popup on hover!"
             on={['hover', 'focus']}
@@ -32,7 +40,7 @@ class PopupExampleOnMultiple extends React.Component {
           <Popup
             trigger={
               <Button
-                icon="more"
+                icon={{ name: 'more' }}
                 content="Context + Focus"
                 aria-label="Right click or focus button"
                 onClick={this.showAlert}
@@ -44,7 +52,7 @@ class PopupExampleOnMultiple extends React.Component {
           <Popup
             trigger={
               <Button
-                icon="more"
+                icon={{ name: 'more' }}
                 content="Context + Hover"
                 aria-label="Right click or hover button"
                 onClick={this.showAlert}
@@ -56,7 +64,7 @@ class PopupExampleOnMultiple extends React.Component {
           <Popup
             trigger={
               <Button
-                icon="more"
+                icon={{ name: 'more' }}
                 content="Context + Hover + Focus"
                 aria-label="Right click or hover or focus button"
                 onClick={this.showAlert}

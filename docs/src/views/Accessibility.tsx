@@ -152,8 +152,8 @@ export default () => (
     <CodeSnippet
       value={`
         <>
-          <Button icon='email' />
-          <Button icon='email' aria-label='Send message' />
+          <Button icon={{name: 'email'}} />
+          <Button icon={{name: 'email'}} aria-label='Send message' />
           <Radio aria-label='Include history from the past day. Press TAB to change the number of days.' />
         </>
       `}
@@ -406,7 +406,7 @@ export default () => (
     <p>Example:</p>
     <CodeSnippet
       value={`
-        <Button icon="add" aria-label="Add item to list" primary />
+        <Button icon={{ name: "add" }} aria-label="Add item to list" primary />
       `}
     />
     <p>Rendered HTML:</p>

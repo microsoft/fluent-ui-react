@@ -49,19 +49,19 @@ export default () => (
         export default () =>
          <Provider theme={themes.teams}>
             <Button content="Button" />
-            <Button icon="add" iconOnly primary />
-            <Button icon="email" content="Send email" secondary />
+            <Button icon={{ name: "add"}} iconOnly primary />
+            <Button icon={{ name: "email" }} content="Send email" secondary />
             <Icon name="emoji" size="larger" />
-            <Label content="Label with icon" icon="close" />
+            <Label content="Label with icon" icon={{ name: "close" }} />
          </Provider>
       `}
       render={() => (
         <>
           <Button content="Button" />
-          <Button icon="add" iconOnly primary />
-          <Button icon="email" content="Send email" secondary />
-          <Icon name="emoji" size="larger" />
-          <Label content="Label with icon" icon="close" />
+          <Button icon={{ name: 'add' }} iconOnly primary />
+          <Button icon={{ name: 'email' }} content="Send email" secondary />
+          <Icon name={{ name: 'emoji' }} size="larger" />
+          <Label content="Label with icon" icon={{ name: 'close' }} />
         </>
       )}
     />
@@ -222,10 +222,10 @@ export default () => (
           <Provider theme={theme}>
             <div>
               <Button content="Button" />
-              <Button icon="add" iconOnly primary />
-              <Button icon="email" content="Send email" secondary />
-              <Icon name="emoji" size="larger" />
-              <Label content="Label with icon" icon="close" />
+              <Button icon={{ name: "add" }} iconOnly primary />
+              <Button icon={{ name: "email" }} content="Send email" secondary />
+              <Icon name={{ name: "email" }} size="larger" />
+              <Label content="Label with icon" icon={{ name: "close" }} />
             </div>
           </Provider>
         )
@@ -266,10 +266,10 @@ export default () => (
           >
             <div>
               <Button content="Button" />
-              <Button icon="add" iconOnly primary />
-              <Button icon="email" content="Send email" secondary />
+              <Button icon={{ name: 'add' }} iconOnly primary />
+              <Button icon={{ name: 'email' }} content="Send email" secondary />
               <Icon name="emoji" size="larger" />
-              <Label content="Label with icon" icon="close" />
+              <Label content="Label with icon" icon={{ name: 'close' }} />
             </div>
           </Provider>
         </div>
@@ -287,10 +287,10 @@ export default () => (
           {/* Default theming */}
           <Header as="h3" content="Default theming" />
           <Button content="Button" />
-          <Button icon="add" iconOnly primary />
-          <Button icon="email" content="Send email" secondary />
+          <Button icon={{ name: "add" }} iconOnly primary />
+          <Button icon={{ name: "email" }} content="Send email" secondary />
           <Icon name="emoji" size="larger" />
-          <Label content="Label with icon" icon="close" />
+          <Label content="Label with icon" icon={{ name: "close" }} />
 
           {/* First nested theming */}
           <Provider
@@ -307,10 +307,10 @@ export default () => (
               <Header as="h3" content="First nested theming" />
 
               <Button content="Button" />
-              <Button icon="add" iconOnly primary />
-              <Button icon="email" content="Send email" secondary />
+              <Button icon={{ name: "add" }} iconOnly primary />
+              <Button icon={{ name: "email" }} content="Send email" secondary />
               <Icon name="emoji" size="larger" />
-              <Label content="Label with icon" icon="close" />
+              <Label content="Label with icon" icon={{ name: "close" }} />
 
               {/* Second nested theming */}
               <Provider
@@ -326,10 +326,10 @@ export default () => (
                   <Header as="h3" content="Second nested theming" />
 
                   <Button content="Button" />
-                  <Button icon="plus" iconOnly primary />
-                  <Button icon="email" content="Send email" secondary />
+                  <Button icon={{ name: "plus" }} iconOnly primary />
+                  <Button icon={{ name: "email" }} content="Send email" secondary />
                   <Icon name="emoji" size="larger" />
-                  <Label content="Label with icon" icon="close" />
+                  <Label content="Label with icon" icon={{ name: "close" }} />
                 </div>
               </Provider>
             </div>
@@ -340,10 +340,10 @@ export default () => (
         <div>
           <Header as="h3" content="Default theming" />
           <Button content="Button" />
-          <Button icon="add" iconOnly primary />
-          <Button icon="email" content="Send email" secondary />
+          <Button icon={{ name: 'add' }} iconOnly primary />
+          <Button icon={{ name: 'email' }} content="Send email" secondary />
           <Icon name="emoji" size="larger" />
-          <Label content="Label with icon" icon="close" />
+          <Label content="Label with icon" icon={{ name: 'close' }} />
 
           <Provider
             theme={{
@@ -358,10 +358,10 @@ export default () => (
               <Header as="h3" content="First nested theming" />
 
               <Button content="Button" />
-              <Button icon="add" iconOnly primary />
-              <Button icon="email" content="Send email" secondary />
+              <Button icon={{ name: 'add' }} iconOnly primary />
+              <Button icon={{ name: 'email' }} content="Send email" secondary />
               <Icon name="emoji" size="larger" />
-              <Label content="Label with icon" icon="close" />
+              <Label content="Label with icon" icon={{ name: 'close' }} />
 
               <Provider
                 theme={{
@@ -376,10 +376,10 @@ export default () => (
                   <Header as="h3" content="Second nested theming" />
 
                   <Button content="Button" />
-                  <Button icon="add" iconOnly primary />
-                  <Button icon="email" content="Send email" secondary />
+                  <Button icon={{ name: 'add' }} iconOnly primary />
+                  <Button icon={{ name: 'email' }} content="Send email" secondary />
                   <Icon name="emoji" size="larger" />
-                  <Label content="Label with icon" icon="close" />
+                  <Label content="Label with icon" icon={{ name: 'close' }} />
                 </>
               </Provider>
             </>

@@ -8,9 +8,15 @@ const PopupControlledExample = () => {
   const popupContent = (
     <Flex column>
       <Flex.Item align="end">
-        <Button text iconOnly icon="close" onClick={() => setOpen(false)} title="Close" />
+        <Button
+          text
+          iconOnly
+          icon={{ name: 'close' }}
+          onClick={() => setOpen(false)}
+          title="Close"
+        />
       </Flex.Item>
-      <Input icon="search" placeholder="Search..." />
+      <Input icon={{ name: 'search' }} placeholder="Search..." />
     </Flex>
   )
 
@@ -21,7 +27,7 @@ const PopupControlledExample = () => {
       content={popupContent}
       trapFocus
     >
-      <Button icon="open-outside" title="Open popup" />
+      <Button icon={{ name: 'open-outside' }} title="Open popup" />
     </Popup>
   )
 }

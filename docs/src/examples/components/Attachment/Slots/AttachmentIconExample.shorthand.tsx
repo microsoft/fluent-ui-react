@@ -3,9 +3,9 @@ import { Attachment } from '@fluentui/react'
 
 const AttachmentIconExampleShorthand = () => (
   <div>
-    <Attachment icon="word-color" header="MeetingNotes.docx" />
-    <Attachment icon="excel-color" header="Budget.xlsx" />
-    <Attachment icon="powerpoint-color" header="Presentation.pptx" />
+    <Attachment icon={{ name: 'word-color' }} header="MeetingNotes.docx" />
+    <Attachment icon={{ name: 'excel-color' }} header="Budget.xlsx" />
+    <Attachment icon={{ name: 'powerpoint-color' }} header="Presentation.pptx" />
   </div>
 )
 

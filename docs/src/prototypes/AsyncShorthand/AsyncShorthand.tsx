@@ -51,7 +51,12 @@ class CustomChatMessage extends React.Component {
           <AsyncData
             data={3}
             render={data => (
-              <MenuItem {...props} icon="thumbs up" content={data} onClick={this.togglePopup} />
+              <MenuItem
+                {...props}
+                icon={{ name: 'thumbs up' }}
+                content={data}
+                onClick={this.togglePopup}
+              />
             )}
           />
         }

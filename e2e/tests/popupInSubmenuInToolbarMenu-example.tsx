@@ -38,7 +38,7 @@ const ToolbarExamplePopupInMenu = () => {
                         content: (
                           <Input
                             id={selectors.popupElementId}
-                            icon="search"
+                            icon={{ name: 'search' }}
                             placeholder="Search..."
                           />
                         ),

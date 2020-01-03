@@ -6,16 +6,26 @@ const ButtonExampleTextShorthand = () => (
     <Button text content="A text button" />
     <br />
     <br />
-    <Button icon="call-video" text content="A text button with an icon" />
+    <Button icon={{ name: 'call-video' }} text content="A text button with an icon" />
     <br />
     <br />
-    <Button icon="team-create" text iconOnly title="Create" />
+    <Button icon={{ name: 'team-create' }} text iconOnly title="Create" />
     <br />
     <br />
-    <Button icon="call-video" text disabled content="A disabled text button with an icon" />
+    <Button
+      icon={{ name: 'call-video' }}
+      text
+      disabled
+      content="A disabled text button with an icon"
+    />
     <br />
     <br />
-    <Button icon="call-video" text primary content="A primary text button with an icon" />
+    <Button
+      icon={{ name: 'call-video' }}
+      text
+      primary
+      content="A primary text button with an icon"
+    />
   </div>
 )
 

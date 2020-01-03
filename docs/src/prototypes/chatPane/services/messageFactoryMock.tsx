@@ -132,7 +132,7 @@ function createMessageContentWithAttachments(content: string, messageId: string)
           aria-label="More attachment options"
           iconOnly
           circular
-          icon="ellipsis horizontal"
+          icon={{ name: 'ellipsis horizontal' }}
           onClick={e => e.stopPropagation()}
           onKeyDown={stopPropagationOnKeys([keyboardKey.Enter, keyboardKey.Spacebar])}
         />
@@ -150,7 +150,7 @@ function createMessageContentWithAttachments(content: string, messageId: string)
         {_.map(['MeetingNotes.pptx', 'Document.docx'], (fileName, index) => (
           <Attachment
             key={`attachment-${index}`}
-            icon="file word outline"
+            icon={{ name: 'file word outline' }}
             aria-label={`File attachment ${fileName}. Press tab for more options Press Enter to open the file`}
             header={fileName}
             action={actionPopup}

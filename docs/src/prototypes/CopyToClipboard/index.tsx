@@ -21,7 +21,7 @@ const CopyToClipboardPrototype: React.FC<CopyToClipboardPrototypeProps> = props 
         attached={props.attached}
         target={props.target}
         value={props.value}
-        trigger={<Button iconOnly icon="clipboard-copied-to" />}
+        trigger={<Button iconOnly icon={{ name: 'clipboard-copied-to' }} />}
       />
     </Flex>
   )

@@ -58,7 +58,7 @@ const ToolbarExamplePopupShorthand = () => {
           active: fontColorActive,
           title: 'Font color',
           popup: {
-            content: <Input icon="search" placeholder="Search..." />,
+            content: <Input icon={{ name: 'search' }} placeholder="Search..." />,
             onOpenChange: () => {
               setFontColorActive(!fontColorActive)
             },

@@ -3,7 +3,7 @@ import { Button, Popup } from '@fluentui/react'
 
 const PopupExample = () => (
   <Popup content="Hello from popup!">
-    <Button icon="more" title="Show popup" />
+    <Button icon={{ name: 'more' }} title="Show popup" />
   </Popup>
 )
 

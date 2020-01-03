@@ -18,7 +18,7 @@ const ToolbarExamplePopupInMenu = () => {
             {
               key: 'popup',
               content: 'Open Popup',
-              popup: <Input icon="search" placeholder="Search..." />,
+              popup: <Input icon={{ name: 'search' }} placeholder="Search..." />,
             },
           ],
           menuOpen: menu1Open,
@@ -41,7 +41,7 @@ const ToolbarExamplePopupInMenu = () => {
             {
               key: 'popup',
               content: 'Open Popup',
-              popup: <Input icon="search" placeholder="Search..." />,
+              popup: <Input icon={{ name: 'search' }} placeholder="Search..." />,
             },
             { key: 'about', content: 'About...' },
           ],

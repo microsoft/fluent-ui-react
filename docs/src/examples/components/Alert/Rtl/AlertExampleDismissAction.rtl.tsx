@@ -12,7 +12,7 @@ const AlertExampleDismissActionRtl = () => (
         content: 'عالم',
       },
     ]}
-    icon="exclamation-triangle"
+    icon={{ name: 'exclamation-triangle' }}
     content="مرحبا العالم"
   />
 )

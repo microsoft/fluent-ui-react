@@ -15,7 +15,7 @@ const PopupClickHandlingExample = () => {
         <Button
           id={selectors.triggerButtonId}
           content="Open Popup"
-          icon="expand"
+          icon={{ name: 'expand' }}
           onClick={() => setShow(true)}
         />
       }
