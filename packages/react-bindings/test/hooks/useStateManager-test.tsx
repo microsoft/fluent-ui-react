@@ -1,6 +1,6 @@
 import { useStateManager } from '@fluentui/react-bindings'
 import { createManager, ManagerFactory } from '@fluentui/state'
-import { shallow } from 'enzyme'
+import { mount, shallow } from 'enzyme'
 import * as React from 'react'
 import * as ReactTestUtils from 'react-dom/test-utils'
 
@@ -61,6 +61,22 @@ const TestComponent: React.FunctionComponent<TestComponentProps> = props => {
       <button className={props.color} onClick={() => actions.toggle()} />
     </>
   )
+}
+
+type ActionsComponentProps = {
+  onRender: () => void
+  onUpdate: () => void
+}
+
+const ActionsComponent: React.FunctionComponent<ActionsComponentProps> = props => {
+  const { actions } = useStateManager(createTestManager)
+
+  props.onRender()
+  React.useEffect(() => {
+    props.onUpdate()
+  }, [actions])
+
+  return <div onClick={() => actions.toggle()} />
 }
 
 describe('useStateManager', () => {
@@ -147,5 +163,18 @@ describe('useStateManager', () => {
     expect(onChange).toHaveBeenCalledTimes(2)
     expect(onChange).toHaveBeenNthCalledWith(1, 'foo')
     expect(onChange).toHaveBeenNthCalledWith(2, 'foo')
+  })
+
+  it('actions are referentially equal between renders', () => {
+    const onRender = jest.fn()
+    const onUpdate = jest.fn()
+    const wrapper = mount(<ActionsComponent onRender={onRender} onUpdate={onUpdate} />)
+
+    ReactTestUtils.act(() => {
+      wrapper.find('div').simulate('click')
+    })
+
+    expect(onRender).toHaveBeenCalledTimes(2)
+    expect(onUpdate).toHaveBeenCalledTimes(1)
   })
 })

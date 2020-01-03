@@ -36,6 +36,7 @@ const useStateManager = <
     mapPropsToState = () => ({} as Partial<State>),
     sideEffects = [],
   } = options
+  const latestActions = React.useMemo<Actions>(() => ({} as Actions), [managerFactory])
   const latestManager = React.useRef<Manager<State, Actions> | null>(null)
 
   // Heads up! forceUpdate() is used only for triggering rerenders, stateManager is SSOT
@@ -58,19 +59,29 @@ const useStateManager = <
     ],
   })
 
+  // We need to keep the same reference to an object with actions to allow usage them as
+  // a dependency in useCallback() hook
+  Object.assign(latestActions, latestManager.current.actions)
+
+  if (process.env.NODE_ENV !== 'production') {
+    if (Object.isExtensible(latestActions)) {
+      Object.preventExtensions(latestActions)
+    }
+  }
+
   // We need to pass exactly `manager.state` to provide the same state object during the same render
   // frame.
   // It keeps behavior consistency between React state tools and our managers
   // https://github.com/facebook/react/issues/11527#issuecomment-360199710
 
   if (process.env.NODE_ENV === 'production') {
-    return { state: latestManager.current.state, actions: latestManager.current.actions }
+    return { state: latestManager.current.state, actions: latestActions }
   }
 
   // Object.freeze() is used only in dev-mode to avoid usage mistakes
   return {
     state: Object.freeze(latestManager.current.state),
-    actions: Object.freeze(latestManager.current.actions),
+    actions: latestActions,
   }
 }
 
