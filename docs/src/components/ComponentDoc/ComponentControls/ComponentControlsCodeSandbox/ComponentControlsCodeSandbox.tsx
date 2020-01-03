@@ -100,6 +100,7 @@ class ComponentControlsCodeSandbox extends React.Component<
           ref={this.codeSandboxerRef}
           template={template}
         >
+          // CodeSandboxer captures ref from children and binds an event handler directly to DOM, this hack allows to avoid this behavior
           {() => null}
         </CodeSandboxer>
         {children(state, this.handleClick)}
