@@ -2,8 +2,8 @@ import { Accessibility } from '../../types'
 import { AlertProps } from './alertWarningBehavior'
 
 /**
- * @specification
- * Adds attribute 'aria-describedby' to 'body' slot.
+ * @description
+ * Use attribute 'aria-describedby' for dismiss action.
  */
 
 const alertBaseBehavior: Accessibility<AlertProps> = props => ({
