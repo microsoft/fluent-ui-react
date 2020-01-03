@@ -56,6 +56,30 @@ const getItemAtIndexWrapper = (wrapper: ReactWrapper, index: number): CommonWrap
   findIntrinsicElement(wrapper, `.${CarouselItem.className}`).at(index)
 
 jest.useFakeTimers()
+jest.mock('lodash', () => ({
+  ...jest.requireActual('lodash'),
+  debounce: (fn: Function, time: number): Function => {
+    let timeoutId
+
+    function cancel() {
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+      }
+    }
+
+    function wrapper(...args) {
+      cancel()
+      timeoutId = setTimeout(() => {
+        timeoutId = null
+        fn(...args)
+      }, time)
+    }
+
+    wrapper.cancel = cancel
+
+    return wrapper
+  },
+}))
 
 describe('Carousel', () => {
   isConformant(Carousel)
