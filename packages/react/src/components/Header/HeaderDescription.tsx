@@ -2,12 +2,9 @@ import { Accessibility } from '@fluentui/accessibility'
 import * as React from 'react'
 
 import {
-  childrenExist,
   createShorthandFactory,
   UIComponent,
   UIComponentProps,
-  ChildrenComponentProps,
-  ContentComponentProps,
   commonPropTypes,
   ColorComponentProps,
   rtlTextContainer,
@@ -16,11 +13,7 @@ import {
 
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
-export interface HeaderDescriptionProps
-  extends UIComponentProps,
-    ChildrenComponentProps,
-    ContentComponentProps,
-    ColorComponentProps {
+export interface HeaderDescriptionProps extends UIComponentProps, ColorComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    */
@@ -43,15 +36,16 @@ class HeaderDescription extends UIComponent<WithAsProp<HeaderDescriptionProps>, 
   }
 
   renderComponent({ accessibility, ElementType, classes, unhandledProps }) {
-    const { children, content } = this.props
+    const { children } = this.props
+
     return (
       <ElementType
-        {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
+        {...rtlTextContainer.getAttributes({ forElements: [children] })}
         {...accessibility.attributes.root}
         {...unhandledProps}
         className={classes.root}
       >
-        {childrenExist(children) ? children : content}
+        {children}
       </ElementType>
     )
   }
@@ -59,7 +53,7 @@ class HeaderDescription extends UIComponent<WithAsProp<HeaderDescriptionProps>, 
 
 HeaderDescription.create = createShorthandFactory({
   Component: HeaderDescription,
-  mappedProp: 'content',
+  mappedProp: 'children',
 })
 
 /**

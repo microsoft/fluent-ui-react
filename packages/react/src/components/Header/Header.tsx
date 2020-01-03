@@ -8,8 +8,6 @@ import {
   createShorthandFactory,
   UIComponent,
   UIComponentProps,
-  ChildrenComponentProps,
-  ContentComponentProps,
   commonPropTypes,
   ColorComponentProps,
   rtlTextContainer,
@@ -24,11 +22,7 @@ export interface HeaderSlotClassNames {
   description: string
 }
 
-export interface HeaderProps
-  extends UIComponentProps,
-    ChildrenComponentProps,
-    ContentComponentProps,
-    ColorComponentProps {
+export interface HeaderProps extends UIComponentProps, ColorComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    */
@@ -66,22 +60,21 @@ class Header extends UIComponent<WithAsProp<HeaderProps>, any> {
   static Description = HeaderDescription
 
   renderComponent({ accessibility, ElementType, classes, variables: v, unhandledProps }) {
-    const { children, description, content } = this.props
+    const { children, description } = this.props
 
     const hasChildren = childrenExist(children)
-    const contentElement = childrenExist(children) ? children : content
 
     return (
       <ElementType
         {...rtlTextContainer.getAttributes({
-          forElements: [children, content],
+          forElements: [children],
           condition: !description,
         })}
         {...accessibility.attributes.root}
         {...unhandledProps}
         className={classes.root}
       >
-        {rtlTextContainer.createFor({ element: contentElement, condition: !!description })}
+        {rtlTextContainer.createFor({ element: children, condition: !!description })}
         {!hasChildren &&
           HeaderDescription.create(description, {
             defaultProps: () => ({
@@ -96,7 +89,7 @@ class Header extends UIComponent<WithAsProp<HeaderProps>, any> {
   }
 }
 
-Header.create = createShorthandFactory({ Component: Header, mappedProp: 'content' })
+Header.create = createShorthandFactory({ Component: Header, mappedProp: 'children' })
 
 /**
  * A Header organises the content by declaring a content's topic.

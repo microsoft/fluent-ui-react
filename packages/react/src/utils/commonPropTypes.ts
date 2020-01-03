@@ -20,7 +20,6 @@ export const createCommon = (config: CreateCommonConfig = {}) => {
     children = 'node',
     className = true,
     color = false,
-    content = 'node',
     styled = true,
   } = config
   return {
@@ -41,10 +40,6 @@ export const createCommon = (config: CreateCommonConfig = {}) => {
     }),
     ...(color && {
       color: PropTypes.string,
-    }),
-    ...(content && {
-      content:
-        content === 'shorthand' ? customPropTypes.itemShorthand : customPropTypes.nodeContent,
     }),
     ...(styled && {
       styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
