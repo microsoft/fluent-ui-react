@@ -30,7 +30,7 @@ const getShorthand = ({
   mappedProp = '',
   mappedArrayProp = '',
   overrideProps,
-  generateKey,
+  generateKey = true,
   valueOrRenderCallback,
   render,
 }: ShorthandConfig) =>
