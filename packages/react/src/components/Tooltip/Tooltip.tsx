@@ -28,7 +28,7 @@ import {
   PopperChildrenProps,
 } from '../../utils/positioner'
 import TooltipContent, { TooltipContentProps } from './TooltipContent'
-import { Accessibility, tooltipBehavior } from '@fluentui/accessibility'
+import { Accessibility, tooltipAsLabelBehavior } from '@fluentui/accessibility'
 import { ReactAccessibilityBehavior } from '../../utils/accessibility/reactTypes'
 import PortalInner from '../Portal/PortalInner'
 
@@ -135,7 +135,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     position: 'above',
     mouseLeaveDelay: 10,
     pointing: true,
-    accessibility: tooltipBehavior,
+    accessibility: tooltipAsLabelBehavior,
   }
 
   static autoControlledProps = ['open']

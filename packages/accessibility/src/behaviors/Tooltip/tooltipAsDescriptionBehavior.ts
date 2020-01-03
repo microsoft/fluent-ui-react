@@ -8,10 +8,10 @@ import { Accessibility } from '../../types'
  * @specification
  * Adds attribute 'role=tooltip' to 'tooltip' slot.
  * Adds attribute 'aria-hidden=false' to 'tooltip' slot if 'open' property is true. Sets the attribute to 'true' otherwise.
- * Adds attribute 'aria-describedby' based on the property 'aria-describedby' to 'trigger' slot.
+ * Adds attribute 'aria-describedby' based on the property 'contentId' to 'trigger' slot. This can be overriden by providing 'aria-describedby' property directly to the component.
  * Triggers 'close' action with 'Escape' on 'trigger'.
  */
-const tooltipBehavior: Accessibility<TooltipBehaviorProps> = props => {
+const tooltipAsDescriptionBehavior: Accessibility<TooltipBehaviorProps> = props => {
   const defaultAriaDescribedBy = getDefaultAriaDescribedBy(props)
 
   return {
@@ -35,7 +35,7 @@ const tooltipBehavior: Accessibility<TooltipBehaviorProps> = props => {
   }
 }
 
-export default tooltipBehavior
+export default tooltipAsDescriptionBehavior
 
 /**
  * Returns the element id of the tooltip, it is used when user does not provide aria-describedby as props.

@@ -152,6 +152,34 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
           },
         }),
 
+      ...(p.inverted && {
+        backgroundColor: siteVariables.colorScheme.silver.background,
+        borderColor: siteVariables.colorScheme.silver.border,
+        color: siteVariables.colorScheme.silver.foreground,
+
+        ':active': {
+          ...createAnimationStyles('scaleDownSoft', theme),
+          backgroundColor: siteVariables.colorScheme.silver.backgroundPressed,
+          color: siteVariables.colorScheme.silver.foregroundHover,
+        },
+
+        ':hover': {
+          backgroundColor: siteVariables.colorScheme.silver.backgroundHover,
+          color: siteVariables.colorScheme.silver.foregroundHover,
+        },
+
+        ':focus': {
+          ...borderFocusStyles[':focus'],
+          boxShadow: 'none',
+        },
+
+        ':focus-visible': {
+          ...borderFocusStyles[':focus-visible'],
+          backgroundColor: siteVariables.colorScheme.silver.backgroundPressed,
+          color: siteVariables.colorScheme.silver.foregroundHover,
+        },
+      }),
+
       // Overrides for "disabled" buttons
       ...(p.disabled && {
         cursor: 'default',
@@ -164,6 +192,7 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
 
         ...(p.text && {
           color: v.textColorDisabled,
+          backgroundColor: 'transparent',
           ':hover': {
             color: v.textColorDisabled,
           },
@@ -172,15 +201,6 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         ...(!p.text && {
           backgroundColor: v.backgroundColorDisabled,
           borderColor: v.borderColorDisabled,
-          ':hover': {
-            backgroundColor: v.backgroundColorDisabled,
-          },
-          ...(p.primary && {
-            backgroundColor: v.primaryBackgroundColorDisabled,
-            ':hover': {
-              backgroundColor: v.primaryBackgroundColorDisabled,
-            },
-          }),
         }),
       }),
 

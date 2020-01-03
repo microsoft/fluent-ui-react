@@ -106,8 +106,19 @@ describe('felaRenderer', () => {
 
   test('marginLeft is rendered into marginRight due to RTL', () => {
     const snapshot = createSnapshot(
-      <Provider rtl={true}>
+      <Provider rtl>
         <Text content="Hello" styles={{ marginLeft: '10px' }} />
+      </Provider>,
+      {},
+      felaRenderer,
+    )
+    expect(snapshot).toMatchSnapshot()
+  })
+
+  test('marginLeft is rendered into marginLeft due to RTL with `noFlip`', () => {
+    const snapshot = createSnapshot(
+      <Provider rtl>
+        <Text content="Hello" styles={{ marginLeft: '10px /* @noflip */' }} />
       </Provider>,
       {},
       felaRenderer,
