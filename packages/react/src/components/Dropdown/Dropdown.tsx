@@ -344,6 +344,11 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
   static SearchInput = DropdownSearchInput
   static SelectedItem = DropdownSelectedItem
 
+  componentWillUnmount() {
+    this.clearStartingString.cancel()
+    this.clearA11ySelectionMessage.cancel()
+  }
+
   getInitialAutoControlledState({ multiple, search }: DropdownProps): DropdownState {
     return {
       a11ySelectionStatus: '',
