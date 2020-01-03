@@ -13,6 +13,30 @@ import { ShorthandValue } from 'src/types'
 
 jest.dontMock('keyboard-key')
 jest.useFakeTimers()
+jest.mock('lodash', () => ({
+  ...jest.requireActual('lodash'),
+  debounce: (fn: Function, time: number): Function => {
+    let timeoutId
+
+    function cancel() {
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+      }
+    }
+
+    function wrapper(...args) {
+      cancel()
+      timeoutId = setTimeout(() => {
+        timeoutId = null
+        fn(...args)
+      }, time)
+    }
+
+    wrapper.cancel = cancel
+
+    return wrapper
+  },
+}))
 
 const getTriggerButtonWrapper = (wrapper: ReactWrapper): CommonWrapper =>
   findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.triggerButton}`)

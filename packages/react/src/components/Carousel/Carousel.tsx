@@ -15,7 +15,6 @@ import {
   ChildrenComponentProps,
   getOrGenerateIdFromShorthand,
   AutoControlledComponent,
-  debounce,
 } from '../../utils'
 import {
   WithAsProp,
@@ -213,8 +212,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
   itemRefs = [] as React.RefObject<HTMLElement>[]
   paddleNextRef = React.createRef<HTMLElement>()
   paddlePreviousRef = React.createRef<HTMLElement>()
-
-  focusItemAtIndex = debounce((index: number) => {
+  focusItemAtIndex = _.debounce((index: number) => {
     this.itemRefs[index].current.focus()
   }, 400)
 

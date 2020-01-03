@@ -361,14 +361,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     }
   }
 
-  a11yStatusTimeout: any
-  charKeysPressedTimeout: any
   defaultTriggerButtonId = _.uniqueId('dropdown-trigger-button-')
-
-  componentWillUnmount() {
-    clearTimeout(this.a11yStatusTimeout)
-    clearTimeout(this.charKeysPressedTimeout)
-  }
 
   /**
    * Used to compute the filtered items (by value and search query) and, if needed,
@@ -1348,20 +1341,22 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
    * so it is not read anymore via virtual cursor.
    */
   setA11ySelectionMessage = (a11ySelectionStatus: string): void => {
-    clearTimeout(this.a11yStatusTimeout)
     this.setState({ a11ySelectionStatus })
-    this.a11yStatusTimeout = setTimeout(() => {
-      this.setState({ a11ySelectionStatus: '' })
-    }, Dropdown.a11yStatusCleanupTime)
+    this.clearA11ySelectionMessage()
   }
 
   setStartingString = (startingString: string): void => {
-    clearTimeout(this.charKeysPressedTimeout)
     this.setState({ startingString })
-    this.charKeysPressedTimeout = setTimeout(() => {
-      this.setState({ startingString: '' })
-    }, Dropdown.charKeyPressedCleanupTime)
+    this.clearStartingString()
   }
+
+  clearA11ySelectionMessage = _.debounce(() => {
+    this.setState({ a11ySelectionStatus: '' })
+  }, Dropdown.a11yStatusCleanupTime)
+
+  clearStartingString = _.debounce(() => {
+    this.setState({ startingString: '' })
+  }, Dropdown.charKeyPressedCleanupTime)
 }
 
 Dropdown.slotClassNames = {
