@@ -22,8 +22,8 @@ interface StyledButtonProps {
 
 const StyledButton = createComponent<StyledButtonProps>({
   displayName: 'StyledButton',
-  render({ stardust, children }) {
-    const { classes } = stardust
+  render({ config, children }) {
+    const { classes } = config
     return <button className={classes.root}>{children}</button>
   },
 })
@@ -32,14 +32,14 @@ export default () => (
   <DocPage title="Integrate Custom Components">
     <Header as="h2" content="Overview" />
     <p>
-      You can use your own components as part of the Stardust's styling and theming mechanisms. In
+      You can use your own components as part of the Fluent UI's styling and theming mechanisms. In
       order for all theming aspects to be available to your custom components, you should use the{' '}
-      <code>createComponent</code> function, provided by the Stardust library.
+      <code>createComponent</code> function, provided by the Fluent UI library.
     </p>
     <Header as="h2" content="Create custom component" />
     <p>
       Let's take a look into one simple example of using the <code>createComponent</code> function
-      for adapting your custom component to the Stardust's styling and theming mechanisms.
+      for adapting your custom component to the Fluent UI's styling and theming mechanisms.
     </p>
     <ExampleSnippet
       value={`
@@ -47,8 +47,8 @@ export default () => (
 
         const StyledButton = createComponent({
           displayName: 'StyledButton',
-          render: ({ stardust, children }) => {
-            const { classes } = stardust
+          render: ({ config, children }) => {
+            const { classes } = config
             return <button className={classes.root}>{children}</button>
           }
         })
@@ -60,7 +60,7 @@ export default () => (
     <p>
       The first argument to the <code>createComponent</code> config's param is the is the{' '}
       <code>displayName</code>, which value might be used as key to define component's styles and
-      variables in theme, exactly the same way how it might be done for any first-class Stardust
+      variables in theme, exactly the same way how it might be done for any first-class Fluent UI
       component.
     </p>
     <ExampleSnippet
@@ -88,13 +88,13 @@ export default () => (
     />
     <p>
       The second argument of the <code>createComponent</code> config param is the{' '}
-      <code>render</code> method. This is the place where where you might link Stardust bits with
+      <code>render</code> method. This is the place where where you might link Fluent UI bits with
       your custom component - e.g. by simply passing them as props. This <code>render</code> method
       will be invoked with the following parameters:
     </p>
     <ul>
       <li>
-        <code>stardust</code> - the object containing the evaluated theming props (
+        <code>config</code> - the object containing the evaluated theming props (
         <code>classes/styles</code>,<code>accessibility</code>
         and <code>rtl</code>).
       </li>
@@ -106,8 +106,8 @@ export default () => (
     <p>
       We already saw how the <code>Provider</code> can define some stylings and variables for the
       custom components. Next, we will take a look into several examples of how the user can further
-      customize styles and variables of these components, the same way they would do with the
-      Stardust components.
+      customize styles and variables of these components, the same way they would do with the Fluent
+      UI components.
     </p>
     <Header
       as="h3"
@@ -263,15 +263,15 @@ export default () => (
           defaultProps: {
             accessibility: buttonBehavior
           },
-          render: ({ stardust, children }) => {
-            const { classes, accessibility } = stardust
+          render: ({ config, children }) => {
+            const { classes, accessibility } = config
             return <button {...accessibility.attributes.root} className={classes.root}>{children}</button>
           }
         })
       `}
     />
     <p>
-      To get more details on <b>Accessibility</b> support in Stardust refer to the{' '}
+      To get more details on <b>Accessibility</b> support in Fluent UI refer to the{' '}
       <NavLink to="accessibility">Accessibility guide</NavLink> section.
     </p>
 

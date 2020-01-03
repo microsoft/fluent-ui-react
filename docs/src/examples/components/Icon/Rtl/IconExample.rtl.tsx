@@ -4,7 +4,7 @@ import { Flex, Icon } from '@fluentui/react'
 const IconExampleRtl = () => (
   <Flex gap="gap.smaller">
     <Icon name="call-video" />
-    <Icon name="stardust-circle" />
+    <Icon name="icon-circle" />
     <Icon name="redo" />
     <Icon name="send" />
   </Flex>

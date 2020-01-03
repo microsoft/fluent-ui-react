@@ -1,4 +1,4 @@
-import { Accessibility, tooltipBehavior } from '@fluentui/accessibility'
+import { Accessibility, tooltipAsLabelBehavior } from '@fluentui/accessibility'
 import { ReactAccessibilityBehavior } from '@fluentui/react-bindings'
 import { toRefObject, Ref } from '@fluentui/react-component-ref'
 import * as customPropTypes from '@fluentui/react-proptypes'
@@ -135,7 +135,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     position: 'above',
     mouseLeaveDelay: 10,
     pointing: true,
-    accessibility: tooltipBehavior,
+    accessibility: tooltipAsLabelBehavior,
   }
 
   static autoControlledProps = ['open']
@@ -290,6 +290,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
         pointing,
         pointerRef: this.pointerTargetRef,
       }),
+      generateKey: false,
       overrideProps: this.getContentProps,
     })
 

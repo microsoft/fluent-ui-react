@@ -24,6 +24,7 @@ export default {
       borderColor: 'transparent',
       ...borderFocusStyles,
       padding: v.cellPadding,
+      position: 'relative',
       height: '100%',
     }
   },

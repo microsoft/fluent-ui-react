@@ -24,9 +24,9 @@ export type CreateComponentReturnType<P> = React.FunctionComponent<P> & {
   create: ShorthandFactory<P>
 }
 
-const createComponent = <P extends ObjectOf<any> = any>({
-  displayName = 'StardustComponent',
-  className = 'ui-stardust-component',
+const createComponentInternal = <P extends ObjectOf<any> = any>({
+  displayName = 'FluentUIComponent',
+  className = 'fluent-ui-component',
   shorthandPropName = 'children',
   defaultProps = {},
   handledProps = [],
@@ -39,7 +39,7 @@ const createComponent = <P extends ObjectOf<any> = any>({
     ...(defaultProps as any),
   }
 
-  const StardustComponent: CreateComponentReturnType<P> = (props): React.ReactElement<P> => {
+  const FluentComponent: CreateComponentReturnType<P> = (props): React.ReactElement<P> => {
     // Stores debug information for component.
     // Note that this ref should go as the first one, to be discoverable by debug utils.
     const ref = React.useRef(null)
@@ -55,26 +55,26 @@ const createComponent = <P extends ObjectOf<any> = any>({
         state: {},
         actionHandlers,
         render: config => render(config, props),
-        saveDebug: stardustDebug => (ref.current = { stardustDebug }),
+        saveDebug: fluentUIDebug => (ref.current = { fluentUIDebug }),
       },
       context,
     )
   }
 
-  StardustComponent.className = className
+  FluentComponent.className = className
 
-  StardustComponent.create = createShorthandFactory({
+  FluentComponent.create = createShorthandFactory({
     Component: mergedDefaultProps.as,
     mappedProp: shorthandPropName,
   })
 
-  StardustComponent.displayName = displayName
+  FluentComponent.displayName = displayName
 
-  StardustComponent.propTypes = propTypes // TODO: generate prop types
+  FluentComponent.propTypes = propTypes // TODO: generate prop types
 
-  StardustComponent.defaultProps = mergedDefaultProps
+  FluentComponent.defaultProps = mergedDefaultProps
 
-  return StardustComponent
+  return FluentComponent
 }
 
-export default createComponent
+export default createComponentInternal

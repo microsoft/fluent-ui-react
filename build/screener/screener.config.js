@@ -10,7 +10,7 @@ require('tsconfig-paths').register({
 
 // https://github.com/screener-io/screener-runner
 module.exports = {
-  projectRepo: 'stardust-ui/react',
+  projectRepo: 'microsoft/fluent-ui-react',
 
   apiKey: process.env.SCREENER_API_KEY,
 

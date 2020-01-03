@@ -122,7 +122,7 @@ const applyStyles = (
     })
   }
 
-  // assuming element is Stardust element
+  // assuming element is Fluent UI element
   return React.cloneElement(element, {
     styles: mergeStyles(styles.root || {}, element.props.styles),
   })

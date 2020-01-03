@@ -299,11 +299,11 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
 
   isOutsidePopupElementAndOutsideTriggerElement(refs: NodeRef[], e) {
     const isOutsidePopupElement = this.isOutsidePopupElement(refs, e)
-    const isOutsideTriggerElement =
+    const isInsideTriggerElement =
       this.triggerRef.current &&
-      !doesNodeContainClick(this.triggerRef.current, e, this.context.target)
+      doesNodeContainClick(this.triggerRef.current, e, this.context.target)
 
-    return isOutsidePopupElement && isOutsideTriggerElement
+    return isOutsidePopupElement && !isInsideTriggerElement
   }
 
   isOutsidePopupElement(refs: NodeRef[], e) {
@@ -627,9 +627,10 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     const activeDocument = mountDocument || this.context.target
     const activeElement = activeDocument.activeElement
 
-    this.triggerFocusableDomElement = this.triggerRef.current.contains(activeElement)
-      ? activeElement
-      : this.triggerRef.current
+    this.triggerFocusableDomElement =
+      this.triggerRef.current && this.triggerRef.current.contains(activeElement)
+        ? activeElement
+        : this.triggerRef.current
   }
 
   updateContextPosition(nativeEvent: MouseEvent) {

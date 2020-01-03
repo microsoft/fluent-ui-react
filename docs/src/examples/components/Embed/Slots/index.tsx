@@ -10,11 +10,6 @@ const Slots = () => (
       description="A basic embedded video."
       examplePath="components/Embed/Slots/EmbedExampleVideo"
     />
-    <ComponentExample
-      title="IFrame"
-      description="An embed component can embed any iframe."
-      examplePath="components/Embed/Slots/EmbedExampleIframe"
-    />
   </ExampleSection>
 )
 

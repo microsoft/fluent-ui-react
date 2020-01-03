@@ -89,14 +89,7 @@ export const colorBoxStyles: ComponentSlotStylesInput<ColorBoxProps, ColorBoxVar
 
 const ColorBox = createComponent<ColorBoxProps>({
   displayName: 'ColorBox',
-  render: ({
-    children,
-    name,
-    value,
-    showColorValue,
-    copyToClipboardIcon,
-    stardust: { classes },
-  }) => (
+  render: ({ children, name, value, showColorValue, copyToClipboardIcon, config: { classes } }) => (
     <div className={classes.root}>
       <div className={classes.inner}>
         <div className={classes.name}>{children || _.startCase(name)}</div>

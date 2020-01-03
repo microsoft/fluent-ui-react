@@ -12,13 +12,13 @@ const knobsSnippetStyles = {
 
 const KnobsSnippet = createComponent({
   displayName: 'KnobsSnippet',
-  render: ({ children, stardust }) => {
+  render: ({ children, config }) => {
     const knobs = useKnobValues()
     const values = _.fromPairs(knobs.map(knob => [knob.name, knob.value]))
 
     return (
       <Flex>
-        <div className={stardust.classes.root}>{children}</div>
+        <div className={config.classes.root}>{children}</div>
         <Flex.Item grow>
           {({ classes }) => (
             <CodeSnippet

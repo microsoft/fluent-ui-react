@@ -31,7 +31,7 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
   actionHandlers: AccessibilityActionHandlers
 
   // stores debug information
-  stardustDebug: any = null
+  fluentUIDebug: any = null
 
   constructor(props, context) {
     super(props, context)
@@ -61,7 +61,7 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
         state: this.state,
         actionHandlers: this.actionHandlers,
         render: this.renderComponent,
-        saveDebug: updatedDebug => (this.stardustDebug = updatedDebug),
+        saveDebug: updatedDebug => (this.fluentUIDebug = updatedDebug),
       },
       this.context,
     )
