@@ -8,14 +8,21 @@ export { default as menuBehavior } from './Menu/menuBehavior'
 export { default as menuItemBehavior } from './Menu/menuItemBehavior'
 export { default as menuDividerBehavior } from './Menu/menuDividerBehavior'
 export { default as submenuBehavior } from './Menu/submenuBehavior'
+
 export { default as basicListBehavior } from './List/listBehavior'
 export { default as basicListItemBehavior } from './List/basicListItemBehavior'
+
 export { default as listBehavior } from './List/listBehavior'
+export * from './List/listBehavior'
 export { default as listItemBehavior } from './List/listItemBehavior'
+export * from './List/listItemBehavior'
+
 export { default as navigableListBehavior } from './List/navigableListBehavior'
 export { default as navigableListItemBehavior } from './List/navigableListItemBehavior'
+
 export { default as selectableListBehavior } from './List/selectableListBehavior'
 export { default as selectableListItemBehavior } from './List/selectableListItemBehavior'
+
 export { default as loaderBehavior } from './Loader/loaderBehavior'
 export { default as inputBehavior } from './Input/inputBehavior'
 export { default as iconBehavior } from './Icon/iconBehavior'

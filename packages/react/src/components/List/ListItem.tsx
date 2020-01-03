@@ -1,19 +1,34 @@
-import { Accessibility, listItemBehavior } from '@fluentui/accessibility'
+import { Accessibility, listItemBehavior, ListItemBehaviorProps } from '@fluentui/accessibility'
+import {
+  getElementType,
+  getUnhandledProps,
+  useAccessibility,
+  useStyles,
+} from '@fluentui/react-bindings'
+import { useContextSelectors } from '@fluentui/react-context-selector'
 import cx from 'classnames'
-import * as React from 'react'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
+import * as React from 'react'
+// @ts-ignore
+import { ThemeContext } from 'react-fela'
+
+import Box, { BoxProps } from '../Box/Box'
+import {
+  ShorthandValue,
+  WithAsProp,
+  ComponentEventHandler,
+  withSafeTypeForAs,
+  ProviderContextPrepared,
+} from '../../types'
 import {
   createShorthandFactory,
-  UIComponent,
   UIComponentProps,
   commonPropTypes,
   ContentComponentProps,
-  applyAccessibilityKeyHandlers,
   ShorthandFactory,
 } from '../../utils'
-import { ShorthandValue, WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
-import Box, { BoxProps } from '../Box/Box'
+import { ListContext } from './context'
 
 export interface ListItemSlotClassNames {
   header: string
@@ -31,7 +46,7 @@ export interface ListItemProps
   extends UIComponentProps,
     ContentComponentProps<ShorthandValue<BoxProps>> {
   /** Accessibility behavior if overridden by the user. */
-  accessibility?: Accessibility
+  accessibility?: Accessibility<ListItemBehaviorProps>
   contentMedia?: ShorthandValue<BoxProps>
   /** Toggle debug mode. */
   debug?: boolean
@@ -63,130 +78,191 @@ export interface ListItemProps
   onClick?: ComponentEventHandler<ListItemProps>
 }
 
-class ListItem extends UIComponent<WithAsProp<ListItemProps>> {
-  static create: ShorthandFactory<ListItemProps>
+const ListItem: React.FC<WithAsProp<ListItemProps> & { index: number }> & {
+  className: string
+  create: ShorthandFactory<ListItemProps>
+  handledProps: string[]
+  slotClassNames: ListItemSlotClassNames
+} = props => {
+  const {
+    accessibility,
+    className,
+    content,
+    contentMedia,
+    design,
+    endMedia,
+    header,
+    important,
+    index,
+    headerMedia,
+    media,
+    styles,
+  } = props
 
-  static displayName = 'ListItem'
+  const context: ProviderContextPrepared = React.useContext(ThemeContext)
 
-  static className = 'ui-list__item'
+  const parentProps = useContextSelectors(ListContext, {
+    debug: v => v.debug,
+    navigable: v => v.navigable,
+    selectable: v => v.selectable,
+    truncateContent: v => v.truncateContent,
+    truncateHeader: v => v.truncateHeader,
+    variables: v => v.variables,
 
-  static slotClassNames: ListItemSlotClassNames
+    onItemClick: v => v.onItemClick,
+    selected: v => v.selectedIndex === props.index,
+  })
+  const {
+    debug = parentProps.debug,
+    navigable = parentProps.navigable,
+    selectable = parentProps.selectable,
+    selected = parentProps.selected,
+    truncateContent = parentProps.truncateContent,
+    truncateHeader = parentProps.truncateHeader,
+    variables = parentProps.variables,
+  } = props
 
-  static propTypes = {
-    ...commonPropTypes.createCommon({
-      content: false,
-    }),
-    contentMedia: PropTypes.any,
-    content: PropTypes.any,
-
-    debug: PropTypes.bool,
-
-    header: PropTypes.any,
-    endMedia: PropTypes.any,
-    headerMedia: PropTypes.any,
-
-    important: PropTypes.bool,
-    media: PropTypes.any,
-
-    selectable: PropTypes.bool,
-    navigable: PropTypes.bool,
-    index: PropTypes.number,
-    selected: PropTypes.bool,
-
-    truncateContent: PropTypes.bool,
-    truncateHeader: PropTypes.bool,
-
-    onClick: PropTypes.func,
-  }
-
-  static defaultProps = {
-    as: 'li',
-    accessibility: listItemBehavior as Accessibility,
-  }
-
-  actionHandlers = {
-    performClick: event => {
-      this.handleClick(event)
-      event.preventDefault()
+  const getA11Props = useAccessibility(accessibility, {
+    debugName: ListItem.displayName,
+    actionHandlers: {
+      performClick: e => {
+        e.preventDefault()
+        handleClick(e)
+      },
     },
+    mapPropsToBehavior: () => ({}),
+    rtl: context.rtl,
+  })
+  const { classes, styles: resolvedStyles } = useStyles(ListItem.displayName, {
+    mapPropsToStyles: () => ({
+      debug,
+      navigable,
+      important,
+      selectable,
+      selected,
+      truncateContent,
+      truncateHeader,
+
+      hasContent: !!content,
+      hasContentMedia: !!contentMedia,
+      hasHeader: !!header,
+      hasHeaderMedia: !!headerMedia,
+    }),
+    mapPropsToInlineStyles: () => ({ className, design, styles, variables }),
+    rtl: context.rtl,
+  })
+
+  const ElementType = getElementType(props)
+  const unhandledProps = getUnhandledProps(ListItem.handledProps as any, props)
+
+  const handleClick = (e: React.MouseEvent | React.KeyboardEvent) => {
+    _.invoke(props, 'onClick', e, props)
+    parentProps.onItemClick(e, index)
   }
 
-  handleClick = (e: React.MouseEvent | React.KeyboardEvent) => {
-    _.invoke(this.props, 'onClick', e, this.props)
-  }
+  const contentElement = Box.create(content, {
+    defaultProps: () => ({
+      className: ListItem.slotClassNames.content,
+      styles: resolvedStyles.content,
+    }),
+  })
+  const contentMediaElement = Box.create(contentMedia, {
+    defaultProps: () => ({
+      className: ListItem.slotClassNames.contentMedia,
+      styles: resolvedStyles.contentMedia,
+    }),
+  })
+  const headerElement = Box.create(header, {
+    defaultProps: () => ({
+      className: ListItem.slotClassNames.header,
+      styles: resolvedStyles.header,
+    }),
+  })
+  const headerMediaElement = Box.create(headerMedia, {
+    defaultProps: () => ({
+      className: ListItem.slotClassNames.headerMedia,
+      styles: resolvedStyles.headerMedia,
+    }),
+  })
+  const endMediaElement = Box.create(endMedia, {
+    defaultProps: () => ({
+      className: ListItem.slotClassNames.endMedia,
+      styles: resolvedStyles.endMedia,
+    }),
+  })
+  const mediaElement = Box.create(media, {
+    defaultProps: () => ({
+      className: ListItem.slotClassNames.media,
+      styles: resolvedStyles.media,
+    }),
+  })
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps, styles }) {
-    const { endMedia, media, content, contentMedia, header, headerMedia } = this.props
+  return (
+    <ElementType
+      {...getA11Props('root', {
+        className: classes.root,
+        onClick: handleClick,
+        ...unhandledProps,
+      })}
+    >
+      {mediaElement}
 
-    const contentElement = Box.create(content, {
-      defaultProps: () => ({
-        className: ListItem.slotClassNames.content,
-        styles: styles.content,
-      }),
-    })
-    const contentMediaElement = Box.create(contentMedia, {
-      defaultProps: () => ({
-        className: ListItem.slotClassNames.contentMedia,
-        styles: styles.contentMedia,
-      }),
-    })
-    const headerElement = Box.create(header, {
-      defaultProps: () => ({
-        className: ListItem.slotClassNames.header,
-        styles: styles.header,
-      }),
-    })
-    const headerMediaElement = Box.create(headerMedia, {
-      defaultProps: () => ({
-        className: ListItem.slotClassNames.headerMedia,
-        styles: styles.headerMedia,
-      }),
-    })
-    const endMediaElement = Box.create(endMedia, {
-      defaultProps: () => ({
-        className: ListItem.slotClassNames.endMedia,
-        styles: styles.endMedia,
-      }),
-    })
-    const mediaElement = Box.create(media, {
-      defaultProps: () => ({
-        className: ListItem.slotClassNames.media,
-        styles: styles.media,
-      }),
-    })
+      <div className={cx(ListItem.slotClassNames.main, classes.main)}>
+        {(headerElement || headerMediaElement) && (
+          <div className={cx(ListItem.slotClassNames.headerWrapper, classes.headerWrapper)}>
+            {headerElement}
+            {headerMediaElement}
+          </div>
+        )}
+        {(contentElement || contentMediaElement) && (
+          <div className={cx(ListItem.slotClassNames.contentWrapper, classes.contentWrapper)}>
+            {contentElement}
+            {contentMediaElement}
+          </div>
+        )}
+      </div>
 
-    return (
-      <ElementType
-        className={classes.root}
-        onClick={this.handleClick}
-        {...accessibility.attributes.root}
-        {...unhandledProps}
-        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
-      >
-        {mediaElement}
-
-        <div className={cx(ListItem.slotClassNames.main, classes.main)}>
-          {(headerElement || headerMediaElement) && (
-            <div className={cx(ListItem.slotClassNames.headerWrapper, classes.headerWrapper)}>
-              {headerElement}
-              {headerMediaElement}
-            </div>
-          )}
-          {(contentElement || contentMediaElement) && (
-            <div className={cx(ListItem.slotClassNames.contentWrapper, classes.contentWrapper)}>
-              {contentElement}
-              {contentMediaElement}
-            </div>
-          )}
-        </div>
-
-        {endMediaElement}
-      </ElementType>
-    )
-  }
+      {endMediaElement}
+    </ElementType>
+  )
 }
 
-ListItem.create = createShorthandFactory({ Component: ListItem, mappedProp: 'content' })
+ListItem.className = 'ui-list__item'
+ListItem.displayName = 'ListItem'
+
+ListItem.defaultProps = {
+  as: 'li',
+  accessibility: listItemBehavior,
+}
+
+ListItem.propTypes = {
+  ...commonPropTypes.createCommon({
+    content: false,
+  }),
+  contentMedia: PropTypes.any,
+  content: PropTypes.any,
+
+  debug: PropTypes.bool,
+
+  header: PropTypes.any,
+  endMedia: PropTypes.any,
+  headerMedia: PropTypes.any,
+
+  important: PropTypes.bool,
+  media: PropTypes.any,
+
+  selectable: PropTypes.bool,
+  navigable: PropTypes.bool,
+  index: PropTypes.number.isRequired,
+  selected: PropTypes.bool,
+
+  truncateContent: PropTypes.bool,
+  truncateHeader: PropTypes.bool,
+
+  onClick: PropTypes.func,
+}
+ListItem.handledProps = Object.keys(ListItem.propTypes) as any
+
 ListItem.slotClassNames = {
   header: `${ListItem.className}__header`,
   headerMedia: `${ListItem.className}__headerMedia`,
@@ -198,6 +274,8 @@ ListItem.slotClassNames = {
   media: `${ListItem.className}__media`,
   endMedia: `${ListItem.className}__endMedia`,
 }
+
+ListItem.create = createShorthandFactory({ Component: ListItem, mappedProp: 'content' })
 
 /**
  * A ListItem contains a single piece of content within a List.

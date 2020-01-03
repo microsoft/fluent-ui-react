@@ -3,6 +3,23 @@ import { screenReaderContainerStyles } from '../../../../utils/accessibility/Sty
 import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import { default as ListItem, ListItemProps } from '../../../../components/List/ListItem'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
+import { ListItemVariables } from 'src/themes/teams/components/List/listItemVariables'
+
+type ListItemStyleProps = Pick<
+  ListItemProps,
+  | 'debug'
+  | 'important'
+  | 'navigable'
+  | 'selectable'
+  | 'selected'
+  | 'truncateContent'
+  | 'truncateHeader'
+> & {
+  hasContent: boolean
+  hasContentMedia: boolean
+  hasHeader: boolean
+  hasHeaderMedia: boolean
+}
 
 const truncateStyle: ICSSInJSStyle = {
   overflow: 'hidden',
@@ -10,7 +27,7 @@ const truncateStyle: ICSSInJSStyle = {
   whiteSpace: 'nowrap',
 }
 
-const selectableHoverStyle = (p: ListItemProps, v): ICSSInJSStyle => ({
+const selectableHoverStyle = (p: ListItemStyleProps, v): ICSSInJSStyle => ({
   background: v.selectableFocusHoverBackgroundColor,
   color: v.selectableFocusHoverColor,
   cursor: 'pointer',
@@ -34,7 +51,7 @@ const selectedStyle = variables => ({
   color: variables.selectedColor,
 })
 
-const listItemStyles: ComponentSlotStylesPrepared<ListItemProps, any> = {
+const listItemStyles: ComponentSlotStylesPrepared<ListItemStyleProps, ListItemVariables> = {
   root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
     const borderFocusStyles = getBorderFocusStyles({
       siteVariables,
@@ -77,7 +94,7 @@ const listItemStyles: ComponentSlotStylesPrepared<ListItemProps, any> = {
         background: '#000',
       },
     }),
-    ...((p.header || p.content) && {
+    ...((p.hasHeader || p.hasContent) && {
       marginRight: pxToRem(8),
     }),
   }),
@@ -88,7 +105,7 @@ const listItemStyles: ComponentSlotStylesPrepared<ListItemProps, any> = {
     lineHeight: v.headerLineHeight,
 
     ...(p.truncateHeader && truncateStyle),
-    ...((!p.content || p.headerMedia) && {
+    ...((!p.hasContent || p.hasHeaderMedia) && {
       marginRight: pxToRem(8),
     }),
   }),
@@ -106,12 +123,12 @@ const listItemStyles: ComponentSlotStylesPrepared<ListItemProps, any> = {
     lineHeight: v.contentLineHeight,
 
     ...(p.truncateContent && truncateStyle),
-    ...((!p.header || p.contentMedia) && {
+    ...((!p.hasHeader || p.hasContentMedia) && {
       marginRight: pxToRem(8),
     }),
   }),
 
-  contentMedia: ({ props: p, variables: v }) => ({
+  contentMedia: ({ variables: v }) => ({
     fontSize: v.contentMediaFontSize,
     lineHeight: v.contentMediaLineHeight,
   }),
