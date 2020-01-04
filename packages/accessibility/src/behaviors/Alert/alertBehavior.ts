@@ -7,13 +7,6 @@ import alertBaseBehavior from './alertBaseBehavior'
  * Uses `alertWarningBehavior` for 'danger' and 'warning' variants.
  */
 const alertBehavior: Accessibility<AlertProps> = props =>
-  props.warning || props.danger
-    ? {
-        attributes: {
-          ...alertWarningBehavior(props).attributes,
-          ...alertBaseBehavior(props).attributes,
-        },
-      }
-    : alertBaseBehavior(props)
+  props.warning || props.danger ? alertWarningBehavior(props) : alertBaseBehavior(props)
 
 export default alertBehavior
