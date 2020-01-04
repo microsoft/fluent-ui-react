@@ -12,9 +12,6 @@ const alertWarningBehavior: Accessibility<AlertProps> = props => ({
       role: 'alert',
       'aria-live': 'polite',
     },
-    dismissAction: {
-      'aria-describedby': props.bodyId,
-    },
   },
 })
 
