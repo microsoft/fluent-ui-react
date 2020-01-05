@@ -282,7 +282,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
       ...this.getContentProps(),
     }
 
-    const tooltipContent = Tooltip.Content.create(content, {
+    const tooltipContent = Tooltip.Content.create(content || '', {
       defaultProps: () => ({
         ...tooltipContentAttributes,
         open: this.state.open,
