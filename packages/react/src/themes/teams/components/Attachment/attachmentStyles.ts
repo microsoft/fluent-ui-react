@@ -61,7 +61,6 @@ const attachmentStyles: ComponentSlotStylesPrepared<AttachmentProps, AttachmentV
   }),
 
   action: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
-    const iconFilledStyles = getIconFillOrOutlineStyles({ outline: false })
     const borderFocusStyles = getBorderFocusStyles({
       siteVariables,
       borderRadius: v.borderRadius,
@@ -74,13 +73,13 @@ const attachmentStyles: ComponentSlotStylesPrepared<AttachmentProps, AttachmentV
 
       ...getIconFillOrOutlineStyles({ outline: true }),
 
-      ':hover': iconFilledStyles,
+      ':hover': {
+        ...getIconFillOrOutlineStyles({ outline: false }),
+        color: v.textColorHover,
+      },
 
       ':focus': borderFocusStyles[':focus'],
-      ':focus-visible': {
-        ...iconFilledStyles,
-        ...borderFocusStyles[':focus-visible'],
-      },
+      ':focus-visible': borderFocusStyles[':focus-visible'],
     }
   },
 

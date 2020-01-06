@@ -24,6 +24,14 @@ const buttonStyles: ComponentSlotStylesPrepared<
         },
       }),
 
+      // icon only text buttons need the yellow background, black text color on hover
+      ...(p.iconOnly && {
+        ':hover': {
+          color: v.textColorIconOnly,
+          backgroundColor: v.backgroundColorIconOnlyHover,
+        },
+      }),
+
       // Overrides for "primary" buttons
       ...(p.primary &&
         !p.text && {
