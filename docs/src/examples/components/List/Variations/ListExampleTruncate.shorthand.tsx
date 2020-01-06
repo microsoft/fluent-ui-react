@@ -6,13 +6,13 @@ const actions = (
   <ButtonGroup
     buttons={[
       {
-        icon: 'icon-checkmark',
+        icon: { name: 'icon-checkmark' },
         iconOnly: true,
         text: true,
         title: 'Check',
       },
       {
-        icon: 'icon-close',
+        icon: { name: 'icon-close' },
         iconOnly: true,
         text: true,
         title: 'Close',

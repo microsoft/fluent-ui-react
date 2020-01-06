@@ -290,7 +290,7 @@ const darkThemeOverrides: ThemeInput = {
 const tooltips = {
   videoOn: 'Turn camera off',
   videoOff: 'Turn camera on',
-  micOn: 'Mute',
+  micon: { name: 'Mute' },
   micOff: 'Unmute',
   share: 'Share',
   shareStop: 'Stop sharing',

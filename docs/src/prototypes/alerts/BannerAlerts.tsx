@@ -89,7 +89,7 @@ class BannerAlerts extends React.Component<{}, BannerAlertsState> {
               content: getBannerContent(selectedBannerName),
               ...(isAlertClosable(selectedBannerName) && {
                 open,
-                action: { icon: 'close', onClick: this.closeSelectedBanner },
+                action: { icon: { name: 'close' }, onClick: this.closeSelectedBanner },
               }),
             }}
           />

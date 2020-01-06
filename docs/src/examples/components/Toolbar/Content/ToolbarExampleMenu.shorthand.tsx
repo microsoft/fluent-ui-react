@@ -19,13 +19,13 @@ const ToolbarExampleMenuShorthand = () => {
       items={[
         {
           key: 'more',
-          icon: 'more',
+          icon: { name: 'more' },
           active: menuOpen,
           title: 'More',
           menu: {
             items: [
-              { key: 'play', content: 'Play', icon: 'play' },
-              { key: 'pause', content: 'Pause', icon: 'pause' },
+              { key: 'play', content: 'Play', icon: { name: 'play' } },
+              { key: 'pause', content: 'Pause', icon: { name: 'pause' } },
               { key: 'divider', kind: 'divider' },
               'Without icon',
             ],

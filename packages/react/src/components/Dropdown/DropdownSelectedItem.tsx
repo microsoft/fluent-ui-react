@@ -92,7 +92,7 @@ class DropdownSelectedItem extends UIComponent<WithAsProp<DropdownSelectedItemPr
   }
 
   static defaultProps = {
-    icon: 'close',
+    icon: { name: 'close' },
   }
 
   componentDidUpdate(prevProps: DropdownSelectedItemProps) {

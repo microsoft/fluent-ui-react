@@ -336,7 +336,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
         disabled: !canCodeBeFormatted,
       },
       {
-        icon: 'refresh',
+        icon: { name: 'refresh' },
         content: 'Reset',
         key: 'reset',
         onClick: this.resetSourceCode,
@@ -359,7 +359,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
       },
       {
         disabled: currentCodeLanguage !== 'ts',
-        icon: 'github',
+        icon: { name: 'github' },
         content: 'Edit',
         href: ghEditHref,
         rel: 'noopener noreferrer',

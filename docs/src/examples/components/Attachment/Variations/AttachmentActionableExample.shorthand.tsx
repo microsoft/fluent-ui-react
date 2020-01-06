@@ -14,7 +14,11 @@ class AttachmentActionableExampleShorthand extends React.Component {
         icon={{ name: 'table' }}
         header="Document.docx"
         description="800 Kb"
-        action={{ icon: 'more', onClick: this.handleClick('More Action'), title: 'More Action' }}
+        action={{
+          icon: { name: 'more' },
+          onClick: this.handleClick('More Action'),
+          title: 'More Action',
+        }}
         progress={33}
         onClick={this.handleClick('Attachment')}
       />

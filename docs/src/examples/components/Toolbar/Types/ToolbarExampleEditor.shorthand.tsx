@@ -212,14 +212,14 @@ const ToolbarExampleShorthand = () => {
             menu: [
               {
                 content: 'Quote',
-                icon: 'quote',
+                icon: { name: 'quote' },
                 onClick: () => {
                   writeLog('... -> Quote')
                 },
               },
               {
                 content: 'Link',
-                icon: 'link',
+                icon: { name: 'link' },
                 disabled: true,
                 onClick: () => {
                   writeLog('SHOULD NOT BE CALLED, ITEM IS DISABLED... -> Link')
@@ -227,7 +227,7 @@ const ToolbarExampleShorthand = () => {
               },
               {
                 content: 'Code snippet',
-                icon: 'code-snippet',
+                icon: { name: 'code-snippet' },
                 onClick: () => writeLog('... -> Code snippet'),
               },
             ],

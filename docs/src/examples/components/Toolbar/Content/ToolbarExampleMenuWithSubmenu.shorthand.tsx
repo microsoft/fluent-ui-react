@@ -17,13 +17,13 @@ const ToolbarExampleMenuWithSubmenuShorthand = () => {
       items={[
         {
           key: 'more',
-          icon: 'more',
+          icon: { name: 'more' },
           active: menuOpen,
           menu: [
             {
               key: 'play',
               content: 'Play',
-              icon: 'play',
+              icon: { name: 'play' },
               menu: {
                 items: [
                   'Play with audio',
@@ -31,7 +31,7 @@ const ToolbarExampleMenuWithSubmenuShorthand = () => {
                 ],
               },
             },
-            { key: 'pause', content: 'Pause', icon: 'pause' },
+            { key: 'pause', content: 'Pause', icon: { name: 'pause' } },
             { key: 'divider', kind: 'divider' },
             'Without icon',
           ],

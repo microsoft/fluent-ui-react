@@ -148,7 +148,7 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
 
   static defaultProps = {
     accessibility: alertBehavior,
-    dismissAction: { icon: 'close' },
+    dismissAction: { icon: { name: 'close' } },
     body: {},
   }
 

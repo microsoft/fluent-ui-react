@@ -5,7 +5,7 @@ const ToolbarExampleCustomContentShorthand = () => (
   <Toolbar
     aria-label="Toolbar can contain custom content"
     items={[
-      { key: 'bold', icon: 'bold', title: 'Bold' },
+      { key: 'bold', icon: { name: 'bold' }, title: 'Bold' },
       {
         key: 'custom-text',
         content: <Text content="Text" />,

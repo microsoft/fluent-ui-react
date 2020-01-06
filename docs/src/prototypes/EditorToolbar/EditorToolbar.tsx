@@ -72,7 +72,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
     {
       toolbarItem: {
         key: 'bold',
-        icon: 'bold',
+        icon: { name: 'bold' },
         active: props.bold,
         onClick: () => props.dispatch({ type: 'BOLD', value: !props.bold }),
       },
@@ -80,7 +80,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
     {
       toolbarItem: {
         key: 'italic',
-        icon: 'italic',
+        icon: { name: 'italic' },
         active: props.italic,
         onClick: () => props.dispatch({ type: 'ITALIC', value: !props.italic }),
       },
@@ -88,7 +88,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
     {
       toolbarItem: {
         key: 'underline',
-        icon: 'underline',
+        icon: { name: 'underline' },
         active: props.underline,
         onClick: () => props.dispatch({ type: 'UNDERLINE', value: !props.underline }),
       },
@@ -96,9 +96,9 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
 
     { toolbarItem: { key: 'divider-1', kind: 'divider' } },
 
-    { toolbarItem: { key: 'highlight', icon: 'highlight', active: props.fontHighlight } },
-    { toolbarItem: { key: 'font-color', icon: 'font-color', active: props.fontColor } },
-    { toolbarItem: { key: 'font-size', icon: 'font-size', active: props.fontSize } },
+    { toolbarItem: { key: 'highlight', icon: { name: 'highlight' }, active: props.fontHighlight } },
+    { toolbarItem: { key: 'font-color', icon: { name: 'font-color' }, active: props.fontColor } },
+    { toolbarItem: { key: 'font-size', icon: { name: 'font-size' }, active: props.fontSize } },
 
     {
       toolbarItem: {
@@ -133,31 +133,35 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
           },
           open: props.fontFormattingOpen,
         },
-        icon: 'question',
+        icon: { name: 'question' },
         content: props.fontFormatting,
       },
     },
 
     {
-      toolbarItem: { key: 'remove-format', icon: 'remove-format' },
-      overflowItem: { key: 'remove-format', icon: 'remove-format', content: 'Clear formatting' },
+      toolbarItem: { key: 'remove-format', icon: { name: 'remove-format' } },
+      overflowItem: {
+        key: 'remove-format',
+        icon: { name: 'remove-format' },
+        content: 'Clear formatting',
+      },
     },
     { toolbarItem: { key: 'divider-2', kind: 'divider' } },
 
     {
-      toolbarItem: { key: 'bullets', icon: 'bullets', active: props.itemList },
+      toolbarItem: { key: 'bullets', icon: { name: 'bullets' }, active: props.itemList },
       overflowItem: {
         key: 'bullets',
-        icon: 'bullets',
+        icon: { name: 'bullets' },
         active: props.itemList,
         content: 'Bulleted list',
       },
     },
     {
-      toolbarItem: { key: 'number-list', icon: 'number-list', active: props.numberList },
+      toolbarItem: { key: 'number-list', icon: { name: 'number-list' }, active: props.numberList },
       overflowItem: {
         key: 'number-list',
-        icon: 'number-list',
+        icon: { name: 'number-list' },
         active: props.numberList,
         content: 'Number list',
       },
@@ -168,7 +172,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
     {
       toolbarItem: {
         key: 'link',
-        icon: 'link',
+        icon: { name: 'link' },
         active: props.link,
         children: (Component, props) => (
           <Ref innerRef={linkItemRef}>
@@ -179,7 +183,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
       },
       overflowItem: {
         key: 'link',
-        icon: 'link',
+        icon: { name: 'link' },
         content: 'Insert link',
         onClick: () => props.dispatch({ type: 'LINK', value: true }),
       },
@@ -187,12 +191,12 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
     {
       toolbarItem: {
         key: 'code',
-        icon: 'code-snippet',
+        icon: { name: 'code-snippet' },
         active: props.code,
       },
       overflowItem: {
         key: 'code',
-        icon: 'code-snippet',
+        icon: { name: 'code-snippet' },
         content: 'Code snippet',
         active: props.code,
       },
@@ -200,7 +204,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
     {
       toolbarItem: {
         key: 'table',
-        icon: 'table',
+        icon: { name: 'table' },
         content: 'Insert table',
         active: props.table,
 

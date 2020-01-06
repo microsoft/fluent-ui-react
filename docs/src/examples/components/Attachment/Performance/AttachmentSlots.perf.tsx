@@ -7,7 +7,7 @@ const AttachmentSlotsPerf = () => (
     icon={{ name: 'table' }}
     header="Document.docx"
     description="800 Kb"
-    action={{ icon: 'more', title: 'More Action' }}
+    action={{ icon: { name: 'more' }, title: 'More Action' }}
     progress={33}
   />
 )

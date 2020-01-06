@@ -4,8 +4,8 @@ import { Reaction } from '@fluentui/react'
 const ReactionGroupExampleRtl = () => (
   <Reaction.Group
     items={[
-      { icon: 'like', content: '2 الإعجابات', key: 'up' },
-      { icon: 'emoji', content: '10 ابتسامة', key: 'smile' },
+      { icon: { name: 'like' }, content: '2 الإعجابات', key: 'up' },
+      { icon: { name: 'emoji' }, content: '10 ابتسامة', key: 'smile' },
     ]}
   />
 )

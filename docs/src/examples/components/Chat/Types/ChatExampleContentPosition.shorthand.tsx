@@ -6,7 +6,7 @@ const [janeAvatar, johnAvatar] = [
   'public/images/avatar/small/joe.jpg',
 ].map(src => ({
   image: src,
-  status: { color: 'green', icon: 'icon-checkmark' },
+  status: { color: 'green', icon: { name: 'icon-checkmark' } },
 }))
 
 const items: ShorthandCollection<ChatItemProps> = [

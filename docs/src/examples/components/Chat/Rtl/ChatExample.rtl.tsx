@@ -18,7 +18,7 @@ const items: ShorthandCollection<ChatItemProps> = [
     gutter: (
       <Avatar
         image="public/images/avatar/small/ade.jpg"
-        status={{ color: 'green', icon: 'icon-checkmark' }}
+        status={{ color: 'green', icon: { name: 'icon-checkmark' } }}
       />
     ),
     message: (

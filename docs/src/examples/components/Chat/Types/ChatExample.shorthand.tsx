@@ -3,7 +3,7 @@ import { Avatar, Chat, ChatItemProps, Divider, ShorthandCollection } from '@flue
 
 const janeAvatar = {
   image: 'public/images/avatar/small/ade.jpg',
-  status: { color: 'green', icon: 'icon-checkmark' },
+  status: { color: 'green', icon: { name: 'icon-checkmark' } },
 }
 
 const items: ShorthandCollection<ChatItemProps> = [

@@ -5,7 +5,7 @@ const AvatarExampleStatusShorthand = () => (
   <div>
     <Avatar
       image="public/images/avatar/small/matt.jpg"
-      status={{ color: 'green', icon: 'icon-checkmark', title: 'Available' }}
+      status={{ color: 'green', icon: { name: 'icon-checkmark' }, title: 'Available' }}
     />
     &emsp;
     <Avatar image="public/images/avatar/small/matt.jpg" status={{ color: 'red', title: 'Busy' }} />

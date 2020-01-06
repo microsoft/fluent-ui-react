@@ -52,12 +52,12 @@ const ToolbarExampleShorthand = () => {
         {
           key: 'quote',
           content: 'Quote',
-          icon: 'quote',
+          icon: { name: 'quote' },
         },
         {
           key: 'code-snippet',
           content: 'Code snippet',
-          icon: 'code-snippet',
+          icon: { name: 'code-snippet' },
         },
       ],
       menuOpen: moreMenuOpen,

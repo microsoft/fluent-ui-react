@@ -4,8 +4,8 @@ import * as React from 'react'
 const actionMenu = {
   iconOnly: true,
   items: [
-    { key: 'like', icon: 'like', title: 'Like' },
-    { key: 'more', icon: 'more', title: 'More actions' },
+    { key: 'like', icon: { name: 'like' }, title: 'Like' },
+    { key: 'more', icon: { name: 'more' }, title: 'More actions' },
   ],
 }
 

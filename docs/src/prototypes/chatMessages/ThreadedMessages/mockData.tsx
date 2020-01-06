@@ -6,12 +6,12 @@ export const actionMenu = {
   items: [
     {
       key: 'like',
-      icon: 'like',
+      icon: { name: 'like' },
       title: 'Like',
     },
     {
       key: 'more',
-      icon: 'more',
+      icon: { name: 'more' },
       title: 'More actions',
     },
   ],
@@ -21,7 +21,7 @@ export const janeAvatar = {
   image: 'public/images/avatar/small/ade.jpg',
   status: {
     color: 'green',
-    icon: 'check',
+    icon: { name: 'check' },
   },
 }
 

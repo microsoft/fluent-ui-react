@@ -18,17 +18,17 @@ const ToolbarExampleMenuShorthand = () => {
         items={[
           {
             key: 'highlight',
-            icon: 'highlight',
+            icon: { name: 'highlight' },
           },
           {
             key: 'more',
-            icon: 'more',
+            icon: { name: 'more' },
             active: menuOpen,
             id: selectors.triggerButtonId,
             menu: {
               items: [
-                { key: 'play', content: 'Play', icon: 'play' },
-                { key: 'pause', content: 'Pause', icon: 'pause' },
+                { key: 'play', content: 'Play', icon: { name: 'play' } },
+                { key: 'pause', content: 'Pause', icon: { name: 'pause' } },
                 { key: 'divider', kind: 'divider' },
                 'Without icon',
               ],
@@ -40,7 +40,7 @@ const ToolbarExampleMenuShorthand = () => {
           },
           {
             key: 'bold',
-            icon: 'bold',
+            icon: { name: 'bold' },
           },
         ]}
       />

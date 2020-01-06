@@ -9,7 +9,7 @@ const avatars = {
 
 const janeAvatar = {
   image: `data:image/jpeg;base64,${avatars.ade}`,
-  status: { color: 'green', icon: 'icon-checkmark' },
+  status: { color: 'green', icon: { name: 'icon-checkmark' } },
 }
 
 const ChatDuplicateMessagesPerf = () => {

@@ -5,23 +5,23 @@ const items = [
   {
     key: 'pdf',
     content: 'Export to PDF',
-    icon: 'files-pdf',
+    icon: { name: 'files-pdf' },
   },
   {
     key: 'pds',
     content: 'Export to PDS',
-    icon: 'files-photoshop',
+    icon: { name: 'files-photoshop' },
   },
   {
     key: 'gif',
     content: 'Export as GIF',
-    icon: 'files-gif',
+    icon: { name: 'files-gif' },
     disabled: true,
   },
   {
     key: 'eps',
     content: 'Export to EPS',
-    icon: 'files-illustrator',
+    icon: { name: 'files-illustrator' },
   },
 ]
 

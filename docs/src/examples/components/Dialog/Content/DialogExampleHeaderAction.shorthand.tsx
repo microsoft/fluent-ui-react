@@ -13,7 +13,7 @@ const DialogExampleHeaderAction: React.FC = () => {
       confirmButton="Confirm"
       content="Are you sure you want to confirm this action?"
       header="Action confirmation"
-      headerAction={{ icon: 'close', title: 'Close', onClick: () => setOpen(false) }}
+      headerAction={{ icon: { name: 'close' }, title: 'Close', onClick: () => setOpen(false) }}
       trigger={<Button content="Open a dialog" />}
     />
   )

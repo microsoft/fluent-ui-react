@@ -95,9 +95,9 @@ class CustomChatMessage extends React.Component {
               iconOnly
               className="actions"
               items={[
-                { key: 'a', icon: 'thumbs up', children: this.renderMenuItem },
-                { key: 'b', icon: 'user', children: this.renderMenuItem },
-                { key: 'c', icon: 'ellipsis horizontal', children: this.renderMenuItem },
+                { key: 'a', icon: { name: 'thumbs up' }, children: this.renderMenuItem },
+                { key: 'b', icon: { name: 'user' }, children: this.renderMenuItem },
+                { key: 'c', icon: { name: 'ellipsis horizontal' }, children: this.renderMenuItem },
               ]}
             />
           </div>

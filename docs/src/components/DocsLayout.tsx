@@ -10,7 +10,7 @@ import { mergeThemes } from '@fluentui/react/src/utils'
 
 const anchors = new AnchorJS({
   class: 'anchor-link',
-  icon: '#',
+  icon: { name: '#' },
 })
 
 class DocsLayout extends React.Component<any, any> {

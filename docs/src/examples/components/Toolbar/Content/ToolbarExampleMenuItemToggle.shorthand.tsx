@@ -21,7 +21,7 @@ const ToolbarExampleMenuItemToggle = () => {
         {
           key: 'more',
           active: menuOpen,
-          icon: 'more',
+          icon: { name: 'more' },
           title: 'More',
           menu: [
             {
@@ -29,7 +29,7 @@ const ToolbarExampleMenuItemToggle = () => {
               active: _.includes(activeIndexes, 0),
               content: 'Bold',
               kind: 'toggle',
-              icon: 'bold',
+              icon: { name: 'bold' },
               index: 0,
               onClick: handleToggleClick,
             },
@@ -38,7 +38,7 @@ const ToolbarExampleMenuItemToggle = () => {
               active: _.includes(activeIndexes, 1),
               content: 'Italic',
               kind: 'toggle',
-              icon: 'italic',
+              icon: { name: 'italic' },
               index: 1,
               onClick: handleToggleClick,
             },

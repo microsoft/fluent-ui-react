@@ -3,16 +3,16 @@ import { Avatar, Chat, ChatItemProps, ShorthandCollection } from '@fluentui/reac
 import * as React from 'react'
 
 const actionItems = [
-  { key: 'add', icon: 'add', title: 'Add' },
-  { key: 'ban', icon: 'ban', title: 'Ban' },
-  { key: 'bookmark', icon: 'bookmark', title: 'Bookmark' },
-  { key: 'broadcast', icon: 'broadcast', title: 'Broadcast' },
-  { key: 'calendar', icon: 'calendar', title: 'Calendar' },
-  { key: 'like', icon: 'like', title: 'Like' },
-  { key: 'star', icon: 'star', title: 'Star' },
-  { key: 'edit', icon: 'edit', title: 'Edit' },
-  { key: 'lock', icon: 'lock', title: 'Lock' },
-  { key: 'more', icon: 'more', title: 'More actions' },
+  { key: 'add', icon: { name: 'add' }, title: 'Add' },
+  { key: 'ban', icon: { name: 'ban' }, title: 'Ban' },
+  { key: 'bookmark', icon: { name: 'bookmark' }, title: 'Bookmark' },
+  { key: 'broadcast', icon: { name: 'broadcast' }, title: 'Broadcast' },
+  { key: 'calendar', icon: { name: 'calendar' }, title: 'Calendar' },
+  { key: 'like', icon: { name: 'like' }, title: 'Like' },
+  { key: 'star', icon: { name: 'star' }, title: 'Star' },
+  { key: 'edit', icon: { name: 'edit' }, title: 'Edit' },
+  { key: 'lock', icon: { name: 'lock' }, title: 'Lock' },
+  { key: 'more', icon: { name: 'more' }, title: 'More actions' },
 ]
 
 const ChatExampleInScrollableShorthand = () => {

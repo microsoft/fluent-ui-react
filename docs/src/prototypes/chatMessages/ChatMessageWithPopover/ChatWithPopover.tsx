@@ -13,13 +13,13 @@ import { Ref } from '@fluentui/react-component-ref'
 
 const reactions: ShorthandCollection<ReactionProps> = [
   {
-    icon: 'thumbs up',
+    icon: { name: 'thumbs up' },
     content: '1K',
     key: 'likes',
     variables: { meReacting: true },
   },
   {
-    icon: 'emoji',
+    icon: { name: 'emoji' },
     content: 2,
     key: 'smiles',
   },
@@ -31,7 +31,7 @@ const reactionsWithPopup = reactions.map(reaction => render =>
 
 const janeAvatar = {
   image: 'public/images/avatar/small/ade.jpg',
-  status: { color: 'green', icon: 'check' },
+  status: { color: 'green', icon: { name: 'check' } },
 }
 
 const ChatWithPopover = () => {

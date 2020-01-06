@@ -15,7 +15,7 @@ const janeAvatar = {
   image: 'public/images/avatar/small/ade.jpg',
   status: {
     color: 'green',
-    icon: 'check',
+    icon: { name: 'check' },
   },
 }
 

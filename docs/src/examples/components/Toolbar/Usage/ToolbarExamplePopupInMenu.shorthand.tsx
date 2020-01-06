@@ -11,7 +11,7 @@ const ToolbarExamplePopupInMenu = () => {
       items={[
         {
           key: 'menu1',
-          icon: 'more',
+          icon: { name: 'more' },
           active: menu1Open,
           title: 'More',
           menu: [
@@ -34,7 +34,7 @@ const ToolbarExamplePopupInMenu = () => {
         },
         {
           key: 'menu2',
-          icon: 'more',
+          icon: { name: 'more' },
           active: menu2Open,
           title: 'More',
           menu: [

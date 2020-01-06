@@ -27,7 +27,7 @@ const inputStyles = {
 class GridImagePicker extends React.Component<GridPickerProps> {
   static defaultProps = {
     gridColumns: 5,
-    inputIcon: 'search',
+    inputicon: { name: 'search' },
     inputPlaceholder: 'Search...',
   }
 

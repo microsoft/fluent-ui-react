@@ -16,7 +16,7 @@ const getAttachment = (onClickAttachment: jest.Mock, onClickButton: jest.Mock): 
     <Attachment
       actionable
       action={{
-        icon: 'more',
+        icon: { name: 'more' },
         onClick: onClickButton,
       }}
       onClick={onClickAttachment}

@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Avatar, Grid, SizeValue } from '@fluentui/react'
 
 const statusProps = {
-  icon: 'icon-checkmark',
+  icon: { name: 'icon-checkmark' },
   color: 'green',
   title: 'Available',
 }

@@ -6,7 +6,7 @@ const AvatarExampleNameShorthand = () => (
     name="John Doe"
     status={{
       color: 'green',
-      icon: 'icon-checkmark',
+      icon: { name: 'icon-checkmark' },
       title: 'Available',
     }}
   />

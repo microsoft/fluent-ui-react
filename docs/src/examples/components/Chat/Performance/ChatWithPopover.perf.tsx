@@ -10,7 +10,7 @@ const avatars = {
 
 const janeAvatar = {
   image: `data:image/jpeg;base64,${avatars.ade}`,
-  status: { color: 'green', icon: 'icon-checkmark' },
+  status: { color: 'green', icon: { name: 'icon-checkmark' } },
 }
 
 export interface PopoverProps {
@@ -52,38 +52,38 @@ class Popover extends React.Component<PopoverProps, PopoverState> {
         items={[
           {
             key: 'smile',
-            icon: 'emoji',
+            icon: { name: 'emoji' },
             className: 'smile-emoji',
             'aria-label': 'smile one',
           },
           {
             key: 'smile2',
-            icon: 'emoji',
+            icon: { name: 'emoji' },
             className: 'smile-emoji',
             'aria-label': 'smile two',
           },
           {
             key: 'smile3',
-            icon: 'emoji',
+            icon: { name: 'emoji' },
             className: 'smile-emoji',
             'aria-label': 'smile three',
           },
           {
             key: 'a',
-            icon: 'like',
+            icon: { name: 'like' },
             'aria-label': 'thumbs up',
           },
           {
             key: 'c',
-            icon: 'more',
+            icon: { name: 'more' },
             'aria-label': 'more options',
             indicator: false,
             menu: {
               pills: true,
               items: [
-                { key: 'bookmark', icon: 'download', content: 'Save this message' },
-                { key: 'linkify', icon: 'link', content: 'Copy link' },
-                { key: 'translate', icon: 'translate', content: 'Translate' },
+                { key: 'bookmark', icon: { name: 'download' }, content: 'Save this message' },
+                { key: 'linkify', icon: { name: 'link' }, content: 'Copy link' },
+                { key: 'translate', icon: { name: 'translate' }, content: 'Translate' },
               ],
             },
           },

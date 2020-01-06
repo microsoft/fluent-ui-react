@@ -4,9 +4,9 @@ import { Button } from '@fluentui/react'
 const ButtonGroupExampleShorthand = () => (
   <Button.Group
     buttons={[
-      { key: 'emoji', icon: 'emoji', iconOnly: true, title: 'Emoji' },
-      { key: 'translation', icon: 'translation', iconOnly: true, title: 'Translation' },
-      { key: 'play', icon: 'play', iconOnly: true, title: 'Play' },
+      { key: 'emoji', icon: { name: 'emoji' }, iconOnly: true, title: 'Emoji' },
+      { key: 'translation', icon: { name: 'translation' }, iconOnly: true, title: 'Translation' },
+      { key: 'play', icon: { name: 'play' }, iconOnly: true, title: 'Play' },
     ]}
   />
 )

@@ -2,8 +2,8 @@ import { Avatar, Chat, ChatItemProps, ReactionProps, ShorthandCollection } from 
 import * as React from 'react'
 
 const reactions: ShorthandCollection<ReactionProps> = [
-  { key: 'up', icon: 'like', content: '1K' },
-  { key: 'smile', icon: 'emoji', content: 5 },
+  { key: 'up', icon: { name: 'like' }, content: '1K' },
+  { key: 'smile', icon: { name: 'emoji' }, content: 5 },
 ]
 
 const items: ShorthandCollection<ChatItemProps> = [
@@ -27,7 +27,7 @@ const items: ShorthandCollection<ChatItemProps> = [
     key: 'message-2',
     message: (
       <Chat.Message
-        reactionGroup={[{ key: 'up', icon: 'like', content: '8' }]}
+        reactionGroup={[{ key: 'up', icon: { name: 'like' }, content: '8' }]}
         content="I'm back!"
         author="John Doe"
         timestamp="Yesterday, 10:15 PM"

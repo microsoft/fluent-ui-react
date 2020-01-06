@@ -9,13 +9,13 @@ import {
 } from '@fluentui/react'
 
 const reactions: ShorthandCollection<ReactionProps> = [
-  { key: 'up', icon: 'like', content: '1K' },
-  { key: 'smile', icon: 'emoji', content: 5 },
+  { key: 'up', icon: { name: 'like' }, content: '1K' },
+  { key: 'smile', icon: { name: 'emoji' }, content: 5 },
 ]
 
 const janeAvatar: AvatarProps = {
   image: 'public/images/avatar/small/ade.jpg',
-  status: { color: 'green', icon: 'icon-checkmark' },
+  status: { color: 'green', icon: { name: 'icon-checkmark' } },
 }
 
 const content = (
@@ -108,7 +108,7 @@ const ChatMessageExampleStyled = () => (
                 author="John Doe"
                 timestamp="Yesterday, 10:15 PM"
                 mine
-                badge={{ icon: 'mention' }}
+                badge={{ icon: { name: 'mention' } }}
                 badgePosition="start"
                 reactionGroup={reactions}
               />
@@ -125,7 +125,7 @@ const ChatMessageExampleStyled = () => (
               content={{ content }}
               author="Jane Doe"
               timestamp="Yesterday, 10:15 PM"
-              badge={{ icon: 'exclamation-circle' }}
+              badge={{ icon: { name: 'exclamation-circle' } }}
               reactionGroup={reactions}
             />
           ),

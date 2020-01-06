@@ -38,9 +38,9 @@ type ChatItem = {
 type StatusPropsExtendable = Extendable<StatusProps>
 
 const statusMap: Map<UserStatus, StatusPropsExtendable> = new Map([
-  ['Available', { color: 'green', icon: 'check', title: 'Available' }],
-  ['DoNotDisturb', { color: 'red', icon: 'minus', title: 'Do not disturb' }],
-  ['Away', { color: 'yellow', icon: 'clock', title: 'Away' }],
+  ['Available', { color: 'green', icon: { name: 'check' }, title: 'Available' }],
+  ['DoNotDisturb', { color: 'red', icon: { name: 'minus' }, title: 'Do not disturb' }],
+  ['Away', { color: 'yellow', icon: { name: 'clock' }, title: 'Away' }],
   ['Offline', { color: 'grey', title: 'Offline' }],
 ] as [UserStatus, StatusPropsExtendable][])
 
@@ -97,19 +97,19 @@ function createMessageContentWithAttachments(content: string, messageId: string)
         {
           key: 'download',
           content: 'Download',
-          icon: 'download',
+          icon: { name: 'download' },
           onClick: menuClickHandler('Download'),
         },
         {
           key: 'linkify',
           content: 'Get link',
-          icon: 'linkify',
+          icon: { name: 'linkify' },
           onClick: menuClickHandler('Get link'),
         },
         {
           key: 'tab',
           content: 'Make this a tab',
-          icon: 'folder open',
+          icon: { name: 'folder open' },
           onClick: menuClickHandler('Make tab'),
         },
       ]}

@@ -19,7 +19,7 @@ const ToolbarExamplePopupInMenu = () => {
           {
             id: selectors.menuButtonId,
             key: 'menu',
-            icon: 'more',
+            icon: { name: 'more' },
             active: menuOpen,
             menu: {
               items: [

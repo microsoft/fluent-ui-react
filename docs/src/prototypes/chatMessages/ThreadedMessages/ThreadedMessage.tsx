@@ -36,7 +36,7 @@ class ThreadedMessage extends React.Component<ThreadedMessageProps> {
             header={meeting.header}
             description={meeting.description}
             action={{
-              icon: 'more',
+              icon: { name: 'more' },
             }}
           />
         )}

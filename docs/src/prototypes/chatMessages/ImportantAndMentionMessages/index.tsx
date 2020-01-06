@@ -3,7 +3,7 @@ import { Avatar, Chat, ChatItemProps, ShorthandCollection } from '@fluentui/reac
 
 const janeAvatar = {
   image: 'public/images/avatar/small/ade.jpg',
-  status: { color: 'green', icon: 'check' },
+  status: { color: 'green', icon: { name: 'check' } },
 }
 
 const items: ShorthandCollection<ChatItemProps> = [
@@ -14,7 +14,7 @@ const items: ShorthandCollection<ChatItemProps> = [
         author="John Doe"
         timestamp="Yesterday, 10:15 PM"
         mine
-        badge={{ icon: 'redbang' }}
+        badge={{ icon: { name: 'redbang' } }}
         variables={{ isImportant: true }}
       />
     ),
@@ -29,7 +29,7 @@ const items: ShorthandCollection<ChatItemProps> = [
         content="This is another important message (see how the borders radius respect the grouped ones)"
         author="Jane Doe"
         timestamp="Yesterday, 10:15 PM"
-        badge={{ icon: 'redbang' }}
+        badge={{ icon: { name: 'redbang' } }}
         variables={{ isImportant: true }}
       />
     ),
@@ -43,7 +43,7 @@ const items: ShorthandCollection<ChatItemProps> = [
         content="This is mention message @John"
         author="Jane Doe"
         timestamp="Yesterday, 10:15 PM"
-        badge={{ icon: 'mention' }}
+        badge={{ icon: { name: 'mention' } }}
         variables={{ hasMention: true }}
       />
     ),
@@ -57,7 +57,7 @@ const items: ShorthandCollection<ChatItemProps> = [
         content="This is another mention message @John with custom color"
         author="Jane Doe"
         timestamp="Yesterday, 10:15 PM"
-        badge={{ icon: 'mention' }}
+        badge={{ icon: { name: 'mention' } }}
         variables={siteVars => ({
           hasMention: true,
           hasMentionColor: siteVars.colors.brand[600],
@@ -74,7 +74,7 @@ const items: ShorthandCollection<ChatItemProps> = [
         author="John Doe"
         timestamp="Yesterday, 10:16 PM"
         mine
-        badge={{ icon: 'redbang' }}
+        badge={{ icon: { name: 'redbang' } }}
         variables={siteVars => ({
           isImportant: true,
           isImportantColor: siteVars.colors.yellow[400],

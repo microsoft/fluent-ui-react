@@ -2,8 +2,14 @@ import * as React from 'react'
 import { Avatar, Chat, ChatItemProps, ReactionProps, ShorthandCollection } from '@fluentui/react'
 
 const reactions: ShorthandCollection<ReactionProps> = [
-  { icon: 'like', content: '1K', key: 'likes', variables: { meReacting: true }, as: 'button' },
-  { icon: 'emoji', content: 2, key: 'smiles', as: 'button' },
+  {
+    icon: { name: 'like' },
+    content: '1K',
+    key: 'likes',
+    variables: { meReacting: true },
+    as: 'button',
+  },
+  { icon: { name: 'emoji' }, content: 2, key: 'smiles', as: 'button' },
 ]
 
 const items: ShorthandCollection<ChatItemProps> = [
