@@ -77,7 +77,7 @@ export default (siteVars): DropdownVariables => ({
   listItemBackgroundColorHover: siteVars.colorScheme.default.backgroundHover,
   listItemBackgroundColorActive: siteVars.colorScheme.default.backgroundActive,
   listItemColorActive: siteVars.colorScheme.default.foreground1,
-  listItemColorHover: siteVars.colorScheme.default.foreground1,
+  listItemColorHover: siteVars.colorScheme.default.foregroundHover,
   listItemSelectedColor: siteVars.colorScheme.default.foreground,
   listItemSelectedFontWeight: siteVars.fontWeightSemibold,
   selectedItemBackgroundColor: 'undefined',
