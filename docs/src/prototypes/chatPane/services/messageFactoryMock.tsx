@@ -1,7 +1,6 @@
 import {
   Attachment,
   Popup,
-  Button,
   Menu,
   AvatarProps,
   ChatMessageProps,
@@ -124,22 +123,17 @@ function createMessageContentWithAttachments(content: string, messageId: string)
     }
   }
 
-  const actionPopup = (
-    <Popup
-      trapFocus
-      trigger={
-        <Button
-          aria-label="More attachment options"
-          iconOnly
-          circular
-          icon="ellipsis horizontal"
-          onClick={e => e.stopPropagation()}
-          onKeyDown={stopPropagationOnKeys([keyboardKey.Enter, keyboardKey.Spacebar])}
-        />
-      }
-      content={{ content: contextMenu }}
-    />
-  )
+  const action = {
+    'aria-label': 'More attachment options',
+    iconOnly: true,
+    circular: true,
+    icon: 'ellipsis horizontal',
+    onClick: e => e.stopPropagation(),
+    onKeyDown: stopPropagationOnKeys([keyboardKey.Enter, keyboardKey.Spacebar]),
+    children: (Component, props) => (
+      <Popup content={{ content: contextMenu }} trapFocus trigger={<Component {...props} />} />
+    ),
+  }
 
   return (
     <>
@@ -153,7 +147,7 @@ function createMessageContentWithAttachments(content: string, messageId: string)
             icon="file word outline"
             aria-label={`File attachment ${fileName}. Press tab for more options Press Enter to open the file`}
             header={fileName}
-            action={actionPopup}
+            action={action}
             data-is-focusable={true}
             styles={{
               ...(index === 1 ? { marginLeft: '15px' } : {}),
