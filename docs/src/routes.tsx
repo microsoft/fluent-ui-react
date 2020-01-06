@@ -48,6 +48,7 @@ import ParticipantsListPrototype from './prototypes/ParticipantsList'
 import CustomScrollbarPrototype from './prototypes/customScrollbar'
 import EditorToolbarPrototype from './prototypes/EditorToolbar'
 import HexagonalAvatarPrototype from './prototypes/hexagonalAvatar'
+import TablePrototype from './prototypes/table'
 import CreateComponentPrototype from './prototypes/createComponent'
 
 const Routes = () => (
@@ -81,6 +82,7 @@ const Routes = () => (
           <Route exact path="/prototype-alerts" component={AlertsPrototype} />
           <Route exact path="/prototype-editor-toolbar" component={EditorToolbarPrototype} />
           <Route exact path="/prototype-hexagonal-avatar" component={HexagonalAvatarPrototype} />
+          <Route exact path="/prototype-table" component={TablePrototype} />
           <Route
             exact
             path="/prototype-nested-popups-and-dialogs"
