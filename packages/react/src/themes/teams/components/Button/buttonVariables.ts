@@ -81,7 +81,7 @@ export default (siteVars: any): ButtonVariables => ({
   backgroundColor: siteVars.colorScheme.default.background,
   backgroundColorActive: siteVars.colorScheme.default.backgroundPressed,
   backgroundColorHover: siteVars.colorScheme.default.backgroundHover1,
-  backgroundColorDisabled: siteVars.colorScheme.default.backgroundDisabled1,
+  backgroundColorDisabled: siteVars.colorScheme.default.backgroundDisabled,
   borderColor: siteVars.colorScheme.default.border,
   borderColorHover: siteVars.colorScheme.default.borderHover,
   borderColorActive: siteVars.colorScheme.default.borderPressed,
