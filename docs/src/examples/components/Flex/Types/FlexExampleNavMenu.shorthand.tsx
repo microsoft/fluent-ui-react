@@ -3,7 +3,7 @@ import { Flex, Button } from '@fluentui/react'
 
 const FlexExampleNavMenu = () => (
   <Flex gap="gap.small" debug>
-    <Button content="Logo" icon="skype-logo" />
+    <Button content="Logo" icon={{ name: 'skype-logo' }} />
 
     <Flex.Item push>
       <Button content="Page 1" />

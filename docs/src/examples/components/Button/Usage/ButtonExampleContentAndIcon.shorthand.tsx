@@ -3,9 +3,9 @@ import { Button, Flex } from '@fluentui/react'
 
 const ButtonExampleContentAndIcon = () => (
   <Flex gap="gap.large">
-    <Button icon="call-video" content="Join call" iconPosition="before" primary />
-    <Button icon="call-video" content="Join call" iconPosition="after" />
-    <Button icon="call-video" content="Join call" text />
+    <Button icon={{ name: 'call-video' }} content="Join call" iconPosition="before" primary />
+    <Button icon={{ name: 'call-video' }} content="Join call" iconPosition="after" />
+    <Button icon={{ name: 'call-video' }} content="Join call" text />
   </Flex>
 )
 

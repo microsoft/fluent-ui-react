@@ -4,7 +4,7 @@ import { Alert } from '@fluentui/react'
 const AlertExampleImportantMessage = () => (
   <Alert
     warning
-    icon="exclamation-triangle"
+    icon={{ name: 'exclamation-triangle' }}
     header="Your password may have been compromised"
     content="Please change your password"
     dismissible

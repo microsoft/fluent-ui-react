@@ -23,7 +23,9 @@ const header = {
 }
 
 const moreOptionCell = {
-  content: <Button tabIndex={-1} icon="more" circular text iconOnly title="More options" />,
+  content: (
+    <Button tabIndex={-1} icon={{ name: 'more' }} circular text iconOnly title="More options" />
+  ),
   truncateContent: true,
   key: '1-6',
   accessibility: gridCellWithFocusableElementBehavior,
@@ -39,7 +41,7 @@ const moreActionCell = {
       <Button size="small" content="tag 1" />
       <Button size="small" content="tag 2" />
       {/* table layout not support now more content in the cell */}
-      {/* <Button tabIndex={-1} icon="edit" circular text iconOnly title="edit tags" /> */}
+      {/* <Button tabIndex={-1} icon={{name: "edit"}} circular text iconOnly title="edit tags" /> */}
     </Flex>
   ),
   key: '1-5',

@@ -4,7 +4,7 @@ import * as React from 'react'
 const AttachmentSlotsPerf = () => (
   <Attachment
     actionable
-    icon="table"
+    icon={{ name: 'table' }}
     header="Document.docx"
     description="800 Kb"
     action={{ icon: 'more', title: 'More Action' }}

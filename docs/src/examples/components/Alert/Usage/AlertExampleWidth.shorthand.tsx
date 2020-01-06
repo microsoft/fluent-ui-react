@@ -17,7 +17,7 @@ const AlertExampleWidth = () => {
         actions={[{ content: 'Join and add the room', primary: true }]}
         header="There is a conference room close to you."
         dismissible
-        icon="screencast"
+        icon={{ name: 'screencast' }}
       />
     </div>
   )

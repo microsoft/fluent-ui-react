@@ -3,11 +3,11 @@ import { Status } from '@fluentui/react'
 
 const StatusCustomExampleShorthand = () => (
   <div>
-    <Status color="orange" icon="call-pstn" title="In call" />
+    <Status color="orange" icon={{ name: 'call-pstn' }} title="In call" />
     &emsp;
-    <Status color="blue" icon="onedrive" title="Working from the sky" />
+    <Status color="blue" icon={{ name: 'onedrive' }} title="Working from the sky" />
     &emsp;
-    <Status color="red" icon="ban" title="Offline" />
+    <Status color="red" icon={{ name: 'ban' }} title="Offline" />
   </div>
 )
 

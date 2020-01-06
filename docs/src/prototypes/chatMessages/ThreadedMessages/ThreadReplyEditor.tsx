@@ -49,7 +49,7 @@ const ThreadReplyEditor: React.FC = () => {
           <Flex space="between">
             <Toolbar items={toolbarItems} aria-label="Editor tools" data-is-focusable={true} />
             <Flex gap="gap.small">
-              <Button circular icon="send" iconOnly title="Send reply" text />
+              <Button circular icon={{ name: 'send' }} iconOnly title="Send reply" text />
             </Flex>
           </Flex>
         </Flex>

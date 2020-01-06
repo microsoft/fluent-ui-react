@@ -10,7 +10,9 @@ class MeetingOptionsPrototype extends React.Component<any, any> {
   render() {
     return (
       <div style={mainStyle}>
-        <MSTeamsHeader content={<MSTeamsLogo icon="teams" companyName="Microsoft Teams" />} />
+        <MSTeamsHeader
+          content={<MSTeamsLogo icon={{ name: 'teams' }} companyName="Microsoft Teams" />}
+        />
         <MSTeamsMeetingOptions />
         <MSTeamsFooter
           content={

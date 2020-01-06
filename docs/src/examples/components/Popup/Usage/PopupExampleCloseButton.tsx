@@ -92,7 +92,11 @@ const PopupCloseButtonExample = () => {
       }}
       trapFocus
     >
-      <Button icon="user-friends" content="People Picker" aria-label="Choose a person." />
+      <Button
+        icon={{ name: 'user-friends' }}
+        content="People Picker"
+        aria-label="Choose a person."
+      />
     </Popup>
   )
 }

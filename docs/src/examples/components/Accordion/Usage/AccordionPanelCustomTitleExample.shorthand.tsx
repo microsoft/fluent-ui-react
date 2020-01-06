@@ -7,7 +7,9 @@ const AccordionPanelCustomTitleExample = () => {
       title: (
         <Layout
           key="title"
-          start={<Label icon="error" iconPosition="start" circular content="Warnings" />}
+          start={
+            <Label icon={{ name: 'error' }} iconPosition="start" circular content="Warnings" />
+          }
         />
       ),
       content: {

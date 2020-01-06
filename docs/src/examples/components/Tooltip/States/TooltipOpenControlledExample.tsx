@@ -11,7 +11,7 @@ const TooltipOpenExample = () => {
       onOpenChange={(e, data) => setOpen(data.open)}
       content="This is a controlled Tooltip"
     >
-      <Button icon="more" />
+      <Button icon={{ name: 'more' }} />
     </Tooltip>
   )
 }

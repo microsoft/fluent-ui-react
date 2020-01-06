@@ -9,7 +9,7 @@ const TooltipOpenExample = () => {
     <Tooltip
       open={open}
       onOpenChange={(e, data) => setOpen(data.open)}
-      trigger={<Button icon="more" />}
+      trigger={<Button icon={{ name: 'more' }} />}
       content="This is a controlled Tooltip"
     />
   )

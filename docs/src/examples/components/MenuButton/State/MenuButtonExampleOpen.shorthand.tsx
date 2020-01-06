@@ -9,7 +9,7 @@ const MenuButtonOpenExample = () => {
     <MenuButton
       open={open}
       onOpenChange={(e, { open }) => setOpen(open)}
-      trigger={<Button icon="expand" title="Open MenuButton" />}
+      trigger={<Button icon={{ name: 'expand' }} title="Open MenuButton" />}
       menu={['1', '2', '3', { content: 'submenu', menu: ['4', '5'] }]}
     />
   )

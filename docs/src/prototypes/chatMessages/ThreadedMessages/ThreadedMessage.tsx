@@ -32,7 +32,7 @@ class ThreadedMessage extends React.Component<ThreadedMessageProps> {
         {meeting && (
           <Attachment
             actionable
-            icon="calendar"
+            icon={{ name: 'calendar' }}
             header={meeting.header}
             description={meeting.description}
             action={{

@@ -3,7 +3,7 @@ import * as React from 'react'
 
 const ButtonSlotsPerf = () => (
   <Button
-    icon="play"
+    icon={{ name: 'play' }}
     content="Click here"
     loader={{
       delay: 200,
