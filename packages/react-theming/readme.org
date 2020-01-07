@@ -26,7 +26,7 @@ enough flexibility.
 - When overriding major details of an existing component. (Explained
   later in "Overriding (tokens|slots) with a new component".)
 ** What's in a theme?
-A FluentUi theme contains several major sections. At at high level, it
+A Fluent UI theme contains several major sections. At at high level, it
 contains detail about colors, types, effects, spacing, and animation.
 Furthermore, a theme has the ability to override major details about
 each and every component's look and feel as well as behavior.
@@ -36,7 +36,7 @@ TODO: document theme
 ** Basic usage
 Components created with ~compose~ should act and feel like ordinary,
 run-of-the-mill components. For instance, using a ~Button~ provided by
-FluentUi is nearly the same as a native ~button~:
+Fluent UI is nearly the same as a native ~button~:
 #+begin_src
 <Button onClick={() => alert('Hello, World!')}>Hi</Button>
 #+end_src
