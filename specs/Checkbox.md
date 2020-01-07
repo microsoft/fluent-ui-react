@@ -120,7 +120,7 @@ https://developer.microsoft.com/en-us/fabric#/controls/web/checkbox
 
 ### Conversion process from Fabric 7 to Fluent UI Checkbox
 
-#### Fluent Checkbox recommended props interface - FINAL PROPS LIST; this is to track the transition from current Fabric checkbox to the new Fluent checkbox we're building with this spec.
+#### Fluent Checkbox recommended props interface - FINAL PROPS LIST of the new Fluent checkbox. We came to this by looking at the props list of the current Fabric Checkbox so the transitioning progress is meant to track the conversion of the current Fabric Checkbox to the new Fluent Checkbox.
 
 | Name                         | To transition or not?| Property transitioned? | Breaking change? | Codemod/Shim created? |
 | -----------------------------| -------------------- | :--------------------: | :--------------: | :-------------------: |
