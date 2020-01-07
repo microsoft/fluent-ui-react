@@ -170,6 +170,10 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
     }
   }
 
+  componentWillUnmount() {
+    this.focusItemAtIndex.cancel()
+  }
+
   actionHandlers = {
     showNextSlideByKeyboardNavigation: e => {
       e.preventDefault()
