@@ -55,7 +55,6 @@ export default (siteVars): DropdownVariables => ({
   // borderColorFocus: 'transparent',
   borderColorFocus: siteVars.colors.brand[600],
   borderWidth: '0',
-  // might need to be 1px
   color: siteVars.colorScheme.default.foreground1,
   containerBorderRadius: `${cornerRadius}`,
   openAboveContainerBorderRadius: `0 0 ${cornerRadius} ${cornerRadius}`,
@@ -69,7 +68,7 @@ export default (siteVars): DropdownVariables => ({
 
   listBackgroundColor: siteVars.colorScheme.default.background,
   listBorderColor: 'transparent',
-  listBorderWidth: '0px',
+  listBorderWidth: '0',
   listPadding: `${pxToRem(8)} 0 ${pxToRem(6)}`,
   listBoxShadow: siteVars.shadowLevel3,
   listMaxHeight: pxToRem(296),
@@ -83,16 +82,14 @@ export default (siteVars): DropdownVariables => ({
   listItemSelectedFontWeight: siteVars.fontWeightSemibold,
   selectedItemBackgroundColor: 'undefined',
   selectedItemColorFocus: siteVars.colorScheme.default.foreground,
-  // old version selectedItemBackgroundColorFocus: siteVars.colorScheme.default.backgroundPressed,
-  // original version selectedItemBackgroundColorFocus: siteVars.colors.brand[200],
-  selectedItemBackgroundColorFocus: siteVars.colorScheme.default.borderFocus1,
+  selectedItemBackgroundColorFocus: siteVars.colorScheme.default.backgroundPressed,
   selectedItemsMaxHeight: pxToRem(82),
   toggleIndicatorSize: pxToRem(32),
   width: pxToRem(356),
 
   // these should only apply when there is content in the image/media slot:
   listItemHeaderFontSize: siteVars.fontSizes.medium,
-  listItemHeaderColor: siteVars.colorScheme.default.foreground1, // this is to be updated
+  listItemHeaderColor: siteVars.colorScheme.default.foreground1,
   listItemContentFontSize: siteVars.fontSizes.small,
   listItemContentColor: siteVars.colorScheme.default.foreground2,
 })
