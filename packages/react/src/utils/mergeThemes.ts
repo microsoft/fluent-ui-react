@@ -22,6 +22,7 @@ import {
 import toCompactArray from './toCompactArray'
 import deepmerge from './deepmerge'
 import objectKeyToValues from './objectKeysToValues'
+import hash from 'object-hash'
 
 import { isEnabled as isDebugEnabled } from './debug/debugEnabled'
 import withDebugId from './withDebugId'
@@ -42,6 +43,24 @@ export const emptyTheme: ThemePrepared = {
 // Component level merge functions
 // ----------------------------------------
 
+const mergeComponentStylesCache = {}
+
+export const mergeComponentStylesWithCache = (
+  hashObj,
+  sources: (ComponentSlotStylesInput | null | undefined)[],
+) => {
+  try {
+    const hashVal = hash(hashObj)
+
+    if (!mergeComponentStylesCache[hashVal]) {
+      mergeComponentStylesCache[hashVal] = mergeComponentStyles(...sources)
+    }
+
+    return mergeComponentStylesCache[hashVal]
+  } catch (e) {
+    return mergeComponentStyles(...sources)
+  }
+}
 /**
  * Merges a single component's styles (keyed by component part) with another component's styles.
  */

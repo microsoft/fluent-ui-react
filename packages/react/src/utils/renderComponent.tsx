@@ -29,7 +29,7 @@ import {
 import { Props, ProviderContextPrepared } from '../types'
 import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/reactTypes'
 import getKeyDownHandlers from './getKeyDownHandlers'
-import { emptyTheme, mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
+import { emptyTheme, mergeComponentVariables, mergeComponentStylesWithCache } from './mergeThemes'
 import createAnimationStyles from './createAnimationStyles'
 import { isEnabled as isDebugEnabled } from './debug/debugEnabled'
 import { DebugData } from './debug/debugData'
@@ -210,11 +210,21 @@ const renderComponent = <P extends {}>(
   // Resolve styles using resolved variables, merge results, allow props.styles to override
   // TODO: update mergeComponentStyles to cache its results based on theme object and prop combinations.
   //       together with the already existent resolveStylesAndClasses caching, this should skip all style calculations on re-render.
-  const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
-    theme.componentStyles[displayName],
-    withDebugId({ root: props.design }, 'props.design'),
-    withDebugId({ root: props.styles }, 'props.styles'),
-    withDebugId({ root: animationCSSProp }, 'props.animation'),
+  const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStylesWithCache(
+    {
+      displayName,
+      design: props.design,
+      styles: props.styles,
+      animation: props.animation,
+      themeStyles:
+        theme.componentStyles[displayName] && theme.componentStyles[displayName].toString(),
+    },
+    [
+      theme.componentStyles[displayName],
+      withDebugId({ root: props.design }, 'props.design'),
+      withDebugId({ root: props.styles }, 'props.styles'),
+      withDebugId({ root: animationCSSProp }, 'props.animation'),
+    ],
   )
 
   const accessibility: ReactAccessibilityBehavior = getAccessibility(

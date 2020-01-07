@@ -9,7 +9,7 @@ import {
   ShorthandRenderFunction,
   ShorthandRenderer,
 } from '../types'
-import { mergeStyles } from './mergeThemes'
+// import { mergeStyles } from './mergeThemes'
 
 type HTMLTag = 'iframe' | 'img' | 'input'
 type ShorthandProp = 'children' | 'src' | 'type'
@@ -250,11 +250,18 @@ function createShorthandFromValue<P>({
 
   // Merge styles
   if (defaultProps.styles || overrideProps.styles || usersProps.styles) {
-    ;(props as any).styles = mergeStyles(
-      defaultProps.styles,
-      usersProps.styles,
-      overrideProps.styles,
-    )
+    // As long as we allow the styles prop to be a function, I don't see how we can cache it, as the stirng of the function will always be mergeStyles..
+    // ;(props as any).styles = mergeStyles(
+    //   defaultProps.styles,
+    //   usersProps.styles,
+    //   overrideProps.styles,
+    // )
+    // Just for hacking, relaying that it will always be an object, so we can cache...
+    ;(props as any).styles = {
+      ...(defaultProps.styles || {}),
+      ...(usersProps.styles || {}),
+      ...(overrideProps.styles || {}),
+    }
   }
 
   // ----------------------------------------
