@@ -322,6 +322,15 @@ class Sidebar extends React.Component<any, any> {
         public: false,
       },
       {
+        key: 'cards',
+        title: {
+          content: 'Cards',
+          as: NavLink,
+          to: '/prototype-cards',
+        },
+        public: true,
+      },
+      {
         key: 'employeecard',
         title: { content: 'Employee Card', as: NavLink, to: '/prototype-employee-card' },
         public: false,
