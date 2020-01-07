@@ -67,6 +67,10 @@ export const getClassName = (
 
   const slotNames: string[] = Object.keys(componentStyles);
 
+  // We need to merge the slot names defined in the styles with the slot names
+  // defined in the variants
+  // styles = { [slot]: { css in js }
+  // variants = { [enumValue]: { [slot]: { css in js } } }
   if (
     theme &&
     theme.components &&

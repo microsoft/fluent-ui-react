@@ -208,6 +208,8 @@ const renderComponent = <P extends {}>(
     : {}
 
   // Resolve styles using resolved variables, merge results, allow props.styles to override
+  // TODO: update mergeComponentStyles to cache its results based on theme object and prop combinations.
+  //       together with the already existent resolveStylesAndClasses caching, this should skip all style calculations on re-render.
   const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
     theme.componentStyles[displayName],
     withDebugId({ root: props.design }, 'props.design'),
