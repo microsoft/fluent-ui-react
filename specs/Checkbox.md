@@ -116,38 +116,11 @@ https://developer.microsoft.com/en-us/fabric#/controls/web/checkbox
 | theme                | ITheme                                                      |                                                                                |
 | toggle               | boolean                                                     | default false                                                                  |  
 | variables            | any                                                         |                                                                                |
- 
-### Recommended props
 
-| Name                 | Type                                                        |
-| --------------       | ----------------------------------------------------------- |
-| ariaDescribedBy      | string                                                      |
-| ariaLabel            | string                                                      |                                                
-| ariaLabelledBy       | string                                                      |                                                
-| as                   | keyof JSX.IntrinsicElements                                 |
-| checked              | boolean                                                     |      
-| className            | string                                                      |
-| defaultChecked       | boolean                                                     |
-| defaultIndeterminate | boolean                                                     |
-| disabled             | boolean                                                     |
-| indeterminate        | boolean                                                     |
-| label                | string                                                      |
-| name                 | string                                                      |
-| onChange             | (ev: Event, value: boolean) => void                         |
-| labelPosition        | start or end                                                |
-
-Note: rtl, styles, and theme come from compose or the ThemeProvider. And name has been added to support checkbox in form scenarios.
-
-Removing the following two props because the ARIA spec dictates role='checkbox' doesn't need aria-posinset and aria-setsize. These are only valid for role='option' which is only in the case the checkbox is a part of a listbox, which is not something we need to account for in the base component API. If the user does need to provide these two props, slotProps could be used to apply additional props to any slot.
-
-| Name                                  | Concern                                                           |
-| ------------------------------------- | ----------------------------------------------------------------- |
-| ariaPositionInset                     | if checkbox is in a set, should be up to the user to provide a11y |             
-| ariaSetSize                           | same as above                                                     |
 
 ### Conversion process from Fabric 7 to Fluent UI Checkbox
 
-#### Fluent Checkbox recommended props interface
+#### Fluent Checkbox recommended props interface - FINAL PROPS LIST; this is to track the transition from current Fabric checkbox to the new Fluent checkbox we're building with this spec.
 
 | Name                         | To transition or not?| Property transitioned? | Breaking change? | Codemod/Shim created? |
 | -----------------------------| -------------------- | :--------------------: | :--------------: | :-------------------: |
@@ -156,9 +129,10 @@ Removing the following two props because the ARIA spec dictates role='checkbox' 
 | `ariaLabelledBy`             | User provided        | &#x274C;               | &#x274C;         | &#x274C;              |
 | `ariaPositionInSet`          | Won't be transitioned| &#x274C;               | &#x274C;         | &#x274C;              |
 | `ariaSetSize`                | Won't be transitioned| &#x274C;               | &#x274C;         | &#x274C;              |
+| `as`                         | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
 | `boxSide`                    | No; labelPosition    | &#x274C;               | &#x274C;         | &#x274C;              |
 | `checked`                    | Yes - native         | &#x274C;               | &#x274C;         | &#x274C;              |
-| `checkmarkIconProps`         | No                   | &#x274C;               | &#x274C;         | &#x274C;              |
+| `checkmarkIconProps`         | No; icon             | &#x274C;               | &#x274C;         | &#x274C;              |
 | `className`                  | Yes - native         | &#x274C;               | &#x274C;         | &#x274C;              |
 | `defaultChecked`             | Yes - native         | &#x274C;               | &#x274C;         | &#x274C;              |
 | `defaultIndetermiante`       | Yes - native         | &#x274C;               | &#x274C;         | &#x274C;              |
@@ -173,7 +147,24 @@ Removing the following two props because the ARIA spec dictates role='checkbox' 
 
 Props being removed:
 
-ariaPoisitionInSet and ariaSetSize - when writing parent component, user should set these on the checkbox.
+ariaPoisitionInSet and ariaSetSize - when writing parent component, user should set these on the checkbox. ARIA spec dictates role='checkbox' doesn't need aria-posinset and aria-setsize. These are only valid for role='option' which is only in the case the checkbox is a part of a listbox, which is not something we need to account for in the base component API. If the user does need to provide these two props, slotProps could be used to apply additional props to any slot. 
+
+Note: rtl, styles, and theme come from compose or the ThemeProvider. And name has been added to support checkbox in form scenarios.
+
+### Work items and tracking progress on conversion from the current Fluent (Stardust) checkbox to the new Fluent checkbox we're building with this spec: 
+- [ ] Remove `animation` prop.
+- [ ] Remove `accessibility` prop.
+- [ ] Add `indeterminate` and `defaultIndeterminate` props to support the third state.
+- [ ] Redesign `keytipProps` from what's currently in Fabric and add the new implementation.
+- [ ] Decide if, in keeping label, it will be of type `ShorthandValue<TextProps>`and if other type, implement that.
+- [ ] Decide if, in keeping icon, it will be of type `ShorthandValue<IconProps>` and if other type, implement that.
+- [ ] Change `onChange` type to native `onChange?: (ev?: React.FormEvent<HTMLElement | HTMLInputElement>, checked?: boolean) => void;` from current `ComponentEventHandler`.
+- [ ] Decide if `onClick` is too similar to `onChange` and if so, remove it. If not, change its type to native instead of the current `ComponentEventHandler`.
+- [ ] Remove `toggle` - it will be a separate variant component of Checkbox.
+- [ ] Remove `variables` - theming will be handled differently in the new Fluent.
+- [ ] Remove `design` prop.
+- [ ] Decide on the TBD props `as`, `styles`, and `theme` which will apply to other components across the new Fluent library.
+- [ ] Keep `labelPosition`, `checked`, `defaultChecked`, `className`, and `disabled` props unchanged.
 
 ## Slots
 
