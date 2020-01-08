@@ -1,4 +1,4 @@
-import getKeyDownHandlers from 'src/utils/getKeyDownHandlers'
+import getKeyDownHandlers from '../../src/accessibility/getKeyDownHandlers'
 import * as keyboardKey from 'keyboard-key'
 
 const testKeyCode = keyboardKey.ArrowRight

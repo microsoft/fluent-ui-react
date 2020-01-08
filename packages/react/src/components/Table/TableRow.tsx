@@ -1,3 +1,4 @@
+import { ReactAccessibilityBehavior } from '@fluentui/react-bindings'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import { Ref } from '@fluentui/react-component-ref'
 import * as PropTypes from 'prop-types'
@@ -18,7 +19,6 @@ import { ShorthandCollection, WithAsProp } from '../../types'
 import { Accessibility, tableRowBehavior } from '@fluentui/accessibility'
 import { ComponentVariablesObject } from '../../themes/types'
 import { mergeComponentVariables } from '../../utils/mergeThemes'
-import { ReactAccessibilityBehavior } from '../../utils/accessibility/reactTypes'
 
 export interface TableRowProps extends UIComponentProps {
   /**
