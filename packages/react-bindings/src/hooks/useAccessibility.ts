@@ -29,10 +29,8 @@ const mergeProps = <SlotProps extends Record<string, any>>(
 
   if (slotHandlers) {
     const onKeyDown = (e: React.KeyboardEvent, ...args: any[]) => {
-      const keyHandlers = definition.keyHandlers[slotName]
-
-      if (keyHandlers && keyHandlers.onKeyDown) {
-        keyHandlers.onKeyDown(e)
+      if (slotHandlers && slotHandlers.onKeyDown) {
+        slotHandlers.onKeyDown(e)
       }
 
       if (slotProps.onKeyDown) {
