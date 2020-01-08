@@ -1,14 +1,14 @@
 version: 2
+
 general:
   branches:
     ignore:
       - gh-pages
+
 jobs:
   build:
     docker:
       - image: circleci/node:10-browsers
-    environment:
-      TZ: '/usr/share/zoneinfo/America/Los_Angeles'
     steps:
       - run:
           name: Update yarn
@@ -99,3 +99,39 @@ jobs:
               echo "//registry.npmjs.org/:_authToken=${npm_TOKEN}" > ~/project/.npmrc
               yarn lerna publish --canary --preid "${CIRCLE_BUILD_NUM}.${CIRCLE_BRANCH}" --yes
             fi
+
+  visual:
+    docker:
+      - image: circleci/node:10
+    steps:
+      - run:
+          name: Update yarn
+          command: |
+            # remove default yarn
+            sudo rm -rf $(dirname $(which yarn))/yarn*
+            # download latest
+            rm -rf ~/.yarn
+            curl -o- -L https://yarnpkg.com/install.sh | bash
+            echo 'export PATH="${PATH}:${HOME}/.yarn/bin"' >> $BASH_ENV
+      - checkout
+      # because we don't invoke npm (we use yarn) we need to add npm bin to PATH manually
+      - run:
+          name: Add npm bin to PATH
+          command: echo 'export PATH="${PATH}:$(npm bin)"' >> $BASH_ENV
+      - restore_cache:
+          keys:
+            - v1.1-dependencies-{{ checksum "yarn.lock" }}
+            - v1.1-dependencies
+      - run:
+          name: Install Dependencies
+          command: yarn
+      - run:
+          name: Visual Tests
+          command: yarn test:visual
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - visual
