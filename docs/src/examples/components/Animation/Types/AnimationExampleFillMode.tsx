@@ -11,7 +11,7 @@ const colorChanger = {
 }
 
 const AnimationExampleFillMode = () => (
-  <Provider theme={{ animations: { colorChanger } }}>
+  <Provider theme={{ animations: { colorChanger }, hash: 'animation-example-fill-mode' }}>
     <Grid columns={4}>
       <Text content="None" />
       <Text content="Forwards" />

@@ -425,6 +425,7 @@ export interface ThemeInput {
   staticStyles?: StaticStyles
   icons?: ThemeIcons
   animations?: { [key: string]: ThemeAnimation }
+  hash?: string
 }
 
 // Component variables and styles must be resolved by the component after
@@ -443,6 +444,7 @@ export interface ThemePrepared {
   fontFaces: FontFaces
   staticStyles: StaticStyles
   animations: { [key: string]: ThemeAnimation }
+  hash?: string
 }
 
 type ThemeStylesProps = {

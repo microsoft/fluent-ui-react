@@ -52,7 +52,7 @@ export const mergeComponentStylesWithCache = (
   sources: (ComponentSlotStylesInput | null | undefined)[],
 ) => {
   try {
-    const themeHash = JSON.stringify(theme)
+    const themeHash = theme.hash || JSON.stringify(theme)
     if (!mergeComponentStylesThemeCache[themeHash]) {
       mergeComponentStylesThemeCache[themeHash] = Object.keys(mergeComponentStylesThemeCache).length
     }
@@ -400,6 +400,8 @@ const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
       acc.staticStyles = mergeStaticStyles(...acc.staticStyles, ...(next.staticStyles || []))
 
       acc.animations = mergeAnimations(acc.animations, next.animations)
+
+      acc.hash = next.hash || JSON.stringify(acc)
 
       return acc
     },

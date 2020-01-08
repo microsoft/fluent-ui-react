@@ -15,7 +15,7 @@ const spinner = {
 }
 
 const AnimationExample = () => (
-  <Provider theme={{ animations: { spinner } }}>
+  <Provider theme={{ animations: { spinner }, hash: 'animation-example' }}>
     <Animation name="spinner">
       <Icon name="mention" circular bordered />
     </Animation>

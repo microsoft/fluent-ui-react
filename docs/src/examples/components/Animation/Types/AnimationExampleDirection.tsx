@@ -15,7 +15,7 @@ const spinner = {
 }
 
 const AnimationExampleDirection = () => (
-  <Provider theme={{ animations: { spinner } }}>
+  <Provider theme={{ animations: { spinner }, hash: 'animation-example-direction' }}>
     <Grid columns={4}>
       <Text content="Normal" />
       <Text content="Reverse" />

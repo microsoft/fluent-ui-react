@@ -18,7 +18,7 @@ const AnimationExampleDelay = () => (
   <div>
     This animation will start after 5 seconds
     <br />
-    <Provider theme={{ animations: { spinner } }}>
+    <Provider theme={{ animations: { spinner }, hash: 'animation-example-dalay' }}>
       <Animation name="spinner" delay="5s">
         <Icon name="mention" circular bordered />
       </Animation>

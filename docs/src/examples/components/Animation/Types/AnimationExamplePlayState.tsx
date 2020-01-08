@@ -27,7 +27,7 @@ class AnimationExamplePlayState extends React.Component {
 
   render() {
     return (
-      <Provider theme={{ animations: { spinner } }}>
+      <Provider theme={{ animations: { spinner }, hash: 'animation-example-play-state' }}>
         <div>
           <Button
             icon={this.state.playState === 'running' ? 'pause' : 'play'}

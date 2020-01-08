@@ -15,7 +15,7 @@ const spinner = {
 }
 
 const AnimationExampleTimingFunction = () => (
-  <Provider theme={{ animations: { spinner } }}>
+  <Provider theme={{ animations: { spinner }, hash: 'animation-example-timing-function' }}>
     <Grid columns={6}>
       <Text content="Ease" />
       <Text content="Linear" />

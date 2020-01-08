@@ -15,7 +15,7 @@ const spinner = {
 }
 
 const AnimationExampleIterationCount = () => (
-  <Provider theme={{ animations: { spinner } }}>
+  <Provider theme={{ animations: { spinner }, hash: 'animation-example-iteration-count' }}>
     <Grid columns={4}>
       <Text content="1 iteration" />
       <Text content="2 iterations" />
