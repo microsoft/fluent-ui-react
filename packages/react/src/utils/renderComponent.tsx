@@ -211,13 +211,12 @@ const renderComponent = <P extends {}>(
   // TODO: update mergeComponentStyles to cache its results based on theme object and prop combinations.
   //       together with the already existent resolveStylesAndClasses caching, this should skip all style calculations on re-render.
   const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStylesWithCache(
+    theme,
     {
       displayName,
       design: props.design,
       styles: props.styles,
       animation: props.animation,
-      themeStyles:
-        theme.componentStyles[displayName] && theme.componentStyles[displayName].toString(),
     },
     [
       theme.componentStyles[displayName],

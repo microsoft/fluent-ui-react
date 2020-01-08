@@ -44,15 +44,22 @@ export const emptyTheme: ThemePrepared = {
 // ----------------------------------------
 
 const mergeComponentStylesCache = {}
+const mergeComponentStylesThemeCache = {}
 
 export const mergeComponentStylesWithCache = (
+  theme,
   hashObj,
   sources: (ComponentSlotStylesInput | null | undefined)[],
 ) => {
   try {
+    const themeHash = JSON.stringify(theme)
+    if (!mergeComponentStylesThemeCache[themeHash]) {
+      mergeComponentStylesThemeCache[themeHash] = Object.keys(mergeComponentStylesThemeCache).length
+    }
+
     // using the hash fn is costly... is stringify valid? [I previosly convert all possible fn to string...]
     // const hashVal = hash(hashObj)
-    const hashVal = JSON.stringify(hashObj)
+    const hashVal = JSON.stringify({ ...hashObj, theme: mergeComponentStylesThemeCache[themeHash] })
 
     if (!mergeComponentStylesCache[hashVal]) {
       mergeComponentStylesCache[hashVal] = mergeComponentStyles(...sources)
