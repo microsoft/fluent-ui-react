@@ -38,6 +38,7 @@ export interface DropdownVariables {
   selectedItemColor: string
   selectedItemBackgroundColor: string
   selectedItemColorFocus: string
+  selectedItemColorHover: string
   selectedItemBackgroundColorFocus: string
   selectedItemsMaxHeight: string
   toggleIndicatorSize: string
@@ -52,7 +53,7 @@ export default (siteVars): DropdownVariables => ({
   backgroundColorHover: siteVars.colorScheme.default.background3,
   borderColor: 'transparent',
   borderColorHover: 'transparent',
-  borderColorFocus: siteVars.colorScheme.default.borderFocus1,
+  borderColorFocus: siteVars.colorScheme.brand.borderFocus1,
   borderWidth: '0',
   color: siteVars.colorScheme.default.foreground1,
   containerBorderRadius: `${cornerRadius}`,
@@ -80,7 +81,8 @@ export default (siteVars): DropdownVariables => ({
   listItemSelectedColor: siteVars.colorScheme.default.foreground,
   listItemSelectedFontWeight: siteVars.fontWeightSemibold,
   selectedItemBackgroundColor: 'undefined',
-  selectedItemColorFocus: siteVars.colorScheme.default.foreground,
+  selectedItemColorHover: siteVars.colorScheme.default.foregroundHover,
+  selectedItemColorFocus: siteVars.colorScheme.default.foregroundFocus,
   selectedItemBackgroundColorFocus: siteVars.colorScheme.default.backgroundPressed,
   selectedItemsMaxHeight: pxToRem(82),
   toggleIndicatorSize: pxToRem(32),

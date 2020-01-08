@@ -8,6 +8,7 @@ const dropdownSelectedItemStyles: ComponentSlotStylesPrepared<
   DropdownVariables
 > = {
   root: ({ variables: v }): ICSSInJSStyle => ({
+    cursor: 'pointer',
     margin: '.4rem 0 0 .4rem',
     color: v.selectedItemColor,
     ...(v.selectedItemBackgroundColor && {
@@ -19,7 +20,7 @@ const dropdownSelectedItemStyles: ComponentSlotStylesPrepared<
       outline: '0',
     },
     ':hover': {
-      color: v.selectedItemColorFocus,
+      color: v.selectedItemColorHover,
       backgroundColor: v.selectedItemBackgroundColorFocus,
     },
   }),
