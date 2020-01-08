@@ -37,6 +37,7 @@ export const emptyTheme: ThemePrepared = {
   staticStyles: [],
   icons: {},
   animations: {},
+  hash: '',
 }
 
 // ----------------------------------------
@@ -401,7 +402,7 @@ const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
 
       acc.animations = mergeAnimations(acc.animations, next.animations)
 
-      acc.hash = next.hash || JSON.stringify(acc)
+      acc.hash = `${acc.hash}-${next.hash || JSON.stringify(acc)}`
 
       return acc
     },
