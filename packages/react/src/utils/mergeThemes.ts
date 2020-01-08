@@ -22,7 +22,6 @@ import {
 import toCompactArray from './toCompactArray'
 import deepmerge from './deepmerge'
 import objectKeyToValues from './objectKeysToValues'
-// import hash from 'object-hash'
 
 import { isEnabled as isDebugEnabled } from './debug/debugEnabled'
 import withDebugId from './withDebugId'
@@ -58,8 +57,6 @@ export const mergeComponentStylesWithCache = (
       mergeComponentStylesThemeCache[themeHash] = Object.keys(mergeComponentStylesThemeCache).length
     }
 
-    // using the hash fn is costly... is stringify valid? [I previosly convert all possible fn to string...]
-    // const hashVal = hash(hashObj)
     const hashVal = JSON.stringify({ ...hashObj, theme: mergeComponentStylesThemeCache[themeHash] })
 
     if (!mergeComponentStylesCache[hashVal]) {
