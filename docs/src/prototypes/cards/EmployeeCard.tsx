@@ -27,6 +27,7 @@ class EmployeeCard extends React.Component<Extendable<EmployeeCardProps>, any> {
       email,
       avatar,
       phone,
+      cardOrder,
       ...restProps
     } = this.props
     return (
@@ -41,8 +42,8 @@ class EmployeeCard extends React.Component<Extendable<EmployeeCardProps>, any> {
         {...restProps}
       >
         <div>
-          <CustomText size={'medium'} weight={'bold'} as="div">
-            {firstName} {lastName}
+          <CustomText id={`user-name-${cardOrder}`} size={'medium'} weight={'bold'} as="div">
+            {firstName} {`${lastName} ${cardOrder}`}
           </CustomText>
           <CustomText muted as="div">
             {status}

@@ -13,13 +13,19 @@ class EmployeeCardPrototype extends React.Component<any> {
   getCards(numberOfCards, employee) {
     const cards = []
     for (let i = 0; i < numberOfCards; i++) {
+      const cardOrder = { cardOrder: i }
       cards.push(
         <EmployeeCard
           {...employee}
+          {...cardOrder}
+          aria-labelledby={`user-name-${i} user-card-${i}`}
+          id={`user-card-${i}`}
+          aria-label=",card"
           tabIndex={0}
           role={this.state.cardRole}
           aria-roledescription={this.state.ariaRoleDescription}
-          aria-label={`${employee.firstName}`}
+          // aria-label={`${employee.firstName} user card`}
+          aria-expanded="false"
         />,
       )
     }
@@ -69,10 +75,9 @@ class EmployeeCardPrototype extends React.Component<any> {
           defaultValue={'Select aria roles to be used'}
           onSelectedChange={this.handleSelectedChange}
         />
-        ,
         <div
           role={this.state.parentRole}
-          aria-label="Use arrows to navigate between cards."
+          // aria-label="Use arrows to navigate between cards."
           style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}
         >
           {this.getCards(15, employee)}
