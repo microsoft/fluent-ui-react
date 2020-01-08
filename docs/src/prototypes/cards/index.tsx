@@ -8,6 +8,7 @@ class EmployeeCardPrototype extends React.Component<any> {
     parentRole: null,
     cardRole: 'group',
     ariaRoleDescription: null,
+    ariaExpanded: null,
   }
 
   getCards(numberOfCards, employee) {
@@ -25,7 +26,7 @@ class EmployeeCardPrototype extends React.Component<any> {
           role={this.state.cardRole}
           aria-roledescription={this.state.ariaRoleDescription}
           // aria-label={`${employee.firstName} user card`}
-          aria-expanded="false"
+          aria-expanded={this.state.ariaExpanded}
         />,
       )
     }
@@ -36,15 +37,24 @@ class EmployeeCardPrototype extends React.Component<any> {
     switch (value) {
       case 'card as group':
         this.setState({ cardRole: 'group' })
+        this.setState({ ariaExpanded: null })
+        this.setState({ ariaRoleDescription: null })
+        return
+      case 'card as group with aria-expanded':
+        this.setState({ cardRole: 'group' })
+        this.setState({ ariaExpanded: 'false' })
+        this.setState({ ariaRoleDescription: null })
         return
       case 'card as group with aria-roledescription as card':
         this.setState({ cardRole: 'group' })
         this.setState({ ariaRoleDescription: 'card' })
+        this.setState({ ariaExpanded: null })
         return
       case 'menu and menuitem with aria-roledescription as card':
         this.setState({ cardRole: 'menuitem' })
         this.setState({ parentRole: 'menu' })
         this.setState({ ariaRoleDescription: 'card' })
+        this.setState({ ariaExpanded: null })
         return
     }
   }
@@ -69,6 +79,7 @@ class EmployeeCardPrototype extends React.Component<any> {
           inline
           items={[
             'card as group',
+            'card as group with aria-expanded',
             'card as group with aria-roledescription as card',
             'menu and menuitem with aria-roledescription as card',
           ]}
