@@ -36,12 +36,6 @@ module.exports = {
 
   ...(process.env.CI && {
     baseBranch: 'master',
-    // Disable exit code to fail in Github Actions
-    // failureExitCode: 0,
-    // GITHUB_REF can be:
-    // - refs/heads/feature-branch-1 for "push"
-    // - refs/pull/2040/merge for "pull_request"
-    branch: process.env.GITHUB_REF.split('/')[2],
-    commit: process.env.GITHUB_SHA,
+    failureExitCode: 0,
   }),
 }
