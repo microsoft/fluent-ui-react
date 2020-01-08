@@ -6,6 +6,7 @@ const DialogExample: React.FC = () => (
     cancelButton="Cancel"
     confirmButton="Confirm"
     header="Action confirmation"
+    open
     trigger={<Button content="Open a dialog" />}
   />
 )

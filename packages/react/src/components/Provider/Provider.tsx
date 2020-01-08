@@ -3,8 +3,9 @@ import * as _ from 'lodash'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import * as ReactDOM from 'react-dom'
 // @ts-ignore
-import { RendererProvider, ThemeProvider, ThemeContext } from 'react-fela'
+import { RendererProvider, ThemeContext } from 'react-fela'
 
 import { ChildrenComponentProps, setUpWhatInput, tryCleanupWhatInput } from '../../utils'
 
@@ -30,6 +31,7 @@ import {
 } from '../../types'
 import mergeContexts from '../../utils/mergeProviderContexts'
 import Telemetry from '../../utils/Telemetry'
+import { Ref } from '@fluentui/react-component-ref'
 
 export interface ProviderProps extends ChildrenComponentProps {
   renderer?: Renderer
@@ -90,6 +92,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
   static Box = ProviderBox
   static contextType = ThemeContext
 
+  boxRef = React.createRef()
   outgoingContext: ProviderContextPrepared
   staticStylesRendered: boolean = false
 
@@ -192,6 +195,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
     // rehydration disabled to avoid leaking styles between renderers
     // https://github.com/rofrischmann/fela/blob/master/docs/api/fela-dom/rehydrate.md
     this.outgoingContext = mergeContexts(incomingContext, inputContext)
+    this.outgoingContext.boxRef = _.uniqueId('box-')
 
     this.renderStaticStylesOnce(this.outgoingContext.theme)
 
@@ -209,11 +213,21 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
         renderer={this.outgoingContext.renderer}
         {...{ rehydrate: false, targetDocument: this.outgoingContext.target }}
       >
-        <ThemeProvider theme={this.outgoingContext} overwrite>
+        <ThemeContext.Provider value={this.outgoingContext}>
+          {ReactDOM.createPortal(
+            <ProviderBox
+              variables={variables}
+              {...unhandledProps}
+              {...rtlProps}
+              id={this.outgoingContext.boxRef}
+            />,
+            this.outgoingContext.target.body,
+          )}
+
           <ProviderBox as={as} variables={variables} {...unhandledProps} {...rtlProps}>
             {children}
           </ProviderBox>
-        </ThemeProvider>
+        </ThemeContext.Provider>
       </RendererProvider>
     )
   }

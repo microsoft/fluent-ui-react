@@ -26,42 +26,42 @@ export interface PortalInnerProps extends ChildrenComponentProps {
   onUnmount?: (props: PortalInnerProps) => void
 }
 
-/**
- * A PortalInner is a container for Portal's content.
- */
-class PortalInner extends React.Component<PortalInnerProps> {
-  static contextType = ThemeContext
+const PortalInner: React.FC<PortalInnerProps> = props => {
+  const { children, mountNode } = this.props
 
-  static propTypes = {
-    ...commonPropTypes.createCommon({
-      accessibility: false,
-      animated: false,
-      as: false,
-      className: false,
-      content: false,
-      styled: false,
-    }),
-    mountNode: PropTypes.object,
-    onMount: PropTypes.func,
-    onUnmount: PropTypes.func,
-  }
+  React.useLayoutEffect(() => {
+    _.invoke(props, 'onMount', props)
 
-  componentDidMount() {
-    _.invoke(this.props, 'onMount', this.props)
-  }
+    return () => {
+      _.invoke(props, 'onUnmount', props)
+    }
+  })
 
-  componentWillUnmount() {
-    _.invoke(this.props, 'onUnmount', this.props)
-  }
+  const target: HTMLElement | null = isBrowser()
+    ? this.context.target.querySelector('#' + this.context.boxRef)
+    : null
+  const container: HTMLElement | null = mountNode || target
+  console.log(
+    children,
+    this.context.boxRef,
+    this.context.target.querySelector('#' + this.context.boxRef),
+  )
 
-  render() {
-    const { children, mountNode } = this.props
+  return container && ReactDOM.createPortal(children, container)
+}
 
-    const target: HTMLElement | null = isBrowser() ? this.context.target.body : null
-    const container: HTMLElement | null = mountNode || target
-
-    return container && ReactDOM.createPortal(children, container)
-  }
+PortalInner.propTypes = {
+  ...commonPropTypes.createCommon({
+    accessibility: false,
+    animated: false,
+    as: false,
+    className: false,
+    content: false,
+    styled: false,
+  }),
+  mountNode: PropTypes.object,
+  onMount: PropTypes.func,
+  onUnmount: PropTypes.func,
 }
 
 export default PortalInner
