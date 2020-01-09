@@ -12,9 +12,14 @@ const carouselItems = [
     key: 'ade',
     id: 'ade',
     content: (
-      <Image src="public/images/avatar/large/ade.jpg" fluid alt={imageAltTags.ade} id="ade" />
+      <Image
+        src="public/images/avatar/large/ade.jpg"
+        fluid
+        alt={imageAltTags.ade}
+        id="ade-picture"
+      />
     ),
-    'aria-labelledby': 'ade',
+    'aria-labelledby': 'ade-picture',
   },
   {
     key: 'elliot',
@@ -24,10 +29,10 @@ const carouselItems = [
         src="public/images/avatar/large/elliot.jpg"
         fluid
         alt={imageAltTags.elliot}
-        id="elliot"
+        id="elliot-picture"
       />
     ),
-    'aria-labelledby': 'elliot',
+    'aria-labelledby': 'elliot-picture',
   },
   {
     key: 'kristy',
@@ -37,18 +42,23 @@ const carouselItems = [
         src="public/images/avatar/large/kristy.png"
         fluid
         alt={imageAltTags.kristy}
-        id="kristy"
+        id="kristy-picture"
       />
     ),
-    'aria-labelledby': 'kristy',
+    'aria-labelledby': 'kristy-picture',
   },
   {
     key: 'nan',
     id: 'nan',
     content: (
-      <Image src="public/images/avatar/large/nan.jpg" fluid alt={imageAltTags.nan} id="nan" />
+      <Image
+        src="public/images/avatar/large/nan.jpg"
+        fluid
+        alt={imageAltTags.nan}
+        id="nan-picture"
+      />
     ),
-    'aria-labelledby': 'nan',
+    'aria-labelledby': 'nan-picture',
   },
 ]
 
