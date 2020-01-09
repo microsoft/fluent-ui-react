@@ -282,7 +282,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
       ...this.getContentProps(),
     }
 
-    const tooltipContent = Tooltip.Content.create(content || '', {
+    const tooltipContent = Tooltip.Content.create(content, {
       defaultProps: () => ({
         ...tooltipContentAttributes,
         open: this.state.open,
@@ -293,6 +293,8 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
       generateKey: false,
       overrideProps: this.getContentProps,
     })
+
+    if (!tooltipContent) return null
 
     return <Ref innerRef={this.contentRef}>{tooltipContent}</Ref>
   }

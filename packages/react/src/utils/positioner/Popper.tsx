@@ -188,7 +188,9 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
         })
       : children
 
-  return <Ref innerRef={contentRef}>{React.Children.only(child) as React.ReactElement}</Ref>
+  return child ? (
+    <Ref innerRef={contentRef}>{React.Children.only(child) as React.ReactElement}</Ref>
+  ) : null
 }
 
 Popper.defaultProps = {
