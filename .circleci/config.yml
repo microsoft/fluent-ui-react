@@ -41,8 +41,8 @@ jobs:
 
       - restore_cache:
           keys:
-            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
-            - v1-repo
+            - v1-json-{{ .Environment.CIRCLE_SHA1 }}
+            - v1-json
       - run:
           name: Create JSON for docs & tests
           command: yarn gulp build:docs:json
