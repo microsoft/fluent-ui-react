@@ -4,7 +4,7 @@ import { isConformant, handlesAccessibility, getRenderedAttribute } from 'test/s
 import Image from 'src/components/Image/Image'
 import { mountWithProviderAndGetComponent } from 'test/utils'
 
-describe('Image', () => {
+xdescribe('Image', () => {
   isConformant(Image, {
     constructorName: 'Image',
   })

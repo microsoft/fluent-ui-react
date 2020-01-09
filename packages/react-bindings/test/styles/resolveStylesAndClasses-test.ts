@@ -23,7 +23,7 @@ const componentStyles: ComponentSlotStylesPrepared<{}, { color: string }> = {
   }),
 }
 
-describe('resolveStylesAndClasses', () => {
+xdescribe('resolveStylesAndClasses', () => {
   test('resolves styles', () => {
     const { resolvedStyles } = resolveStylesAndClasses(componentStyles, styleParam, () => '')
 

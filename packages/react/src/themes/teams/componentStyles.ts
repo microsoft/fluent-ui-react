@@ -7,8 +7,13 @@ export { default as Alert } from './components/Alert/alertStyles'
 export { default as Attachment } from './components/Attachment/attachmentStyles'
 
 export { default as Avatar } from './components/Avatar/avatarStyles'
+export { default as AvatarLabel } from './components/Avatar/avatarLabelStyles'
+export { default as AvatarImage } from './components/Avatar/avatarImageStyles'
+export { default as AvatarStatus } from './components/Avatar/avatarStatusStyles'
 
 export { default as Button } from './components/Button/buttonStyles'
+export { default as ButtonContent } from './components/Button/buttonContentStyles'
+export { default as ButtonIcon } from './components/Button/buttonIconStyles'
 export { default as ButtonGroup } from './components/Button/buttonGroupStyles'
 
 export { default as Chat } from './components/Chat/chatStyles'
@@ -16,6 +21,9 @@ export { default as ChatItem } from './components/Chat/chatItemStyles'
 export { default as ChatMessage } from './components/Chat/chatMessageStyles'
 
 export { default as Checkbox } from './components/Checkbox/checkboxStyles'
+export { default as CheckboxLabel } from './components/Checkbox/checkboxLabelStyles'
+export { default as CheckboxIcon } from './components/Checkbox/checkboxIconStyles'
+export { default as CheckboxToggleIcon } from './components/Checkbox/checkboxToggleStyles'
 
 export { default as Dialog } from './components/Dialog/dialogStyles'
 export { default as DialogFooter } from './components/Dialog/dialogFooterStyles'
@@ -77,11 +85,13 @@ export { default as RadioGroupItem } from './components/RadioGroup/radioGroupIte
 export { default as Segment } from './components/Segment/segmentStyles'
 
 export { default as Slider } from './components/Slider/sliderStyles'
+export { default as SliderInput } from './components/Slider/sliderInputStyles'
 
 export { default as Reaction } from './components/Reaction/reactionStyles'
 export { default as ReactionGroup } from './components/Reaction/reactionGroupStyles'
 
 export { default as Status } from './components/Status/statusStyles'
+export { default as StatusIcon } from './components/Status/statusIconStyles'
 
 export { default as SplitButton } from './components/SplitButton/splitButtonStyles'
 

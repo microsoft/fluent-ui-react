@@ -28,35 +28,6 @@ const avatarStyles: ComponentSlotStylesPrepared<AvatarStylesProps, AvatarVariabl
       width: sizeInRem,
     }
   },
-  image: ({ variables: v }): ICSSInJSStyle => ({
-    borderColor: v.avatarBorderColor,
-    borderStyle: 'solid',
-    borderWidth: v.avatarBorderWidth,
-
-    height: '100%',
-    objectFit: 'cover',
-    verticalAlign: 'top',
-    width: '100%',
-  }),
-  label: ({ props: { size } }): ICSSInJSStyle => {
-    const sizeInRem = pxToRem(sizeToPxValue[size])
-    return {
-      display: 'inline-block',
-      width: sizeInRem,
-      height: sizeInRem,
-      lineHeight: sizeInRem,
-      fontSize: pxToRem(sizeToPxValue[size] / 2.333),
-      verticalAlign: 'top',
-      textAlign: 'center',
-      padding: '0px',
-    }
-  },
-  status: ({ variables: v }): ICSSInJSStyle => ({
-    position: 'absolute',
-    bottom: 0,
-    right: 0,
-    boxShadow: `0 0 0 ${v.statusBorderWidth} ${v.statusBorderColor}`,
-  }),
 }
 
 export default avatarStyles

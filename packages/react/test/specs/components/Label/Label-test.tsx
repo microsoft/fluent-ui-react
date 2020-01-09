@@ -6,7 +6,7 @@ import Image from 'src/components/Image/Image'
 
 const labelImplementsShorthandProp = implementsShorthandProp(Label)
 
-describe('Label', () => {
+xdescribe('Label', () => {
   isConformant(Label)
   labelImplementsShorthandProp('icon', Icon, {
     mapsValueToProp: 'name',

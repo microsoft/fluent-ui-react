@@ -1,28 +1,37 @@
 import { Accessibility, statusBehavior } from '@fluentui/accessibility'
+import {
+  ComposableProps,
+  getElementType,
+  getUnhandledProps,
+  useAccessibility,
+  useStyles,
+  useComposedConfig,
+} from '@fluentui/react-bindings'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import Icon, { IconProps } from '../Icon/Icon'
+// @ts-ignore
+import { ThemeContext } from 'react-fela'
 
+import { createShorthandFactory, UIComponentProps, commonPropTypes, SizeValue } from '../../utils'
 import {
-  UIComponent,
-  createShorthandFactory,
-  UIComponentProps,
-  commonPropTypes,
-  SizeValue,
-  ShorthandFactory,
-} from '../../utils'
-import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
+  WithAsProp,
+  ShorthandValue,
+  withSafeTypeForAs,
+  ProviderContextPrepared,
+  FluentComponentStaticProps,
+} from '../../types'
+import StatusIcon, { StatusIconProps } from './StatusIcon'
 
-export interface StatusProps extends UIComponentProps {
+export interface StatusProps extends UIComponentProps, ComposableProps {
   /** Accessibility behavior if overridden by the user. */
-  accessibility?: Accessibility
+  accessibility?: Accessibility<never>
 
   /** A custom color. */
   color?: string
 
   /** Shorthand for the icon, to provide customizing status */
-  icon?: ShorthandValue<IconProps>
+  icon?: ShorthandValue<StatusIconProps>
 
   /** Size multiplier */
   size?: SizeValue
@@ -31,46 +40,74 @@ export interface StatusProps extends UIComponentProps {
   state?: 'success' | 'info' | 'warning' | 'error' | 'unknown'
 }
 
-class Status extends UIComponent<WithAsProp<StatusProps>, any> {
-  static create: ShorthandFactory<StatusProps>
+const Status: React.FC<WithAsProp<StatusProps>> &
+  FluentComponentStaticProps &
+  ComposableProps = props => {
+  const { className, color, icon, size, state, design, styles, variables } = props
 
-  static className = 'ui-status'
+  const compose = useComposedConfig(props)
+  const { rtl }: ProviderContextPrepared = React.useContext(ThemeContext)
 
-  static displayName = 'Status'
-
-  static propTypes = {
-    ...commonPropTypes.createCommon({
-      children: false,
-      content: false,
+  const { classes } = useStyles(Status.displayName, {
+    className: Status.className,
+    mapPropsToStyles: () => ({
+      color,
+      size,
+      state,
+      ...compose.styleProps,
     }),
-    color: PropTypes.string,
-    icon: customPropTypes.itemShorthandWithoutJSX,
-    size: customPropTypes.size,
-    state: PropTypes.oneOf(['success', 'info', 'warning', 'error', 'unknown']),
-  }
+    mapPropsToInlineStyles: () => ({
+      className,
+      design,
+      styles,
+      variables,
+    }),
+    rtl,
 
-  static defaultProps = {
-    accessibility: statusBehavior,
-    as: 'span',
-    size: 'medium',
-    state: 'unknown',
-  }
+    __experimental_composeName: compose.displayName,
+    __experimental_overrideStyles: compose.overrideStyles,
+  })
+  const getA11Props = useAccessibility(props.accessibility, {
+    debugName: compose.displayName || Status.displayName,
+    mapPropsToBehavior: () => compose.behaviorProps,
+    rtl,
+  })
+  const ElementType = getElementType(props)
+  const unhandledProps = getUnhandledProps(
+    [...Status.handledProps, ...compose.handledProps] as any,
+    props,
+  )
 
-  renderComponent({ accessibility, ElementType, classes, unhandledProps, variables, styles }) {
-    const { icon } = this.props as StatusProps
-    return (
-      <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
-        {Icon.create(icon, {
-          defaultProps: () => ({
-            size: 'smallest',
-            styles: styles.icon,
-            variables: variables.icon,
-            xSpacing: 'none',
-          }),
-        })}
-      </ElementType>
-    )
-  }
+  // @ts-ignore
+  const iconElement = StatusIcon.create(icon, {
+    defaultProps: () => getA11Props('icon', { state }),
+  })
+
+  return (
+    <ElementType {...getA11Props('root', { className: classes.root, ...unhandledProps })}>
+      {iconElement}
+    </ElementType>
+  )
+}
+
+Status.className = 'ui-status'
+Status.displayName = 'Status'
+Status.propTypes = {
+  ...commonPropTypes.createCommon({
+    children: false,
+    content: false,
+  }),
+  color: PropTypes.string,
+  icon: customPropTypes.itemShorthandWithoutJSX,
+  size: customPropTypes.size,
+  state: PropTypes.oneOf(['success', 'info', 'warning', 'error', 'unknown']),
+}
+Status.handledProps = Object.keys(Status.propTypes) as any
+Status.defaultProps = {
+  accessibility: statusBehavior,
+  as: 'span',
+  size: 'medium',
+  state: 'unknown',
 }
 
 Status.create = createShorthandFactory({ Component: Status, mappedProp: 'state' })

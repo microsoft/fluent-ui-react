@@ -1,6 +1,6 @@
 import {
   ComponentSlotStyle,
-  ComponentSlotStylesPrepared,
+  ComponentSlotStylesResolved,
   ComponentVariablesInput,
   DebugData,
   emptyTheme,
@@ -10,6 +10,7 @@ import * as React from 'react'
 import { ThemeContext } from 'react-fela'
 
 import {
+  ComponentAnimationProp,
   ComponentDesignProp,
   ComponentSlotClasses,
   RendererRenderRule,
@@ -23,14 +24,19 @@ type UseStylesOptions<StyleProps extends PrimitiveProps> = {
   mapPropsToStyles?: () => StyleProps
   mapPropsToInlineStyles?: () => InlineStyleProps<StyleProps>
   rtl?: boolean
+
+  __experimental_composeName?: string
+  __experimental_overrideStyles?: boolean
 }
 
 type UseStylesResult = {
   classes: ComponentSlotClasses
-  styles: ComponentSlotStylesPrepared
+  styles: ComponentSlotStylesResolved
 }
 
 type InlineStyleProps<StyleProps> = {
+  unstable_animation?: ComponentAnimationProp
+
   /** Additional CSS class name(s) to apply.  */
   className?: string
 
@@ -62,17 +68,22 @@ const useStyles = <StyleProps extends PrimitiveProps>(
     mapPropsToStyles = () => ({} as StyleProps),
     mapPropsToInlineStyles = () => ({} as InlineStyleProps<StyleProps>),
     rtl = false,
+    __experimental_composeName,
+    __experimental_overrideStyles,
   } = options
 
   // Stores debug information for component.
   const debug = React.useRef<{ fluentUIDebug: DebugData | null }>({ fluentUIDebug: null })
+  const inlineProps = mapPropsToInlineStyles()
+
   const { classes, styles: resolvedStyles } = getStyles({
     // Input values
     className,
     displayName,
     props: {
       ...mapPropsToStyles(),
-      ...mapPropsToInlineStyles(),
+      ...inlineProps,
+      animation: inlineProps.unstable_animation,
     },
 
     // Context values
@@ -82,6 +93,10 @@ const useStyles = <StyleProps extends PrimitiveProps>(
     saveDebug: fluentUIDebug => (debug.current = { fluentUIDebug }),
     theme: context.theme,
     _internal_resolvedComponentVariables: context._internal_resolvedComponentVariables,
+
+    __experimental_cache: true,
+    __experimental_composeName,
+    __experimental_overrideStyles,
   })
 
   return { classes, styles: resolvedStyles }

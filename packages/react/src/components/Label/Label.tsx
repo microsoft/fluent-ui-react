@@ -1,37 +1,53 @@
 import { Accessibility } from '@fluentui/accessibility'
+import {
+  ComposableProps,
+  useComposedConfig,
+  getElementType,
+  getUnhandledProps,
+  useAccessibility,
+  useStyles,
+} from '@fluentui/react-bindings'
 import * as customPropTypes from '@fluentui/react-proptypes'
+import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+// @ts-ignore
+import { ThemeContext } from 'react-fela'
 
 import {
   childrenExist,
   createShorthandFactory,
   pxToRem,
-  UIComponent,
   UIComponentProps,
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
   ColorComponentProps,
   rtlTextContainer,
-  ShorthandFactory,
 } from '../../utils'
 
 import Icon, { IconProps } from '../Icon/Icon'
 import Image, { ImageProps } from '../Image/Image'
 import Layout from '../Layout/Layout'
 
-import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
+import {
+  WithAsProp,
+  ShorthandValue,
+  withSafeTypeForAs,
+  FluentComponentStaticProps,
+  ProviderContextPrepared,
+} from '../../types'
 
 export interface LabelProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps,
-    ColorComponentProps {
+    ColorComponentProps,
+    ComposableProps {
   /**
    * Accessibility behavior if overridden by the user.
    */
-  accessibility?: Accessibility
+  accessibility?: Accessibility<never>
 
   /** A Label can be circular. */
   circular?: boolean
@@ -52,30 +68,47 @@ export interface LabelProps
   imagePosition?: 'start' | 'end'
 }
 
-class Label extends UIComponent<WithAsProp<LabelProps>, any> {
-  static displayName = 'Label'
+const Label: React.FC<WithAsProp<LabelProps>> & FluentComponentStaticProps = props => {
+  const {
+    accessibility,
+    children,
+    className,
+    circular,
+    content,
+    icon,
+    iconPosition,
+    design,
+    styles,
+    variables,
+    image,
+    imagePosition,
+  } = props
 
-  static create: ShorthandFactory<LabelProps>
+  const compose = useComposedConfig(props)
+  const context: ProviderContextPrepared = React.useContext(ThemeContext)
 
-  static className = 'ui-label'
+  const getA11Props = useAccessibility(accessibility, {
+    debugName: Label.displayName,
+    rtl: context.rtl,
+    mapPropsToBehavior: () => compose.behaviorProps,
+  })
+  const { classes, styles: resolvedStyles } = useStyles(Label.displayName, {
+    className: Label.className,
+    mapPropsToStyles: () => ({
+      hasActionableIcon: _.has(icon, 'onClick'),
+      hasImage: !!image,
+      circular,
+      imagePosition,
+      ...compose.styleProps,
+    }),
+    mapPropsToInlineStyles: () => ({ className, design, styles, variables }),
+    rtl: context.rtl,
 
-  static propTypes = {
-    ...commonPropTypes.createCommon({ color: true }),
-    circular: PropTypes.bool,
-    icon: customPropTypes.itemShorthandWithoutJSX,
-    iconPosition: PropTypes.oneOf(['start', 'end']),
-    image: customPropTypes.itemShorthandWithoutJSX,
-    imagePosition: PropTypes.oneOf(['start', 'end']),
-    fluid: PropTypes.bool,
-  }
+    __experimental_composeName: compose.displayName,
+    __experimental_overrideStyles: compose.overrideStyles,
+  })
 
-  static defaultProps = {
-    as: 'span',
-    imagePosition: 'start',
-    iconPosition: 'end',
-  }
-
-  handleIconOverrides = iconProps => {
+  const handleIconOverrides = iconProps => {
     return {
       ...(!iconProps.xSpacing && {
         xSpacing: 'none',
@@ -83,69 +116,95 @@ class Label extends UIComponent<WithAsProp<LabelProps>, any> {
     }
   }
 
-  renderComponent({ accessibility, ElementType, classes, unhandledProps, variables, styles }) {
-    const { children, content, icon, iconPosition, image, imagePosition } = this.props
+  const ElementType = getElementType(props)
+  const unhandledProps = getUnhandledProps(
+    [...Label.handledProps, ...compose.handledProps] as any,
+    props,
+  )
 
-    if (childrenExist(children)) {
-      return (
-        <ElementType
-          {...rtlTextContainer.getAttributes({ forElements: [children] })}
-          {...accessibility.attributes.root}
-          {...unhandledProps}
-          className={classes.root}
-        >
-          {children}
-        </ElementType>
-      )
-    }
-
-    const imageElement = Image.create(image, {
-      defaultProps: () => ({
-        styles: styles.image,
-        variables: variables.image,
-      }),
-    })
-    const iconElement = Icon.create(icon, {
-      defaultProps: () => ({
-        styles: styles.icon,
-        variables: variables.icon,
-      }),
-      overrideProps: this.handleIconOverrides,
-    })
-
-    const startImage = imagePosition === 'start' && imageElement
-    const startIcon = iconPosition === 'start' && iconElement
-    const endIcon = iconPosition === 'end' && iconElement
-    const endImage = imagePosition === 'end' && imageElement
-
-    const hasStartElement = startImage || startIcon
-    const hasEndElement = endIcon || endImage
-
+  if (childrenExist(children)) {
     return (
-      <ElementType {...accessibility.attributes.root} {...unhandledProps} className={classes.root}>
-        <Layout
-          start={
-            hasStartElement && (
-              <>
-                {startImage}
-                {startIcon}
-              </>
-            )
-          }
-          main={content}
-          end={
-            hasEndElement && (
-              <>
-                {endIcon}
-                {endImage}
-              </>
-            )
-          }
-          gap={pxToRem(3)}
-        />
+      <ElementType
+        {...getA11Props('root', {
+          className: classes.root,
+          ...rtlTextContainer.getAttributes({ forElements: [children] }),
+          ...unhandledProps,
+        })}
+      >
+        {children}
       </ElementType>
     )
   }
+
+  const imageElement = Image.create(image, {
+    defaultProps: () => ({
+      styles: resolvedStyles.image,
+    }),
+  })
+  const iconElement = Icon.create(icon, {
+    defaultProps: () => ({
+      styles: resolvedStyles.icon,
+    }),
+    overrideProps: handleIconOverrides,
+  })
+
+  const startImage = imagePosition === 'start' && imageElement
+  const startIcon = iconPosition === 'start' && iconElement
+  const endIcon = iconPosition === 'end' && iconElement
+  const endImage = imagePosition === 'end' && imageElement
+
+  const hasStartElement = startImage || startIcon
+  const hasEndElement = endIcon || endImage
+
+  return (
+    <ElementType
+      {...getA11Props('root', {
+        className: classes.root,
+        ...unhandledProps,
+      })}
+    >
+      <Layout
+        start={
+          hasStartElement && (
+            <>
+              {startImage}
+              {startIcon}
+            </>
+          )
+        }
+        main={content}
+        end={
+          hasEndElement && (
+            <>
+              {endIcon}
+              {endImage}
+            </>
+          )
+        }
+        gap={pxToRem(3)}
+      />
+    </ElementType>
+  )
+}
+
+Label.displayName = 'Label'
+Label.className = 'ui-label'
+
+Label.propTypes = {
+  ...commonPropTypes.createCommon({ color: true }),
+  circular: PropTypes.bool,
+  icon: customPropTypes.itemShorthandWithoutJSX,
+  iconPosition: PropTypes.oneOf(['start', 'end']),
+  image: customPropTypes.itemShorthandWithoutJSX,
+  imagePosition: PropTypes.oneOf(['start', 'end']),
+  fluid: PropTypes.bool,
+}
+Label.handledProps = Object.keys(Label.propTypes) as any
+
+Label.defaultProps = {
+  as: 'span',
+  imagePosition: 'start',
+  iconPosition: 'end',
 }
 
 Label.create = createShorthandFactory({ Component: Label, mappedProp: 'content' })

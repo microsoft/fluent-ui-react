@@ -482,7 +482,12 @@ export const size = PropTypes.oneOf<
   'smallest' | 'smaller' | 'small' | 'medium' | 'large' | 'larger' | 'largest'
 >(['smallest', 'smaller', 'small', 'medium', 'large', 'larger', 'largest'])
 
-export const align = PropTypes.oneOf(['start', 'end', 'center', 'justify'])
+export const align = PropTypes.oneOf<'start' | 'end' | 'center' | 'justify'>([
+  'start',
+  'end',
+  'center',
+  'justify',
+])
 
 export const animation = PropTypes.oneOfType([
   // Validator is broken in the latest @react/types

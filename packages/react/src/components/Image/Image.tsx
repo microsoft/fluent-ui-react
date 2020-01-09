@@ -5,9 +5,11 @@ import {
   ImageBehaviorProps,
 } from '@fluentui/accessibility'
 import {
+  ComposableProps,
   getElementType,
   getUnhandledProps,
   useAccessibility,
+  useComposedConfig,
   useStyles,
   useTelemetry,
 } from '@fluentui/react-bindings'
@@ -24,7 +26,7 @@ import {
   withSafeTypeForAs,
 } from '../../types'
 
-export interface ImageProps extends UIComponentProps, ImageBehaviorProps {
+export interface ImageProps extends UIComponentProps, ImageBehaviorProps, ComposableProps {
   /** Alternative text. */
   alt?: string
 
@@ -64,6 +66,7 @@ const Image: React.FC<WithAsProp<ImageProps>> & FluentComponentStaticProps<Image
     variables,
   } = props
 
+  const compose = useComposedConfig(props)
   const getA11Props = useAccessibility(accessibility, {
     debugName: Image.displayName,
     mapPropsToBehavior: () => ({
@@ -86,6 +89,9 @@ const Image: React.FC<WithAsProp<ImageProps>> & FluentComponentStaticProps<Image
       variables,
     }),
     rtl: context.rtl,
+
+    __experimental_composeName: compose.displayName,
+    __experimental_overrideStyles: compose.overrideStyles,
   })
 
   const ElementType = getElementType(props)
@@ -116,7 +122,6 @@ Image.propTypes = {
   circular: PropTypes.bool,
   fluid: PropTypes.bool,
 }
-
 Image.handledProps = Object.keys(Image.propTypes) as any
 
 Image.create = createShorthandFactory({ Component: Image, mappedProp: 'src', allowsJSX: false })

@@ -35,7 +35,7 @@ const AnimationComponentStyles = {
   },
 }
 
-describe('felaRenderer', () => {
+xdescribe('felaRenderer', () => {
   test('basic styles are rendered', () => {
     const snapshot = createSnapshot(
       <EmptyThemeProvider>

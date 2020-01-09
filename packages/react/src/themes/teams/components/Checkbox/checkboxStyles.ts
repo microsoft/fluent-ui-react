@@ -1,10 +1,10 @@
 import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
-import Checkbox, { CheckboxProps, CheckboxState } from '../../../../components/Checkbox/Checkbox'
+import Checkbox, { CheckboxProps } from '../../../../components/Checkbox/Checkbox'
 import { CheckboxVariables } from './checkboxVariables'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 const checkboxStyles: ComponentSlotStylesPrepared<
-  CheckboxProps & CheckboxState,
+  CheckboxProps & { checked: boolean },
   CheckboxVariables
 > = {
   root: ({ props: p, variables: v, theme: t }): ICSSInJSStyle => ({
@@ -50,89 +50,6 @@ const checkboxStyles: ComponentSlotStylesPrepared<
       pointerEvents: 'none',
       color: v.disabledColor,
     }),
-  }),
-
-  checkbox: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    gridColumn: p.labelPosition === 'start' ? 3 : 1,
-    '-ms-grid-row-align': 'center',
-    boxShadow: 'unset',
-
-    background: v.background,
-    borderColor: v.borderColor,
-    borderStyle: v.borderStyle,
-    borderRadius: v.borderRadius,
-    borderWidth: v.borderWidth,
-    color: v.indicatorColor,
-    margin: v.margin,
-    padding: v.padding,
-    userSelect: 'none',
-
-    ...(p.checked && {
-      background: v.checkedBackground,
-      borderColor: v.checkedBorderColor,
-      color: v.checkedIndicatorColor,
-    }),
-
-    ...(p.disabled && {
-      background: v.disabledBackground,
-      borderColor: v.disabledBorderColor,
-    }),
-
-    ...(p.disabled &&
-      p.checked && {
-        color: v.disabledCheckedIndicatorColor,
-        background: v.disabledBackgroundChecked,
-        borderColor: 'transparent',
-      }),
-  }),
-
-  toggle: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    '-ms-grid-row-align': 'center',
-    gridColumn: p.labelPosition === 'start' ? 3 : 1,
-    boxShadow: 'unset',
-
-    background: v.background,
-    borderColor: v.borderColor,
-    borderStyle: v.borderStyle,
-    borderRadius: v.toggleBorderRadius,
-    borderWidth: v.borderWidth,
-    color: v.borderColor,
-    margin: v.toggleMargin,
-    padding: v.togglePadding,
-    transition: 'padding .3s ease',
-    userSelect: 'none',
-    width: v.toggleWidth,
-    height: v.toggleHeight,
-
-    [`& svg`]: {
-      width: v.toggleIndicatorSize,
-      height: v.toggleIndicatorSize,
-    },
-
-    ...(p.checked && {
-      background: v.checkedBackground,
-      borderColor: v.checkedBorderColor,
-      color: v.checkedIndicatorColor,
-      padding: v.toggleCheckedPadding,
-    }),
-
-    ...(p.disabled && {
-      color: v.disabledToggleIndicatorColor,
-      background: v.disabledBackground,
-      borderColor: v.disabledBorderColor,
-    }),
-
-    ...(p.disabled &&
-      p.checked && {
-        color: v.disabledCheckedIndicatorColor,
-        background: v.disabledBackgroundChecked,
-        borderColor: 'transparent',
-      }),
-  }),
-
-  label: ({ props: p }): ICSSInJSStyle => ({
-    display: 'block', // IE11: should be forced to be block, as inline-block is not supported
-    gridColumn: p.labelPosition === 'start' ? 1 : 3,
   }),
 }
 

@@ -8,7 +8,6 @@ import { WithAsProp } from '../../../../types'
 export default {
   root: ({
     props: {
-      as,
       atMention,
       color,
       important,

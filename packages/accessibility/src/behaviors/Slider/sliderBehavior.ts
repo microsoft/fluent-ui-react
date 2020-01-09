@@ -26,8 +26,9 @@ const sliderBehavior: Accessibility<SliderBehaviorProps> = props => ({
 
 export default sliderBehavior
 
-type SliderBehaviorProps = {
+export type SliderBehaviorProps = {
   disabled?: boolean
+  // TODO: fix these SupportedIntrinsicInputProps['min']
   min?: number
   max?: number
   value?: number

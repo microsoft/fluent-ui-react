@@ -1,5 +1,3 @@
-import { FontWeightProperty } from 'csstype'
-
 import { pxToRem } from '../../../../utils'
 
 export interface ButtonVariables {
@@ -9,9 +7,6 @@ export interface ButtonVariables {
   loadingMinWidth: string
   maxWidth: string
   borderRadius: string
-  contentFontWeight: FontWeightProperty
-  contentFontSize: string
-  contentLineHeight: string
 
   color: string
   colorHover: string
@@ -51,8 +46,6 @@ export interface ButtonVariables {
   loaderSvgHeight: string
   loaderSvgAnimationHeight: string
 
-  sizeSmallContentFontSize: string
-  sizeSmallContentLineHeight: string
   sizeSmallHeight: string
   sizeSmallMinWidth: string
   sizeSmallPadding: string
@@ -69,10 +62,6 @@ export default (siteVars: any): ButtonVariables => ({
   loadingMinWidth: pxToRem(118),
   maxWidth: pxToRem(280),
   borderRadius: siteVars.borderRadius,
-
-  contentFontSize: siteVars.fontSizes.medium,
-  contentFontWeight: siteVars.fontWeightSemibold,
-  contentLineHeight: siteVars.lineHeightMedium,
 
   color: siteVars.colorScheme.default.foreground,
   colorHover: siteVars.colorScheme.default.foregroundHover,
@@ -111,8 +100,6 @@ export default (siteVars: any): ButtonVariables => ({
   loaderSvgHeight: pxToRem(1220),
   loaderSvgAnimationHeight: pxToRem(-1200),
 
-  sizeSmallContentFontSize: siteVars.fontSizes.small,
-  sizeSmallContentLineHeight: siteVars.lineHeightSmall,
   sizeSmallHeight: pxToRem(24),
   sizeSmallMinWidth: pxToRem(72),
   sizeSmallPadding: `0 ${pxToRem(8)}`,

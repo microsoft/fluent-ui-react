@@ -5,7 +5,7 @@ import { isConformant, handlesAccessibility, getRenderedAttribute } from '../../
 import Icon from '../../../../src/components/Icon/Icon'
 import { mountWithProviderAndGetComponent } from 'test/utils'
 
-describe('Icon', () => {
+xdescribe('Icon', () => {
   isConformant(Icon, { requiredProps: { name: 'at' } })
 
   describe('accessibility', () => {

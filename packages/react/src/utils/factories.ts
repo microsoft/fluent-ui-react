@@ -129,6 +129,7 @@ export function createShorthandFactory<TInstance extends React.Component, P>(con
 }): ShorthandFactory<P>
 export function createShorthandFactory<P>({ Component, mappedProp, mappedArrayProp, allowsJSX }) {
   if (typeof Component !== 'function' && typeof Component !== 'string') {
+    console.log(Component)
     throw new Error('createShorthandFactory() Component must be a string or function.')
   }
 
