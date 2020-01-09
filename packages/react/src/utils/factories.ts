@@ -257,11 +257,11 @@ function createShorthandFromValue<P>({
     //   overrideProps.styles,
     // )
     // Just for hacking, relaying that it will always be an object, so we can cache...
-    ;(props as any).styles = {
-      ...(defaultProps.styles || {}),
-      ...(usersProps.styles || {}),
-      ...(overrideProps.styles || {}),
-    }
+    ;(props as any).styles = _.merge(
+      defaultProps.styles || {},
+      usersProps.styles || {},
+      overrideProps.styles || {},
+    )
   }
 
   // ----------------------------------------
