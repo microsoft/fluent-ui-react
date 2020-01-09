@@ -1,17 +1,15 @@
 import fs from 'fs'
 import { task, parallel, series } from 'gulp'
+import { log, PluginError } from 'gulp-util'
 import _ from 'lodash'
 import webpack from 'webpack'
 import stableStringify from 'json-stable-stringify-without-jsonify'
 import { argv } from 'yargs'
 import requestHttp from 'request-promise-native'
 
-import config from '../../../config'
-
-const g = require('gulp-load-plugins')()
+import config from '../../config'
 
 const { paths } = config
-const { log, PluginError } = g.util
 
 const UNRELEASED_VERSION_STRING = 'Unreleased'
 const SEMVER_MATCHER = /(\d+)\.(\d+)\.(\d+)/

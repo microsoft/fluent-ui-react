@@ -1,7 +1,8 @@
 {
-  "extends": "../build/tsconfig.common.json",
+  "extends": "@fluentui/internal-tooling/tsconfig.common.json",
   "compilerOptions": {
-    "module": "esnext"
+    "module": "esnext",
+    "allowSyntheticDefaultImports": true
   },
   "include": ["../packages/react/src", "../e2e", "../types"]
 }

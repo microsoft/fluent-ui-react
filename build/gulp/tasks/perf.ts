@@ -1,6 +1,7 @@
 import express from 'express'
 import fs from 'fs'
 import { series, task } from 'gulp'
+import { colors, log } from 'gulp-util'
 import _ from 'lodash'
 import ProgressBar from 'progress'
 import puppeteer from 'puppeteer'
@@ -15,12 +16,11 @@ import {
   ProfilerMeasureCycle,
   ReducedMeasures,
 } from '../../../perf/types'
-import config from '../../../config'
+import config from '../../config'
 import webpackPlugin from '../plugins/gulp-webpack'
 import { safeLaunchOptions } from 'build/puppeteer.config'
 
 const { paths } = config
-const { colors, log } = require('gulp-load-plugins')().util
 
 const DEFAULT_RUN_TIMES = 10
 let server
@@ -112,7 +112,7 @@ const createMarkdownTable = (
 task('perf:clean', () => del(paths.perfDist()))
 
 task('perf:build', cb => {
-  webpackPlugin(require('../../../build/webpack.config.perf').default, cb)
+  webpackPlugin(require('../../webpack.config.perf').default, cb)
 })
 
 task('perf:run', async () => {

@@ -1,0 +1,15 @@
+{
+  "name": "@fluentui/perf",
+  "version": "0.43.0",
+  "private": true,
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/polyfill": "^7.7.0",
+    "@fluentui/internal-tooling": "^0.43.0",
+    "@fluentui/react": "^0.43.0",
+    "minimatch": "^3.0.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

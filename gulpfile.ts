@@ -2,7 +2,7 @@ import { task, parallel } from 'gulp'
 import * as path from 'path'
 import * as tsPaths from 'tsconfig-paths'
 
-import config from './config'
+import config from './build/config'
 
 const { compilerOptions } = require('./build/tsconfig.docs.json')
 

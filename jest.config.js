@@ -8,12 +8,19 @@ const fs = require('fs')
 const packagePaths = lernaAliases({ sourceDirectory: false })
 
 // Exclude packages which build with just, and other special packages
-const excludedPackages = ['@fluentui/internal-tooling']
-const projects = Object.keys(packagePaths).filter(
-  packageName =>
-    !excludedPackages.includes(packageName) &&
-    !fs.existsSync(path.join(packagePaths[packageName], 'just.config.ts')),
-)
+const excludedPackages = [
+  '@fluentui/docs',
+  '@fluentui/e2e',
+  '@fluentui/internal-tooling',
+  '@fluentui/perf',
+]
+const projects = Object.keys(packagePaths)
+  .filter(
+    packageName =>
+      !excludedPackages.includes(packageName) &&
+      !fs.existsSync(path.join(packagePaths[packageName], 'just.config.ts')),
+  )
+  .map(packageName => projects[packageName])
 
 module.exports = {
   coverageReporters,

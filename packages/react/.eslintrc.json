@@ -1,5 +1,5 @@
 {
-  "extends": ["../internal-tooling/eslint/index.js"],
+  "extends": ["@fluentui/internal-tooling/eslint/index.js"],
   "overrides": [
     {
       "files": "**/icons/*.tsx",

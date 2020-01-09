@@ -1,0 +1,17 @@
+{
+  "name": "@fluentui/e2e",
+  "version": "0.43.0",
+  "private": true,
+  "license": "MIT",
+  "devDependencies": {
+    "@fluentui/internal-tooling": "^0.43.0",
+    "@fluentui/react": "^0.43.0",
+    "@types/puppeteer": "^1.11.1",
+    "@types/react-router-dom": "^4.3.4",
+    "puppeteer": "^1.11.0",
+    "react-router-dom": "^5.0.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "extends": ["../internal-tooling/eslint/index.js"],
+  "extends": ["../../build/eslint/index.js"],
   "rules": {
     "semi": ["error", "always"]
   }
