@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "@fluentui/internal-tooling": "^0.43.0",
+    "@types/react-is": "^16.7.1",
     "lerna-alias": "^3.0.3-0"
   },
   "files": [

@@ -1,6 +1,6 @@
 import { spawnSync } from 'child_process'
 
-import config from '../../../../config'
+import config from '../../../config'
 
 const { paths } = config
 
