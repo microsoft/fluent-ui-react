@@ -11,10 +11,6 @@ jobs:
       TZ: '/usr/share/zoneinfo/America/Los_Angeles'
     steps:
       - run:
-        name: Setup Environment Variables
-        command: |
-          echo "export GULP_CACHE_DIR=$(node -e "console.log(require('path').join(require('os').tmpdir(), 'gulp-cache'))")" >> $BASH_ENV
-      - run:
           name: Update yarn
           command: |
             # remove default yarn
@@ -50,7 +46,7 @@ jobs:
       - save_cache:
           key: v1.1-json
           paths:
-            - {{ .Environment.GULP_CACHE_DIR }}
+            - /tmp/gulp-cache
 
       - run:
           name: Lint
