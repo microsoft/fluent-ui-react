@@ -1,3 +1,4 @@
+import { ReactAccessibilityBehavior } from '@fluentui/react-bindings'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as customPropTypes from '@fluentui/react-proptypes'
@@ -22,7 +23,6 @@ import {
 } from '../../types'
 import CarouselNavigationItem, { CarouselNavigationItemProps } from './CarouselNavigationItem'
 import { ComponentVariablesObject } from '../../themes/types'
-import { ReactAccessibilityBehavior } from '../../utils/accessibility/reactTypes'
 import { mergeComponentVariables } from '../../utils/mergeThemes'
 
 export interface CarouselNavigationProps extends UIComponentProps, ChildrenComponentProps {

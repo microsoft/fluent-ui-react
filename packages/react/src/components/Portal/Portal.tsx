@@ -1,5 +1,9 @@
 import { AccessibilityAttributes } from '@fluentui/accessibility'
-import { FocusTrapZone, FocusTrapZoneProps } from '@fluentui/react-bindings'
+import {
+  AccessibilityHandlerProps,
+  FocusTrapZone,
+  FocusTrapZoneProps,
+} from '@fluentui/react-bindings'
 import { EventListener } from '@fluentui/react-component-event-listener'
 import { handleRef, Ref, toRefObject } from '@fluentui/react-component-ref'
 import * as customPropTypes from '@fluentui/react-proptypes'
@@ -17,7 +21,6 @@ import {
   rtlTextContainer,
 } from '../../utils'
 import PortalInner from './PortalInner'
-import { AccessibilityHandlerProps } from '../../utils/accessibility/reactTypes'
 
 export type TriggerAccessibility = {
   attributes?: AccessibilityAttributes

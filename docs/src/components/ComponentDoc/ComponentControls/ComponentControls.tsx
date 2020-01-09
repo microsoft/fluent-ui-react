@@ -1,11 +1,13 @@
 import { CopyToClipboard } from '@fluentui/docs-components'
-import { Icon, Menu, menuAsToolbarBehavior, Tooltip } from '@fluentui/react'
+import { Menu, menuAsToolbarBehavior, Tooltip } from '@fluentui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
 
 import { ComponentSourceManagerLanguage } from 'docs/src/components/ComponentDoc/ComponentSourceManager'
-import ComponentControlsCodeSandbox from './ComponentControlsCodeSandbox/ComponentControlsCodeSandbox'
+import ComponentControlsCodeSandbox, {
+  CodeSandboxState,
+} from './ComponentControlsCodeSandbox/ComponentControlsCodeSandbox'
 
 type ComponentControlsProps = {
   exampleCode: string
@@ -44,116 +46,131 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
   } = props
 
   return (
-    <Menu
-      {...rest}
-      iconOnly
-      accessibility={menuAsToolbarBehavior}
-      aria-label={toolbarAriaLabel || null}
-      items={[
-        {
-          key: 'show-code',
-          content: (
-            <Tooltip
-              content="Try it"
-              trigger={<Icon name="code" style={{ width: '20px', height: '20px' }} />}
-            />
-          ),
-          onClick: onShowCode,
-          active: showCode,
-        },
-        {
-          key: 'show-variables',
-          content: (
-            <Tooltip
-              content="Theme it"
-              trigger={<Icon name="paint brush" style={{ width: '20px', height: '20px' }} />}
-            />
-          ),
-          onClick: onShowVariables,
-          active: showVariables,
-        },
-        {
-          key: 'divider-1',
-          style: { margin: '0 5px' },
-          kind: 'divider',
-        },
-        {
-          key: 'show-transparent',
-          content: (
-            <Tooltip
-              content="Transparent"
-              trigger={<Icon name="adjust" style={{ width: '20px', height: '20px' }} />}
-            />
-          ),
-          onClick: onShowTransparent,
-          active: showTransparent,
-        },
-        {
-          key: 'show-rtl',
-          content: (
-            <Tooltip
-              content="RTL"
-              trigger={<Icon name="align right" style={{ width: '20px', height: '20px' }} />}
-            />
-          ),
-          onClick: onShowRtl,
-          active: showRtl,
-        },
-        {
-          key: 'maximize',
-          content: (
-            <Tooltip
-              content="Popout"
-              trigger={<Icon name="external alternate" style={{ width: '20px', height: '20px' }} />}
-            />
-          ),
-          as: NavLink,
-          to: `/maximize/${_.kebabCase(
-            examplePath
-              .split('/')
-              .slice(-1)
-              .pop(),
-          )}/${showRtl}`,
-          target: '_blank',
-          rel: 'noopener noreferrer',
-        },
-        {
-          key: 'divider-2',
-          style: { margin: '0 5px' },
-          kind: 'divider',
-        },
-        {
-          key: 'show-codesandbox',
-          content: (
-            <ComponentControlsCodeSandbox
-              exampleCode={exampleCode}
-              exampleLanguage={exampleLanguage}
-              exampleName={examplePath}
-            />
-          ),
-        },
-        {
-          key: 'copy-link',
-          content: (
-            <CopyToClipboard value={anchorName}>
-              {(active, onClick) => (
-                <Tooltip
-                  content={active ? 'Copied!' : 'Permalink'}
-                  trigger={
-                    <Icon
-                      name="linkify"
-                      onClick={onClick}
-                      style={{ width: '20px', height: '20px' }}
-                    />
-                  }
-                />
-              )}
-            </CopyToClipboard>
-          ),
-          onClick: onCopyLink,
-        },
-      ]}
-    />
+    <ComponentControlsCodeSandbox
+      exampleCode={exampleCode}
+      exampleLanguage={exampleLanguage}
+      exampleName={examplePath}
+    >
+      {(state, onCodeSandboxClick) => {
+        const codeSandboxTooltip =
+          state === CodeSandboxState.Default
+            ? 'CodeSandbox'
+            : state === CodeSandboxState.Loading
+            ? 'Exporting...'
+            : 'Click to open'
+        const codeSandboxIcon =
+          state === CodeSandboxState.Default
+            ? 'connectdevelop'
+            : state === CodeSandboxState.Loading
+            ? 'spinner'
+            : 'checkmark'
+
+        return (
+          <Menu
+            {...rest}
+            iconOnly
+            accessibility={menuAsToolbarBehavior}
+            aria-label={toolbarAriaLabel || null}
+            items={[
+              {
+                key: 'show-code',
+                icon: { name: 'code', style: { width: '20px', height: '20px' } },
+                onClick: onShowCode,
+                active: showCode,
+                children: (Component, props) => (
+                  <Tooltip content="Try it" trigger={<Component {...props} />} />
+                ),
+              },
+
+              {
+                key: 'show-variables',
+                icon: { name: 'paint brush', style: { width: '20px', height: '20px' } },
+                onClick: onShowVariables,
+                active: showVariables,
+                children: (Component, props) => (
+                  <Tooltip content="Theme it" trigger={<Component {...props} />} />
+                ),
+              },
+              {
+                key: 'divider-1',
+                style: { margin: '0 5px' },
+                kind: 'divider',
+              },
+              {
+                key: 'show-transparent',
+                icon: { name: 'adjust', style: { width: '20px', height: '20px' } },
+                onClick: onShowTransparent,
+                active: showTransparent,
+                children: (Component, props) => (
+                  <Tooltip content="Transparent" trigger={<Component {...props} />} />
+                ),
+              },
+              {
+                key: 'show-rtl',
+                icon: { name: 'align right', style: { width: '20px', height: '20px' } },
+                onClick: onShowRtl,
+                active: showRtl,
+                children: (Component, props) => (
+                  <Tooltip content="RTL" trigger={<Component {...props} />} />
+                ),
+              },
+
+              {
+                key: 'maximize',
+                icon: { name: 'external alternate', style: { width: '20px', height: '20px' } },
+                children: (Component, props) => (
+                  <Tooltip content="Popout" trigger={<Component {...props} />} />
+                ),
+                as: NavLink,
+                to: `/maximize/${_.kebabCase(
+                  examplePath
+                    .split('/')
+                    .slice(-1)
+                    .pop(),
+                )}/${showRtl}`,
+                target: '_blank',
+                rel: 'noopener noreferrer',
+              },
+              {
+                key: 'divider-2',
+                style: { margin: '0 5px' },
+                kind: 'divider',
+              },
+              {
+                key: 'show-codesandbox',
+                onClick: onCodeSandboxClick,
+                icon: { name: codeSandboxIcon, style: { width: '20px', height: '20px' } },
+                children: (Component, props) => (
+                  <Tooltip content={codeSandboxTooltip} trigger={<Component {...props} />} />
+                ),
+              },
+              {
+                key: 'copy-link',
+                icon: { name: 'linkify', style: { width: '20px', height: '20px' } },
+                children: (Component, props) => (
+                  <CopyToClipboard value={anchorName}>
+                    {(active, onClick) => (
+                      <Tooltip
+                        content={active ? 'Copied!' : 'Permalink'}
+                        trigger={
+                          <Component
+                            {...props}
+                            onClick={(e: React.SyntheticEvent) => {
+                              onClick()
+                              onCopyLink(e)
+                            }}
+                          />
+                        }
+                      />
+                    )}
+                  </CopyToClipboard>
+                ),
+              },
+            ]}
+          />
+        )
+      }}
+    </ComponentControlsCodeSandbox>
   )
 }
 

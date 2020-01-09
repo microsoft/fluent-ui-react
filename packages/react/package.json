@@ -1,17 +1,17 @@
 {
   "name": "@fluentui/react",
   "description": "A themable React component library.",
-  "version": "0.42.0",
+  "version": "0.43.0",
   "author": "Levi Thomason <me@levithomason.com>",
   "bugs": "https://github.com/microsoft/fluent-ui-react/issues",
   "dependencies": {
     "@babel/runtime": "^7.1.2",
-    "@fluentui/accessibility": "^0.42.0",
-    "@fluentui/react-bindings": "^0.42.0",
-    "@fluentui/react-component-event-listener": "^0.42.0",
-    "@fluentui/react-component-nesting-registry": "^0.42.0",
-    "@fluentui/react-component-ref": "^0.42.0",
-    "@fluentui/react-proptypes": "^0.42.0",
+    "@fluentui/accessibility": "^0.43.0",
+    "@fluentui/react-bindings": "^0.43.0",
+    "@fluentui/react-component-event-listener": "^0.43.0",
+    "@fluentui/react-component-nesting-registry": "^0.43.0",
+    "@fluentui/react-component-ref": "^0.43.0",
+    "@fluentui/react-proptypes": "^0.43.0",
     "classnames": "^2.2.6",
     "downshift": "3.2.14",
     "fast-memoize": "^2.5.1",
@@ -29,7 +29,7 @@
     "react-is": "^16.6.3"
   },
   "devDependencies": {
-    "@fluentui/internal-tooling": "^0.42.0",
+    "@fluentui/internal-tooling": "^0.43.0",
     "lerna-alias": "^3.0.3-0",
     "qs": "^6.8.0"
   },

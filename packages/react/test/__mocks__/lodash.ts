@@ -1,12 +1,12 @@
-const debounce = (fn: Function, time: number): Function => {
+// @ts-ignore
+export * from 'lodash'
+export const debounce = (fn: Function, time: number): Function => {
   let timeoutId
-
   function cancel() {
     if (timeoutId) {
       clearTimeout(timeoutId)
     }
   }
-
   function wrapper(...args) {
     cancel()
     timeoutId = setTimeout(() => {
@@ -14,10 +14,6 @@ const debounce = (fn: Function, time: number): Function => {
       fn(...args)
     }, time)
   }
-
   wrapper.cancel = cancel
-
   return wrapper
 }
-
-export default debounce

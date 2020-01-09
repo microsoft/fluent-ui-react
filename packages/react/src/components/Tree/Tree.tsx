@@ -1,5 +1,5 @@
 import { Accessibility, treeBehavior } from '@fluentui/accessibility'
-import { getNextElement } from '@fluentui/react-bindings'
+import { ReactAccessibilityBehavior, getNextElement } from '@fluentui/react-bindings'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -7,6 +7,7 @@ import * as React from 'react'
 import { Ref } from '@fluentui/react-component-ref'
 
 import TreeItem, { TreeItemProps } from './TreeItem'
+import TreeTitle, { TreeTitleProps } from './TreeTitle'
 import {
   childrenExist,
   commonPropTypes,
@@ -26,8 +27,6 @@ import {
   ShorthandValue,
 } from '../../types'
 import { hasSubtree, removeItemAtIndex } from './utils'
-import TreeTitle, { TreeTitleProps } from './TreeTitle'
-import { ReactAccessibilityBehavior } from '../../utils/accessibility/reactTypes'
 
 export interface TreeSlotClassNames {
   item: string

@@ -141,6 +141,10 @@ export interface AccessibilityAttributes
   extends AriaWidgetAttributes,
     AriaRelationshipAttributes,
     ElementStateAttributes {
+  // Is used in @fluentui/ability-attributes for accessibility validations.
+  // Do not set it manually and do not rely on it in production
+  'data-aa-class'?: string
+
   role?: AriaRole
   tabIndex?: number
   id?: string
