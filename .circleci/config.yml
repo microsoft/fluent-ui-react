@@ -29,7 +29,6 @@ jobs:
           keys:
             - v1.1-dependencies-{{ checksum "yarn.lock" }}
             - v1.1-dependencies
-            - v1.1-json
       - run:
           name: Install Dependencies
           command: yarn
@@ -40,11 +39,15 @@ jobs:
             - .yarn-cache
             - node_modules
 
+      - restore_cache:
+          keys:
+            - v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+            - v1-repo
       - run:
           name: Create JSON for docs & tests
           command: yarn gulp build:docs:json
       - save_cache:
-          key: v1.1-json
+          key: v1-json-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - /tmp/gulp-cache
 
