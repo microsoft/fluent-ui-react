@@ -19,7 +19,7 @@ import { ButtonStylesProps } from './components/Button/buttonStyles'
 import { ChatItemProps } from '../../components/Chat/ChatItem'
 import { ChatMessageProps } from '../../components/Chat/ChatMessage'
 import { ChatProps } from '../../components/Chat/Chat'
-import { CheckboxProps } from '../../components/Checkbox/Checkbox'
+import { CheckboxStylesProps } from './components/Checkbox/checkboxStyles'
 import { DividerProps } from '../../components/Divider/Divider'
 import { DropdownProps } from '../../components/Dropdown/Dropdown'
 import { EmbedProps } from '../../components/Embed/Embed'
@@ -34,7 +34,7 @@ import { IconProps } from '../../components/Icon/Icon'
 import { ImageStylesProps } from './components/Image/imageStyles'
 import { InputProps } from '../../components/Input/Input'
 import { ItemLayoutProps } from '../../components/ItemLayout/ItemLayout'
-import { LabelProps } from '../../components/Label/Label'
+import { LabelStylesProps } from './components/Label/labelStyles'
 import { LayoutProps } from '../../components/Layout/Layout'
 import { ListStylesProps } from './components/List/listStyles'
 import { ListItemStylesProps } from './components/List/listItemStyles'
@@ -49,9 +49,9 @@ import { RadioGroupProps } from '../../components/RadioGroup/RadioGroup'
 import { ReactionGroupProps } from '../../components/Reaction/ReactionGroup'
 import { ReactionProps } from '../../components/Reaction/Reaction'
 import { SegmentProps } from '../../components/Segment/Segment'
-import { SliderProps } from '../../components/Slider/Slider'
+import { SliderStylesProps } from './components/Slider/sliderStyles'
 import { StatusProps } from '../../components/Status/Status'
-import { TextProps } from '../../components/Text/Text'
+import { TextStylesProps } from './components/Text/textStyles'
 import { ToolbarDividerProps } from '../../components/Toolbar/ToolbarDivider'
 import { ToolbarItemProps } from '../../components/Toolbar/ToolbarItem'
 import { ToolbarProps } from '../../components/Toolbar/Toolbar'
@@ -76,7 +76,7 @@ export type TeamsThemeStylesProps = {
   Chat?: ChatProps
   ChatItem?: ChatItemProps
   ChatMessage?: ChatMessageProps
-  Checkbox?: CheckboxProps
+  Checkbox?: CheckboxStylesProps
   Divider?: DividerProps
   Dropdown?: DropdownProps
   Embed?: EmbedProps
@@ -91,7 +91,7 @@ export type TeamsThemeStylesProps = {
   Image?: ImageStylesProps
   Input?: InputProps
   ItemLayout?: ItemLayoutProps
-  Label?: LabelProps
+  Label?: LabelStylesProps
   Layout?: LayoutProps
   List?: ListStylesProps
   ListItem?: ListItemStylesProps
@@ -106,7 +106,7 @@ export type TeamsThemeStylesProps = {
   Reaction?: ReactionProps
   ReactionGroup?: ReactionGroupProps
   Segment?: SegmentProps
-  Slider?: SliderProps
+  Slider?: SliderStylesProps
   Status?: StatusProps
   Toolbar?: ToolbarProps
   ToolbarItem?: ToolbarItemProps
@@ -114,7 +114,7 @@ export type TeamsThemeStylesProps = {
   ToolbarRadioGroup?: ToolbarRadioGroupProps
   Tooltip?: TooltipProps
   TooltipContent?: TooltipContentProps
-  Text?: TextProps
+  Text?: TextStylesProps
   HierarchicalTree?: HierarchicalTreeProps
   HierarchicalTreeItem?: HierarchicalTreeItemProps
   HierarchicalTreeTitle?: HierarchicalTreeTitleProps

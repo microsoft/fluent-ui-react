@@ -3,6 +3,7 @@ import Slider from 'src/components/Slider/Slider'
 
 describe('Slider', () => {
   isConformant(Slider, {
+    constructorName: 'Slider',
     eventTargets: {
       onChange: 'input',
       onKeyDown: 'input',
