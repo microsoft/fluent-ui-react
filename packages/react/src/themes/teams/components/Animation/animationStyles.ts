@@ -1,5 +1,5 @@
 import { AnimationProp } from '../../../types'
-import createAnimationStyles from '../../../../utils/createAnimationStyles'
+import createAnimationStyles from '@fluentui/react-bindings/src/styles/createAnimationStyles'
 
 export default {
   root: () => ({
