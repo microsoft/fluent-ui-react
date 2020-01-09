@@ -64,13 +64,13 @@ class CarouselItem extends UIComponent<WithAsProp<CarouselItemProps>> {
         {...unhandledProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
+        {childrenExist(children) ? children : content}
         <div
           className={CarouselItem.slotClassNames.itemPositionText}
           style={screenReaderContainerStyles}
         >
           {itemPositionText}
         </div>
-        {childrenExist(children) ? children : content}
       </ElementType>
     )
   }

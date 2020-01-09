@@ -278,6 +278,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
                     defaultProps: () => ({
                       active: activeIndex === index,
                       id: itemIds[index],
+                      navigation: !!this.props.navigation,
                       ...(getItemPositionText && {
                         itemPositionText: getItemPositionText(index, items.length),
                       }),
@@ -391,6 +392,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
       <Text
         className={Carousel.slotClassNames.pagination}
         content={getItemPositionText(activeIndex, items.length)}
+        aria-hidden="true"
       />
     )
   }

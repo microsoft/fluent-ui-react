@@ -11,22 +11,44 @@ const carouselItems = [
   {
     key: 'ade',
     id: 'ade',
-    content: <Image src="public/images/avatar/large/ade.jpg" fluid alt={imageAltTags.ade} />,
+    content: (
+      <Image src="public/images/avatar/large/ade.jpg" fluid alt={imageAltTags.ade} id="ade" />
+    ),
+    'aria-labelledby': 'ade',
   },
   {
     key: 'elliot',
     id: 'elliot',
-    content: <Image src="public/images/avatar/large/elliot.jpg" fluid alt={imageAltTags.elliot} />,
+    content: (
+      <Image
+        src="public/images/avatar/large/elliot.jpg"
+        fluid
+        alt={imageAltTags.elliot}
+        id="elliot"
+      />
+    ),
+    'aria-labelledby': 'elliot',
   },
   {
     key: 'kristy',
     id: 'kristy',
-    content: <Image src="public/images/avatar/large/kristy.png" fluid alt={imageAltTags.kristy} />,
+    content: (
+      <Image
+        src="public/images/avatar/large/kristy.png"
+        fluid
+        alt={imageAltTags.kristy}
+        id="kristy"
+      />
+    ),
+    'aria-labelledby': 'kristy',
   },
   {
     key: 'nan',
     id: 'nan',
-    content: <Image src="public/images/avatar/large/nan.jpg" fluid alt={imageAltTags.nan} />,
+    content: (
+      <Image src="public/images/avatar/large/nan.jpg" fluid alt={imageAltTags.nan} id="nan" />
+    ),
+    'aria-labelledby': 'nan',
   },
 ]
 
