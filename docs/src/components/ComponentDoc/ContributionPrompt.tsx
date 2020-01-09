@@ -1,7 +1,7 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-
-import { Icon, Segment, Text, ICSSInJSStyle } from '@fluentui/react'
+import { ICSSInJSStyle } from '@fluentui/styles'
+import { Icon, Segment, Text } from '@fluentui/react'
 import { constants } from '@fluentui/react/src/utils'
 
 const wrapStyle: ICSSInJSStyle = { wordBreak: 'break-word' }

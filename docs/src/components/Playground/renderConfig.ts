@@ -2,8 +2,10 @@ import * as Accessibility from '@fluentui/accessibility'
 import * as CodeSandbox from '@fluentui/code-sandbox'
 import * as DocsComponent from '@fluentui/docs-components'
 import * as FluentUI from '@fluentui/react'
+import * as FluentBindings from '@fluentui/react-bindings'
 import * as ReactFela from 'react-fela'
 import * as _ from 'lodash'
+import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as Classnames from 'classnames'
@@ -39,6 +41,10 @@ export const imports: Record<string, { version: string; module: any }> = {
     version: projectPackageJson.version,
     module: FluentUI,
   },
+  '@fluentui/react-bindings': {
+    version: null,
+    module: FluentBindings,
+  },
   classnames: {
     version: projectPackageJson.dependencies['classnames'],
     module: Classnames,
@@ -46,6 +52,10 @@ export const imports: Record<string, { version: string; module: any }> = {
   lodash: {
     version: projectPackageJson.dependencies['lodash'],
     module: _,
+  },
+  'prop-types': {
+    version: projectPackageJson.dependencies['prop-types'],
+    module: PropTypes,
   },
   react: {
     version: projectPackageJson.peerDependencies['react'],

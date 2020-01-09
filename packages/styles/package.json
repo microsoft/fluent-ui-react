@@ -1,0 +1,33 @@
+{
+  "name": "@fluentui/styles",
+  "description": "FIX ME",
+  "version": "0.43.0",
+  "author": "Oleksandr Fediashov <a@fedyashov.com>",
+  "bugs": "https://github.com/microsoft/fluent-ui-react/issues",
+  "dependencies": {
+    "@babel/runtime": "^7.1.2",
+    "lodash": "*",
+    "csstype": "*"
+  },
+  "devDependencies": {
+    "@fluentui/internal-tooling": "^0.43.0",
+    "lerna-alias": "^3.0.3-0"
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/microsoft/fluent-ui-react/tree/master/packages/styles",
+  "jsnext:main": "dist/es/index.js",
+  "license": "MIT",
+  "main": "dist/commonjs/index.js",
+  "module": "dist/es/index.js",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": "microsoft/fluent-ui-react.git",
+  "scripts": {
+    "build": "cross-env TS_NODE_PROJECT=../../tsconfig.json gulp bundle:package:no-umd --package styles"
+  },
+  "sideEffects": false,
+  "types": "dist/es/index.d.ts"
+}

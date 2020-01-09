@@ -1,4 +1,4 @@
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 
 const toolbarRadioGroupStyles: ComponentSlotStylesPrepared = {
   root: (): ICSSInJSStyle => ({

@@ -12,7 +12,7 @@ import * as React from 'react'
 import { ThemeContext } from 'react-fela'
 
 import ComponentExampleVariable, { ComponentExampleVariableProps } from './ComponentExampleVariable'
-import { mergeThemeVariables } from '@fluentui/react/src/utils/mergeThemes'
+import { mergeThemeVariables } from '@fluentui/styles'
 
 type ComponentExampleVariablesProps = {
   onChange: ComponentExampleVariableProps['onChange']

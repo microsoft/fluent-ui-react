@@ -1,4 +1,4 @@
-import deepmerge from 'src/utils/deepmerge'
+import { deepmerge } from '@fluentui/styles'
 
 describe('deepmerge', () => {
   test(`always returns an object`, () => {

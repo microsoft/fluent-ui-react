@@ -1,4 +1,4 @@
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import { TooltipProps } from '../../../../components/Tooltip/Tooltip'
 import { TooltipVariables } from './tooltipVariables'
 

@@ -1,20 +1,16 @@
+import { ThemeInput, ThemePrepared } from '@fluentui/styles'
+import * as React from 'react'
+
+import { Renderer } from './themes/types'
+import Telemetry from './utils/Telemetry'
+
 // ========================================================
 // Utilities
 // ========================================================
 
-import * as React from 'react'
-import { ThemeInput, Renderer, ThemePrepared } from './themes/types'
-import Telemetry from './utils/Telemetry'
-
-export type Extendable<T, V = any> = T & {
-  [key: string]: V
-}
-
 export type ResultOf<T> = T extends (...arg: any[]) => infer TResult ? TResult : never
 
 export type ObjectOf<T> = { [key: string]: T }
-
-export type ObjectOrFunc<TResult, TArg = {}> = ((arg: TArg) => TResult) | TResult
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 

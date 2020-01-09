@@ -22,8 +22,7 @@ import {
   ComponentEventHandler,
 } from '../../types'
 import CarouselNavigationItem, { CarouselNavigationItemProps } from './CarouselNavigationItem'
-import { ComponentVariablesObject } from '../../themes/types'
-import { mergeComponentVariables } from '../../utils/mergeThemes'
+import { ComponentVariablesObject, mergeComponentVariables } from '@fluentui/styles'
 
 export interface CarouselNavigationProps extends UIComponentProps, ChildrenComponentProps {
   /** Index of the currently active item. */

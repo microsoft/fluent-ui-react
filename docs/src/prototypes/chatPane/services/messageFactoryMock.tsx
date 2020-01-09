@@ -1,5 +1,6 @@
 import {
   Attachment,
+  Extendable,
   Popup,
   Menu,
   AvatarProps,
@@ -10,7 +11,7 @@ import {
 import * as React from 'react'
 import * as _ from 'lodash'
 import * as keyboardKey from 'keyboard-key'
-import { Extendable, ShorthandValue } from 'src/types'
+import { ShorthandValue } from 'src/types'
 import { ChatData, UserStatus, MessageData, UserData, areSameDay, getFriendlyDateString } from '.'
 
 export enum ChatItemTypes {

@@ -5,7 +5,15 @@ import {
   KnobProvider,
   LogInspector,
 } from '@fluentui/docs-components'
-import { Flex, ICSSInJSStyle, Menu, Provider, Segment } from '@fluentui/react'
+import {
+  ComponentVariablesInput,
+  Flex,
+  ICSSInJSStyle,
+  Menu,
+  Provider,
+  Segment,
+  ThemeInput,
+} from '@fluentui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
@@ -23,7 +31,6 @@ import ComponentExampleTitle from './ComponentExampleTitle'
 import ComponentSourceManager, {
   ComponentSourceManagerRenderProps,
 } from '../ComponentSourceManager'
-import { ThemeInput } from 'packages/react/src/themes/types'
 import VariableResolver from 'docs/src/components/VariableResolver/VariableResolver'
 import ComponentExampleVariables from 'docs/src/components/ComponentDoc/ComponentExample/ComponentExampleVariables'
 
@@ -43,7 +50,7 @@ export interface ComponentExampleProps
 
 interface ComponentExampleState {
   anchorName: string
-  componentVariables: Object
+  componentVariables: ComponentVariablesInput
   isActive: boolean
   isActiveHash: boolean
   usedVariables: Record<string, string[]>
@@ -53,7 +60,7 @@ interface ComponentExampleState {
   showVariables: boolean
 }
 
-const childrenStyle: React.CSSProperties = {
+const childrenStyle: ICSSInJSStyle = {
   paddingTop: 0,
   paddingBottom: '10px',
 }

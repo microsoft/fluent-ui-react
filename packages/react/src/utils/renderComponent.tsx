@@ -10,26 +10,27 @@ import {
   ReactAccessibilityBehavior,
   unstable_getAccessibility as getAccessibility,
 } from '@fluentui/react-bindings'
-import cx from 'classnames'
-import * as React from 'react'
-import * as _ from 'lodash'
-
-import logProviderMissingWarning from './providerMissingHandler'
 import {
+  emptyTheme,
+  ComponentSlotStylesPrepared,
   ComponentStyleFunctionParam,
   ComponentVariablesObject,
-  ComponentSlotClasses,
-  ComponentSlotStylesPrepared,
+  DebugData,
+  isDebugEnabled,
+  mergeComponentStyles,
+  mergeComponentVariables,
   PropsWithVarsAndStyles,
-  State,
   ThemePrepared,
-} from '../themes/types'
+  withDebugId,
+} from '@fluentui/styles'
+import cx from 'classnames'
+import * as _ from 'lodash'
+import * as React from 'react'
+
+import { ComponentSlotClasses } from '../themes/types'
 import { Props, ProviderContextPrepared } from '../types'
-import { emptyTheme, mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import createAnimationStyles from './createAnimationStyles'
-import { isEnabled as isDebugEnabled } from './debug/debugEnabled'
-import { DebugData } from './debug/debugData'
-import withDebugId from './withDebugId'
+import logProviderMissingWarning from './providerMissingHandler'
 import Telemetry from './Telemetry'
 import resolveStylesAndClasses from './resolveStylesAndClasses'
 
@@ -51,7 +52,7 @@ export interface RenderConfig<P> {
   displayName: string
   handledProps: string[]
   props: PropsWithVarsAndStyles
-  state: State
+  state: Record<string, any>
   actionHandlers: AccessibilityActionHandlers
   render: RenderComponentCallback<P>
   saveDebug: (debug: DebugData | null) => void

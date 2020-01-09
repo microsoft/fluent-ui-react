@@ -73,22 +73,24 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
             aria-label={toolbarAriaLabel || null}
             items={[
               {
-                key: 'show-code',
                 icon: { name: 'code', style: { width: '20px', height: '20px' } },
                 onClick: onShowCode,
                 active: showCode,
                 children: (Component, props) => (
-                  <Tooltip content="Try it" trigger={<Component {...props} />} />
+                  <Tooltip content="Try it" key="show-code" trigger={<Component {...props} />} />
                 ),
               },
 
               {
-                key: 'show-variables',
                 icon: { name: 'paint brush', style: { width: '20px', height: '20px' } },
                 onClick: onShowVariables,
                 active: showVariables,
                 children: (Component, props) => (
-                  <Tooltip content="Theme it" trigger={<Component {...props} />} />
+                  <Tooltip
+                    content="Theme it"
+                    key="show-variables"
+                    trigger={<Component {...props} />}
+                  />
                 ),
               },
               {
@@ -97,29 +99,30 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
                 kind: 'divider',
               },
               {
-                key: 'show-transparent',
                 icon: { name: 'adjust', style: { width: '20px', height: '20px' } },
                 onClick: onShowTransparent,
                 active: showTransparent,
                 children: (Component, props) => (
-                  <Tooltip content="Transparent" trigger={<Component {...props} />} />
+                  <Tooltip
+                    content="Transparent"
+                    key="show-transparent"
+                    trigger={<Component {...props} />}
+                  />
                 ),
               },
               {
-                key: 'show-rtl',
                 icon: { name: 'align right', style: { width: '20px', height: '20px' } },
                 onClick: onShowRtl,
                 active: showRtl,
                 children: (Component, props) => (
-                  <Tooltip content="RTL" trigger={<Component {...props} />} />
+                  <Tooltip content="RTL" key="show-rtl" trigger={<Component {...props} />} />
                 ),
               },
 
               {
-                key: 'maximize',
                 icon: { name: 'external alternate', style: { width: '20px', height: '20px' } },
                 children: (Component, props) => (
-                  <Tooltip content="Popout" trigger={<Component {...props} />} />
+                  <Tooltip content="Popout" key="maximize" trigger={<Component {...props} />} />
                 ),
                 as: NavLink,
                 to: `/maximize/${_.kebabCase(
@@ -137,18 +140,20 @@ const ComponentControls: React.FC<ComponentControlsProps> = props => {
                 kind: 'divider',
               },
               {
-                key: 'show-codesandbox',
                 onClick: onCodeSandboxClick,
                 icon: { name: codeSandboxIcon, style: { width: '20px', height: '20px' } },
                 children: (Component, props) => (
-                  <Tooltip content={codeSandboxTooltip} trigger={<Component {...props} />} />
+                  <Tooltip
+                    content={codeSandboxTooltip}
+                    key="show-codesandbox"
+                    trigger={<Component {...props} />}
+                  />
                 ),
               },
               {
-                key: 'copy-link',
                 icon: { name: 'linkify', style: { width: '20px', height: '20px' } },
                 children: (Component, props) => (
-                  <CopyToClipboard value={anchorName}>
+                  <CopyToClipboard key="copy-link" value={anchorName}>
                     {(active, onClick) => (
                       <Tooltip
                         content={active ? 'Copied!' : 'Permalink'}

@@ -1,4 +1,4 @@
-import { mergeFontFaces } from '../../../../src/utils/mergeThemes'
+import { mergeFontFaces } from '@fluentui/styles'
 
 describe('mergeFontFaces', () => {
   test('returns a compact array', () => {

@@ -40,7 +40,7 @@ import { MenuItemProps } from '../Menu/MenuItem'
 import Text, { TextProps } from '../Text/Text'
 import Reaction, { ReactionProps } from '../Reaction/Reaction'
 import { ReactionGroupProps } from '../Reaction/ReactionGroup'
-import { ComponentSlotStylesPrepared } from '../../themes/types'
+import { ComponentSlotStylesPrepared } from '@fluentui/styles'
 
 export interface ChatMessageSlotClassNames {
   actionMenu: string

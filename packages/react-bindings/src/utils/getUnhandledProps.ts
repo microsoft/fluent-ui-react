@@ -9,10 +9,19 @@
 function getUnhandledProps<P extends Record<string, any>>(
   handledProps: (keyof P)[],
   props: P,
+  shouldForwardProp: Function = () => false,
 ): Partial<P> {
   return Object.keys(props).reduce<Partial<P>>((acc, prop) => {
-    if (handledProps.indexOf(prop) === -1) (acc as any)[prop] = props[prop]
+    if (shouldForwardProp(prop)) {
+      ;(acc as any)[prop] = props[prop]
+      return acc
+    }
 
+    if (handledProps.indexOf(prop) !== -1) {
+      return acc
+    }
+
+    ;(acc as any)[prop] = props[prop]
     return acc
   }, {})
 }

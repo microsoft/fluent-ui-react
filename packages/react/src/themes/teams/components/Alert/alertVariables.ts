@@ -1,7 +1,7 @@
 import { FontWeightProperty } from 'csstype'
 
 import { pxToRem } from '../../../../utils'
-import { SiteVariablesPrepared } from '../../../types'
+import { SiteVariablesPrepared } from '@fluentui/styles'
 
 export interface AlertVariables {
   borderStyle: string
