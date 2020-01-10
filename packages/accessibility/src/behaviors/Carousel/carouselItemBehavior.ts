@@ -2,7 +2,7 @@ import { Accessibility } from '../../types'
 
 /**
  * @specification
- * Adds attribute 'role=tabpanel' to 'root' slot.
+ * Adds attribute 'role=tabpanel' to 'root' slot if 'navigation' property is true. Sets the attribute to 'group' otherwise.
  * Adds attribute 'aria-hidden=false' to 'root' slot if 'active' property is true. Sets the attribute to 'true' otherwise.
  * Adds attribute 'tabIndex=0' to 'root' slot if 'active' property is true. Sets the attribute to '-1' otherwise.
  */
