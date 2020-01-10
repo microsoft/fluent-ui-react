@@ -194,10 +194,10 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
 
     if (!this._isInnerZone) {
       _outerZones.delete(this)
-    }
 
-    if (this.windowElement && _outerZones.size === 0) {
-      this.windowElement.removeEventListener('keydown', this._onKeyDownCapture, true)
+      if (this.windowElement && _outerZones.size === 0) {
+        this.windowElement.removeEventListener('keydown', this._onKeyDownCapture, true)
+      }
     }
 
     if (this._root.current) {
