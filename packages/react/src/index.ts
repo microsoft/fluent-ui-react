@@ -235,6 +235,7 @@ export { default as TableCell } from './components/Table/TableCell'
 //
 // Utilities
 //
+export * from './utils/createComponent'
 export * from './utils'
 export * from './types'
 export { Popper as UNSTABLE_Popper } from './utils/positioner'
