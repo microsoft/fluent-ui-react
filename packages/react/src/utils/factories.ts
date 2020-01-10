@@ -9,7 +9,7 @@ import {
   ShorthandRenderFunction,
   ShorthandRenderer,
 } from '../types'
-import { mergeStyles } from './mergeThemes'
+// import { mergeStyles } from './mergeThemes'
 
 type HTMLTag = 'iframe' | 'img' | 'input'
 type ShorthandProp = 'children' | 'src' | 'type'
@@ -250,11 +250,7 @@ function createShorthandFromValue<P>({
 
   // Merge styles
   if (defaultProps.styles || overrideProps.styles || usersProps.styles) {
-    ;(props as any).styles = mergeStyles(
-      defaultProps.styles,
-      usersProps.styles,
-      overrideProps.styles,
-    )
+    ;(props as any).styles = _.merge(defaultProps.styles, usersProps.styles, overrideProps.styles)
   }
 
   // ----------------------------------------

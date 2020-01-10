@@ -25,7 +25,7 @@ import {
   ThemePrepared,
 } from '../themes/types'
 import { Props, ProviderContextPrepared } from '../types'
-import { emptyTheme, mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
+import { emptyTheme, mergeComponentStylesWithCache, mergeComponentVariables } from './mergeThemes'
 import createAnimationStyles from './createAnimationStyles'
 import { isEnabled as isDebugEnabled } from './debug/debugEnabled'
 import { DebugData } from './debug/debugData'
@@ -109,11 +109,20 @@ const renderComponent = <P extends {}>(
     : {}
 
   // Resolve styles using resolved variables, merge results, allow props.styles to override
-  const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
-    theme.componentStyles[displayName],
-    withDebugId({ root: props.design }, 'props.design'),
-    withDebugId({ root: props.styles }, 'props.styles'),
-    withDebugId({ root: animationCSSProp }, 'props.animation'),
+  const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStylesWithCache(
+    theme,
+    {
+      displayName,
+      design: props.design,
+      styles: props.styles,
+      animation: props.animation,
+    },
+    [
+      theme.componentStyles[displayName],
+      withDebugId({ root: props.design }, 'props.design'),
+      withDebugId({ root: props.styles }, 'props.styles'),
+      withDebugId({ root: animationCSSProp }, 'props.animation'),
+    ],
   )
 
   const accessibility: ReactAccessibilityBehavior = getAccessibility(
