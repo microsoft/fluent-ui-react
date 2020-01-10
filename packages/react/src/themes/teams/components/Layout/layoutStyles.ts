@@ -1,9 +1,10 @@
 import { debugRoot, debugArea, debugGap } from '../../../../styles/debugStyles'
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
+import { LayoutProps } from '../../../../components/Layout/Layout'
 
 const countTrue = items => items.filter(Boolean).length
 
-const layoutStyles: ComponentSlotStylesPrepared = {
+const layoutStyles: ComponentSlotStylesPrepared<LayoutProps> = {
   root: ({ props }): ICSSInJSStyle => {
     const {
       alignItems,

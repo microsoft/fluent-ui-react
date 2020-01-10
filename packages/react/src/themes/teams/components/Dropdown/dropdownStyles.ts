@@ -2,7 +2,7 @@ import {
   ComponentSlotStylesPrepared,
   ICSSInJSStyle,
   ComponentSlotStyleFunction,
-} from '../../../types'
+} from '@fluentui/styles'
 import {
   default as Dropdown,
   DropdownProps,

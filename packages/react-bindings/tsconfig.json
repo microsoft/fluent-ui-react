@@ -13,6 +13,7 @@
   "references": [
     { "path": "../accessibility" },
     { "path": "../state" },
+    { "path": "../styles" },
     { "path": "../react-component-event-listener" },
     { "path": "../react-component-ref" }
   ]

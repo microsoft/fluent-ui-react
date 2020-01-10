@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
 
-import { ICSSInJSStyle, ComponentSlotStylesPrepared } from '../../../types'
+import { ICSSInJSStyle, ComponentSlotStylesPrepared } from '@fluentui/styles'
 import { HeaderDescriptionProps } from '../../../../components/Header/HeaderDescription'
 import { HeaderDescriptionVariables } from './headerDescriptionVariables'
 import { pxToRem } from '../../../../utils'

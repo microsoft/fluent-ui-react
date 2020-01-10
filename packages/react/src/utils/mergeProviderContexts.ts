@@ -1,7 +1,7 @@
 import { ProviderContextPrepared, ProviderContextInput } from '../types'
 import { Renderer } from '../themes/types'
 import { createRenderer, felaRenderer } from './felaRenderer'
-import mergeThemes from './mergeThemes'
+import { mergeThemes } from '@fluentui/styles'
 
 const registeredRenderers = new WeakMap<Document, Renderer>()
 

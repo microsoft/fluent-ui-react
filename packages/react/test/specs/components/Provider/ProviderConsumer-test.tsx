@@ -1,9 +1,9 @@
+import { ThemeInput } from '@fluentui/styles'
 import * as React from 'react'
 import { mount } from 'enzyme'
 
 import Provider from 'src/components/Provider/Provider'
 import ProviderConsumer from 'src/components/Provider/ProviderConsumer'
-import { ThemeInput } from 'src/themes/types'
 
 describe('ProviderConsumer', () => {
   test('is exported', () => {

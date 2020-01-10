@@ -1,5 +1,6 @@
-import { callable } from '@fluentui/react-bindings'
 import * as _ from 'lodash'
+
+import callable from './callable'
 import {
   ComponentSlotStyle,
   ComponentSlotStylesInput,
@@ -18,12 +19,12 @@ import {
   ThemeIcons,
   ThemeInput,
   ThemePrepared,
-} from '../themes/types'
-import toCompactArray from './toCompactArray'
+} from './types'
+
+import { isEnabled as isDebugEnabled } from './debugEnabled'
 import deepmerge from './deepmerge'
 import objectKeyToValues from './objectKeysToValues'
-
-import { isEnabled as isDebugEnabled } from './debug/debugEnabled'
+import toCompactArray from './toCompactArray'
 import withDebugId from './withDebugId'
 
 export const emptyTheme: ThemePrepared = {

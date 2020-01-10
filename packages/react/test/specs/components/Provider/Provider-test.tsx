@@ -1,10 +1,10 @@
+import { ThemeInput } from '@fluentui/styles'
 import { mount } from 'enzyme'
 import { createRenderer } from 'fela'
 import * as React from 'react'
 
 import Provider from 'src/components/Provider/Provider'
 import ProviderConsumer from 'src/components/Provider/ProviderConsumer'
-import { ThemeInput } from 'src/themes/types'
 
 describe('Provider', () => {
   test('is exported', () => {

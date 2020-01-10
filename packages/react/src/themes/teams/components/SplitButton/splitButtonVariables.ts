@@ -1,4 +1,4 @@
-import { SiteVariablesPrepared } from '../../../types'
+import { SiteVariablesPrepared } from '@fluentui/styles'
 import { pxToRem } from '../../../../utils'
 
 export interface SplitButtonVariables {

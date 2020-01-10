@@ -1,10 +1,7 @@
-import {
-  mergeComponentVariables__PROD,
-  mergeComponentVariables__DEV,
-} from '../../../../src/utils/mergeThemes'
-import * as debugEnabled from 'src/utils/debug/debugEnabled'
-import { withDebugId } from 'src/utils'
-import objectKeyToValues from 'src/utils/objectKeysToValues'
+import { objectKeyToValues, withDebugId } from '@fluentui/styles'
+
+import * as debugEnabled from '../../src/debugEnabled'
+import { mergeComponentVariables__PROD, mergeComponentVariables__DEV } from '../../src/mergeThemes'
 
 describe('mergeComponentVariables', () => {
   let originalDebugEnabled

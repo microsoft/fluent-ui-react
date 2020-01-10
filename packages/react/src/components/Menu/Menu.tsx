@@ -1,6 +1,11 @@
 import { Accessibility, menuBehavior } from '@fluentui/accessibility'
 import { ReactAccessibilityBehavior } from '@fluentui/react-bindings'
 import * as customPropTypes from '@fluentui/react-proptypes'
+import {
+  ComponentVariablesObject,
+  ComponentSlotStylesPrepared,
+  mergeComponentVariables,
+} from '@fluentui/styles'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -16,10 +21,8 @@ import {
   rtlTextContainer,
   ShorthandFactory,
 } from '../../utils'
-import { mergeComponentVariables } from '../../utils/mergeThemes'
 
 import MenuItem, { MenuItemProps } from './MenuItem'
-import { ComponentVariablesObject, ComponentSlotStylesPrepared } from '../../themes/types'
 import {
   WithAsProp,
   ShorthandCollection,

@@ -1,4 +1,4 @@
-import { ComponentSlotStylesPrepared } from '../../../types'
+import { ComponentSlotStylesPrepared } from '@fluentui/styles'
 import { MenuButtonProps } from '../../../../components/MenuButton/MenuButton'
 import PopupContent from '../../../../components/Popup/PopupContent'
 

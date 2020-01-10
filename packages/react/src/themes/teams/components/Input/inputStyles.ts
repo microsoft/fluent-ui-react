@@ -1,4 +1,4 @@
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import { InputProps } from '../../../../components/Input/Input'
 import { InputVariables } from './inputVariables'
 import { PositionProperty } from 'csstype'
