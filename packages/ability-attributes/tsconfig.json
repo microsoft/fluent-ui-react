@@ -9,6 +9,5 @@
     "noUnusedParameters": true,
     "strictNullChecks": true
   },
-  "include": ["src", "test"],
-  "references": [{ "path": "../react" }]
+  "include": ["src", "test"]
 }
