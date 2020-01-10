@@ -250,7 +250,18 @@ function createShorthandFromValue<P>({
 
   // Merge styles
   if (defaultProps.styles || overrideProps.styles || usersProps.styles) {
-    ;(props as any).styles = _.merge(defaultProps.styles, usersProps.styles, overrideProps.styles)
+    // As long as we allow the styles prop to be a function, I don't see how we can cache it, as the stirng of the function will always be mergeStyles..
+    // ;(props as any).styles = mergeStyles(
+    //   defaultProps.styles,
+    //   usersProps.styles,
+    //   overrideProps.styles,
+    // )
+    // Just for hacking, relaying that it will always be an object, so we can cache...
+    ;(props as any).styles = _.merge(
+      defaultProps.styles || {},
+      usersProps.styles || {},
+      overrideProps.styles || {},
+    )
   }
 
   // ----------------------------------------
