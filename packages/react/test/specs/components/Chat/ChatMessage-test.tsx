@@ -26,7 +26,7 @@ describe('ChatMessage', () => {
   describe('onMouseEnter', () => {
     it('performs position update', () => {
       const wrapper = mountWithProvider(<ChatMessage />)
-      const update = jest.spyOn(wrapper.instance(), 'updateActionsMenuPosition')
+      const update = jest.spyOn(wrapper.instance() as any, 'updateActionsMenuPosition')
 
       wrapper.simulate('mouseenter')
       expect(update).toBeCalledTimes(1)

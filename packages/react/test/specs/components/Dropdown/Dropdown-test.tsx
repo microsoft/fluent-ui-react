@@ -1023,7 +1023,7 @@ describe('Dropdown', () => {
 
       expect(wrapper.find(Dropdown).state('searchQuery')).toBe('foo')
 
-      wrapper.setProps({ searchQuery: 'bar' })
+      wrapper.setProps({ searchQuery: 'bar' } as any)
       expect(wrapper.find(Dropdown).state('searchQuery')).toBe('bar')
     })
 
@@ -1391,7 +1391,7 @@ describe('Dropdown', () => {
         findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.selectedItem}`),
       ).toHaveLength(0)
 
-      wrapper.setProps({ multiple: true })
+      wrapper.setProps({ multiple: true } as any)
       expect(
         findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.selectedItem}`),
       ).toHaveLength(1)

@@ -9,10 +9,9 @@
       "test/*": ["packages/react/test/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "test"],
   "references": [
     { "path": "../accessibility" },
-    { "path": "../styles" },
     { "path": "../react-bindings" },
     { "path": "../react-component-event-listener" },
     { "path": "../react-component-nesting-registry" },

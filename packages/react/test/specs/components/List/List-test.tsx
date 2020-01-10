@@ -5,7 +5,7 @@ import { mountWithProvider } from 'test/utils'
 
 import List from 'src/components/List/List'
 import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
-import ListItem from 'src/components/List/ListItem'
+import ListItem, { ListItemProps } from 'src/components/List/ListItem'
 
 const listImplementsCollectionShorthandProp = implementsCollectionShorthandProp(List)
 
@@ -14,8 +14,8 @@ describe('List', () => {
   handlesAccessibility(List, { defaultRootRole: 'list' })
   listImplementsCollectionShorthandProp('items', ListItem, { mapsValueToProp: 'content' })
 
-  const getItems = (onClick?: Function) => [
-    { key: 'irving', content: 'Irving', onClick },
+  const getItems = (onClick?: Function): (ListItemProps & { key: string })[] => [
+    { key: 'irving', content: 'Irving', onClick } as any,
     { key: 'skyler', content: 'Skyler' },
     { key: 'dante', content: 'Dante' },
   ]
