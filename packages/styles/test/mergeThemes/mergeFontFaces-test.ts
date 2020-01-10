@@ -9,34 +9,34 @@ describe('mergeFontFaces', () => {
         {
           name: 'Segoe UI',
           paths: ['public/fonts/segoe-ui-regular.woff2'],
-          style: { fontWeight: 400 },
+          props: { fontWeight: 400 },
         },
         {
           name: 'Segoe UI',
           paths: ['public/fonts/segoe-ui-semibold.woff2'],
-          style: { fontWeight: 600 },
+          props: { fontWeight: 600 },
         },
         {
           name: 'Segoe UI',
           paths: ['public/fonts/segoe-ui-bold.woff2'],
-          style: { fontWeight: 700 },
+          props: { fontWeight: 700 },
         },
       ),
     ).toEqual([
       {
         name: 'Segoe UI',
         paths: ['public/fonts/segoe-ui-regular.woff2'],
-        style: { fontWeight: 400 },
+        props: { fontWeight: 400 },
       },
       {
         name: 'Segoe UI',
         paths: ['public/fonts/segoe-ui-semibold.woff2'],
-        style: { fontWeight: 600 },
+        props: { fontWeight: 600 },
       },
       {
         name: 'Segoe UI',
         paths: ['public/fonts/segoe-ui-bold.woff2'],
-        style: { fontWeight: 700 },
+        props: { fontWeight: 700 },
       },
     ])
   })

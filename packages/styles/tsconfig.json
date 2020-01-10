@@ -1,11 +1,9 @@
 {
   "extends": "../../build/tsconfig.common",
   "compilerOptions": {
-    "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noImplicitAny": true,
-    "noUnusedParameters": true,
-    "strictNullChecks": true
+    "composite": true,
+    "outDir": "dist/dts"
   },
-  "include": ["src", "test"]
+  "include": ["src", "test"],
+  "references": []
 }

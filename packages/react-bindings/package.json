@@ -30,7 +30,7 @@
   },
   "repository": "microsoft/fluent-ui-react.git",
   "scripts": {
-    "build": "cross-env TS_NODE_PROJECT=../../tsconfig.json gulp bundle:package:no-umd --package react-bindings"
+    "build": "gulp bundle:package:no-umd --package react-bindings"
   },
   "sideEffects": false,
   "types": "dist/es/index.d.ts"

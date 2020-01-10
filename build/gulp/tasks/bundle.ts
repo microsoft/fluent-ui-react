@@ -55,18 +55,19 @@ task('bundle:package:es', () =>
     .pipe(dest(paths.packageDist(packageName, 'es'))),
 )
 
-task('bundle:package:types', () => {
-  const tsConfig = paths.base('build/tsconfig.json')
-  const typescript = g.typescript.createProject(tsConfig, {
-    declaration: true,
-    isolatedModules: false,
-    module: 'esnext',
-  })
-
-  return src(componentsSrc)
-    .pipe(typescript())
-    .dts.pipe(dest(paths.packageDist(packageName, 'es')))
+task('bundle:package:types:tsc', () => sh(`cd packages/${packageName} && tsc -b`))
+task('bundle:package:types:copy', () => {
+  return src(paths.packageDist(packageName, 'dts/src/**/*.d.ts')).pipe(
+    dest(paths.packageDist(packageName, 'es')),
+  )
 })
+task('bundle:package:types:clean', cb => {
+  rimraf(`${config.paths.packageDist(packageName)}/dts/*`, cb)
+})
+task(
+  'bundle:package:types',
+  series('bundle:package:types:tsc', 'bundle:package:types:copy', 'bundle:package:types:clean'),
+)
 
 task('bundle:package:umd', cb => {
   process.env.NODE_ENV = 'build'

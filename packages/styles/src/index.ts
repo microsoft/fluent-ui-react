@@ -14,7 +14,7 @@ export {
   mergeThemeVariables,
   mergeSiteVariables,
 } from './mergeThemes'
-export { default as objectKeyToValues } from './objectKeyToValues'
+export { default as objectKeyToValues } from './objectKeysToValues'
 export { default as withDebugId } from './withDebugId'
 
 export * from './types'

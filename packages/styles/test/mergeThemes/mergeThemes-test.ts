@@ -297,7 +297,7 @@ describe('mergeThemes', () => {
               {
                 name: 'Segoe UI',
                 paths: ['public/fonts/segoe-ui-regular.woff2'],
-                style: { fontWeight: 400 },
+                props: { fontWeight: 400 },
               },
             ],
           },
@@ -306,7 +306,7 @@ describe('mergeThemes', () => {
               {
                 name: 'Segoe UI',
                 paths: ['public/fonts/segoe-ui-semibold.woff2'],
-                style: { fontWeight: 600 },
+                props: { fontWeight: 600 },
               },
             ],
           },
@@ -315,7 +315,7 @@ describe('mergeThemes', () => {
               {
                 name: 'Segoe UI',
                 paths: ['public/fonts/segoe-ui-bold.woff2'],
-                style: { fontWeight: 700 },
+                props: { fontWeight: 700 },
               },
             ],
           },
@@ -325,17 +325,17 @@ describe('mergeThemes', () => {
           {
             name: 'Segoe UI',
             paths: ['public/fonts/segoe-ui-regular.woff2'],
-            style: { fontWeight: 400 },
+            props: { fontWeight: 400 },
           },
           {
             name: 'Segoe UI',
             paths: ['public/fonts/segoe-ui-semibold.woff2'],
-            style: { fontWeight: 600 },
+            props: { fontWeight: 600 },
           },
           {
             name: 'Segoe UI',
             paths: ['public/fonts/segoe-ui-bold.woff2'],
-            style: { fontWeight: 700 },
+            props: { fontWeight: 700 },
           },
         ],
       })
@@ -469,7 +469,9 @@ describe('mergeThemes', () => {
         ],
       })
 
-      const buttonRootStyles = merged.componentStyles.Button.root({ variables: buttonVariables })
+      const buttonRootStyles = merged.componentStyles.Button.root({
+        variables: buttonVariables,
+      } as any)
       expect(buttonRootStyles).toMatchObject({
         _debug: [{ styles: { style: 'tStyleA' } }, { styles: { style: 'sVarA' } }],
       })
@@ -492,7 +494,9 @@ describe('mergeThemes', () => {
       expect(merged.siteVariables._debug).toBe(undefined)
       const buttonVariables = merged.componentVariables.Button(merged.siteVariables)
       expect(buttonVariables._debug).toBe(undefined)
-      const buttonRootStyles = merged.componentStyles.Button.root({ variables: buttonVariables })
+      const buttonRootStyles = merged.componentStyles.Button.root({
+        variables: buttonVariables,
+      } as any)
       expect(buttonRootStyles._debug).toBe(undefined)
     })
 
@@ -538,7 +542,9 @@ describe('mergeThemes', () => {
         ],
       })
 
-      const buttonRootStyles = merged.componentStyles.Button.root({ variables: buttonVariables })
+      const buttonRootStyles = merged.componentStyles.Button.root({
+        variables: buttonVariables,
+      } as any)
       expect(buttonRootStyles).toMatchObject({
         _debug: [{ debugId: 'target' }, { debugId: 'source' }],
       })
