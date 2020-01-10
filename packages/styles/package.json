@@ -1,11 +1,13 @@
 {
-  "name": "@fluentui/state",
-  "description": "A set of utils to create framework agnostic and reusable state managers",
+  "name": "@fluentui/styles",
+  "description": "A set of styling utilities for CSS-in-JS.",
   "version": "0.43.0",
-  "author": "Oleksandr Fediashov <a@fedyashov.com>",
+  "author": "Marija Najdova <mnajdova@gmail.com>",
   "bugs": "https://github.com/microsoft/fluent-ui-react/issues",
   "dependencies": {
-    "@babel/runtime": "^7.1.2"
+    "@babel/runtime": "^7.1.2",
+    "lodash": "^4.17.15",
+    "csstype": "^2.6.7"
   },
   "devDependencies": {
     "@fluentui/internal-tooling": "^0.43.0",
@@ -14,7 +16,7 @@
   "files": [
     "dist"
   ],
-  "homepage": "https://github.com/microsoft/fluent-ui-react/tree/master/packages/state",
+  "homepage": "https://github.com/microsoft/fluent-ui-react/tree/master/packages/styles",
   "jsnext:main": "dist/es/index.js",
   "license": "MIT",
   "main": "dist/commonjs/index.js",
@@ -24,7 +26,7 @@
   },
   "repository": "microsoft/fluent-ui-react.git",
   "scripts": {
-    "build": "gulp bundle:package:no-umd --package state"
+    "build": "gulp bundle:package:no-umd --package styles"
   },
   "sideEffects": false,
   "types": "dist/es/index.d.ts"

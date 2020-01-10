@@ -1,7 +1,14 @@
 {
-  "extends": "@stardust-ui/internal-tooling/ts/tsconfig.json",
+  "extends": "../../build/tsconfig.common",
   "compilerOptions": {
-    "composite": true
+    "composite": true,
+    "outDir": "dist/dts",
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "noUnusedParameters": true,
+    "strictNullChecks": true
   },
-  "include": ["src", "test"]
+  "include": ["src", "test"],
+  "references": []
 }
