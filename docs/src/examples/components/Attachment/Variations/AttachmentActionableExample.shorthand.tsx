@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Attachment } from '@stardust-ui/react'
+import { Attachment } from '@fluentui/react'
 
 class AttachmentActionableExampleShorthand extends React.Component {
   handleClick = message => e => {
@@ -14,7 +14,7 @@ class AttachmentActionableExampleShorthand extends React.Component {
         icon="table"
         header="Document.docx"
         description="800 Kb"
-        action={{ icon: 'more', onClick: this.handleClick('More Action') }}
+        action={{ icon: 'more', onClick: this.handleClick('More Action'), title: 'More Action' }}
         progress={33}
         onClick={this.handleClick('Attachment')}
       />

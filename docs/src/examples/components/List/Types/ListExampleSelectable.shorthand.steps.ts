@@ -1,4 +1,4 @@
-import { List } from '@stardust-ui/react'
+import { List } from '@fluentui/react'
 
 const selectors = {
   list: `.${List.className}`,
@@ -17,6 +17,7 @@ const config: ScreenerTestsConfig = {
         .snapshot('Selects an item')
         .hover(selectors.item(3))
         .snapshot('Highlights another item'),
+    (builder, keys) => builder.keys('body', keys.tab).snapshot('Focuses item'),
   ],
 }
 

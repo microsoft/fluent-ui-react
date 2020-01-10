@@ -1,9 +1,9 @@
 import * as React from 'react'
-import { Flex, Button } from '@stardust-ui/react'
+import { Flex, Button } from '@fluentui/react'
 
 const FlexExampleNavMenu = () => (
   <Flex gap="gap.small" debug>
-    <Button content="Logo" icon="chess rook" />
+    <Button content="Logo" icon="skype-logo" />
 
     <Flex.Item push>
       <Button content="Page 1" />

@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { CodeSnippet } from '@stardust-ui/docs-components'
-import { Button, Box, Flex, Header, Segment, Divider } from '@stardust-ui/react'
+import { CodeSnippet } from '@fluentui/docs-components'
+import { Button, Box, Flex, Header, Segment, Divider } from '@fluentui/react'
 
 import ExampleSnippet from '../components/ExampleSnippet'
 import DocPage from '../components/DocPage'
@@ -18,7 +18,7 @@ const links = {
 export default () => (
   <DocPage title="Layout Components">
     <Header as="h2">Overview</Header>
-    <p>The following components are introduced by Stardust to handle layout aspects:</p>
+    <p>The following components are introduced by Fluent UI to handle layout aspects:</p>
     <ul>
       <li>{links.flex} - designed for layout in one dimension, either a row or a column.</li>
       <li>
@@ -51,7 +51,7 @@ export default () => (
     <CodeSnippet
       label="OpaqueBackground.jsx"
       value={`
-        import { Segment } from '@stardust-ui/react'
+        import { Segment } from '@fluentui/react'
 
         const OpaqueBackground = ({ children, color }) =>
           <Segment styles={{ backgroundColor: color }} content={{ children }} />
@@ -75,7 +75,7 @@ export default () => (
     <CodeSnippet
       label="RelativePositioned.jsx"
       value={`
-        import { Box } from '@stardust-ui/react'
+        import { Box } from '@fluentui/react'
 
         const RelativePositioned = ({ children, top, right, bottom, left }) =>
           <Box styles={{ position: 'relative', top, right, bottom, left }} content={children} />
@@ -100,7 +100,7 @@ export default () => (
       wrong for the following reason:
     </p>
     <blockquote>
-      Stardust makes it very important to{' '}
+      Fluent UI makes it very important to{' '}
       <strong>follow component's semantics at the first place</strong>, and only then consider the
       visual aspects.
     </blockquote>
@@ -172,7 +172,7 @@ export default () => (
     <ExampleSnippet
       render={() => (
         <Flex space="between">
-          <Button content="Logo" icon="chess rook" />
+          <Button content="Logo" icon="emoji" />
 
           <Flex gap="gap.small">
             <Button content="Page 1" />
@@ -189,7 +189,7 @@ export default () => (
     <ExampleSnippet
       render={() => (
         <Flex gap="gap.small">
-          <Button content="Logo" icon="chess rook" />
+          <Button content="Logo" icon="emoji" />
           <Flex.Item push>
             <Button content="Page 1" />
           </Flex.Item>
@@ -209,7 +209,7 @@ export default () => (
       <strong>Each of these examples is optimized in terms of DOM elements rendered</strong>.
     </blockquote>
     <GuidesNavigationFooter
-      previous={{ name: 'Colors', url: 'color-palette' }}
+      previous={{ name: 'Colors', url: 'colors' }}
       next={{ name: 'Integrate Custom Components', url: 'integrate-custom-components' }}
     />
   </DocPage>

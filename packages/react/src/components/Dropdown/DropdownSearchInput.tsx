@@ -1,11 +1,17 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
-import { UIComponent, RenderResultConfig, createShorthandFactory, commonPropTypes } from '../../lib'
+import {
+  UIComponent,
+  RenderResultConfig,
+  createShorthandFactory,
+  commonPropTypes,
+  ShorthandFactory,
+} from '../../utils'
 import { ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
-import { UIComponentProps } from '../../lib/commonPropInterfaces'
+import { UIComponentProps } from '../../utils/commonPropInterfaces'
 import Input from '../Input/Input'
 
 export interface DropdownSearchInputSlotClassNames {
@@ -29,32 +35,32 @@ export interface DropdownSearchInputProps extends UIComponentProps<DropdownSearc
   /**
    * Called on input element focus.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onFocus?: ComponentEventHandler<DropdownSearchInputProps>
 
   /**
    * Called on input element blur.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onInputBlur?: ComponentEventHandler<DropdownSearchInputProps>
 
   /**
    * Called on input key down event.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onInputKeyDown?: ComponentEventHandler<DropdownSearchInputProps>
 
   /**
    * Called on input key up event.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onKeyUp?: ComponentEventHandler<DropdownSearchInputProps>
 
@@ -64,7 +70,7 @@ export interface DropdownSearchInputProps extends UIComponentProps<DropdownSearc
 
 class DropdownSearchInput extends UIComponent<WithAsProp<DropdownSearchInputProps>, any> {
   static displayName = 'DropdownSearchInput'
-  static create: Function
+  static create: ShorthandFactory<DropdownSearchInputProps>
   static slotClassNames: DropdownSearchInputSlotClassNames
   static className = 'ui-dropdown__searchinput'
 
@@ -85,23 +91,23 @@ class DropdownSearchInput extends UIComponent<WithAsProp<DropdownSearchInputProp
     placeholder: PropTypes.string,
   }
 
-  private handleFocus = (e: React.SyntheticEvent) => {
+  handleFocus = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 
-  private handleInputKeyDown = (e: React.SyntheticEvent) => {
+  handleInputKeyDown = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onInputKeyDown', e, this.props)
   }
 
-  private handleInputBlur = (e: React.SyntheticEvent) => {
+  handleInputBlur = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onInputBlur', e, this.props)
   }
 
-  private handleKeyUp = (e: React.SyntheticEvent) => {
+  handleKeyUp = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onKeyUp', e, this.props)
   }
 
-  public renderComponent({ unhandledProps, styles }: RenderResultConfig<DropdownSearchInputProps>) {
+  renderComponent({ unhandledProps, styles }: RenderResultConfig<DropdownSearchInputProps>) {
     const {
       accessibilityComboboxProps,
       accessibilityInputProps,
@@ -143,7 +149,7 @@ DropdownSearchInput.slotClassNames = {
 DropdownSearchInput.create = createShorthandFactory({ Component: DropdownSearchInput })
 
 /**
- * A sub-component of a search Dropdown.
+ * A DropdownSearchInput represents item of 'search' Dropdown.
  * Used to display the search input field.
  */
 export default withSafeTypeForAs<typeof DropdownSearchInput, DropdownSearchInputProps>(

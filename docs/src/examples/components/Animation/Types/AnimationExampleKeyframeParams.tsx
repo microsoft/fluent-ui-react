@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Animation, Flex, Icon, Provider, ThemeAnimation } from '@stardust-ui/react'
+import { Animation, Flex, Icon, Provider, ThemeAnimation } from '@fluentui/react'
 
 const colorChanger: ThemeAnimation<{ fromColor: string; toColor: string }> = {
   keyframe: ({ fromColor, toColor }) => ({
@@ -19,13 +19,13 @@ const AnimationExample = () => (
   <Provider theme={{ animations: { colorChanger } }}>
     <Flex gap="gap.smaller">
       <Animation name="colorChanger">
-        <Icon name="umbrella" circular bordered />
+        <Icon name="mention" circular bordered />
       </Animation>
       <Animation name="colorChanger" keyframeParams={{ fromColor: 'green', toColor: 'yellow' }}>
-        <Icon name="umbrella" circular bordered />
+        <Icon name="mention" circular bordered />
       </Animation>
       <Animation name="colorChanger" keyframeParams={{ toColor: 'black' }}>
-        <Icon name="umbrella" circular bordered />
+        <Icon name="mention" circular bordered />
       </Animation>
     </Flex>
   </Provider>

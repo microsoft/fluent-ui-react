@@ -1,4 +1,5 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility } from '@fluentui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import {
@@ -10,19 +11,13 @@ import {
   commonPropTypes,
   ContentComponentProps,
   rtlTextContainer,
-} from '../../lib'
+} from '../../utils'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
-import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
 
-export interface GridProps
-  extends UIComponentProps,
-    ChildrenComponentProps,
-    ContentComponentProps<React.ReactNode | React.ReactNode[]> {
+export interface GridProps extends UIComponentProps, ChildrenComponentProps, ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
-   * @available gridBehavior
+   * @available gridBehavior, gridHorizontalBehavior
    * */
   accessibility?: Accessibility
 
@@ -33,12 +28,12 @@ export interface GridProps
   rows?: string | number
 }
 
-class Grid extends UIComponent<WithAsProp<GridProps>, any> {
-  public static displayName = 'Grid'
+class Grid extends UIComponent<WithAsProp<GridProps>> {
+  static displayName = 'Grid'
 
-  public static className = 'ui-grid'
+  static className = 'ui-grid'
 
-  public static propTypes = {
+  static propTypes = {
     ...commonPropTypes.createCommon({
       content: false,
     }),
@@ -53,12 +48,11 @@ class Grid extends UIComponent<WithAsProp<GridProps>, any> {
     rows: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   }
 
-  public static defaultProps: WithAsProp<GridProps> = {
+  static defaultProps: WithAsProp<GridProps> = {
     as: 'div',
-    accessibility: defaultBehavior,
   }
 
-  public renderComponent({
+  renderComponent({
     accessibility,
     ElementType,
     classes,
@@ -80,9 +74,6 @@ class Grid extends UIComponent<WithAsProp<GridProps>, any> {
 }
 
 /**
- * A grid is used to harmonize negative space in a layout.
- * @accessibility
- * Do use Grid behavior for bidirectional keyboard navigation. Use appropriate ARIA role for the grid and actionable components inside of it.
- * Don't use grid component as a replacement for table.
+ * A Grid is a layout component that harmonizes negative space, by controlling both the row and column alignment.
  */
 export default withSafeTypeForAs<typeof Grid, GridProps>(Grid)

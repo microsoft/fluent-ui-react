@@ -4,10 +4,11 @@ import {
   Input,
   Menu,
   Provider,
-  toolbarButtonBehavior,
-  toolbarBehavior,
+  menuAsToolbarBehavior,
   MenuItemProps,
-} from '@stardust-ui/react'
+  ShorthandCollection,
+  IconXSpacing,
+} from '@fluentui/react'
 
 import { Props } from 'src/types'
 import chatProtoStyle from './chatProtoStyle'
@@ -42,7 +43,7 @@ const ComposeMessage: React.FunctionComponent<ComposeMessageProps> = props => (
           defaultActiveIndex={0}
           items={getMenuItems()}
           iconOnly
-          accessibility={toolbarBehavior}
+          accessibility={menuAsToolbarBehavior}
           aria-label="Compose Editor"
           styles={{ marginTop: '10px' }}
         />
@@ -73,8 +74,8 @@ const getInputWrapperStyles = ({ attached }: ComposeMessageProps): React.CSSProp
   }
 }
 
-const getMenuItems = (): MenuItemProps[] => {
-  const items: MenuItemProps[] = [
+const getMenuItems = (): ShorthandCollection<MenuItemProps> => {
+  const items: ShorthandCollection<MenuItemProps> = [
     'compose',
     'attach',
     'smile',
@@ -87,10 +88,9 @@ const getMenuItems = (): MenuItemProps[] => {
     key: `${index}-${name}`,
     icon: {
       name,
-      xSpacing: 'both',
+      xSpacing: 'both' as IconXSpacing,
       variables: siteVars => ({ color: siteVars.colors.grey[500] }),
     },
-    accessibility: toolbarButtonBehavior,
     'aria-label': `${name} tool`,
   }))
 

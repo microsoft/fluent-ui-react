@@ -1,52 +1,89 @@
-const _ = require('lodash')
+import * as Babel from '@babel/core'
+import { NodePath } from '@babel/traverse'
+import * as t from '@babel/types'
+import _ from 'lodash'
 
-// eslint-disable-next-line no-eval
-const evalValue = value => eval(value) // tslint:disable-line no-eval
+import { ComponentPropType } from 'docs/src/types'
+import { PropItem } from './docgen'
+import parseTypeAnnotation from './parseTypeAnnotation'
 
-const isTransformable = value => typeof value === 'string' && value.includes('names')
+/** Performs transform: `ShorthandValue<T & { kind?: N }>` to `ShorthandCollection<T, N>[]`. */
+const normalizeShorthandCollection = (propType: string): string => {
+  const regex = /ShorthandValue<(.+) & { kind\?: (.+); }>\[]$/
+  const result = regex.exec(propType)
 
-const uniqValues = values => _.uniqWith(values, (val, other) => `${val}` === `${other}`)
+  if (result) {
+    return `ShorthandCollection<${result[1]}, ${result[2]}>`
+  }
 
-const transformEnumValues = values =>
-  _.flatMap(values, ({ value }) => {
-    if (value === 'names') return evalValue(value)
-    return value.replace(/'/g, '')
+  return propType
+}
+
+const normalizeType = (propType: string): string => {
+  _.reduce(
+    [normalizeShorthandCollection],
+    (propType, normalizer): string => {
+      return normalizer(propType)
+    },
+    propType,
+  )
+
+  return normalizeShorthandCollection(propType)
+}
+
+const getTypeFromBabelTree = (componentFile: t.File, componentName: string, propName: string) => {
+  let typeAnnotation: t.TSType
+
+  const propertyVisitor: Babel.Visitor = {
+    TSPropertySignature: path => {
+      if (path.get('key').isIdentifier({ name: propName })) {
+        const annotationPath: NodePath<t.TSTypeAnnotation> = path.get('typeAnnotation')
+
+        typeAnnotation = annotationPath.get('typeAnnotation').node
+      }
+    },
+  }
+
+  Babel.traverse(componentFile, {
+    TSInterfaceDeclaration: path => {
+      if (path.get('id').isIdentifier({ name: `${componentName}Props` })) {
+        path.traverse(propertyVisitor)
+      }
+    },
   })
 
-const parseEnum = type => {
-  const { value } = type
-
-  if (isTransformable(value)) return { ...type, value: uniqValues(evalValue(value)) }
-  return { ...type, value: uniqValues(transformEnumValues(value)) }
+  return typeAnnotation
 }
 
-const parseUnion = union => {
-  const { value } = union
-  const values = _.flatten(_.map(_.filter(value, { name: 'enum' }), type => parseEnum(type).value))
+const parseType = (
+  componentFile: t.File,
+  componentName: string,
+  propName: string,
+  propInfo: PropItem,
+): ComponentPropType[] => {
+  const propType = normalizeType(propInfo.type.name)
 
-  return {
-    ...union,
-    name: _.map(value, 'name').join('|'),
-    value: values,
-  }
-}
+  let typeAnnotation: t.TSType
 
-const parsers = {
-  enum: parseEnum,
-  union: parseUnion,
-}
+  try {
+    const result = Babel.parse(`type __ = ${propType}`, {
+      configFile: false,
+      presets: [['@babel/preset-typescript', { allExtensions: true }]],
+    }) as t.File
 
-export default (propName, { type }) => {
-  if (type === undefined) {
-    throw new Error(
-      [
-        `The prop "${propName}" does not contain propType definition. This happens if the property is in the `,
-        'defaultProps, but it is not in the propTypes',
-      ].join(' '),
-    )
+    const body = result.program.body
+    const declaration = body[0]
+
+    if (body.length !== 1 || !t.isTSTypeAliasDeclaration(declaration)) {
+      throw new Error(`A prop "${propName}" has unsupported type definition: ${propType}`)
+    }
+
+    typeAnnotation = declaration.typeAnnotation
+  } catch (e) {
+    typeAnnotation = getTypeFromBabelTree(componentFile, componentName, propName)
   }
 
-  const parser = parsers[type.name]
-
-  return parser ? parser(type) : type
+  return parseTypeAnnotation(propName, propType, typeAnnotation)
 }
+
+export default parseType

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Animation, Icon, Grid, Text, Provider } from '@stardust-ui/react'
+import { Animation, Icon, Grid, Text, Provider } from '@fluentui/react'
 
 const colorChanger = {
   keyframe: {
@@ -18,16 +18,16 @@ const AnimationExampleFillMode = () => (
       <Text content="Backwards" />
       <Text content="Both" />
       <Animation name="colorChanger" fillMode="none" delay="3s" iterationCount="1">
-        <Icon name="umbrella" circular bordered />
+        <Icon name="mention" circular bordered />
       </Animation>
       <Animation name="colorChanger" fillMode="forwards" delay="3s" iterationCount="1">
-        <Icon name="umbrella" circular bordered />
+        <Icon name="mention" circular bordered />
       </Animation>
       <Animation name="colorChanger" fillMode="backwards" delay="3s" iterationCount="1">
-        <Icon name="umbrella" circular bordered />
+        <Icon name="mention" circular bordered />
       </Animation>
       <Animation name="colorChanger" fillMode="both" delay="3s" iterationCount="1">
-        <Icon name="umbrella" circular bordered />
+        <Icon name="mention" circular bordered />
       </Animation>
     </Grid>
   </Provider>

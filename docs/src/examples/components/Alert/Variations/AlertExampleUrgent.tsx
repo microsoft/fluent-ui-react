@@ -1,13 +1,8 @@
 import * as React from 'react'
-import { Alert } from '@stardust-ui/react'
+import { Alert } from '@fluentui/react'
 
 const AlertExampleUrgent = () => (
-  <Alert
-    variables={{ urgent: true }}
-    action={{
-      icon: 'close',
-    }}
-  >
+  <Alert dismissible variables={{ urgent: true }}>
     This is an urgent alert
   </Alert>
 )

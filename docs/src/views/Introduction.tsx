@@ -1,21 +1,22 @@
 import * as _ from 'lodash'
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Flex, Header } from '@stardust-ui/react'
+import { Flex, Header } from '@fluentui/react'
 
 import pkg from '../../../packages/react/package.json'
 import Logo from '../components/Logo/Logo'
 
 const Introduction = () => (
-  <div style={{ margin: '0 225px', fontSize: '1.125em', maxWidth: '80ch' }}>
+  <div style={{ margin: '0 225px', fontSize: '1.125em', maxWidth: '100ch' }}>
     <Flex column hAlign="center" padding="padding.medium">
-      <Logo width="150px" />
+      <Logo styles={{ width: '150px' }} />
       <Header
         as="h1"
         styles={{
           marginTop: '24px',
           marginBottom: '0px',
           fontSize: '2rem',
+          textAlign: 'center',
         }}
       >
         {_.capitalize(pkg.name)}
@@ -30,12 +31,12 @@ const Introduction = () => (
       </Header>
     </Flex>
     <p>
-      Stardust UI provides extensible vanilla JavaScript solutions to component state, styling, and
+      Fluent UI provides extensible vanilla JavaScript solutions to component state, styling, and
       accessibility. These powerful features are exposed behind simple APIs based on natural
       language.
     </p>
     <p>
-      Stardust UI React is being built as an exemplar of the Stardust UI design language, component
+      Fluent UI React is being built as an exemplar of the Fluent UI design language, component
       specifications, and utilities.
     </p>
 

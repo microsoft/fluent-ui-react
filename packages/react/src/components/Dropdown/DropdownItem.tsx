@@ -1,19 +1,27 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
-import { UIComponent, RenderResultConfig, createShorthandFactory, commonPropTypes } from '../../lib'
+import {
+  UIComponent,
+  RenderResultConfig,
+  createShorthandFactory,
+  commonPropTypes,
+  ShorthandFactory,
+} from '../../utils'
 import { ShorthandValue, ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
-import { UIComponentProps } from '../../lib/commonPropInterfaces'
+import { UIComponentProps } from '../../utils/commonPropInterfaces'
 import ListItem from '../List/ListItem'
-import Image from '../Image/Image'
-import Box from '../Box/Box'
+import Icon, { IconProps } from '../Icon/Icon'
+import Image, { ImageProps } from '../Image/Image'
+import Box, { BoxProps } from '../Box/Box'
 
 export interface DropdownItemSlotClassNames {
   content: string
   header: string
   image: string
+  checkableIndicator: string
 }
 
 export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
@@ -24,13 +32,19 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
   accessibilityItemProps?: any
 
   /** Item's content. */
-  content?: ShorthandValue
+  content?: ShorthandValue<BoxProps>
+
+  /** Item can show check indicator if selected. */
+  checkable?: boolean
+
+  /** A slot for a checkable indicator. */
+  checkableIndicator?: ShorthandValue<IconProps>
 
   /** Item's header. */
-  header?: ShorthandValue
+  header?: ShorthandValue<BoxProps>
 
   /** Item's image. */
-  image?: ShorthandValue
+  image?: ShorthandValue<ImageProps>
 
   /** Indicated whether the item has been set active by keyboard. */
   isFromKeyboard?: boolean
@@ -38,8 +52,8 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
   /**
    * Called on dropdown item click.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onClick?: ComponentEventHandler<DropdownItemProps>
 
@@ -50,7 +64,7 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
 class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
   static displayName = 'DropdownItem'
 
-  static create: Function
+  static create: ShorthandFactory<DropdownItemProps>
 
   static className = 'ui-dropdown__item'
 
@@ -65,47 +79,65 @@ class DropdownItem extends UIComponent<WithAsProp<DropdownItemProps>> {
     accessibilityItemProps: PropTypes.object,
     active: PropTypes.bool,
     content: customPropTypes.itemShorthand,
+    checkable: PropTypes.bool,
+    checkableIndicator: customPropTypes.itemShorthandWithoutJSX,
     header: customPropTypes.itemShorthand,
-    image: customPropTypes.itemShorthand,
+    image: customPropTypes.itemShorthandWithoutJSX,
     onClick: PropTypes.func,
     isFromKeyboard: PropTypes.bool,
     selected: PropTypes.bool,
   }
 
-  private handleClick = e => {
+  handleClick = e => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  public renderComponent({
-    classes,
-    styles,
-    unhandledProps,
-  }: RenderResultConfig<DropdownItemProps>) {
-    const { content, header, image, accessibilityItemProps } = this.props
+  renderComponent({ classes, styles, unhandledProps }: RenderResultConfig<DropdownItemProps>) {
+    const {
+      content,
+      header,
+      image,
+      accessibilityItemProps,
+      selected,
+      checkable,
+      checkableIndicator,
+    } = this.props
     return (
       <ListItem
         className={DropdownItem.className}
         styles={styles.root}
         onClick={this.handleClick}
         header={Box.create(header, {
-          defaultProps: {
+          defaultProps: () => ({
             className: DropdownItem.slotClassNames.header,
             styles: styles.header,
-          },
+          }),
         })}
         media={Image.create(image, {
-          defaultProps: {
+          defaultProps: () => ({
             avatar: true,
             className: DropdownItem.slotClassNames.image,
             styles: styles.image,
-          },
+          }),
         })}
         content={Box.create(content, {
-          defaultProps: {
+          defaultProps: () => ({
             className: DropdownItem.slotClassNames.content,
             styles: styles.content,
-          },
+          }),
         })}
+        endMedia={
+          selected &&
+          checkable && {
+            content: Icon.create(checkableIndicator, {
+              defaultProps: () => ({
+                className: DropdownItem.slotClassNames.checkableIndicator,
+                styles: styles.checkableIndicator,
+              }),
+            }),
+            styles: styles.endMedia,
+          }
+        }
         truncateContent
         truncateHeader
         {...accessibilityItemProps}
@@ -119,12 +151,13 @@ DropdownItem.slotClassNames = {
   content: `${DropdownItem.className}__content`,
   header: `${DropdownItem.className}__header`,
   image: `${DropdownItem.className}__image`,
+  checkableIndicator: `${DropdownItem.className}__checkable-indicator`,
 }
 
 DropdownItem.create = createShorthandFactory({ Component: DropdownItem, mappedProp: 'header' })
 
 /**
- * A sub-component of the Dropdown.
- * Used to display items of the dropdown list.
+ * A DropdownItem represents an option of Dropdown list.
+ * Displays an item with optional rich media metadata.
  */
 export default withSafeTypeForAs<typeof DropdownItem, DropdownItemProps>(DropdownItem)

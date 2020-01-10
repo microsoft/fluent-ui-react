@@ -1,4 +1,4 @@
-const commonConfig = require('@stardust-ui/internal-tooling/jest')
+const commonConfig = require('@fluentui/internal-tooling/jest')
 
 module.exports = {
   ...commonConfig,
@@ -8,7 +8,7 @@ module.exports = {
     'docs/(.*)$': `<rootDir>/../../docs/$1`,
 
     // Legacy aliases, they should not be used in new tests
-    'src/(.*)$': `<rootDir>/src/$1`,
+    '^src/(.*)$': `<rootDir>/src/$1`,
     'test/(.*)$': `<rootDir>/test/$1`,
   },
 }

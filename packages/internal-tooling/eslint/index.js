@@ -1,7 +1,7 @@
 module.exports = {
-  extends: ['airbnb', 'plugin:prettier/recommended'],
+  extends: ['airbnb', 'prettier'],
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'jest', 'import', 'prettier', 'react-hooks'],
+  plugins: ['@typescript-eslint', 'jest', 'import', 'react-hooks', '@fluentui'],
   env: {
     browser: true,
     'jest/globals': true,
@@ -12,9 +12,8 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': ['error', { args: 'none' }],
 
     'import/no-unresolved': 'off',
-    'prettier/prettier': 'error',
     'react/jsx-filename-extension': ['error', { extensions: ['.js', '.tsx'] }],
-    'no-shadow': 'off', // https://github.com/stardust-ui/react/pull/1261#pullrequestreview-231005092
+    'no-shadow': 'off', // https://github.com/microsoft/fluent-ui-react/pull/1261#pullrequestreview-231005092
     'no-unused-vars': 'off', // we use @typescript-eslint/no-unused-vars instead
     semi: ['error', 'never'],
 
@@ -37,6 +36,7 @@ module.exports = {
     'react/button-has-type': 'off',
     'react/destructuring-assignment': 'off',
     'react/default-props-match-prop-types': 'off',
+    'react/forbid-foreign-prop-types': 'off',
     'react/jsx-curly-brace-presence': 'off',
     'react/jsx-boolean-value': 'off',
     'react/jsx-no-bind': 'off',
@@ -81,6 +81,7 @@ module.exports = {
     'no-return-await': 'off',
     'no-return-assign': 'off',
     'no-restricted-globals': 'off',
+    'no-restricted-properties': ['off', { object: 'Math', property: 'pow' }],
     'no-restricted-syntax': 'off',
     'no-throw-literal': 'off',
     'no-sparse-arrays': 'off',
@@ -107,6 +108,18 @@ module.exports = {
       files: '**/test/**/*.{ts,tsx}',
       rules: {
         'import/no-extraneous-dependencies': 'off',
+      },
+    },
+    {
+      files: '**/*.tsx',
+      rules: {
+        '@fluentui/no-visibility-modifiers': 'error',
+      },
+    },
+    {
+      files: '**/*.{ts,tsx}',
+      rules: {
+        'no-dupe-class-members': 'off',
       },
     },
   ],

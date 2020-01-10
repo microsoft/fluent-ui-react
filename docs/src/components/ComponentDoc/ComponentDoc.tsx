@@ -1,19 +1,19 @@
-import * as _ from 'lodash'
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { withRouter } from 'react-router'
-import { Flex, Header, Icon, Dropdown, Text, Grid, Divider } from '@stardust-ui/react'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
+import { tabListBehavior, Header, Icon, Dropdown, Text, Grid, Menu } from '@fluentui/react'
 
-import componentInfoShape from 'docs/src/utils/componentInfoShape'
-import { scrollToAnchor, examplePathToHash, getFormattedHash } from 'docs/src/utils'
-import ComponentDocLinks from './ComponentDocLinks'
-import ComponentDocSee from './ComponentDocSee'
-import ComponentExamples from './ComponentExamples'
+import { getFormattedHash } from 'docs/src/utils'
+// import ComponentDocLinks from './ComponentDocLinks'
+// import ComponentDocSee from './ComponentDocSee'
+import { ComponentExamples } from './ComponentExamples'
 import ComponentProps from './ComponentProps'
-import ComponentAccessibility from './ComponentDocAccessibility'
+import { ComponentDocAccessibility } from './ComponentDocAccessibility'
 import { ThemeContext } from 'docs/src/context/ThemeContext'
 import ExampleContext from 'docs/src/context/ExampleContext'
-import ComponentPlayground from 'docs/src/components/ComponentPlayground'
+import ComponentPlayground from 'docs/src/components/ComponentPlayground/ComponentPlayground'
+import { ComponentInfo } from 'docs/src/types'
+import ComponentBestPractices from './ComponentBestPractices'
+import * as _ from 'lodash'
 
 const exampleEndStyle: React.CSSProperties = {
   textAlign: 'center',
@@ -21,25 +21,60 @@ const exampleEndStyle: React.CSSProperties = {
   paddingTop: '75vh',
 }
 
-class ComponentDoc extends React.Component<any, any> {
-  static propTypes = {
-    history: PropTypes.object.isRequired,
-    info: componentInfoShape.isRequired,
+type ComponentDocProps = {
+  info: ComponentInfo
+  tabs: string[]
+} & RouteComponentProps<{}>
+
+type ComponentDocState = {
+  activePath: string
+  currentTabIndex: number
+}
+
+class ComponentDoc extends React.Component<ComponentDocProps, ComponentDocState> {
+  state = {
+    activePath: '',
+    propComponent: '',
+    currentTabIndex: 0,
   }
 
-  state: any = {}
+  tabRegex = new RegExp(/[^\/]*$/)
+
+  getTabIndexOrRedirectToDefault(tab: string, tabs) {
+    const lowercaseTabs = _.map(tabs, tab => tab.toLowerCase())
+    const index = lowercaseTabs.indexOf(tab)
+    if (index === -1) {
+      const { history, location } = this.props
+      const at = location.pathname
+      const newLocation = at.replace(this.tabRegex, 'definition')
+      history.push(newLocation)
+      return 0
+    }
+    return index
+  }
+
+  getCurrentTabTitle() {
+    return this.props.tabs[this.state.currentTabIndex]
+  }
 
   componentWillMount() {
-    const { history, location } = this.props
+    const { history, location, tabs } = this.props
+    const tab = location.pathname.match(this.tabRegex)[0]
+    const tabIndex = this.getTabIndexOrRedirectToDefault(tab, tabs)
+    this.setState({ currentTabIndex: tabIndex })
 
     if (location.hash) {
       const activePath = getFormattedHash(location.hash)
-      history.replace(`${location.pathname}#${activePath}`)
+      history.replace({ ...history.location, hash: activePath })
       this.setState({ activePath })
     }
   }
 
-  componentWillReceiveProps({ info }) {
+  componentWillReceiveProps({ info, location, tabs }) {
+    const tab = location.pathname.match(this.tabRegex)[0]
+    const tabIndex = this.getTabIndexOrRedirectToDefault(tab, tabs)
+    this.setState({ currentTabIndex: tabIndex })
+
     if (info.displayName !== this.props.info.displayName) {
       this.setState({ activePath: undefined })
     }
@@ -49,15 +84,25 @@ class ComponentDoc extends React.Component<any, any> {
     this.setState({ activePath: passedAnchorName })
   }
 
-  handleExamplesRef = examplesRef => this.setState({ examplesRef })
-
+  /* TODO: bring back the right floating menu
   handleSidebarItemClick = (e, { examplePath }) => {
-    const { history, location } = this.props
+    const { history } = this.props
     const activePath = examplePathToHash(examplePath)
 
-    history.replace(`${location.pathname}#${activePath}`)
+    history.replace({ ...history.location, hash: activePath })
     // set active hash path
     this.setState({ activePath }, scrollToAnchor)
+  }
+  */
+
+  handleTabClick = (e, props) => {
+    const newIndex = props.index
+    const { history, location } = this.props
+    const at = location.pathname
+    const newLocation = at.replace(this.tabRegex, this.props.tabs[newIndex].toLowerCase())
+
+    history.push(newLocation)
+    this.setState({ currentTabIndex: newIndex })
   }
 
   render() {
@@ -87,87 +132,109 @@ class ComponentDoc extends React.Component<any, any> {
       return ''
     }
 
-    const { info } = this.props
-    const { activePath } = this.state
+    const { info, tabs } = this.props
+    const { activePath, currentTabIndex } = this.state
 
+    const PAGE_PADDING = '20px'
     return (
-      <div style={{ padding: '20px' }}>
-        <Flex column>
-          <Flex.Item padding="padding.medium">
-            <ThemeContext.Consumer>
-              {({ changeTheme, themeOptions }) => (
-                <Dropdown
-                  getA11yStatusMessage={getA11yStatusMessage}
-                  getA11ySelectionMessage={getA11ySelectionMessage}
-                  noResultsMessage="We couldn't find any matches."
-                  placeholder="Theme"
-                  onSelectedChange={changeTheme}
-                  items={themeOptions.map(({ text, value }) => ({ header: text, value }))}
-                />
-              )}
-            </ThemeContext.Consumer>
-          </Flex.Item>
-          <Flex.Item>
+      <div>
+        <div
+          id="docs-sticky-header"
+          style={{
+            position: 'sticky',
+            padding: `${PAGE_PADDING} ${PAGE_PADDING} 10px ${PAGE_PADDING}`,
+            top: 0,
+            background: '#DDDDDD88',
+            borderBottom: '1px solid #00000022',
+            backdropFilter: 'blur(10px)',
+            zIndex: 1000,
+          }}
+        >
+          <ThemeContext.Consumer>
+            {({ changeTheme, themeOptions }) => (
+              <Dropdown
+                style={{ float: 'right' }}
+                getA11yStatusMessage={getA11yStatusMessage}
+                getA11ySelectionMessage={getA11ySelectionMessage}
+                noResultsMessage="We couldn't find any matches."
+                placeholder="Theme"
+                onSelectedChange={changeTheme}
+                items={themeOptions.map(({ text, value }) => ({ header: text, value }))}
+              />
+            )}
+          </ThemeContext.Consumer>
+          <Header
+            as="h1"
+            aria-level={2}
+            content={info.displayName}
+            style={{ margin: 0 }}
+            variables={{ color: 'black' }}
+          />
+          <Menu
+            underlined
+            activeIndex={currentTabIndex}
+            items={tabs}
+            style={{ marginTop: '0.5rem', background: 'none', border: 'none' }}
+            onItemClick={this.handleTabClick}
+            accessibility={tabListBehavior}
+          />
+        </div>
+        {/* <ComponentDocSee displayName={info.displayName} /> */}
+
+        <div style={{ padding: PAGE_PADDING }}>
+          {/* <ComponentDocLinks */}
+          {/*  displayName={info.displayName} */}
+          {/*  parentDisplayName={info.parentDisplayName} */}
+          {/*  repoPath={info.repoPath} */}
+          {/*  type={info.type} */}
+          {/* /> */}
+
+          {this.getCurrentTabTitle() === 'Accessibility' && (
+            <ComponentDocAccessibility info={info} />
+          )}
+
+          {this.getCurrentTabTitle() === 'Props' && (
+            <ComponentProps displayName={info.displayName} props={info.props} />
+          )}
+
+          {this.getCurrentTabTitle() === 'Definition' && (
             <>
-              <Flex styles={{ justifyContent: 'space-between' }}>
-                <Flex.Item>
-                  <Header
-                    as="h1"
-                    aria-level={2}
-                    content={info.displayName}
-                    variables={{ color: 'black' }}
-                  />
-                </Flex.Item>
-                <Flex.Item>
-                  <ComponentDocLinks
-                    displayName={info.displayName}
-                    parentDisplayName={info.parentDisplayName}
-                    repoPath={info.repoPath}
-                    type={info.type}
-                  />
-                </Flex.Item>
-              </Flex>
               <Text
-                styles={{ marginBottom: '1.4rem' }}
-                content={_.join(info.docblock.description, ' ')}
+                size="large"
+                content={info.docblock.description}
+                style={{
+                  display: 'block',
+                  margin: '0 0 1rem 0',
+                }}
               />
-              <ComponentAccessibility info={info} />
-              <ComponentDocSee displayName={info.displayName} />
-              <Divider />
-              <ComponentProps displayName={info.displayName} props={info.props} />
+              <ComponentPlayground
+                componentName={info.displayName}
+                key={info.displayName}
+                style={{ marginTop: '1rem' }}
+              />
+              <Grid
+                columns="auto 300px"
+                styles={{ justifyContent: 'normal', justifyItems: 'stretch' }}
+              >
+                <div>
+                  <ComponentBestPractices displayName={info.displayName} />
+                  <ExampleContext.Provider
+                    value={{
+                      activeAnchorName: activePath,
+                      onExamplePassed: this.handleExamplePassed,
+                    }}
+                  >
+                    <ComponentExamples displayName={info.displayName} />
+                  </ExampleContext.Provider>
+                </div>
+              </Grid>
             </>
-          </Flex.Item>
-        </Flex>
+          )}
 
-        <ComponentPlayground componentName={info.displayName} key={info.displayName} />
-
-        <Grid columns="auto 300px" styles={{ justifyContent: 'normal', justifyItems: 'stretch' }}>
-          <div ref={this.handleExamplesRef}>
-            <ExampleContext.Provider
-              value={{
-                activeAnchorName: activePath,
-                onExamplePassed: this.handleExamplePassed,
-              }}
-            >
-              <ComponentExamples displayName={info.displayName} />
-            </ExampleContext.Provider>
-
-            <div style={exampleEndStyle}>
-              This is the bottom <Icon name="pointing down" />
-            </div>
+          <div style={exampleEndStyle}>
+            This is the bottom <Icon name="pointing down" />
           </div>
-
-          {/* TODO: bring back the right floating menu
-            <Box styles={{ width: '25%', paddingLeft: '14px' }}>
-              <ComponentSidebar
-                activePath={activePath}
-                displayName={info.displayName}
-                examplesRef={examplesRef}
-                onItemClick={this.handleSidebarItemClick}
-              />
-            </Box>
-          */}
-        </Grid>
+        </div>
       </div>
     )
   }

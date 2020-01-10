@@ -1,5 +1,5 @@
-import { pxToRem, SizeValue } from '../../../../lib'
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { pxToRem, SizeValue } from '../../../../utils'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { StatusProps } from '../../../../components/Status/Status'
 import { StatusVariables } from './statusVariables'
 
@@ -55,7 +55,7 @@ export const getSizeStyles = (sizeInPx: number, variables: StatusVariables) => {
   }
 }
 
-const statusStyles: ComponentSlotStylesInput<StatusProps, StatusVariables> = {
+const statusStyles: ComponentSlotStylesPrepared<StatusProps, StatusVariables> = {
   root: ({ props: { color, size, state }, variables }): ICSSInJSStyle => {
     return {
       display: 'inline-flex',

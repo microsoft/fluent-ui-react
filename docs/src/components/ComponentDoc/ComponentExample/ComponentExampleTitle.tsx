@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Flex, Header, Text } from '@stardust-ui/react'
+import { Header, Text } from '@fluentui/react'
 
 const titleStyle = {
   margin: 0,
@@ -14,10 +14,10 @@ export default class ComponentExampleTitle extends React.PureComponent<Component
   render() {
     const { description, title } = this.props
     return (
-      <Flex column>
+      <div>
         {title && <Header as="h3" className="no-anchor" content={title} styles={titleStyle} />}
         <Text content={description} />
-      </Flex>
+      </div>
     )
   }
 }

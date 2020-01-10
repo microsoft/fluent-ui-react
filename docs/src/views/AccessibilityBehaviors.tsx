@@ -1,6 +1,6 @@
-import { CodeSnippet } from '@stardust-ui/docs-components'
+import { CodeSnippet } from '@fluentui/docs-components'
 import * as React from 'react'
-import { Header } from '@stardust-ui/react'
+import { Header } from '@fluentui/react'
 import DocPage from '../components/DocPage'
 import { code, link } from '../utils/helpers'
 import { Link } from 'react-router-dom'
@@ -15,7 +15,7 @@ export default () => (
     </ul>
     <Header as="h2">Overview</Header>
     <p>
-      In Stardust, accessibility behaviors encapsulate the logic needed for keyboard navigation,
+      In Fluent UI, accessibility behaviors encapsulate the logic needed for keyboard navigation,
       focus handling and screen reading. They essentially add ARIA roles, ARIA attributes and event
       handlers to components' parts. The idea is to compose visual components and apply a behavior
       on top of them to achieve the desired keyboard navigation and screen reader support.
@@ -60,29 +60,16 @@ export default () => (
           <p>Type: {code('{ mode: FocusZoneMode, props?: FocusZoneProps }')}.</p>
         </li>
         <li>
-          <b>focusTrap</b> - {code('FocusTrapZone')} grabs the focus and traps it within an HTML
-          element, usually a dialog or popup.{' '}
-          <Link to="focus-trap-zone">Read more about FocusTrapZone.</Link>
-          <p>Type: {code('FocusTrapZoneProps | boolean')}.</p>
-        </li>
-        <li>
-          <b>autoFocus</b> - {code('AutoFocusZone')} is used to grab focus and put it to inner
-          element when component mounts. For example, when it is needed to focus an inner element in
-          the Popup when it mounts. If true, it is enabled with default properties or can be
-          modified by setting object.{' '}
-          <Link to="auto-focus-zone">Read more about AutoFocusZone.</Link>
-          <p>Type: {code('AutoFocusZoneProps | boolean')}.</p>
-        </li>
-        <li>
           <b>childBehaviors</b> - {code('{ [childBehaviorSlot: string]: Accessibility }')} are used
           for components such as {code('Menu')} that contain children which, in turn, require their
           own behaviors. For instance, for a {code('Toolbar')} to work properly, the {code('Menu')}{' '}
           needs to have applied the
-          {code('toolbarBehavior')}, while each {code('MenuItem')} needs to have{' '}
-          {code('toolbarButtonBehavior')}. In this case of parent-child relationship, it makes sense
-          for the {code('toolbarBehavior')} to contain the default option for the {code('Menu')}{' '}
-          children, in this case {code('toolbarButtonBehavior')}. When the {code('Menu')} is
-          created, it will automatically add the default child behaviors for its children:
+          {code('menuAsToolbarBehavior')}, while each {code('MenuItem')} needs to have{' '}
+          {code('menuItemAsToolbarButtonBehavior')}. In this case of parent-child relationship, it
+          makes sense for the {code('menuAsToolbarBehavior')} to contain the default option for the{' '}
+          {code('Menu')} children, in this case {code('menuItemAsToolbarButtonBehavior')}. When the{' '}
+          {code('Menu')} is created, it will automatically add the default child behaviors for its
+          children:
           {code('MenuItem')} and {code('MenuDivider')}.
         </li>
       </ul>
@@ -213,8 +200,6 @@ export default () => (
           },
         },
         focusZone: {},
-        focusTrap: {},
-        autoFocus: {},
       })
       `}
     />
@@ -232,11 +217,11 @@ export default () => (
       value={`
       const overridenMenuBehavior: Accessibility = (props: any) => {
         const behavior = menuBehavior(props)
-      
+
         behavior.focusZone.props.defaultTabbableElement = (root: HTMLElement): HTMLElement => {
           return root.querySelector(".ui-menu__item__wrapper:last-child")
         }
-      
+
         return behavior
       }
       `}
@@ -244,10 +229,10 @@ export default () => (
 
     <CodeSnippet label="App.jsx" value={`<Menu accessibility={overridenMenuBehavior} />`} />
     <p>
-      All Stardust behaviors implementations can be found on the{' '}
+      All Fluent UI behaviors implementations can be found on the{' '}
       {link(
         'GitHub',
-        'https://github.com/stardust-ui/react/tree/master/packages/react/src/lib/accessibility/Behaviors',
+        'https://github.com/microsoft/fluent-ui-react/tree/master/packages/react/src/utils/accessibility/Behaviors',
       )}
       .
     </p>

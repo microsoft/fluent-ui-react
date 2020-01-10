@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
-import { UIComponent } from 'src/lib'
+import { UIComponent } from 'src/utils'
 import { Extendable } from 'src/types'
 import { ICSSInJSStyle } from 'src/themes/types'
 import { mountWithProviderAndGetComponent } from 'test/utils'
@@ -28,16 +28,16 @@ const testStylesForComponent = ({
   expected,
 }: { props?: Props; state?: State; expected?: PropsAndState } = {}) => {
   class TestComponent extends UIComponent<Extendable<Props>, State> {
-    public static className = testClassName
-    public static propTypes = {
+    static className = testClassName
+    static propTypes = {
       propsAttr: PropTypes.any,
       commonAttr: PropTypes.any,
       styles: PropTypes.any,
     }
 
-    public state = state
+    state = state
 
-    public renderComponent({ ElementType, classes, unhandledProps }): React.ReactNode {
+    renderComponent({ ElementType, classes, unhandledProps }): React.ReactNode {
       return <ElementType {...unhandledProps} className={classes.root} />
     }
   }

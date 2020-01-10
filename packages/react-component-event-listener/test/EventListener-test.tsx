@@ -1,4 +1,4 @@
-import { documentRef, EventListener } from '@stardust-ui/react-component-event-listener'
+import { documentRef, EventListener } from '@fluentui/react-component-event-listener'
 import { mount } from 'enzyme'
 import * as React from 'react'
 import * as simulant from 'simulant'
@@ -68,7 +68,7 @@ describe('EventListener', () => {
   })
 
   describe('type', () => {
-    it('handlers changes', () => {
+    it('handles changes', () => {
       const listener = jest.fn()
       const wrapper = mount(
         <EventListener listener={listener} targetRef={documentRef} type="click" />,

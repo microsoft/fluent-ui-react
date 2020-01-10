@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Accordion } from '@stardust-ui/react'
+import { Accordion } from '@fluentui/react'
 
 const panels = [
   {

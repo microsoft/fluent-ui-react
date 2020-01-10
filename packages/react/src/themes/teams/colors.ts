@@ -21,6 +21,7 @@ export const contextualColors: TeamsContextualColors = {
     200: '#E2E2F6', // 100, light brand14, dark theme brand02
     300: '#BDBDE6', // 200, light brand12, dark theme brand04
     400: '#A6A7DC', // dark theme brand06 (dark06)
+    450: '#9EA2FF',
     500: '#8B8CC7', // light08, dark08
     600: '#6264A7', // 500, siteVariables.brand, siteVariables.brand06, dark theme brand, brand12
     700: '#585A96', // light05
@@ -151,13 +152,24 @@ export const transparentColors: TeamsTransparentColors = {
   },
   onyx: {
     100: 'rgba(59,58,57,0.9)',
-    200: undefined,
-    300: undefined,
-    400: undefined,
+    200: 'rgba(45,44,44,0.4)',
+    300: 'rgba(37,36,35,0.2)',
+    400: 'rgba(37,36,35,0.65)',
     500: 'rgba(41,40,40,0.9)',
     600: undefined,
-    700: undefined,
+    700: 'rgba(0,0,0,0.5)',
     800: 'rgba(27,26,26,0.9)',
+    900: 'rgba(0,0,0,0.8)',
+  },
+  amethyst: {
+    100: undefined,
+    200: undefined,
+    300: undefined,
+    400: 'rgba(98,100,167,0.75)',
+    500: 'rgba(51,52,74,0.5)',
+    600: 'rgba(70,71,117,0.4)',
+    700: 'rgba(98,100,167,0.15)',
+    800: undefined,
     900: undefined,
   },
 }
@@ -168,52 +180,54 @@ export const colors: ColorPalette<TeamsTransparentColors> = {
   ...transparentColors,
 }
 
-const createColorScheme = (color: string, customValues = {}) => {
+export const createColorScheme = (customValues = {}) => {
   return {
-    foreground: colors[color][600],
-    background: colors[color][50],
-    border: colors[color][600],
-    shadow: colors[color][600],
+    foreground: undefined,
+    background: undefined,
+    border: undefined,
+    shadow: undefined,
 
-    foregroundHover: colors[color][50],
-    backgroundHover: colors[color][600],
-    borderHover: colors[color][600],
-    shadowHover: colors[color][600],
+    foregroundHover: undefined,
+    backgroundHover: undefined,
+    borderHover: undefined,
+    shadowHover: undefined,
 
-    foregroundActive: colors[color][50],
-    backgroundActive: colors[color][600],
-    borderActive: colors[color][600],
-    shadowActive: colors[color][600],
+    foregroundActive: undefined,
+    backgroundActive: undefined,
+    borderActive: undefined,
+    shadowActive: undefined,
 
-    foregroundFocus: colors[color][50],
-    backgroundFocus: colors[color][600],
-    borderFocus: colors[color][600],
-    shadowFocus: colors[color][600],
+    foregroundFocus: undefined,
+    backgroundFocus: undefined,
+    borderFocus: undefined,
+    shadowFocus: undefined,
 
-    foregroundPressed: colors[color][50],
-    backgroundPressed: colors[color][600],
-    borderPressed: colors[color][600],
-    shadowPressed: colors[color][600],
+    foregroundPressed: undefined,
+    backgroundPressed: undefined,
+    borderPressed: undefined,
+    shadowPressed: undefined,
 
-    foregroundDisabled: colors[color][50],
-    backgroundDisabled: colors[color][600],
-    borderDisabled: colors[color][600],
-    shadowDisabled: colors[color][600],
+    foregroundDisabled: undefined,
+    backgroundDisabled: undefined,
+    borderDisabled: undefined,
+    shadowDisabled: undefined,
     ...customValues,
   }
 }
 
 export const colorScheme: ColorSchemeMapping<ColorScheme, TeamsColorNames> = {
-  default: {
+  default: createColorScheme({
     foreground: colors.grey[750],
     foreground1: colors.grey[500],
     foreground2: colors.grey[450],
     foreground3: colors.white,
+    foreground4: colors.white,
 
     background: colors.white,
     background1: colors.grey[50],
     background2: colors.grey[100],
     background3: colors.grey[150],
+    background4: colors.grey[100],
 
     border: colors.grey[200], // buttons
     border1: colors.grey[150],
@@ -225,6 +239,7 @@ export const colorScheme: ColorSchemeMapping<ColorScheme, TeamsColorNames> = {
 
     foregroundHover: colors.grey[750],
     foregroundHover1: colors.white,
+    foregroundHover2: colors.white,
 
     backgroundHover: colors.grey[100],
     backgroundHover1: colors.grey[150],
@@ -234,7 +249,6 @@ export const colorScheme: ColorSchemeMapping<ColorScheme, TeamsColorNames> = {
     foregroundPressed: colors.grey[750],
     backgroundPressed: colors.grey[200],
     borderPressed: colors.grey[250],
-    shadowPressed: undefined,
 
     foregroundActive: colors.grey[750],
     foregroundActive1: colors.white,
@@ -246,8 +260,6 @@ export const colorScheme: ColorSchemeMapping<ColorScheme, TeamsColorNames> = {
     borderActive1: colors.grey[150],
     borderActive2: colors.grey[200],
     borderActive3: colors.grey[150], // divider
-
-    shadowActive: undefined,
 
     foregroundFocus: colors.grey[750],
     foregroundFocus1: colors.grey[500],
@@ -262,8 +274,6 @@ export const colorScheme: ColorSchemeMapping<ColorScheme, TeamsColorNames> = {
     borderFocusWithin: colors.white,
     borderFocus: colors.black,
 
-    shadowFocus: undefined,
-
     foregroundDisabled1: colors.grey[250],
     foregroundDisabled: colors.grey[250],
 
@@ -271,9 +281,8 @@ export const colorScheme: ColorSchemeMapping<ColorScheme, TeamsColorNames> = {
     backgroundDisabled: colors.grey[150],
 
     borderDisabled: colors.grey[150],
-    shadowDisabled: undefined,
-  },
-  brand: {
+  }),
+  brand: createColorScheme({
     foreground: colors.brand[600],
     foreground1: colors.brand[600],
     foreground2: colors.brand[700],
@@ -284,6 +293,7 @@ export const colorScheme: ColorSchemeMapping<ColorScheme, TeamsColorNames> = {
     background1: colors.brand[100],
     background2: colors.brand[900],
     background3: colors.brand[1000],
+    background4: colors.brand[800],
 
     border: colors.grey[200],
     border1: colors.brand[200],
@@ -294,6 +304,7 @@ export const colorScheme: ColorSchemeMapping<ColorScheme, TeamsColorNames> = {
 
     foregroundHover: colors.brand[600],
     foregroundHover1: colors.white,
+    foregroundHover2: colors.brand[200],
 
     borderHover: colors.brand[300],
 
@@ -304,7 +315,6 @@ export const colorScheme: ColorSchemeMapping<ColorScheme, TeamsColorNames> = {
     foregroundPressed1: colors.white,
     backgroundPressed: colors.brand[800], // it's 900 on the button - 800 is same as hover
     borderPressed: colors.brand[300],
-    shadowPressed: undefined,
 
     foregroundActive: colors.brand[600],
     foregroundActive1: colors.brand[600],
@@ -316,8 +326,6 @@ export const colorScheme: ColorSchemeMapping<ColorScheme, TeamsColorNames> = {
     borderActive: colors.grey[200],
     borderActive1: colors.brand[200],
     borderActive2: colors.brand[300],
-
-    shadowActive: undefined,
 
     foregroundFocus: colors.brand[600],
     foregroundFocus1: colors.brand[600],
@@ -333,7 +341,6 @@ export const colorScheme: ColorSchemeMapping<ColorScheme, TeamsColorNames> = {
     borderFocus: colors.black,
     borderFocusWithin: colors.white,
     borderFocus1: colors.brand[600], // only input
-    shadowFocus: undefined,
 
     foregroundDisabled: colors.grey[250],
     foregroundDisabled1: colors.grey[250],
@@ -342,8 +349,7 @@ export const colorScheme: ColorSchemeMapping<ColorScheme, TeamsColorNames> = {
     backgroundDisabled1: colors.grey[150],
 
     borderDisabled: colors.grey[150],
-    shadowDisabled: undefined,
-  },
+  }),
   black: {
     foreground: colors.black,
     background: colors.white,
@@ -406,55 +412,77 @@ export const colorScheme: ColorSchemeMapping<ColorScheme, TeamsColorNames> = {
     borderDisabled: colors.white,
     shadowDisabled: colors.white,
   },
-  grey: createColorScheme('grey'),
-  green: createColorScheme('green', {
-    background: colors.white,
+  green: createColorScheme({
+    foreground: colors.green[600],
+    foreground1: colors.white,
+    foreground2: colors.green[400],
+    background: colors.green[300],
   }),
-  orange: createColorScheme('orange'),
-  pink: createColorScheme('pink'),
-  red: {
+  orange: createColorScheme({
+    foreground: colors.orange[400],
+    foreground1: colors.orange[300],
+    background: colors.orange[400],
+    border: colors.orange[200],
+  }),
+  pink: createColorScheme({
+    foreground: colors.pink[600],
+    foreground1: colors.pink[500],
+    background: colors.pink[50],
+    border: colors.pink[100],
+  }),
+  red: createColorScheme({
     foreground: colors.red[400],
     foreground1: colors.white,
     foreground2: colors.white,
-
     background: colors.red[400],
     background1: colors.red[50],
     background2: colors.ruby[500],
     background3: colors.red[400],
-
     border: colors.red[100],
-
-    shadow: undefined,
-
     foregroundHover: colors.white,
     backgroundHover: colors.ruby[600],
-    borderHover: undefined,
-    shadowHover: undefined,
-
-    foregroundActive: undefined,
-    backgroundActive: undefined,
-    borderActive: undefined,
-    shadowActive: undefined,
-
-    foregroundFocus: undefined,
-    backgroundFocus: undefined,
-    borderFocus: undefined,
-    shadowFocus: undefined,
-
     foregroundPressed: colors.white,
-    backgroundPressed: colors.ruby[600],
-    borderPressed: undefined,
-    shadowPressed: undefined,
-
-    foregroundDisabled: undefined,
-    backgroundDisabled: undefined,
-    borderDisabled: undefined,
-    shadowDisabled: undefined,
-  },
-  yellow: createColorScheme('yellow', {
-    background: colors.yellow[100],
+    backgroundPressed: colors.ruby[700],
+  }),
+  yellow: createColorScheme({
+    foreground: colors.yellow[300],
+    foreground1: colors.grey[800],
+    foreground2: colors.white,
+    background: colors.yellow[600],
+    background1: colors.yellow[100],
+    background2: colors.yellow[500],
+  }),
+  silver: createColorScheme({
+    foreground: colors.white,
+    foreground1: colors.silver[200],
+    foregroundHover: colors.white,
+    foregroundPressed: colors.white,
+    border: colors.silver[600],
+    background: 'transparent',
+    backgroundHover: colors.silver[800],
+    borderHover: colors.silver[600],
+    backgroundPressed: colors.silver[700],
+    borderPressed: colors.silver[600],
+    foregroundDisabled: colors.silver[600],
+    backgroundDisabled: colors.silver[900],
+  }),
+  onyx: createColorScheme({
+    background: colors.onyx[500],
+    background1: colors.onyx[100],
+    background2: colors.onyx[500],
+    border: colors.onyx[800],
+    border1: 'transparent',
+    border2: colors.onyx[300],
+  }),
+  amethyst: createColorScheme({
+    background: colors.amethyst[600],
+    backgroundHover: colors.amethyst[700],
+    backgroundHover1: colors.amethyst[500],
+    backgroundActive: colors.amethyst[700],
   }),
 }
+
+colorScheme.grey = colorScheme.default
 
 export const availableColors = [
   'default',

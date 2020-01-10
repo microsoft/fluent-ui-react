@@ -1,22 +1,34 @@
+import {
+  ComponentSlotStylesPrepared,
+  ComponentStyleFunctionParam,
+  ICSSInJSStyle,
+} from '../../../types'
+import { FlexDirectionProperty } from 'csstype'
 import { LoaderProps } from '../../../../components/Loader/Loader'
-import { ComponentStyleFunctionParam, ICSSInJSStyle } from '../../../types'
 import { LoaderVariables } from './loaderVariables'
+import { pxToRem } from '../../../../utils'
+import { ObjectOf } from '../../../../types'
 
-export default {
+const rootFlexDirections: ObjectOf<FlexDirectionProperty> = {
+  above: 'column-reverse',
+  below: 'column',
+  start: 'row-reverse',
+  end: 'row',
+}
+
+const loaderStyles: ComponentSlotStylesPrepared<LoaderProps, LoaderVariables> = {
+  root: ({
+    props: p,
+  }: ComponentStyleFunctionParam<LoaderProps, LoaderVariables>): ICSSInJSStyle => ({
+    alignItems: 'center',
+    display: p.inline ? 'inline-flex' : 'flex',
+    justifyContent: 'center',
+    flexDirection: rootFlexDirections[p.labelPosition],
+  }),
   indicator: ({
     props: p,
     variables: v,
   }: ComponentStyleFunctionParam<LoaderProps, LoaderVariables>): ICSSInJSStyle => ({
-    // Reset existing styles from base theme
-    animationName: 'none',
-    animationDuration: 'unset',
-    animationIterationCount: 'unset',
-    animationTimingFunction: 'unset',
-    borderColor: 'transparent',
-    borderRadius: 0,
-    borderStyle: 'none',
-    borderWidth: 0,
-
     height: v.containerHeights[p.size],
     width: v.containerWidths[p.size],
     overflow: 'hidden',
@@ -27,15 +39,11 @@ export default {
     variables: v,
   }: ComponentStyleFunctionParam<LoaderProps, LoaderVariables>) => {
     const outerAnimation: ICSSInJSStyle = {
-      animationName: t.renderer.renderKeyframe(
-        () =>
-          ({
-            to: {
-              opacity: 1,
-            },
-          } as any),
-        {},
-      ),
+      animationName: {
+        to: {
+          opacity: 1,
+        },
+      },
       animationDelay: '1.5s',
       animationDirection: 'normal',
       animationDuration: '.3s',
@@ -48,15 +56,11 @@ export default {
       position: 'relative',
     }
     const svgAnimation: ICSSInJSStyle = {
-      animationName: t.renderer.renderKeyframe(
-        () =>
-          ({
-            to: {
-              transform: `translate3d(0, ${v.svgTranslatePosition[p.size]}, 0)`,
-            },
-          } as any),
-        {},
-      ),
+      animationName: {
+        to: {
+          transform: `translate3d(0, ${v.svgTranslatePosition[p.size]}, 0)`,
+        },
+      },
       animationDelay: '0s',
       animationDirection: 'normal',
       animationDuration: '2s',
@@ -82,4 +86,9 @@ export default {
       },
     }
   },
+  label: () => ({
+    margin: pxToRem(10),
+  }),
 }
+
+export default loaderStyles

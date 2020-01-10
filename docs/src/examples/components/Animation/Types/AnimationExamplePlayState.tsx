@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Icon, Button, Animation, Provider } from '@stardust-ui/react'
+import { Icon, Button, Animation, Provider } from '@fluentui/react'
 
 const spinner = {
   keyframe: {
@@ -38,7 +38,7 @@ class AnimationExamplePlayState extends React.Component {
           <br />
           <br />
           <Animation name="spinner" playState={this.state.playState}>
-            <Icon name="umbrella" circular bordered />
+            <Icon name="mention" circular bordered />
           </Animation>
         </div>
       </Provider>

@@ -1,4 +1,5 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility } from '@fluentui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
@@ -13,10 +14,10 @@ import {
   commonPropTypes,
   rtlTextContainer,
   getElementProp,
-} from '../../lib'
-import Box from '../Box/Box'
-import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+  ShorthandFactory,
+} from '../../utils'
+import Box, { BoxProps } from '../Box/Box'
+
 import { ComponentSlotStylesPrepared } from '../../themes/types'
 import ChatMessage from './ChatMessage'
 
@@ -28,7 +29,6 @@ export interface ChatItemSlotClassNames {
 export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
@@ -36,18 +36,18 @@ export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps 
   attached?: boolean | 'top' | 'bottom'
 
   /** Chat items can have a gutter. */
-  gutter?: ShorthandValue
+  gutter?: ShorthandValue<BoxProps>
 
   /** Indicates whether the content is positioned at the start or the end. */
   contentPosition?: 'start' | 'end'
 
   /** Chat items can have a message. */
-  message?: ShorthandValue
+  message?: ShorthandValue<BoxProps>
 }
 
 class ChatItem extends UIComponent<WithAsProp<ChatItemProps>, any> {
   static className = 'ui-chat__item'
-  static create: Function
+  static create: ShorthandFactory<ChatItemProps>
   static displayName = 'ChatItem'
   static slotClassNames: ChatItemSlotClassNames
 
@@ -60,7 +60,6 @@ class ChatItem extends UIComponent<WithAsProp<ChatItemProps>, any> {
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior,
     as: 'li',
     contentPosition: 'start',
     attached: false,
@@ -87,12 +86,12 @@ class ChatItem extends UIComponent<WithAsProp<ChatItemProps>, any> {
     )
   }
 
-  private renderChatItem(styles: ComponentSlotStylesPrepared) {
+  renderChatItem(styles: ComponentSlotStylesPrepared) {
     const { gutter, contentPosition } = this.props
     const gutterElement =
       gutter &&
       Box.create(gutter, {
-        defaultProps: { className: ChatItem.slotClassNames.gutter, styles: styles.gutter },
+        defaultProps: () => ({ className: ChatItem.slotClassNames.gutter, styles: styles.gutter }),
       })
 
     const messageElement = this.setAttachedPropValueForChatMessage(styles)
@@ -109,10 +108,10 @@ class ChatItem extends UIComponent<WithAsProp<ChatItemProps>, any> {
   setAttachedPropValueForChatMessage = styles => {
     const { message, attached } = this.props
     const messageElement = Box.create(message, {
-      defaultProps: {
+      defaultProps: () => ({
         className: ChatItem.slotClassNames.message,
         styles: styles.message,
-      },
+      }),
     })
 
     // the element is ChatMessage
@@ -149,6 +148,6 @@ ChatItem.slotClassNames = {
 }
 
 /**
- * A chat item represents a single event in a chat.
+ * A ChatItem is container for single entity in Chat (e.g. message, notification, etc).
  */
 export default withSafeTypeForAs<typeof ChatItem, ChatItemProps, 'li'>(ChatItem)

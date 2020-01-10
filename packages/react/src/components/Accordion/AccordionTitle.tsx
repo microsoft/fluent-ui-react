@@ -1,5 +1,6 @@
-import { Ref } from '@stardust-ui/react-component-ref'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { accordionTitleBehavior } from '@fluentui/accessibility'
+import { Ref } from '@fluentui/react-component-ref'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -14,12 +15,11 @@ import {
   commonPropTypes,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
-} from '../../lib'
+  ShorthandFactory,
+} from '../../utils'
 import { WithAsProp, ComponentEventHandler, ShorthandValue, withSafeTypeForAs } from '../../types'
-import Icon from '../Icon/Icon'
+import Icon, { IconProps } from '../Icon/Icon'
 import Layout from '../Layout/Layout'
-import { accordionTitleBehavior } from '../../lib/accessibility'
-import { AccessibilityActionHandlers } from '../../lib/accessibility/types'
 
 export interface AccordionTitleSlotClassNames {
   content: string
@@ -42,31 +42,31 @@ export interface AccordionTitleProps
   index?: number
 
   /** Ref to the clickable element that contains the title. */
-  contentRef: React.Ref<HTMLElement>
+  contentRef?: React.Ref<HTMLElement>
 
   /**
    * Called on click.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onClick?: ComponentEventHandler<AccordionTitleProps>
 
   /**
    * Called after user's focus.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onFocus?: ComponentEventHandler<AccordionTitleProps>
 
   /** Shorthand for the active indicator. */
-  indicator?: ShorthandValue
+  indicator?: ShorthandValue<IconProps>
 }
 
 class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
   static displayName = 'AccordionTitle'
 
-  static create: Function
+  static create: ShorthandFactory<AccordionTitleProps>
 
   static className = 'ui-accordion__title'
 
@@ -86,27 +86,29 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
   static defaultProps = {
     accessibility: accordionTitleBehavior,
     as: 'dt',
+    contentRef: _.noop,
   }
 
-  actionHandlers: AccessibilityActionHandlers = {
+  actionHandlers = {
     performClick: e => {
       e.preventDefault()
-      this.handleClick(e as any)
+      this.handleClick(e)
     },
   }
 
-  private handleClick = (e: React.SyntheticEvent) => {
+  handleClick = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
-  private handleFocus = (e: React.SyntheticEvent) => {
+  handleFocus = (e: React.SyntheticEvent) => {
     e.stopPropagation()
     _.invoke(this.props, 'onFocus', e, this.props)
   }
 
   renderComponent({ ElementType, classes, unhandledProps, styles, accessibility }) {
     const { contentRef, children, content, indicator, active } = this.props
-    const indicatorWithDefaults = indicator === undefined ? {} : indicator
+    const defaultIndicator = { name: active ? 'icon-arrow-down' : 'icon-arrow-end' }
+    const indicatorWithDefaults = indicator === undefined ? defaultIndicator : indicator
 
     const contentElement = (
       <Ref innerRef={contentRef}>
@@ -117,10 +119,9 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
           {...accessibility.attributes.content}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.content, unhandledProps)}
           start={Icon.create(indicatorWithDefaults, {
-            defaultProps: {
-              name: active ? 'stardust-arrow-down' : 'stardust-arrow-end',
+            defaultProps: () => ({
               styles: styles.indicator,
-            },
+            }),
           })}
           main={rtlTextContainer.createFor({ element: content })}
         />
@@ -148,6 +149,6 @@ AccordionTitle.slotClassNames = {
 }
 
 /**
- * A standard AccordionTitle that is used to expand or collapse content.
+ * An AccordionTitle represents the title of Accordion's item that can be interacted with to expand or collapse the item's content.
  */
 export default withSafeTypeForAs<typeof AccordionTitle, AccordionTitleProps>(AccordionTitle)

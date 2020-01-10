@@ -1,7 +1,8 @@
+import { Accessibility, embedBehavior } from '@fluentui/accessibility'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import * as customPropTypes from '@fluentui/react-proptypes'
 
 import {
   createShorthandFactory,
@@ -9,24 +10,21 @@ import {
   applyAccessibilityKeyHandlers,
   commonPropTypes,
   AutoControlledComponent,
-} from '../../lib'
-import { embedBehavior } from '../../lib/accessibility'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
+  ShorthandFactory,
+} from '../../utils'
 import Icon, { IconProps } from '../Icon/Icon'
-import Image, { ImageProps } from '../Image/Image'
+import Image from '../Image/Image'
 import Video, { VideoProps } from '../Video/Video'
-import Box from '../Box/Box'
+import Box, { BoxProps } from '../Box/Box'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
+import { Ref } from '@fluentui/react-component-ref'
 
 export interface EmbedSlotClassNames {
   control: string
 }
 
 export interface EmbedProps extends UIComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default embedBehavior
-   * */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Whether the embedded object should be active. */
@@ -39,25 +37,25 @@ export interface EmbedProps extends UIComponentProps {
   control?: ShorthandValue<IconProps>
 
   /** Shorthand for an embedded iframe. */
-  iframe?: ShorthandValue
+  iframe?: ShorthandValue<BoxProps>
 
   /**
    * Event for request to change 'active' value.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onActiveChanged?: ComponentEventHandler<EmbedProps>
 
   /**
    * Called when is clicked.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All item props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All item props.
    */
   onClick?: ComponentEventHandler<EmbedProps>
 
   /** Image source URL for when video isn't playing. */
-  placeholder?: ShorthandValue<ImageProps>
+  placeholder?: string
 
   /** Shorthand for an embedded video. */
   video?: ShorthandValue<VideoProps>
@@ -65,10 +63,11 @@ export interface EmbedProps extends UIComponentProps {
 
 export interface EmbedState {
   active: boolean
+  iframeLoaded: boolean
 }
 
 class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> {
-  static create: Function
+  static create: ShorthandFactory<EmbedProps>
 
   static className = 'ui-embed'
 
@@ -82,11 +81,17 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
     active: PropTypes.bool,
     defaultActive: PropTypes.bool,
     control: customPropTypes.itemShorthand,
-    iframe: customPropTypes.itemShorthand,
+    iframe: customPropTypes.every([
+      customPropTypes.disallow(['video']),
+      customPropTypes.itemShorthand,
+    ]),
     onActiveChanged: PropTypes.func,
     onClick: PropTypes.func,
     placeholder: PropTypes.string,
-    video: customPropTypes.itemShorthand,
+    video: customPropTypes.every([
+      customPropTypes.disallow(['iframe']),
+      customPropTypes.itemShorthand,
+    ]),
   }
 
   static defaultProps = {
@@ -101,74 +106,105 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
     control: `${Embed.className}__control`,
   }
 
-  actionHandlers: AccessibilityActionHandlers = {
+  actionHandlers = {
     performClick: event => this.handleClick(event),
   }
 
+  frameRef = React.createRef<HTMLFrameElement>()
+
   getInitialAutoControlledState(): EmbedState {
-    return { active: false }
+    return { active: false, iframeLoaded: false }
   }
 
   handleClick = e => {
     e.stopPropagation()
     e.preventDefault()
 
-    this.trySetState({ active: !this.state.active })
+    const iframeNil = _.isNil(this.props.iframe)
 
-    _.invoke(this.props, 'onActiveChanged', e, { ...this.props, active: !this.state.active })
+    if (iframeNil || (!iframeNil && !this.state.active)) {
+      this.setState({ active: !this.state.active })
+      _.invoke(this.props, 'onActiveChanged', e, { ...this.props, active: !this.state.active })
+    }
+
     _.invoke(this.props, 'onClick', e, { ...this.props, active: !this.state.active })
   }
 
+  handleFrameOverrides = predefinedProps => ({
+    onLoad: (e: React.SyntheticEvent) => {
+      _.invoke(predefinedProps, 'onLoad', e)
+
+      this.setState({ iframeLoaded: true })
+      this.frameRef.current.contentWindow.focus()
+    },
+  })
+
   renderComponent({ ElementType, classes, accessibility, unhandledProps, styles, variables }) {
     const { control, iframe, placeholder, video } = this.props
-    const { active } = this.state
+    const { active, iframeLoaded } = this.state
+
+    const placeholderElement = placeholder ? (
+      <Image
+        src={placeholder}
+        styles={styles.image}
+        variables={{ width: variables.width, height: variables.height }}
+      />
+    ) : null
+
+    const hasIframe = !_.isNil(iframe)
+    const hasVideo = !_.isNil(video)
+    const controlVisible = !active || hasVideo
+    const placeholderVisible = !active || (hasIframe && active && !iframeLoaded)
 
     return (
       <ElementType
         className={classes.root}
         onClick={this.handleClick}
         {...accessibility.attributes.root}
-        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         {...unhandledProps}
+        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
-        {active ? (
+        {active && (
           <>
             {Video.create(video, {
-              defaultProps: {
+              defaultProps: () => ({
                 autoPlay: true,
                 controls: false,
                 loop: true,
                 muted: true,
+                poster: placeholder,
                 styles: styles.video,
                 variables: {
                   width: variables.width,
                   height: variables.height,
                 },
-              },
+              }),
             })}
-            {Box.create(iframe, { defaultProps: { as: 'iframe' } })}
+            {iframe && (
+              <Ref innerRef={this.frameRef}>
+                {Box.create(iframe, {
+                  defaultProps: () => ({
+                    as: 'iframe',
+                    styles: styles.iframe,
+                  }),
+                  overrideProps: this.handleFrameOverrides,
+                })}
+              </Ref>
+            )}
           </>
-        ) : (
-          Image.create(placeholder, {
-            defaultProps: {
-              styles: styles.image,
-              variables: {
-                width: variables.width,
-                height: variables.height,
-              },
-            },
-          })
         )}
 
-        {Icon.create(control, {
-          defaultProps: {
-            className: Embed.slotClassNames.control,
-            circular: true,
-            name: active ? 'stardust-pause' : 'stardust-play',
-            size: 'largest',
-            styles: styles.control,
-          },
-        })}
+        {placeholderVisible && placeholderElement}
+        {controlVisible &&
+          Icon.create(control, {
+            defaultProps: () => ({
+              className: Embed.slotClassNames.control,
+              circular: true,
+              name: active ? 'icon-pause' : 'icon-play',
+              size: 'largest',
+              styles: styles.control,
+            }),
+          })}
       </ElementType>
     )
   }
@@ -177,11 +213,10 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
 Embed.create = createShorthandFactory({ Component: Embed })
 
 /**
- * A GIF is a muted segment of a video.
- * @accessibility
- * If GIF should be visible to screen readers, textual representation needs to be provided in 'alt' or 'title' property.
+ * An Embed displays content from external websites, like a post from external social network.
  *
- * Other considerations:
- *  - when alt and title property are empty, then Narrator in scan mode navigates to the gif and narrates it as empty paragraph
+ * @accessibility
+ * A `placeholder` slot represents an [`Image`](/components/image/definition) component, please follow recommendations from its
+ * accessibility section.
  */
 export default withSafeTypeForAs<typeof Embed, EmbedProps, 'span'>(Embed)

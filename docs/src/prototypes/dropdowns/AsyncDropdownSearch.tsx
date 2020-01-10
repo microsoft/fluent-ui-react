@@ -1,5 +1,5 @@
-import { CodeSnippet } from '@stardust-ui/docs-components'
-import { Dropdown, DropdownProps, Flex, Label, Loader } from '@stardust-ui/react'
+import { CodeSnippet } from '@fluentui/docs-components'
+import { Dropdown, DropdownProps, Flex, Label, Loader } from '@fluentui/react'
 import * as faker from 'faker'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -74,9 +74,7 @@ class AsyncDropdownSearch extends React.Component<{}, SearchPageState> {
             fluid
             items={items}
             loading={loading}
-            loadingMessage={{
-              content: <Loader label="Loading..." labelPosition="end" />,
-            }}
+            loadingMessage={<Loader label="Loading..." labelPosition="end" />}
             multiple
             onSearchQueryChange={this.handleSearchQueryChange}
             onSelectedChange={this.handleSelectedChange}

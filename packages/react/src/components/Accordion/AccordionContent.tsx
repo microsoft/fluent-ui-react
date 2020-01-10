@@ -1,3 +1,4 @@
+import { accordionContentBehavior } from '@fluentui/accessibility'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
@@ -11,9 +12,9 @@ import {
   ContentComponentProps,
   commonPropTypes,
   rtlTextContainer,
-} from '../../lib'
+  ShorthandFactory,
+} from '../../utils'
 import { WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
-import { accordionContentBehavior } from '../../lib/accessibility'
 
 export interface AccordionContentProps
   extends UIComponentProps,
@@ -28,8 +29,8 @@ export interface AccordionContentProps
   /**
    * Called on click.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onClick?: ComponentEventHandler<AccordionContentProps>
 }
@@ -37,7 +38,7 @@ export interface AccordionContentProps
 class AccordionContent extends UIComponent<WithAsProp<AccordionContentProps>, any> {
   static displayName = 'AccordionContent'
 
-  static create: Function
+  static create: ShorthandFactory<AccordionContentProps>
 
   static className = 'ui-accordion__content'
 
@@ -53,7 +54,7 @@ class AccordionContent extends UIComponent<WithAsProp<AccordionContentProps>, an
     as: 'dd',
   }
 
-  private handleClick = (e: React.SyntheticEvent) => {
+  handleClick = (e: React.SyntheticEvent) => {
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
@@ -80,6 +81,6 @@ AccordionContent.create = createShorthandFactory({
 })
 
 /**
- * A standard AccordionContent that is used to display content hosted in an accordion.
+ * An AccordionContent displays content hosted in an Accordion.
  */
 export default withSafeTypeForAs<typeof AccordionContent, AccordionContentProps>(AccordionContent)

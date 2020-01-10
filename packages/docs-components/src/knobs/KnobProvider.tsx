@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import defaultComponents from './defaultComponents'
-import KnobsContext, { KnobContextValue } from './KnobContext'
+import { KnobContext, KnobContextValue, LogContext, LogContextValue } from './KnobContexts'
 import { KnobComponents, KnobDefinition, KnobName, KnobSet } from './types'
 
 type KnobProviderProps = {
@@ -9,16 +9,20 @@ type KnobProviderProps = {
 }
 
 const KnobProvider: React.FunctionComponent<KnobProviderProps> = props => {
+  const { children, components } = props
+
   const [knobs, setKnobs] = React.useState<KnobSet>({})
+  const [items, setItems] = React.useState<string[]>([])
 
   const registerKnob = (knob: KnobDefinition) => {
-    if (process.env.NODE_ENV !== 'production') {
-      if (knobs[knob.name]) {
-        throw new Error(`Knob with name "${knob.name}" has been already registered`)
+    setKnobs(prevKnobs => {
+      if (process.env.NODE_ENV !== 'production') {
+        if (prevKnobs[knob.name]) {
+          throw new Error(`Knob with name "${knob.name}" has been already registered`)
+        }
       }
-    }
-
-    setKnobs(prevKnob => ({ ...prevKnob, [knob.name]: knob }))
+      return { ...prevKnobs, [knob.name]: knob }
+    })
   }
   const setKnobValue = (knobName: KnobName, knobValue: any) => {
     setKnobs(prevKnob => ({
@@ -27,26 +31,37 @@ const KnobProvider: React.FunctionComponent<KnobProviderProps> = props => {
     }))
   }
   const unregisterKnob = (knobName: KnobName) => {
-    setKnobs(prevKnob => {
-      const newKnobs = { ...prevKnob }
+    setKnobs(prevKnobs => {
+      const newKnobs = { ...prevKnobs }
       delete newKnobs[knobName]
 
       return newKnobs
     })
   }
 
-  const value: KnobContextValue = React.useMemo(
+  const appendLog = React.useCallback(
+    (value: string) => setItems(prevLog => [...prevLog, value]),
+    [],
+  )
+  const clearLog = React.useCallback(() => setItems([]), [])
+
+  const knobValue: KnobContextValue = React.useMemo(
     () => ({
-      components: { ...defaultComponents, ...props.components },
+      components: { ...defaultComponents, ...components },
       knobs,
       registerKnob,
       setKnobValue,
       unregisterKnob,
     }),
-    [knobs, props.components],
+    [knobs, components],
   )
+  const logValue: LogContextValue = React.useMemo(() => ({ appendLog, clearLog, items }), [items])
 
-  return <KnobsContext.Provider value={value}>{props.children}</KnobsContext.Provider>
+  return (
+    <KnobContext.Provider value={knobValue}>
+      <LogContext.Provider value={logValue}>{children}</LogContext.Provider>
+    </KnobContext.Provider>
+  )
 }
 
 KnobProvider.defaultProps = {

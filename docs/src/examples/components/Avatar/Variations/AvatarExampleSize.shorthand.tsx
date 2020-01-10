@@ -1,8 +1,8 @@
 import * as React from 'react'
-import { Avatar, Grid, SizeValue } from '@stardust-ui/react'
+import { Avatar, Grid, SizeValue } from '@fluentui/react'
 
 const statusProps = {
-  icon: 'check',
+  icon: 'icon-checkmark',
   color: 'green',
   title: 'Available',
 }

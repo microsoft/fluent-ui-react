@@ -6,11 +6,14 @@ import { mountWithProviderAndGetComponent } from 'test/utils'
 import { ThemeInput } from 'src/themes/types'
 
 describe('Icon', () => {
-  isConformant(Icon)
+  isConformant(Icon, { requiredProps: { name: 'at' } })
 
   describe('accessibility', () => {
     handlesAccessibility(Icon, {
       defaultRootRole: 'img',
+      requiredProps: {
+        name: 'at',
+      },
     })
 
     describe('aria-hidden', () => {

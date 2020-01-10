@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Box } from '@stardust-ui/react'
+import { Box } from '@fluentui/react'
 
 const BoxShorthandExample = () => (
   <Box

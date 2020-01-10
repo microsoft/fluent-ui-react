@@ -1,8 +1,8 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import { FormProps } from '../../../../components/Form/Form'
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../../../utils'
 
-const formStyles: ComponentSlotStylesInput<FormProps, any> = {
+const formStyles: ComponentSlotStylesPrepared<FormProps, any> = {
   root: ({ props, variables }): ICSSInJSStyle => ({
     height: '100%',
     width: '100%',

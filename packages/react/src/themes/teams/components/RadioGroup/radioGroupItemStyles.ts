@@ -1,10 +1,10 @@
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
 import {
   RadioGroupItemProps,
   RadioGroupItemState,
 } from '../../../../components/RadioGroup/RadioGroupItem'
 import { RadioGroupItemVariables } from './radioGroupItemVariables'
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../../../utils'
 import Icon from '../../../../components/Icon/Icon'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
@@ -21,7 +21,7 @@ const restHoverFocusTextColor = textColor => ({
   },
 })
 
-const radioStyles: ComponentSlotStylesInput<
+const radioStyles: ComponentSlotStylesPrepared<
   RadioGroupItemProps & RadioGroupItemState,
   RadioGroupItemVariables
 > = {
@@ -58,7 +58,7 @@ const radioStyles: ComponentSlotStylesInput<
       ...restHoverFocusTextColor(v.colorDisabled),
     }),
 
-    ...getBorderFocusStyles({ siteVariables, isFromKeyboard: p.isFromKeyboard }),
+    ...getBorderFocusStyles({ siteVariables }),
   }),
 
   icon: ({ props: p, variables: v }): ICSSInJSStyle => ({

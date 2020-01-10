@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Flex, Icon, Text } from '@stardust-ui/react'
+import { Button, Flex, Icon, Text } from '@fluentui/react'
 
 const ButtonExampleDisabled = () => (
   <Flex column gap="gap.smaller">
@@ -8,15 +8,19 @@ const ButtonExampleDisabled = () => (
       <Button disabled primary>
         Primary
       </Button>
-      <Button disabled secondary>
-        Secondary
+      <Button disabled inverted>
+        <Text content="Inverted Button" />
       </Button>
       <Button disabled icon iconPosition="before" primary>
-        <Icon name="book" xSpacing="after" />
+        <Icon name="emoji" xSpacing="after" />
         <Text content="Click me" />
       </Button>
-      <Button disabled circular>
-        <Icon name="coffee" xSpacing="none" />
+      <Button disabled circular title="Translation">
+        <Icon name="translation" xSpacing="none" />
+      </Button>
+      <Button disabled text>
+        <Icon name="call-video" xSpacing="before" />
+        <Text content="Disabled text button" />
       </Button>
     </Flex>
     <Button disabled fluid>

@@ -1,4 +1,5 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, loaderBehavior } from '@fluentui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
@@ -7,15 +8,12 @@ import {
   createShorthandFactory,
   UIComponentProps,
   commonPropTypes,
-  ColorComponentProps,
   SizeValue,
-} from '../../lib'
-import { loaderBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
+  ShorthandFactory,
+} from '../../utils'
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
-import Box from '../Box/Box'
-
-export type LoaderPosition = 'above' | 'below' | 'start' | 'end'
+import Box, { BoxProps } from '../Box/Box'
+import Text, { TextProps } from '../Text/Text'
 
 export interface LoaderSlotClassNames {
   indicator: string
@@ -23,33 +21,30 @@ export interface LoaderSlotClassNames {
   svg: string
 }
 
-export interface LoaderProps extends UIComponentProps, ColorComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default loaderBehavior
-   */
+export interface LoaderProps extends UIComponentProps {
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Time in milliseconds after component mount before spinner is visible. */
   delay?: number
 
   /** A loader can contain an indicator. */
-  indicator?: ShorthandValue
+  indicator?: ShorthandValue<BoxProps>
 
   /** Loaders can appear inline with content. */
   inline?: boolean
 
   /** A loader can contain a label. */
-  label?: ShorthandValue
+  label?: ShorthandValue<TextProps>
 
   /** A label in the loader can have different positions. */
-  labelPosition?: LoaderPosition
+  labelPosition?: 'above' | 'below' | 'start' | 'end'
 
   /** A size of the loader. */
   size?: SizeValue
 
   /** A loader can contain a custom svg element. */
-  svg?: ShorthandValue
+  svg?: ShorthandValue<BoxProps>
 }
 
 export interface LoaderState {
@@ -60,7 +55,7 @@ export interface LoaderState {
  * A loader alerts a user that content is being loaded or processed and they should wait for the activity to complete.
  */
 class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
-  static create: Function
+  static create: ShorthandFactory<LoaderProps>
   static displayName = 'Loader'
   static className = 'ui-loader'
   static slotClassNames: LoaderSlotClassNames = {
@@ -73,7 +68,6 @@ class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
     ...commonPropTypes.createCommon({
       children: false,
       content: false,
-      color: true,
     }),
     delay: PropTypes.number,
     indicator: customPropTypes.itemShorthand,
@@ -107,7 +101,8 @@ class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
     const { delay } = this.props
 
     if (delay > 0) {
-      this.delayTimer = window.setTimeout(() => {
+      // @ts-ignore We have a collision between types from DOM and @types/node
+      this.delayTimer = setTimeout(() => {
         this.setState({ visible: true })
       }, delay)
     }
@@ -122,7 +117,7 @@ class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
     const { visible } = this.state
 
     const svgElement = Box.create(svg, {
-      defaultProps: { className: Loader.slotClassNames.svg, styles: styles.svg },
+      defaultProps: () => ({ className: Loader.slotClassNames.svg, styles: styles.svg }),
     })
 
     return (
@@ -133,14 +128,14 @@ class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
           {...unhandledProps}
         >
           {Box.create(indicator, {
-            defaultProps: {
+            defaultProps: () => ({
               children: svgElement,
               className: Loader.slotClassNames.indicator,
               styles: styles.indicator,
-            },
+            }),
           })}
-          {Box.create(label, {
-            defaultProps: { className: Loader.slotClassNames.label, styles: styles.label },
+          {Text.create(label, {
+            defaultProps: () => ({ className: Loader.slotClassNames.label, styles: styles.label }),
           })}
         </ElementType>
       )
@@ -148,9 +143,12 @@ class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
   }
 }
 
-Loader.create = createShorthandFactory({ Component: Loader })
+Loader.create = createShorthandFactory({ Component: Loader, mappedProp: 'label' })
 
 /**
- * A Loader indicates a possible user action.
+ * A Loader alerts a user to wait for an activity to complete.
+ *
+ * @accessibility
+ * Implements [ARIA progressbar](https://www.w3.org/TR/wai-aria-1.1/#progressbar) role.
  */
 export default withSafeTypeForAs<typeof Loader, LoaderProps>(Loader)

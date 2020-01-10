@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Button, Icon, Provider, Text, Animation, Header } from '@stardust-ui/react'
+import { Button, Icon, Provider, Text, Animation, Header } from '@fluentui/react'
 
 import DocPage from '../components/DocPage/DocPage'
 import ExampleSnippet from '../components/ExampleSnippet/ExampleSnippet'
@@ -10,7 +10,7 @@ export default () => (
   <DocPage title="Theming">
     <Header as="h2" content="Overview" />
     <p>
-      Stardust is a fully themable component library. Theming is opt-in, allowing you to theme as
+      Fluent UI is a fully themable component library. Theming is opt-in, allowing you to theme as
       much or as little as needed. Themes can be applied to your entire app, to specific subtrees,
       or to individual components. You can also infinitely nest and override themes.
     </p>
@@ -86,8 +86,8 @@ export default () => (
     <ExampleSnippet
       render={() => (
         <>
-          <Icon name="user" circular />
-          <Icon name="user" circular variables={{ color: 'cornflowerblue' }} />
+          <Icon name="calendar" circular />
+          <Icon name="calendar" circular variables={{ color: 'cornflowerblue' }} />
         </>
       )}
     />
@@ -99,13 +99,13 @@ export default () => (
     <ExampleSnippet
       render={() => (
         <>
-          <Icon name="user" circular />
-          <Icon name="user" circular />
+          <Icon name="calendar" circular />
+          <Icon name="calendar" circular />
 
           <Provider theme={{ componentVariables: { Icon: { color: 'cornflowerblue' } } }}>
             <span>
-              <Icon name="user" circular />
-              <Icon name="user" circular />
+              <Icon name="calendar" circular />
+              <Icon name="calendar" circular />
             </span>
           </Provider>
         </>
@@ -141,7 +141,10 @@ export default () => (
     </p>
     <ExampleSnippet
       render={() => (
-        <Button icon={{ name: 'user', styles: { boxShadow: '0 0 0 2px red' } }} content="Profile" />
+        <Button
+          icon={{ name: 'calendar', styles: { boxShadow: '0 0 0 2px red' } }}
+          content="Profile"
+        />
       )}
     />
 
@@ -157,8 +160,8 @@ export default () => (
     <ExampleSnippet
       render={() => (
         <>
-          <Button icon="user" content="Profile" />
-          <Button icon="user" content="Profile" />
+          <Button icon="calendar" content="Profile" />
+          <Button icon="calendar" content="Profile" />
 
           <Provider
             theme={{
@@ -172,8 +175,8 @@ export default () => (
             }}
           >
             <span>
-              <Button icon="user" content="Profile" />
-              <Button icon="user" content="Profile" />
+              <Button icon="calendar" content="Profile" />
+              <Button icon="calendar" content="Profile" />
             </span>
           </Provider>
         </>
@@ -186,7 +189,7 @@ export default () => (
 
     <Header as="h2" content="Animations" />
     <p>
-      You define animations in Stardust in a very similar way to CSS, by providing keyframes and
+      You define animations in Fluent UI in a very similar way to CSS, by providing keyframes and
       animation properties.
     </p>
 
@@ -218,7 +221,7 @@ export default () => (
     <p>
       This is done with the Provider's <code>theme</code> prop. The animations are then applied
       based on their name by using the <NavLink to="components/Animation">Animation</NavLink>{' '}
-      component, or the <code>animation</code> property available on all Stardust component. Here's
+      component, or the <code>animation</code> property available on all Fluent UI component. Here's
       how we can use them in our components.
     </p>
     <ExampleSnippet
@@ -239,9 +242,9 @@ export default () => (
         >
           <div>
             <Animation name="spinner">
-              <Icon name="user" circular />
+              <Icon name="calendar" circular />
             </Animation>
-            <Icon name="book" animation="spinner" circular />
+            <Icon name="emoji" animation="spinner" circular />
           </div>
         </Provider>
       )}
@@ -278,10 +281,10 @@ export default () => (
         >
           <div>
             <Animation name="spinner" delay="2s" duration="1s">
-              <Icon name="user" circular />
+              <Icon name="calendar" circular />
             </Animation>
             <Icon
-              name="book"
+              name="emoji"
               animation={{ name: 'spinner', delay: '5s', duration: '2s' }}
               circular
             />
@@ -293,11 +296,11 @@ export default () => (
     <p>
       The difference between using the Animation component versus the animation property is that,
       the Animation component can be safely used for applying animations on{' '}
-      <i>all components (Stardust, custom and third party components)</i>. For the Stardust
+      <i>all components (Fluent UI, custom and third party components)</i>. For the Fluent UI
       components, we recommend using the animation property as there will be no wrapper element
       added just for the purpose of defining the animation. For more details, please see the
       examples in the <NavLink to="components/Animation">Animation</NavLink> component, or the
-      structure of the <code>animation</code> property in any of the Stardust components.
+      structure of the <code>animation</code> property in any of the Fluent UI components.
     </p>
 
     <GuidesNavigationFooter

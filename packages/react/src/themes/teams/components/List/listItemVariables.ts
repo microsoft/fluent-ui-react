@@ -1,4 +1,4 @@
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../../../utils'
 
 export interface ListItemVariables {
   minHeight: string
@@ -25,7 +25,6 @@ export interface ListItemVariables {
   selectableFocusHoverBackgroundColor: string
   selectedColor: string
   selectedBackgroundColor: string
-  selectedFocusOutlineColor: string
 }
 
 export default (siteVariables: any): ListItemVariables => {
@@ -56,6 +55,5 @@ export default (siteVariables: any): ListItemVariables => {
     selectableFocusHoverBackgroundColor: siteVariables.colors.brand[500],
     selectedColor: siteVariables.bodyColor,
     selectedBackgroundColor: siteVariables.colors.grey[100],
-    selectedFocusOutlineColor: siteVariables.colors.brand[600],
   }
 }

@@ -1,4 +1,5 @@
 import gutil from 'gulp-util'
+import _ from 'lodash'
 import fs from 'fs'
 import path from 'path'
 import through2 from 'through2'
@@ -64,7 +65,7 @@ export default () => {
   function endStream(cb) {
     const file = new Vinyl({
       path: './componentMenu.json',
-      contents: Buffer.from(JSON.stringify(result, null, 2)),
+      contents: Buffer.from(JSON.stringify(_.sortBy(result, 'displayName'), null, 2)),
     })
 
     this.push(file)

@@ -1,4 +1,4 @@
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../../../utils'
 
 export interface ChatMessageVariables {
   actionMenuBoxShadow: string
@@ -26,6 +26,8 @@ export interface ChatMessageVariables {
   isImportantColor: string
   badgeTextColor: string
   reactionGroupMarginLeft: string
+  reactionGroupBorderColor: string
+  showActionMenu?: boolean
   timestampColorMine: string
 }
 
@@ -47,7 +49,7 @@ export default (siteVars): ChatMessageVariables => ({
   linkColor: siteVars.colorScheme.brand.foreground1,
   linkColorMine: siteVars.colorScheme.brand.foreground2,
   border: 'none',
-  badgeShadow: siteVars.shadowLevel1Darker,
+  badgeShadow: siteVars.shadowLevel1Dark,
   isImportant: false,
   hasMention: false,
   hasMentionColor: siteVars.colors.orange[300],
@@ -55,5 +57,7 @@ export default (siteVars): ChatMessageVariables => ({
   isImportantColor: siteVars.colors.red[400],
   badgeTextColor: siteVars.colors.white,
   reactionGroupMarginLeft: pxToRem(12),
+  reactionGroupBorderColor: 'transparent',
+  showActionMenu: undefined,
   timestampColorMine: siteVars.colors.grey[500],
 })

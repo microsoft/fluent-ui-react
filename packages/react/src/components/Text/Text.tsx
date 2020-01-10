@@ -1,4 +1,4 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
@@ -13,9 +13,11 @@ import {
   ColorComponentProps,
   rtlTextContainer,
   SizeValue,
-} from '../../lib'
-import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+  AlignValue,
+  ShorthandFactory,
+} from '../../utils'
+import { Accessibility } from '@fluentui/accessibility'
+
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface TextProps
@@ -25,7 +27,6 @@ export interface TextProps
     ColorComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
@@ -53,6 +54,9 @@ export interface TextProps
   /** The text can signify a temporary state */
   temporary?: boolean
 
+  /** Align text content. */
+  align?: AlignValue
+
   /** Set as timestamp Text component */
   timestamp?: boolean
 
@@ -61,7 +65,7 @@ export interface TextProps
 }
 
 class Text extends UIComponent<WithAsProp<TextProps>, any> {
-  static create: Function
+  static create: ShorthandFactory<TextProps>
 
   static className = 'ui-text'
 
@@ -77,12 +81,12 @@ class Text extends UIComponent<WithAsProp<TextProps>, any> {
     weight: PropTypes.oneOf(['light', 'semilight', 'regular', 'semibold', 'bold']),
     success: PropTypes.bool,
     temporary: PropTypes.bool,
+    align: customPropTypes.align,
     timestamp: PropTypes.bool,
     truncated: PropTypes.bool,
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior,
     as: 'span',
   }
 
@@ -105,13 +109,6 @@ class Text extends UIComponent<WithAsProp<TextProps>, any> {
 Text.create = createShorthandFactory({ Component: Text, mappedProp: 'content' })
 
 /**
- * A Text component formats occurrences of text consistently.
- * @accessibility
- * Text is how people read the content on your website.
- * Ensure that a contrast ratio of at least 4.5:1 exists between text and the background behind the text.
- *
- * To ensure that RTL mode will be properly handled for provided 'content' value, ensure that either:
- * - 'content' is provided as plain string (then dir="auto" attribute will be applied automatically)
- * - for other 'content' value types (i.e. that use elements inside) ensure that dir="auto" attribute is applied for all places in content where necessary
+ * A Text consistently styles and formats occurrences of text.
  */
 export default withSafeTypeForAs<typeof Text, TextProps, 'span'>(Text)

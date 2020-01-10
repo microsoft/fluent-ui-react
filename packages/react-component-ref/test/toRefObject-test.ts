@@ -1,4 +1,4 @@
-import { toRefObject } from '@stardust-ui/react-component-ref'
+import { toRefObject } from '@fluentui/react-component-ref'
 
 describe('toRefObject', () => {
   it('creates an ref object from an input', () => {
@@ -7,7 +7,7 @@ describe('toRefObject', () => {
   })
 
   it('handles "null" as input', () => {
-    expect(toRefObject(null)).toHaveProperty('current', null)
+    expect(toRefObject(null as any)).toHaveProperty('current', null)
   })
 
   it('returned object is memoized', () => {

@@ -2,7 +2,10 @@ import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
-import { isBrowser, ChildrenComponentProps, commonPropTypes } from '../../lib'
+// @ts-ignore
+import { ThemeContext } from 'react-fela'
+
+import { isBrowser, ChildrenComponentProps, commonPropTypes } from '../../utils'
 
 export interface PortalInnerProps extends ChildrenComponentProps {
   /** Existing element the portal should be bound to. */
@@ -11,22 +14,24 @@ export interface PortalInnerProps extends ChildrenComponentProps {
   /**
    * Called when the portal is mounted on the DOM
    *
-   * @param {object} data - All props.
+   * @param data - All props.
    */
   onMount?: (props: PortalInnerProps) => void
 
   /**
    * Called when the portal is unmounted from the DOM
    *
-   * @param {object} data - All props.
+   * @param data - All props.
    */
   onUnmount?: (props: PortalInnerProps) => void
 }
 
 /**
- * An inner component that allows you to render children outside their parent.
+ * A PortalInner is a container for Portal's content.
  */
 class PortalInner extends React.Component<PortalInnerProps> {
+  static contextType = ThemeContext
+
   static propTypes = {
     ...commonPropTypes.createCommon({
       accessibility: false,
@@ -41,10 +46,6 @@ class PortalInner extends React.Component<PortalInnerProps> {
     onUnmount: PropTypes.func,
   }
 
-  static defaultProps = {
-    mountNode: isBrowser() ? document.body : null,
-  }
-
   componentDidMount() {
     _.invoke(this.props, 'onMount', this.props)
   }
@@ -56,7 +57,10 @@ class PortalInner extends React.Component<PortalInnerProps> {
   render() {
     const { children, mountNode } = this.props
 
-    return mountNode && ReactDOM.createPortal(children, mountNode)
+    const target: HTMLElement | null = isBrowser() ? this.context.target.body : null
+    const container: HTMLElement | null = mountNode || target
+
+    return container && ReactDOM.createPortal(children, container)
   }
 }
 

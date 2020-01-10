@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Grid, Input, Text } from '@stardust-ui/react'
+import { Grid, Input, Text } from '@fluentui/react'
 
 const inputStyles = { color: 'blue', background: 'yellow' }
 const InputExampleInputSlot = () => (

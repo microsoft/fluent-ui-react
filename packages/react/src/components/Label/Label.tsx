@@ -1,4 +1,5 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility } from '@fluentui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
@@ -13,13 +14,13 @@ import {
   commonPropTypes,
   ColorComponentProps,
   rtlTextContainer,
-} from '../../lib'
+  ShorthandFactory,
+} from '../../utils'
 
-import Icon from '../Icon/Icon'
-import Image from '../Image/Image'
+import Icon, { IconProps } from '../Icon/Icon'
+import Image, { ImageProps } from '../Image/Image'
 import Layout from '../Layout/Layout'
-import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 
 export interface LabelProps
@@ -29,7 +30,6 @@ export interface LabelProps
     ColorComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
@@ -40,13 +40,13 @@ export interface LabelProps
   fluid?: boolean
 
   /** A Label can have an icon. */
-  icon?: ShorthandValue
+  icon?: ShorthandValue<IconProps>
 
   /** A Label can position its Icon at the start or end of the layout. */
   iconPosition?: 'start' | 'end'
 
   /** A Label can contain an image. */
-  image?: ShorthandValue
+  image?: ShorthandValue<ImageProps>
 
   /** A Label can position its image at the start or end of the layout. */
   imagePosition?: 'start' | 'end'
@@ -55,22 +55,21 @@ export interface LabelProps
 class Label extends UIComponent<WithAsProp<LabelProps>, any> {
   static displayName = 'Label'
 
-  static create: Function
+  static create: ShorthandFactory<LabelProps>
 
   static className = 'ui-label'
 
   static propTypes = {
     ...commonPropTypes.createCommon({ color: true }),
     circular: PropTypes.bool,
-    icon: customPropTypes.itemShorthand,
+    icon: customPropTypes.itemShorthandWithoutJSX,
     iconPosition: PropTypes.oneOf(['start', 'end']),
-    image: customPropTypes.itemShorthand,
+    image: customPropTypes.itemShorthandWithoutJSX,
     imagePosition: PropTypes.oneOf(['start', 'end']),
     fluid: PropTypes.bool,
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior,
     as: 'span',
     imagePosition: 'start',
     iconPosition: 'end',
@@ -101,16 +100,16 @@ class Label extends UIComponent<WithAsProp<LabelProps>, any> {
     }
 
     const imageElement = Image.create(image, {
-      defaultProps: {
+      defaultProps: () => ({
         styles: styles.image,
         variables: variables.image,
-      },
+      }),
     })
     const iconElement = Icon.create(icon, {
-      defaultProps: {
+      defaultProps: () => ({
         styles: styles.icon,
         variables: variables.icon,
-      },
+      }),
       overrideProps: this.handleIconOverrides,
     })
 
@@ -152,6 +151,6 @@ class Label extends UIComponent<WithAsProp<LabelProps>, any> {
 Label.create = createShorthandFactory({ Component: Label, mappedProp: 'content' })
 
 /**
- * A Label is used to classify content.
+ * A Label allows user to classify content.
  */
 export default withSafeTypeForAs<typeof Label, LabelProps, 'span'>(Label)

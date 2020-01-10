@@ -5,8 +5,15 @@ import { isConformant, handlesAccessibility, getRenderedAttribute } from 'test/s
 import { mountWithProvider, mountWithProviderAndGetComponent } from 'test/utils'
 import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
 import MenuItem from 'src/components/Menu/MenuItem'
-import { menuBehavior, toolbarBehavior, tabListBehavior, tabBehavior } from 'src/lib/accessibility'
-import { AccessibilityDefinition } from 'src/lib/accessibility/types'
+import {
+  AccessibilityDefinition,
+  menuBehavior,
+  menuAsToolbarBehavior,
+  tabListBehavior,
+  tabBehavior,
+} from '@fluentui/accessibility'
+import { ReactWrapper } from 'enzyme'
+import * as keyboardKey from 'keyboard-key'
 
 const menuImplementsCollectionShorthandProp = implementsCollectionShorthandProp(Menu)
 
@@ -17,6 +24,19 @@ describe('Menu', () => {
   const getItems = () => [
     { key: 'home', content: 'home', onClick: jest.fn(), 'data-foo': 'something' },
     { key: 'users', content: 'users', 'data-foo': 'something' },
+  ]
+
+  const getNestedItems = () => [
+    { key: 'home', content: 'home', onClick: jest.fn(), 'data-foo': 'something' },
+    {
+      key: 'users',
+      content: 'users',
+      'data-foo': 'something',
+      menu: [
+        { key: '1', content: 'Alice' },
+        { key: '2', content: 'Bob' },
+      ],
+    },
   ]
 
   describe('items', () => {
@@ -58,6 +78,25 @@ describe('Menu', () => {
       const menuItems = mountWithProvider(<Menu items={getItems()} />).find('MenuItem')
 
       expect(menuItems.everyWhere(item => item.prop('data-foo') === 'something')).toBe(true)
+    })
+
+    it('closes menu when item is clicked using spacebar', () => {
+      const menu = mountWithProvider(<Menu items={getNestedItems()} />)
+      const menuItems = menu.find('MenuItem')
+
+      menuItems
+        .at(1)
+        .find('a')
+        .first()
+        .simulate('keydown', { keyCode: keyboardKey.Spacebar })
+      menuItems
+        .at(1)
+        .at(0)
+        .find('a')
+        .first()
+        .simulate('keydown', { keyCode: keyboardKey.Spacebar })
+
+      expect(menuItems.at(1).state('menuOpen')).toBe(false)
     })
 
     describe('activeIndex', () => {
@@ -113,6 +152,60 @@ describe('Menu', () => {
       })
     })
 
+    describe('variables', () => {
+      function checkMergedVariables(menu: ReactWrapper): void {
+        expect(
+          (menu
+            .find('MenuItem')
+            .first()
+            .prop('variables') as Function)(),
+        ).toEqual(expect.objectContaining({ a: 'menu', b: 'overwritten', c: 'item' }))
+
+        expect(
+          (menu
+            .find('MenuDivider')
+            .first()
+            .prop('variables') as Function)(),
+        ).toEqual(expect.objectContaining({ a: 'menu', b: 'overwrittenInDivider', c: 'divider' }))
+      }
+
+      it('are passed from Menu to MenuItem and MenuDivider and correctly merged', () => {
+        const menu = mountWithProvider(
+          <Menu
+            variables={{ a: 'menu', b: 'menu' }}
+            items={[
+              { key: 1, content: 'menu item', variables: { b: 'overwritten', c: 'item' } },
+              {
+                key: 'd1',
+                kind: 'divider',
+                variables: { b: 'overwrittenInDivider', c: 'divider' },
+              },
+            ]}
+          />,
+        )
+
+        checkMergedVariables(menu)
+      })
+
+      it('as functions are passed from Menu to MenuItem and MenuDivider and correctly merged', () => {
+        const menu = mountWithProvider(
+          <Menu
+            variables={() => ({ a: 'menu', b: 'menu' })}
+            items={[
+              { key: 1, content: 'menu item', variables: () => ({ b: 'overwritten', c: 'item' }) },
+              {
+                key: 'd1',
+                kind: 'divider',
+                variables: () => ({ b: 'overwrittenInDivider', c: 'divider' }),
+              },
+            ]}
+          />,
+        )
+
+        checkMergedVariables(menu)
+      })
+    })
+
     describe('accessibility', () => {
       handlesAccessibility(Menu, {
         defaultRootRole: 'menu',
@@ -150,18 +243,18 @@ describe('Menu', () => {
       })
 
       describe('as a Toolbar', () => {
-        test('root role should be toolbar', () => {
+        test('root role should be menuAsToolbar', () => {
           const menuComponent = mountWithProviderAndGetComponent(
             Menu,
-            <Menu accessibility={toolbarBehavior} />,
+            <Menu accessibility={menuAsToolbarBehavior} />,
           )
           expect(getRenderedAttribute(menuComponent, 'role', '')).toBe('toolbar')
         })
 
-        test('children role should be toolbarButton', () => {
+        test('children role should be menuAsToolbarButton', () => {
           const menuItemComponents = mountWithProviderAndGetComponent(
             Menu,
-            <Menu accessibility={toolbarBehavior} items={getItems()} />,
+            <Menu accessibility={menuAsToolbarBehavior} items={getItems()} />,
           ).find('MenuItem')
           expect(getRenderedAttribute(menuItemComponents.at(0), 'role', 'a')).toBe('button')
           expect(getRenderedAttribute(menuItemComponents.at(1), 'role', 'a')).toBe('button')

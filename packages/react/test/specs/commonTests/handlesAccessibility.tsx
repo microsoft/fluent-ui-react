@@ -1,10 +1,16 @@
+import {
+  Accessibility,
+  AriaRole,
+  FocusZoneMode,
+  FocusZoneDefinition,
+} from '@fluentui/accessibility'
+import { FocusZone, FOCUSZONE_WRAP_ATTRIBUTE } from '@fluentui/react-bindings'
 import * as React from 'react'
+import * as keyboardKey from 'keyboard-key'
 
-import { mountWithProviderAndGetComponent } from 'test/utils'
-import { defaultBehavior } from 'src/lib/accessibility'
-import { Accessibility, AriaRole, FocusZoneMode } from 'src/lib/accessibility/types'
-import { FocusZone } from 'src/lib/accessibility/FocusZone'
-import { FOCUSZONE_WRAP_ATTRIBUTE } from 'src/lib/accessibility/FocusZone/focusUtilities'
+import { mountWithProviderAndGetComponent, mountWithProvider } from 'test/utils'
+import { UIComponent } from 'src/utils'
+import { EVENT_TARGET_ATTRIBUTE, getEventTargetComponent } from './eventTarget'
 
 export const getRenderedAttribute = (renderedComponent, propName, partSelector) => {
   const target = partSelector
@@ -30,20 +36,18 @@ const TestBehavior: Accessibility = (props: any) => ({
 
 /**
  * Assert Component handles accessibility attributes correctly.
- * @param {React.Component|Function} Component A component that should conform.
- * @param {Object} [options={}]
- * @param {Object} [options.requiredProps={}] Props required to render Component without errors or warnings.
- * @param {string} [options.defaultRootRole=''] Default root role rendered when no override provided
- * @param {string} [options.partSelector=''] Selector to scope the test to a part
- * @param {FocusZoneDefinition} [options.focusZoneDefinition={}] FocusZone definition
+ * @param Component - A component that should conform.
  */
 export default (
-  Component,
+  Component: React.ComponentType<any>,
   options: {
-    requiredProps?: any
+    /** Props required to render Component without errors or warnings */
+    requiredProps?: { [key: string]: any }
+    /** Default root role rendered when no override provided */
     defaultRootRole?: string
+    /** Selector to scope the test to a part */
     partSelector?: string
-    focusZoneDefinition?: any
+    focusZoneDefinition?: FocusZoneDefinition
     usesWrapperSlot?: boolean
   } = {},
 ) => {
@@ -51,7 +55,7 @@ export default (
     requiredProps = {},
     defaultRootRole,
     partSelector = '',
-    focusZoneDefinition = {},
+    focusZoneDefinition = {} as FocusZoneDefinition,
     usesWrapperSlot = false,
   } = options
 
@@ -61,10 +65,10 @@ export default (
     expect(role).toBe(defaultRootRole)
   })
 
-  test('does not get role when overrides to default', () => {
+  test('does not get role when overrides to null', () => {
     const rendered = mountWithProviderAndGetComponent(
       Component,
-      <Component {...requiredProps} accessibility={defaultBehavior} />,
+      <Component {...requiredProps} accessibility={null} />,
     )
     const role = getRenderedAttribute(rendered, 'role', partSelector)
     expect(role).toBeFalsy()
@@ -106,6 +110,46 @@ export default (
       const rendered = mountWithProviderAndGetComponent(Component, element)
       const role = getRenderedAttribute(rendered, 'role', partSelector)
       expect(role).toBe(testRole)
+    })
+
+    test(`handles "onKeyDown" overrides`, () => {
+      const actionHandler = jest.fn()
+      const eventHandler = jest.fn()
+
+      const actionBehavior: Accessibility = () => ({
+        keyActions: {
+          root: {
+            mockAction: {
+              keyCombinations: [{ keyCode: keyboardKey.Enter }],
+            },
+          },
+        },
+      })
+
+      const wrapperProps = {
+        ...requiredProps,
+        accessibility: actionBehavior,
+        [EVENT_TARGET_ATTRIBUTE]: true,
+        onKeyDown: eventHandler,
+      }
+
+      const wrapper = mountWithProvider(<Component {...wrapperProps} />)
+      const component = wrapper.find(Component)
+      const instance = component.instance() as UIComponent<any, any>
+      if (instance.actionHandlers) {
+        instance.actionHandlers.mockAction = actionHandler
+      }
+      // Force render component to apply updated key handlers
+      wrapper.setProps({})
+
+      getEventTargetComponent(component, 'onKeyDown').simulate('keydown', {
+        keyCode: keyboardKey.Enter,
+      })
+
+      if (instance.actionHandlers) {
+        expect(actionHandler).toBeCalledTimes(1)
+      }
+      expect(eventHandler).toBeCalledTimes(1)
     })
   }
 

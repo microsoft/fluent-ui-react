@@ -2,6 +2,7 @@ import * as React from 'react'
 
 export type PerfSample = {
   build: number
+  tag?: string
   ts: string
   performance: Record<
     string,
@@ -10,6 +11,11 @@ export type PerfSample = {
         min: number
         median: number
         max: number
+      }
+      flamegrill: {
+        extended: {
+          tpi: number
+        }
       }
     }
   >

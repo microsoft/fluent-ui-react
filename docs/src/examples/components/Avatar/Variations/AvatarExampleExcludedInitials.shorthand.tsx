@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { Avatar } from '@stardust-ui/react'
+import { Avatar } from '@fluentui/react'
 
-const status = { color: 'green', icon: 'check', title: 'Available' }
+const status = { color: 'green', icon: 'icon-checkmark', title: 'Available' }
 
 const AvatarExampleExcludedInitialsShorthand = () => (
   <div>

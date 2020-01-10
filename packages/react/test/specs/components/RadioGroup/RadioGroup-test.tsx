@@ -91,12 +91,13 @@ describe('RadioGroup', () => {
     })
 
     describe('checkedValue', () => {
-      it('should not be set by default', () => {
+      it('should not be set and first item is focusable by default', () => {
         const radioGroupItems = mountWithProvider(<RadioGroup items={getItems()} />).find(
           'RadioGroupItem',
         )
 
         expect(radioGroupItems.everyWhere(item => !item.is('[checked="true"]'))).toBe(true)
+        expect(radioGroupItems.at(0).props().tabIndex).toBe(0)
       })
     })
 
@@ -238,15 +239,5 @@ describe('RadioGroup', () => {
 
   describe('shorthand API for items', () => {
     itemsTest(getShorthandItems)
-  })
-
-  describe('children API for items', () => {
-    const getChildrenItems = props => {
-      return getShorthandItems(props).map(item => {
-        return <RadioGroupItem {...item} />
-      })
-    }
-
-    itemsTest(getChildrenItems, false)
   })
 })

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import DocumentTitle from 'react-document-title'
-import { Header } from '@stardust-ui/react'
+import { Header } from '@fluentui/react'
 
 interface DocPageProps {
   title: string
@@ -9,9 +9,9 @@ interface DocPageProps {
 }
 
 const DocPage = ({ title, description, children }: DocPageProps) => (
-  <DocumentTitle title={`Stardust - ${title}`}>
-    <div style={{ padding: '2rem', fontSize: '1.15rem', maxWidth: '80ch' }}>
-      <Header as="h1" aria-level={2} content={title} description={description} textAlign="center" />
+  <DocumentTitle title={`Fluent UI - ${title}`}>
+    <div style={{ padding: '2rem', fontSize: '1.15rem', maxWidth: '100ch' }}>
+      <Header as="h1" aria-level={2} content={title} description={description} align="center" />
       {children}
     </div>
   </DocumentTitle>

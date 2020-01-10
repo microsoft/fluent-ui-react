@@ -1,11 +1,16 @@
-import { Ref } from '@stardust-ui/react-component-ref'
+import { Ref } from '@fluentui/react-component-ref'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { createShorthandFactory, UIComponent, UIComponentProps, commonPropTypes } from '../../lib'
+import {
+  createShorthandFactory,
+  UIComponent,
+  UIComponentProps,
+  commonPropTypes,
+  ShorthandFactory,
+} from '../../utils'
 
 import { WithAsProp, withSafeTypeForAs } from '../../types'
-import { defaultBehavior } from '../../lib/accessibility'
 
 export interface VideoProps extends UIComponentProps {
   /** Whether the video should start playing when rendered. Autoplay videos must be muted or they will not play immediately in certain browers like Chrome. */
@@ -28,7 +33,7 @@ export interface VideoProps extends UIComponentProps {
 }
 
 class Video extends UIComponent<WithAsProp<VideoProps>> {
-  static create: Function
+  static create: ShorthandFactory<VideoProps>
 
   static className = 'ui-video'
 
@@ -49,7 +54,6 @@ class Video extends UIComponent<WithAsProp<VideoProps>> {
 
   static defaultProps = {
     as: 'video',
-    accessibility: defaultBehavior,
     controls: true,
     autoPlay: false,
     muted: false,
@@ -69,11 +73,7 @@ class Video extends UIComponent<WithAsProp<VideoProps>> {
     // React doesn't guaranty that props will be set:
     // https://github.com/facebook/react/issues/10389
     if (this.videoRef.current) {
-      if (this.props.muted) {
-        this.videoRef.current.setAttribute('muted', 'true')
-      } else {
-        this.videoRef.current.removeAttribute('muted')
-      }
+      this.videoRef.current.muted = !!this.props.muted
     }
   }
 
@@ -100,6 +100,6 @@ class Video extends UIComponent<WithAsProp<VideoProps>> {
 Video.create = createShorthandFactory({ Component: Video, mappedProp: 'src' })
 
 /**
- * An video is a graphicical and audio representation of something.
+ * A Video provides ability to embed video content.
  */
 export default withSafeTypeForAs<typeof Video, VideoProps, 'video'>(Video)

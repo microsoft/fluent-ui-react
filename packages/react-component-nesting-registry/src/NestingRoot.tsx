@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import RefStack from './lib/RefStack'
+import RefStack from './utils/RefStack'
 import NestingContext from './NestingContext'
 import { NestingProps, NodeRef } from './types'
 

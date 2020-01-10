@@ -1,11 +1,11 @@
 import * as React from 'react'
-import { Flex, Icon } from '@stardust-ui/react'
+import { Flex, Icon } from '@fluentui/react'
 
 const IconExample = () => (
   <Flex gap="gap.smaller">
     <Icon name="call-video" />
-    <Icon name="chess rook" />
-    <Icon name="book" />
+    <Icon name="skype-logo" />
+    <Icon name="emoji" />
     <Icon name="circle" />
   </Flex>
 )

@@ -12,9 +12,9 @@ const DropdownExamples = () => (
     <Types />
     <Variations />
     <State />
-    <Usage />
     <Rtl />
     <Performance />
+    <Usage />
   </>
 )
 

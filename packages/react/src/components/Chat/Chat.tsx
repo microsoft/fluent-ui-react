@@ -1,4 +1,5 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, chatBehavior } from '@fluentui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -9,27 +10,22 @@ import {
   commonPropTypes,
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
-} from '../../lib'
-import ChatItem from './ChatItem'
+} from '../../utils'
+import ChatItem, { ChatItemProps } from './ChatItem'
 import ChatMessage from './ChatMessage'
-import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
-import { Accessibility, AccessibilityActionHandlers } from '../../lib/accessibility/types'
-import { chatBehavior } from '../../lib/accessibility'
-import { UIComponentProps, ChildrenComponentProps } from '../../lib/commonPropInterfaces'
+import { WithAsProp, withSafeTypeForAs, ShorthandCollection } from '../../types'
+import { UIComponentProps, ChildrenComponentProps } from '../../utils/commonPropInterfaces'
 
 export interface ChatSlotClassNames {
   item: string
 }
 
 export interface ChatProps extends UIComponentProps, ChildrenComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default chatBehavior
-   * */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** Shorthand array of the items inside the chat. */
-  items?: ShorthandValue[]
+  items?: ShorthandCollection<ChatItemProps>
 }
 
 class Chat extends UIComponent<WithAsProp<ChatProps>, any> {
@@ -56,10 +52,6 @@ class Chat extends UIComponent<WithAsProp<ChatProps>, any> {
   static Item = ChatItem
   static Message = ChatMessage
 
-  protected actionHandlers: AccessibilityActionHandlers = {
-    focus: () => this.focusZone && this.focusZone.focus(),
-  }
-
   renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
     const { children, items } = this.props
 
@@ -74,7 +66,9 @@ class Chat extends UIComponent<WithAsProp<ChatProps>, any> {
         {childrenExist(children)
           ? children
           : _.map(items, item =>
-              ChatItem.create(item, { defaultProps: { className: Chat.slotClassNames.item } }),
+              ChatItem.create(item, {
+                defaultProps: () => ({ className: Chat.slotClassNames.item }),
+              }),
             )}
       </ElementType>
     )
@@ -82,6 +76,6 @@ class Chat extends UIComponent<WithAsProp<ChatProps>, any> {
 }
 
 /**
- * A Chat displays messages between users.
+ * A Chat displays messages from a conversation between multiple users.
  */
 export default withSafeTypeForAs<typeof Chat, ChatProps, 'ul'>(Chat)

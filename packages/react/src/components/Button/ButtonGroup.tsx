@@ -1,9 +1,10 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility } from '@fluentui/accessibility'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
+import { WithAsProp, withSafeTypeForAs, ShorthandCollection } from '../../types'
 import {
   UIComponent,
   childrenExist,
@@ -13,10 +14,9 @@ import {
   commonPropTypes,
   rtlTextContainer,
   createShorthandFactory,
-} from '../../lib'
-import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
-import Button from './Button'
+  ShorthandFactory,
+} from '../../utils'
+import Button, { ButtonProps } from './Button'
 
 export interface ButtonGroupProps
   extends UIComponentProps,
@@ -24,36 +24,34 @@ export interface ButtonGroupProps
     ContentComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 
   /** The buttons contained inside the ButtonGroup. */
-  buttons?: ShorthandValue[]
+  buttons?: ShorthandCollection<ButtonProps>
 
   /** The buttons inside group can appear circular. */
   circular?: boolean
 }
 
 class ButtonGroup extends UIComponent<WithAsProp<ButtonGroupProps>, any> {
-  public static create: Function
+  static create: ShorthandFactory<ButtonGroupProps>
 
-  public static displayName = 'ButtonGroup'
+  static displayName = 'ButtonGroup'
 
-  public static className = 'ui-buttons'
+  static className = 'ui-buttons'
 
-  public static propTypes = {
+  static propTypes = {
     ...commonPropTypes.createCommon(),
     buttons: customPropTypes.collectionShorthand,
     circular: PropTypes.bool,
   }
 
-  public static defaultProps = {
-    accessibility: defaultBehavior,
+  static defaultProps = {
     as: 'div',
   }
 
-  public renderComponent({
+  renderComponent({
     ElementType,
     classes,
     accessibility,
@@ -78,10 +76,10 @@ class ButtonGroup extends UIComponent<WithAsProp<ButtonGroupProps>, any> {
       <ElementType {...unhandledProps} className={classes.root}>
         {_.map(buttons, (button, idx) =>
           Button.create(button, {
-            defaultProps: {
+            defaultProps: () => ({
               circular,
               styles: this.getStyleForButtonIndex(styles, idx === 0, idx === buttons.length - 1),
-            },
+            }),
           }),
         )}
       </ElementType>
@@ -110,6 +108,6 @@ ButtonGroup.create = createShorthandFactory({
 })
 
 /**
- * A button group presents multiple related actions.
+ * A ButtonGroup represents multiple related actions as a group.
  */
 export default withSafeTypeForAs<typeof ButtonGroup, ButtonGroupProps>(ButtonGroup)

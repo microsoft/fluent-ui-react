@@ -1,4 +1,4 @@
-import { Dropdown } from '@stardust-ui/react'
+import { Dropdown } from '@fluentui/react'
 
 const selectors = {
   triggerButton: `.${Dropdown.slotClassNames.triggerButton}`,
@@ -20,6 +20,14 @@ const config: ScreenerTestsConfig = {
         .snapshot('Highlights another item')
         .click(selectors.triggerButton)
         .snapshot('Closes the list'),
+    (builder, keys) =>
+      builder
+        .keys('body', keys.tab)
+        .snapshot('Focuses trigger')
+        .keys(selectors.triggerButton, keys.downArrow)
+        .snapshot('Focuses first item')
+        .keys(selectors.triggerButton, keys.downArrow)
+        .snapshot('Focuses second item'),
   ],
 }
 

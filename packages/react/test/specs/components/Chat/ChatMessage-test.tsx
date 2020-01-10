@@ -1,8 +1,10 @@
+import { chatMessageBehavior, AccessibilityDefinition } from '@fluentui/accessibility'
+import * as React from 'react'
+
 import { handlesAccessibility, implementsShorthandProp, isConformant } from 'test/specs/commonTests'
+import { mountWithProvider } from 'test/utils'
 
 import ChatMessage from 'src/components/Chat/ChatMessage'
-import { chatMessageBehavior } from 'src/lib/accessibility'
-import { AccessibilityDefinition } from 'src/lib/accessibility/types'
 import Text from 'src/components/Text/Text'
 import Box from 'src/components/Box/Box'
 
@@ -18,6 +20,16 @@ describe('ChatMessage', () => {
   describe('accessibility', () => {
     handlesAccessibility(ChatMessage, {
       focusZoneDefinition: (chatMessageBehavior as AccessibilityDefinition).focusZone,
+    })
+  })
+
+  describe('onMouseEnter', () => {
+    it('performs position update', () => {
+      const wrapper = mountWithProvider(<ChatMessage />)
+      const update = jest.spyOn(wrapper.instance(), 'updateActionsMenuPosition')
+
+      wrapper.simulate('mouseenter')
+      expect(update).toBeCalledTimes(1)
     })
   })
 })

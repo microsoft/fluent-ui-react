@@ -1,12 +1,10 @@
-import { Dropdown, DropdownSelectedItem } from '@stardust-ui/react'
+import { Dropdown, DropdownSelectedItem } from '@fluentui/react'
 
 const selectors = {
   triggerButton: `.${Dropdown.slotClassNames.triggerButton}`,
   item: (itemIndex: number) => `.${Dropdown.slotClassNames.itemsList} li:nth-child(${itemIndex})`,
   removeItemIcon: (itemIndex: number) =>
-    `.${Dropdown.slotClassNames.selectedItems} span:nth-child(${itemIndex}) .${
-      DropdownSelectedItem.slotClassNames.icon
-    }`,
+    `.${Dropdown.slotClassNames.selectedItems} span:nth-child(${itemIndex}) .${DropdownSelectedItem.slotClassNames.icon}`,
 }
 
 const config: ScreenerTestsConfig = {

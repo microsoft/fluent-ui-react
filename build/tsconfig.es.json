@@ -1,7 +1,0 @@
-{
-  "extends": "./tsconfig.common.json",
-  "compilerOptions": {
-    "isolatedModules": false,
-    "module": "esnext"
-  }
-}

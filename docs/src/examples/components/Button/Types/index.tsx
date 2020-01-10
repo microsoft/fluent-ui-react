@@ -15,19 +15,19 @@ const Types = () => (
       examplePath="components/Button/Types/ButtonExampleEmphasis"
     />
     <ComponentExample
-      title="Icon"
-      description="A button can be made of only an icon."
-      examplePath="components/Button/Types/ButtonExampleIcon"
+      title="Inverted Button"
+      description="A button that inherits its background."
+      examplePath="components/Button/Types/ButtonExampleInverted"
+    />
+    <ComponentExample
+      title="Text"
+      description="A button can be shown in form of a text to indicate some less-pronounced actions."
+      examplePath="components/Button/Types/ButtonExampleText"
     />
     <ComponentExample
       title="Icon Only"
       description="A button can be formatted differently if it indicate that it contains only an icon."
       examplePath="components/Button/Types/ButtonExampleIconOnly"
-    />
-    <ComponentExample
-      title="Content and Icon"
-      description="A button can have an icon in addition to content."
-      examplePath="components/Button/Types/ButtonExampleContentAndIcon"
     />
   </ExampleSection>
 )

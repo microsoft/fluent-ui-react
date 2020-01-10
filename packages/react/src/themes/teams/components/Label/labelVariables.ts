@@ -1,4 +1,4 @@
-import { pxToRem, stringLiteralsArray } from '../../../../lib'
+import { pxToRem, stringLiteralsArray } from '../../../../utils'
 import { SiteVariablesPrepared, ItemType } from '../../../types'
 import { TeamsSchemeMappingWithAreas } from '../../types'
 import { extendColorScheme, pickValuesFromColorScheme } from '../../../colorUtils'

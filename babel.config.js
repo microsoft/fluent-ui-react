@@ -1,3 +1,4 @@
-module.exports = {
-  babelrcRoots: ['./docs/*', './packages/*', './perf/*'],
-}
+module.exports = api => ({
+  ...require('@fluentui/internal-tooling/babel')(api),
+  babelrcRoots: ['./packages/*'],
+})

@@ -1,4 +1,17 @@
-import { Icon, Menu, Segment, Text, ICSSInJSStyle } from '@stardust-ui/react'
+import {
+  Box,
+  Flex,
+  HierarchicalTree,
+  HierarchicalTreeItemProps,
+  HierarchicalTreeProps,
+  HierarchicalTreeTitleProps,
+  Icon,
+  ICSSInJSStyle,
+  Input,
+  Segment,
+  Text,
+} from '@fluentui/react'
+import { CopyToClipboard } from '@fluentui/docs-components'
 import { ShorthandValue } from '../../../../packages/react/src/types'
 import Logo from 'docs/src/components/Logo/Logo'
 import { getComponentPathname } from 'docs/src/utils'
@@ -6,13 +19,9 @@ import keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { findDOMNode } from 'react-dom'
-import { withRouter } from 'react-router'
+import { NavLink, NavLinkProps, withRouter } from 'react-router-dom'
 
-import { NavLink } from 'react-router-dom'
-
-import { constants } from 'src/lib'
-import { fontWeightBold } from 'src/themes/teams/siteVariables'
+import { constants } from '@fluentui/react/src/utils'
 
 type ComponentMenuItem = { displayName: string; type: string }
 
@@ -20,7 +29,7 @@ const pkg = require('../../../../packages/react/package.json')
 const componentMenu: ComponentMenuItem[] = require('docs/src/componentMenu')
 const behaviorMenu: ComponentMenuItem[] = require('docs/src/behaviorMenu')
 
-const flexDislayStyle: any = { width: '100%' }
+const componentsBlackList = ['Debug', 'Design']
 
 class Sidebar extends React.Component<any, any> {
   static propTypes = {
@@ -29,463 +38,532 @@ class Sidebar extends React.Component<any, any> {
     history: PropTypes.object.isRequired,
     style: PropTypes.object,
   }
-  state: any = { query: '' }
-  _searchInput: any
-  selectedRoute: any
-  filteredMenu = componentMenu
+  state: any = { query: '', activeCategoryIndex: 0 }
+  searchInputRef = React.createRef<HTMLInputElement>()
 
   componentDidMount() {
     document.addEventListener('keydown', this.handleDocumentKeyDown)
-    this.setSearchInput()
-  }
 
-  componentDidUpdate() {
-    this.setSearchInput()
+    const at = this.props.location.pathname
+    const categoryIndex = this.findActiveCategoryIndex(at, this.getSectionsWithoutSearchFilter())
+    this.setState({ activeCategoryIndex: categoryIndex })
   }
 
   componentWillUnmount() {
     document.removeEventListener('keydown', this.handleDocumentKeyDown)
   }
 
-  setSearchInput() {
-    // TODO: Replace findDOMNode with Ref component when it will be merged
-    this._searchInput = (findDOMNode(this) as any).querySelector('.ui.input input')
+  findActiveCategoryIndex = (at: string, sections: ShorthandValue<any>[]): number => {
+    let newAt = at
+    if (at.startsWith('/components')) {
+      newAt = newAt.replace(/[^\/]*$/, '')
+    }
+    if (newAt[newAt.length - 1] === '/') {
+      newAt = newAt.substr(0, newAt.length - 1)
+    }
+
+    return _.findIndex(sections, (section: ShorthandValue<HierarchicalTreeItemProps>) => {
+      return _.find((section as any).items, item => item.title.to.startsWith(newAt))
+    })
   }
 
-  private handleDocumentKeyDown = e => {
+  handleDocumentKeyDown = e => {
     const code = keyboardKey.getCode(e)
     const isAZ = code >= 65 && code <= 90
     const hasModifier = e.altKey || e.ctrlKey || e.metaKey
     const bodyHasFocus = document.activeElement === document.body
 
-    if (!hasModifier && isAZ && bodyHasFocus) this._searchInput.focus()
+    if (!hasModifier && isAZ && bodyHasFocus) this.searchInputRef.current.focus()
   }
 
-  private handleItemClick = () => {
+  handleItemClick = (e: React.SyntheticEvent, data: HierarchicalTreeItemProps) => {
     const { query } = this.state
 
-    if (query) this.setState({ query: '' })
-    // TODO: as part of search input re-enabling
-    // if (document.activeElement === this._searchInput) this._searchInput.blur()
+    if (query) {
+      this.setState({ query: '' })
+      const at = (data.title as NavLinkProps).to as string
+      const categoryIndex = this.findActiveCategoryIndex(at, this.getSectionsWithoutSearchFilter())
+      this.setState({ activeCategoryIndex: categoryIndex })
+    }
   }
 
-  /* TODO: as part of search input re-enabling
-    private renderSearchItems = () => {
-      const { selectedItemIndex, query } = this.state
-      if (!query) return undefined
+  treeActiveIndexChanged = (e: React.SyntheticEvent, props: HierarchicalTreeProps) => {
+    this.setState({ activeCategoryIndex: props.activeIndex })
+  }
 
-      let itemIndex = -1
-      const startsWithMatches: ComponentMenuItem[] = []
-      const containsMatches: ComponentMenuItem[] = []
-      const escapedQuery = _.escapeRegExp(query)
+  keyDownCallback(e) {
+    if (keyboardKey.getCode(e) !== keyboardKey.Enter) {
+      return
+    }
+    e.stopPropagation()
+    e.target.click()
+  }
 
-      _.each(componentMenu, info => {
-        if (new RegExp(`^${escapedQuery}`, 'i').test(info.displayName)) {
-          startsWithMatches.push(info)
-        } else if (new RegExp(escapedQuery, 'i').test(info.displayName)) {
-          containsMatches.push(info)
+  addItemKeyCallbacks(sections: ShorthandValue<any>[]) {
+    for (let i = 0; i < sections.length; i++) {
+      const category = sections[i]
+      if ('items' in category) {
+        this.addItemKeyCallbacks(category.items)
+      } else {
+        if (!('title' in category)) {
+          continue
         }
-      })
+        category['onKeyDown'] = e => {
+          this.keyDownCallback(e)
+        }
+      }
+    }
+  }
 
-      this.filteredMenu = [...startsWithMatches, ...containsMatches]
-      const menuItems = _.map(this.filteredMenu, info => {
-        itemIndex += 1
-        const isSelected = itemIndex === selectedItemIndex
+  addItemOnClickCallbacks(sections: ShorthandValue<any>[]) {
+    for (let i = 0; i < sections.length; i++) {
+      const category = sections[i]
+      if ('items' in category) {
+        this.addItemOnClickCallbacks(category.items)
+      } else {
+        if (!('title' in category)) {
+          continue
+        }
+        category['onTitleClick'] = (e, data) => {
+          this.handleItemClick(e, data)
+        }
+      }
+    }
+  }
 
-        if (isSelected) this.selectedRoute = getComponentPathname(info)
+  getTreeItems(): HierarchicalTreeProps['items'] {
+    return [
+      {
+        key: 'concepts',
+        title: 'Concepts',
+        items: [
+          {
+            key: 'intro',
+            title: {
+              content: 'Introduction',
+              exact: true,
+              activeClassName: 'active',
+              as: NavLink,
+              to: '/',
+            },
+          },
+          {
+            key: 'composition',
+            title: {
+              as: NavLink,
+              content: 'Composition',
+              activeClassName: 'active',
+              to: '/composition',
+            },
+          },
+          {
+            key: 'shorthand',
+            title: {
+              as: NavLink,
+              content: 'Shorthand Props',
+              activeClassName: 'active',
+              to: '/shorthand-props',
+            },
+          },
+        ],
+      },
+      {
+        key: 'guides',
+        title: 'Guides',
+        items: [
+          {
+            key: 'quickstart',
+            title: {
+              content: 'QuickStart',
+              as: NavLink,
+              activeClassName: 'active',
+              to: '/quick-start',
+            },
+          },
+          {
+            key: 'faq',
+            title: { content: 'FAQ', as: NavLink, activeClassName: 'active', to: '/faq' },
+          },
+          {
+            key: 'accessiblity',
+            title: {
+              content: 'Accessibility',
+              as: NavLink,
+              activeClassName: 'active',
+              to: '/accessibility',
+            },
+          },
+          {
+            key: 'theming',
+            title: { content: 'Theming', as: NavLink, activeClassName: 'active', to: '/theming' },
+          },
+          {
+            key: 'theming-examples',
+            title: {
+              content: 'Theming Examples',
+              as: NavLink,
+              activeClassName: 'active',
+              to: '/theming-examples',
+            },
+          },
+          {
+            key: 'colorpalette',
+            title: { content: 'Colors', as: NavLink, activeClassName: 'active', to: '/colors' },
+          },
+          {
+            key: 'layout',
+            title: { content: 'Layout', as: NavLink, activeClassName: 'active', to: '/layout' },
+          },
+          {
+            key: 'integrate-custom',
+            title: {
+              content: 'Integrate Custom Components',
+              as: NavLink,
+              activeClassName: 'active',
+              to: '/integrate-custom-components',
+            },
+          },
+          {
+            key: 'performance',
+            title: {
+              content: 'Performance',
+              as: NavLink,
+              activeClassName: 'active',
+              to: '/performance',
+            },
+          },
+        ],
+      },
+    ]
+  }
 
-        return (
-          <Menu.Item
-            key={info.displayName}
-            content={info.displayName}
-            onClick={this.handleItemClick}
-            active={isSelected}
-            as={NavLink}
-            to={getComponentPathname(info)}
-          />
-        )
-      }, this.filteredMenu)
+  getSectionsWithPrototypeSectionIfApplicable(currentSections, allPrototypes) {
+    let prototypes =
+      process.env.NODE_ENV === 'production'
+        ? _.filter(allPrototypes, { public: true })
+        : allPrototypes
 
-      return (
-        <Menu.Item
-          key={info.displayName}
-          name={info.displayName}
-          onClick={this.handleItemClick}
-          active={isSelected}
-          as={NavLink}
-          to={getComponentPathname(info)}
-        >
-          {info.displayName}
-          {isSelected && selectedItemLabel}
-        </Menu.Item>
-      )
+    if (prototypes.length === 0) {
+      return currentSections
+    }
+    prototypes = this.removePublicTags(prototypes)
+    const prototypeTreeSection = {
+      key: 'prototypes',
+      title: 'Prototypes',
+      items: prototypes,
+    }
+    return currentSections.concat(prototypeTreeSection)
+  }
+
+  removePublicTags(prototyptesTreeItems) {
+    return prototyptesTreeItems.map(p => {
+      delete p.public
+      return p
     })
-*/
+  }
 
-  render() {
-    // Should be applied by provider
-    const sidebarStyles: ICSSInJSStyle = {
-      background: '#201f1f',
-      width: '250px',
-      position: 'fixed',
-      overflowY: 'scroll',
-      top: 0,
-      left: 0,
-      padding: 0,
-      maxHeight: '100vh',
-    }
+  handleQueryChange = (e, data) => {
+    this.setState({ query: data.value })
+  }
 
-    const menuSectionStyles: ICSSInJSStyle = {
-      fontWeight: fontWeightBold,
-      margin: '0 0 .5rem',
-      padding: '0 1.2857rem',
-      background: '#201f1f',
-      color: 'white',
-      ':hover': {
-        background: 'none',
-        color: 'white',
-      },
-      ':focus': {
-        background: 'none',
-        color: 'white',
-      },
-    }
-
-    const menuItemStyles: ICSSInJSStyle = {
-      padding: '.5em 1.33333333em',
-      textDecoration: 'none',
-      fontSize: '0.85714286em',
-      fontWeight: 400,
-      color: '#ffffff80',
-      background: '#201f1f',
-      ':hover': {
-        color: 'white',
-        backgroundColor: 'none',
-      },
-      ':focus': {
-        color: 'white',
-        backgroundColor: 'none',
-      },
-    }
-
-    const dividerStyles: ICSSInJSStyle = {
-      marginTop: '.5em',
-      paddingBottom: '.5em',
-      background: '#201f1f',
-    }
-
-    const navBarStyles: ICSSInJSStyle = {
-      color: '#ffffff80',
-      padding: '0px',
-      backgroundColor: '#201f1f',
-    }
-
-    const logoStyles: ICSSInJSStyle = {
-      paddingRight: '5px',
-      color: 'white',
-      fontWeight: 700,
-    }
-    const changeLogUrl: string = `${constants.repoURL}/blob/master/CHANGELOG.md`
-
-    const menuItemsByType = _.map(constants.typeOrder, nextType => {
+  getSectionsWithoutSearchFilter = (): HierarchicalTreeItemProps[] => {
+    const treeItemsByType = _.map(constants.typeOrder, nextType => {
       const items = _.chain([...componentMenu, ...behaviorMenu])
         .filter(({ type }) => type === nextType)
+        .filter(({ displayName }) => !_.includes(componentsBlackList, displayName))
         .map(info => ({
           key: info.displayName.concat(nextType),
-          content: info.displayName,
-          onClick: this.handleItemClick,
-          as: NavLink,
-          to: getComponentPathname(info),
-          styles: menuItemStyles,
+          title: { content: info.displayName, as: NavLink, to: getComponentPathname(info) },
         }))
         .value()
 
       return { items }
     })
 
-    const menuItems: ShorthandValue[] = [
-      {
-        key: 'github',
-        content: (
-          <div style={flexDislayStyle}>
-            GitHub
-            <Icon name="github" styles={{ float: 'right' }} />
-          </div>
-        ),
-        href: constants.repoURL,
-        target: '_blank',
-        rel: 'noopener noreferrer',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'change',
-        content: (
-          <div style={flexDislayStyle}>
-            CHANGELOG
-            <Icon name="file alternate outline" styles={{ float: 'right' }} />
-          </div>
-        ),
-        href: changeLogUrl,
-        target: '_blank',
-        rel: 'noopener noreferrer',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'divider1',
-        kind: 'divider',
-        styles: dividerStyles,
-      },
-      {
-        key: 'concepts',
-        content: 'Concepts',
-        styles: menuSectionStyles,
-        disabled: true,
-      },
-      {
-        key: 'intro',
-        content: 'Introduction',
-        as: NavLink,
-        to: '/',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'shorthand',
-        content: 'Shorthand Props',
-        as: NavLink,
-        to: '/shorthand-props',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'divider2',
-        kind: 'divider',
-        styles: dividerStyles,
-      },
-      {
-        key: 'guides',
-        content: 'Guides',
-        styles: menuSectionStyles,
-        disabled: true,
-      },
-      {
-        key: 'quickstart',
-        content: 'QuickStart',
-        as: NavLink,
-        to: '/quick-start',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'faq',
-        content: 'FAQ',
-        as: NavLink,
-        to: '/faq',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'accessiblity',
-        content: 'Accessibility',
-        as: NavLink,
-        to: '/accessibility',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'theming',
-        content: 'Theming',
-        as: NavLink,
-        to: '/theming',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'theming-examples',
-        content: 'Theming Examples',
-        as: NavLink,
-        to: '/theming-examples',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'colorpalette',
-        content: 'Colors',
-        as: NavLink,
-        to: '/color-palette',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'layout',
-        content: 'Layout',
-        as: NavLink,
-        to: '/layout',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'integrate-custom',
-        content: 'Integrate Custom Components',
-        as: NavLink,
-        to: '/integrate-custom-components',
-        styles: menuItemStyles,
-      },
-      {
-        key: 'divider3',
-        kind: 'divider',
-        styles: dividerStyles,
-      },
-      // TODO: to re-enable the search input - will modify the list of the components depending on the search results
-      // {query ? this.renderSearchItems() : this.menuItemsByType},
-      // {
-      //   key: 'search',
-      //   content: (
-      //     <Input
-      //       className="transparent inverted icon"
-      //       icon="search"
-      //       placeholder="Search components..."
-      //       value={query}
-      //       onChange={this.handleSearchChange}
-      //       onKeyDown={this.handleSearchKeyDown}
-      //     />
-      //   ),
-      // },
-    ]
-
-    const prototypesMenuItemTitle = {
-      key: 'prototypes',
-      content: 'Prototypes',
-      styles: menuSectionStyles,
-      disabled: true,
-    }
-
-    const prototypesMenuItems: ShorthandValue[] = [
+    const prototypesTreeItems: (ShorthandValue<{}> & { key: string; public: boolean })[] = [
       {
         key: 'chatpane',
-        content: 'Chat Pane',
-        as: NavLink,
-        to: '/prototype-chat-pane',
-        styles: menuItemStyles,
+        title: { content: 'Chat Pane', as: NavLink, to: '/prototype-chat-pane' },
+        public: false,
       },
       {
         key: 'chatMssages',
-        content: 'Chat Messages',
-        as: NavLink,
-        to: '/prototype-chat-messages',
-        styles: menuItemStyles,
+        title: { content: 'Chat Messages', as: NavLink, to: '/prototype-chat-messages' },
+        public: true,
+      },
+      {
+        key: 'customscrollbar',
+        title: { content: 'Custom Scrollbar', as: NavLink, to: '/prototype-custom-scrollbar' },
+        public: true,
+      },
+      {
+        key: 'customtoolbar',
+        title: { content: 'Custom Styled Toolbar', as: NavLink, to: '/prototype-custom-toolbar' },
+        public: true,
+      },
+      {
+        key: 'editor-toolbar',
+        title: { content: 'Editor Toolbar', as: NavLink, to: '/prototype-editor-toolbar' },
+        public: true,
       },
       {
         key: 'dropdowns',
-        content: 'Dropdowns',
-        as: NavLink,
-        to: '/prototype-dropdowns',
-        styles: menuItemStyles,
+        title: { content: 'Dropdowns', as: NavLink, to: '/prototype-dropdowns' },
+        public: false,
       },
       {
         key: 'alerts',
-        content: 'Alerts',
-        as: NavLink,
-        to: '/prototype-alerts',
-        styles: menuItemStyles,
+        title: { content: 'Alerts', as: NavLink, to: '/prototype-alerts' },
+        public: false,
       },
       {
         key: 'asyncshorthand',
-        content: 'Async Shorthand',
-        as: NavLink,
-        to: '/prototype-async-shorthand',
-        styles: menuItemStyles,
+        title: { content: 'Async Shorthand', as: NavLink, to: '/prototype-async-shorthand' },
+        public: false,
       },
       {
         key: 'employeecard',
-        content: 'Employee Card',
-        as: NavLink,
-        to: '/prototype-employee-card',
-        styles: menuItemStyles,
+        title: { content: 'Employee Card', as: NavLink, to: '/prototype-employee-card' },
+        public: false,
       },
       {
         key: 'meetingoptions',
-        content: 'Meeting Options',
-        as: NavLink,
-        to: '/prototype-meeting-options',
-        styles: menuItemStyles,
+        title: { content: 'Meeting Options', as: NavLink, to: '/prototype-meeting-options' },
+        public: false,
       },
       {
         key: 'mentions',
-        content: 'Mentions',
-        as: NavLink,
-        to: '/prototype-mentions',
-        styles: menuItemStyles,
+        title: { content: 'Mentions', as: NavLink, to: '/prototype-mentions' },
+        public: true,
+      },
+      {
+        key: 'participants-list',
+        title: { content: 'Participants list', as: NavLink, to: '/prototype-participants-list' },
+        public: true,
       },
       {
         key: 'searchpage',
-        content: 'Search Page',
-        as: NavLink,
-        to: '/prototype-search-page',
-        styles: menuItemStyles,
+        title: { content: 'Search Page', as: NavLink, to: '/prototype-search-page' },
+        public: false,
       },
       {
         key: 'popups',
-        content: 'Popups',
-        as: NavLink,
-        to: '/prototype-popups',
-        styles: menuItemStyles,
+        title: { content: 'Popups', as: NavLink, to: '/prototype-popups' },
+        public: false,
+      },
+      {
+        key: 'nested-popups-and-dialogs',
+        title: {
+          content: 'Nested Popups & Dialogs',
+          as: NavLink,
+          to: '/prototype-nested-popups-and-dialogs',
+        },
+        public: true,
       },
       {
         key: 'iconviewer',
-        content: 'Processed Icons',
-        as: NavLink,
-        to: '/icon-viewer',
-        styles: menuItemStyles,
+        title: { content: 'Processed Icons', as: NavLink, to: '/icon-viewer' },
+        public: false,
       },
       {
-        key: 'menu-button',
-        content: 'MenuButton',
-        as: NavLink,
-        to: '/menu-button',
-        styles: menuItemStyles,
+        key: 'virtualized-tree',
+        title: { content: 'VirtualizedTree', as: NavLink, to: '/virtualized-tree' },
+        public: true,
       },
       {
-        key: 'divider4',
-        kind: 'divider',
-        styles: dividerStyles,
+        key: 'copy-to-clipboard',
+        title: { content: 'Copy to Clipboard', as: NavLink, to: '/prototype-copy-to-clipboard' },
+        public: true,
+      },
+      {
+        key: 'hexagonal-avatar',
+        title: {
+          content: 'Hexagonal Avatar',
+          as: NavLink,
+          to: '/prototype-hexagonal-avatar',
+        },
+        public: true,
+      },
+      {
+        key: 'table',
+        title: {
+          content: 'Table',
+          as: NavLink,
+          to: '/prototype-table',
+        },
+        public: true,
       },
     ]
 
-    const withPrototypes =
-      process.env.NODE_ENV !== 'production'
-        ? menuItems.concat(prototypesMenuItemTitle).concat(prototypesMenuItems)
-        : menuItems
-
-    const componentMenuItem = {
+    const componentTreeSection = {
       key: 'components',
-      content: 'Components',
-      styles: menuSectionStyles,
-      disabled: true,
-    }
-    const behaviorMenuItem = {
-      key: 'behaviour',
-      content: 'Behaviors',
-      styles: menuSectionStyles,
-      disabled: true,
+      title: 'Components',
+      items: treeItemsByType[0].items,
     }
 
-    const withComponents = withPrototypes.concat(componentMenuItem).concat(menuItemsByType[0].items)
-    const allItems = withComponents
-      .concat({
-        key: 'divider5',
-        kind: 'divider',
-        styles: dividerStyles,
+    const treeItems = this.getTreeItems()
+    const withComponents = treeItems.concat(componentTreeSection)
+    return this.getSectionsWithPrototypeSectionIfApplicable(withComponents, prototypesTreeItems)
+  }
+
+  render() {
+    const sidebarStyles: ICSSInJSStyle = {
+      background: '#201f1f',
+      width: `${this.props.width}px`,
+      position: 'fixed',
+      overflowY: 'scroll',
+      top: 0,
+      left: 0,
+      padding: 0,
+      height: '100%',
+      zIndex: 1000,
+    }
+
+    const logoStyles: ICSSInJSStyle = {
+      marginRight: '0.5rem',
+      width: '36px',
+    }
+
+    const changeLogUrl: string = `${constants.repoURL}/blob/master/CHANGELOG.md`
+    const allSectionsWithoutSearchFilter = this.getSectionsWithoutSearchFilter()
+
+    const escapedQuery = _.escapeRegExp(this.state.query)
+    const regexQuery = new RegExp(`^${escapedQuery}`, 'i')
+    const allSectionsWithPossibleEmptySections = _.map(
+      allSectionsWithoutSearchFilter,
+      (section: HierarchicalTreeItemProps) => {
+        return {
+          ...section,
+          items: _.filter(section.items as HierarchicalTreeItemProps[], item =>
+            regexQuery.test((item.title as HierarchicalTreeTitleProps).content as string),
+          ),
+        }
+      },
+    )
+
+    let allSections = _.filter(
+      allSectionsWithPossibleEmptySections,
+      (section: HierarchicalTreeItemProps) =>
+        Array.isArray(section.items) && section.items.length > 0,
+    )
+
+    if (this.state.query !== '') {
+      allSections = _.map(allSections, (section: HierarchicalTreeItemProps) => {
+        return { ...section, open: true }
       })
-      .concat(behaviorMenuItem)
-      .concat(menuItemsByType[1].items)
+    }
+
+    // TODO: remove after the issue with TreeItem will be fixed
+    // https://github.com/microsoft/fluent-ui-react/issues/1613
+    this.addItemKeyCallbacks(allSections)
+
+    this.addItemOnClickCallbacks(allSections)
+
+    const titleRenderer = (Component, { content, open, hasSubtree, ...restProps }) => (
+      <Component open={open} hasSubtree={hasSubtree} {...restProps}>
+        <span>{content}</span>
+        {hasSubtree && this.state.query === '' && (
+          <Icon name={open ? 'icon-arrow-up' : 'icon-arrow-down'} />
+        )}
+      </Component>
+    )
+
+    const topItemTheme = {
+      ...this.props.treeItemStyle,
+      padding: undefined,
+      margin: '0.5em 0em 0.5em 1em',
+      width: `${0.9 * this.props.width}px`,
+    }
+
+    const gradientTextStyles: React.CSSProperties = {
+      background: 'linear-gradient(45deg, rgb(138, 255, 124), rgb(123, 226, 251))',
+      color: 'transparent',
+
+      WebkitBackgroundClip: 'text',
+      WebkitTextFillColor: 'transparent',
+      fontWeight: 100,
+    }
 
     // TODO: bring back the active elements indicators
     return (
       <Segment styles={sidebarStyles}>
-        <Segment styles={menuSectionStyles}>
-          <Logo width="32px" styles={logoStyles} />
+        <Flex column hAlign="center" styles={{ padding: '1rem', background: 'black' }}>
+          <Logo flavor="white" styles={logoStyles} />
           <Text
             role="heading"
             aria-level={1}
-            color="white"
-            content="Stardust UI React &nbsp;"
-            styles={logoStyles}
+            styles={{
+              fontSize: '1.25rem',
+              color: 'white',
+              fontWeight: 600,
+              textAlign: 'center',
+            }}
+          >
+            Fluent <span style={gradientTextStyles}>UI</span>
+          </Text>
+          <CopyToClipboard value={`yarn add ${pkg.name}@${pkg.version}`} timeout={3000}>
+            {(active, onClick) => (
+              <Box
+                as="code"
+                onClick={onClick}
+                styles={{
+                  display: 'block',
+                  fontWeight: 'normal',
+                  fontSize: '12px',
+                  opacity: active ? 1 : 0.6,
+                  color: active ? 'rgb(138, 255, 124)' : 'inherit',
+                  marginTop: '10px',
+                  cursor: 'pointer',
+                  ...(!active && {
+                    ':hover': {
+                      opacity: 0.75,
+                    },
+                  }),
+                }}
+              >
+                {active ? 'Copied! Happy coding :)' : `yarn add ${pkg.name}@${pkg.version}`}
+              </Box>
+            )}
+          </CopyToClipboard>
+        </Flex>
+        <Flex column>
+          <a
+            href={constants.repoURL}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={topItemTheme}
+          >
+            <Box>
+              GitHub
+              <Icon name="github" styles={{ float: 'right' }} />
+            </Box>
+          </a>
+          <a href={changeLogUrl} target="_blank" rel="noopener noreferrer" style={topItemTheme}>
+            <Box>
+              CHANGELOG
+              <Icon name="file alternate outline" styles={{ float: 'right' }} />
+            </Box>
+          </a>
+          <Input
+            styles={topItemTheme}
+            inverted
+            fluid
+            clearable
+            icon="search"
+            placeholder="Search"
+            iconPosition="end"
+            role="search"
+            onChange={this.handleQueryChange}
+            value={this.state.query}
+            inputRef={this.searchInputRef}
           />
-          <Text color="white" content={pkg.version} size="medium" styles={logoStyles} />
-        </Segment>
-        <Menu vertical fluid pills styles={navBarStyles} items={allItems} />
+        </Flex>
+        <HierarchicalTree
+          items={allSections}
+          renderItemTitle={titleRenderer}
+          activeIndex={this.state.activeCategoryIndex}
+          onActiveIndexChange={this.treeActiveIndexChanged}
+        />
       </Segment>
     )
   }

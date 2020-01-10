@@ -1,17 +1,18 @@
+import { Accessibility, imageBehavior } from '@fluentui/accessibility'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { createShorthandFactory, UIComponent, UIComponentProps, commonPropTypes } from '../../lib'
-import { imageBehavior } from '../../lib/accessibility'
-import { Accessibility } from '../../lib/accessibility/types'
-
+import {
+  createShorthandFactory,
+  UIComponent,
+  UIComponentProps,
+  commonPropTypes,
+  ShorthandFactory,
+} from '../../utils'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface ImageProps extends UIComponentProps {
-  /**
-   * Accessibility behavior if overridden by the user.
-   * @default imageBehavior
-   * */
+  /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
   /** An image may be formatted to appear inline with text as an avatar. */
@@ -28,7 +29,7 @@ export interface ImageProps extends UIComponentProps {
 }
 
 class Image extends UIComponent<WithAsProp<ImageProps>, any> {
-  static create: Function
+  static create: ShorthandFactory<ImageProps>
 
   static className = 'ui-image'
 
@@ -60,10 +61,11 @@ class Image extends UIComponent<WithAsProp<ImageProps>, any> {
   }
 }
 
-Image.create = createShorthandFactory({ Component: Image, mappedProp: 'src' })
+Image.create = createShorthandFactory({ Component: Image, mappedProp: 'src', allowsJSX: false })
 
 /**
- * An image is a graphic representation of something.
+ * An Image is a graphic representation of something.
+ *
  * @accessibility
  * If image should be visible to screen readers, textual representation needs to be provided in 'alt' property.
  *

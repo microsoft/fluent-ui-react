@@ -2,13 +2,20 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
 import * as _ from 'lodash'
-import { UIComponent, commonPropTypes, UIComponentProps, ChildrenComponentProps } from '../../lib'
-import { mergeStyles } from '../../lib/mergeThemes'
+import {
+  UIComponent,
+  commonPropTypes,
+  UIComponentProps,
+  ChildrenComponentProps,
+  ShorthandFactory,
+} from '../../utils'
+import { mergeStyles } from '../../utils/mergeThemes'
 import { ComponentSlotStylesPrepared } from '../../themes/types'
 
-type ChildrenFunction = (
-  params: { styles: ComponentSlotStylesPrepared; classes: string },
-) => React.ReactElement<any>
+type ChildrenFunction = (params: {
+  styles: ComponentSlotStylesPrepared
+  classes: string
+}) => React.ReactElement<any>
 
 export type FlexItemChildren = React.ReactElement<any> | ChildrenFunction
 
@@ -42,6 +49,9 @@ export interface FlexItemProps extends UIComponentProps, ChildrenComponentProps<
   flexDirection?: 'row' | 'column'
 }
 
+/**
+ * A FlexItem is a layout component that customizes alignment of Flex child.
+ */
 class FlexItem extends UIComponent<FlexItemProps> {
   static className = 'ui-flex__item'
 
@@ -71,7 +81,7 @@ class FlexItem extends UIComponent<FlexItemProps> {
 
   displayName: 'FlexItem'
 
-  static create: Function
+  static create: ShorthandFactory<FlexItemProps>
 
   // Boolean flag for now, Symbol-based approach may be used instead.
   // However, there are  concerns related to browser compatibility if Symbols will be used.
@@ -112,7 +122,7 @@ const applyStyles = (
     })
   }
 
-  // assuming element is Stardust element
+  // assuming element is Fluent UI element
   return React.cloneElement(element, {
     styles: mergeStyles(styles.root || {}, element.props.styles),
   })

@@ -10,7 +10,7 @@ export interface MentionsContainerProps {
   items?: AtMentionItem[]
   searchQuery?: string
   open?: boolean
-  onInputKeyDown?: (e: React.KeyboardEvent) => void
+  onInputKeyDown?: (e: React.SyntheticEvent) => void
   onOpenChange?: (e: React.SyntheticEvent, data: { open?: boolean }) => void
   onSearchQueryChange?: (e: React.SyntheticEvent, data: { searchQuery: string }) => void
   onSelectedChange?: (e: React.SyntheticEvent, data: { searchQuery: string }) => void
@@ -58,9 +58,9 @@ const stateReducer = (state: MentionsEditorState, action: MentionsEditorAction) 
   }
 }
 
-const MentionsEditor: React.FunctionComponent<
-  MentionsContainerProps & { children: (props: MentionsContainerProps) => React.ReactNode }
-> = props => {
+const MentionsEditor: React.FunctionComponent<MentionsContainerProps & {
+  children: (props: MentionsContainerProps) => React.ReactNode
+}> = props => {
   const { children, ...rest } = props
   const contendEditableRef = React.useRef(null)
   const [state, dispatch] = React.useReducer(stateReducer, {
@@ -70,23 +70,23 @@ const MentionsEditor: React.FunctionComponent<
     selectedItem: '',
   })
 
-  React.useEffect(
-    () => {
-      if (!state.shouldUpdate) {
-        return
-      }
+  React.useEffect(() => {
+    if (!state.shouldUpdate) {
+      return
+    }
 
-      _.invoke(contendEditableRef.current, 'focus')
+    _.invoke(contendEditableRef.current, 'focus')
 
-      // after the wrapped component is closed the value of the search query is inserted in the editor at cursor position
-      insertTextAtCursorPosition(state.selectedItem)
-      dispatch({ type: 'RESET_UPDATE_FLAG' })
-    },
-    [state.shouldUpdate],
-  )
+    // after the wrapped component is closed the value of the search query is inserted in the editor at cursor position
+    insertTextAtCursorPosition(state.selectedItem)
+    dispatch({ type: 'RESET_UPDATE_FLAG' })
+  }, [state.shouldUpdate])
 
-  const handleEditorKeyUp = (e: React.KeyboardEvent) => {
-    if (!state.open && e.shiftKey && keyboardKey.getCode(e) === keyboardKey.AtSign) {
+  const handleEditorKeyChange = () => {
+    const { anchorNode, focusOffset } = window.getSelection()
+    const lastCharacter = anchorNode.nodeValue && anchorNode.nodeValue[focusOffset - 1]
+
+    if (!state.open && lastCharacter === '@') {
       dispatch({ type: 'OPEN' })
     }
   }
@@ -136,7 +136,7 @@ const MentionsEditor: React.FunctionComponent<
       <div
         contentEditable
         ref={contendEditableRef}
-        onKeyUp={handleEditorKeyUp}
+        onInput={handleEditorKeyChange}
         style={editorStyle}
       />
       <PortalAtCursorPosition open={state.open}>

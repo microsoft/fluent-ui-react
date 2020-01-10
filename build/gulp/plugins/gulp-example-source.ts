@@ -20,13 +20,15 @@ const createExampleSourceCode = (file: Vinyl): ExampleSource => {
   const tsSource = file.contents.toString()
 
   const babelResult = Babel.transform(tsSource, {
+    // This plugin transforms TS files for docs, we want to apply exactly this config.
+    configFile: false,
     plugins: [transformStarImportPlugin],
     presets: [['@babel/preset-typescript', { allExtensions: true, isTSX: true }]],
     sourceType: 'module',
   })
   const prettierResult = prettier.format(babelResult.code, {
     ...prettierConfig,
-    parser: 'babylon',
+    parser: 'babel',
   })
   // https://eslint.org/docs/developer-guide/nodejs-api#cliengineexecuteontext
   // Results will contain single entry

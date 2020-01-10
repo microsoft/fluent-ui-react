@@ -1,19 +1,16 @@
 import * as React from 'react'
-import { Flex, Icon } from '@stardust-ui/react'
+import { Flex, Icon } from '@fluentui/react'
 
 const IconExampleBordered = () => (
   <Flex gap="gap.smaller">
-    <Icon name="chess rook" bordered />
-    <Icon name="book" bordered />
-    <Icon name="expand" bordered />
+    <Icon name="skype-logo" bordered />
+    <Icon name="emoji" bordered />
     <Icon name="play" bordered />
     <Icon name="call" bordered />
     <Icon name="call-video" bordered />
-    <Icon name="stop" bordered />
-    <Icon name="calendar alternate outline" bordered />
-    <Icon name="coffee" bordered />
-    <Icon name="compass outline" bordered />
-    <Icon name="area chart" bordered />
+    <Icon name="calendar outline" bordered />
+    <Icon name="translation" bordered />
+    <Icon name="star outline" bordered />
   </Flex>
 )
 

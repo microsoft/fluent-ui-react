@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Dropdown } from '@stardust-ui/react'
+import { Dropdown } from '@fluentui/react'
 
 const inputItems = [
   'Bruce Wayne',
@@ -17,6 +17,7 @@ const DropdownExample = () => (
   <Dropdown
     items={inputItems}
     placeholder="Select your hero"
+    checkable
     getA11ySelectionMessage={{ onAdd: item => `${item} has been selected.` }}
   />
 )

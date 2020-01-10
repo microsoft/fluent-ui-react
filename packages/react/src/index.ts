@@ -1,11 +1,13 @@
-import * as themes from './themes'
-
 //
 // Theme
 //
-export { themes }
+// work around api-extractor limitation
+import { fontAwesome, teams, teamsDark, teamsHighContrast } from './themes'
+
+export const themes = { fontAwesome, teams, teamsDark, teamsHighContrast }
 export * from './themes/types'
 export * from './themes/colorUtils'
+export * from './themes/createTheme'
 
 //
 // Teams theme
@@ -15,8 +17,6 @@ export * from './themes/teams/types'
 //
 // Components
 //
-export * from '@stardust-ui/react-component-ref'
-
 export * from './components/Accordion/Accordion'
 export { default as Accordion } from './components/Accordion/Accordion'
 export * from './components/Accordion/AccordionTitle'
@@ -48,11 +48,26 @@ export { default as ChatItem } from './components/Chat/ChatItem'
 export * from './components/Chat/ChatMessage'
 export { default as ChatMessage } from './components/Chat/ChatMessage'
 
+export * from './components/Checkbox/Checkbox'
+export { default as Checkbox } from './components/Checkbox/Checkbox'
+
+export * from './components/Debug/Debug'
+export { default as Debug } from './components/Debug/Debug'
+
+export * from './components/Design/Design'
+export { default as Design } from './components/Design/Design'
+
+export * from './components/MenuButton/MenuButton'
+export { default as MenuButton } from './components/MenuButton/MenuButton'
+
 export * from './components/Divider/Divider'
 export { default as Divider } from './components/Divider/Divider'
 
 export * from './components/Dialog/Dialog'
 export { default as Dialog } from './components/Dialog/Dialog'
+
+export * from './components/Dialog/DialogFooter'
+export { default as DialogFooter } from './components/Dialog/DialogFooter'
 
 export * from './components/Dropdown/Dropdown'
 export { default as Dropdown } from './components/Dropdown/Dropdown'
@@ -138,6 +153,9 @@ export { default as RadioGroupItem } from './components/RadioGroup/RadioGroupIte
 export * from './components/Segment/Segment'
 export { default as Segment } from './components/Segment/Segment'
 
+export * from './components/Slider/Slider'
+export { default as Slider } from './components/Slider/Slider'
+
 export * from './components/Status/Status'
 export { default as Status } from './components/Status/Status'
 
@@ -147,64 +165,83 @@ export { default as Text } from './components/Text/Text'
 export * from './components/Animation/Animation'
 export { default as Animation } from './components/Animation/Animation'
 
-export * from './components/Tree'
-export { default as Tree } from './components/Tree'
+export * from './components/TextArea/TextArea'
+export { default as TextArea } from './components/TextArea/TextArea'
+
+export * from './components/Toolbar/Toolbar'
+export { default as Toolbar } from './components/Toolbar/Toolbar'
+export * from './components/Toolbar/ToolbarCustomItem'
+export { default as ToolbarCustomItem } from './components/Toolbar/ToolbarCustomItem'
+export * from './components/Toolbar/ToolbarDivider'
+export { default as ToolbarDivider } from './components/Toolbar/ToolbarDivider'
+export * from './components/Toolbar/ToolbarItem'
+export { default as ToolbarItem } from './components/Toolbar/ToolbarItem'
+export * from './components/Toolbar/ToolbarMenu'
+export { default as ToolbarMenu } from './components/Toolbar/ToolbarMenu'
+export * from './components/Toolbar/ToolbarMenuDivider'
+export { default as ToolbarMenuDivider } from './components/Toolbar/ToolbarMenuDivider'
+export * from './components/Toolbar/ToolbarMenuItem'
+export { default as ToolbarMenuItem } from './components/Toolbar/ToolbarMenuItem'
+export * from './components/Toolbar/ToolbarMenuRadioGroup'
+export { default as ToolbarMenuRadioGroup } from './components/Toolbar/ToolbarMenuRadioGroup'
+export * from './components/Toolbar/ToolbarRadioGroup'
+export { default as ToolbarRadioGroup } from './components/Toolbar/ToolbarRadioGroup'
+
+export * from './components/HierarchicalTree/HierarchicalTree'
+export { default as HierarchicalTree } from './components/HierarchicalTree/HierarchicalTree'
+export * from './components/HierarchicalTree/HierarchicalTreeItem'
+export { default as HierarchicalTreeItem } from './components/HierarchicalTree/HierarchicalTreeItem'
+export * from './components/HierarchicalTree/HierarchicalTreeTitle'
+export { default as HierarchicalTreeTitle } from './components/HierarchicalTree/HierarchicalTreeTitle'
+
+export * from './components/Tree/Tree'
+export { default as Tree } from './components/Tree/Tree'
+export * from './components/Tree/TreeItem'
+export { default as TreeItem } from './components/Tree/TreeItem'
+export * from './components/Tree/TreeTitle'
+export { default as TreeTitle } from './components/Tree/TreeTitle'
 
 export * from './components/Reaction/Reaction'
 export { default as Reaction } from './components/Reaction/Reaction'
 export * from './components/Reaction/ReactionGroup'
 export { default as ReactionGroup } from './components/Reaction/ReactionGroup'
 
+export * from './components/SplitButton/SplitButton'
+export { default as SplitButton } from './components/SplitButton/SplitButton'
+
 export * from './components/Video/Video'
 export { default as Video } from './components/Video/Video'
 
-//
-// Accessibility
-//
-export { default as menuBehavior } from './lib/accessibility/Behaviors/Menu/menuBehavior'
-export { default as menuItemBehavior } from './lib/accessibility/Behaviors/Menu/menuItemBehavior'
-export {
-  default as menuDividerBehavior,
-} from './lib/accessibility/Behaviors/Menu/menuDividerBehavior'
-export { default as tabBehavior } from './lib/accessibility/Behaviors/Tab/tabBehavior'
-export { default as tabListBehavior } from './lib/accessibility/Behaviors/Tab/tabListBehavior'
-export { default as toolbarBehavior } from './lib/accessibility/Behaviors/Toolbar/toolbarBehavior'
-export {
-  default as toolbarButtonBehavior,
-} from './lib/accessibility/Behaviors/Toolbar/toolbarButtonBehavior'
-export {
-  default as radioGroupBehavior,
-} from './lib/accessibility/Behaviors/Radio/radioGroupBehavior'
-export {
-  default as radioGroupItemBehavior,
-} from './lib/accessibility/Behaviors/Radio/radioGroupItemBehavior'
-export { default as chatBehavior } from './lib/accessibility/Behaviors/Chat/chatBehavior'
-export {
-  default as chatMessageBehavior,
-} from './lib/accessibility/Behaviors/Chat/chatMessageBehavior'
-export { default as gridBehavior } from './lib/accessibility/Behaviors/Grid/gridBehavior'
-export {
-  default as popupFocusTrapBehavior,
-} from './lib/accessibility/Behaviors/Popup/popupFocusTrapBehavior'
-export {
-  default as popupAutoFocusBehavior,
-} from './lib/accessibility/Behaviors/Popup/popupAutoFocusBehavior'
-export { default as dialogBehavior } from './lib/accessibility/Behaviors/Dialog/dialogBehavior'
-export { default as statusBehavior } from './lib/accessibility/Behaviors/Status/statusBehavior'
-export { default as alertBehavior } from './lib/accessibility/Behaviors/Alert/alertBehavior'
-export {
-  default as alertWarningBehavior,
-} from './lib/accessibility/Behaviors/Alert/alertWarningBehavior'
+export * from './components/Tooltip/Tooltip'
+export { default as Tooltip } from './components/Tooltip/Tooltip'
+export * from './components/Tooltip/TooltipContent'
+export { default as TooltipContent } from './components/Tooltip/TooltipContent'
+
+export * from './components/Carousel/Carousel'
+export { default as Carousel } from './components/Carousel/Carousel'
+export * from './components/Carousel/CarouselItem'
+export { default as CarouselItem } from './components/Carousel/CarouselItem'
+export * from './components/Carousel/CarouselNavigation'
+export { default as CarouselNavigation } from './components/Carousel/CarouselNavigation'
+export * from './components/Carousel/CarouselNavigationItem'
+export { default as CarouselNavigationItem } from './components/Carousel/CarouselNavigationItem'
+
+export * from './components/Table/Table'
+export { default as Table } from './components/Table/Table'
+export * from './components/Table/TableRow'
+export { default as TableRow } from './components/Table/TableRow'
+export * from './components/Table/TableCell'
+export { default as TableCell } from './components/Table/TableCell'
 
 //
 // Utilities
 //
-export { default as mergeThemes } from './lib/mergeThemes'
-export * from './lib/createStardustComponent'
-export * from './lib'
+export { default as mergeThemes } from './utils/mergeThemes'
+export * from './utils/createComponent'
+export * from './utils'
 export * from './types'
-export { Popper as UNSTABLE_Popper } from './lib/positioner'
-export * from './lib/positioner/types'
+export { Popper as UNSTABLE_Popper } from './utils/positioner'
+export * from './utils/positioner/types'
 
 //
 // FocusZone
@@ -212,17 +249,23 @@ export * from './lib/positioner/types'
 import {
   getFirstTabbable,
   getLastTabbable,
+  getFirstFocusable,
+  getLastFocusable,
   getNextElement,
   getPreviousElement,
   focusAsync,
-} from './lib/accessibility/FocusZone/focusUtilities'
+} from '@fluentui/react-bindings'
 
 export const FocusZoneUtilities = {
   getFirstTabbable,
   getLastTabbable,
+  getFirstFocusable,
+  getLastFocusable,
   getNextElement,
   getPreviousElement,
   focusAsync,
 }
-export * from './lib/accessibility/FocusZone/FocusZone.types'
-export * from './lib/accessibility/types'
+
+export * from '@fluentui/accessibility'
+export * from '@fluentui/react-component-ref'
+export * from '@fluentui/react-bindings'

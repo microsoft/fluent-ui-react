@@ -8,21 +8,25 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   rtlTextContainer,
-} from '../../lib'
-import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+  ColorComponentProps,
+} from '../../utils'
+import { Accessibility } from '@fluentui/accessibility'
+
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
-import Box from '../Box/Box'
+import Box, { BoxProps } from '../Box/Box'
 
 export interface SegmentProps
   extends UIComponentProps<SegmentProps>,
     ChildrenComponentProps,
-    ContentComponentProps<ShorthandValue> {
+    ColorComponentProps,
+    ContentComponentProps<ShorthandValue<BoxProps>> {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
+
+  /** An segment can show it is currently unable to be interacted with. */
+  disabled?: boolean
 
   /** A segment can have its colors inverted for contrast. */
   inverted?: boolean
@@ -36,13 +40,14 @@ class Segment extends UIComponent<WithAsProp<SegmentProps>, any> {
   static propTypes = {
     ...commonPropTypes.createCommon({
       content: 'shorthand',
+      color: true,
     }),
+    disabled: PropTypes.bool,
     inverted: PropTypes.bool,
     rtlAttributes: PropTypes.func,
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior,
     as: 'div',
   }
 
@@ -63,6 +68,6 @@ class Segment extends UIComponent<WithAsProp<SegmentProps>, any> {
 }
 
 /**
- * A segment is used to create a grouping of related content.
+ * A Segment visually groups related content.
  */
 export default withSafeTypeForAs<typeof Segment, SegmentProps>(Segment)

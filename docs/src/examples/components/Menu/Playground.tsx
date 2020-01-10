@@ -1,5 +1,5 @@
-import { useBooleanKnob } from '@stardust-ui/docs-components'
-import { Menu } from '@stardust-ui/react'
+import { useBooleanKnob } from '@fluentui/docs-components'
+import { Menu } from '@fluentui/react'
 import * as React from 'react'
 
 import useAccessibilityKnob from 'docs/src/components/ComponentDoc/useAccessibilityKnob'

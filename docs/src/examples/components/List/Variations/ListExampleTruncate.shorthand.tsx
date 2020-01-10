@@ -1,6 +1,25 @@
-import { useBooleanKnob, useRangeKnob } from '@stardust-ui/docs-components'
-import { List, Image } from '@stardust-ui/react'
+import { useBooleanKnob, useRangeKnob } from '@fluentui/docs-components'
+import { List, Image, ButtonGroup } from '@fluentui/react'
 import * as React from 'react'
+
+const actions = (
+  <ButtonGroup
+    buttons={[
+      {
+        icon: 'icon-checkmark',
+        iconOnly: true,
+        text: true,
+        title: 'Check',
+      },
+      {
+        icon: 'icon-close',
+        iconOnly: true,
+        text: true,
+        title: 'Close',
+      },
+    ]}
+  />
+)
 
 const items = [
   {
@@ -10,6 +29,7 @@ const items = [
     headerMedia: '7:26:56 AM',
     content: 'Program the sensor to the SAS alarm through the haptic SQL card!',
     contentMedia: '!!',
+    endMedia: actions,
   },
   {
     key: 'skyler',
@@ -18,6 +38,7 @@ const items = [
     headerMedia: '11:30:17 PM',
     content: 'Use the online FTP application to input the multi-byte application!',
     contentMedia: '!!',
+    endMedia: actions,
   },
   {
     key: 'dante',
@@ -26,6 +47,7 @@ const items = [
     headerMedia: '5:22:40 PM',
     content: 'The GB pixel is down, navigate the virtual interface!',
     contentMedia: '!!',
+    endMedia: actions,
   },
 ]
 

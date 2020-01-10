@@ -1,14 +1,12 @@
 import {
   Attachment,
   Popup,
-  Button,
   Menu,
-  popupFocusTrapBehavior,
   AvatarProps,
   ChatMessageProps,
   DividerProps,
   StatusProps,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 import * as React from 'react'
 import * as _ from 'lodash'
 import * as keyboardKey from 'keyboard-key'
@@ -76,7 +74,7 @@ function generateChatMsgProps(message: MessageData, fromUser: UserData): ChatIte
   }
 }
 
-function createMessageContent(message: MessageData): ShorthandValue {
+function createMessageContent(message: MessageData): ShorthandValue<ChatMessageProps> {
   const messageId = `content-${message.id}`
   return {
     id: message.withAttachment ? undefined : messageId,
@@ -125,22 +123,17 @@ function createMessageContentWithAttachments(content: string, messageId: string)
     }
   }
 
-  const actionPopup = (
-    <Popup
-      accessibility={popupFocusTrapBehavior}
-      trigger={
-        <Button
-          aria-label="More attachment options"
-          iconOnly
-          circular
-          icon="ellipsis horizontal"
-          onClick={e => e.stopPropagation()}
-          onKeyDown={stopPropagationOnKeys([keyboardKey.Enter, keyboardKey.Spacebar])}
-        />
-      }
-      content={{ content: contextMenu }}
-    />
-  )
+  const action = {
+    'aria-label': 'More attachment options',
+    iconOnly: true,
+    circular: true,
+    icon: 'ellipsis horizontal',
+    onClick: e => e.stopPropagation(),
+    onKeyDown: stopPropagationOnKeys([keyboardKey.Enter, keyboardKey.Spacebar]),
+    children: (Component, props) => (
+      <Popup content={{ content: contextMenu }} trapFocus trigger={<Component {...props} />} />
+    ),
+  }
 
   return (
     <>
@@ -154,7 +147,7 @@ function createMessageContentWithAttachments(content: string, messageId: string)
             icon="file word outline"
             aria-label={`File attachment ${fileName}. Press tab for more options Press Enter to open the file`}
             header={fileName}
-            action={actionPopup}
+            action={action}
             data-is-focusable={true}
             styles={{
               ...(index === 1 ? { marginLeft: '15px' } : {}),

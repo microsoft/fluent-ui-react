@@ -1,4 +1,4 @@
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../../../utils'
 
 export type AttachmentVariables = {
   padding: string
@@ -30,7 +30,7 @@ export default (siteVariables: any): AttachmentVariables => ({
   borderColor: siteVariables.colors.grey[200],
   borderRadius: pxToRem(3),
   backgroundColor: siteVariables.colors.grey[100],
-  backgroundColorHover: siteVariables.colors.grey[200],
+  backgroundColorHover: siteVariables.colors.grey[150],
   textColor: siteVariables.colors.grey[750],
   textColorHover: siteVariables.colors.grey[750],
   boxShadow: siteVariables.shadowLevel1,
@@ -44,5 +44,5 @@ export default (siteVariables: any): AttachmentVariables => ({
 
   descriptionFontSize: siteVariables.fontSizes.small,
   descriptionFontWeight: siteVariables.fontWeightRegular,
-  descriptionLineHeight: siteVariables.lineHeightSmall,
+  descriptionLineHeight: siteVariables.lineHeightDefault,
 })

@@ -77,7 +77,7 @@ export default () => {
   }
 
   function getParsedResults() {
-    return _(result)
+    return _.chain(result)
       .groupBy('displayName')
       .map((behaviors, displayName) => ({
         displayName,

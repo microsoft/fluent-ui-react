@@ -2,7 +2,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
 
-import { UIComponent, commonPropTypes, UIComponentProps, ChildrenComponentProps } from '../../lib'
+import { UIComponent, commonPropTypes, UIComponentProps, ChildrenComponentProps } from '../../utils'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 import FlexItem from './FlexItem'
 
@@ -48,7 +48,7 @@ class Flex extends UIComponent<WithAsProp<FlexProps>> {
     as: 'div',
   }
 
-  public static propTypes = {
+  static propTypes = {
     ...commonPropTypes.createCommon({
       accessibility: false,
       content: false,
@@ -97,6 +97,6 @@ class Flex extends UIComponent<WithAsProp<FlexProps>> {
 }
 
 /**
- * Arranges group of items aligned towards common direction.
+ * A Flex is a layout component that arranges group of items aligned towards common direction (either row or column).
  */
 export default withSafeTypeForAs<typeof Flex, FlexProps>(Flex)

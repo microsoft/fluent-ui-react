@@ -1,11 +1,11 @@
 import * as React from 'react'
-import { Reaction } from '@stardust-ui/react'
+import { Reaction } from '@fluentui/react'
 
 const ReactionGroupExample = () => (
   <Reaction.Group
     items={[
-      { icon: 'thumbs up', content: '2K', key: 'up' },
-      { icon: 'thumbs down', content: 10, key: 'down' },
+      { icon: 'like', content: '2K', key: 'up' },
+      { icon: 'emoji', content: 10, key: 'smile' },
     ]}
   />
 )

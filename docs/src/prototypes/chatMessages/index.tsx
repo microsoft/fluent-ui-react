@@ -1,13 +1,14 @@
 import * as React from 'react'
 import { PrototypeSection, ComponentPrototype } from '../Prototypes'
-import MessageReactionsWithPopup from './MessageReactionsWithPopup'
 import ImportantAndMentionMessages from './ImportantAndMentionMessages'
 import ChatMessageWithPopover from './ChatMessageWithPopover'
+import ControlMessages from './ControlMessages'
+import ThreadedMessages from './ThreadedMessages'
 
 export default () => (
   <PrototypeSection title="Chat messages">
     <ComponentPrototype
-      title="Chat message with popover"
+      title="Chat message with popover and reactions"
       description="The Popover can be use together with the chat messages."
     >
       <ChatMessageWithPopover />
@@ -18,11 +19,11 @@ export default () => (
     >
       <ImportantAndMentionMessages />
     </ComponentPrototype>
-    <ComponentPrototype
-      title="Message reactions with popup"
-      description="The reactions can show popup with the list of users who reacted with that rection."
-    >
-      <MessageReactionsWithPopup />
+    <ComponentPrototype title="Control messages" description="Control messages example">
+      <ControlMessages />
+    </ComponentPrototype>
+    <ComponentPrototype title="Threaded messages" description="Threaded messages example">
+      <ThreadedMessages />
     </ComponentPrototype>
   </PrototypeSection>
 )

@@ -6,9 +6,9 @@ import NonPublicSection from 'docs/src/components/ComponentDoc/NonPublicSection'
 const Performance = () => (
   <NonPublicSection title="Performance">
     <ComponentPerfExample
-      title="Default"
-      description="A default test."
-      examplePath="components/List/Performance/List.perf"
+      title="Common"
+      description="A typical list with common slots filled."
+      examplePath="components/List/Performance/ListCommon.perf"
     />
   </NonPublicSection>
 )

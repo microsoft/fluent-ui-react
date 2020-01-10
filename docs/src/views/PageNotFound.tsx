@@ -1,10 +1,10 @@
 import * as React from 'react'
-import { Grid, Segment, Header, Icon } from '@stardust-ui/react'
+import { Grid, Segment, Header, Icon } from '@fluentui/react'
 
 const PageNotFound = () => (
   <Grid>
     <div>
-      <Header as="h1" textAlign="center">
+      <Header as="h1" align="center">
         <Icon name="game" />
         404
         <Header.Description>How about some good old Atari?</Header.Description>

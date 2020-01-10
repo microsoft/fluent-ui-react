@@ -1,9 +1,10 @@
-import { pxToRem } from '../../lib'
+import { pxToRem } from '../../utils'
 import { colors } from './colors'
 
 //
 // COLORS
 //
+export { categoryColors, categoryColorScheme } from './categoryColors'
 export {
   colors,
   contextualColors,
@@ -25,11 +26,10 @@ export const focusOuterBorderColor = colors.black
 // SHADOW LEVELS
 //
 export const shadowLevel1 = '0 .2rem .4rem -.075rem rgba(0, 0, 0, .1)'
-export const shadowLevel2 = '0 .4rem 0.7rem -0.1rem rgba(0, 0, 0, .1)'
-export const shadowLevel3 = '0 .8rem 1rem -0.2rem rgba(0, 0, 0, .1)'
-export const shadowLevel4 = '0 .6rem 1.8rem -0.4rem rgba(0, 0, 0, .1)'
-
-export const shadowLevel1Darker = '0 .2rem .4rem -.075rem rgba(0, 0, 0, 0.5)'
+export const shadowLevel2 = '0 .4rem .7rem -.1rem rgba(0, 0, 0, .1)'
+export const shadowLevel3 = '0 .8rem 1rem -.2rem rgba(0, 0, 0, .1)'
+export const shadowLevel4 = '0 1.6rem 1.8rem -.4rem rgba(0, 0, 0, .1)'
+export const shadowLevel1Dark = '0 .2rem .4rem -.075rem rgba(0, 0, 0, .25)'
 
 //
 // FONT SIZES
@@ -54,6 +54,7 @@ export const fontWeightBold = 700
 //
 // LINE HEIGHTS
 //
+export const lineHeightDefault = 1
 export const lineHeightSmaller = 1.2
 export const lineHeightSmall = 1.3333
 export const lineHeightMedium = 1.4286

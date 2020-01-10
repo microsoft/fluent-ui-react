@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { FontWeightProperty } from 'csstype'
-import { Dropdown, DropdownItemProps, Provider } from '@stardust-ui/react'
+import { Dropdown, DropdownItemProps, Provider } from '@fluentui/react'
 
 import { MentionsContainerProps } from './MentionsEditor'
 
@@ -22,9 +22,10 @@ const MentionsDropdown: React.FunctionComponent<MentionsContainerProps> = props 
     <Provider.Consumer
       render={({ siteVariables: siteVars }) => (
         <Dropdown
-          defaultOpen={true}
+          open
           inline
           search
+          position="above"
           items={items}
           renderItem={
             searchQuery
@@ -64,15 +65,13 @@ const getCustomItem = (args: {
 
   return (
     <Item
-      header={{
-        content: (
-          <span>
-            {header.substring(0, queryStartIndex)}
-            <span style={{ fontWeight }}>{header.substring(queryStartIndex, queryEndIndex)}</span>
-            {header.substring(queryEndIndex)}
-          </span>
-        ),
-      }}
+      header={
+        <span>
+          {header.substring(0, queryStartIndex)}
+          <span style={{ fontWeight }}>{header.substring(queryStartIndex, queryEndIndex)}</span>
+          {header.substring(queryEndIndex)}
+        </span>
+      }
       {...rest}
     />
   )

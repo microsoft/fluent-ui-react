@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button, Header, Portal } from '@stardust-ui/react'
+import { Button, Header, Portal } from '@fluentui/react'
 
 class PortalExampleFocusTrapped extends React.Component {
   state = { open: false }
@@ -33,7 +33,7 @@ class PortalExampleFocusTrapped extends React.Component {
             elementToFocusOnDismiss: null,
             // Indicates whether to force focus inside a Portal, if the 'focus' event was invoked at any place.
             // 'false' by default.
-            forceFocusInsideTrap: false,
+            forceFocusInsideTrapOnOutsideFocus: false,
             // Ignore focusing element which activated Portal after it was closed.
             // 'false' by default.
             ignoreExternalFocusing: false,

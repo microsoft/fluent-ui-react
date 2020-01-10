@@ -1,5 +1,4 @@
-.awcache/
 coverage/
 dist/
-dll/
+lib/
 node_modules/

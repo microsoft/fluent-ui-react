@@ -3,6 +3,8 @@
 // ========================================================
 
 import * as React from 'react'
+import { ThemeInput, Renderer, ThemePrepared } from './themes/types'
+import Telemetry from './utils/Telemetry'
 
 export type Extendable<T, V = any> = T & {
   [key: string]: V
@@ -13,6 +15,8 @@ export type ResultOf<T> = T extends (...arg: any[]) => infer TResult ? TResult :
 export type ObjectOf<T> = { [key: string]: T }
 
 export type ObjectOrFunc<TResult, TArg = {}> = ((arg: TArg) => TResult) | TResult
+
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 
 // ========================================================
 // Props
@@ -47,17 +51,17 @@ export type PropsOf<T> = T extends React.Component<infer TProps>
 // Shorthand Factories
 // ========================================================
 
-export type ShorthandRenderFunction = (
+export type ShorthandRenderFunction<P> = (
   Component: React.ReactType,
-  props: Props,
+  props: P,
 ) => React.ReactElement<any>
 
-export type ShorthandRenderer = (
-  value: ShorthandValue,
-  renderTree?: ShorthandRenderFunction,
+export type ShorthandRenderer<P> = (
+  value: ShorthandValue<P>,
+  renderTree?: ShorthandRenderFunction<P>,
 ) => React.ReactElement<any>
 
-export type ShorthandRenderCallback = (render: ShorthandRenderer) => React.ReactElement<any>
+export type ShorthandRenderCallback<P> = (render: ShorthandRenderer<P>) => React.ReactElement<any>
 
 // The ReactFragment here is replaced from the original typings with ReactNodeArray because of incorrect inheriting of the type when it is defined as {}
 type ReactNode =
@@ -68,8 +72,12 @@ type ReactNode =
   | null
   | undefined
 
-export type ShorthandValue<P = {}> = ReactNode | Props<P>
-export type ShorthandCollection<K = []> = ShorthandValue<{ kind?: K }>[]
+export type ShorthandRenderProp<P> = (Component: React.ElementType, props: P) => React.ReactNode
+
+export type ShorthandValue<P extends Props> =
+  | ReactNode
+  | (Props<P> & { children?: P['children'] | ShorthandRenderProp<P> })
+export type ShorthandCollection<P, K = never> = ShorthandValue<P & { kind?: K }>[]
 
 // ========================================================
 // Types for As prop support
@@ -110,12 +118,13 @@ type PickProps<T, Props extends string | number | symbol> = {
   [K in Intersect<Props, keyof T>]: T[K]
 }
 
-export const withSafeTypeForAs = function<
+export const withSafeTypeForAs = <
   TComponentType extends React.ComponentType,
   TProps,
-  TAs extends keyof JSX.IntrinsicElements = 'div',
-  TAdditionalProps extends keyof TComponentType = undefined
->(componentType: TComponentType) {
+  TAs extends keyof JSX.IntrinsicElements = 'div'
+>(
+  componentType: TComponentType,
+) => {
   /**
    * TODO: introduce overload once TS compiler issue that leads to
    * 'JS Heap Out Of Memory' exception will be fixed
@@ -143,4 +152,27 @@ export const UNSAFE_typed = <TComponentType>(componentType: TComponentType) => {
     withProps: <TProps>() =>
       (componentType as any) as UNSAFE_TypedComponent<TComponentType, TProps>,
   }
+}
+
+// ========================================================
+// Provider's context
+// ========================================================
+
+export interface ProviderContextInput {
+  renderer?: Renderer
+  rtl?: boolean
+  disableAnimations?: boolean
+  target?: Document
+  theme?: ThemeInput
+  telemetry?: Telemetry
+}
+
+export interface ProviderContextPrepared {
+  renderer: Renderer
+  rtl: boolean
+  disableAnimations: boolean
+  target: Document
+  theme: ThemePrepared
+  telemetry: Telemetry | undefined
+  _internal_resolvedComponentVariables: Record<string, object>
 }

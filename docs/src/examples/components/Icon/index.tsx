@@ -12,9 +12,9 @@ const IconExamples = () => (
     <Types />
     <States />
     <Variations />
-    <Usage />
     <Rtl />
     <Performance />
+    <Usage />
   </div>
 )
 

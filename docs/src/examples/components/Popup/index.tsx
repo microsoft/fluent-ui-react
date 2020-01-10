@@ -9,8 +9,8 @@ const PopupExamples = () => (
   <>
     <Types />
     <Variations />
-    <Usage />
     <Rtl />
+    <Usage />
   </>
 )
 

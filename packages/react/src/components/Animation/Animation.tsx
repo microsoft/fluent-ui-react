@@ -1,5 +1,6 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import cx from 'classnames'
 
 import {
   UIComponent,
@@ -7,9 +8,8 @@ import {
   StyledComponentProps,
   commonPropTypes,
   ChildrenComponentProps,
-} from '../../lib'
-import { AnimationProp } from '../../themes/types'
-import createAnimationStyles from '../../lib/createAnimationStyles'
+  ShorthandFactory,
+} from '../../utils'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface AnimationProps
@@ -24,42 +24,42 @@ export interface AnimationProps
   /** The name for the animation that should be applied, defined in the theme. */
   name?: string
 
-  /** The delay property specifies a delay for the start of an animation. Negative values are
+  /** Specifies a delay for the start of an animation. Negative values are
    * also allowed. If using negative values, the animation will start as if it had already been
-   * playing for N seconds.
+   * playing for that amount of time.
    */
   delay?: string
 
-  /** The direction property specifies whether an animation should be played forwards, backwards
-   * or in alternate cycles. It can have the following values:
-   * - normal - The animation is played as normal (forwards). This is default
+  /** Specifies whether an animation should be played forwards, backwards or in alternate cycles.
+   * It can have the following values:
+   * - normal (default) - The animation is played as normal (forwards)
    * - reverse - The animation is played in reverse direction (backwards)
    * - alternate - The animation is played forwards first, then backwards
-   * - alternate-reverse - The animation is played backwards first, then forwards.
+   * - alternate-reverse - The animation is played backwards first, then forwards
    */
   direction?: string
 
-  /** The duration property defines how long time an animation should take to complete. */
+  /** Specifies how long an animation should take to complete. */
   duration?: string
 
   /**
-   * The fillMode property specifies a style for the target element when the animation
-   * is not playing (before it starts, after it ends, or both). It can have the following values:
-   * - none - Default value. Animation will not apply any styles to the element before or after it is executing
+   * Specifies a style for the target element when the animation is not playing (i.e. before it starts, after it ends, or both).
+   * It can have the following values:
+   * - none (default) - Animation will not apply any styles to the element before or after it is executing
    * - forwards - The element will retain the style values that is set by the last keyframe (depends on animation-direction and animation-iteration-count)
    * - backwards - The element will get the style values that is set by the first keyframe (depends on animation-direction), and retain this during the animation-delay period
    * - both - The animation will follow the rules for both forwards and backwards, extending the animation properties in both directions
    * */
   fillMode?: string
 
-  /** The animation-iteration-count property specifies the number of times an animation should run. */
+  /** Specifies the number of times an animation should run. */
   iterationCount?: string
 
   /** Custom parameters for the keyframe defined for the animation. */
   keyframeParams?: object
 
   /**
-   * The playState property specifies whether the animation is running or paused. It can have the following values:
+   * Specifies whether the animation is running or paused. It can have the following values:
    * - paused - Specifies that the animation is paused
    * - running - Default value. Specifies that the animation is running
    * - initial - Sets this property to its default value.
@@ -68,7 +68,7 @@ export interface AnimationProps
   playState?: string
 
   /**
-   * The timingFunction property specifies the speed curve of the animation. It can have the following values:
+   * Specifies the speed curve of the animation. It can have the following values:
    * - ease - Specifies an animation with a slow start, then fast, then end slowly (this is default)
    * - linear - Specifies an animation with the same speed from start to end
    * - ease-in - Specifies an animation with a slow start
@@ -80,7 +80,7 @@ export interface AnimationProps
 }
 
 class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
-  static create: Function
+  static create: ShorthandFactory<AnimationProps>
 
   static className = 'ui-animation'
 
@@ -104,28 +104,14 @@ class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
     timingFunction: PropTypes.string,
   }
 
-  renderComponent({ ElementType, classes, unhandledProps, styles, variables, theme }) {
-    const { children, name } = this.props
-
-    const animation: AnimationProp = {
-      name,
-      keyframeParams: this.props.keyframeParams,
-      duration: this.props.duration,
-      delay: this.props.delay,
-      iterationCount: this.props.iterationCount,
-      direction: this.props.direction,
-      fillMode: this.props.fillMode,
-      playState: this.props.playState,
-      timingFunction: this.props.timingFunction,
-    }
-
-    const animationStyle = createAnimationStyles(animation, theme)
+  renderComponent({ ElementType, classes, unhandledProps }) {
+    const { children } = this.props
 
     const child =
       childrenExist(children) && (React.Children.only(children) as React.ReactElement<any>)
     const result = child
       ? React.cloneElement(child, {
-          style: { ...animationStyle, ...(child.props && child.props.style) },
+          className: cx(child.props.className, classes.children),
         })
       : ''
 
@@ -138,6 +124,6 @@ class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
 }
 
 /**
- * An animation allows the user to animate their own components.
+ * An Animation provides animation effects to rendered elements.
  */
 export default withSafeTypeForAs<typeof Animation, AnimationProps>(Animation)

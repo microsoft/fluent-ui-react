@@ -8,17 +8,17 @@ export interface PortalAtCursorPositionProps {
 }
 
 export class PortalAtCursorPosition extends React.Component<PortalAtCursorPositionProps> {
-  private mountNodeInstance: HTMLElement = null
+  mountNodeInstance: HTMLElement = null
 
   static defaultProps = {
     mountNodeId: 'portal-at-cursor-position',
   }
 
-  public componentWillUnmount() {
+  componentWillUnmount() {
     this.removeMountNode()
   }
 
-  public render() {
+  render() {
     const { children, open } = this.props
 
     this.setupMountNode()
@@ -27,7 +27,7 @@ export class PortalAtCursorPosition extends React.Component<PortalAtCursorPositi
       : null
   }
 
-  private setupMountNode = () => {
+  setupMountNode = () => {
     const { mountNodeId, open } = this.props
 
     if (open) {
@@ -37,7 +37,7 @@ export class PortalAtCursorPosition extends React.Component<PortalAtCursorPositi
     }
   }
 
-  private removeMountNode = () => {
+  removeMountNode = () => {
     if (this.mountNodeInstance) {
       removeElement(this.mountNodeInstance)
       this.mountNodeInstance = null

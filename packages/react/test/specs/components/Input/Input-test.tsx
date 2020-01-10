@@ -31,19 +31,20 @@ const setUserInputValue = (inputComp: ReactWrapper, value: string) => {
 }
 
 describe('Input', () => {
-  describe('conformance', () => {
-    isConformant(Input, {
-      eventTargets: {
-        onChange: 'input',
-        onKeyDown: 'input',
-        onKeyPress: 'input',
-        onKeyUp: 'input',
-      },
-    })
+  isConformant(Input, {
+    eventTargets: {
+      onChange: 'input',
+      onKeyDown: 'input',
+      onKeyPress: 'input',
+      onKeyUp: 'input',
+    },
   })
 
   implementsShorthandProp(Input)('input', Box, { mapsValueToProp: 'type' })
-  implementsShorthandProp(Input)('icon', Icon, { mapsValueToProp: 'name' })
+  implementsShorthandProp(Input)('icon', Icon, {
+    mapsValueToProp: 'name',
+    requiredShorthandProps: { name: 'at' },
+  })
 
   describe('wrapper', () => {
     implementsShorthandProp(Input)('wrapper', Box, { mapsValueToProp: 'children' })
@@ -63,25 +64,6 @@ describe('Input', () => {
       it(`'${attr}' is set correctly to '${testValue}'`, () => {
         expect(domNode[attr]).toEqual(testValue)
       })
-    })
-  })
-
-  describe('auto-controlled', () => {
-    it('sets input value from user when the value prop is not set (non-controlled mode)', () => {
-      const inputComp = mount(<Input />)
-      const domNode = getInputDomNode(inputComp)
-      setUserInputValue(inputComp, testValue)
-
-      expect(domNode.value).toEqual(testValue)
-    })
-
-    it('cannot set input value from user when the value prop is already set (controlled mode)', () => {
-      const controlledInputValue = 'controlled input value'
-      const inputComp = mount(<Input value={controlledInputValue} />)
-      const domNode = getInputDomNode(inputComp)
-      setUserInputValue(inputComp, testValue)
-
-      expect(domNode.value).toEqual(controlledInputValue)
     })
   })
 
@@ -149,7 +131,7 @@ describe('Input', () => {
       const inputComp = mount(<Input clearable />)
       const domNode = getInputDomNode(inputComp)
       setUserInputValue(inputComp, testValue) // user types into the input
-      const iconComp = inputComp.find('Icon[name="stardust-close"]')
+      const iconComp = inputComp.find('Icon[name="icon-close"]')
 
       expect(domNode.value).toEqual(testValue) // input value is the one typed by the user
       expect(iconComp.length).toBeGreaterThan(0) // the 'x' icon appears
@@ -157,7 +139,7 @@ describe('Input', () => {
       iconComp.simulate('click') // user clicks on 'x' icon
 
       expect(domNode.value).toEqual('') // input value gets cleared
-      expect(inputComp.find('Icon[name="stardust-close"]').length).toEqual(0) // the 'x' icon disappears
+      expect(inputComp.find('Icon[name="icon-close"]').length).toEqual(0) // the 'x' icon disappears
     })
   })
 })

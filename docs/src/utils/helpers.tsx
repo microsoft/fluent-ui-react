@@ -1,4 +1,4 @@
-import { Icon } from '@stardust-ui/react'
+import { Icon } from '@fluentui/react'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 
@@ -11,9 +11,8 @@ export const link = (content: string, href: string) => {
   if (isAnchor || isExternal) {
     return (
       <a
-        className={isAnchor ? 'anchor-link' : undefined}
-        href={href}
-        {...isExternal && { target: 'blank' }}
+        href={`${isAnchor ? location.pathname : ''}${href}`}
+        {...(isExternal && { target: 'blank' })}
       >
         {content} {isExternal ? <Icon name="external" size="small" /> : ''}
       </a>

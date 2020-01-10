@@ -1,13 +1,8 @@
 import * as React from 'react'
-import { Alert } from '@stardust-ui/react'
+import { Alert } from '@fluentui/react'
 
 const AlertExampleOof = () => (
-  <Alert
-    variables={{ oof: true }}
-    action={{
-      icon: 'close',
-    }}
-  >
+  <Alert dismissible variables={{ oof: true }}>
     This is an oof alert
   </Alert>
 )

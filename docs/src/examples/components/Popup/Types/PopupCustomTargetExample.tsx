@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Popup, Button, Divider, Text, Grid } from '@stardust-ui/react'
+import { Popup, Button, Divider, Text, Grid } from '@fluentui/react'
 import { findDOMNode } from 'react-dom'
 
 class PopupExample extends React.Component {
@@ -19,7 +19,7 @@ class PopupExample extends React.Component {
           content="well, yes, I am just a garbish text ¯\_(ツ)_/¯"
           position="below"
         >
-          <Button icon="question" circular styles={{ cursor: 'pointer' }} />
+          <Button icon="qna" circular styles={{ cursor: 'pointer' }} title="Q&amp;A" />
         </Popup>
 
         <div style={{ marginLeft: 10 }}>

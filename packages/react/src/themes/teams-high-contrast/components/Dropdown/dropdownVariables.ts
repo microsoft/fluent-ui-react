@@ -1,14 +1,12 @@
 import { DropdownVariables } from '../../../teams/components/Dropdown/dropdownVariables'
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../../../utils'
 
 export interface DropdownVariablesHC extends DropdownVariables {
   borderColorHover: string
 }
-
 export default (siteVars): Partial<DropdownVariablesHC> => ({
   backgroundColor: siteVars.colors.black,
   borderColor: siteVars.colors.white,
-  borderRadius: pxToRem(3),
   borderWidth: `1px`,
   backgroundColorHover: siteVars.colors.black,
   borderColorHover: siteVars.accessibleYellow,
@@ -19,6 +17,9 @@ export default (siteVars): Partial<DropdownVariablesHC> => ({
   listBorderColor: siteVars.colors.white,
   listBoxShadow: undefined,
   listBorderWidth: '1px',
+  listItemFocusBorderWidth: pxToRem(2),
+  listItemHeaderColor: siteVars.colors.white,
+  listItemContentColor: siteVars.colors.white,
   listItemBackgroundColor: siteVars.colors.black,
   listItemColorHover: siteVars.colors.black,
   listItemBackgroundColorHover: siteVars.accessibleYellow,

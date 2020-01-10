@@ -1,6 +1,6 @@
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../../../utils'
 import {
-  ComponentSlotStylesInput,
+  ComponentSlotStylesPrepared,
   ICSSInJSStyle,
   StrictColorScheme,
   ItemType,
@@ -144,7 +144,7 @@ const pointingBeak = ({
   }
 }
 
-const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariables> = {
+const menuItemStyles: ComponentSlotStylesPrepared<MenuItemPropsAndState, MenuVariables> = {
   wrapper: ({ props, variables: v, theme }): ICSSInJSStyle => {
     const {
       active,
@@ -296,6 +296,7 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       color: 'inherit',
       display: 'block',
       cursor: 'pointer',
+      whiteSpace: 'nowrap',
 
       ...(pointing &&
         vertical && {
@@ -325,11 +326,14 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
       }),
 
       // active styles
-      ...(active &&
-        (primary
-          ? {
-              ...(iconOnly && { color: 'inherit' }),
+      ...(active && {
+        ...(iconOnly && {
+          color: v.iconOnlyColorActive,
+          ...getIconFillOrOutlineStyles({ outline: false }),
+        }),
 
+        ...(primary
+          ? {
               ...(underlined && {
                 color: colors.borderActive,
                 ...underlinedItem(v.borderColorActive || colors.borderActive),
@@ -338,7 +342,8 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
           : underlined && {
               fontWeight: 700,
               ...underlinedItem(v.colorActive),
-            })),
+            }),
+      }),
 
       // focus styles
       ...(isFromKeyboard && {
@@ -398,18 +403,47 @@ const menuItemStyles: ComponentSlotStylesInput<MenuItemPropsAndState, MenuVariab
     }
   },
 
-  menu: ({ props: p }) => ({
-    zIndex: '1000',
-    position: 'absolute',
-    top: p.vertical ? '0' : '100%',
-    left: p.vertical ? '100%' : '0',
+  content: ({ props: p }): ICSSInJSStyle => {
+    const widthAdjust = (p.icon ? 26 : 0) + (p.menu ? 16 : 0)
+    return {
+      whiteSpace: 'normal',
+      lineHeight: 1.5,
+      marginTop: pxToRem(-4),
+      marginBottom: pxToRem(-4),
+      display: 'inline-block',
+      ...((p.inSubmenu || p.vertical) && {
+        width: 'max-content',
+        minWidth: pxToRem(46 - widthAdjust),
+        maxWidth: pxToRem(262 - widthAdjust),
+        marginRight: pxToRem(16),
+      }),
+    }
+  },
+
+  icon: ({ props: p }): ICSSInJSStyle => ({
+    ...(!p.iconOnly && {
+      // reduce margins so text has the dominant influence on the vertical height
+      marginTop: 0,
+      marginBottom: pxToRem(-8),
+      verticalAlign: 'top',
+    }),
   }),
 
-  indicator: () => ({
+  menu: () => ({ zIndex: 1000 }),
+
+  indicator: ({ props: p }) => ({
     position: 'relative',
     float: 'right',
-    left: pxToRem(10),
+    left: pxToRem(12),
     userSelect: 'none',
+    marginRight: pxToRem(4),
+
+    ...(p.inSubmenu && {
+      position: 'absolute',
+      top: pxToRem(6),
+      right: pxToRem(2),
+      left: 'unset',
+    }),
   }),
 }
 

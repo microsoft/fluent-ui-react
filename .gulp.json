@@ -1,0 +1,5 @@
+{
+  "flags": {
+    "require": "@fluentui/internal-tooling/babel/register"
+  }
+}

@@ -1,15 +1,14 @@
+import { CopyToClipboard } from '@fluentui/docs-components'
 import {
   ComponentSlotStylesInput,
   ComponentSlotStyle,
   createComponent,
   Icon,
   ICSSInJSStyle,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 import * as Color from 'color'
 import * as _ from 'lodash'
 import * as React from 'react'
-
-import CopyToClipboard from './CopyToClipboard'
 
 type ColorBoxProps = {
   children?: React.ReactNode
@@ -18,6 +17,7 @@ type ColorBoxProps = {
   rounded?: boolean
   size?: 'small' | 'normal' | 'big'
   value: string
+  showColorValue?: boolean
   styles?: ComponentSlotStyle
 }
 
@@ -53,10 +53,21 @@ export const colorBoxVariables = (siteVariables): ColorBoxVariables => ({
 
 export const colorBoxStyles: ComponentSlotStylesInput<ColorBoxProps, ColorBoxVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    backgroundColor: p.value,
-    border: '1px solid transparent',
+    ...(p.showColorValue &&
+      !_.isNil(p.value) && {
+        backgroundImage:
+          'url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAKUlEQVQoU2NkYGAwZkAD////RxdiYBwKCv///4/hGUZGkNNRAeMQUAgAtxof+nLDzyUAAAAASUVORK5CYII=")',
+        backgroundRepeat: 'repeat',
+      }),
+    ...(p.showColorValue &&
+      _.isNil(p.value) && {
+        backgroundColor: 'transparent',
+      }),
     borderRadius: p.rounded && '.25rem',
     color: p.value !== undefined && Color(p.value).isDark() ? v.colorWhite : v.colorBlack,
+  }),
+  inner: ({ props: p, variables: v }) => ({
+    backgroundColor: p.value,
     display: 'grid',
     gridTemplateColumns: 'repeat(2, 1fr)',
     fontSize: v.padding[p.size],
@@ -78,23 +89,27 @@ export const colorBoxStyles: ComponentSlotStylesInput<ColorBoxProps, ColorBoxVar
 
 const ColorBox = createComponent<ColorBoxProps>({
   displayName: 'ColorBox',
-  render: ({ children, name, value, copyToClipboardIcon, stardust: { classes } }) => (
+  render: ({ children, name, value, showColorValue, copyToClipboardIcon, config: { classes } }) => (
     <div className={classes.root}>
-      <div className={classes.name}>{children || _.startCase(name)}</div>
+      <div className={classes.inner}>
+        <div className={classes.name}>{children || _.startCase(name)}</div>
 
-      {copyToClipboardIcon && (
-        <CopyToClipboard
-          render={(active, onClick) => (
-            <div className={classes.value}>
-              <span onClick={onClick}>
-                {value && <Icon name={active ? 'checkmark' : 'copy outline'} size="small" />}
-                {value || 'Not defined'}
-              </span>
-            </div>
-          )}
-          value={value}
-        />
-      )}
+        {copyToClipboardIcon && (
+          <CopyToClipboard value={value}>
+            {(active, onClick) => (
+              <div className={classes.value}>
+                <span onClick={onClick}>
+                  {value && <Icon name={active ? 'checkmark' : 'copy outline'} size="small" />}
+                  {value || 'Not defined'}
+                </span>
+              </div>
+            )}
+          </CopyToClipboard>
+        )}
+        {!copyToClipboardIcon && showColorValue && (
+          <span className={classes.value}>{value || 'Not defined'}</span>
+        )}
+      </div>
     </div>
   ),
 })
@@ -102,6 +117,7 @@ const ColorBox = createComponent<ColorBoxProps>({
 ColorBox.defaultProps = {
   size: 'normal',
   copyToClipboardIcon: true,
+  showColorValue: true,
 }
 
 export default ColorBox

@@ -5,6 +5,7 @@ import _ from 'lodash'
 import webpack from 'webpack'
 import TerserPlugin from 'terser-webpack-plugin'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 
 import config from '../config'
 
@@ -14,13 +15,13 @@ const { __DEV__, __PROD__ } = config.compiler_globals
 const webpackConfig: any = {
   name: 'client',
   target: 'web',
-  mode: __DEV__ ? 'development' : 'production',
+  mode: config.compiler_mode,
   entry: {
     app: paths.docsSrc('index'),
-    vendor: config.compiler_vendor,
   },
   output: {
-    filename: `[name].[${config.compiler_hash_type}].js`,
+    // https://webpack.js.org/guides/build-performance/#avoid-production-specific-tooling
+    filename: __DEV__ ? '[name].js' : `[name].[${config.compiler_hash_type}].js`,
     path: config.compiler_output_path,
     pathinfo: true,
     publicPath: config.compiler_public_path,
@@ -30,10 +31,10 @@ const webpackConfig: any = {
     '@babel/standalone': 'Babel',
     'anchor-js': 'AnchorJS',
     'prettier/standalone': 'prettier',
-    // These Prettier plugins doesn't have any exports
-    'prettier/parser-babylon': 'window',
-    'prettier/parser-html': 'window',
-    'prettier/parser-typescript': 'window',
+    // These Prettier plugins are available under window.prettierPlugins
+    'prettier/parser-babylon': ['prettierPlugins', 'babylon'],
+    'prettier/parser-html': ['prettierPlugins', 'html'],
+    'prettier/parser-typescript': ['prettierPlugins', 'typescript'],
     'prop-types': 'PropTypes',
     react: 'React',
     'react-dom': 'ReactDOM',
@@ -54,8 +55,14 @@ const webpackConfig: any = {
         loader: 'babel-loader',
         exclude: /node_modules/,
         options: {
-          cacheDirectory: true,
+          cacheCompression: false,
+          cacheDirectory: __DEV__,
+          plugins: [__DEV__ && 'react-hot-loader/babel'].filter(Boolean),
         },
+      },
+      {
+        test: /\.mdx?$/,
+        use: ['babel-loader', '@mdx-js/loader'],
       },
     ],
   },
@@ -76,17 +83,13 @@ const webpackConfig: any = {
         to: paths.docsDist('public'),
       },
     ]),
-    new webpack.DllReferencePlugin({
-      context: paths.base('node_modules'),
-      manifest: require(paths.base('dll/vendor-manifest.json')),
-    }),
     new HtmlWebpackPlugin({
       template: paths.docsSrc('index.ejs'),
       filename: 'index.html',
       hash: false,
       inject: 'body',
       minify: {
-        collapseWhitespace: true,
+        collapseWhitespace: __PROD__,
       },
       versions: {
         babelStandalone: require('@babel/standalone/package.json').version,
@@ -95,7 +98,7 @@ const webpackConfig: any = {
         propTypes: require('prop-types/package.json').version,
         react: require('react/package.json').version,
         reactDOM: require('react-dom/package.json').version,
-        stardust: require('../package.json').version,
+        fluentUI: require('../package.json').version,
         reactVis: require('react-vis/package.json').version,
       },
     }),
@@ -103,7 +106,14 @@ const webpackConfig: any = {
       resourceRegExp: /^\.\/locale$/,
       contextRegExp: /moment$/,
     }),
-  ],
+    __DEV__ &&
+      !process.env.CI &&
+      new webpack.ProgressPlugin({
+        entries: true,
+        modules: true,
+        modulesCount: 500,
+      }),
+  ].filter(Boolean),
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json'],
     alias: {
@@ -111,12 +121,20 @@ const webpackConfig: any = {
       src: paths.packageSrc('react'),
       docs: paths.base('docs'),
     },
-    // Allows to avoid multiple inclusions of the same module
-    modules: [paths.base('node_modules')],
   },
-  performance: {
-    hints: false, // to (temporarily) disable "WARNING in entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit")
+  optimization: {
+    // Automatically split vendor and commons
+    // https://twitter.com/wSokra/status/969633336732905474
+    // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
+    splitChunks: {
+      chunks: 'all',
+      name: false,
+    },
+    // Keep the runtime chunk separated to enable long term caching
+    // https://twitter.com/wSokra/status/969679223278505985
+    runtimeChunk: true,
   },
+  performance: false,
 }
 
 // ------------------------------------
@@ -150,17 +168,19 @@ if (__PROD__) {
     }),
   )
 
-  webpackConfig.optimization = {
-    minimizer: [
-      new TerserPlugin({
-        terserOptions: {
-          output: {
-            comments: false,
-          },
+  webpackConfig.optimization.minimizer = [
+    new TerserPlugin({
+      terserOptions: {
+        output: {
+          comments: false,
         },
-      }),
-    ],
-  }
+      },
+    }),
+  ]
+}
+
+if (process.env.ANALYZE) {
+  webpackConfig.plugins.push(new BundleAnalyzerPlugin())
 }
 
 export default webpackConfig

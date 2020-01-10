@@ -1,209 +1,272 @@
-import { pxToRem } from '../../../../lib'
-import { ComponentSlotStylesInput, ICSSInJSStyle } from '../../../types'
-import { ButtonProps, ButtonState } from '../../../../components/Button/Button'
+import * as _ from 'lodash'
+import { pxToRem, createAnimationStyles } from '../../../../utils'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import Loader from '../../../../components/Loader/Loader'
+import { ButtonProps } from '../../../../components/Button/Button'
 import { ButtonVariables } from './buttonVariables'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
+import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 
-const buttonStyles: ComponentSlotStylesInput<ButtonProps & ButtonState, ButtonVariables> = {
-  root: ({ props, variables, theme: { siteVariables } }): ICSSInJSStyle => {
-    const { circular, disabled, fluid, primary, text, iconOnly, isFromKeyboard } = props
+const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = {
+  root: ({ props: p, variables: v, theme }): ICSSInJSStyle => {
+    const { siteVariables } = theme
     const { borderWidth } = siteVariables
 
-    const {
-      height,
-      minWidth,
-      maxWidth,
-      borderRadius,
-      circularBorderRadius,
-      paddingLeftRightValue,
-
-      color,
-      colorHover,
-      colorFocus,
-      colorDisabled,
-      backgroundColor,
-      backgroundColorActive,
-      backgroundColorHover,
-      backgroundColorFocus,
-      backgroundColorDisabled,
-      borderColor,
-      borderColorHover,
-      borderColorDisabled,
-
-      primaryColor,
-      primaryColorHover,
-      primaryColorFocus,
-      primaryBackgroundColor,
-      primaryBackgroundColorActive,
-      primaryBackgroundColorHover,
-      primaryBackgroundColorFocus,
-      primaryBorderColor,
-
-      circularColor,
-      circularColorActive,
-      circularBackgroundColor,
-      circularBackgroundColorActive,
-      circularBackgroundColorHover,
-      circularBackgroundColorFocus,
-      circularBorderColor,
-      circularBorderColorHover,
-      circularBorderColorFocus,
-
-      textColor,
-      textColorHover,
-      textPrimaryColor,
-      textPrimaryColorHover,
-      boxShadow,
-    } = variables
-
-    const { ':focus': borderFocusStyles } = getBorderFocusStyles({
+    const borderFocusStyles = getBorderFocusStyles({
       siteVariables,
-      isFromKeyboard,
-      ...(circular && {
-        borderRadius: circularBorderRadius,
-        focusOuterBorderColor: circularBorderColorFocus,
+      borderPadding: borderWidth,
+      ...(p.circular && {
+        borderPadding: pxToRem(4),
       }),
     })
 
     return {
-      height,
-      minWidth,
-      maxWidth,
-      color,
-      backgroundColor,
-      borderRadius,
+      height: v.height,
+      minWidth: _.isNil(p.loading) ? v.minWidth : v.loadingMinWidth,
+      maxWidth: v.maxWidth,
+      color: v.color,
+      backgroundColor: v.backgroundColor,
+      borderRadius: v.borderRadius,
       display: 'inline-flex',
       justifyContent: 'center',
       alignItems: 'center',
       position: 'relative',
-      padding: `0 ${pxToRem(paddingLeftRightValue)}`,
+      padding: v.padding,
       verticalAlign: 'middle',
       cursor: 'pointer',
 
+      ...(p.size === 'small' && {
+        padding: v.sizeSmallPadding,
+        height: v.sizeSmallHeight,
+        minWidth: v.sizeSmallMinWidth,
+      }),
+
       // rectangular button defaults
-      ...(!text && {
+      ...(!p.text && {
         outline: 0,
         borderWidth,
         borderStyle: 'solid',
-        borderColor,
-        boxShadow,
+        borderColor: v.borderColor,
+        boxShadow: v.boxShadow,
 
         ':hover': {
-          color: colorHover,
-          backgroundColor: backgroundColorHover,
-          borderColor: borderColorHover,
+          color: v.colorHover,
+          backgroundColor: v.backgroundColorHover,
+          borderColor: v.borderColorHover,
+        },
+
+        ':active': {
+          ...createAnimationStyles('scaleDownSoft', theme),
+          color: v.colorActive,
+          backgroundColor: v.backgroundColorActive,
+          borderColor: v.borderColorActive,
+          boxShadow: 'none',
+        },
+
+        ':focus': {
+          ...borderFocusStyles[':focus'],
+        },
+
+        ':focus-visible': {
+          ...borderFocusStyles[':focus-visible'],
+          borderColor: v.borderColor,
+          borderWidth,
+
+          ':hover': {
+            borderColor: v.borderColorHover,
+          },
+        },
+
+        ...(p.size === 'small' && {
+          boxShadow: 'none',
+        }),
+      }),
+
+      // circular button defaults
+      ...(p.circular &&
+        !p.text && {
+          minWidth: v.height,
+          padding: 0,
+          borderRadius: v.circularBorderRadius,
+
+          ...(p.size === 'small' && {
+            minWidth: v.sizeSmallHeight,
+          }),
+        }),
+
+      // text button defaults
+      ...(p.text && {
+        color: v.textColor,
+        backgroundColor: 'transparent',
+        borderColor: 'transparent',
+        padding: `0 ${pxToRem(8)}`,
+
+        // by default icons should always be outline, but filled on hover/focus
+        ...getIconFillOrOutlineStyles({ outline: true }),
+
+        ':hover': {
+          color: v.textColorHover,
+          ...getIconFillOrOutlineStyles({ outline: false }),
         },
 
         ':focus': {
           boxShadow: 'none',
-          ...(isFromKeyboard
-            ? {
-                color: colorFocus,
-                backgroundColor: backgroundColorFocus,
-                ...borderFocusStyles,
-              }
-            : { ':active': { backgroundColor: backgroundColorActive } }),
+          ...borderFocusStyles[':focus'],
         },
-      }),
 
-      // circular button defaults
-      ...(circular &&
-        !text && {
-          minWidth: height,
-          padding: 0,
-          color: circularColor,
-          backgroundColor: circularBackgroundColor,
-          borderColor: circularBorderColor,
-          borderRadius: circularBorderRadius,
-
-          ':hover': {
-            color: circularColorActive,
-            backgroundColor: circularBackgroundColorHover,
-            borderColor: circularBorderColorHover,
-          },
-
-          ':focus': {
-            boxShadow: 'none',
-            ...(isFromKeyboard
-              ? {
-                  color: circularColorActive,
-                  backgroundColor: circularBackgroundColorFocus,
-                  ...borderFocusStyles,
-                }
-              : { ':active': { backgroundColor: circularBackgroundColorActive } }),
-          },
-        }),
-
-      // text button defaults
-      ...(text && {
-        color: textColor,
-        backgroundColor: 'transparent',
-        borderColor: 'transparent',
-        ':hover': {
-          color: textColorHover,
+        ':focus-visible': {
+          ...borderFocusStyles[':focus-visible'],
+          ...getIconFillOrOutlineStyles({ outline: false }),
         },
-        ...(primary && {
-          color: textPrimaryColor,
-          ':hover': {
-            color: textPrimaryColorHover,
-          },
+
+        ...(p.primary && {
+          color: v.textPrimaryColor,
         }),
       }),
 
       // Overrides for "primary" buttons
-      ...(primary &&
-        !text && {
-          color: primaryColor,
-          backgroundColor: primaryBackgroundColor,
-          borderColor: primaryBorderColor,
+      ...(p.primary &&
+        !p.text && {
+          color: v.primaryColor,
+          backgroundColor: v.primaryBackgroundColor,
+          borderColor: v.primaryBorderColor,
+          boxShadow: v.primaryBoxShadow,
 
-          ':hover': {
-            color: primaryColorHover,
-            backgroundColor: primaryBackgroundColorHover,
+          ':active': {
+            ...createAnimationStyles('scaleDownSoft', theme),
+            backgroundColor: v.primaryBackgroundColorActive,
+            boxShadow: 'none',
           },
 
           ':focus': {
-            boxShadow: 'none',
-            ...(isFromKeyboard
-              ? {
-                  color: primaryColorFocus,
-                  backgroundColor: primaryBackgroundColorFocus,
-                  ...borderFocusStyles,
-                }
-              : { ':active': { backgroundColor: primaryBackgroundColorActive } }),
+            ...borderFocusStyles[':focus'],
+          },
+
+          ':focus-visible': {
+            ...borderFocusStyles[':focus-visible'],
+          },
+
+          ':hover': {
+            color: v.primaryColorHover,
+            backgroundColor: v.primaryBackgroundColorHover,
           },
         }),
 
-      // Overrides for "disabled" buttons
-      ...(disabled && {
-        cursor: 'default',
-        color: colorDisabled,
-        backgroundColor: backgroundColorDisabled,
-        borderColor: borderColorDisabled,
-        boxShadow: 'none',
+      ...(p.inverted && {
+        backgroundColor: siteVariables.colorScheme.silver.background,
+        borderColor: siteVariables.colorScheme.silver.border,
+        color: siteVariables.colorScheme.silver.foreground,
+
+        ':active': {
+          ...createAnimationStyles('scaleDownSoft', theme),
+          backgroundColor: siteVariables.colorScheme.silver.backgroundPressed,
+          color: siteVariables.colorScheme.silver.foregroundHover,
+        },
+
         ':hover': {
-          backgroundColor: backgroundColorDisabled,
+          backgroundColor: siteVariables.colorScheme.silver.backgroundHover,
+          color: siteVariables.colorScheme.silver.foregroundHover,
+        },
+
+        ':focus': {
+          ...borderFocusStyles[':focus'],
+          boxShadow: 'none',
+        },
+
+        ':focus-visible': {
+          ...borderFocusStyles[':focus-visible'],
+          backgroundColor: siteVariables.colorScheme.silver.backgroundPressed,
+          color: siteVariables.colorScheme.silver.foregroundHover,
         },
       }),
 
-      ...(fluid && {
+      // Overrides for "disabled" buttons
+      ...(p.disabled && {
+        cursor: 'default',
+        color: v.colorDisabled,
+        boxShadow: 'none',
+        pointerEvents: 'none',
+        ':hover': {
+          color: v.colorDisabled,
+        },
+
+        ...(p.text && {
+          color: v.textColorDisabled,
+          backgroundColor: 'transparent',
+          ':hover': {
+            color: v.textColorDisabled,
+          },
+        }),
+
+        ...(!p.text && {
+          backgroundColor: v.backgroundColorDisabled,
+          borderColor: v.borderColorDisabled,
+        }),
+      }),
+
+      ...(p.fluid && {
         width: '100%',
         maxWidth: '100%',
       }),
 
-      ...(iconOnly && {
-        minWidth: height,
+      ...(p.iconOnly && {
+        minWidth: v.height,
         padding: 0,
+
+        ...(p.size === 'small' && {
+          minWidth: v.sizeSmallHeight,
+        }),
       }),
     }
   },
 
   // modifies the text of the button
-  content: ({ variables }): ICSSInJSStyle => ({
+  content: ({ props: p, variables: v }): ICSSInJSStyle => ({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
-    fontWeight: variables.contentFontWeight,
+    fontSize: v.contentFontSize,
+    fontWeight: v.contentFontWeight,
+    lineHeight: v.contentLineHeight,
+
+    ...(p.size === 'small' && {
+      fontSize: v.sizeSmallContentFontSize,
+      lineHeight: v.sizeSmallContentLineHeight,
+    }),
+  }),
+
+  icon: ({ props: p, variables: v }) => ({
+    // when loading, hide the icon
+    ...(p.loading && {
+      margin: 0,
+      opacity: 0,
+      width: 0,
+    }),
+  }),
+
+  loader: ({ props: p, variables: v }): ICSSInJSStyle => ({
+    [`& .${Loader.slotClassNames.indicator}`]: {
+      width: p.size === 'small' ? v.sizeSmallLoaderSize : v.loaderSize,
+      height: p.size === 'small' ? v.sizeSmallLoaderSize : v.loaderSize,
+    },
+    [`& .${Loader.slotClassNames.svg}`]: {
+      ':before': {
+        animationName: {
+          to: {
+            transform: `translate3d(0, ${
+              p.size === 'small' ? v.sizeSmallLoaderSvgAnimationHeight : v.loaderSvgAnimationHeight
+            }, 0)`,
+          },
+        },
+        borderWidth: p.size === 'small' ? v.sizeSmallLoaderBorderSize : v.loaderBorderSize,
+        width: p.size === 'small' ? v.sizeSmallLoaderSize : v.loaderSize,
+        height: p.size === 'small' ? v.sizeSmallLoaderSvgHeight : v.loaderSvgHeight,
+      },
+    },
+
+    ...(p.content && {
+      marginRight: pxToRem(4),
+    }),
   }),
 }
 

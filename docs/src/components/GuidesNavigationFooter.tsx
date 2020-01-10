@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import { Button, Flex, Divider } from '@stardust-ui/react'
+import { Button, Flex, Divider } from '@fluentui/react'
 
-type PageDescriptor = {
+export type PageDescriptor = {
   name: string
   url: string
 }

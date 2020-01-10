@@ -1,3 +1,4 @@
+import { Accessibility } from '@fluentui/accessibility'
 import * as React from 'react'
 
 import {
@@ -10,9 +11,9 @@ import {
   commonPropTypes,
   ColorComponentProps,
   rtlTextContainer,
-} from '../../lib'
-import { Accessibility } from '../../lib/accessibility/types'
-import { defaultBehavior } from '../../lib/accessibility'
+  ShorthandFactory,
+} from '../../utils'
+
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface HeaderDescriptionProps
@@ -22,13 +23,12 @@ export interface HeaderDescriptionProps
     ColorComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
-   * @default defaultBehavior
    */
   accessibility?: Accessibility
 }
 
 class HeaderDescription extends UIComponent<WithAsProp<HeaderDescriptionProps>, any> {
-  static create: Function
+  static create: ShorthandFactory<HeaderDescriptionProps>
 
   static className = 'ui-header__description'
 
@@ -39,7 +39,6 @@ class HeaderDescription extends UIComponent<WithAsProp<HeaderDescriptionProps>, 
   }
 
   static defaultProps = {
-    accessibility: defaultBehavior,
     as: 'p',
   }
 
@@ -64,7 +63,7 @@ HeaderDescription.create = createShorthandFactory({
 })
 
 /**
- * A header's description provides more detailed information.
+ * A HeaderDescription provides more detailed information about the Header.
  */
 export default withSafeTypeForAs<typeof HeaderDescription, HeaderDescriptionProps, 'p'>(
   HeaderDescription,

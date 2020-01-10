@@ -1,9 +1,9 @@
-import { Divider as StardustUIDivider } from '@stardust-ui/react'
+import { Divider } from '@fluentui/react'
 
 export default props => {
-  return StardustUIDivider.create(props, {
-    defaultProps: {
+  return Divider.create(props, {
+    defaultProps: () => ({
       variables: { dividerColor: 'transparent' },
-    },
+    }),
   })
 }

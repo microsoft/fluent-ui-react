@@ -1,0 +1,22 @@
+name: Screener
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - master
+
+jobs:
+  test:
+    name: Test visuals on Screener
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10
+      - run: yarn install
+      - run: yarn test:visual
+        env:
+          CI: true
+          SCREENER_API_KEY: ${{secrets.SCREENER_API_KEY}}

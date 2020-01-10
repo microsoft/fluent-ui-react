@@ -5,16 +5,17 @@ import {
   ComponentSlotStylesInput,
   ThemePrepared,
   Grid,
-  ShorthandValue,
   Header,
-} from '@stardust-ui/react'
+  HeaderProps,
+  ShorthandCollection,
+} from '@fluentui/react'
 
 import ColorBox from './ColorBox'
 
 type ColorVariantsProps = {
   name?: string
   themes?: ThemePrepared[]
-  headers?: ShorthandValue[]
+  headers?: ShorthandCollection<HeaderProps>
 }
 
 export const colorVariantsStyles: ComponentSlotStylesInput<ColorVariantsProps> = {
@@ -27,7 +28,7 @@ export const colorVariantsStyles: ComponentSlotStylesInput<ColorVariantsProps> =
 
 const ColorSchemes = createComponent<ColorVariantsProps>({
   displayName: 'ColorVariants',
-  render: ({ name, themes, headers, stardust: { classes } }) => {
+  render: ({ name, themes, headers, config: { classes } }) => {
     if (themes.length === 0) return <></>
 
     const colorSchemes = _.map(themes, theme => theme.siteVariables.colorScheme[name])
@@ -35,6 +36,7 @@ const ColorSchemes = createComponent<ColorVariantsProps>({
     const elements = _.flatMap(_.head(colorSchemes), (i, token) => [
       <ColorBox
         copyToClipboardIcon={false}
+        showColorValue={false}
         name={token}
         key={`${token}schema`}
         size="small"
@@ -42,7 +44,12 @@ const ColorSchemes = createComponent<ColorVariantsProps>({
         styles={{ backgroundColor: '#f2f2f2' }}
       />,
       ..._.map(colorSchemes, (colorScheme, i) => (
-        <ColorBox key={`${token}${i}`} size="small" value={colorScheme[token]} />
+        <ColorBox
+          key={`${token}${i}`}
+          size="small"
+          value={colorScheme[token]}
+          copyToClipboardIcon={false}
+        />
       )),
     ])
 
