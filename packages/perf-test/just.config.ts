@@ -1,8 +1,6 @@
 import path from 'path'
 import '@fluentui/scripts/tasks/preset'
 import { series, task } from '@fluentui/scripts'
-import { digestStories } from '@fluentui/digest'
-import runPerfTest from './tasks/perf-test'
 
 // TODO: FUR integration issues
 // - FUR build fails when it comes across these new packages inside of packages/
@@ -11,6 +9,8 @@ import runPerfTest from './tasks/perf-test'
 // - Existing perf story format diverges from CSF format, requiring special loader.
 function bundleStories() {
   return async function() {
+    // delay require in case digest isn't built yet
+    const { digestStories } = require('@fluentui/digest')
     await digestStories({
       configDir: path.join(__dirname, '.digest'),
       outputDir: path.join(__dirname, 'dist'),
@@ -24,6 +24,8 @@ function bundleStories() {
 task('perf-test:bundle', bundleStories())
 
 task('perf-test:run', () => {
+  // delay require in case digest isn't built yet
+  const runPerfTest = require('./tasks/perf-test').default
   return runPerfTest()
 })
 

@@ -68,6 +68,14 @@ const paths = {
   ),
 }
 
+const isRoot = process.cwd() === __dirname
+let packageName = isRoot ? 'react' : path.basename(process.cwd())
+// don't use yargs here because it causes build errors in certain circumstances
+const packageArgIndex = process.argv.indexOf('--package')
+if (packageArgIndex > -1 && process.argv[packageArgIndex + 1]) {
+  packageName = process.argv[packageArgIndex + 1]
+}
+
 const config = {
   ...envConfig,
   paths,
@@ -101,23 +109,44 @@ const config = {
   compiler_output_path: paths.base(envConfig.dir_docs_dist),
   compiler_public_path: __BASENAME__,
   compiler_stats: {
-    hash: false, // the hash of the compilation
-    version: false, // webpack version info
-    timings: true, // timing info
-    assets: false, // assets info
-    chunks: false, // chunk info
-    colors: true, // with console colors
-    chunkModules: false, // built modules info to chunk info
-    modules: false, // built modules info
-    cached: false, // also info about cached (not built) modules
-    reasons: false, // info about the reasons modules are included
-    source: false, // the source code of modules
-    errorDetails: true, // details to errors (like resolving log)
-    chunkOrigins: false, // the origins of chunks and chunk merging info
-    modulesSort: '', // (string) sort the modules by that field
-    chunksSort: '', // (string) sort the chunks by that field
-    assetsSort: '', // (string) sort the assets by that field
+    /** the hash of the compilation */
+    hash: false,
+    /** webpack version info */
+    version: false,
+    /** timing info */
+    timings: true,
+    /** assets info */
+    assets: false,
+    /** chunk info */
+    chunks: false,
+    /** with console colors */
+    colors: true,
+    /** built modules info to chunk info */
+    chunkModules: false,
+    /** built modules info */
+    modules: false,
+    /** also info about cached (not built) modules */
+    cached: false,
+    /** info about the reasons modules are included */
+    reasons: false,
+    /** the source code of modules */
+    source: false,
+    /** details to errors (like resolving log) */
+    errorDetails: true,
+    /** the origins of chunks and chunk merging info */
+    chunkOrigins: false,
+    /** sort the modules by that field */
+    modulesSort: '',
+    /** sort the chunks by that field */
+    chunksSort: '',
+    /** sort the assets by that field */
+    assetsSort: '',
   },
+
+  /** True if command is running from repo root */
+  isRoot,
+  /** Package name the task is running against: default to react if running at root, or cwd otherwise */
+  package: packageName,
 }
 
 export default config
