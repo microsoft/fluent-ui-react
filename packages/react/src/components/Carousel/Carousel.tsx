@@ -392,7 +392,6 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
       <Text
         className={Carousel.slotClassNames.pagination}
         content={getItemPositionText(activeIndex, items.length)}
-        aria-hidden="true"
       />
     )
   }
