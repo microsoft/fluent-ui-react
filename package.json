@@ -103,7 +103,6 @@
     "gulp-plumber": "^1.2.0",
     "gulp-remember": "^1.0.1",
     "gulp-transform": "^3.0.5",
-    "gulp-typescript": "^5.0.0",
     "gulp-util": "^3.0.8",
     "html-webpack-plugin": "^4.0.0-beta.5",
     "husky": "^0.14.3",
