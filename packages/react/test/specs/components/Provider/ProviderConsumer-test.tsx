@@ -22,7 +22,7 @@ describe('ProviderConsumer', () => {
         siteVariables: { a: 'b' },
         componentVariables: { Button: { color: 'red' } },
         componentStyles: { Button: { root: { color: 'red' } } },
-        fontFaces: [{ name: 'name', paths: ['path.woff2'], style: { fontWeight: 400 } }],
+        fontFaces: [{ name: 'name', paths: ['path.woff2'], props: { fontWeight: 400 } }],
         staticStyles: ['body{margin:0;}', { body: { margin: 0 } }],
         icons: {
           user: { icon: { content: '\\f1', fontFamily: 'i' } },

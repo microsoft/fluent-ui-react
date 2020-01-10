@@ -194,7 +194,7 @@ describe('Provider', () => {
           {
             name: 'Segoe UI',
             paths: ['public/fonts/segoe-ui-regular.woff2'],
-            style: { fontWeight: 400 },
+            props: { fontWeight: 400 },
           },
         ],
       }
