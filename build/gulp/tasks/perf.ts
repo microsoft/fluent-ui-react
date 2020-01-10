@@ -154,12 +154,6 @@ task('perf:run', async () => {
   console.log(createMarkdownTable(perExamplePerfMeasures))
 })
 
-task('perf:log', cb => {
-  const perExamplePerfMeasures = JSON.parse(fs.readFileSync(paths.perfDist('result.json'), 'utf-8'))
-  console.log(createMarkdownTable(perExamplePerfMeasures))
-  cb()
-})
-
 task('perf:serve', cb => {
   server = express()
     .use(express.static(paths.perfDist()))
