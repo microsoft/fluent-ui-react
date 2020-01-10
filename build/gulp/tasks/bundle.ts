@@ -102,4 +102,7 @@ task(
 )
 task('bundle:package', series('bundle:package:no-umd', 'bundle:package:umd'))
 
-task('bundle:all-packages', () => sh('lerna run build'))
+task('bundle:all-packages', async () => {
+  await sh('lerna run build')
+  rimraf.sync(`${config.paths.packages()}/*/dist/dts`)
+})

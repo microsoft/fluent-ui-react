@@ -5,6 +5,7 @@
   "author": "Oleksandr Fediashov <a@fedyashov.com>",
   "bugs": "https://github.com/microsoft/fluent-ui-react/issues",
   "dependencies": {
+    "@fluentui/docs-components": "^0.43.0",
     "@fluentui/react": "^0.43.0"
   },
   "files": [
