@@ -9,8 +9,7 @@ import {
   ChildrenComponentProps,
   ShorthandFactory,
 } from '../../utils'
-import { mergeStyles } from '../../utils/mergeThemes'
-import { ComponentSlotStylesPrepared } from '../../themes/types'
+import { ComponentSlotStylesPrepared, mergeStyles } from '@fluentui/styles'
 
 type ChildrenFunction = (params: {
   styles: ComponentSlotStylesPrepared

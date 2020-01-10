@@ -1,5 +1,5 @@
-import { ComponentSlotClasses, ComponentSlotStylesPrepared, ICSSInJSStyle } from '../themes/types'
-import { isEnabled as isDebugEnabled } from './debug/debugEnabled'
+import { ComponentSlotClasses } from '../themes/types'
+import { ComponentSlotStylesPrepared, isDebugEnabled, ICSSInJSStyle } from '@fluentui/styles'
 
 // Both resolvedStyles and classes are objects of getters with lazy evaluation
 const resolveStylesAndClasses = (

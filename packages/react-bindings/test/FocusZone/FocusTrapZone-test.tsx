@@ -2,6 +2,7 @@ import { FocusZoneDirection } from '@fluentui/accessibility'
 import { FocusTrapZone, FocusZone, FocusTrapZoneProps } from '@fluentui/react-bindings'
 import * as React from 'react'
 import * as ReactTestUtils from 'react-dom/test-utils'
+// @ts-ignore
 import * as keyboardKey from 'keyboard-key'
 
 // rAF does not exist in node - let's mock it
@@ -17,7 +18,7 @@ class FocusTrapZoneTestComponent extends React.Component<
   {},
   { isShowingFirst: boolean; isShowingSecond: boolean }
 > {
-  constructor(props) {
+  constructor(props: {}) {
     super(props)
     this.state = { isShowingFirst: true, isShowingSecond: false }
   }
@@ -82,6 +83,7 @@ describe('FocusTrapZone', () => {
       isVisible?: boolean
     },
   ): void => {
+    // @ts-ignore
     element.getBoundingClientRect = () => ({
       top: clientRect.top,
       left: clientRect.left,
@@ -539,6 +541,7 @@ describe('FocusTrapZone', () => {
       )
 
       // By calling `componentDidMount`, FTZ will behave as just initialized and focus needed element
+      // @ts-ignore
       focusTrapZone.componentDidMount()
       expect(lastFocusedElement).toBe(buttonF)
 
@@ -552,6 +555,7 @@ describe('FocusTrapZone', () => {
 
       // By calling `componentDidMount`, FTZ will behave as just initialized and focus needed element
       // FTZ should return to originally focused inner element.
+      // @ts-ignore
       focusTrapZone.componentDidMount()
       expect(lastFocusedElement).toBe(buttonB)
     })
@@ -565,6 +569,7 @@ describe('FocusTrapZone', () => {
 
       // By calling `componentDidMount`, FTZ will behave as just initialized and focus needed element
       // Focus within should go to 1st focusable inner element.
+      // @ts-ignore
       focusTrapZone.componentDidMount()
       expect(lastFocusedElement).toBe(buttonF)
 
@@ -578,6 +583,7 @@ describe('FocusTrapZone', () => {
 
       // By calling `componentDidMount`, FTZ will behave as just initialized and focus needed element
       // Focus should go to the first focusable element
+      // @ts-ignore
       focusTrapZone.componentDidMount()
       expect(lastFocusedElement).toBe(buttonF)
     })

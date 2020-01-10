@@ -9,19 +9,19 @@ class NestingRoot<T extends Node> extends React.Component<NestingProps> {
   parentRef = React.createRef<T>()
 
   componentDidMount() {
-    this.registry.register(this.parentRef)
+    this.registry.register(this.parentRef as any)
   }
 
   componentWillUnmount() {
-    this.registry.unregister(this.parentRef)
+    this.registry.unregister(this.parentRef as any)
   }
 
-  getRefs = (): NodeRef[] => this.registry.getContextRefs(this.parentRef)
+  getRefs = (): NodeRef[] => this.registry.getContextRefs(this.parentRef as any)
 
   render() {
     return (
       <NestingContext.Provider value={this.registry}>
-        {this.props.children(this.getRefs, this.parentRef)}
+        {this.props.children(this.getRefs, this.parentRef as any)}
       </NestingContext.Provider>
     )
   }

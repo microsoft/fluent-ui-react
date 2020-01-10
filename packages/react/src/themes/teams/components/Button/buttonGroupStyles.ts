@@ -1,5 +1,5 @@
 import { pxToRem } from '../../../../utils'
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import { ButtonGroupProps } from '../../../../components/Button/ButtonGroup'
 
 const commonButtonsStyles = (circular: boolean) =>

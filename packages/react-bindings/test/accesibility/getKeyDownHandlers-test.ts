@@ -1,9 +1,11 @@
 import getKeyDownHandlers from '../../src/accessibility/getKeyDownHandlers'
+// @ts-ignore
 import * as keyboardKey from 'keyboard-key'
+import { KeyActions } from '@fluentui/accessibility'
 
 const testKeyCode = keyboardKey.ArrowRight
 const partElementName = 'anchor'
-let actionsDefinition
+let actionsDefinition: KeyActions
 
 const eventArg = (keyCodeValue: number): any => ({
   keyCode: keyCodeValue,
@@ -91,6 +93,7 @@ describe('getKeyDownHandlers', () => {
       const keyHandlers = getKeyDownHandlers(actions, actionsDefinition)
 
       keyHandlers[partElementName] &&
+        // @ts-ignore
         keyHandlers[partElementName]['onKeyDown'](eventArg(testKeyCode))
       expect(actions.testAction).toHaveBeenCalled()
       expect(actions.otherAction).toHaveBeenCalled()
@@ -106,9 +109,11 @@ describe('getKeyDownHandlers', () => {
       }
 
       actionsDefinition[partElementName].actionFalse = {
+        // @ts-ignore
         keyCombinations: false,
       }
       actionsDefinition[partElementName].actionNull = {
+        // @ts-ignore
         keyCombinations: null,
       }
       actionsDefinition[partElementName].actionEmpty = {
@@ -118,6 +123,7 @@ describe('getKeyDownHandlers', () => {
       const keyHandlers = getKeyDownHandlers(actions, actionsDefinition)
 
       keyHandlers[partElementName] &&
+        // @ts-ignore
         keyHandlers[partElementName]['onKeyDown'](eventArg(testKeyCode))
       expect(actions.testAction).toHaveBeenCalled()
       expect(actions.actionFalse).not.toHaveBeenCalled()
@@ -140,6 +146,7 @@ describe('getKeyDownHandlers', () => {
         }
         const keyHandlers = getKeyDownHandlers(actions, actionsDefinition, /** isRtlEnabled */ true)
 
+        // @ts-ignore
         keyHandlers[partElementName]['onKeyDown'](eventArg(keyboardKey.ArrowRight))
         expect(actions.actionOnLeftArrow).toHaveBeenCalled()
         expect(actions.actionOnRightArrow).not.toHaveBeenCalled()
@@ -159,6 +166,7 @@ describe('getKeyDownHandlers', () => {
         }
         const keyHandlers = getKeyDownHandlers(actions, actionsDefinition, /** isRtlEnabled */ true)
 
+        // @ts-ignore
         keyHandlers[partElementName]['onKeyDown'](eventArg(keyboardKey.ArrowLeft))
         expect(actions.actionOnLeftArrow).not.toHaveBeenCalled()
         expect(actions.actionOnRightArrow).toHaveBeenCalled()
@@ -177,9 +185,11 @@ describe('getKeyDownHandlers', () => {
         }
 
         actionsDefinition[partElementName].actionFalse = {
+          // @ts-ignore
           keyCombinations: false,
         }
         actionsDefinition[partElementName].actionNull = {
+          // @ts-ignore
           keyCombinations: null,
         }
         actionsDefinition[partElementName].actionEmpty = {
@@ -189,6 +199,7 @@ describe('getKeyDownHandlers', () => {
         const keyHandlers = getKeyDownHandlers(actions, actionsDefinition, true)
 
         keyHandlers[partElementName] &&
+          // @ts-ignore
           keyHandlers[partElementName]['onKeyDown'](eventArg(keyboardKey.ArrowLeft))
         expect(actions.actionOnRightArrow).toHaveBeenCalled()
         expect(actions.actionFalse).not.toHaveBeenCalled()
@@ -202,12 +213,14 @@ describe('getKeyDownHandlers', () => {
     test('when actions are null', () => {
       const actions = null
 
+      // @ts-ignore
       const keyHandlers = getKeyDownHandlers(actions, actionsDefinition)
       expect(keyHandlers.hasOwnProperty(partElementName)).toBeFalsy()
     })
 
     test("when accessibility's actionsDefinition is null", () => {
       const actions = { otherAction: () => {} }
+      // @ts-ignore
       const keyHandlers = getKeyDownHandlers(actions, null)
 
       expect(keyHandlers.hasOwnProperty(partElementName)).toBeFalsy()
@@ -230,9 +243,11 @@ describe('getKeyDownHandlers', () => {
 
       actionsDefinition.anotherPart = {
         actionFalse: {
+          // @ts-ignore
           keyCombinations: false,
         },
         actionNull: {
+          // @ts-ignore
           keyCombinations: null,
         },
         actionEmpty: {

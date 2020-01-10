@@ -10,9 +10,9 @@ import {
   Input,
   Segment,
   Text,
+  ShorthandValue,
 } from '@fluentui/react'
 import { CopyToClipboard } from '@fluentui/docs-components'
-import { ShorthandValue } from '../../../../packages/react/src/types'
 import Logo from 'docs/src/components/Logo/Logo'
 import { getComponentPathname } from 'docs/src/utils'
 import keyboardKey from 'keyboard-key'

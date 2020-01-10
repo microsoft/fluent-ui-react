@@ -7,6 +7,7 @@
   "dependencies": {
     "@babel/runtime": "^7.1.2",
     "@fluentui/accessibility": "^0.43.0",
+    "@fluentui/styles": "^0.43.0",
     "@fluentui/react-bindings": "^0.43.0",
     "@fluentui/react-component-event-listener": "^0.43.0",
     "@fluentui/react-component-nesting-registry": "^0.43.0",

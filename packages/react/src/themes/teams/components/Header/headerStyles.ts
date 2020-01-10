@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import { ICSSInJSStyle, ComponentSlotStylesPrepared } from '../../../types'
+import { ICSSInJSStyle, ComponentSlotStylesPrepared } from '@fluentui/styles'
 import { HeaderProps } from '../../../../components/Header/Header'
 import { HeaderVariables } from './headerVariables'
 import translateAlignProp from '../../../../styles/translateAlignProp'

@@ -1,26 +1,25 @@
 import { IStyle } from 'fela'
 import * as _ from 'lodash'
 import * as customPropTypes from '@fluentui/react-proptypes'
-import * as PropTypes from 'prop-types'
-import * as React from 'react'
-// @ts-ignore
-import { RendererProvider, ThemeProvider, ThemeContext } from 'react-fela'
-
-import { ChildrenComponentProps, setUpWhatInput, tryCleanupWhatInput } from '../../utils'
-
 import {
+  mergeSiteVariables,
   ThemePrepared,
   StaticStyleObject,
   StaticStyle,
   StaticStyleFunction,
   FontFace,
   ComponentVariablesInput,
-  Renderer,
   ThemeInput,
-} from '../../themes/types'
+} from '@fluentui/styles'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
+// @ts-ignore
+import { RendererProvider, ThemeProvider, ThemeContext } from 'react-fela'
+
+import { ChildrenComponentProps, setUpWhatInput, tryCleanupWhatInput } from '../../utils'
+import { Renderer } from '../../themes/types'
 
 import ProviderConsumer from './ProviderConsumer'
-import { mergeSiteVariables } from '../../utils/mergeThemes'
 import ProviderBox, { ProviderBoxProps } from './ProviderBox'
 import {
   WithAsProp,

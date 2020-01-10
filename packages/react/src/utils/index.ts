@@ -3,14 +3,12 @@ export { default as AutoControlledComponent } from './AutoControlledComponent'
 export { default as childrenExist } from './childrenExist'
 export { default as UIComponent } from './UIComponent'
 export { createRenderer, felaRenderer } from './felaRenderer'
-export { default as toCompactArray } from './toCompactArray'
 export { default as rtlTextContainer } from './rtlTextContainer'
 export { default as stringLiteralsArray } from './stringLiteralsArray'
 export { default as getOrGenerateIdFromShorthand } from './getOrGenerateIdFromShorthand'
 
 export * from './factories'
 export { default as constants } from './constants'
-export { default as mergeThemes } from './mergeThemes'
 export { default as mergeProviderContexts } from './mergeProviderContexts'
 
 export * from './renderComponent'
@@ -46,6 +44,4 @@ export module commonPropTypes {
   export type CreateCommonConfig = CreateCommonConfigLocal
   export const createCommon = createCommonLocal
 }
-
-export { default as withDebugId } from './withDebugId'
 export { default as Telemetry } from './Telemetry'

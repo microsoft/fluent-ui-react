@@ -1,8 +1,13 @@
-import mergeThemes, { mergeStyles } from 'src/utils/mergeThemes'
-import { ComponentStyleFunctionParam, ICSSInJSStyle, ThemeInput } from 'src/themes/types'
-import * as _ from 'lodash'
-import { callable, themes, withDebugId } from 'src/index'
-import * as debugEnabled from 'src/utils/debug/debugEnabled'
+import {
+  ComponentStyleFunctionParam,
+  ICSSInJSStyle,
+  mergeThemes,
+  mergeStyles,
+  ThemeInput,
+  withDebugId,
+} from '@fluentui/styles'
+
+import * as debugEnabled from '../../src/debugEnabled'
 
 describe('mergeThemes', () => {
   test(`always returns an object`, () => {
@@ -292,7 +297,7 @@ describe('mergeThemes', () => {
               {
                 name: 'Segoe UI',
                 paths: ['public/fonts/segoe-ui-regular.woff2'],
-                style: { fontWeight: 400 },
+                props: { fontWeight: 400 },
               },
             ],
           },
@@ -301,7 +306,7 @@ describe('mergeThemes', () => {
               {
                 name: 'Segoe UI',
                 paths: ['public/fonts/segoe-ui-semibold.woff2'],
-                style: { fontWeight: 600 },
+                props: { fontWeight: 600 },
               },
             ],
           },
@@ -310,7 +315,7 @@ describe('mergeThemes', () => {
               {
                 name: 'Segoe UI',
                 paths: ['public/fonts/segoe-ui-bold.woff2'],
-                style: { fontWeight: 700 },
+                props: { fontWeight: 700 },
               },
             ],
           },
@@ -320,17 +325,17 @@ describe('mergeThemes', () => {
           {
             name: 'Segoe UI',
             paths: ['public/fonts/segoe-ui-regular.woff2'],
-            style: { fontWeight: 400 },
+            props: { fontWeight: 400 },
           },
           {
             name: 'Segoe UI',
             paths: ['public/fonts/segoe-ui-semibold.woff2'],
-            style: { fontWeight: 600 },
+            props: { fontWeight: 600 },
           },
           {
             name: 'Segoe UI',
             paths: ['public/fonts/segoe-ui-bold.woff2'],
-            style: { fontWeight: 700 },
+            props: { fontWeight: 700 },
           },
         ],
       })
@@ -464,7 +469,9 @@ describe('mergeThemes', () => {
         ],
       })
 
-      const buttonRootStyles = merged.componentStyles.Button.root({ variables: buttonVariables })
+      const buttonRootStyles = merged.componentStyles.Button.root({
+        variables: buttonVariables,
+      } as any)
       expect(buttonRootStyles).toMatchObject({
         _debug: [{ styles: { style: 'tStyleA' } }, { styles: { style: 'sVarA' } }],
       })
@@ -487,7 +494,9 @@ describe('mergeThemes', () => {
       expect(merged.siteVariables._debug).toBe(undefined)
       const buttonVariables = merged.componentVariables.Button(merged.siteVariables)
       expect(buttonVariables._debug).toBe(undefined)
-      const buttonRootStyles = merged.componentStyles.Button.root({ variables: buttonVariables })
+      const buttonRootStyles = merged.componentStyles.Button.root({
+        variables: buttonVariables,
+      } as any)
       expect(buttonRootStyles._debug).toBe(undefined)
     })
 
@@ -533,7 +542,9 @@ describe('mergeThemes', () => {
         ],
       })
 
-      const buttonRootStyles = merged.componentStyles.Button.root({ variables: buttonVariables })
+      const buttonRootStyles = merged.componentStyles.Button.root({
+        variables: buttonVariables,
+      } as any)
       expect(buttonRootStyles).toMatchObject({
         _debug: [{ debugId: 'target' }, { debugId: 'source' }],
       })
@@ -542,59 +553,59 @@ describe('mergeThemes', () => {
 
   // This test is disabled by default
   // It's purpose is to be executed manually to measure performance of mergeThemes
-  xdescribe('performance', () => {
-    let originalDebugEnabled
-
-    beforeEach(() => {
-      originalDebugEnabled = debugEnabled.isEnabled
-    })
-
-    afterEach(() => {
-      Object.defineProperty(debugEnabled, 'isEnabled', {
-        get: () => originalDebugEnabled,
-      })
-    })
-
-    function mockIsDebugEnabled(enabled: boolean) {
-      Object.defineProperty(debugEnabled, 'isEnabled', {
-        get: jest.fn(() => enabled),
-      })
-    }
-
-    test('100 themes with debug disabled', () => {
-      mockIsDebugEnabled(false)
-
-      const merged = mergeThemes(..._.times(100, n => themes.teams))
-      const resolvedStyles = _.mapValues(
-        merged.componentStyles,
-        (componentStyle, componentName) => {
-          const compVariables = _.get(
-            merged.componentVariables,
-            componentName,
-            callable({}),
-          )(merged.siteVariables)
-          const styleParam: ComponentStyleFunctionParam = {
-            displayName: componentName,
-            props: {},
-            variables: compVariables,
-            theme: merged,
-            rtl: false,
-            disableAnimations: false,
-          }
-          return _.mapValues(componentStyle, (partStyle, partName) => {
-            if (partName === '_debug') {
-              // TODO: fix in code, happens only with mergeThemes(singleTheme)
-              return undefined
-            }
-            if (typeof partStyle !== 'function') {
-              fail(`Part style is not a function??? ${componentName} ${partStyle} ${partName}`)
-            }
-            return partStyle(styleParam)
-          })
-        },
-      )
-      expect(resolvedStyles.Button.root).toMatchObject({})
-      // console.log(resolvedStyles.Button.root)
-    })
-  })
+  // xdescribe('performance', () => {
+  //   let originalDebugEnabled
+  //
+  //   beforeEach(() => {
+  //     originalDebugEnabled = debugEnabled.isEnabled
+  //   })
+  //
+  //   afterEach(() => {
+  //     Object.defineProperty(debugEnabled, 'isEnabled', {
+  //       get: () => originalDebugEnabled,
+  //     })
+  //   })
+  //
+  //   function mockIsDebugEnabled(enabled: boolean) {
+  //     Object.defineProperty(debugEnabled, 'isEnabled', {
+  //       get: jest.fn(() => enabled),
+  //     })
+  //   }
+  //
+  //   test('100 themes with debug disabled', () => {
+  //     mockIsDebugEnabled(false)
+  //
+  //     const merged = mergeThemes(..._.times(100, n => themes.teams))
+  //     const resolvedStyles = _.mapValues(
+  //       merged.componentStyles,
+  //       (componentStyle, componentName) => {
+  //         const compVariables = _.get(
+  //           merged.componentVariables,
+  //           componentName,
+  //           callable({}),
+  //         )(merged.siteVariables)
+  //         const styleParam: ComponentStyleFunctionParam = {
+  //           displayName: componentName,
+  //           props: {},
+  //           variables: compVariables,
+  //           theme: merged,
+  //           rtl: false,
+  //           disableAnimations: false,
+  //         }
+  //         return _.mapValues(componentStyle, (partStyle, partName) => {
+  //           if (partName === '_debug') {
+  //             // TODO: fix in code, happens only with mergeThemes(singleTheme)
+  //             return undefined
+  //           }
+  //           if (typeof partStyle !== 'function') {
+  //             fail(`Part style is not a function??? ${componentName} ${partStyle} ${partName}`)
+  //           }
+  //           return partStyle(styleParam)
+  //         })
+  //       },
+  //     )
+  //     expect(resolvedStyles.Button.root).toMatchObject({})
+  //     // console.log(resolvedStyles.Button.root)
+  //   })
+  // })
 })
