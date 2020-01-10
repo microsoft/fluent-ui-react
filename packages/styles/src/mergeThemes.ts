@@ -23,7 +23,7 @@ import {
 
 import { isEnabled as isDebugEnabled } from './debugEnabled'
 import deepmerge from './deepmerge'
-import objectKeyToValues from './objectKeysToValues'
+import objectKeyToValues from './objectKeyToValues'
 import toCompactArray from './toCompactArray'
 import withDebugId from './withDebugId'
 
