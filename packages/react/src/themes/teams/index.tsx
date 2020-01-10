@@ -12,6 +12,7 @@ import * as componentVariables from './componentVariables'
 import * as componentStyles from './componentStyles'
 import fontFaces from './fontFaces'
 import staticStyles from './staticStyles'
+import { TeamsThemeStylesProps } from './types'
 
 import { default as svgIconsAndStyles } from './components/Icon/svg'
 
@@ -54,7 +55,7 @@ const icons: ThemeIcons = {
   'icon-play': themeIcons['play'],
 }
 
-const teamsTheme: ThemePrepared = createTheme(
+const teamsTheme: ThemePrepared<TeamsThemeStylesProps> = createTheme(
   {
     siteVariables,
     componentVariables,

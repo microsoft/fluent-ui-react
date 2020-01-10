@@ -7,6 +7,120 @@ import {
   PrimitiveColors,
 } from '../types'
 
+import { AccordionContentProps } from '../../components/Accordion/AccordionContent'
+import { AccordionProps } from '../../components/Accordion/Accordion'
+import { AccordionTitleProps } from '../../components/Accordion/AccordionTitle'
+import { AlertProps } from '../../components/Alert/Alert'
+import { AnimationProps } from '../../components/Animation/Animation'
+import { AttachmentProps } from '../../components/Attachment/Attachment'
+import { AvatarProps } from '../../components/Avatar/Avatar'
+import { ButtonGroupProps } from '../../components/Button/ButtonGroup'
+import { ButtonProps } from '../../components/Button/Button'
+import { ChatItemProps } from '../../components/Chat/ChatItem'
+import { ChatMessageProps } from '../../components/Chat/ChatMessage'
+import { ChatProps } from '../../components/Chat/Chat'
+import { CheckboxProps } from '../../components/Checkbox/Checkbox'
+import { DividerProps } from '../../components/Divider/Divider'
+import { DropdownProps } from '../../components/Dropdown/Dropdown'
+import { EmbedProps } from '../../components/Embed/Embed'
+import { FlexItemProps } from '../../components/Flex/FlexItem'
+import { FlexProps } from '../../components/Flex/Flex'
+import { FormFieldProps } from '../../components/Form/FormField'
+import { FormProps } from '../../components/Form/Form'
+import { GridProps } from '../../components/Grid/Grid'
+import { HeaderDescriptionProps } from '../../components/Header/HeaderDescription'
+import { HeaderProps } from '../../components/Header/Header'
+import { IconProps } from '../../components/Icon/Icon'
+import { ImageProps } from '../../components/Image/Image'
+import { InputProps } from '../../components/Input/Input'
+import { ItemLayoutProps } from '../../components/ItemLayout/ItemLayout'
+import { LabelProps } from '../../components/Label/Label'
+import { LayoutProps } from '../../components/Layout/Layout'
+import { ListItemProps } from '../../components/List/ListItem'
+import { ListProps } from '../../components/List/List'
+import { LoaderProps } from '../../components/Loader/Loader'
+import { MenuItemProps } from '../../components/Menu/MenuItem'
+import { MenuProps } from '../../components/Menu/Menu'
+import { PopupContentProps } from '../../components/Popup/PopupContent'
+import { PopupProps } from '../../components/Popup/Popup'
+import { PortalProps } from '../../components/Portal/Portal'
+import { RadioGroupItemProps } from '../../components/RadioGroup/RadioGroupItem'
+import { RadioGroupProps } from '../../components/RadioGroup/RadioGroup'
+import { ReactionGroupProps } from '../../components/Reaction/ReactionGroup'
+import { ReactionProps } from '../../components/Reaction/Reaction'
+import { SegmentProps } from '../../components/Segment/Segment'
+import { SliderProps } from '../../components/Slider/Slider'
+import { StatusProps } from '../../components/Status/Status'
+import { TextProps } from '../../components/Text/Text'
+import { ToolbarDividerProps } from '../../components/Toolbar/ToolbarDivider'
+import { ToolbarItemProps } from '../../components/Toolbar/ToolbarItem'
+import { ToolbarProps } from '../../components/Toolbar/Toolbar'
+import { ToolbarRadioGroupProps } from '../../components/Toolbar/ToolbarRadioGroup'
+import { TooltipContentProps } from '../../components/Tooltip/TooltipContent'
+import { TooltipProps } from '../../components/Tooltip/Tooltip'
+import { HierarchicalTreeItemProps } from '../../components/HierarchicalTree/HierarchicalTreeItem'
+import { HierarchicalTreeProps } from '../../components/HierarchicalTree/HierarchicalTree'
+import { HierarchicalTreeTitleProps } from '../../components/HierarchicalTree/HierarchicalTreeTitle'
+import { VideoProps } from '../../components/Video/Video'
+
+export type TeamsThemeStylesProps = {
+  Accordion?: AccordionProps
+  AccordionTitle?: AccordionTitleProps
+  AccordionContent?: AccordionContentProps
+  Alert?: AlertProps
+  Animation?: AnimationProps
+  Attachment?: AttachmentProps
+  Avatar?: AvatarProps
+  Button?: ButtonProps
+  ButtonGroup?: ButtonGroupProps
+  Chat?: ChatProps
+  ChatItem?: ChatItemProps
+  ChatMessage?: ChatMessageProps
+  Checkbox?: CheckboxProps
+  Divider?: DividerProps
+  Dropdown?: DropdownProps
+  Embed?: EmbedProps
+  Flex?: FlexProps
+  FlexItem?: FlexItemProps
+  Form?: FormProps
+  FormField?: FormFieldProps
+  Grid?: GridProps
+  Header?: HeaderProps
+  HeaderDescription?: HeaderDescriptionProps
+  Icon?: IconProps
+  Image?: ImageProps
+  Input?: InputProps
+  ItemLayout?: ItemLayoutProps
+  Label?: LabelProps
+  Layout?: LayoutProps
+  List?: ListProps
+  ListItem?: ListItemProps
+  Loader?: LoaderProps
+  Menu?: MenuProps
+  MenuItem?: MenuItemProps
+  Portal?: PortalProps
+  Popup?: PopupProps
+  PopupContent?: PopupContentProps
+  RadioGroup?: RadioGroupProps
+  RadioGroupItem?: RadioGroupItemProps
+  Reaction?: ReactionProps
+  ReactionGroup?: ReactionGroupProps
+  Segment?: SegmentProps
+  Slider?: SliderProps
+  Status?: StatusProps
+  Toolbar?: ToolbarProps
+  ToolbarItem?: ToolbarItemProps
+  ToolbarDivider?: ToolbarDividerProps
+  ToolbarRadioGroup?: ToolbarRadioGroupProps
+  Tooltip?: TooltipProps
+  TooltipContent?: TooltipContentProps
+  Text?: TextProps
+  HierarchicalTree?: HierarchicalTreeProps
+  HierarchicalTreeItem?: HierarchicalTreeItemProps
+  HierarchicalTreeTitle?: HierarchicalTreeTitleProps
+  Video?: VideoProps
+}
+
 export type TeamsContextualColors = {
   brand: ColorVariants
 }
