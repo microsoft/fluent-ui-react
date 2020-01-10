@@ -13,9 +13,8 @@ import { ShorthandValue } from 'src/types'
 
 jest.dontMock('keyboard-key')
 jest.useFakeTimers()
-// jest.mock('lodash')
 
-const items = ['item1', 'item2', 'item3', 'item4', 'item5']
+const items = ['item0', 'item1', 'item2', 'item3', 'item4', 'item5']
 
 const getTriggerButtonWrapper = (wrapper: ReactWrapper): CommonWrapper =>
   findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.triggerButton}`)
@@ -43,34 +42,70 @@ const getSelectedItemHeaderAtIndexWrapper = (
 
 const renderDropdown = (props: DropdownProps = {}) => {
   const wrapper = mountWithProvider(<Dropdown items={items} {...props} />)
+  const triggerButtonWrapper = findIntrinsicElement(
+    wrapper,
+    `.${Dropdown.slotClassNames.triggerButton}`,
+  )
+  const toggleIndicatorWrapper = findIntrinsicElement(
+    wrapper,
+    `.${Dropdown.slotClassNames.toggleIndicator}`,
+  )
+  const searchInputWrapper = findIntrinsicElement(
+    wrapper,
+    `.${DropdownSearchInput.slotClassNames.input}`,
+  )
+  const itemsListWrapper = findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.itemsList}`)
+  const getItemsWrapper = () => findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.item}`)
+  const getSelectedItemsWrapper = () =>
+    findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.selectedItem}`)
+  const getSelectedItemWrapperAtIndex = index => getSelectedItemsWrapper().at(index)
+  const getItemWrapperAtIndex = index => getItemsWrapper().at(index)
 
   return {
     wrapper,
-    triggerButton: findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.triggerButton}`),
-    toggleIndicator: findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.toggleIndicator}`),
-    searchInput: findIntrinsicElement(wrapper, `.${DropdownSearchInput.slotClassNames.input}`),
-    itemsList: findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.itemsList}`),
-    clickItemAtIndex: index =>
-      findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.item}`)
-        .at(index)
-        .simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } }),
-    getSelectedItemAtIndex: index =>
-      findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.selectedItem}`).at(index),
-    getItems: () => findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.item}`),
-    getHighlightedIndex: () =>
-      Number(
-        findIntrinsicElement(
-          wrapper,
-          `.${
-            props.search ? Dropdown.slotClassNames.searchInput : Dropdown.slotClassNames.itemsList
-          }`,
-        )
-          .getDOMNode()
-          .getAttribute('aria-activedescendant')
-          .match(/downshift-\d+-item-(\d+)$/)[1],
-      ),
+    triggerButton: triggerButtonWrapper.length && triggerButtonWrapper.getDOMNode(),
+    toggleIndicator: toggleIndicatorWrapper.length && toggleIndicatorWrapper.getDOMNode(),
+    itemsList: itemsListWrapper.getDOMNode(),
+    searchInput: searchInputWrapper.length && searchInputWrapper.getDOMNode<HTMLInputElement>(),
+    getA11yMessageContainer: () => findIntrinsicElement(wrapper, '[role="status"]').getDOMNode(),
+    getItems: () => getItemsWrapper().map(nodeWrapper => nodeWrapper.getDOMNode()),
+    getSelectedItems: () => getSelectedItemsWrapper().map(nodeWrapper => nodeWrapper.getDOMNode()),
+    getItemAtIndex: index => getItemWrapperAtIndex(index).getDOMNode(),
+    getSelectedItemAtIndex: index => getSelectedItemWrapperAtIndex(index).getDOMNode(),
+    mouseOverItemAtIndex: index => getItemWrapperAtIndex(index).simulate('mousemove'),
+    changeSearchInput: value => {
+      searchInputWrapper.simulate('change', { target: { value } })
+    },
+    clickOnTriggerButton: () => {
+      triggerButtonWrapper.simulate('click')
+    },
+    clickOnToggleIndicator: () => {
+      toggleIndicatorWrapper.simulate('click')
+    },
+    clickOnSearchInput: () => {
+      searchInputWrapper.simulate('click')
+    },
+    clickOnItemAtIndex: index => {
+      getItemWrapperAtIndex(index).simulate('click', {
+        nativeEvent: { stopImmediatePropagation: jest.fn() },
+      })
+    },
+    clickOnSelectedItemAtIndex: index => {
+      getSelectedItemWrapperAtIndex(index).simulate('click')
+    },
+    keyDownOnSearchInput: (key: string, optional?: Object) =>
+      searchInputWrapper.simulate('keydown', { key, ...optional }),
+    keyDownOnItemsList: (key: string, optional?: Object) =>
+      itemsListWrapper.simulate('keydown', { key, ...optional }),
+    keyDownOnTriggerButton: (key: string, optional?: Object) =>
+      triggerButtonWrapper.simulate('keydown', { key, ...optional }),
+    keyDownOnSelectedItemAtIndex: (index: number, key: string, optional?: Object) => {
+      getSelectedItemWrapperAtIndex(index).simulate('keydown', { key, ...optional })
+    },
   }
 }
+
+const getItemIdRegexByIndex = index => new RegExp(`downshift-\\d+-item-${index}`)
 
 describe('Dropdown', () => {
   isConformant(Dropdown, {
@@ -93,7 +128,7 @@ describe('Dropdown', () => {
 
       findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.clearIndicator}`).simulate('click')
 
-      expect(triggerButton.getDOMNode().textContent).toBe('')
+      expect(triggerButton).toHaveTextContent('')
     })
 
     it('calls onChange on Icon click with an `empty` value', () => {
@@ -121,31 +156,51 @@ describe('Dropdown', () => {
   })
 
   describe('open', () => {
-    it('is "true" when opened by trigger button click', () => {
-      const { triggerButton, getItems } = renderDropdown()
+    it('it takes the value of the controlled prop', () => {
+      const { getItems, clickOnItemAtIndex } = renderDropdown({ open: true })
 
-      triggerButton.simulate('click')
+      expect(getItems()).toHaveLength(items.length)
+
+      clickOnItemAtIndex(0)
+
+      expect(getItems()).toHaveLength(items.length)
+    })
+
+    it('it takes the value of the default prop but can be changed', () => {
+      const { getItems, clickOnItemAtIndex } = renderDropdown({ defaultOpen: true })
+
+      expect(getItems()).toHaveLength(items.length)
+
+      clickOnItemAtIndex(0)
+
+      expect(getItems()).toHaveLength(0)
+    })
+
+    it('is "true" when opened by trigger button click', () => {
+      const { getItems, clickOnTriggerButton } = renderDropdown()
+
+      clickOnTriggerButton()
 
       expect(getItems()).toHaveLength(items.length)
     })
 
     it('is "false" when closed by trigger button click', () => {
-      const { triggerButton, getItems } = renderDropdown({
+      const { clickOnTriggerButton, getItems } = renderDropdown({
         defaultOpen: true,
       })
 
-      triggerButton.simulate('click')
+      clickOnTriggerButton()
 
       expect(getItems()).toHaveLength(0)
     })
 
     it('calls onOpenChange with a value that represents the open state', () => {
       const onOpenChange = jest.fn()
-      const { triggerButton } = renderDropdown({
+      const { clickOnTriggerButton } = renderDropdown({
         onOpenChange,
       })
 
-      triggerButton.simulate('click')
+      clickOnTriggerButton()
 
       expect(onOpenChange).toBeCalledTimes(1)
       expect(onOpenChange).toHaveBeenLastCalledWith(
@@ -155,7 +210,7 @@ describe('Dropdown', () => {
         }),
       )
 
-      triggerButton.simulate('click')
+      clickOnTriggerButton()
 
       expect(onOpenChange).toBeCalledTimes(2)
       expect(onOpenChange).toHaveBeenLastCalledWith(
@@ -167,821 +222,768 @@ describe('Dropdown', () => {
     })
 
     it('is "true" when opened by toggle indicator click', () => {
-      const { toggleIndicator, getItems } = renderDropdown()
+      const { clickOnToggleIndicator, getItems } = renderDropdown()
 
-      toggleIndicator.simulate('click')
+      clickOnToggleIndicator()
 
       expect(getItems()).toHaveLength(items.length)
     })
 
     it('is "false" when closed by toggle indicator click', () => {
-      const { toggleIndicator, getItems } = renderDropdown({
+      const { clickOnToggleIndicator, getItems } = renderDropdown({
         defaultOpen: true,
       })
 
-      toggleIndicator.simulate('click')
+      clickOnToggleIndicator()
 
       expect(getItems()).toHaveLength(0)
     })
 
     it('is "false" when closed by hitting Escape in search input', () => {
-      const { searchInput, getItems } = renderDropdown({
+      const { keyDownOnSearchInput, getItems } = renderDropdown({
         search: true,
         defaultOpen: true,
       })
 
-      searchInput.simulate('keydown', { keyCode: keyboardKey.Escape, key: 'Escape' })
+      keyDownOnSearchInput('Escape')
 
       expect(getItems()).toHaveLength(0)
     })
 
     it('is "false" when closed by hitting Escape in items list', () => {
-      const { itemsList, getItems } = renderDropdown({ defaultOpen: true })
+      const { keyDownOnItemsList, getItems } = renderDropdown({ defaultOpen: true })
 
       expect(items).toHaveLength(items.length)
 
-      itemsList.simulate('keydown', { keyCode: keyboardKey.Escape, key: 'Escape' })
+      keyDownOnItemsList('Escape')
 
       expect(getItems()).toHaveLength(0)
     })
 
     it('is "false" when an item has been selected', () => {
-      const { clickItemAtIndex, getItems } = renderDropdown({ defaultOpen: true })
+      const { clickOnItemAtIndex, getItems } = renderDropdown({ defaultOpen: true })
 
-      clickItemAtIndex(0)
+      clickOnItemAtIndex(0)
 
       expect(getItems()).toHaveLength(0)
     })
 
     it('when set to "true" by trigger button click will move focus to the items list', () => {
-      const { triggerButton, itemsList } = renderDropdown()
+      const { clickOnTriggerButton, itemsList } = renderDropdown()
 
-      triggerButton.simulate('click')
+      clickOnTriggerButton()
 
-      expect(document.activeElement).toEqual(itemsList.getDOMNode())
+      expect(document.activeElement).toEqual(itemsList)
     })
   })
 
   describe('highlightedIndex', () => {
-    const onOpenChange = jest.fn()
-
     afterEach(() => {
-      onOpenChange.mockReset()
       jest.runAllTimers()
     })
 
     it('is null when opened by click', () => {
-      const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
-      const triggerButton = getTriggerButtonWrapper(wrapper)
+      const { clickOnTriggerButton, itemsList } = renderDropdown()
 
-      triggerButton.simulate('click')
+      clickOnTriggerButton()
 
-      expect(onOpenChange).toBeCalledTimes(1)
-      expect(onOpenChange).toHaveBeenCalledWith(
-        null,
-        expect.objectContaining({
-          highlightedIndex: null,
-          open: true,
-        }),
-      )
+      expect(itemsList).not.toHaveAttribute('aria-activedescendant')
     })
 
     it('is null when opened by toggle indicator click', () => {
-      const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
-      const toggleIndicator = getToggleIndicatorWrapper(wrapper)
+      const { clickOnToggleIndicator, itemsList } = renderDropdown()
 
-      toggleIndicator.simulate('click')
+      clickOnToggleIndicator()
 
-      expect(onOpenChange).toBeCalledTimes(1)
-      expect(onOpenChange).toHaveBeenCalledWith(
-        null,
-        expect.objectContaining({
-          highlightedIndex: null,
-          open: true,
-        }),
-      )
+      expect(itemsList).not.toHaveAttribute('aria-activedescendant')
     })
 
     it('is first item index when opened by arrow down key', () => {
-      const { triggerButton, getHighlightedIndex } = renderDropdown()
+      const { keyDownOnTriggerButton, itemsList } = renderDropdown()
 
-      triggerButton.simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
+      keyDownOnTriggerButton('ArrowDown')
 
-      expect(getHighlightedIndex()).toEqual(0)
+      expect(itemsList).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(0)),
+      )
     })
 
     it('is last item index when opened by arrow up key', () => {
-      const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
-      const triggerButton = getTriggerButtonWrapper(wrapper)
+      const { keyDownOnTriggerButton, itemsList } = renderDropdown()
 
-      triggerButton
-        .simulate('focus')
-        .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
+      keyDownOnTriggerButton('ArrowUp')
 
-      expect(onOpenChange).toBeCalledTimes(1)
-      expect(onOpenChange).toHaveBeenCalledWith(
-        null,
-        expect.objectContaining({
-          highlightedIndex: items.length - 1,
-          open: true,
-        }),
+      expect(itemsList).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(items.length - 1)),
       )
     })
 
     it('has the provided prop value when opened by click', () => {
-      const highlightedIndex = 1
-      const wrapper = mountWithProvider(
-        <Dropdown highlightedIndex={highlightedIndex} onOpenChange={onOpenChange} items={items} />,
-      )
-      const triggerButton = getTriggerButtonWrapper(wrapper)
+      const highlightedIndex = 2
+      const { clickOnTriggerButton, itemsList } = renderDropdown({
+        highlightedIndex,
+      })
 
-      triggerButton.simulate('click')
+      clickOnTriggerButton()
 
-      expect(onOpenChange).toBeCalledTimes(1)
-      expect(onOpenChange).toHaveBeenCalledWith(
-        null,
-        expect.objectContaining({
-          highlightedIndex,
-          open: true,
-        }),
+      expect(itemsList).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(highlightedIndex)),
       )
     })
 
     it('has the provided prop value when opened by arrow down key', () => {
       const highlightedIndex = 1
-      const wrapper = mountWithProvider(
-        <Dropdown highlightedIndex={highlightedIndex} onOpenChange={onOpenChange} items={items} />,
-      )
-      const triggerButton = getTriggerButtonWrapper(wrapper)
+      const { keyDownOnTriggerButton, itemsList } = renderDropdown({
+        highlightedIndex,
+      })
 
-      triggerButton
-        .simulate('focus')
-        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
+      keyDownOnTriggerButton('ArrowDown')
 
-      expect(onOpenChange).toBeCalledTimes(1)
-      expect(onOpenChange).toHaveBeenCalledWith(
-        null,
-        expect.objectContaining({
-          highlightedIndex,
-          open: true,
-        }),
+      expect(itemsList).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(highlightedIndex)),
       )
     })
 
     it('has the provided prop value when opened by arrow up key', () => {
       const highlightedIndex = 1
-      const wrapper = mountWithProvider(
-        <Dropdown highlightedIndex={highlightedIndex} onOpenChange={onOpenChange} items={items} />,
-      )
-      const triggerButton = getTriggerButtonWrapper(wrapper)
+      const { keyDownOnTriggerButton, itemsList } = renderDropdown({
+        highlightedIndex,
+      })
 
-      triggerButton
-        .simulate('focus')
-        .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
+      keyDownOnTriggerButton('ArrowUp')
 
-      expect(onOpenChange).toBeCalledTimes(1)
-      expect(onOpenChange).toHaveBeenCalledWith(
-        null,
-        expect.objectContaining({
-          highlightedIndex,
-          open: true,
-        }),
+      expect(itemsList).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(highlightedIndex)),
       )
     })
 
-    it('is defaultHighlightedIndex prop value at first opening', () => {
-      const defaultHighlightedIndex = 1
-      const wrapper = mountWithProvider(
-        <Dropdown
-          defaultHighlightedIndex={defaultHighlightedIndex}
-          onOpenChange={onOpenChange}
-          items={items}
-        />,
+    it('is defaultHighlightedIndex prop value at first opening, then null', () => {
+      const defaultHighlightedIndex = 2
+      const { clickOnTriggerButton, itemsList } = renderDropdown({
+        defaultHighlightedIndex,
+      })
+
+      clickOnTriggerButton()
+
+      expect(itemsList).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(defaultHighlightedIndex)),
       )
-      const triggerButton = getTriggerButtonWrapper(wrapper)
 
-      triggerButton.simulate('click')
+      clickOnTriggerButton()
+      clickOnTriggerButton()
 
-      expect(onOpenChange).toBeCalledTimes(1)
-      expect(onOpenChange).toHaveBeenCalledWith(
-        null,
-        expect.objectContaining({
-          highlightedIndex: defaultHighlightedIndex,
-          open: true,
-        }),
+      expect(itemsList).not.toHaveAttribute('aria-activedescendant')
+    })
+
+    it('is 0 on every open when highlightFirstItemOnOpen prop is provided', () => {
+      const { clickOnTriggerButton, itemsList } = renderDropdown({
+        highlightFirstItemOnOpen: true,
+      })
+
+      clickOnTriggerButton()
+
+      expect(itemsList).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(0)),
+      )
+
+      clickOnTriggerButton()
+      clickOnTriggerButton()
+
+      expect(itemsList).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(0)),
       )
     })
 
-    it('is null on second and subsequent open when defaultHighlightedIndex prop is passed', () => {
-      const wrapper = mountWithProvider(
-        <Dropdown defaultHighlightedIndex={1} onOpenChange={onOpenChange} items={items} />,
+    it('is set to 0 on searchQuery change and when highlightFirstItemOnOpen prop is provided', () => {
+      const { changeSearchInput, keyDownOnSearchInput, searchInput } = renderDropdown({
+        highlightFirstItemOnOpen: true,
+        search: true,
+      })
+
+      changeSearchInput('i')
+
+      expect(searchInput).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(0)),
       )
-      const triggerButton = getTriggerButtonWrapper(wrapper)
 
-      triggerButton
-        .simulate('click')
-        .simulate('click')
-        .simulate('click')
+      keyDownOnSearchInput('ArrowDown')
 
-      expect(onOpenChange).toBeCalledTimes(3)
-      expect(onOpenChange).toHaveBeenLastCalledWith(
-        null,
-        expect.objectContaining({
-          highlightedIndex: null,
-          open: true,
-        }),
+      expect(searchInput).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(1)),
       )
-    })
 
-    it('is 0 on first open when highlightFirstItemOnOpen prop is provided', () => {
-      const wrapper = mountWithProvider(
-        <Dropdown highlightFirstItemOnOpen onOpenChange={onOpenChange} items={items} />,
-      )
-      const triggerButton = getTriggerButtonWrapper(wrapper)
+      changeSearchInput('it')
 
-      triggerButton.simulate('click')
-
-      expect(onOpenChange).toBeCalledTimes(1)
-      expect(onOpenChange).toHaveBeenCalledWith(
-        null,
-        expect.objectContaining({
-          highlightedIndex: 0,
-          open: true,
-        }),
+      expect(searchInput).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(0)),
       )
     })
 
-    it('is 0 on second and subsequent open when highlightFirstItemOnOpen prop is provided', () => {
-      const wrapper = mountWithProvider(
-        <Dropdown highlightFirstItemOnOpen onOpenChange={onOpenChange} items={items} />,
+    it('is null on searchQuery change and when highlightFirstItemOnOpen prop is not provided', () => {
+      const { changeSearchInput, keyDownOnSearchInput, searchInput } = renderDropdown({
+        search: true,
+      })
+
+      changeSearchInput('i')
+
+      expect(searchInput).not.toHaveAttribute('aria-activedescendant')
+
+      keyDownOnSearchInput('ArrowDown')
+
+      expect(searchInput).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(0)),
       )
-      const triggerButton = getTriggerButtonWrapper(wrapper)
 
-      triggerButton
-        .simulate('click')
-        .simulate('click')
-        .simulate('click')
+      changeSearchInput('it')
 
-      expect(onOpenChange).toBeCalledTimes(3)
-      expect(onOpenChange).toHaveBeenLastCalledWith(
-        null,
-        expect.objectContaining({
-          highlightedIndex: 0,
-          open: true,
-        }),
-      )
-    })
-
-    it('is 0 on searchQuery first change and when highlightFirstItemOnOpen prop is provided', () => {
-      const onSearchQueryChange = jest.fn()
-      const wrapper = mountWithProvider(
-        <Dropdown
-          search
-          highlightFirstItemOnOpen
-          onSearchQueryChange={onSearchQueryChange}
-          onOpenChange={onOpenChange}
-          items={items}
-        />,
-      )
-      const searchInput = getSearchInputWrapper(wrapper)
-
-      searchInput.simulate('click').simulate('change', { target: { value: 'i' } })
-
-      expect(onOpenChange).toBeCalledTimes(1)
-      expect(onOpenChange).toHaveBeenCalledWith(
-        null,
-        expect.objectContaining({
-          highlightedIndex: 0,
-          open: true,
-        }),
-      )
-      expect(onSearchQueryChange).toBeCalledTimes(1)
-      expect(onSearchQueryChange).toHaveBeenCalledWith(
-        null,
-        expect.objectContaining({
-          searchQuery: 'i',
-          highlightedIndex: 0,
-        }),
-      )
-    })
-
-    it('is reset to 0 on searchQuery change and when highlightFirstItemOnOpen prop is provided', () => {
-      const onSearchQueryChange = jest.fn()
-      const wrapper = mountWithProvider(
-        <Dropdown
-          search
-          highlightFirstItemOnOpen
-          onSearchQueryChange={onSearchQueryChange}
-          onOpenChange={onOpenChange}
-          items={items}
-        />,
-      )
-      const searchInput = getSearchInputWrapper(wrapper)
-
-      searchInput
-        .simulate('click')
-        .simulate('change', { target: { value: 'i' } })
-        .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' }) // now it's on index 1.
-        .simulate('change', { target: { value: 'in' } }) // now it should reset to 0.
-
-      expect(onSearchQueryChange).toBeCalledTimes(2)
-      expect(onSearchQueryChange).toHaveBeenLastCalledWith(
-        null,
-        expect.objectContaining({
-          searchQuery: 'in',
-          highlightedIndex: 0,
-        }),
-      )
-    })
-
-    it('is null on searchQuery first change and when highlightFirstItemOnOpen prop is not provided', () => {
-      const onSearchQueryChange = jest.fn()
-      const wrapper = mountWithProvider(
-        <Dropdown
-          search
-          onSearchQueryChange={onSearchQueryChange}
-          onOpenChange={onOpenChange}
-          items={items}
-        />,
-      )
-      const searchInput = getSearchInputWrapper(wrapper)
-
-      searchInput.simulate('click').simulate('change', { target: { value: 'i' } })
-
-      expect(onOpenChange).toBeCalledTimes(1)
-      expect(onOpenChange).toHaveBeenCalledWith(
-        null,
-        expect.objectContaining({
-          highlightedIndex: null,
-          open: true,
-        }),
-      )
-      expect(onSearchQueryChange).toBeCalledTimes(1)
-      expect(onSearchQueryChange).toHaveBeenCalledWith(
-        null,
-        expect.objectContaining({
-          searchQuery: 'i',
-          highlightedIndex: null,
-        }),
-      )
-    })
-
-    it('is reset to null on searchQuery change and when highlightFirstItemOnOpen prop is not provided', () => {
-      const onSearchQueryChange = jest.fn()
-      const wrapper = mountWithProvider(
-        <Dropdown
-          search
-          onSearchQueryChange={onSearchQueryChange}
-          onOpenChange={onOpenChange}
-          items={items}
-        />,
-      )
-      const searchInput = getSearchInputWrapper(wrapper)
-
-      searchInput
-        .simulate('click')
-        .simulate('change', { target: { value: 'i' } }) // no item highlighted.
-        .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' }) // highlight on index 0.
-        .simulate('change', { target: { value: 'in' } })
-
-      expect(onSearchQueryChange).toBeCalledTimes(2)
-      expect(onSearchQueryChange).toHaveBeenLastCalledWith(
-        null,
-        expect.objectContaining({
-          searchQuery: 'in',
-          highlightedIndex: null,
-        }),
-      )
+      expect(searchInput).not.toHaveAttribute('aria-activedescendant')
     })
 
     it('is the index of the value previously selected when opened', () => {
-      const wrapper = mountWithProvider(<Dropdown onOpenChange={onOpenChange} items={items} />)
-      const triggerButton = getTriggerButtonWrapper(wrapper)
+      const highlightedIndex = 2
+      const { clickOnTriggerButton, itemsList } = renderDropdown({
+        value: items[highlightedIndex],
+      })
 
-      triggerButton.simulate('click')
-      const itemsList = getItemsListWrapper(wrapper)
-      itemsList
-        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
-        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
-        .simulate('keydown', { keyCode: keyboardKey.Enter, key: 'Enter' })
-      getTriggerButtonWrapper(wrapper).simulate('click')
+      clickOnTriggerButton()
 
-      expect(onOpenChange).toBeCalledTimes(3)
-      expect(onOpenChange).toHaveBeenLastCalledWith(
-        null,
-        expect.objectContaining({
-          highlightedIndex: 1,
-          open: true,
-        }),
+      expect(itemsList).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(highlightedIndex)),
       )
     })
 
     it('is the index of the (value previously selected + 1) when opened by arrow down', () => {
-      const wrapper = mountWithProvider(
-        <Dropdown onOpenChange={onOpenChange} items={items} value={items[2]} />,
-      )
-
-      getTriggerButtonWrapper(wrapper).simulate('keydown', {
-        keyCode: keyboardKey.ArrowDown,
-        key: 'ArrowDown',
+      const highlightedIndex = 2
+      const { keyDownOnTriggerButton, itemsList } = renderDropdown({
+        value: items[highlightedIndex],
       })
 
-      expect(onOpenChange).toBeCalledTimes(1)
-      expect(onOpenChange).toHaveBeenLastCalledWith(
-        null,
-        expect.objectContaining({
-          highlightedIndex: 3,
-          open: true,
-        }),
+      keyDownOnTriggerButton('ArrowDown')
+
+      expect(itemsList).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(highlightedIndex + 1)),
       )
     })
 
     it('is the index of the (value previously selected - 1) when opened by arrow up', () => {
-      const wrapper = mountWithProvider(
-        <Dropdown onOpenChange={onOpenChange} items={items} value={items[2]} />,
-      )
-
-      getTriggerButtonWrapper(wrapper).simulate('keydown', {
-        keyCode: keyboardKey.ArrowUp,
-        key: 'ArrowUp',
+      const highlightedIndex = 2
+      const { keyDownOnTriggerButton, itemsList } = renderDropdown({
+        value: items[highlightedIndex],
       })
 
-      expect(onOpenChange).toBeCalledTimes(1)
-      expect(onOpenChange).toHaveBeenLastCalledWith(
-        null,
-        expect.objectContaining({
-          highlightedIndex: 1,
-          open: true,
-        }),
+      keyDownOnTriggerButton('ArrowUp')
+
+      expect(itemsList).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(highlightedIndex - 1)),
       )
     })
 
     it('is changed correctly on arrow down navigation', () => {
-      const wrapper = mountWithProvider(<Dropdown items={items} />)
-      const dropdown = wrapper.find(Dropdown)
-      const itemsList = getItemsListWrapper(wrapper)
-      const triggerButton = getTriggerButtonWrapper(wrapper)
+      const { keyDownOnTriggerButton, itemsList } = renderDropdown()
 
-      triggerButton.simulate('click')
-      _.times(2, index => {
-        itemsList.simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
+      for (let index = 0; index < items.length; index++) {
+        keyDownOnTriggerButton('ArrowDown')
 
-        expect(dropdown.state('highlightedIndex')).toBe(index)
-      })
+        expect(itemsList).toHaveAttribute(
+          'aria-activedescendant',
+          expect.stringMatching(getItemIdRegexByIndex(index)),
+        )
+      }
     })
 
     it('is changed correctly on arrow up navigation', () => {
-      const wrapper = mountWithProvider(<Dropdown items={items} />)
-      const dropdown = wrapper.find(Dropdown)
-      const itemsList = getItemsListWrapper(wrapper)
-      const triggerButton = getTriggerButtonWrapper(wrapper)
+      const { keyDownOnTriggerButton, itemsList } = renderDropdown()
 
-      triggerButton.simulate('click')
-      _.times(2, index => {
-        itemsList.simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
+      for (let index = 0; index < items.length; index++) {
+        keyDownOnTriggerButton('ArrowUp')
 
-        expect(dropdown.state('highlightedIndex')).toBe(items.length - 1 - index)
+        expect(itemsList).toHaveAttribute(
+          'aria-activedescendant',
+          expect.stringMatching(getItemIdRegexByIndex(items.length - 1 - index)),
+        )
+      }
+    })
+
+    it('is changed correctly on arrow down and shift navigation', () => {
+      const { keyDownOnTriggerButton, itemsList } = renderDropdown({ defaultOpen: true })
+
+      keyDownOnTriggerButton('ArrowDown', { shiftKey: true })
+
+      expect(itemsList).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(4)),
+      )
+    })
+
+    it('is changed correctly on arrow up and shift navigation', () => {
+      const { keyDownOnTriggerButton, itemsList } = renderDropdown({
+        defaultHighlightedIndex: items.length - 1,
+        defaultOpen: true,
       })
+
+      keyDownOnTriggerButton('ArrowUp', { shiftKey: true })
+
+      expect(itemsList).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(0)),
+      )
     })
 
     it('is changed correctly on home key navigation', () => {
-      const wrapper = mountWithProvider(<Dropdown items={items} />)
-      const dropdown = wrapper.find(Dropdown)
-      const itemsList = getItemsListWrapper(wrapper)
-      const triggerButton = getTriggerButtonWrapper(wrapper)
-
-      triggerButton.simulate('click')
-      _.times(2, () => {
-        itemsList.simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
+      const { keyDownOnItemsList, itemsList } = renderDropdown({
+        defaultHighlightedIndex: 2,
+        defaultOpen: true,
       })
-      itemsList.simulate('keydown', { keyCode: keyboardKey.Home, key: 'Home' })
 
-      expect(dropdown.state('highlightedIndex')).toBe(0)
+      keyDownOnItemsList('Home')
+
+      expect(itemsList).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(0)),
+      )
     })
 
     it('is changed correctly on end key navigation', () => {
-      const wrapper = mountWithProvider(<Dropdown items={items} />)
-      const dropdown = wrapper.find(Dropdown)
-      const itemsList = getItemsListWrapper(wrapper)
-      const triggerButton = getTriggerButtonWrapper(wrapper)
-
-      triggerButton.simulate('click')
-      _.times(2, () => {
-        itemsList.simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
+      const { keyDownOnItemsList, itemsList } = renderDropdown({
+        defaultHighlightedIndex: 2,
+        defaultOpen: true,
       })
-      itemsList.simulate('keydown', { keyCode: keyboardKey.Home, key: 'End' })
 
-      expect(dropdown.state('highlightedIndex')).toBe(items.length - 1)
+      keyDownOnItemsList('End')
+
+      expect(itemsList).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(items.length - 1)),
+      )
     })
 
     it('wraps to start and end on navigation', () => {
-      const wrapper = mountWithProvider(<Dropdown items={items} defaultHighlightedIndex={1} />)
-      const dropdown = wrapper.find(Dropdown)
-      const itemsList = getItemsListWrapper(wrapper)
-      const triggerButton = getTriggerButtonWrapper(wrapper)
+      const { keyDownOnItemsList, itemsList } = renderDropdown({
+        defaultHighlightedIndex: 0,
+        defaultOpen: true,
+      })
 
-      triggerButton.simulate('click')
-      itemsList
-        .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
-        .simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
+      keyDownOnItemsList('ArrowUp')
 
-      expect(dropdown.state('highlightedIndex')).toBe(items.length - 1)
+      expect(itemsList).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(items.length - 1)),
+      )
 
-      itemsList.simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
+      keyDownOnItemsList('ArrowDown')
 
-      expect(dropdown.state('highlightedIndex')).toBe(0)
+      expect(itemsList).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(0)),
+      )
     })
 
     it('is updated correctly when hovering over items', () => {
-      const wrapper = mountWithProvider(<Dropdown items={items} />)
-      const dropdown = wrapper.find(Dropdown)
-      const triggerButton = getTriggerButtonWrapper(wrapper)
+      const { mouseOverItemAtIndex, itemsList } = renderDropdown({
+        defaultOpen: true,
+      })
 
-      triggerButton.simulate('click')
-      const itemAtIndex1 = getItemAtIndexWrapper(wrapper, 1)
-      itemAtIndex1.simulate('mousemove')
+      mouseOverItemAtIndex(1)
 
-      expect(dropdown.state('highlightedIndex')).toBe(1)
+      expect(itemsList).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(1)),
+      )
 
-      const itemAtIndex3 = getItemAtIndexWrapper(wrapper, 3)
-      itemAtIndex3.simulate('mousemove')
+      mouseOverItemAtIndex(3)
 
-      expect(dropdown.state('highlightedIndex')).toBe(3)
+      expect(itemsList).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(3)),
+      )
     })
 
     it('is updated correctly when hovering over items and using arrow keys to navigate', () => {
-      const wrapper = mountWithProvider(<Dropdown items={items} />)
-      const dropdown = wrapper.find(Dropdown)
-      const triggerButton = getTriggerButtonWrapper(wrapper)
-      const itemsList = getItemsListWrapper(wrapper)
+      const { mouseOverItemAtIndex, keyDownOnItemsList, itemsList } = renderDropdown({
+        defaultOpen: true,
+      })
 
-      triggerButton.simulate('click')
-      const itemAtIndex1 = getItemAtIndexWrapper(wrapper, 1)
-      itemAtIndex1.simulate('mousemove')
-      itemsList.simulate('keydown', { keyCode: keyboardKey.ArrowUp, key: 'ArrowUp' })
-      expect(dropdown.state('highlightedIndex')).toBe(0)
+      mouseOverItemAtIndex(1)
+      keyDownOnItemsList('ArrowDown')
 
-      const itemAtIndex2 = getItemAtIndexWrapper(wrapper, 2)
-      itemAtIndex2.simulate('mousemove')
-      itemsList.simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
-      expect(dropdown.state('highlightedIndex')).toBe(3)
+      expect(itemsList).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(2)),
+      )
+
+      mouseOverItemAtIndex(4)
+      keyDownOnItemsList('ArrowUp')
+
+      expect(itemsList).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(3)),
+      )
     })
 
     it('jumps to the item starting with the character key pressed', () => {
       const items = ['Athos', 'Porthos', 'Aramis', `D'Artagnan`]
-      const wrapper = mountWithProvider(<Dropdown items={items} />)
-      const dropdown = wrapper.find(Dropdown)
-      const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
-      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
+      const { keyDownOnItemsList, itemsList } = renderDropdown({
+        items,
+        defaultOpen: true,
+      })
 
-      triggerButton.simulate('click')
-      itemsList.simulate('keydown', { keyCode: keyboardKey.P, key: 'P' })
+      keyDownOnItemsList('P')
 
-      expect(dropdown.state('highlightedIndex')).toBe(1)
+      expect(itemsList).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(1)),
+      )
     })
 
     it('jumps starting from the current highlightedIndex on character key press', () => {
       const items = ['Athos', 'Porthos', 'Aramis', `D'Artagnan`]
-      const wrapper = mountWithProvider(<Dropdown items={items} defaultHighlightedIndex={1} />)
-      const dropdown = wrapper.find(Dropdown)
-      const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
-      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
+      const { keyDownOnItemsList, itemsList } = renderDropdown({
+        items,
+        defaultHighlightedIndex: 1,
+        defaultOpen: true,
+      })
 
-      triggerButton.simulate('click')
-      itemsList.simulate('keydown', { keyCode: keyboardKey.A, key: 'A' })
+      keyDownOnItemsList('A')
 
-      expect(dropdown.state('highlightedIndex')).toBe(2)
+      expect(itemsList).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(2)),
+      )
     })
 
-    it('is updated in a circular way on same character key press', () => {
+    it('wraps to the start of the list when no options remain', () => {
       const items = ['Athos', 'Porthos', 'Aramis', `D'Artagnan`]
-      const wrapper = mountWithProvider(<Dropdown items={items} />)
-      const dropdown = wrapper.find(Dropdown)
-      const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
-      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
+      const { keyDownOnItemsList, itemsList } = renderDropdown({
+        items,
+        defaultHighlightedIndex: 2,
+        defaultOpen: true,
+      })
 
-      triggerButton.simulate('click')
-      itemsList.simulate('keydown', { keyCode: keyboardKey.A, key: 'A' })
-      expect(dropdown.state('highlightedIndex')).toBe(0)
+      keyDownOnItemsList('A')
+
+      expect(itemsList).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(0)),
+      )
+    })
+
+    it('jumps from item to item when pressing the same key with enough time in between', () => {
+      const items = ['Athos', 'Porthos', 'Aramis', `D'Artagnan`]
+      const { keyDownOnItemsList, itemsList } = renderDropdown({
+        items,
+        defaultOpen: true,
+      })
+
+      keyDownOnItemsList('A')
+
+      expect(itemsList).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(0)),
+      )
 
       jest.runAllTimers()
-      itemsList.simulate('keydown', { keyCode: keyboardKey.A, key: 'A' })
-      expect(dropdown.state('highlightedIndex')).toBe(2)
+      keyDownOnItemsList('A')
+
+      expect(itemsList).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(2)),
+      )
 
       jest.runAllTimers()
-      itemsList.simulate('keydown', { keyCode: keyboardKey.A, key: 'A' })
-      expect(dropdown.state('highlightedIndex')).toBe(0)
+      keyDownOnItemsList('A')
+
+      expect(itemsList).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(0)),
+      )
     })
 
     it('jumps to the item starting with the keys tapped in rapid succession', () => {
       const items = ['Albert', 'Alfred', 'Alena', 'Ali']
-      const wrapper = mountWithProvider(<Dropdown items={items} />)
-      const dropdown = wrapper.find(Dropdown)
-      const itemsList = wrapper.find(`ul.${Dropdown.slotClassNames.itemsList}`)
-      const triggerButton = wrapper.find(`button.${Dropdown.slotClassNames.triggerButton}`)
+      const { keyDownOnItemsList, itemsList } = renderDropdown({
+        items,
+        defaultOpen: true,
+      })
 
-      triggerButton.simulate('click')
-      itemsList.simulate('keydown', { keyCode: keyboardKey.A, key: 'A' })
-      expect(dropdown.state('highlightedIndex')).toBe(0)
+      keyDownOnItemsList('A')
+
+      expect(itemsList).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(0)),
+      )
 
       jest.advanceTimersByTime(Dropdown.charKeyPressedCleanupTime / 2)
-      itemsList.simulate('keydown', { keyCode: keyboardKey.L, key: 'L' })
-      expect(dropdown.state('highlightedIndex')).toBe(0)
+      keyDownOnItemsList('L')
+
+      expect(itemsList).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(0)),
+      )
 
       jest.advanceTimersByTime(Dropdown.charKeyPressedCleanupTime / 2)
-      itemsList.simulate('keydown', { keyCode: keyboardKey.E, key: 'E' })
-      expect(dropdown.state('highlightedIndex')).toBe(2)
+      keyDownOnItemsList('E')
+
+      expect(itemsList).toHaveAttribute(
+        'aria-activedescendant',
+        expect.stringMatching(getItemIdRegexByIndex(2)),
+      )
     })
   })
 
   describe('value', () => {
-    it('is set by clicking on item', () => {
-      const itemSelectedIndex = 2
-      const onChange = jest.fn()
-      const wrapper = mountWithProvider(<Dropdown onChange={onChange} items={items} />)
-      const triggerButton = getTriggerButtonWrapper(wrapper)
+    it('it takes the value of the controlled prop', () => {
+      const value = items[2]
+      const { triggerButton, clickOnItemAtIndex } = renderDropdown({ value, defaultOpen: true })
 
-      triggerButton.simulate('click')
-      const item = getItemAtIndexWrapper(wrapper, itemSelectedIndex)
-      item.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
+      expect(triggerButton).toHaveTextContent(value)
+
+      clickOnItemAtIndex(0)
+
+      expect(triggerButton).toHaveTextContent(value)
+    })
+
+    it('it takes the value of the default prop but can be changed', () => {
+      const defaultValue = items[2]
+      const itemToBeClickedIndex = 1
+      const { triggerButton, clickOnItemAtIndex } = renderDropdown({
+        defaultValue,
+        defaultOpen: true,
+      })
+
+      expect(triggerButton).toHaveTextContent(defaultValue)
+
+      clickOnItemAtIndex(itemToBeClickedIndex)
+
+      expect(triggerButton).toHaveTextContent(items[itemToBeClickedIndex])
+    })
+
+    it('has onChange called when item is added', () => {
+      const itemToClickIndex = 2
+      const onChange = jest.fn()
+      const { clickOnItemAtIndex } = renderDropdown({ open: true, onChange })
+
+      clickOnItemAtIndex(itemToClickIndex)
 
       expect(onChange).toHaveBeenCalledTimes(1)
       expect(onChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
-          value: items[itemSelectedIndex],
+          value: items[itemToClickIndex],
+          searchQuery: items[itemToClickIndex],
         }),
       )
+    })
+
+    it('has onChange called when item is added or removed on multiple', () => {
+      // it will actually be the third, since one is already removed from the list due to defaultValue.
+      const itemToClickIndex = 2
+      const defaultSelectedItemIndex = 1
+      const onChange = jest.fn()
+      const { clickOnItemAtIndex, keyDownOnSelectedItemAtIndex } = renderDropdown({
+        open: true,
+        defaultValue: [items[defaultSelectedItemIndex]],
+        onChange,
+        multiple: true,
+      })
+
+      clickOnItemAtIndex(itemToClickIndex - 1)
+
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(onChange).toHaveBeenCalledWith(
+        null,
+        expect.objectContaining({
+          value: [items[defaultSelectedItemIndex], items[itemToClickIndex]],
+        }),
+      )
+
+      keyDownOnSelectedItemAtIndex(0, 'Delete')
+
+      expect(onChange).toHaveBeenCalledTimes(2)
+      expect(onChange).toHaveBeenLastCalledWith(
+        null,
+        expect.objectContaining({
+          value: [items[itemToClickIndex]],
+        }),
+      )
+    })
+
+    it('is set by clicking on item', () => {
+      const itemSelectedIndex = 2
+      const { triggerButton, clickOnItemAtIndex } = renderDropdown({ defaultOpen: true })
+
+      clickOnItemAtIndex(itemSelectedIndex)
+
+      expect(triggerButton).toHaveTextContent(items[itemSelectedIndex])
     })
 
     it('is set by using Enter on highlighted item', () => {
-      const onChange = jest.fn()
-      const wrapper = mountWithProvider(<Dropdown onChange={onChange} items={items} />)
-      const triggerButton = getTriggerButtonWrapper(wrapper)
-      triggerButton.simulate('click')
-      const itemsList = getItemsListWrapper(wrapper)
-      itemsList
-        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
-        .simulate('keydown', { keyCode: keyboardKey.Enter, key: 'Enter' })
+      const itemSelectedIndex = 1
+      const { triggerButton, keyDownOnItemsList } = renderDropdown({
+        defaultOpen: true,
+        defaultHighlightedIndex: itemSelectedIndex,
+      })
 
-      expect(onChange).toHaveBeenCalledTimes(1)
-      expect(onChange).toHaveBeenCalledWith(
-        null,
-        expect.objectContaining({
-          value: items[0],
-        }),
-      )
+      keyDownOnItemsList('Enter')
+
+      expect(triggerButton).toHaveTextContent(items[itemSelectedIndex])
     })
 
     it('is set by using Tab on highlighted item', () => {
-      const onChange = jest.fn()
-      const wrapper = mountWithProvider(<Dropdown onChange={onChange} items={items} />)
-      const triggerButton = getTriggerButtonWrapper(wrapper)
+      const itemSelectedIndex = 3
+      const { triggerButton, keyDownOnItemsList } = renderDropdown({
+        defaultOpen: true,
+        defaultHighlightedIndex: itemSelectedIndex,
+      })
 
-      triggerButton.simulate('click')
-      const itemsList = getItemsListWrapper(wrapper)
-      itemsList
-        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
-        .simulate('keydown', { keyCode: keyboardKey.Tab, key: 'Tab' })
+      keyDownOnItemsList('Tab')
 
-      expect(onChange).toHaveBeenCalledTimes(1)
-      expect(onChange).toHaveBeenCalledWith(
-        null,
-        expect.objectContaining({
-          value: items[0],
-        }),
-      )
+      expect(triggerButton).toHaveTextContent(items[itemSelectedIndex])
     })
 
     it('is set by using Shift+Tab on highlighted item', () => {
-      const onChange = jest.fn()
-      const wrapper = mountWithProvider(<Dropdown onChange={onChange} items={items} />)
-      const triggerButton = getTriggerButtonWrapper(wrapper)
+      const itemSelectedIndex = 2
+      const { triggerButton, keyDownOnItemsList } = renderDropdown({
+        defaultOpen: true,
+        defaultHighlightedIndex: itemSelectedIndex,
+      })
 
-      triggerButton.simulate('click')
-      const itemsList = getItemsListWrapper(wrapper)
-      itemsList
-        .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
-        .simulate('keydown', { keyCode: keyboardKey.Tab, key: 'Tab', shiftKey: true })
+      keyDownOnItemsList('Tab', { shiftKey: true })
 
-      expect(onChange).toHaveBeenCalledTimes(1)
-      expect(onChange).toHaveBeenCalledWith(
-        null,
-        expect.objectContaining({
-          value: items[0],
-        }),
-      )
+      expect(triggerButton).toHaveTextContent(items[itemSelectedIndex])
     })
 
     it('is replaced when another item is selected', () => {
-      const itemSelectedIndex = 3
-      const onChange = jest.fn()
-      const wrapper = mountWithProvider(<Dropdown onChange={onChange} items={items} />)
-      const triggerButton = getTriggerButtonWrapper(wrapper)
+      const defaultSelectedIndex = 0
+      const itemSelectedIndex = 2
+      const { triggerButton, clickOnItemAtIndex } = renderDropdown({
+        defaultOpen: true,
+        defaultValue: items[defaultSelectedIndex],
+      })
 
-      triggerButton.simulate('click')
-      const firstItem = getItemAtIndexWrapper(wrapper, 1)
-      firstItem.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
-      triggerButton.simulate('click')
-      const itemAtIndex = getItemAtIndexWrapper(wrapper, itemSelectedIndex)
-      itemAtIndex.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
+      expect(triggerButton).toHaveTextContent(items[defaultSelectedIndex])
 
-      expect(onChange).toHaveBeenCalledTimes(2)
-      expect(onChange).toHaveBeenLastCalledWith(
-        null,
-        expect.objectContaining({
-          value: items[itemSelectedIndex],
-        }),
-      )
+      clickOnItemAtIndex(itemSelectedIndex)
+
+      expect(triggerButton).toHaveTextContent(items[itemSelectedIndex])
     })
 
     it('has an array of items if more items are selected and the multiple prop is supplied', () => {
-      const onChange = jest.fn()
-      const wrapper = mountWithProvider(<Dropdown onChange={onChange} multiple items={items} />)
-      const triggerButton = getTriggerButtonWrapper(wrapper)
+      const { getSelectedItems, getSelectedItemAtIndex } = renderDropdown({
+        multiple: true,
+        defaultValue: [items[0], items[1]],
+      })
 
-      triggerButton.simulate('click')
-      const itemAtIndex1 = getItemAtIndexWrapper(wrapper, 1)
-      itemAtIndex1.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
-      triggerButton.simulate('click')
-      const itemAtIndex2 = getItemAtIndexWrapper(wrapper, 3)
-      itemAtIndex2.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
-
-      expect(onChange).toHaveBeenCalledTimes(2)
-      expect(onChange).toHaveBeenLastCalledWith(
-        null,
-        expect.objectContaining({
-          value: ['item2', 'item5'],
-        }),
-      )
+      expect(getSelectedItems()).toHaveLength(2)
+      expect(getSelectedItemAtIndex(0)).toHaveTextContent(items[0])
+      expect(getSelectedItemAtIndex(1)).toHaveTextContent(items[1])
     })
 
-    it('has items removed on empty search query backspace', () => {
-      const onChange = jest.fn()
-      const wrapper = mountWithProvider(
-        <Dropdown onChange={onChange} multiple items={items} search />,
-      )
-      const searchInput = getSearchInputWrapper(wrapper)
-      const toggleIndicator = getToggleIndicatorWrapper(wrapper)
+    it('emoves last item on backspace when query is emtpy', () => {
+      const { getSelectedItems, getSelectedItemAtIndex, keyDownOnSearchInput } = renderDropdown({
+        multiple: true,
+        search: true,
+        defaultValue: [items[0], items[1]],
+      })
 
-      toggleIndicator.simulate('click')
-      let firstItem = getItemAtIndexWrapper(wrapper)
-      firstItem.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
-      toggleIndicator.simulate('click')
-      firstItem = getItemAtIndexWrapper(wrapper)
-      firstItem.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
-      searchInput
-        .simulate('click')
-        .simulate('keydown', { keyCode: keyboardKey.Backspace, key: 'Backspace' })
+      keyDownOnSearchInput('Backspace')
 
-      expect(onChange).toHaveBeenCalledTimes(3)
-      expect(onChange).toHaveBeenLastCalledWith(
-        null,
-        expect.objectContaining({
-          value: [items[0]],
-        }),
-      )
+      expect(getSelectedItems()).toHaveLength(1)
+      expect(getSelectedItemAtIndex(0)).toHaveTextContent(items[0])
+    })
+
+    it('does not rempve last item on backspace when query is not empty', () => {
+      const { getSelectedItems, keyDownOnSearchInput, searchInput } = renderDropdown({
+        multiple: true,
+        search: true,
+        defaultSearchQuery: 'bla',
+        defaultValue: [items[0], items[1]],
+      })
+
+      searchInput.setSelectionRange(1, 2)
+      keyDownOnSearchInput('Backspace')
+
+      expect(getSelectedItems()).toHaveLength(2)
+    })
+
+    it('removes last item on backspace when selection range is 0, 0', () => {
+      const {
+        getSelectedItems,
+        getSelectedItemAtIndex,
+        keyDownOnSearchInput,
+        searchInput,
+      } = renderDropdown({
+        multiple: true,
+        search: true,
+        defaultSearchQuery: 'bla',
+        defaultValue: [items[0], items[1]],
+      })
+
+      searchInput.setSelectionRange(0, 0)
+      keyDownOnSearchInput('Backspace')
+
+      expect(getSelectedItems()).toHaveLength(1)
+      expect(getSelectedItemAtIndex(0)).toHaveTextContent(items[0])
+    })
+
+    it('does not rempve last item on backspace when selection range is 0, (y>0)', () => {
+      const { getSelectedItems, keyDownOnSearchInput, searchInput } = renderDropdown({
+        multiple: true,
+        search: true,
+        defaultSearchQuery: 'bla',
+        defaultValue: [items[0], items[1]],
+      })
+
+      searchInput.setSelectionRange(0, 1)
+      keyDownOnSearchInput('Backspace')
+
+      expect(getSelectedItems()).toHaveLength(2)
     })
 
     it('has the item removed if it receives delete key down', () => {
-      const onChange = jest.fn()
-      const wrapper = mountWithProvider(
-        <Dropdown multiple items={items} onChange={onChange} value={items} />,
-      )
-      const selectedItemHeader = getSelectedItemHeaderAtIndexWrapper(wrapper, items.length - 1)
-      selectedItemHeader.simulate('click')
-      const selectedItem = getSelectedItemAtIndexWrapper(wrapper, items.length - 1)
-      selectedItem.simulate('keydown', {
-        keyCode: keyboardKey.Delete,
-        key: 'Delete',
+      const {
+        getSelectedItems,
+        getSelectedItemAtIndex,
+        keyDownOnSelectedItemAtIndex,
+      } = renderDropdown({
+        multiple: true,
+        search: true,
+        defaultValue: [items[0], items[1]],
       })
 
-      expect(onChange).toHaveBeenCalledTimes(1)
-      expect(onChange).toHaveBeenCalledWith(
-        null,
-        expect.objectContaining({
-          value: items.slice(0, items.length - 1),
-        }),
-      )
+      keyDownOnSelectedItemAtIndex(0, 'Delete')
+
+      expect(getSelectedItems()).toHaveLength(1)
+      expect(getSelectedItemAtIndex(0)).toHaveTextContent(items[1])
     })
 
     it('has the item removed if it receives click on remove icon', () => {
-      const onChange = jest.fn()
-      const wrapper = mountWithProvider(
-        <Dropdown multiple items={items} onChange={onChange} value={items} />,
-      )
-      const selectedItemIcon = wrapper
-        .find(`span.${DropdownSelectedItem.slotClassNames.icon}`)
-        .at(items.length - 1)
-      selectedItemIcon.simulate('click')
+      const { getSelectedItems, getSelectedItemAtIndex, wrapper } = renderDropdown({
+        multiple: true,
+        search: true,
+        defaultValue: [items[0], items[1]],
+      })
 
-      expect(onChange).toHaveBeenCalledTimes(1)
-      expect(onChange).toHaveBeenCalledWith(
-        null,
-        expect.objectContaining({
-          value: items.slice(0, items.length - 1),
-        }),
-      )
+      findIntrinsicElement(wrapper, `.${DropdownSelectedItem.slotClassNames.icon}`)
+        .at(0)
+        .simulate('click')
+
+      expect(getSelectedItems()).toHaveLength(1)
+      expect(getSelectedItemAtIndex(0)).toHaveTextContent(items[1])
     })
   })
 
@@ -991,306 +993,278 @@ describe('Dropdown', () => {
     })
 
     it('creates message container element', () => {
-      mountWithProvider(<Dropdown items={[]} getA11ySelectionMessage={{}} />)
-      expect(
-        document.querySelector(
-          `[role="status"][aria-live="polite"][aria-relevant="additions text"]`,
-        ),
-      ).toBeTruthy()
+      const { getA11yMessageContainer } = renderDropdown({ getA11ySelectionMessage: {} })
+
+      expect(getA11yMessageContainer()).toMatchInlineSnapshot(`
+        <div
+          aria-live="polite"
+          aria-relevant="additions text"
+          role="status"
+          style="border: 0px; height: 1px; margin: -1px; overflow: hidden; padding: 0px; position: absolute; width: 1px;"
+        />
+      `)
     })
 
     it('has the onAdd message inserted and cleared after an item has been added to selection', () => {
-      const wrapper = mountWithProvider(
-        <Dropdown
-          multiple
-          items={items}
-          getA11ySelectionMessage={{ onAdd: item => 'bla bla added' }}
-        />,
+      const itemToBeClickedIndex = 1
+      const { getA11yMessageContainer, clickOnItemAtIndex } = renderDropdown({
+        defaultOpen: true,
+        getA11ySelectionMessage: { onAdd: item => `${item} has been added` },
+      })
+
+      clickOnItemAtIndex(itemToBeClickedIndex)
+
+      expect(getA11yMessageContainer()).toHaveTextContent(
+        `${items[itemToBeClickedIndex]} has been added`,
       )
-      const dropdown = wrapper.find(Dropdown)
-      const triggerButton = getTriggerButtonWrapper(wrapper)
-
-      triggerButton.simulate('click')
-      const firstItem = getItemAtIndexWrapper(wrapper)
-      firstItem.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
-
-      expect(dropdown.state('a11ySelectionStatus')).toBe('bla bla added')
 
       jest.runAllTimers()
 
-      expect(dropdown.state('a11ySelectionStatus')).toBe('')
+      expect(getA11yMessageContainer()).toHaveTextContent('')
     })
 
     it('has the onRemove message inserted and cleared after an item has been removed from selection', () => {
-      const wrapper = mountWithProvider(
-        <Dropdown
-          multiple
-          items={items}
-          getA11ySelectionMessage={{ onRemove: item => 'bla bla removed' }}
-        />,
+      const itemSelectedByDefaultIndex = 2
+      const { getA11yMessageContainer, keyDownOnSelectedItemAtIndex } = renderDropdown({
+        defaultOpen: true,
+        multiple: true,
+        defaultValue: [items[itemSelectedByDefaultIndex]],
+        getA11ySelectionMessage: { onRemove: item => `${item} has been removed` },
+      })
+
+      keyDownOnSelectedItemAtIndex(0, 'Delete')
+
+      expect(getA11yMessageContainer()).toHaveTextContent(
+        `${items[itemSelectedByDefaultIndex]} has been removed`,
       )
-      const dropdown = wrapper.find(Dropdown)
-      const triggerButton = getTriggerButtonWrapper(wrapper)
-
-      triggerButton.simulate('click')
-      const firstItem = getItemAtIndexWrapper(wrapper)
-      firstItem.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
-      jest.runAllTimers()
-      const removeIcon = wrapper.find(`span.${DropdownSelectedItem.slotClassNames.icon}`)
-      removeIcon.simulate('click')
-
-      expect(dropdown.state('a11ySelectionStatus')).toBe('bla bla removed')
 
       jest.runAllTimers()
 
-      expect(dropdown.state('a11ySelectionStatus')).toBe('')
+      expect(getA11yMessageContainer()).toHaveTextContent('')
     })
   })
 
   describe('searchQuery', () => {
+    it('it takes the value of the controlled prop', () => {
+      const searchQuery = "can't touch this"
+      const { changeSearchInput, searchInput } = renderDropdown({ searchQuery, search: true })
+
+      expect(searchInput).toHaveValue(searchQuery)
+
+      changeSearchInput('but I can try!')
+
+      expect(searchInput).toHaveValue(searchQuery)
+    })
+
+    it('it takes the value of the default prop but can be changed', () => {
+      const defaultSearchQuery = "maybe you can't touch this"
+      const finalSearchQuery = 'you underestimate my power'
+      const { changeSearchInput, searchInput } = renderDropdown({
+        defaultSearchQuery,
+        search: true,
+      })
+
+      expect(searchInput).toHaveValue(defaultSearchQuery)
+
+      changeSearchInput(finalSearchQuery)
+
+      expect(searchInput).toHaveValue(finalSearchQuery)
+    })
+
     it("updates component's state on props updates", () => {
-      const wrapper = mountWithProvider(<Dropdown items={items} search searchQuery="foo" />)
+      const newSearchQueryProp = 'bar'
+      const { wrapper, searchInput } = renderDropdown({
+        searchQuery: 'foo',
+        search: true,
+      })
 
-      expect(wrapper.find(Dropdown).state('searchQuery')).toBe('foo')
-
-      wrapper.setProps({ searchQuery: 'bar' } as any)
-      expect(wrapper.find(Dropdown).state('searchQuery')).toBe('bar')
+      wrapper.setProps({ searchQuery: newSearchQueryProp })
+      expect(searchInput).toHaveValue(newSearchQueryProp)
     })
 
     it('closes dropdown when changed to empty string', () => {
-      const dropdown = mountWithProvider(<Dropdown items={items} search />).find(Dropdown)
+      const { getItems, changeSearchInput } = renderDropdown({
+        defaultSearchQuery: 'foo',
+        defaultOpen: true,
+        search: true,
+      })
 
-      dropdown.find('input').simulate('change', { target: { value: 'foo' } })
-      expect(dropdown.state('open')).toBe(true)
-      expect(dropdown.state('searchQuery')).toBe('foo')
+      changeSearchInput('')
 
-      dropdown.find('input').simulate('change', { target: { value: '' } })
-      expect(dropdown.state('open')).toBe(false)
-      expect(dropdown.state('searchQuery')).toBe('')
+      expect(getItems()).toHaveLength(0)
     })
 
     it('is the string equivalent of selected item in single search', () => {
       const itemSelectedIndex = 2
-      const onChange = jest.fn()
-      const wrapper = mountWithProvider(<Dropdown onChange={onChange} search items={items} />)
-      const toggleIndicator = getToggleIndicatorWrapper(wrapper)
+      const itemsAsObjects = items.map(item => ({ value: item, key: item }))
+      const { searchInput, clickOnItemAtIndex } = renderDropdown({
+        search: true,
+        defaultOpen: true,
+        items: itemsAsObjects,
+        itemToString: (itemObject: { value: string }) => itemObject.value,
+      })
 
-      toggleIndicator.simulate('click')
-      const itemAtIndex = getItemAtIndexWrapper(wrapper, itemSelectedIndex)
-      itemAtIndex.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
+      clickOnItemAtIndex(itemSelectedIndex)
 
-      expect(onChange).toHaveBeenCalledTimes(1)
-      expect(onChange).toHaveBeenCalledWith(
-        null,
-        expect.objectContaining({
-          value: items[itemSelectedIndex],
-          searchQuery: items[itemSelectedIndex],
-        }),
-      )
+      expect(searchInput).toHaveValue(itemsAsObjects[itemSelectedIndex].value)
     })
 
     it('is set to empty by hitting Escape in search input', () => {
-      const onSearchQueryChange = jest.fn()
-      const wrapper = mountWithProvider(
-        <Dropdown onSearchQueryChange={onSearchQueryChange} search items={items} />,
-      )
-      const searchInput = getSearchInputWrapper(wrapper)
+      const { keyDownOnSearchInput, searchInput } = renderDropdown({
+        defaultSearchQuery: 'foo',
+        search: true,
+      })
 
-      searchInput
-        .simulate('click')
-        .simulate('change', { target: { value: 'test' } })
-        .simulate('keydown', { keyCode: keyboardKey.Escape, key: 'Escape' })
+      keyDownOnSearchInput('Escape')
 
-      expect(onSearchQueryChange).toBeCalledTimes(2)
-      expect(onSearchQueryChange).toHaveBeenLastCalledWith(
-        null,
-        expect.objectContaining({
-          searchQuery: '',
-        }),
-      )
+      expect(searchInput).toHaveValue('')
     })
 
     it('is set to empty when item is selected in multiple search', () => {
-      const itemSelectedIndex = 2
-      const onChange = jest.fn()
-      const wrapper = mountWithProvider(
-        <Dropdown onChange={onChange} search multiple items={items} />,
-      )
-      const toggleIndicator = getToggleIndicatorWrapper(wrapper)
+      const { clickOnItemAtIndex, searchInput, getSelectedItems } = renderDropdown({
+        search: true,
+        multiple: true,
+        defaultOpen: true,
+      })
 
-      toggleIndicator.simulate('click')
-      const itemAtIndex = getItemAtIndexWrapper(wrapper, itemSelectedIndex)
-      itemAtIndex.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
+      clickOnItemAtIndex(2)
 
-      expect(onChange).toHaveBeenCalledTimes(1)
-      expect(onChange).toHaveBeenCalledWith(
-        null,
-        expect.objectContaining({
-          value: [items[itemSelectedIndex]],
-          searchQuery: '',
-        }),
-      )
+      expect(searchInput).toHaveValue('')
+      expect(getSelectedItems()).toHaveLength(1)
     })
   })
 
   describe('activeSelectedIndex', () => {
-    it('is unset by default', () => {
-      const wrapper = mountWithProvider(<Dropdown multiple items={items} value={items} />)
-      const dropdown = wrapper.find(Dropdown)
-
-      expect(dropdown.state('activeSelectedIndex')).toBe(null)
-    })
-
     it('is set on active item click', () => {
-      const wrapper = mountWithProvider(<Dropdown multiple items={items} value={items} />)
-      const dropdown = wrapper.find(Dropdown)
+      const { getSelectedItemAtIndex, clickOnSelectedItemAtIndex } = renderDropdown({
+        multiple: true,
+        value: [items[2]],
+      })
 
-      const selectedItem = getSelectedItemHeaderAtIndexWrapper(wrapper, 2)
-      selectedItem.simulate('click')
+      clickOnSelectedItemAtIndex(0)
 
-      expect(dropdown.state('activeSelectedIndex')).toBe(2)
+      expect(document.activeElement).toBe(getSelectedItemAtIndex(0))
     })
 
     it('is set as last index on left arrow from the search query', () => {
-      const wrapper = mountWithProvider(<Dropdown multiple search items={items} value={items} />)
-      const dropdown = wrapper.find(Dropdown)
-      const searchInput = getSearchInputWrapper(wrapper)
+      const { getSelectedItemAtIndex, keyDownOnSearchInput } = renderDropdown({
+        multiple: true,
+        value: [items[0], items[1], items[2]],
+        search: true,
+      })
 
-      searchInput.simulate('keydown', { keyCode: keyboardKey.ArrowLeft, key: 'ArrowLeft' })
+      keyDownOnSearchInput('ArrowLeft')
 
-      expect(dropdown.state('activeSelectedIndex')).toBe(items.length - 1)
+      expect(document.activeElement).toBe(getSelectedItemAtIndex(2))
+    })
+
+    it('is set as last index on left arrow from the trigger button', () => {
+      const { getSelectedItemAtIndex, keyDownOnTriggerButton } = renderDropdown({
+        multiple: true,
+        value: [items[0], items[1], items[2]],
+      })
+
+      keyDownOnTriggerButton('ArrowLeft')
+
+      expect(document.activeElement).toBe(getSelectedItemAtIndex(2))
     })
 
     it('is updated on arrow navigation after being set by click', () => {
-      const wrapper = mountWithProvider(<Dropdown multiple items={items} value={items} />)
-      const dropdown = wrapper.find(Dropdown)
-      const selectedItemAtIndex2 = getSelectedItemAtIndexWrapper(wrapper, 2)
-      const selectedItemHeaderAtIndex2 = getSelectedItemHeaderAtIndexWrapper(wrapper, 2)
-
-      selectedItemHeaderAtIndex2.simulate('click')
-      selectedItemAtIndex2.simulate('keydown', { keyCode: keyboardKey.ArrowLeft, key: 'ArrowLeft' })
-
-      expect(dropdown.state('activeSelectedIndex')).toBe(1)
-
-      const selectedItemAtIndex1 = getSelectedItemAtIndexWrapper(wrapper, 1)
-      selectedItemAtIndex1.simulate('keydown', {
-        keyCode: keyboardKey.ArrowRight,
-        key: 'ArrowRight',
+      const {
+        getSelectedItemAtIndex,
+        keyDownOnSelectedItemAtIndex,
+        clickOnSelectedItemAtIndex,
+      } = renderDropdown({
+        multiple: true,
+        value: [items[0], items[1], items[2]],
       })
 
-      expect(dropdown.state('activeSelectedIndex')).toBe(2)
+      clickOnSelectedItemAtIndex(2)
+      keyDownOnSelectedItemAtIndex(2, 'ArrowLeft')
+
+      expect(document.activeElement).toBe(getSelectedItemAtIndex(1))
     })
 
     it('stays as "0" on left arrow from the first selected item', () => {
-      const wrapper = mountWithProvider(<Dropdown multiple items={items} value={items} />)
-      const dropdown = wrapper.find(Dropdown)
-      const selectedItem = getSelectedItemAtIndexWrapper(wrapper)
-      const selectedItemHeader = getSelectedItemHeaderAtIndexWrapper(wrapper, 0)
-      selectedItemHeader.simulate('click')
-      selectedItem.simulate('keydown', { keyCode: keyboardKey.ArrowLeft, key: 'ArrowLeft' })
-      selectedItem.simulate('keydown', { keyCode: keyboardKey.ArrowLeft, key: 'ArrowLeft' })
-
-      expect(dropdown.state('activeSelectedIndex')).toBe(0)
-    })
-
-    it('gets unset on right arrow from the last selected item', () => {
-      const wrapper = mountWithProvider(<Dropdown multiple items={items} value={items} />)
-      const dropdown = wrapper.find(Dropdown)
-
-      const selectedItemHeader = getSelectedItemHeaderAtIndexWrapper(wrapper, items.length - 1)
-      selectedItemHeader.simulate('click')
-      const selectedItem = getSelectedItemAtIndexWrapper(wrapper, items.length - 1)
-      selectedItem.simulate('keydown', {
-        keyCode: keyboardKey.ArrowRight,
-        key: 'ArrowRight',
+      const {
+        getSelectedItemAtIndex,
+        keyDownOnSelectedItemAtIndex,
+        clickOnSelectedItemAtIndex,
+      } = renderDropdown({
+        multiple: true,
+        value: [items[0], items[1], items[2]],
       })
 
-      expect(dropdown.state('activeSelectedIndex')).toBe(null)
+      clickOnSelectedItemAtIndex(0)
+      keyDownOnSelectedItemAtIndex(0, 'ArrowLeft')
+
+      expect(document.activeElement).toBe(getSelectedItemAtIndex(0))
     })
 
-    it('gets unset on the removal of selected item', () => {
-      const wrapper = mountWithProvider(<Dropdown multiple items={items} value={items} />)
-      const dropdown = wrapper.find(Dropdown)
-
-      const selectedItemHeader = getSelectedItemHeaderAtIndexWrapper(wrapper, items.length - 1)
-      selectedItemHeader.simulate('click')
-      const selectedItem = getSelectedItemAtIndexWrapper(wrapper, items.length - 1)
-      selectedItem.simulate('keydown', {
-        keyCode: keyboardKey.Delete,
-        key: 'Delete',
+    it('gets unset on right arrow from the last selected item and moves focus to trigger button', () => {
+      const {
+        triggerButton,
+        keyDownOnSelectedItemAtIndex,
+        clickOnSelectedItemAtIndex,
+      } = renderDropdown({
+        multiple: true,
+        value: [items[0], items[1], items[2]],
       })
 
-      expect(dropdown.state('activeSelectedIndex')).toBe(null)
+      clickOnSelectedItemAtIndex(2)
+      keyDownOnSelectedItemAtIndex(2, 'ArrowRight')
+
+      expect(document.activeElement).toBe(triggerButton)
     })
 
-    it('moves focus to the label when is active', () => {
-      const wrapper = mountWithProvider(<Dropdown multiple items={items} value={items} />)
+    it('gets unset on the removal of selected item and moves focus to trigger button', () => {
+      const {
+        triggerButton,
+        keyDownOnSelectedItemAtIndex,
+        clickOnSelectedItemAtIndex,
+      } = renderDropdown({
+        multiple: true,
+        value: [items[0], items[1], items[2]],
+      })
 
-      const selectedItemHeader = getSelectedItemHeaderAtIndexWrapper(wrapper, 2)
-      selectedItemHeader.simulate('click')
+      clickOnSelectedItemAtIndex(2)
+      keyDownOnSelectedItemAtIndex(2, 'Delete')
 
-      expect(document.activeElement).toEqual(getSelectedItemAtIndexWrapper(wrapper, 2).getDOMNode())
+      expect(document.activeElement).toBe(triggerButton)
     })
 
-    it('moves focus back to the trigger button on arrow right from last selected item', () => {
-      const wrapper = mountWithProvider(<Dropdown multiple items={items} value={items} />)
-      const triggerButton = getTriggerButtonWrapper(wrapper)
+    it('gets unset on right arrow from the last selected item and moves focus to search input', () => {
+      const {
+        searchInput,
+        keyDownOnSelectedItemAtIndex,
+        clickOnSelectedItemAtIndex,
+      } = renderDropdown({
+        multiple: true,
+        value: [items[0], items[1], items[2]],
+        search: true,
+      })
 
-      const selectedItemHeader = getSelectedItemHeaderAtIndexWrapper(wrapper, items.length - 1)
-      selectedItemHeader.simulate('click')
-      const selectedItem = getSelectedItemAtIndexWrapper(wrapper, items.length - 1)
-      selectedItem.simulate('keydown', { keyCode: keyboardKey.ArrowRight, key: 'ArrowRight' })
+      clickOnSelectedItemAtIndex(2)
+      keyDownOnSelectedItemAtIndex(2, 'ArrowRight')
 
-      expect(document.activeElement).toEqual(triggerButton.getDOMNode())
+      expect(document.activeElement).toBe(searchInput)
     })
 
-    it('moves focus back to the search input on arrow right from last selected item', () => {
-      const wrapper = mountWithProvider(<Dropdown multiple search items={items} value={items} />)
-      const searchInput = getSearchInputWrapper(wrapper)
+    it('gets unset on the removal of selected item and moves focus to search input', () => {
+      const {
+        searchInput,
+        keyDownOnSelectedItemAtIndex,
+        clickOnSelectedItemAtIndex,
+      } = renderDropdown({
+        multiple: true,
+        value: [items[0], items[1], items[2]],
+        search: true,
+      })
 
-      const selectedItemHeader = getSelectedItemHeaderAtIndexWrapper(wrapper, items.length - 1)
-      selectedItemHeader.simulate('click')
-      const selectedItem = getSelectedItemAtIndexWrapper(wrapper, items.length - 1)
-      selectedItem.simulate('keydown', { keyCode: keyboardKey.ArrowRight, key: 'ArrowRight' })
+      clickOnSelectedItemAtIndex(2)
+      keyDownOnSelectedItemAtIndex(2, 'Delete')
 
-      expect(document.activeElement).toEqual(searchInput.getDOMNode())
-    })
-
-    it('moves focus back to the trigger button on removal of selected item', () => {
-      const wrapper = mountWithProvider(<Dropdown multiple items={items} value={items} />)
-      const triggerButton = getTriggerButtonWrapper(wrapper)
-
-      const selectedItemHeader = getSelectedItemHeaderAtIndexWrapper(wrapper, 2)
-      selectedItemHeader.simulate('click')
-      const selectedItem = getSelectedItemAtIndexWrapper(wrapper, 2)
-      selectedItem.simulate('keydown', { keyCode: keyboardKey.Delete, key: 'Delete' })
-
-      expect(document.activeElement).toEqual(triggerButton.getDOMNode())
-    })
-
-    it('moves focus back to the search input on removal of selected item', () => {
-      const wrapper = mountWithProvider(<Dropdown multiple search items={items} value={items} />)
-      const searchInput = getSearchInputWrapper(wrapper)
-
-      const selectedItemHeader = getSelectedItemHeaderAtIndexWrapper(wrapper, 1)
-      selectedItemHeader.simulate('click')
-      const selectedItem = getSelectedItemAtIndexWrapper(wrapper, 1)
-      selectedItem.simulate('keydown', { keyCode: keyboardKey.Delete, key: 'Delete' })
-
-      expect(document.activeElement).toEqual(searchInput.getDOMNode())
-    })
-
-    it('moves focus back to the last selected item after input focus and left arrow', () => {
-      const wrapper = mountWithProvider(<Dropdown multiple search items={items} value={items} />)
-      const searchInput = getSearchInputWrapper(wrapper)
-      const selectedItem = getSelectedItemAtIndexWrapper(wrapper, items.length - 1)
-      const selectedItemHeader = getSelectedItemHeaderAtIndexWrapper(wrapper, items.length - 1)
-
-      selectedItemHeader.simulate('click')
-      searchInput.simulate('click')
-      searchInput.simulate('keydown', { keyCode: keyboardKey.ArrowLeft, key: 'ArrowLeft' })
-
-      expect(document.activeElement).toEqual(selectedItem.getDOMNode())
+      expect(document.activeElement).toBe(searchInput)
     })
   })
 
