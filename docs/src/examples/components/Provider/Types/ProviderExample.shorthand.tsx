@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Provider } from '@fluentui/react'
 
-const customTheme = { siteVariables: { brand: 'cornflowerblue' }, hash: 'provider-example' }
+const customTheme = { siteVariables: { brand: 'cornflowerblue' } }
 
 const ProviderExampleShorthand = () => (
   <Provider theme={customTheme}>

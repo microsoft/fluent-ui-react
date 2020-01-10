@@ -52,7 +52,6 @@ const slotLabelStyles: any = (label, beforeStyles?, slotStyles?) => ({
 const ChatMessageExampleStyled = () => (
   <Provider
     theme={{
-      hash: 'chat-message-example-styled',
       componentStyles: {
         ChatItem: {
           root: { ...slotLabelStyles('chat-item-root'), backgroundColor: 'transparent' },

@@ -9,7 +9,6 @@ export default mergeThemes(
   teams,
   createTheme(
     {
-      hash: 'teams-high-contrast',
       siteVariables,
       componentVariables,
       componentStyles,

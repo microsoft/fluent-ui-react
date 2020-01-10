@@ -51,7 +51,6 @@ const icons: ThemeIcons = {
 
 const teamsTheme: ThemePrepared = createTheme(
   {
-    hash: 'teams',
     siteVariables,
     componentVariables,
     componentStyles,

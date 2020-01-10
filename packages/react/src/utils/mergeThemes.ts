@@ -36,38 +36,12 @@ export const emptyTheme: ThemePrepared = {
   staticStyles: [],
   icons: {},
   animations: {},
-  hash: '',
 }
 
 // ----------------------------------------
 // Component level merge functions
 // ----------------------------------------
 
-const mergeComponentStylesCache = {}
-const mergeComponentStylesThemeCache = {}
-
-export const mergeComponentStylesWithCache = (
-  theme,
-  hashObj,
-  sources: (ComponentSlotStylesInput | null | undefined)[],
-) => {
-  try {
-    const themeHash = theme.hash || JSON.stringify(theme)
-    if (!mergeComponentStylesThemeCache[themeHash]) {
-      mergeComponentStylesThemeCache[themeHash] = Object.keys(mergeComponentStylesThemeCache).length
-    }
-
-    const hashVal = JSON.stringify({ ...hashObj, theme: mergeComponentStylesThemeCache[themeHash] })
-
-    if (!mergeComponentStylesCache[hashVal]) {
-      mergeComponentStylesCache[hashVal] = mergeComponentStyles(...sources)
-    }
-
-    return mergeComponentStylesCache[hashVal]
-  } catch (e) {
-    return mergeComponentStyles(...sources)
-  }
-}
 /**
  * Merges a single component's styles (keyed by component part) with another component's styles.
  */
@@ -398,8 +372,6 @@ const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
       acc.staticStyles = mergeStaticStyles(...acc.staticStyles, ...(next.staticStyles || []))
 
       acc.animations = mergeAnimations(acc.animations, next.animations)
-
-      acc.hash = `${acc.hash}-${next.hash || JSON.stringify(acc)}`
 
       return acc
     },
