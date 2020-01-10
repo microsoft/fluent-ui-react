@@ -19,7 +19,7 @@ const carouselItems = [
         id="ade-picture"
       />
     ),
-    'aria-labelledby': 'ade-picture',
+    'aria-label': imageAltTags.ade,
   },
   {
     key: 'elliot',
@@ -32,7 +32,8 @@ const carouselItems = [
         id="elliot-picture"
       />
     ),
-    'aria-labelledby': 'elliot-picture',
+
+    'aria-label': imageAltTags.elliot,
   },
   {
     key: 'kristy',
@@ -45,7 +46,7 @@ const carouselItems = [
         id="kristy-picture"
       />
     ),
-    'aria-labelledby': 'kristy-picture',
+    'aria-label': imageAltTags.kristy,
   },
   {
     key: 'nan',
@@ -58,7 +59,7 @@ const carouselItems = [
         id="nan-picture"
       />
     ),
-    'aria-labelledby': 'nan-picture',
+    'aria-label': imageAltTags.nan,
   },
 ]
 
