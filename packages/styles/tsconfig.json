@@ -1,9 +1,0 @@
-{
-  "extends": "../../build/tsconfig.common",
-  "compilerOptions": {
-    "composite": true,
-    "outDir": "dist/dts"
-  },
-  "include": ["src", "test"],
-  "references": []
-}
