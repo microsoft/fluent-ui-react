@@ -1,4 +1,7 @@
-export * from './types'
+export { default as callable } from './callable'
+export { default as createTheme } from './createTheme'
+export { isEnabled as isDebugEnabled } from './debugEnabled'
+export { default as deepmerge } from './deepmerge'
 export {
   default as mergeThemes,
   emptyTheme,
@@ -11,8 +14,7 @@ export {
   mergeThemeVariables,
   mergeSiteVariables,
 } from './mergeThemes'
-export { isEnabled as isDebugEnabled } from './debugEnabled'
 export { default as objectKeysToValues } from './objectKeysToValues'
 export { default as withDebugId } from './withDebugId'
-export { default as deepmerge } from './deepmerge'
-export { default as createTheme } from './createTheme'
+
+export * from './types'

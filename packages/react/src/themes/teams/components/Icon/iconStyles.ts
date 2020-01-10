@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
-import { callable } from '@fluentui/react-bindings'
 import {
+  callable,
   ComponentSlotStylesPrepared,
   FontIconSpec,
   ICSSInJSStyle,

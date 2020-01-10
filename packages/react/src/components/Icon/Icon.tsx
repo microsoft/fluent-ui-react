@@ -1,5 +1,5 @@
 import { Accessibility, iconBehavior } from '@fluentui/accessibility'
-import { callable } from '@fluentui/react-bindings'
+import { callable } from '@fluentui/styles'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'

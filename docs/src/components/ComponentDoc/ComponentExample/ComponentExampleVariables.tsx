@@ -1,11 +1,11 @@
 import {
+  callable,
   Grid,
   Header,
   Segment,
   ProviderContextPrepared,
   ThemeComponentVariablesPrepared,
 } from '@fluentui/react'
-import { callable } from '@fluentui/react-bindings'
 import * as _ from 'lodash'
 import * as React from 'react'
 // @ts-ignore

@@ -1,4 +1,4 @@
-import { callable } from '@fluentui/react-bindings'
+import { callable } from '@fluentui/styles'
 import { ComponentSlotStylesPrepared, Renderer } from '@fluentui/react'
 import flat from 'flat'
 import * as _ from 'lodash'

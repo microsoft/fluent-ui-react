@@ -1,7 +1,6 @@
 import { FocusZoneMode } from '@fluentui/accessibility'
 import {
   AccessibilityActionHandlers,
-  callable,
   FocusZone,
   FocusZoneProps,
   FOCUSZONE_WRAP_ATTRIBUTE,
@@ -11,6 +10,7 @@ import {
   unstable_getAccessibility as getAccessibility,
 } from '@fluentui/react-bindings'
 import {
+  callable,
   emptyTheme,
   ComponentSlotStylesPrepared,
   ComponentStyleFunctionParam,

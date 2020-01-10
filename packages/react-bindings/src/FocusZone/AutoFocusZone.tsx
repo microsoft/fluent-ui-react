@@ -5,7 +5,7 @@ import * as _ from 'lodash'
 
 import getElementType from '../utils/getElementType'
 import getUnhandledProps from '../utils/getUnhandledProps'
-import callable from '../utils/callable'
+import callable from '@fluentui/styles/src/callable'
 import { AutoFocusZoneProps } from './AutoFocusZone.types'
 import { getNextElement, focusAsync } from './focusUtilities'
 

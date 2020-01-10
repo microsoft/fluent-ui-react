@@ -1,6 +1,6 @@
-import { callable } from '@fluentui/react-bindings' // TODO fix me
 import * as _ from 'lodash'
 
+import callable from './callable'
 import {
   ComponentSlotStyle,
   ComponentSlotStylesInput,

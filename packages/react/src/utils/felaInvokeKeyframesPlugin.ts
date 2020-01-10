@@ -1,4 +1,4 @@
-import { callable } from '@fluentui/react-bindings'
+import { callable } from '@fluentui/styles'
 import * as _ from 'lodash'
 
 /**
