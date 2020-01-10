@@ -18,7 +18,6 @@ const carouselItems = [
     key: 'elliot',
     id: 'elliot',
     content: <Image src="public/images/avatar/large/elliot.jpg" fluid alt={imageAltTags.elliot} />,
-
     'aria-label': imageAltTags.elliot,
   },
   {
