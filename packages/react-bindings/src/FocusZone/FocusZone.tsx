@@ -143,10 +143,10 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
 
     if (!this._isInnerZone) {
       _outerZones.add(this)
-    }
 
-    if (this.windowElement && _outerZones.size === 1) {
-      this.windowElement.addEventListener('keydown', this._onKeyDownCapture, true)
+      if (this.windowElement && _outerZones.size === 1) {
+        this.windowElement.addEventListener('keydown', this._onKeyDownCapture, true)
+      }
     }
 
     this._root.current.addEventListener('blur', this._onBlur, true)
