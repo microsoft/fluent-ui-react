@@ -41,13 +41,14 @@ jobs:
 
       - restore_cache:
           keys:
+            - v1-json-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
             - v1-json-{{ .Environment.CIRCLE_BRANCH }}
             - v1-json
       - run:
           name: Create JSON for docs & tests
           command: yarn gulp build:docs:json
       - save_cache:
-          key: v1-json-{{ .Environment.CIRCLE_BRANCH }}
+          key: v1-json-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
           paths:
             - /tmp/gulp-cache
 
