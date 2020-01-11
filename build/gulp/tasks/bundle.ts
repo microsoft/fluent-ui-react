@@ -45,7 +45,7 @@ task('bundle:package:es', () =>
 )
 
 task('bundle:package:types:tsc', () => {
-  let cmd = 'tsc -b --emitDeclarationOnly'
+  let cmd = 'tsc -b'
   if (process.cwd() === config.path_base) {
     cmd = `cd packages && cd ${packageName} && ${cmd}`
   }
