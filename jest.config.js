@@ -1,16 +1,19 @@
 const { coverageReporters } = require('@fluentui/internal-tooling/jest')
 const { rollup: lernaAliases } = require('lerna-alias')
+const path = require('path')
+const fs = require('fs')
 
 // packages/react/src -> packages/react,
 // as lernaAliases append 'src' by default
-const projectPackages = lernaAliases({ sourceDirectory: false })
+const packagePaths = lernaAliases({ sourceDirectory: false })
 
-// Excludes the non-project packages
-const excluded = ['@fluentui/playground', '@fluentui/react-theming']
-
-const projects = Object.keys(projectPackages)
-  .filter(p => !excluded.includes(p))
-  .map(packageName => projectPackages[packageName])
+// Exclude packages which build with just, and other special packages
+const excludedPackages = ['@fluentui/internal-tooling']
+const projects = Object.keys(packagePaths).filter(
+  packageName =>
+    !excludedPackages.includes(packageName) &&
+    !fs.existsSync(path.join(packagePaths[packageName], 'just.config.ts')),
+)
 
 module.exports = {
   coverageReporters,

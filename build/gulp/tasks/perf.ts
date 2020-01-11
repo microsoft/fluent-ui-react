@@ -4,7 +4,7 @@ import { series, task } from 'gulp'
 import _ from 'lodash'
 import ProgressBar from 'progress'
 import puppeteer from 'puppeteer'
-import rimraf from 'rimraf'
+import del from 'del'
 import { argv } from 'yargs'
 import markdownTable from 'markdown-table'
 
@@ -109,9 +109,7 @@ const createMarkdownTable = (
   ])
 }
 
-task('perf:clean', cb => {
-  rimraf(paths.perfDist(), cb)
-})
+task('perf:clean', () => del(paths.perfDist()))
 
 task('perf:build', cb => {
   webpackPlugin(require('../../../build/webpack.config.perf').default, cb)

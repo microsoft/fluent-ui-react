@@ -10,14 +10,17 @@ trigger: [master]
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-- task: ComponentGovernanceComponentDetection@0
-  inputs:
-    scanType: 'Register'
-    verbosity: 'Verbose'
-    alertWarningLevel: 'High'
-  displayName: Component governance registration
+variables:
+  # emulate circleci method of detecting whether build is running in CI or local
+  CI: 1
 
+steps:
+  - task: ComponentGovernanceComponentDetection@0
+    inputs:
+      scanType: 'Register'
+      verbosity: 'Verbose'
+      alertWarningLevel: 'High'
+    displayName: Component governance registration
 # Rest of build is not being used for now, but leaving setup for reference
 
 #   - task: NodeTool@0

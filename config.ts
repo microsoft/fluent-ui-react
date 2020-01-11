@@ -36,30 +36,45 @@ const envConfig = {
 // ------------------------------------
 // Paths
 // ------------------------------------
-const base = (...args) => path.resolve(...[envConfig.path_base, ...args])
+const base = (...paths: string[]) => path.resolve(envConfig.path_base, ...paths)
+const fromBase = (...paths: string[]) => (...subPaths: string[]) => base(...paths, ...subPaths)
 
-const paths = {
-  base,
-  build: base.bind(null, envConfig.dir_build),
-  docsDist: base.bind(null, envConfig.dir_docs_dist),
-  docsSrc: base.bind(null, envConfig.dir_docs_src),
-  e2e: base.bind(null, envConfig.dir_e2e),
-  e2eSrc: base.bind(null, envConfig.dir_e2e_src),
-  e2eDist: base.bind(null, envConfig.dir_e2e_dist),
+const tempPaths = {
+  build: fromBase(envConfig.dir_build),
+  docsDist: fromBase(envConfig.dir_docs_dist),
+  docsSrc: fromBase(envConfig.dir_docs_src),
+  e2e: fromBase(envConfig.dir_e2e),
+  e2eSrc: fromBase(envConfig.dir_e2e_src),
+  e2eDist: fromBase(envConfig.dir_e2e_dist),
   packageDist: (packageName: string, ...paths: string[]) =>
     base(envConfig.dir_packages, packageName, 'dist', ...paths),
   packageSrc: (packageName: string, ...paths: string[]) =>
     base(envConfig.dir_packages, packageName, 'src', ...paths),
-  packages: base.bind(null, envConfig.dir_packages),
-  perfDist: base.bind(null, envConfig.dir_perf_dist),
-  perfSrc: base.bind(null, envConfig.dir_perf_src),
-  umdDist: base.bind(null, envConfig.dir_umd_dist),
-  ciArtifacts: base.bind(null, envConfig.dir_ci_artifacts),
-  withRootAt: (root, ...subpaths) => (...args) => path.resolve(root, ...subpaths, ...args),
-  posix: undefined, // all the sibling values, but with forward slashes regardless the OS
+  packages: fromBase(envConfig.dir_packages),
+  perfDist: fromBase(envConfig.dir_perf_dist),
+  perfSrc: fromBase(envConfig.dir_perf_src),
+  umdDist: fromBase(envConfig.dir_umd_dist),
+  ciArtifacts: fromBase(envConfig.dir_ci_artifacts),
+  withRootAt: (root: string, ...subpaths: string[]) => (...args: string[]) =>
+    path.resolve(root, ...subpaths, ...args),
 }
 
-paths.posix = _.mapValues(paths, func => (...args) => func(...args).replace(/\\/g, '/'))
+const paths = {
+  base,
+  ...tempPaths,
+  // all the sibling values, but with forward slashes regardless the OS
+  posix: _.mapValues(tempPaths, (func: (...args: string[]) => string) => (...args: string[]) =>
+    func(...args).replace(/\\/g, '/'),
+  ),
+}
+
+const isRoot = process.cwd() === __dirname
+let packageName = isRoot ? 'react' : path.basename(process.cwd())
+// don't use yargs here because it causes build errors in certain circumstances
+const packageArgIndex = process.argv.indexOf('--package')
+if (packageArgIndex > -1 && process.argv[packageArgIndex + 1]) {
+  packageName = process.argv[packageArgIndex + 1]
+}
 
 const config = {
   ...envConfig,
@@ -94,23 +109,44 @@ const config = {
   compiler_output_path: paths.base(envConfig.dir_docs_dist),
   compiler_public_path: __BASENAME__,
   compiler_stats: {
-    hash: false, // the hash of the compilation
-    version: false, // webpack version info
-    timings: true, // timing info
-    assets: false, // assets info
-    chunks: false, // chunk info
-    colors: true, // with console colors
-    chunkModules: false, // built modules info to chunk info
-    modules: false, // built modules info
-    cached: false, // also info about cached (not built) modules
-    reasons: false, // info about the reasons modules are included
-    source: false, // the source code of modules
-    errorDetails: true, // details to errors (like resolving log)
-    chunkOrigins: false, // the origins of chunks and chunk merging info
-    modulesSort: '', // (string) sort the modules by that field
-    chunksSort: '', // (string) sort the chunks by that field
-    assetsSort: '', // (string) sort the assets by that field
+    /** the hash of the compilation */
+    hash: false,
+    /** webpack version info */
+    version: false,
+    /** timing info */
+    timings: true,
+    /** assets info */
+    assets: false,
+    /** chunk info */
+    chunks: false,
+    /** with console colors */
+    colors: true,
+    /** built modules info to chunk info */
+    chunkModules: false,
+    /** built modules info */
+    modules: false,
+    /** also info about cached (not built) modules */
+    cached: false,
+    /** info about the reasons modules are included */
+    reasons: false,
+    /** the source code of modules */
+    source: false,
+    /** details to errors (like resolving log) */
+    errorDetails: true,
+    /** the origins of chunks and chunk merging info */
+    chunkOrigins: false,
+    /** sort the modules by that field */
+    modulesSort: '',
+    /** sort the chunks by that field */
+    chunksSort: '',
+    /** sort the assets by that field */
+    assetsSort: '',
   },
+
+  /** True if command is running from repo root */
+  isRoot,
+  /** Package name the task is running against: default to react if running at root, or cwd otherwise */
+  package: packageName,
 }
 
 export default config
