@@ -7,7 +7,7 @@ import Vinyl from 'vinyl'
 
 const prettierConfig = require('../../../.prettierrc.json')
 
-import { ExampleSource } from '../../../docs/src/types'
+import { ExampleSource } from './util/docs-types'
 import transformStarImportPlugin from '../../babel/transform-star-import-plugin'
 import { getRelativePathToSourceFile } from './util'
 
