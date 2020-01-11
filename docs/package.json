@@ -19,7 +19,6 @@
     "react-source-render": "4.0.0-1",
     "react-virtualized": "^9.21.1",
     "react-vis": "^1.11.6"
-
   },
   "devDependencies": {
     "@fluentui/internal-tooling": "^0.43.0",
