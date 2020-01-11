@@ -3,10 +3,7 @@
   "compilerOptions": {
     "module": "esnext",
     "paths": {
-      "@fluentui/*": ["packages/*/src"],
-      "docs/*": ["docs/*"],
-      "src/*": ["packages/react/src/*"],
-      "test/*": ["packages/react/test/*"]
+      "@fluentui/*": ["packages/*/src"]
     }
   },
   "include": ["../docs/src", "../packages/react/src", "../types"]
