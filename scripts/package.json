@@ -40,7 +40,7 @@
     "jest": "^24.9.0",
     "jest-puppeteer": "^4.3.0",
     "just-scripts": "^0.35.0",
-    "puppeteer": "^2.0.0",
+    "puppeteer": "^1.13.0",
     "react-docgen-typescript-loader": "^3.2.0",
     "rollup": "^1.25.1",
     "rollup-plugin-dts": "^1.1.10",
