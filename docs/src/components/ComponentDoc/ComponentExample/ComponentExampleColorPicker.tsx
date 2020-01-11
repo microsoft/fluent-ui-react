@@ -1,11 +1,9 @@
-import { ProviderContextPrepared } from '@fluentui/react'
+import { ProviderContextPrepared, ColorVariants } from '@fluentui/react'
 import * as Color from 'color'
 import * as _ from 'lodash'
 import * as React from 'react'
 // @ts-ignore
 import { ThemeContext } from 'react-fela'
-
-import { ColorVariants } from 'src/themes/types'
 
 type ComponentExampleColorPickerProps = {
   onChange: (colorValue: string) => void
