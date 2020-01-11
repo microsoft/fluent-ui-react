@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
-import { mountWithProviderAndGetComponent } from 'test/utils'
-import TableCell from 'src/components/Table/TableCell'
+import { isConformant, handlesAccessibility } from '../../commonTests'
+import { mountWithProviderAndGetComponent } from '../../../utils'
+import TableCell from '@fluentui/react/src/components/Table/TableCell'
 
 describe('TableCell', () => {
   isConformant(TableCell)

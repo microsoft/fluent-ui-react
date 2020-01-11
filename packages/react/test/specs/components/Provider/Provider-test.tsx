@@ -3,16 +3,16 @@ import { mount } from 'enzyme'
 import { createRenderer } from 'src/utils/felaRenderer'
 import * as React from 'react'
 
-import Provider from 'src/components/Provider/Provider'
-import ProviderConsumer from 'src/components/Provider/ProviderConsumer'
+import Provider from '@fluentui/react/src/components/Provider/Provider'
+import ProviderConsumer from '@fluentui/react/src/components/Provider/ProviderConsumer'
 
 describe('Provider', () => {
   test('is exported', () => {
-    expect(require('src/index.ts').Provider).toEqual(Provider)
+    expect(require('@fluentui/react/src/index.ts').Provider).toEqual(Provider)
   })
 
   test('has a ProviderConsumer subcomponent', () => {
-    expect(require('src/index.ts').Provider.Consumer).toEqual(ProviderConsumer)
+    expect(require('@fluentui/react/src/index.ts').Provider.Consumer).toEqual(ProviderConsumer)
   })
 
   describe('overwrite', () => {

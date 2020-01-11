@@ -1,4 +1,10 @@
-import { find, isOverridden, filter, getValues, removeNulls } from 'src/components/Debug/utils'
+import {
+  find,
+  isOverridden,
+  filter,
+  getValues,
+  removeNulls,
+} from '@fluentui/react/src/components/Debug/utils'
 
 describe('debugUtils', () => {
   describe('find', () => {

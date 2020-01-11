@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { createSnapshot } from 'jest-react-fela'
-import { EmptyThemeProvider } from 'test/utils'
-import Box from 'src/components/Box/Box'
-import Provider from 'src/components/Provider/Provider'
-import Text from 'src/components/Text/Text'
-import { felaRenderer } from 'src/utils'
+import { EmptyThemeProvider } from '../../utils'
+import Box from '@fluentui/react/src/components/Box/Box'
+import Provider from '@fluentui/react/src/components/Provider/Provider'
+import Text from '@fluentui/react/src/components/Text/Text'
+import { felaRenderer } from '@fluentui/react/src/utils'
 
 describe('felaRenderer', () => {
   test('basic styles are rendered', () => {

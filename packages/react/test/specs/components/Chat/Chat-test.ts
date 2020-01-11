@@ -1,9 +1,9 @@
 import { chatBehavior, AccessibilityDefinition } from '@fluentui/accessibility'
-import { handlesAccessibility, isConformant } from 'test/specs/commonTests'
+import { handlesAccessibility, isConformant } from '../../commonTests'
 
-import Chat from 'src/components/Chat/Chat'
+import Chat from '@fluentui/react/src/components/Chat/Chat'
 import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
-import ChatItem from 'src/components/Chat/ChatItem'
+import ChatItem from '@fluentui/react/src/components/Chat/ChatItem'
 
 const chatImplementsCollectionShorthandProp = implementsCollectionShorthandProp(Chat)
 

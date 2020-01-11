@@ -1,6 +1,6 @@
-import { isConformant } from 'test/specs/commonTests'
+import { isConformant } from '../../commonTests'
 
-import Reaction from 'src/components/Reaction/Reaction'
+import Reaction from '@fluentui/react/src/components/Reaction/Reaction'
 
 describe('Reaction', () => {
   isConformant(Reaction)

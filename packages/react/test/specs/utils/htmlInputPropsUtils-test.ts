@@ -1,4 +1,4 @@
-import { partitionHTMLProps } from 'src/utils/htmlPropsUtils'
+import { partitionHTMLProps } from '@fluentui/react/src/utils/htmlPropsUtils'
 
 const props = {
   autoFocus: false,

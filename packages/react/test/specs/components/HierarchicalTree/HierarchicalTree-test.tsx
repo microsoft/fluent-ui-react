@@ -1,11 +1,11 @@
 import * as React from 'react'
 import * as keyboardKey from 'keyboard-key'
 
-import { isConformant } from 'test/specs/commonTests'
-import { mountWithProvider } from 'test/utils'
-import HierarchicalTree from 'src/components/HierarchicalTree/HierarchicalTree'
-import HierarchicalTreeTitle from 'src/components/HierarchicalTree/HierarchicalTreeTitle'
-import HierarchicalTreeItem from 'src/components/HierarchicalTree/HierarchicalTreeItem'
+import { isConformant } from '../../commonTests'
+import { mountWithProvider } from '../../../utils'
+import HierarchicalTree from '@fluentui/react/src/components/HierarchicalTree/HierarchicalTree'
+import HierarchicalTreeTitle from '@fluentui/react/src/components/HierarchicalTree/HierarchicalTreeTitle'
+import HierarchicalTreeItem from '@fluentui/react/src/components/HierarchicalTree/HierarchicalTreeItem'
 import { ReactWrapper, CommonWrapper } from 'enzyme'
 
 const items = [

@@ -1,7 +1,7 @@
 import * as React from 'react'
 
-import Tooltip from 'src/components/Tooltip/Tooltip'
-import Button from 'src/components/Button/Button'
+import Tooltip from '@fluentui/react/src/components/Tooltip/Tooltip'
+import Button from '@fluentui/react/src/components/Button/Button'
 
 import { mountWithProvider, findIntrinsicElement } from '../../../utils'
 

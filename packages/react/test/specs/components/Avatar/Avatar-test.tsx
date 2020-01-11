@@ -1,8 +1,8 @@
-import { implementsShorthandProp, isConformant } from 'test/specs/commonTests'
+import { implementsShorthandProp, isConformant } from '../../commonTests'
 
-import Avatar from 'src/components/Avatar/Avatar'
-import Label from 'src/components/Label/Label'
-import Image from 'src/components/Image/Image'
+import Avatar from '@fluentui/react/src/components/Avatar/Avatar'
+import Label from '@fluentui/react/src/components/Label/Label'
+import Image from '@fluentui/react/src/components/Image/Image'
 
 const avatarImplementsShorthandProp = implementsShorthandProp(Avatar)
 const { getInitials } = (Avatar as any).defaultProps

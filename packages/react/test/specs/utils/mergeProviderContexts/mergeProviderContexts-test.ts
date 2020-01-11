@@ -1,5 +1,7 @@
-import mergeProviderContexts, { mergeRenderers } from 'src/utils/mergeProviderContexts'
-import { felaRenderer } from 'src/utils/felaRenderer'
+import mergeProviderContexts, {
+  mergeRenderers,
+} from '@fluentui/react/src/utils/mergeProviderContexts'
+import { felaRenderer } from '@fluentui/react/src/utils/felaRenderer'
 
 describe('mergeRenderers', () => {
   test(`always uses "next" renderer`, () => {

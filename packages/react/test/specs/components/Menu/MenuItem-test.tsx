@@ -5,10 +5,10 @@ import {
 } from '@fluentui/accessibility'
 import * as React from 'react'
 
-import { isConformant, handlesAccessibility, getRenderedAttribute } from 'test/specs/commonTests'
-import { mountWithProviderAndGetComponent } from 'test/utils'
-import MenuItem from 'src/components/Menu/MenuItem'
-import Box from 'src/components/Box/Box'
+import { isConformant, handlesAccessibility, getRenderedAttribute } from '../../commonTests'
+import { mountWithProviderAndGetComponent } from '../../../utils'
+import MenuItem from '@fluentui/react/src/components/Menu/MenuItem'
+import Box from '@fluentui/react/src/components/Box/Box'
 
 describe('MenuItem', () => {
   isConformant(MenuItem, {

@@ -1,5 +1,5 @@
-import { isConformant } from 'test/specs/commonTests'
-import CarouselNavigation from 'src/components/Carousel/CarouselNavigation'
+import { isConformant } from '../../commonTests'
+import CarouselNavigation from '@fluentui/react/src/components/Carousel/CarouselNavigation'
 
 describe('CarouselNavigation', () => {
   isConformant(CarouselNavigation)

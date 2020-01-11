@@ -1,8 +1,8 @@
-import { isConformant, implementsShorthandProp } from 'test/specs/commonTests'
+import { isConformant, implementsShorthandProp } from '../../commonTests'
 
-import Label from 'src/components/Label/Label'
-import Icon from 'src/components/Icon/Icon'
-import Image from 'src/components/Image/Image'
+import Label from '@fluentui/react/src/components/Label/Label'
+import Icon from '@fluentui/react/src/components/Icon/Icon'
+import Image from '@fluentui/react/src/components/Image/Image'
 
 const labelImplementsShorthandProp = implementsShorthandProp(Label)
 

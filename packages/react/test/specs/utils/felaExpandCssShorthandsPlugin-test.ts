@@ -1,4 +1,4 @@
-import felaExpandCssShorthandsPlugin from 'src/utils/felaExpandCssShorthandsPlugin'
+import felaExpandCssShorthandsPlugin from '@fluentui/react/src/utils/felaExpandCssShorthandsPlugin'
 
 const expandCssShorthands = felaExpandCssShorthandsPlugin()
 

@@ -1,6 +1,6 @@
-import { isConformant } from 'test/specs/commonTests'
+import { isConformant } from '../../commonTests'
 
-import Status from 'src/components/Status/Status'
+import Status from '@fluentui/react/src/components/Status/Status'
 
 describe('Status', () => {
   isConformant(Status)

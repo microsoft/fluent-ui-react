@@ -1,5 +1,5 @@
-import { extendColorScheme, pickValuesFromColorScheme } from 'src/themes/colorUtils'
-import { ColorSchemeMapping, ComponentAreaName } from 'src/themes/types'
+import { extendColorScheme, pickValuesFromColorScheme } from '@fluentui/react/src/themes/colorUtils'
+import { ColorSchemeMapping, ComponentAreaName } from '@fluentui/react/src/themes/types'
 
 const generateColorSchemeValues = color => ({
   foreground: color,

@@ -14,10 +14,10 @@ import {
   getDisplayName,
   mountWithProvider as mount,
   syntheticEvent,
-} from 'test/utils'
+} from '../../utils'
 import helpers from './commonHelpers'
 
-import * as FluentUI from 'src/index'
+import * as FluentUI from '@fluentui/react/src/index'
 import { getEventTargetComponent, EVENT_TARGET_ATTRIBUTE } from './eventTarget'
 
 export interface Conformant {

@@ -1,6 +1,6 @@
-import { isConformant } from 'test/specs/commonTests'
+import { isConformant } from '../../commonTests'
 
-import Layout from 'src/components/Layout/Layout'
+import Layout from '@fluentui/react/src/components/Layout/Layout'
 
 describe('Layout', () => {
   isConformant(Layout, { hasAccessibilityProp: false })

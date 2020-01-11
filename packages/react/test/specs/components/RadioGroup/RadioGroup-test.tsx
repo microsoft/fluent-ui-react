@@ -1,15 +1,11 @@
 import * as React from 'react'
 
-import {
-  isConformant,
-  handlesAccessibility,
-  htmlIsAccessibilityCompliant,
-} from 'test/specs/commonTests'
+import { isConformant, handlesAccessibility, htmlIsAccessibilityCompliant } from '../../commonTests'
 import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
-import { mountWithProvider } from 'test/utils'
+import { mountWithProvider } from '../../../utils'
 
-import RadioGroup from 'src/components/RadioGroup/RadioGroup'
-import RadioGroupItem from 'src/components/RadioGroup/RadioGroupItem'
+import RadioGroup from '@fluentui/react/src/components/RadioGroup/RadioGroup'
+import RadioGroupItem from '@fluentui/react/src/components/RadioGroup/RadioGroupItem'
 
 const radioGroupImplementsCollectionShorthandProp = implementsCollectionShorthandProp(RadioGroup)
 

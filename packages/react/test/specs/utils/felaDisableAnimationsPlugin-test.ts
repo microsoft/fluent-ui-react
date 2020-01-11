@@ -1,4 +1,4 @@
-import felaDisableAnimationsPlugin from 'src/utils/felaDisableAnimationsPlugin'
+import felaDisableAnimationsPlugin from '@fluentui/react/src/utils/felaDisableAnimationsPlugin'
 
 const disableAnimationsPlugin = felaDisableAnimationsPlugin()
 

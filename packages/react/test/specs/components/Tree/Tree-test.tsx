@@ -1,11 +1,11 @@
 import * as React from 'react'
 import * as keyboardKey from 'keyboard-key'
 
-import { isConformant } from 'test/specs/commonTests'
-import { mountWithProvider } from 'test/utils'
-import Tree from 'src/components/Tree/Tree'
-import TreeTitle from 'src/components/Tree/TreeTitle'
-import TreeItem from 'src/components/Tree/TreeItem'
+import { isConformant } from '../../commonTests'
+import { mountWithProvider } from '../../../utils'
+import Tree from '@fluentui/react/src/components/Tree/Tree'
+import TreeTitle from '@fluentui/react/src/components/Tree/TreeTitle'
+import TreeItem from '@fluentui/react/src/components/Tree/TreeItem'
 import { ReactWrapper, CommonWrapper } from 'enzyme'
 
 const items = [

@@ -1,4 +1,4 @@
-import felaInvokeKeyframesPlugin from 'src/utils/felaInvokeKeyframesPlugin'
+import felaInvokeKeyframesPlugin from '@fluentui/react/src/utils/felaInvokeKeyframesPlugin'
 
 const renderInvokeKeyframes = felaInvokeKeyframesPlugin()
 

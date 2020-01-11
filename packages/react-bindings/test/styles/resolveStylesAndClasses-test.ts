@@ -4,7 +4,7 @@ import {
   emptyTheme,
   ICSSInJSStyle,
 } from '@fluentui/styles'
-import resolveStylesAndClasses from '../../src/styles/resolveStylesAndClasses'
+import resolveStylesAndClasses from '@fluentui/react/src/styles/resolveStylesAndClasses'
 
 const styleParam: ComponentStyleFunctionParam = {
   disableAnimations: false,

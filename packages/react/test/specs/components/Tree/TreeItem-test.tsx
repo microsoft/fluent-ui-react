@@ -1,5 +1,5 @@
-import { isConformant } from 'test/specs/commonTests'
-import TreeItem from 'src/components/Tree/TreeItem'
+import { isConformant } from '../../commonTests'
+import TreeItem from '@fluentui/react/src/components/Tree/TreeItem'
 
 describe('TreeItem', () => {
   isConformant(TreeItem, { requiredProps: { id: 'my-id' } })

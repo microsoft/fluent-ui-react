@@ -1,8 +1,8 @@
-import { isConformant } from 'test/specs/commonTests'
+import { isConformant } from '../../commonTests'
 
-import ReactionGroup from 'src/components/Reaction/ReactionGroup'
-import Reaction from 'src/components/Reaction/Reaction'
-import implementsCollectionShorthandProp from 'test/specs/commonTests/implementsCollectionShorthandProp'
+import ReactionGroup from '@fluentui/react/src/components/Reaction/ReactionGroup'
+import Reaction from '@fluentui/react/src/components/Reaction/Reaction'
+import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
 
 const reactionGroupImplementsCollectionShorthandProp = implementsCollectionShorthandProp(
   ReactionGroup,

@@ -51,9 +51,9 @@ These tests are typically imported into individual component tests.
 Every common test receives your component as its first argument.
 
 ```tsx
-import { isConformant } from 'test/specs/commonTests'
+import { isConformant } from '../../commonTests'
 
-import Divider from 'src/components/Divider/Divider'
+import Divider from '@fluentui/react/src/components/Divider/Divider'
 
 describe('Divider', () => {
   isConformant(Divider)
@@ -85,9 +85,9 @@ There should be one describe block for each prop of your component.
 Example for `Button` component:
 
 ```tsx
-import { isConformant } from 'test/specs/commonTests'
+import { isConformant } from '../../commonTests'
 
-import Button from 'src/components/Button'
+import Button from '@fluentui/react/src/components/Button'
 
 describe('Button', () => {
   isConformant(Button)

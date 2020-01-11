@@ -1,6 +1,6 @@
-import { isConformant } from 'test/specs/commonTests'
+import { isConformant } from '../../commonTests'
 
-import ToolbarDivider from 'src/components/Toolbar/ToolbarDivider'
+import ToolbarDivider from '@fluentui/react/src/components/Toolbar/ToolbarDivider'
 
 describe('ToolbarDivider', () => {
   isConformant(ToolbarDivider)

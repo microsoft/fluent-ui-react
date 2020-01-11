@@ -1,4 +1,4 @@
-import { doesNodeContainClick } from 'src/utils'
+import { doesNodeContainClick } from '@fluentui/react/src/utils'
 
 const makeEvent = (event?: any) => ({ clientX: 0, clientY: 0, ...event })
 
