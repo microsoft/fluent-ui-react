@@ -87,7 +87,7 @@ const createReactApp = async (atTempDirectory: string, appName: string): Promise
     await runIn(tempUtilProjectPath)(`yarn create-react-app ${appProjectPath} --typescript`)
   } finally {
     // remove temp util directory
-    del.sync(tempUtilProjectPath)
+    del.sync(tempUtilProjectPath, { force: true })
   }
 
   return appProjectPath
