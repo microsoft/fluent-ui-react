@@ -13,8 +13,8 @@ import {
   ShorthandValue,
 } from '@fluentui/react'
 import { CopyToClipboard } from '@fluentui/docs-components'
-import Logo from 'docs/src/components/Logo/Logo'
-import { getComponentPathname } from 'docs/src/utils'
+import Logo from '../Logo/Logo'
+import { getComponentPathname } from '../../utils'
 import keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -26,8 +26,8 @@ import { constants } from '@fluentui/react/src/utils'
 type ComponentMenuItem = { displayName: string; type: string }
 
 const pkg = require('../../../../packages/react/package.json')
-const componentMenu: ComponentMenuItem[] = require('docs/src/componentMenu')
-const behaviorMenu: ComponentMenuItem[] = require('docs/src/behaviorMenu')
+const componentMenu: ComponentMenuItem[] = require('../../componentMenu')
+const behaviorMenu: ComponentMenuItem[] = require('../../behaviorMenu')
 
 const componentsBlackList = ['Debug', 'Design']
 

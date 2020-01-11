@@ -1,7 +1,7 @@
 import * as React from 'react'
 
-import ComponentPerfExample from 'docs/src/components/ComponentDoc/ComponentPerfExample'
-import NonPublicSection from 'docs/src/components/ComponentDoc/NonPublicSection'
+import ComponentPerfExample from '../../../../components/ComponentDoc/ComponentPerfExample'
+import NonPublicSection from '../../../../components/ComponentDoc/NonPublicSection'
 
 const Performance = () => (
   <NonPublicSection title="Performance">

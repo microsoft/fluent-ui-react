@@ -2,8 +2,8 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { exampleBestPracticesContext } from 'docs/src/utils'
-import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
+import { exampleBestPracticesContext } from '../../utils'
+import ExampleSection from '../ComponentDoc/ExampleSection'
 
 interface ComponentBestPracticesProps {
   displayName: string

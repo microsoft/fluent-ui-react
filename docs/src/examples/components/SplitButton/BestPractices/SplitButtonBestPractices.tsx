@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import ComponentBestPractices from 'docs/src/components/ComponentBestPractices'
+import ComponentBestPractices from '../../../../components/ComponentBestPractices'
 
 const doList = [
   'Use `aria-roledescription` with the value of `splitbutton` on the `button` slot to announce the proper semantics of the component.',

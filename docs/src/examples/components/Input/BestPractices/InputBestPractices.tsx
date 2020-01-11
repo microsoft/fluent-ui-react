@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import ComponentBestPractices from 'docs/src/components/ComponentBestPractices'
+import ComponentBestPractices from '../../../../components/ComponentBestPractices'
 
 const doList = [
   'For good screen reader experience set `aria-label` or `aria-labelledby` attribute for input.',
