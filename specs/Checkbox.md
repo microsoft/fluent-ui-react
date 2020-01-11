@@ -158,13 +158,14 @@ Note: rtl, styles, and theme come from compose or the ThemeProvider. And name ha
 - [ ] Redesign `keytipProps` from what's currently in Fabric and add the new implementation.
 - [ ] Decide if, in keeping label, it will be of type `ShorthandValue<TextProps>`and if other type, implement that.
 - [ ] Decide if, in keeping icon, it will be of type `ShorthandValue<IconProps>` and if other type, implement that.
-- [ ] Change `onChange` type to native `onChange?: (ev?: React.FormEvent<HTMLElement | HTMLInputElement>, checked?: boolean) => void;` from current `ComponentEventHandler`.
-- [ ] Decide if `onClick` is too similar to `onChange` and if so, remove it. If not, change its type to native instead of the current `ComponentEventHandler`.
+- [ ] Change `onChange` type to native but with the added `checked` state as the 2nd prop `onChange?: (ev?: React.FormEvent<HTMLElement | HTMLInputElement>, checked?: boolean) => void;` from current `ComponentEventHandler`.
+- [ ] Remove `onClick` because it too similar to `onChange`.
 - [ ] Remove `toggle` - it will be a separate variant component of Checkbox.
 - [ ] Remove `variables` - theming will be handled differently in the new Fluent.
 - [ ] Remove `design` prop.
 - [ ] Decide on the TBD props `as`, `styles`, and `theme` which will apply to other components across the new Fluent library.
 - [ ] Keep `labelPosition`, `checked`, `defaultChecked`, `className`, and `disabled` props unchanged.
+- [ ] Unrecognized native `div` props should be mixed into `root`.
 
 ## Slots
 
