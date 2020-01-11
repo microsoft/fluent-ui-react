@@ -5,7 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "color": "^3.1.0",
-    "copy-to-clipboard": "^3.0.8",
+    "copy-to-clipboard": "^3.2.0",
     "faker": "^4.1.0",
     "flat": "^4.1.0",
     "react-ace": "^5.1.2",
