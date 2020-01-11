@@ -65,7 +65,7 @@
     "portfinder": "^1.0.20",
     "prettier": "^1.19.1",
     "progress": "^2.0.3",
-    "puppeteer": "^2.0.0",
+    "puppeteer": "^1.13.0",
     "react-hot-loader": "^4.12.15",
     "react-vis": "^1.11.6",
     "read-package-json": "^2.0.13",
