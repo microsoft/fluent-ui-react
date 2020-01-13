@@ -22,6 +22,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixes
 - Fix event lister leak in `FocusZone` @miroslavstastny ([#2227](https://github.com/microsoft/fluent-ui-react/pull/2227))
+- Fix `dropdown` styles to match Teams theme @notandrew ([#2172](https://github.com/microsoft/fluent-ui-react/pull/2172))
 
 <!--------------------------------[ v0.43.0 ]------------------------------- -->
 ## [v0.43.0](https://github.com/microsoft/fluent-ui-react/tree/v0.43.0) (2020-01-08)
@@ -40,7 +41,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix `toggle` changing width during animation in Teams theme @mnajdova ([#2189](https://github.com/microsoft/fluent-ui-react/pull/2189))
 - Update `SplitButton` styles in Teams theme [redlines] @notandrew ([#2108](https://github.com/microsoft/fluent-ui-react/pull/2108))
 - Fix `Popup` positioning in multiple cases @layershifter ([#2187](https://github.com/microsoft/fluent-ui-react/pull/2187))
-- Fix `dropdown` styles to match Teams theme @notandrew ([#2172](https://github.com/microsoft/fluent-ui-react/pull/2172))
 - Fix click outside in `Popup` when `trigger` is not defined @layershifter ([#2202](https://github.com/microsoft/fluent-ui-react/pull/2202))
 - Use `debounce` from `lodash` in `Dropdown` and `Carouel` @silviuavram ([#2203](https://github.com/microsoft/fluent-ui-react/pull/2203))
 
