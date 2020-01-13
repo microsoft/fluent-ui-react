@@ -9,7 +9,7 @@ import {
   ChildrenComponentProps,
   ShorthandFactory,
 } from '../../utils'
-// import { mergeStyles } from '../../utils/mergeThemes'
+import { mergeStyles } from '../../utils/mergeThemes'
 import { ComponentSlotStylesPrepared } from '../../themes/types'
 
 type ChildrenFunction = (params: {
@@ -124,6 +124,6 @@ const applyStyles = (
 
   // assuming element is Fluent UI element
   return React.cloneElement(element, {
-    styles: { ...(styles.root || {}), ...element.props.styles },
+    styles: mergeStyles(styles.root || {}, element.props.styles),
   })
 }
