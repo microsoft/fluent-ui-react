@@ -34,24 +34,14 @@ export interface StatusProps extends UIComponentProps {
 
 const Status = React.forwardRef<HTMLDivElement, WithAsProp<StatusProps>>((props, ref) => {
   const { className, color, icon, size, state, design, styles, variables } = props
-  // @ts-ignore
-  const { displayName, mapPropsToBehavior, mapPropsToStyles, overrideStyles, shouldForwardProp } =
-    props.__unstable_config || {}
 
   const { rtl }: ProviderContextPrepared = React.useContext(ThemeContext)
-  const magicName = overrideStyles
-    ? displayName || Status.displayName
-    : [Status.displayName, displayName].filter(Boolean)
-  // @ts-ignore
-  // @ts-ignore
-  const [classes, resolvedStyles] = useStyles(magicName, {
-    // magic name is not cool, too
+  const [classes, resolvedStyles] = useStyles(Status.displayName, {
     className: (Status as any).className,
     mapPropsToStyles: () => ({
       color,
       size,
       state,
-      ...(mapPropsToStyles && mapPropsToStyles(props)), // This is not cool
     }),
     mapPropsToInlineStyles: () => ({
       className,
@@ -59,31 +49,15 @@ const Status = React.forwardRef<HTMLDivElement, WithAsProp<StatusProps>>((props,
       styles,
       variables,
     }),
-    // <CallMenu />
-    // <div className="call-menu my-custom-classname" />
     rtl,
-
-    // @ts-ignore
-    __experimental_variant: displayName,
-    __expirimental_overwrite: overrideStyles,
   })
   const getA11Props = useAccessibility(props.accessibility, {
-    debugName: displayName || Status.displayName,
-    mapPropsToBehavior: mapPropsToBehavior ? () => mapPropsToBehavior(props) : undefined,
+    debugName: Status.displayName,
     rtl,
   })
   const ElementType = getElementType(props)
-  const unhandledProps = getUnhandledProps(
-    (Status as any).handledProps /* TODO */,
-    props,
-    shouldForwardProp,
-  )
+  const unhandledProps = getUnhandledProps((Status as any).handledProps /* TODO */, props)
 
-  // 1: shouldHandleProp should work!
-  // 2: Fix typings, no any!
-  // 3: const [] = useComposeConfig()
-
-  console.log(getA11Props('root', {}))
   return (
     <ElementType {...getA11Props('root', { className: classes.root, ref, ...unhandledProps })}>
       {Icon.create(icon, {
