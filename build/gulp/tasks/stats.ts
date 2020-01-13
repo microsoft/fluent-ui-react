@@ -139,6 +139,10 @@ function readSummaryPerfStats() {
     .mapKeys((value, key) => _.camelCase(key)) // mongodb does not allow dots in keys
     .mapValues(result => ({
       actualTime: _.omit(result.actualTime, 'values'),
+      renderComponentTime: {
+        ..._.omit(result.renderComponentTime, 'values'),
+        componentCount: result.componentCount.median,
+      },
     }))
     .value()
 }
