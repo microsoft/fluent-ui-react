@@ -18,7 +18,7 @@ type InlineStyleProps<StyleProps> = {
   /** Additional CSS class name(s) to apply.  */
   className?: string
 
-  design?: ComponentDesignProp // TODO type
+  design?: ComponentDesignProp
 
   /** Additional CSS styles to apply to the component instance.  */
   styles?: ComponentSlotStyle<StyleProps, any> // TODO: see if we can improve it
