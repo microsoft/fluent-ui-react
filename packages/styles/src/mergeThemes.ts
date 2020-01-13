@@ -145,6 +145,46 @@ export const mergeComponentStyles__DEV = (
   }, initial)
 }
 
+const mergeComponentStylesCache = {}
+
+const containsFunctionProp = obj => {
+  const keys = Object.keys(obj)
+  for (let i = 0; i < keys.length; i++) {
+    if (typeof obj[keys[i]] === 'function') {
+      return true
+    }
+  }
+  return false
+}
+
+export const mergeComponentStylesWithCache = (
+  themeHash,
+  hashObj,
+  sources: (ComponentSlotStylesInput | null | undefined)[],
+) => {
+  try {
+    if (containsFunctionProp(hashObj) || themeHash === undefined || themeHash === null) {
+      return mergeComponentStyles(...sources)
+    }
+
+    if (!mergeComponentStylesCache[themeHash]) {
+      mergeComponentStylesCache[themeHash] = {}
+    }
+
+    const hashVal = JSON.stringify(hashObj)
+
+    if (!mergeComponentStylesCache[themeHash][hashVal]) {
+      const value = mergeComponentStylesCache[themeHash]
+      value[hashVal] = mergeComponentStyles(...sources)
+      mergeComponentStylesCache[themeHash] = value
+    }
+
+    return mergeComponentStylesCache[hashVal][hashVal]
+  } catch (e) {
+    return mergeComponentStyles(...sources)
+  }
+}
+
 export const mergeComponentStyles =
   process.env.NODE_ENV === 'production' ? mergeComponentStyles__PROD : mergeComponentStyles__DEV
 
@@ -347,7 +387,7 @@ export const mergeStyles = (...sources: ComponentSlotStyle[]) => {
 const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
   return themes.reduce<ThemePrepared>(
     (acc: ThemePrepared, next: ThemeInput) => {
-      if (!next) return acc
+      if (!next || next === {}) return acc
       const nextDebugId = next['_debugId']
 
       acc.siteVariables = mergeSiteVariables(
@@ -374,10 +414,15 @@ const mergeThemes = (...themes: ThemeInput[]): ThemePrepared => {
 
       acc.animations = mergeAnimations(acc.animations, next.animations)
 
+      if (!_.isNil(acc.hash) && !_.isNil(next.hash)) {
+        const prefix = acc.hash.length > 0 ? `${acc.hash}-` : ''
+        acc.hash = `${prefix}${next.hash}`
+      }
+
       return acc
     },
     // .reduce() will modify "emptyTheme" object, so we should clone it before actual usage
-    { ...emptyTheme },
+    { ...emptyTheme, hash: '' },
   )
 }
 

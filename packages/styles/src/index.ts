@@ -13,6 +13,7 @@ export {
   mergeThemeStyles,
   mergeThemeVariables,
   mergeSiteVariables,
+  mergeComponentStylesWithCache,
 } from './mergeThemes'
 export { default as objectKeyToValues } from './objectKeysToValues'
 export { default as withDebugId } from './withDebugId'

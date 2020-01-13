@@ -7,6 +7,7 @@ export default mergeThemes(
   teams,
   createTheme(
     {
+      hash: 'teams-dark',
       siteVariables,
       componentVariables,
     },

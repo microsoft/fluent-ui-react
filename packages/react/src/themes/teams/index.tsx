@@ -57,6 +57,7 @@ const icons: ThemeIcons = {
 
 const teamsTheme: ThemePrepared<TeamsThemeStylesProps> = createTheme(
   {
+    hash: 'teams',
     siteVariables,
     componentVariables,
     componentStyles,

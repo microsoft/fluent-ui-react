@@ -250,6 +250,7 @@ export type ThemeComponentStylesPrepared<ThemeStylesProps = any> = {
 // ========================================================
 
 export interface ThemeInput<ThemeStylesProps extends Record<string, any> = any> {
+  hash?: string
   siteVariables?: SiteVariablesInput
   componentVariables?: ThemeComponentVariablesInput<ThemeStylesProps>
   componentStyles?: ThemeComponentStylesInput<ThemeStylesProps>
@@ -268,6 +269,7 @@ export interface ThemeInput<ThemeStylesProps extends Record<string, any> = any> 
 // As a theme cascades down the tree and is merged with the previous theme on
 // context, the resulting theme takes this shape.
 export interface ThemePrepared<ThemeStylesProps extends Record<string, any> = any> {
+  hash?: string
   siteVariables: SiteVariablesPrepared
   componentVariables: {
     [key in keyof ThemeComponentVariablesPrepared<ThemeStylesProps>]: ComponentVariablesPrepared

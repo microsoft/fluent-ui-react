@@ -459,6 +459,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     } = this.state
 
     const newTheme: ThemeInput = {
+      hash: 'component-example',
       componentVariables: {
         ...componentVariables,
         ProviderBox: { background: showTransparent ? 'initial' : undefined },
