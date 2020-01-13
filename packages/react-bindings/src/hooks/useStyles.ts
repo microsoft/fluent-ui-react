@@ -6,7 +6,7 @@ import { ComponentSlotStyle, ComponentVariablesInput, emptyTheme } from '@fluent
 import { ComponentDesignProp, StylesContextValue } from '../styles/types'
 import getStyles, { GetStylesResult } from '../styles/getStyles'
 
-type PrimitiveProps = Record<string, boolean | number | string>
+type PrimitiveProps = Record<string, boolean | number | string | undefined>
 type UseStylesOptions<StyleProps extends PrimitiveProps> = {
   className?: string
   mapPropsToStyles?: () => StyleProps
