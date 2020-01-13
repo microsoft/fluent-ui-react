@@ -1,5 +1,6 @@
 import {
   callable,
+  ComponentSlotStylesInput,
   ComponentSlotStylesPrepared,
   ComponentStyleFunctionParam,
   ComponentVariablesObject,
@@ -76,7 +77,7 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
   const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
     theme.componentStyles[displayName],
     props.design && withDebugId({ root: props.design }, 'props.design'),
-    props.styles && withDebugId({ root: props.styles }, 'props.styles'),
+    props.styles && withDebugId({ root: props.styles } as ComponentSlotStylesInput, 'props.styles'),
     animationStyles && withDebugId({ root: animationStyles }, 'props.animation'),
   )
 

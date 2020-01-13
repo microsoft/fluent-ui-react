@@ -1,6 +1,6 @@
 import { ThemeInput } from '@fluentui/styles'
 import { mount } from 'enzyme'
-import { createRenderer } from 'fela'
+import { createRenderer } from 'src/utils/felaRenderer'
 import * as React from 'react'
 
 import Provider from 'src/components/Provider/Provider'

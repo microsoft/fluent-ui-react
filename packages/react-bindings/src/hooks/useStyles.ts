@@ -1,9 +1,9 @@
+import { ComponentSlotStyle, ComponentVariablesInput, emptyTheme } from '@fluentui/styles'
 import * as React from 'react'
 // @ts-ignore We have this export in package, but it is not present in typings
 import { ThemeContext } from 'react-fela'
 
-import { ComponentSlotStyle, ComponentVariablesInput, emptyTheme } from '@fluentui/styles'
-import { ComponentDesignProp, StylesContextValue } from '../styles/types'
+import { ComponentDesignProp, RendererRenderRule, StylesContextValue } from '../styles/types'
 import getStyles, { GetStylesResult } from '../styles/getStyles'
 
 type PrimitiveProps = Record<string, boolean | number | string | undefined>
@@ -27,11 +27,20 @@ type InlineStyleProps<StyleProps> = {
   variables?: ComponentVariablesInput
 }
 
+const defaultContext: StylesContextValue<{ renderRule: RendererRenderRule }> = {
+  disableAnimations: false,
+  renderer: { renderRule: () => '' },
+  theme: emptyTheme,
+  _internal_resolvedComponentVariables: {},
+}
+
 const useStyles = <StyleProps extends PrimitiveProps>(
   displayName: string,
   options: UseStylesOptions<StyleProps>,
 ): [GetStylesResult['classes'], GetStylesResult['styles']] => {
-  const context: StylesContextValue = React.useContext(ThemeContext) || ({} as any) // TODO FIX ME
+  const context: StylesContextValue<{ renderRule: RendererRenderRule }> =
+    React.useContext(ThemeContext) || defaultContext
+
   const {
     className = 'no-classname-🙉',
     mapPropsToStyles = () => ({} as StyleProps),
@@ -49,12 +58,12 @@ const useStyles = <StyleProps extends PrimitiveProps>(
     },
 
     // Context values
-    disableAnimations: context.disableAnimations || false,
-    renderer: context.renderer || { renderRule: () => '' },
+    disableAnimations: context.disableAnimations,
+    renderer: context.renderer,
     rtl,
     saveDebug: () => null,
-    theme: context.theme || emptyTheme,
-    _internal_resolvedComponentVariables: context._internal_resolvedComponentVariables || {},
+    theme: context.theme,
+    _internal_resolvedComponentVariables: context._internal_resolvedComponentVariables,
   })
 
   return [classes, resolvedStyles]

@@ -1,7 +1,6 @@
 import cx from 'classnames'
 import * as _ from 'lodash'
 import * as React from 'react'
-import * as ReactIs from 'react-is'
 import {
   ShorthandValue,
   Props,
@@ -129,9 +128,8 @@ export function createShorthandFactory<TInstance extends React.Component, P>(con
   allowsJSX?: boolean
 }): ShorthandFactory<P>
 export function createShorthandFactory<P>({ Component, mappedProp, mappedArrayProp, allowsJSX }) {
-  // if (typeof Component !== 'function' && typeof Component !== 'string') {
-  if (!ReactIs.isValidElementType(Component)) {
-    // throw new Error('createShorthandFactory() Component must be a string or function.')
+  if (typeof Component !== 'function' && typeof Component !== 'string') {
+    throw new Error('createShorthandFactory() Component must be a string or function.')
   }
 
   return (val, options: CreateShorthandOptions<P>) =>
@@ -164,8 +162,7 @@ function createShorthandFromValue<P>({
   value?: ShorthandValue<P>
   options?: CreateShorthandOptions<P>
 }) {
-  // if (typeof Component !== 'function' && typeof Component !== 'string') {
-  if (!ReactIs.isValidElementType(Component)) {
+  if (typeof Component !== 'function' && typeof Component !== 'string') {
     throw new Error('createShorthand() Component must be a string or function.')
   }
   // short circuit noop values
