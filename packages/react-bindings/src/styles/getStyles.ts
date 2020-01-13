@@ -16,7 +16,7 @@ import {
 } from '@fluentui/styles'
 
 import createAnimationStyles from './createAnimationStyles'
-import resolveStylesAndClasses from './resolveStylesAndClasses'
+import resolveStylesAndClasses from '@fluentui/react/src/utils/resolveStylesAndClasses'
 import { ComponentSlotClasses, ProviderContextPrepared } from '@fluentui/react' // TODO fix me
 
 export interface RenderResultConfig {

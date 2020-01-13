@@ -29,7 +29,7 @@ import * as React from 'react'
 
 import { ComponentSlotClasses } from '../themes/types'
 import { Props, ProviderContextPrepared } from '../types'
-import createAnimationStyles from './createAnimationStyles'
+import createAnimationStyles from '@fluentui/react-bindings/src/styles/createAnimationStyles'
 import logProviderMissingWarning from './providerMissingHandler'
 import Telemetry from './Telemetry'
 import resolveStylesAndClasses from './resolveStylesAndClasses'

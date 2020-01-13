@@ -11,7 +11,7 @@ import {
   mergeComponentVariables,
 } from '@fluentui/styles'
 import { ProviderContextPrepared } from '@fluentui/react'
-import resolveStylesAndClasses from '../styles/resolveStylesAndClasses'
+import resolveStylesAndClasses from '@fluentui/react/src/utils/resolveStylesAndClasses'
 
 type UseStylesOptions<StyleProps> = {
   className?: string
