@@ -153,22 +153,19 @@ A React hook that provides bindings for usage CSSinJS styles and Fluent theming.
 
 ### Usage
 
-The example below assumes a component called `<Input>` will be used this way:
+The example below assumes a component called `<Text>` will be used this way:
 
 ```tsx
-type TestComponentProps = {
+type TextComponentProps = {
   className?: string
   color?: string
-
-  styles?: ComponentSlotStyle<TestComponentProps>
-  variables?: ComponentVariablesInput
 }
 
-const TestComponent: React.FunctionComponent<TestComponentProps> = props => {
-  const { className, children, color, styles, variables } = props
+const Text: React.FunctionComponent<TextComponentProps> = props => {
+  const { className, children, color } = props
 
-  const [classes] = useStyles('Test', {
-    className: 'ui-test',
+  const [classes] = useStyles('Text', {
+    className: 'ui-text',
     mapPropsToStyles: () => ({ color }),
   })
 
@@ -179,12 +176,13 @@ const TestComponent: React.FunctionComponent<TestComponentProps> = props => {
 ### Reference
 
 ```tsx
-const [classes, styles] = useStyles(
-  displayName: string
+const [classes] = useStyles(
+  displayName: string,
   options: UseStylesOptions<Props>,
 )
 ```
 
 - `displayName` - a component name to lookup in theme
-- `options.className` - optional, a special classname that will be always added to the `root` slot
+- `options.className` - optional, a special class name that will be always added to the `root` slot
 - `options.mapPropsToStyles` - optional, a set of props that will be passed style functions, only primitives are allowed
+- `options.rtl` - optional, sets RTL mode
