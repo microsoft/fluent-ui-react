@@ -308,6 +308,30 @@ export default function isConformant(
         handledProps: expectedProps,
       })
     })
+
+    test('autoControlled props should have onChange props associated', () => {
+      if (Component.autoControlledProps && Component.autoControlledProps.length) {
+        Component.autoControlledProps.forEach(autoControlledProp => {
+          const expectedOnChangeProp = `on${autoControlledProp
+            .slice(0, 1)
+            .toLocaleUpperCase()}${autoControlledProp.slice(1)}Change`
+
+          expect(Component.handledProps).toContain(expectedOnChangeProp)
+        })
+      }
+    })
+
+    test('autoControlled props should have default props', () => {
+      if (Component.autoControlledProps && Component.autoControlledProps.length) {
+        Component.autoControlledProps.forEach(autoControlledProp => {
+          const expectedDefaultProp = `default${autoControlledProp
+            .slice(0, 1)
+            .toLocaleUpperCase()}${autoControlledProp.slice(1)}`
+
+          expect(Component.handledProps).toContain(expectedDefaultProp)
+        })
+      }
+    })
   })
 
   if (hasAccessibilityProp) {
