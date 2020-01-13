@@ -25,7 +25,8 @@
   },
   "repository": "microsoft/fluent-ui-react.git",
   "scripts": {
-    "build": "gulp bundle:package:no-umd --package code-sandbox"
+    "build": "gulp bundle:package:no-umd",
+    "clean": "gulp bundle:package:clean"
   },
   "sideEffects": false,
   "types": "dist/es/index.d.ts"

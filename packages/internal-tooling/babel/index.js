@@ -18,7 +18,7 @@ module.exports = api => {
       '@babel/preset-env',
       {
         modules: useESModules ? false : 'cjs',
-        targets: isNode ? { node: '8' } : undefined,
+        targets: isNode ? { node: '10' } : undefined,
         exclude: [
           // https://github.com/microsoft/fluent-ui-react/pull/1895
           'proposal-object-rest-spread',
@@ -41,5 +41,10 @@ module.exports = api => {
   return {
     presets,
     plugins,
+    // Options to facilitate debugging in editor (set DEBUG environment var)
+    ...(process.env.DEBUG && {
+      sourceMaps: 'inline',
+      retainLines: true,
+    }),
   }
 }

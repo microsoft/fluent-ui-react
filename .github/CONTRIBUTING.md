@@ -3,7 +3,6 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
 - [Getting started](#getting-started)
   - [Useful Commands](#useful-commands)
 - [Workflow](#workflow)
@@ -168,11 +167,11 @@ These changes are required to setup internal tooling and package publishing.
 -    "test": "echo \"Error: run tests from root\" && exit 1"
 -  },
 +  "scripts": {
-+    "build": "gulp bundle:package:no-umd --package react-proptypes"
++    "build": "gulp bundle:package:no-umd"
 +  },
 ```
 
-Don't forget to provide a correct directory name, you can also use `gulp bundle:package` to bundle your package with UMD.
+You can also use `gulp bundle:package` to bundle your package with UMD.
 
 #### Create `tsconfig.json`
 

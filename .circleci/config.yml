@@ -24,6 +24,7 @@ jobs:
       - run:
           name: Add npm bin to PATH
           command: echo 'export PATH="${PATH}:$(npm bin)"' >> $BASH_ENV
+
       - restore_cache:
           keys:
             - v1.1-dependencies-{{ checksum "yarn.lock" }}
@@ -37,6 +38,20 @@ jobs:
             - ~/.cache/yarn
             - .yarn-cache
             - node_modules
+
+      - restore_cache:
+          keys:
+            - v1-json-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+            - v1-json-{{ .Environment.CIRCLE_BRANCH }}
+            - v1-json
+      - run:
+          name: Create JSON for docs & tests
+          command: yarn gulp build:docs:json
+      - save_cache:
+          key: v1-json-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - /tmp/gulp-cache
+
       - run:
           name: Lint
           command: yarn lint
@@ -45,7 +60,7 @@ jobs:
           command: yarn prettier
       - run:
           name: Unit Tests
-          command: yarn test --maxWorkers=2
+          command: yarn test
       - run:
           name: Report coverage
           command: bash <(curl -s https://codecov.io/bash)

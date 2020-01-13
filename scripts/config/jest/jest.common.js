@@ -6,6 +6,9 @@ module.exports = {
   transform: {
     ...tsjPreset.transform,
   },
+  moduleNameMapper: {
+    ...require('lerna-alias').jest(),
+  },
   testRegex: '(/__tests__/.*|\\.(test|spec))\\.(ts|tsx)$',
   globals: {
     'ts-jest': {

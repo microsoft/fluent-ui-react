@@ -4,7 +4,7 @@ import { series, task } from 'gulp'
 import _ from 'lodash'
 import ProgressBar from 'progress'
 import puppeteer from 'puppeteer'
-import rimraf from 'rimraf'
+import del from 'del'
 import { argv } from 'yargs'
 import markdownTable from 'markdown-table'
 
@@ -77,41 +77,36 @@ const sumByExample = (measures: ProfilerMeasureCycle[]): PerExamplePerfMeasures 
 
   return _.mapValues(perExampleMeasures, (profilerMeasures: ProfilerMeasure[]) => ({
     actualTime: reduceMeasures(profilerMeasures, 'actualTime'),
+    renderComponentTime: reduceMeasures(profilerMeasures, 'renderComponentTime'),
+    componentCount: reduceMeasures(profilerMeasures, 'componentCount'),
   }))
 }
 
-type NumberPropertyNames<T> = { [K in keyof T]: T[K] extends number ? K : never }[keyof T]
+const createMarkdownTable = (perExamplePerfMeasures: PerExamplePerfMeasures) => {
+  const fieldsMapping = {
+    min: 'actualTime.min',
+    avg: 'actualTime.avg',
+    median: 'actualTime.median',
+    max: 'actualTime.max',
+    'renderComponent.min': 'renderComponentTime.min',
+    'renderComponent.avg': 'renderComponentTime.avg',
+    'renderComponent.median': 'renderComponentTime.median',
+    'renderComponent.max': 'renderComponentTime.max',
+    components: 'componentCount.median',
+  }
 
-const createMarkdownTable = (
-  perExamplePerfMeasures: PerExamplePerfMeasures,
-  metricName: MeasuredValues = 'actualTime',
-  fields: NumberPropertyNames<ReducedMeasures>[] = ['min', 'avg', 'median', 'max'],
-) => {
-  const exampleMeasures = _.mapValues(
-    perExamplePerfMeasures,
-    exampleMeasure => exampleMeasure[metricName],
-  )
-
-  const fieldLabels: string[] = _.map(fields, _.startCase)
-  const fieldValues = _.mapValues(exampleMeasures, exampleMeasure =>
-    _.flatMap(fields, field => exampleMeasure[field]),
-  )
+  const fieldLabels = _.keys(fieldsMapping)
+  const fieldValues = _.map(perExamplePerfMeasures, (value, exampleName) => {
+    return [exampleName, ..._.map(_.values(fieldsMapping), measure => _.get(value, measure))]
+  })
 
   return markdownTable([
     ['Example', ...fieldLabels],
-    ..._.sortBy(
-      _.map(exampleMeasures, (exampleMeasure, exampleName) => [
-        exampleName,
-        ...fieldValues[exampleName],
-      ]),
-      row => -row[fields.indexOf('median')],
-    ),
+    ..._.sortBy(fieldValues, row => -row[fieldLabels.indexOf('median') + 1]), // +1 is for exampleName
   ])
 }
 
-task('perf:clean', cb => {
-  rimraf(paths.perfDist(), cb)
-})
+task('perf:clean', () => del(paths.perfDist()))
 
 task('perf:build', cb => {
   webpackPlugin(require('../../../build/webpack.config.perf').default, cb)

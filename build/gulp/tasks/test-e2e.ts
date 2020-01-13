@@ -1,6 +1,6 @@
 import { task, series } from 'gulp'
 import * as yargs from 'yargs'
-import rimraf from 'rimraf'
+import del from 'del'
 import config from '../../../config'
 import webpackPlugin from '../plugins/gulp-webpack'
 
@@ -15,9 +15,7 @@ const argv = yargs
   .option('testNamePattern', { alias: 't' })
   .option('testFilePattern', { alias: 'F' }).argv
 
-task('test:e2e:clean', cb => {
-  rimraf(paths.e2eDist(), cb)
-})
+task('test:e2e:clean', () => del(paths.e2eDist()))
 
 task('test:e2e:build', cb => {
   webpackPlugin(require('../../../build/webpack.config.e2e').default, cb)
