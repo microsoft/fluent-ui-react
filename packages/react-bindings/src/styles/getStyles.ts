@@ -12,7 +12,7 @@ import {
   withDebugId,
 } from '@fluentui/styles'
 import cx from 'classnames'
-import * as _ from 'lodash' // TODO: REMOVE ME PLEASE!
+import * as _ from 'lodash'
 
 import createAnimationStyles from './createAnimationStyles'
 import resolveStylesAndClasses from './resolveStylesAndClasses'
