@@ -1,4 +1,9 @@
-import { ComponentSlotStyle, ComponentVariablesInput, emptyTheme } from '@fluentui/styles'
+import {
+  ComponentSlotStyle,
+  ComponentVariablesInput,
+  DebugData,
+  emptyTheme,
+} from '@fluentui/styles'
 import * as React from 'react'
 // @ts-ignore We have this export in package, but it is not present in typings
 import { ThemeContext } from 'react-fela'
@@ -48,6 +53,8 @@ const useStyles = <StyleProps extends PrimitiveProps>(
     rtl = false,
   } = options
 
+  // Stores debug information for component.
+  const debug = React.useRef<{ fluentUIDebug: DebugData | null }>({ fluentUIDebug: null })
   const { classes, styles: resolvedStyles } = getStyles({
     // Input values
     className,
@@ -61,7 +68,7 @@ const useStyles = <StyleProps extends PrimitiveProps>(
     disableAnimations: context.disableAnimations,
     renderer: context.renderer,
     rtl,
-    saveDebug: () => null,
+    saveDebug: fluentUIDebug => (debug.current = { fluentUIDebug }),
     theme: context.theme,
     _internal_resolvedComponentVariables: context._internal_resolvedComponentVariables,
   })

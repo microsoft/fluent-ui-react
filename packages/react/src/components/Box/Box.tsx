@@ -1,4 +1,6 @@
+import { getElementType, getUnhandledProps, useStyles } from '@fluentui/react-bindings'
 import * as React from 'react'
+
 import {
   childrenExist,
   createShorthandFactory,
@@ -8,7 +10,6 @@ import {
   commonPropTypes,
   rtlTextContainer,
 } from '../../utils'
-import createComponentInternal from '../../utils/createComponentInternal'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface BoxProps
@@ -16,32 +17,63 @@ export interface BoxProps
     ContentComponentProps,
     ChildrenComponentProps {}
 
-const Box = createComponentInternal<WithAsProp<BoxProps>>({
-  displayName: 'Box',
+// const Box = createComponentInternal<WithAsProp<BoxProps>>({
+//   displayName: 'Box',
+//
+//   className: 'ui-box',
+//
+//   propTypes: {
+//     ...commonPropTypes.createCommon(),
+//   },
+//
+//   render(config, props) {
+//     const { ElementType, classes, unhandledProps } = config
+//     const { children, content } = props
+//
+//     return (
+//       <ElementType
+//         {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
+//         {...unhandledProps}
+//         className={classes.root}
+//       >
+//         {childrenExist(children) ? children : content}
+//       </ElementType>
+//     )
+//   },
+// })
 
-  className: 'ui-box',
+const Box: React.FC<WithAsProp<BoxProps>> = props => {
+  const { children, className, content, design, styles, variables } = props
 
-  propTypes: {
-    ...commonPropTypes.createCommon(),
-  },
+  const [classes] = useStyles('Box', {
+    className: Box.className,
+    mapPropsToInlineStyles: () => ({
+      className,
+      design,
+      styles,
+      variables,
+    }),
+  })
 
-  render(config, props) {
-    const { ElementType, classes, unhandledProps } = config
-    const { children, content } = props
+  const ElementType = getElementType(props)
+  const unhandledProps = getUnhandledProps(Object.keys(Box.propTypes) as any, props)
 
-    return (
-      <ElementType
-        {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
-        {...unhandledProps}
-        className={classes.root}
-      >
-        {childrenExist(children) ? children : content}
-      </ElementType>
-    )
-  },
-})
+  return (
+    <ElementType
+      {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
+      {...unhandledProps}
+      className={classes.root}
+    >
+      {childrenExist(children) ? children : content}
+    </ElementType>
+  )
+}
 
 Box.create = createShorthandFactory({ Component: Box })
+Box.className = 'ui-box'
+Box.propTypes = {
+  ...commonPropTypes.createCommon(),
+}
 
 /**
  * A Box is a basic component, commonly used for slots in other Fluent UI components.
