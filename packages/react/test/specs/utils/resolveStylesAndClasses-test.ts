@@ -1,5 +1,5 @@
 import { ComponentSlotStylesPrepared } from '@fluentui/styles'
-import resolveStylesAndClasses from 'src/utils/resolveStylesAndClasses'
+import resolveStylesAndClasses from '@fluentui/react-bindings/src/styles/resolveStylesAndClasses'
 
 describe('resolveStylesAndClasses', () => {
   const styleParam = {

@@ -1,3 +1,4 @@
+import { ComponentDesignProp } from '@fluentui/react-bindings'
 import * as customPropTypes from '@fluentui/react-proptypes'
 // @ts-ignore
 import { ThemeContext } from 'react-fela'
@@ -5,14 +6,13 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
 import { ProviderContextPrepared, ReactChildren } from '../../types'
-import { ComponentDesign } from '../../themes/types'
 
 export type DesignProps = {
   /** A render function that receives the generated className as its only argument */
   children: ({ className: string }) => ReactChildren
 
   /** Design config takes a limited set of layout and position CSS properties. */
-  config: ComponentDesign
+  config: ComponentDesignProp
 }
 
 /**

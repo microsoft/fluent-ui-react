@@ -1,8 +1,7 @@
-import { ThemeInput, ThemePrepared } from '@fluentui/styles'
 import * as React from 'react'
 
-import { Renderer } from './themes/types'
 import Telemetry from './utils/Telemetry'
+import { StylesContextInputValue, StylesContextValue } from '@fluentui/react-bindings/src'
 
 // ========================================================
 // Utilities
@@ -154,21 +153,14 @@ export const UNSAFE_typed = <TComponentType>(componentType: TComponentType) => {
 // Provider's context
 // ========================================================
 
-export interface ProviderContextInput {
-  renderer?: Renderer
+export interface ProviderContextInput extends StylesContextInputValue {
   rtl?: boolean
-  disableAnimations?: boolean
   target?: Document
-  theme?: ThemeInput
   telemetry?: Telemetry
 }
 
-export interface ProviderContextPrepared {
-  renderer: Renderer
+export interface ProviderContextPrepared extends StylesContextValue {
   rtl: boolean
-  disableAnimations: boolean
   target: Document
-  theme: ThemePrepared
   telemetry: Telemetry | undefined
-  _internal_resolvedComponentVariables: Record<string, object>
 }

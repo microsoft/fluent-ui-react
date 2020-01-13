@@ -1,7 +1,4 @@
-import { Extendable, ICSSInJSStyle } from '@fluentui/styles'
-import { IRenderer as FelaRenderer } from 'fela'
-
-import { ObjectOf } from '../types'
+import { Extendable } from '@fluentui/styles'
 
 // Themes go through 3 phases.
 // 1. Input - (from the user), variable and style objects/functions, some values optional
@@ -174,52 +171,3 @@ export type ColorSchemeMappingOverrides<
 }
 
 export type ItemType<T> = T extends (infer TItem)[] ? TItem : never
-
-// Heads Up!
-// Keep in sync with packages/react-proptypes/src/index.ts
-export type ComponentDesign = {
-  display?: ICSSInJSStyle['display']
-  position?: ICSSInJSStyle['position']
-
-  top?: ICSSInJSStyle['top']
-  bottom?: ICSSInJSStyle['bottom']
-  left?: ICSSInJSStyle['left']
-  right?: ICSSInJSStyle['right']
-
-  padding?: ICSSInJSStyle['padding']
-  paddingTop?: ICSSInJSStyle['paddingTop']
-  paddingRight?: ICSSInJSStyle['paddingRight']
-  paddingBottom?: ICSSInJSStyle['paddingBottom']
-  paddingLeft?: ICSSInJSStyle['paddingLeft']
-
-  margin?: ICSSInJSStyle['margin']
-  marginTop?: ICSSInJSStyle['marginTop']
-  marginRight?: ICSSInJSStyle['marginRight']
-  marginBottom?: ICSSInJSStyle['marginBottom']
-  marginLeft?: ICSSInJSStyle['marginLeft']
-
-  width?: ICSSInJSStyle['width']
-  height?: ICSSInJSStyle['height']
-  minWidth?: ICSSInJSStyle['minWidth']
-  maxWidth?: ICSSInJSStyle['maxWidth']
-  minHeight?: ICSSInJSStyle['minHeight']
-  maxHeight?: ICSSInJSStyle['maxHeight']
-}
-
-export interface ComponentSlotClasses extends ObjectOf<string> {}
-
-export type AnimationProp =
-  | {
-      name: string
-      delay?: string
-      direction?: string
-      duration?: string
-      fillMode?: string
-      iterationCount?: string
-      playState?: string
-      timingFunction?: string
-      keyframeParams?: object
-    }
-  | string
-
-export interface Renderer extends FelaRenderer {}

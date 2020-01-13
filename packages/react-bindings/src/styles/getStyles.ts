@@ -1,52 +1,58 @@
-import cx from 'classnames'
-import * as _ from 'lodash' // REMOVE ME PLEASE!
-
-import callable from '../utils/callable'
 import {
+  callable,
   ComponentSlotStylesPrepared,
   ComponentStyleFunctionParam,
   ComponentVariablesObject,
   DebugData,
-  emptyTheme,
+  ICSSInJSStyle,
   isDebugEnabled,
   mergeComponentStyles,
   mergeComponentVariables,
   PropsWithVarsAndStyles,
   withDebugId,
 } from '@fluentui/styles'
+import cx from 'classnames'
+import * as _ from 'lodash' // TODO: REMOVE ME PLEASE!
 
 import createAnimationStyles from './createAnimationStyles'
-import resolveStylesAndClasses from '@fluentui/react/src/utils/resolveStylesAndClasses'
-import { ComponentSlotClasses, ProviderContextPrepared } from '@fluentui/react' // TODO fix me
+import resolveStylesAndClasses from './resolveStylesAndClasses'
+import {
+  ComponentDesignProp,
+  ComponentSlotClasses,
+  RendererParam,
+  RendererRenderRule,
+  StylesContextValue,
+} from '../styles/types'
 
-export interface RenderResultConfig {
-  classes: ComponentSlotClasses
-  variables: ComponentVariablesObject
-  styles: ComponentSlotStylesPrepared
-}
-
-export interface RenderConfig {
+type GetStylesOptions = StylesContextValue<{
+  renderRule: RendererRenderRule
+}> & {
   className?: string
   displayName: string
-  props: PropsWithVarsAndStyles
+  props: PropsWithVarsAndStyles & { design?: ComponentDesignProp }
+  rtl: boolean
   saveDebug: (debug: DebugData | null) => void
 }
 
-const getStyles = (options: any, context?: ProviderContextPrepared): RenderConfig => {
-  const { displayName, className, props, saveDebug } = options
+export type GetStylesResult = {
+  classes: ComponentSlotClasses
+  variables: ComponentVariablesObject
+  styles: ComponentSlotStylesPrepared
+  theme: StylesContextValue['theme']
+}
 
-  // const displayName = ''
-  // const className = ''
-  // const props = {} // include state
-  // const saveDebug = () => {}
-
+const getStyles = (options: GetStylesOptions): GetStylesResult => {
   const {
-    disableAnimations = false,
-    renderer = null,
-    rtl = false,
-    theme = emptyTheme,
-    _internal_resolvedComponentVariables: resolvedComponentVariables = {},
-  } = context || {}
+    className,
+    disableAnimations,
+    displayName,
+    props,
+    renderer,
+    rtl,
+    saveDebug,
+    theme,
+    _internal_resolvedComponentVariables: resolvedComponentVariables,
+  } = options
 
   // Resolve variables for this component, cache the result in provider
   if (!resolvedComponentVariables[displayName]) {
@@ -62,17 +68,16 @@ const getStyles = (options: any, context?: ProviderContextPrepared): RenderConfi
       )(theme.siteVariables)
     : resolvedComponentVariables[displayName]
 
-  const animationCSSProp = props.animation
-    ? // @ts-ignore
-      createAnimationStyles(props.animation, context.theme)
-    : {}
+  const animationStyles = props.animation
+    ? createAnimationStyles(props.animation, theme)
+    : undefined
 
   // Resolve styles using resolved variables, merge results, allow props.styles to override
   const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
     theme.componentStyles[displayName],
-    withDebugId({ root: props.design }, 'props.design'),
-    withDebugId({ root: props.styles }, 'props.styles'),
-    withDebugId({ root: animationCSSProp }, 'props.animation'),
+    props.design && withDebugId({ root: props.design }, 'props.design'),
+    props.styles && withDebugId({ root: props.styles }, 'props.styles'),
+    animationStyles && withDebugId({ root: animationStyles }, 'props.animation'),
   )
 
   const styleParam: ComponentStyleFunctionParam = {
@@ -88,7 +93,7 @@ const getStyles = (options: any, context?: ProviderContextPrepared): RenderConfi
   // Our API should be aligned with it
   // Heads Up! Keep in sync with Design.tsx render logic
   const direction = rtl ? 'rtl' : 'ltr'
-  const felaParam = {
+  const felaParam: RendererParam = {
     theme: { direction },
     disableAnimations,
     displayName, // does not affect styles, only used by useEnhancedRenderer in docs
@@ -97,8 +102,7 @@ const getStyles = (options: any, context?: ProviderContextPrepared): RenderConfi
   const { resolvedStyles, resolvedStylesDebug, classes } = resolveStylesAndClasses(
     mergedStyles,
     styleParam,
-    // @ts-ignore
-    renderer ? style => renderer.renderRule(() => style, felaParam) : undefined,
+    (style: ICSSInJSStyle) => renderer.renderRule(() => style, felaParam),
   )
 
   classes.root = cx(className, classes.root, props.className)
@@ -132,7 +136,6 @@ const getStyles = (options: any, context?: ProviderContextPrepared): RenderConfi
   }
 
   return {
-    // @ts-ignore
     classes,
     variables: resolvedVariables,
     styles: resolvedStyles,

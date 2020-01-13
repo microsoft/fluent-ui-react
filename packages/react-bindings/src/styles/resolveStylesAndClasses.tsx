@@ -1,19 +1,24 @@
-import { ComponentSlotClasses } from '../themes/types'
-import { ComponentSlotStylesPrepared, isDebugEnabled, ICSSInJSStyle } from '@fluentui/styles'
+import {
+  ComponentSlotStylesPrepared,
+  isDebugEnabled,
+  ICSSInJSStyle,
+  ComponentStyleFunctionParam,
+} from '@fluentui/styles'
+import { ComponentSlotClasses } from '../styles/types'
 
 // Both resolvedStyles and classes are objects of getters with lazy evaluation
 const resolveStylesAndClasses = (
   mergedStyles: ComponentSlotStylesPrepared,
-  styleParam,
-  renderStyles,
+  styleParam: ComponentStyleFunctionParam,
+  renderStyles: (styles: ICSSInJSStyle) => string,
 ): {
   resolvedStyles: ICSSInJSStyle
-  resolvedStylesDebug: { [key: string]: { styles: Object }[] }
+  resolvedStylesDebug: Record<string, { styles: Object }[]>
   classes: ComponentSlotClasses
 } => {
-  const resolvedStyles = {}
-  const resolvedStylesDebug = {}
-  const classes = {}
+  const resolvedStyles: Record<string, ICSSInJSStyle> = {}
+  const resolvedStylesDebug: Record<string, { styles: Object }[]> = {}
+  const classes: Record<string, string> = {}
 
   Object.keys(mergedStyles).forEach(slotName => {
     // resolve/render slot styles once and cache

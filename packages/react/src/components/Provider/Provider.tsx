@@ -1,5 +1,6 @@
 import { IStyle } from 'fela'
 import * as _ from 'lodash'
+import { Renderer } from '@fluentui/react-bindings'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import {
   mergeSiteVariables,
@@ -17,7 +18,6 @@ import * as React from 'react'
 import { RendererProvider, ThemeProvider, ThemeContext } from 'react-fela'
 
 import { ChildrenComponentProps, setUpWhatInput, tryCleanupWhatInput } from '../../utils'
-import { Renderer } from '../../themes/types'
 
 import ProviderConsumer from './ProviderConsumer'
 import ProviderBox, { ProviderBoxProps } from './ProviderBox'
