@@ -21,7 +21,7 @@ export const EmptyThemeProvider: React.FunctionComponent = ({ children }) => {
 }
 
 interface AugmentedMountRendererProps extends MountRendererProps {
-  wrappingComponent: React.FunctionComponent
+  wrappingComponent?: React.FunctionComponent
 }
 
 export const mountWithProvider = <C extends React.Component, P = C['props'], S = C['state']>(
