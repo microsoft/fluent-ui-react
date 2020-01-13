@@ -1,10 +1,7 @@
-import {
-  mergeComponentStyles__PROD,
-  mergeComponentStyles__DEV,
-} from '../../../../src/utils/mergeThemes'
-import { ComponentStyleFunctionParam } from 'src/themes/types'
-import * as debugEnabled from 'src/utils/debug/debugEnabled'
-import { withDebugId } from 'src/utils'
+import { ComponentStyleFunctionParam, withDebugId } from '@fluentui/styles'
+
+import * as debugEnabled from '../../src/debugEnabled'
+import { mergeComponentStyles__PROD, mergeComponentStyles__DEV } from '../../src/mergeThemes'
 
 describe('mergeComponentStyles', () => {
   let originalDebugEnabled

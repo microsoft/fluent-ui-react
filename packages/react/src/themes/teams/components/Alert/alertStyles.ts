@@ -1,5 +1,4 @@
-import * as React from 'react'
-import { ComponentSlotStylesPrepared, ICSSInJSStyle, SiteVariablesPrepared } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle, SiteVariablesPrepared } from '@fluentui/styles'
 import { AlertProps } from '../../../../components/Alert/Alert'
 import { AlertVariables } from './alertVariables'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
@@ -9,7 +8,7 @@ const getIntentColorsFromProps = (
   p: AlertProps,
   v: AlertVariables,
   siteVars: SiteVariablesPrepared,
-): React.CSSProperties => {
+): ICSSInJSStyle => {
   const { colors } = siteVars
 
   if (p.danger) {

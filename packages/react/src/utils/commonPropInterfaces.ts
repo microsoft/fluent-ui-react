@@ -1,10 +1,7 @@
+import { ComponentSlotStyle, ComponentVariablesInput } from '@fluentui/styles'
 import * as React from 'react'
-import {
-  ComponentVariablesInput,
-  ComponentSlotStyle,
-  AnimationProp,
-  ComponentDesign,
-} from '../themes/types'
+
+import { AnimationProp, ComponentDesign } from '../themes/types'
 import { ReactChildren } from '../types'
 
 export interface StyledComponentProps<P = any, V = any> {

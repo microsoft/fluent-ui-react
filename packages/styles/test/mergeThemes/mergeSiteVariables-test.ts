@@ -1,9 +1,7 @@
-import {
-  mergeSiteVariables__PROD,
-  mergeSiteVariables__DEV,
-} from '../../../../src/utils/mergeThemes'
-import * as debugEnabled from 'src/utils/debug/debugEnabled'
-import { withDebugId } from 'src/utils'
+import { withDebugId } from '@fluentui/styles'
+
+import * as debugEnabled from '../../src/debugEnabled'
+import { mergeSiteVariables__PROD, mergeSiteVariables__DEV } from '../../src/mergeThemes'
 
 describe('mergeSiteVariables', () => {
   let originalDebugEnabled

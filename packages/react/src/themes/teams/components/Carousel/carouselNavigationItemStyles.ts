@@ -1,24 +1,12 @@
 import { pxToRem } from '../../../../utils'
 import { CarouselNavigationItemProps } from '../../../../components/Carousel/CarouselNavigationItem'
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import { CarouselNavigationVariables } from './carouselNavigationVariables'
 import { getColorScheme } from '../../colors'
 import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 
-export const verticalPillsBottomMargin = pxToRem(5)
-export const horizontalPillsRightMargin = pxToRem(8)
-export const verticalPointingBottomMargin = pxToRem(12)
-
-export const underlinedItem = (color: string): ICSSInJSStyle => ({
-  paddingBottom: 0,
-  borderBottom: `solid ${pxToRem(4)} ${color}`,
-  transition: 'color .1s ease',
-})
-
-type CarouselNavigationItemPropsAndState = CarouselNavigationItemProps
-
 const carouselNavigationItemStyles: ComponentSlotStylesPrepared<
-  CarouselNavigationItemPropsAndState,
+  CarouselNavigationItemProps,
   CarouselNavigationVariables
 > = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
@@ -88,14 +76,15 @@ const carouselNavigationItemStyles: ComponentSlotStylesPrepared<
   },
 
   content: ({ props: p }): ICSSInJSStyle => {
-    const widthAdjust = (p.icon ? 26 : 0) + (p.menu ? 16 : 0)
+    const widthAdjust = p.icon ? 26 : 0
+
     return {
       whiteSpace: 'normal',
       lineHeight: 1.5,
       marginTop: pxToRem(-4),
       marginBottom: pxToRem(-4),
       display: 'inline-block',
-      ...((p.inSubmenu || p.vertical) && {
+      ...(p.vertical && {
         width: 'max-content',
         minWidth: pxToRem(46 - widthAdjust),
         maxWidth: pxToRem(262 - widthAdjust),

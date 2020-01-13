@@ -5,7 +5,7 @@ export const EVENT_TARGET_ATTRIBUTE = 'data-simulate-event-here'
 export const getEventTargetComponent = (
   wrapper: ReactWrapper,
   listenerName: string,
-  eventTargets?: object = {},
+  eventTargets: object = {},
 ) => {
   const eventTarget = eventTargets[listenerName]
     ? wrapper

@@ -1,4 +1,4 @@
-import { isEnabled as isDebugEnabled } from './debug/debugEnabled'
+import { isEnabled as isDebugEnabled } from './debugEnabled'
 
 const withDebugId =
   process.env.NODE_ENV === 'production'

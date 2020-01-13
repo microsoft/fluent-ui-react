@@ -1,5 +1,9 @@
 import { Accessibility, popupBehavior } from '@fluentui/accessibility'
-import { AutoFocusZoneProps, FocusTrapZoneProps } from '@fluentui/react-bindings'
+import {
+  ReactAccessibilityBehavior,
+  AutoFocusZoneProps,
+  FocusTrapZoneProps,
+} from '@fluentui/react-bindings'
 import { EventListener } from '@fluentui/react-component-event-listener'
 import { NodeRef, Unstable_NestingAuto } from '@fluentui/react-component-nesting-registry'
 import { handleRef, toRefObject, Ref } from '@fluentui/react-component-ref'
@@ -32,7 +36,6 @@ import {
 } from '../../utils/positioner'
 import PopupContent, { PopupContentProps } from './PopupContent'
 
-import { ReactAccessibilityBehavior } from '../../utils/accessibility/reactTypes'
 import { createShorthandFactory, ShorthandFactory } from '../../utils/factories'
 import createReferenceFromContextClick from './createReferenceFromContextClick'
 import isRightClick from '../../utils/isRightClick'

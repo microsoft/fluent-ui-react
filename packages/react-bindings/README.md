@@ -9,8 +9,10 @@ A set of reusable components and hooks to build component libraries and UI kits.
 
 - [Installation](#installation)
 - [Hooks](#hooks)
+  - [`useAccesibility()`](#useaccesibility)
+      - [Usage](#usage)
   - [`useStateManager()`](#usestatemanager)
-    - [Usage](#usage)
+    - [Usage](#usage-1)
     - [Reference](#reference)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -29,13 +31,70 @@ yarn add @fluentui/react-bindings
 
 # Hooks
 
+## `useAccesibility()`
+
+A React hook that provides bindings for accessibility behaviors.
+
+#### Usage
+
+The example below assumes a component called `<Image>` will be used this way:
+
+```tsx
+const imageBehavior: Accessibility<{ disabled: boolean }> = props => ({
+  attributes: {
+    root: {
+      "aria-disabled": props.disabled,
+      tabIndex: -1
+    },
+    img: {
+      role: "presentation"
+    }
+  },
+  keyActions: {
+    root: {
+      click: {
+        keyCombinations: [{ keyCode: 13 /* equals Enter */ }]
+      }
+    }
+  }
+});
+
+type ImageProps = {
+  disabled?: boolean;
+  onClick?: (
+    e: React.MouseEvent<HTMLDivElement> | React.KeyboardEvent<HTMLDivElement>
+  ) => void;
+  src: string;
+};
+
+const Image: React.FC<ImageProps> = props => {
+  const { disabled, onClick, src, ...rest } = props;
+  const getA11Props = useAccessibility(imageBehavior, {
+    mapPropsToBehavior: () => ({
+      disabled
+    }),
+    actionHandlers: {
+      click: (e: React.KeyboardEvent<HTMLDivElement>) => {
+        if (onClick) onClick(e);
+      }
+    }
+  });
+
+  return (
+    <div {...getA11Props("root", { onClick, ...rest })}>
+      <img {...getA11Props("img", { src })} />
+    </div>
+  );
+};
+```
+
 ## `useStateManager()`
 
 A React hook that provides bindings for state managers. 
 
 ### Usage 
 
-The examples below assume a component called `<Input>` will be used this way:
+The example below assumes a component called `<Input>` will be used this way:
 
 ```tsx
 type InputProps = {

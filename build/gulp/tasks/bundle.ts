@@ -55,18 +55,13 @@ task('bundle:package:es', () =>
     .pipe(dest(paths.packageDist(packageName, 'es'))),
 )
 
-task('bundle:package:types', () => {
-  const tsConfig = paths.base('build/tsconfig.json')
-  const typescript = g.typescript.createProject(tsConfig, {
-    declaration: true,
-    isolatedModules: false,
-    module: 'esnext',
-  })
-
-  return src(componentsSrc)
-    .pipe(typescript())
-    .dts.pipe(dest(paths.packageDist(packageName, 'es')))
+task('bundle:package:types:tsc', () => sh(`cd packages/${packageName} && tsc -b`))
+task('bundle:package:types:copy', () => {
+  return src(paths.packageDist(packageName, 'dts/src/**/*.d.ts')).pipe(
+    dest(paths.packageDist(packageName, 'es')),
+  )
 })
+task('bundle:package:types', series('bundle:package:types:tsc', 'bundle:package:types:copy'))
 
 task('bundle:package:umd', cb => {
   process.env.NODE_ENV = 'build'
@@ -107,4 +102,7 @@ task(
 )
 task('bundle:package', series('bundle:package:no-umd', 'bundle:package:umd'))
 
-task('bundle:all-packages', () => sh('lerna run build'))
+task('bundle:all-packages', async () => {
+  await sh('lerna run build')
+  rimraf.sync(`${config.paths.packages()}/*/dist/dts`)
+})

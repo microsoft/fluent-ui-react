@@ -1,39 +1,36 @@
+import { FocusZoneMode } from '@fluentui/accessibility'
 import {
-  AccessibilityDefinition,
-  FocusZoneMode,
-  FocusZoneDefinition,
-  Accessibility,
-} from '@fluentui/accessibility'
-import {
-  callable,
+  AccessibilityActionHandlers,
   FocusZone,
   FocusZoneProps,
   FOCUSZONE_WRAP_ATTRIBUTE,
   getElementType,
   getUnhandledProps,
+  ReactAccessibilityBehavior,
+  unstable_getAccessibility as getAccessibility,
 } from '@fluentui/react-bindings'
-import cx from 'classnames'
-import * as React from 'react'
-import * as _ from 'lodash'
-
-import logProviderMissingWarning from './providerMissingHandler'
 import {
+  callable,
+  emptyTheme,
+  ComponentSlotStylesPrepared,
   ComponentStyleFunctionParam,
   ComponentVariablesObject,
-  ComponentSlotClasses,
-  ComponentSlotStylesPrepared,
+  DebugData,
+  isDebugEnabled,
+  mergeComponentStyles,
+  mergeComponentVariables,
   PropsWithVarsAndStyles,
-  State,
   ThemePrepared,
-} from '../themes/types'
+  withDebugId,
+} from '@fluentui/styles'
+import cx from 'classnames'
+import * as _ from 'lodash'
+import * as React from 'react'
+
+import { ComponentSlotClasses } from '../themes/types'
 import { Props, ProviderContextPrepared } from '../types'
-import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/reactTypes'
-import getKeyDownHandlers from './getKeyDownHandlers'
-import { emptyTheme, mergeComponentStyles, mergeComponentVariables } from './mergeThemes'
 import createAnimationStyles from './createAnimationStyles'
-import { isEnabled as isDebugEnabled } from './debug/debugEnabled'
-import { DebugData } from './debug/debugData'
-import withDebugId from './withDebugId'
+import logProviderMissingWarning from './providerMissingHandler'
 import Telemetry from './Telemetry'
 import resolveStylesAndClasses from './resolveStylesAndClasses'
 
@@ -55,105 +52,10 @@ export interface RenderConfig<P> {
   displayName: string
   handledProps: string[]
   props: PropsWithVarsAndStyles
-  state: State
+  state: Record<string, any>
   actionHandlers: AccessibilityActionHandlers
   render: RenderComponentCallback<P>
   saveDebug: (debug: DebugData | null) => void
-}
-
-const emptyBehavior: ReactAccessibilityBehavior = {
-  attributes: {},
-  keyHandlers: {},
-}
-
-const getAccessibility = (
-  displayName: string,
-  props: State & PropsWithVarsAndStyles & { accessibility?: Accessibility },
-  actionHandlers: AccessibilityActionHandlers,
-  isRtlEnabled: boolean,
-): ReactAccessibilityBehavior => {
-  const { accessibility } = props
-
-  if (_.isNil(accessibility)) {
-    return emptyBehavior
-  }
-
-  const definition: AccessibilityDefinition = accessibility(props)
-  const keyHandlers = getKeyDownHandlers(actionHandlers, definition.keyActions, isRtlEnabled)
-
-  if (process.env.NODE_ENV !== 'production') {
-    // For the non-production builds we enable the runtime accessibility attributes validator.
-    // We're adding the data-aa-class attribute which is being consumed by the validator, the
-    // schema is located in @fluentui/ability-attributes package.
-    if (definition.attributes) {
-      const slotNames = Object.keys(definition.attributes)
-      slotNames.forEach(slotName => {
-        if (!definition.attributes[slotName]) {
-          definition.attributes[slotName] = {}
-        }
-
-        const slotAttributes = definition.attributes[slotName]
-        if (!('data-aa-class' in slotAttributes)) {
-          definition.attributes[slotName]['data-aa-class'] = `${displayName}${
-            slotName === 'root' ? '' : `__${slotName}`
-          }`
-        }
-      })
-    }
-  }
-
-  return {
-    ...emptyBehavior,
-    ...definition,
-    keyHandlers,
-  }
-}
-
-/**
- * This function provides compile-time type checking for the following:
- * - if FocusZone implements FocusZone interface,
- * - if FocusZone properties extend FocusZoneProps, and
- * - if the passed properties extend FocusZoneProps.
- *
- * Should the FocusZone implementation change at any time, this function should provide a compile-time guarantee
- * that the new implementation is backwards compatible with the old implementation.
- */
-function wrapInGenericFocusZone<
-  COMPONENT_PROPS extends FocusZoneProps,
-  PROPS extends COMPONENT_PROPS,
-  COMPONENT extends FocusZone & React.Component<COMPONENT_PROPS>
->(
-  FocusZone: { new (...args: any[]): COMPONENT },
-  props: PROPS | undefined,
-  children: React.ReactNode,
-) {
-  props[FOCUSZONE_WRAP_ATTRIBUTE] = true
-  return <FocusZone {...props}>{children}</FocusZone>
-}
-
-const renderWithFocusZone = <P extends {}>(
-  render: RenderComponentCallback<P>,
-  focusZoneDefinition: FocusZoneDefinition,
-  config: RenderResultConfig<P>,
-): any => {
-  if (focusZoneDefinition.mode === FocusZoneMode.Wrap) {
-    return wrapInGenericFocusZone(
-      FocusZone,
-      {
-        ...focusZoneDefinition.props,
-        isRtl: config.rtl,
-      },
-      render(config),
-    )
-  }
-  if (focusZoneDefinition.mode === FocusZoneMode.Embed) {
-    const originalElementType = config.ElementType
-    config.ElementType = FocusZone as any
-    config.unhandledProps = { ...config.unhandledProps, ...focusZoneDefinition.props }
-    config.unhandledProps.as = originalElementType
-    config.unhandledProps.isRtl = config.rtl
-  }
-  return render(config)
 }
 
 const renderComponent = <P extends {}>(
@@ -217,9 +119,10 @@ const renderComponent = <P extends {}>(
 
   const accessibility: ReactAccessibilityBehavior = getAccessibility(
     displayName,
+    props.accessibility,
     stateAndProps,
-    actionHandlers,
     rtl,
+    actionHandlers,
   )
 
   const unhandledProps = getUnhandledProps(handledProps, props)
@@ -261,13 +164,7 @@ const renderComponent = <P extends {}>(
     rtl,
     theme,
   }
-
-  let result
-  if (accessibility.focusZone) {
-    result = renderWithFocusZone(render, accessibility.focusZone, resolvedConfig)
-  } else {
-    result = render(resolvedConfig)
-  }
+  let wrapInFocusZone: (element: React.ReactElement) => React.ReactElement = element => element
 
   // conditionally add sources for evaluating debug information to component
   if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
@@ -321,7 +218,32 @@ const renderComponent = <P extends {}>(
     }
   }
 
-  return result
+  if (accessibility.focusZone && accessibility.focusZone.mode === FocusZoneMode.Wrap) {
+    wrapInFocusZone = element =>
+      React.createElement(
+        FocusZone,
+        {
+          [FOCUSZONE_WRAP_ATTRIBUTE]: true,
+          ...accessibility.focusZone.props,
+          isRtl: rtl,
+        } as FocusZoneProps & { [FOCUSZONE_WRAP_ATTRIBUTE]: boolean },
+        element,
+      )
+  }
+
+  if (accessibility.focusZone && accessibility.focusZone.mode === FocusZoneMode.Embed) {
+    const originalElementType = resolvedConfig.ElementType
+
+    resolvedConfig.ElementType = FocusZone as any
+    resolvedConfig.unhandledProps = {
+      ...resolvedConfig.unhandledProps,
+      ...accessibility.focusZone.props,
+    }
+    resolvedConfig.unhandledProps.as = originalElementType
+    resolvedConfig.unhandledProps.isRtl = resolvedConfig.rtl
+  }
+
+  return wrapInFocusZone(render(resolvedConfig))
 }
 
 export default renderComponent

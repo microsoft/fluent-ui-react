@@ -1,4 +1,4 @@
-import { ICSSInJSStyle, ComponentSlotStylesPrepared } from '../../../types'
+import { ICSSInJSStyle, ComponentSlotStylesPrepared } from '@fluentui/styles'
 import { ChatVariables } from './chatVariables'
 import { ChatProps } from '../../../../components/Chat/Chat'
 import { pxToRem } from '../../../../utils'

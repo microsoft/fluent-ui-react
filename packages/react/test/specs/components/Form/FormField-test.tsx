@@ -1,5 +1,4 @@
 import * as React from 'react'
-import { ComponentClass } from 'enzyme'
 
 import { isConformant, implementsShorthandProp } from 'test/specs/commonTests'
 import { mountWithProvider } from 'test/utils'
@@ -12,7 +11,7 @@ import Box from 'src/components/Box/Box'
 
 const formFieldImplementsShorthandProp = implementsShorthandProp(FormField)
 
-const getFormField = (control: ComponentClass<any> | string) =>
+const getFormField = (control: React.ComponentType<any> | string) =>
   mountWithProvider(<FormField control={{ as: control }} name="firstName" />).find('FormField')
 
 describe('FormField', () => {

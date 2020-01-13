@@ -1,10 +1,7 @@
-import {
-  mergeComponentVariables__PROD,
-  mergeComponentVariables__DEV,
-} from '../../../../src/utils/mergeThemes'
-import * as debugEnabled from 'src/utils/debug/debugEnabled'
-import { withDebugId } from 'src/utils'
-import objectKeyToValues from 'src/utils/objectKeysToValues'
+import { objectKeyToValues, withDebugId } from '@fluentui/styles'
+
+import * as debugEnabled from '../../src/debugEnabled'
+import { mergeComponentVariables__PROD, mergeComponentVariables__DEV } from '../../src/mergeThemes'
 
 describe('mergeComponentVariables', () => {
   let originalDebugEnabled
@@ -211,7 +208,7 @@ describe('mergeComponentVariables', () => {
         const siteVariables = { varA: 42, nested: { varA: 42 } }
         siteVariables['_invertedKeys'] = objectKeyToValues(siteVariables, v => `siteVariables.${v}`)
 
-        expect(merged(siteVariables)).toMatchObject({
+        expect(merged(siteVariables as any)).toMatchObject({
           _debug: [
             { input: { a: 'siteVariables.varA' } },
             { input: { a: 'siteVariables.nested.varA' } },
@@ -229,15 +226,15 @@ describe('mergeComponentVariables', () => {
         const source1 = withDebugId({ b: 'bS1', d: false, bb: 'bbS1' }, 'source1')
         const source2 = withDebugId(sv => ({ c: sv.colors.colorForC, cc: 'bbS2' }), 'source2')
 
-        const merged1 = mergeComponentVariables__DEV(target, source1, source2)(siteVariables)
+        const merged1 = mergeComponentVariables__DEV(target, source1, source2)(siteVariables as any)
         const merged2 = mergeComponentVariables__DEV(
           mergeComponentVariables__DEV(target, source1),
           source2,
-        )(siteVariables)
+        )(siteVariables as any)
         const merged3 = mergeComponentVariables__DEV(
           target,
           mergeComponentVariables__DEV(source1, source2),
-        )(siteVariables)
+        )(siteVariables as any)
 
         expect(merged1).toMatchObject({
           _debug: [{ debugId: 'target' }, { debugId: 'source1' }, { debugId: 'source2' }],

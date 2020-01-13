@@ -1,6 +1,5 @@
+import { ICSSInJSStyle, SiteVariablesPrepared } from '@fluentui/styles'
 import * as React from 'react'
-
-import { ICSSInJSStyle, SiteVariablesPrepared } from '../types'
 
 type CSSBorderStyles = Pick<React.CSSProperties, 'borderWidth' | 'borderRadius'>
 

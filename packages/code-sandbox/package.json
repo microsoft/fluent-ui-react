@@ -1,11 +1,12 @@
 {
   "name": "@fluentui/code-sandbox",
   "description": "Fluent UI tools for CodeSandbox.",
-  "version": "0.42.0",
+  "version": "0.43.0",
   "author": "Oleksandr Fediashov <a@fedyashov.com>",
   "bugs": "https://github.com/microsoft/fluent-ui-react/issues",
   "dependencies": {
-    "@fluentui/react": "^0.42.0"
+    "@fluentui/docs-components": "^0.43.0",
+    "@fluentui/react": "*"
   },
   "files": [
     "dist"

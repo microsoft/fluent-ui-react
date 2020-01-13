@@ -14,7 +14,7 @@ import {
   WithAsProp,
   withSafeTypeForAs,
 } from '../../types'
-import { ComponentSlotStylesInput, ComponentVariablesInput } from '../../themes/types'
+import { ComponentSlotStylesInput, ComponentVariablesInput } from '@fluentui/styles'
 import Downshift, {
   DownshiftState,
   StateChangeOptions,

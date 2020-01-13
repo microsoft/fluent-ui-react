@@ -20,4 +20,4 @@ x.y.z
 
 ### Testcase
 [Fork, update, and replace this sandbox to show the bug]:
-https://codesandbox.io/s/stardust-ui-example-8ismt
+https://codesandbox.io/s/fluent-ui-example-on8xf

@@ -54,7 +54,7 @@ describe('Portal', () => {
 
       await nextFrame()
 
-      domEvent.click(document)
+      domEvent.click(document.body)
       wrapper.update()
       testPortalInnerIsOpen(wrapper, false)
     })
@@ -73,7 +73,7 @@ describe('Portal', () => {
     it('called when portal opens', () => {
       const onMount = jest.fn()
       const wrapper = mountWithProvider(<Portal content={<p />} onMount={onMount} />)
-      wrapper.setProps({ open: true })
+      wrapper.setProps({ open: true } as any)
 
       expect(onMount).toHaveBeenCalledTimes(1)
     })
@@ -83,7 +83,7 @@ describe('Portal', () => {
     it('is called when portal closes', () => {
       const onUnmount = jest.fn()
       const wrapper = mountWithProvider(<Portal content={<p />} onUnmount={onUnmount} open />)
-      wrapper.setProps({ open: false })
+      wrapper.setProps({ open: false } as any)
 
       expect(onUnmount).toHaveBeenCalledTimes(1)
     })
@@ -91,7 +91,7 @@ describe('Portal', () => {
     it('is called only once when portal closes and then is unmounted', () => {
       const onUnmount = jest.fn()
       const wrapper = mountWithProvider(<Portal content={<p />} onUnmount={onUnmount} open />)
-      wrapper.setProps({ open: false })
+      wrapper.setProps({ open: false } as any)
       wrapper.unmount()
 
       expect(onUnmount).toHaveBeenCalledTimes(1)
