@@ -4,20 +4,19 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import Icon, { IconProps } from '../Icon/Icon'
 
-import { createShorthandFactory, UIComponentProps, commonPropTypes, SizeValue } from '../../utils'
-import { WithAsProp, ShorthandValue, withSafeTypeForAs, ProviderContextPrepared } from '../../types'
 import {
-  getElementType,
-  getUnhandledProps,
-  useAccessibility,
-  useStyles,
-} from '@fluentui/react-bindings'
-// @ts-ignore
-import { ThemeContext } from 'react-fela'
+  UIComponent,
+  createShorthandFactory,
+  UIComponentProps,
+  commonPropTypes,
+  SizeValue,
+  ShorthandFactory,
+} from '../../utils'
+import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 
 export interface StatusProps extends UIComponentProps {
   /** Accessibility behavior if overridden by the user. */
-  accessibility?: Accessibility<never>
+  accessibility?: Accessibility
 
   /** A custom color. */
   color?: string
@@ -32,66 +31,48 @@ export interface StatusProps extends UIComponentProps {
   state?: 'success' | 'info' | 'warning' | 'error' | 'unknown'
 }
 
-const Status = React.forwardRef<HTMLDivElement, WithAsProp<StatusProps>>((props, ref) => {
-  const { className, color, icon, size, state, design, styles, variables } = props
+class Status extends UIComponent<WithAsProp<StatusProps>, any> {
+  static create: ShorthandFactory<StatusProps>
 
-  const { rtl }: ProviderContextPrepared = React.useContext(ThemeContext)
-  const [classes, resolvedStyles] = useStyles(Status.displayName, {
-    className: (Status as any).className,
-    mapPropsToStyles: () => ({
-      color,
-      size,
-      state,
-    }),
-    mapPropsToInlineStyles: () => ({
-      className,
-      design,
-      styles,
-      variables,
-    }),
-    rtl,
-  })
-  const getA11Props = useAccessibility(props.accessibility, {
-    debugName: Status.displayName,
-    rtl,
-  })
-  const ElementType = getElementType(props)
-  const unhandledProps = getUnhandledProps((Status as any).handledProps /* TODO */, props)
+  static className = 'ui-status'
 
-  return (
-    <ElementType {...getA11Props('root', { className: classes.root, ref, ...unhandledProps })}>
-      {Icon.create(icon, {
-        defaultProps: () =>
-          getA11Props('icon', {
+  static displayName = 'Status'
+
+  static propTypes = {
+    ...commonPropTypes.createCommon({
+      children: false,
+      content: false,
+    }),
+    color: PropTypes.string,
+    icon: customPropTypes.itemShorthandWithoutJSX,
+    size: customPropTypes.size,
+    state: PropTypes.oneOf(['success', 'info', 'warning', 'error', 'unknown']),
+  }
+
+  static defaultProps = {
+    accessibility: statusBehavior,
+    as: 'span',
+    size: 'medium',
+    state: 'unknown',
+  }
+
+  renderComponent({ accessibility, ElementType, classes, unhandledProps, variables, styles }) {
+    const { icon } = this.props as StatusProps
+    return (
+      <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
+        {Icon.create(icon, {
+          defaultProps: () => ({
             size: 'smallest',
-            styles: resolvedStyles.icon,
+            styles: styles.icon,
+            variables: variables.icon,
             xSpacing: 'none',
           }),
-      })}
-    </ElementType>
-  )
-})
-;(Status as any).className = 'ui-status'
-;(Status as any).displayName = 'Status'
-;(Status as any).propTypes = {
-  ...commonPropTypes.createCommon({
-    children: false,
-    content: false,
-  }),
-  color: PropTypes.string,
-  icon: customPropTypes.itemShorthandWithoutJSX,
-  size: customPropTypes.size,
-  state: PropTypes.oneOf(['success', 'info', 'warning', 'error', 'unknown']),
-}
-;(Status as any).handledProps = [...Object.keys((Status as any).propTypes), '__unstable_config']
-Status.defaultProps = {
-  accessibility: statusBehavior,
-  as: 'span',
-  size: 'medium',
-  state: 'unknown',
+        })}
+      </ElementType>
+    )
+  }
 }
 
-// @ts-ignore
 Status.create = createShorthandFactory({ Component: Status, mappedProp: 'state' })
 
 /**
@@ -100,5 +81,4 @@ Status.create = createShorthandFactory({ Component: Status, mappedProp: 'state' 
  * @accessibility
  * Implements [ARIA img](https://www.w3.org/TR/wai-aria-1.1/#img) role.
  */
-// @ts-ignore
 export default withSafeTypeForAs<typeof Status, StatusProps, 'span'>(Status)
