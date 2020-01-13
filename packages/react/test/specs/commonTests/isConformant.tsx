@@ -312,9 +312,12 @@ export default function isConformant(
     test('autoControlled props should have onChange props associated', () => {
       if (Component.autoControlledProps && Component.autoControlledProps.length) {
         Component.autoControlledProps.forEach(autoControlledProp => {
-          const expectedOnChangeProp = `on${autoControlledProp
-            .slice(0, 1)
-            .toLocaleUpperCase()}${autoControlledProp.slice(1)}Change`
+          const expectedOnChangeProp =
+            autoControlledProp === 'value'
+              ? 'onChange'
+              : `on${autoControlledProp.slice(0, 1).toLocaleUpperCase()}${autoControlledProp.slice(
+                  1,
+                )}Change`
 
           expect(Component.handledProps).toContain(expectedOnChangeProp)
         })
