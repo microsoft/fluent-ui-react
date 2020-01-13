@@ -1,20 +1,19 @@
 import { Accessibility } from '@fluentui/accessibility'
-import {
-  getElementType,
-  getUnhandledProps,
-  useAccessibility,
-  useStyles,
-} from '@fluentui/react-bindings'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import Image, { ImageProps } from '../Image/Image'
 import Label, { LabelProps } from '../Label/Label'
 import Status, { StatusProps } from '../Status/Status'
-import { WithAsProp, ShorthandValue, withSafeTypeForAs, ProviderContextPrepared } from '../../types'
-import { createShorthandFactory, UIComponentProps, commonPropTypes, SizeValue } from '../../utils'
-// @ts-ignore
-import { ThemeContext } from 'react-fela'
+import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
+import {
+  createShorthandFactory,
+  UIComponent,
+  UIComponentProps,
+  commonPropTypes,
+  SizeValue,
+  ShorthandFactory,
+} from '../../utils'
 
 export interface AvatarProps extends UIComponentProps {
   /**
@@ -41,118 +40,91 @@ export interface AvatarProps extends UIComponentProps {
   getInitials?: (name: string) => string
 }
 
-const Avatar = React.forwardRef<HTMLDivElement, WithAsProp<AvatarProps>>((props, ref) => {
-  const {
-    className,
-    design,
-    name,
-    status,
-    image,
-    label,
-    getInitials,
-    size,
-    styles,
-    variables,
-  } = props
+class Avatar extends UIComponent<WithAsProp<AvatarProps>, any> {
+  static create: ShorthandFactory<AvatarProps>
 
-  const { rtl }: ProviderContextPrepared = React.useContext(ThemeContext)
-  const [classes, resolvedStyles] = useStyles(Avatar.displayName, {
-    mapPropsToStyles: () => ({
-      size,
-    }),
-    mapPropsToInlineStyles: () => ({
-      className,
-      design,
-      styles,
-      variables,
-    }),
-    rtl,
-  })
-  const getA11Props = useAccessibility(props.accessibility, {
-    debugName: Avatar.displayName,
-    rtl,
-  })
-  const ElementType = getElementType(props)
-  const unhandledProps = getUnhandledProps((Avatar as any).handledProps /* TODO */, props)
+  static className = 'ui-avatar'
 
-  return (
-    <ElementType {...getA11Props('root', { className: classes.root, ref, ...unhandledProps })}>
-      {Image.create(image, {
-        defaultProps: () => ({
-          fluid: true,
-          avatar: true,
-          title: name,
-          styles: resolvedStyles.image,
-        }),
-      })}
-      {!image &&
-        Label.create(label || {}, {
+  static displayName = 'Avatar'
+
+  static propTypes = {
+    ...commonPropTypes.createCommon({
+      children: false,
+      content: false,
+    }),
+    name: PropTypes.string,
+    image: customPropTypes.itemShorthandWithoutJSX,
+    label: customPropTypes.itemShorthand,
+    size: customPropTypes.size,
+    status: customPropTypes.itemShorthand,
+    getInitials: PropTypes.func,
+  }
+
+  static defaultProps = {
+    size: 'medium',
+    getInitials(name: string) {
+      if (!name) {
+        return ''
+      }
+
+      const reducedName = name
+        .replace(/\s*\(.*?\)\s*/g, ' ')
+        .replace(/\s*{.*?}\s*/g, ' ')
+        .replace(/\s*\[.*?]\s*/g, ' ')
+
+      const initials = reducedName
+        .split(' ')
+        .filter(item => item !== '')
+        .map(item => item.charAt(0))
+        .reduce((accumulator, currentValue) => accumulator + currentValue)
+
+      if (initials.length > 2) {
+        return initials.charAt(0) + initials.charAt(initials.length - 1)
+      }
+      return initials
+    },
+  } as AvatarProps
+
+  renderComponent({ accessibility, ElementType, classes, unhandledProps, styles, variables }) {
+    const { name, status, image, label, getInitials, size } = this.props as AvatarProps
+
+    return (
+      <ElementType {...accessibility.attributes.root} {...unhandledProps} className={classes.root}>
+        {Image.create(image, {
           defaultProps: () => ({
-            content: getInitials(name),
-            circular: true,
+            fluid: true,
+            avatar: true,
             title: name,
-            styles: resolvedStyles.label,
+            styles: styles.image,
           }),
         })}
-      {Status.create(status, {
-        defaultProps: () => ({
-          size,
-          styles: resolvedStyles.status,
-          // variables: {
-          //   borderColor: variables.statusBorderColor,
-          //   borderWidth: variables.statusBorderWidth,
-          // },
-          // TODO: Fix me please PLEASE PLEAASSEEE
-        }),
-      })}
-    </ElementType>
-  )
-})
-;(Avatar as any).className = 'ui-avatar'
-Avatar.displayName = 'Avatar'
-;(Avatar as any).propTypes = {
-  ...commonPropTypes.createCommon({
-    children: false,
-    content: false,
-  }),
-  name: PropTypes.string,
-  image: customPropTypes.itemShorthandWithoutJSX,
-  label: customPropTypes.itemShorthand,
-  size: customPropTypes.size,
-  status: customPropTypes.itemShorthand,
-  getInitials: PropTypes.func,
-}
-;(Avatar as any).handledProps = Object.keys((Avatar as any).propTypes)
-Avatar.defaultProps = {
-  size: 'medium',
-  getInitials(name: string) {
-    if (!name) {
-      return ''
-    }
-
-    const reducedName = name
-      .replace(/\s*\(.*?\)\s*/g, ' ')
-      .replace(/\s*{.*?}\s*/g, ' ')
-      .replace(/\s*\[.*?]\s*/g, ' ')
-
-    const initials = reducedName
-      .split(' ')
-      .filter(item => item !== '')
-      .map(item => item.charAt(0))
-      .reduce((accumulator, currentValue) => accumulator + currentValue)
-
-    if (initials.length > 2) {
-      return initials.charAt(0) + initials.charAt(initials.length - 1)
-    }
-    return initials
-  },
+        {!image &&
+          Label.create(label || {}, {
+            defaultProps: () => ({
+              content: getInitials(name),
+              circular: true,
+              title: name,
+              styles: styles.label,
+            }),
+          })}
+        {Status.create(status, {
+          defaultProps: () => ({
+            size,
+            styles: styles.status,
+            variables: {
+              borderColor: variables.statusBorderColor,
+              borderWidth: variables.statusBorderWidth,
+            },
+          }),
+        })}
+      </ElementType>
+    )
+  }
 }
 
-// @ts-ignore
 Avatar.create = createShorthandFactory({ Component: Avatar, mappedProp: 'name' })
 
 /**
  * An Avatar is a graphical representation of a user.
  */
-// @ts-ignore
 export default withSafeTypeForAs<typeof Avatar, AvatarProps>(Avatar)

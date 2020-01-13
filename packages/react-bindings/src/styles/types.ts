@@ -2,7 +2,7 @@ import { ICSSInJSStyle, ThemeInput, ThemePrepared } from '@fluentui/styles'
 import { IRenderer as FelaRenderer } from 'fela'
 
 // Notice:
-// A temporary lives there, will be removed once `animation` prop will be dropped
+// This temporary lives here, will be remove once `animation` prop will be dropped
 export type ComponentAnimationProp =
   | {
       name: string

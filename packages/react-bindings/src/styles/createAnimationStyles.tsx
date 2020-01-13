@@ -2,7 +2,7 @@ import { ICSSInJSStyle, ThemePrepared } from '@fluentui/styles'
 import { ComponentAnimationProp } from '../styles/types'
 
 // Notice:
-// A temporary lives there, will be removed once `animation` prop will be dropped
+// This temporary lives here, will be remove once `animation` prop will be dropped
 const createAnimationStyles = (animation: ComponentAnimationProp, theme: ThemePrepared) => {
   let animationCSSProp: ICSSInJSStyle = {}
   const { animations = {} } = theme
