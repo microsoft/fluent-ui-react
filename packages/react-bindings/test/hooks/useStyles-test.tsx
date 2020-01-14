@@ -1,9 +1,9 @@
 import { useStyles } from '@fluentui/react-bindings'
+import { ComponentSlotStyle, ComponentVariablesInput, ThemeInput } from '@fluentui/styles'
 import { mount, shallow } from 'enzyme'
 import * as React from 'react'
 // @ts-ignore
 import { ThemeContext } from 'react-fela'
-import { ComponentSlotStyle, ComponentVariablesInput, ThemeInput } from '@fluentui/styles'
 
 type TestComponentProps = {
   className?: string
@@ -35,7 +35,16 @@ const createTheme = (styles: jest.Mock): ThemeInput => ({
 const TestProvider: React.FC<{ theme: ThemeInput }> = props => {
   const { children, theme } = props
 
-  return <ThemeContext.Provider value={{ theme }}>{children}</ThemeContext.Provider>
+  return (
+    <ThemeContext.Provider
+      value={{
+        theme,
+        _internal_resolvedComponentVariables: {},
+      }}
+    >
+      {children}
+    </ThemeContext.Provider>
+  )
 }
 
 describe('useStyles', () => {
