@@ -28,7 +28,7 @@ const avatarStyles: ComponentSlotStylesPrepared<AvatarProps, any> = {
   image: ({ variables: v }): ICSSInJSStyle => ({
     borderColor: v.avatarBorderColor,
     borderStyle: 'solid',
-    borderWidth: `${v.avatarBorderWidth}px`,
+    borderWidth: v.avatarBorderWidth,
 
     height: '100%',
     objectFit: 'cover',
@@ -50,8 +50,9 @@ const avatarStyles: ComponentSlotStylesPrepared<AvatarProps, any> = {
   },
   status: ({ variables: v }): ICSSInJSStyle => ({
     position: 'absolute',
-    bottom: `-${v.statusBorderWidth}px`,
-    right: `-${v.statusBorderWidth}px`,
+    bottom: 0,
+    right: 0,
+    boxShadow: `0 0 0 ${v.statusBorderWidth} ${v.statusBorderColor}`,
   }),
 }
 

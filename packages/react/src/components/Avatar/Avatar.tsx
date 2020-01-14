@@ -111,11 +111,6 @@ const Avatar: React.FC<WithAsProp<AvatarProps>> &
           getA11Props('status', {
             size,
             styles: resolvedStyles.status,
-            variables: {
-              // TODO: Fix me
-              // borderColor: variables.statusBorderColor,
-              // borderWidth: variables.statusBorderWidth,
-            },
           }),
       })}
     </ElementType>
