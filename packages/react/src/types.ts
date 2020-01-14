@@ -1,8 +1,8 @@
 import { StylesContextInputValue, StylesContextValue } from '@fluentui/react-bindings'
 import * as React from 'react'
 
+import { ShorthandFactory } from './utils/factories'
 import Telemetry from './utils/Telemetry'
-import { ShorthandFactory } from 'src/utils'
 
 // ========================================================
 // Utilities

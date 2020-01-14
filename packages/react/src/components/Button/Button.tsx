@@ -100,6 +100,7 @@ const Button: React.FC<WithAsProp<ButtonProps>> &
   FluentComponentStaticProps<ButtonProps> & { Group: any } = props => {
   const {
     accessibility,
+    // @ts-ignore
     active,
     as,
     children,
