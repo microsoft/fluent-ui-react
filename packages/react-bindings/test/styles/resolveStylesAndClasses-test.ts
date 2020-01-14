@@ -1,28 +1,38 @@
-import { ComponentSlotStylesPrepared } from '@fluentui/styles'
-import resolveStylesAndClasses from 'src/utils/resolveStylesAndClasses'
+import {
+  ComponentSlotStylesPrepared,
+  ComponentStyleFunctionParam,
+  emptyTheme,
+  ICSSInJSStyle,
+} from '@fluentui/styles'
+import resolveStylesAndClasses from '../../src/styles/resolveStylesAndClasses'
+
+const styleParam: ComponentStyleFunctionParam = {
+  disableAnimations: false,
+  displayName: 'Test',
+  props: {},
+  rtl: false,
+  theme: emptyTheme,
+  variables: {
+    color: 'red',
+  },
+}
+
+const componentStyles: ComponentSlotStylesPrepared<{}, { color: string }> = {
+  root: ({ variables: v }): ICSSInJSStyle => ({
+    color: v.color,
+  }),
+}
 
 describe('resolveStylesAndClasses', () => {
-  const styleParam = {
-    variables: {
-      color: 'red',
-    },
-  }
-
-  const componentStyles: ComponentSlotStylesPrepared = {
-    root: ({ variables }) => ({
-      color: variables['color'],
-    }),
-  }
-
   test('resolves styles', () => {
-    const { resolvedStyles } = resolveStylesAndClasses(componentStyles, styleParam, () => ({}))
+    const { resolvedStyles } = resolveStylesAndClasses(componentStyles, styleParam, () => '')
 
     expect(resolvedStyles.root).toMatchObject({ color: 'red' })
   })
 
   test('caches resolved styles', () => {
     spyOn(componentStyles, 'root').and.callThrough()
-    const { resolvedStyles } = resolveStylesAndClasses(componentStyles, styleParam, () => ({}))
+    const { resolvedStyles } = resolveStylesAndClasses(componentStyles, styleParam, () => '')
 
     expect(resolvedStyles.root).toMatchObject({ color: 'red' })
     expect(componentStyles.root).toHaveBeenCalledTimes(1)
