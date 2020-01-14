@@ -201,7 +201,7 @@ export interface ComponentStyleFunctionParam<
 }
 
 export type ComponentSlotStyleFunction<TProps = {}, TVars = {}> = (
-  styleParam?: ComponentStyleFunctionParam<TProps, TVars>,
+  styleParam: ComponentStyleFunctionParam<TProps, TVars>,
 ) => ICSSInJSStyle
 
 export interface ComponentSlotStylesPrepared<TProps = {}, TVars = {}>
