@@ -1,8 +1,10 @@
-import { ThemePrepared } from '@fluentui/styles'
-import { AnimationProp } from '../themes/types'
+import { ICSSInJSStyle, ThemePrepared } from '@fluentui/styles'
+import { ComponentAnimationProp } from '../styles/types'
 
-const createAnimationStyles = (animation: AnimationProp, theme: ThemePrepared) => {
-  let animationCSSProp = {}
+// Notice:
+// This temporary lives here, will be remove once `animation` prop will be dropped
+const createAnimationStyles = (animation: ComponentAnimationProp, theme: ThemePrepared) => {
+  let animationCSSProp: ICSSInJSStyle = {}
   const { animations = {} } = theme
 
   if (animation) {
@@ -56,25 +58,27 @@ const createAnimationStyles = (animation: AnimationProp, theme: ThemePrepared) =
       }
     } else {
       // animations was not found in the theme object
-      animationCSSProp =
-        typeof animation === 'string'
-          ? {
-              animationName: animation,
-            }
-          : {
-              animationName: animation.name,
-              ...(animation.delay && { animationDelay: animation.delay }),
-              ...(animation.direction && { animationDirection: animation.direction }),
-              ...(animation.duration && { animationDuration: animation.duration }),
-              ...(animation.fillMode && { animationFillMode: animation.fillMode }),
-              ...(animation.iterationCount && {
-                animationIterationCount: animation.iterationCount,
-              }),
-              ...(animation.playState && { animationPlayState: animation.playState }),
-              ...(animation.timingFunction && {
-                animationTimingFunction: animation.timingFunction,
-              }),
-            }
+
+      // TS issue, it's impossible to assign without this condition
+      // eslint-disable-next-line no-lonely-if
+      if (typeof animation === 'string') {
+        animationCSSProp = { animationName: animation }
+      } else {
+        animationCSSProp = {
+          animationName: animation.name,
+          ...(animation.delay && { animationDelay: animation.delay }),
+          ...(animation.direction && { animationDirection: animation.direction }),
+          ...(animation.duration && { animationDuration: animation.duration }),
+          ...(animation.fillMode && { animationFillMode: animation.fillMode }),
+          ...(animation.iterationCount && {
+            animationIterationCount: animation.iterationCount,
+          }),
+          ...(animation.playState && { animationPlayState: animation.playState }),
+          ...(animation.timingFunction && {
+            animationTimingFunction: animation.timingFunction,
+          }),
+        }
+      }
     }
   }
   return animationCSSProp

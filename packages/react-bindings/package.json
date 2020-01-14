@@ -7,7 +7,11 @@
   "dependencies": {
     "@babel/runtime": "^7.1.2",
     "@fluentui/accessibility": "^0.43.0",
-    "@fluentui/state": "^0.43.0"
+    "@fluentui/state": "^0.43.0",
+    "@fluentui/styles": "^0.43.0",
+    "classnames": "^2.2.6",
+    "fela": "^10.6.1",
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
     "@fluentui/internal-tooling": "^0.43.0",
