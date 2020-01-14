@@ -1,16 +1,7 @@
-import { ComponentStyleFunctionParam, emptyTheme, withDebugId } from '@fluentui/styles'
+import { ComponentStyleFunctionParam, withDebugId } from '@fluentui/styles'
 
 import * as debugEnabled from '../../src/debugEnabled'
 import { mergeComponentStyles__PROD, mergeComponentStyles__DEV } from '../../src/mergeThemes'
-
-const styleParam: ComponentStyleFunctionParam = {
-  disableAnimations: false,
-  displayName: 'Test',
-  props: {},
-  rtl: false,
-  theme: emptyTheme,
-  variables: {},
-}
 
 describe('mergeComponentStyles', () => {
   let originalDebugEnabled
@@ -163,7 +154,7 @@ describe('mergeComponentStyles', () => {
 
       const merged = mergeComponentStyles__PROD(target, source)
 
-      const resolvedRoot = merged.root(styleParam)
+      const resolvedRoot = merged.root()
       expect(resolvedRoot._debug).toBe(undefined)
     })
   })
@@ -181,7 +172,7 @@ describe('mergeComponentStyles', () => {
 
       const merged = mergeComponentStyles__DEV(target, source)
 
-      const resolvedRoot = merged.root(styleParam)
+      const resolvedRoot = merged.root()
       expect(resolvedRoot._debug).toBe(undefined)
     })
   })
@@ -208,7 +199,7 @@ describe('mergeComponentStyles', () => {
           _debug: [{ styles: { a: 'tA', b: 'tB' } }, { styles: { a: 'sA', c: { deep: 'vC' } } }],
         })
 
-        const resolvedIcon = merged.icon(styleParam)
+        const resolvedIcon = merged.icon()
         expect(resolvedIcon).toMatchObject({
           _debug: [{ styles: { d: 'sD' } }],
         })
@@ -219,7 +210,7 @@ describe('mergeComponentStyles', () => {
         const source = withDebugId({ root: { a: 'sA', c: { deep: 'c' } } }, 'source')
 
         const merged = mergeComponentStyles__DEV(target, source)
-        const resolvedRoot = merged.root(styleParam)
+        const resolvedRoot = merged.root()
         expect(resolvedRoot).toMatchObject({
           _debug: [{ debugId: 'target' }, { debugId: 'source' }],
         })
@@ -252,7 +243,7 @@ describe('mergeComponentStyles', () => {
         )
 
         const merged1 = mergeComponentStyles__DEV(target, source1, source2)
-        const resolvedRoot1 = merged1.root(styleParam)
+        const resolvedRoot1 = merged1.root()
         expect(resolvedRoot1).toMatchObject({
           _debug: [{ debugId: 'target' }, { debugId: 'source1' }, { debugId: 'source2' }],
         })
@@ -261,7 +252,7 @@ describe('mergeComponentStyles', () => {
           mergeComponentStyles__DEV(target, source1),
           source2,
         )
-        const resolvedRoot2 = merged2.root(styleParam)
+        const resolvedRoot2 = merged2.root()
         expect(resolvedRoot2).toMatchObject({
           _debug: [{ debugId: 'target' }, { debugId: 'source1' }, { debugId: 'source2' }],
         })
@@ -270,7 +261,7 @@ describe('mergeComponentStyles', () => {
           target,
           mergeComponentStyles__DEV(source1, source2),
         )
-        const resolvedRoot3 = merged3.root(styleParam)
+        const resolvedRoot3 = merged3.root()
         expect(resolvedRoot3).toMatchObject({
           _debug: [{ debugId: 'target' }, { debugId: 'source1' }, { debugId: 'source2' }],
         })

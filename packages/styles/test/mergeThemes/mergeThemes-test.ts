@@ -5,19 +5,9 @@ import {
   mergeStyles,
   ThemeInput,
   withDebugId,
-  emptyTheme,
 } from '@fluentui/styles'
 
 import * as debugEnabled from '../../src/debugEnabled'
-
-const styleParam: ComponentStyleFunctionParam = {
-  disableAnimations: false,
-  displayName: 'Test',
-  props: {},
-  rtl: false,
-  theme: emptyTheme,
-  variables: {},
-}
 
 describe('mergeThemes', () => {
   test(`always returns an object`, () => {
@@ -254,7 +244,7 @@ describe('mergeThemes', () => {
 
       const merged = mergeThemes(target, source)
 
-      expect(merged.componentStyles.Button.root(styleParam)).toMatchObject({
+      expect(merged.componentStyles.Button.root()).toMatchObject({
         display: 'inline-block',
         color: 'blue',
         '::before': {
