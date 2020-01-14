@@ -9,6 +9,7 @@ class EmployeeCardPrototype extends React.Component<any> {
     cardRole: 'group',
     ariaRoleDescription: null,
     ariaExpanded: null,
+    isLimitedNavigation: false,
   }
 
   getCards(numberOfCards, employee) {
@@ -19,6 +20,7 @@ class EmployeeCardPrototype extends React.Component<any> {
         <EmployeeCard
           {...employee}
           {...cardOrder}
+          isLimitedNavigation={this.state.isLimitedNavigation}
           aria-labelledby={`user-name-${i} user-card-${i}`}
           id={`user-card-${i}`}
           aria-label=",card"
@@ -58,6 +60,17 @@ class EmployeeCardPrototype extends React.Component<any> {
     }
   }
 
+  handleSelectedNavigation = (e: React.SyntheticEvent, { value }: DropdownProps) => {
+    switch (value) {
+      case 'use Enter key go inside the card':
+        this.setState({ isLimitedNavigation: true })
+        return
+      case 'use TAB key go inside the card':
+        this.setState({ isLimitedNavigation: false })
+        return
+    }
+  }
+
   render() {
     const employee = {
       firstName: 'John',
@@ -84,6 +97,12 @@ class EmployeeCardPrototype extends React.Component<any> {
           ]}
           defaultValue={'Select aria roles to be used'}
           onSelectedChange={this.handleSelectedChange}
+        />
+        <Dropdown
+          inline
+          items={['use Enter key go inside the card', 'use TAB key go inside the card']}
+          defaultValue={'Select type of navigaton'}
+          onSelectedChange={this.handleSelectedNavigation}
         />
         <div
           role={this.state.parentRole}

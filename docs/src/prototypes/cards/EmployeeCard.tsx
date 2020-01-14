@@ -29,12 +29,13 @@ class EmployeeCard extends React.Component<Extendable<EmployeeCardProps>, any> {
       avatar,
       phone,
       cardOrder,
+      isLimitedNavigation,
       ...restProps
     } = this.props
     return (
       <Group
         isFocusable={true}
-        isLimited={true}
+        isLimited={isLimitedNavigation}
         nextGroupDirection={NextGroupDirection.Grid}
         {...restProps}
       >
@@ -48,6 +49,7 @@ class EmployeeCard extends React.Component<Extendable<EmployeeCardProps>, any> {
           }}
         >
           <div>
+            <span> is limited navigation: {`${isLimitedNavigation}`} </span>
             <CustomText id={`user-name-${cardOrder}`} size={'medium'} weight={'bold'} as="div">
               {firstName} {`${lastName} ${cardOrder}`}
             </CustomText>
