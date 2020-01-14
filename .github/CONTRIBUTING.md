@@ -180,7 +180,7 @@ If your package uses TypeScript, please also create a new `tsconfig.json` and pl
 
 ```json
 {
-  "extends": "@fluentui/internal-tooling/tsconfig.common",
+  "extends": "../../build/tsconfig.common",
   "include": ["src", "test"]
 }
 ```

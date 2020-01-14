@@ -1,5 +1,5 @@
 {
-  "extends": "@fluentui/internal-tooling/tsconfig.common",
+  "extends": "../../build/tsconfig.common",
   "compilerOptions": {
     "composite": true,
     "outDir": "dist/dts",
