@@ -137,7 +137,7 @@ task('build:docs:toc', () =>
 task('build:docs:schema', () =>
   src(schemaSrc, { since: lastRun('build:docs:schema') }).pipe(
     through2.obj((file, enc, done) => {
-      sh(`cd packages/ability-attributes && npm run schema`)
+      sh('npm run schema', paths.packages('ability-attributes'))
         .then(() => done(null, file))
         .catch(done)
     }),

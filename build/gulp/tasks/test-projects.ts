@@ -24,7 +24,7 @@ const log = (context: string) => (message: string) => {
   console.log('='.repeat(80))
 }
 
-export const runIn = targetPath => cmd => sh(`cd ${targetPath} && ${cmd}`)
+export const runIn = targetPath => cmd => sh(cmd, targetPath)
 
 const addResolutionPathsForProjectPackages = async (
   testProjectDir: string,
