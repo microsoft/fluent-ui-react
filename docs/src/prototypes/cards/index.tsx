@@ -9,7 +9,7 @@ class EmployeeCardPrototype extends React.Component<any> {
     cardRole: 'group',
     ariaRoleDescription: null,
     ariaExpanded: null,
-    isLimitedNavigation: false,
+    isLimitedNavigation: true,
   }
 
   getCards(numberOfCards, employee) {
