@@ -1,9 +1,4 @@
-import {
-  ComponentDesignProp,
-  getElementType,
-  getUnhandledProps,
-  useStyles,
-} from '@fluentui/react-bindings'
+import { getElementType, getUnhandledProps, useStyles } from '@fluentui/react-bindings'
 import * as React from 'react'
 // @ts-ignore
 import { ThemeContext } from 'react-fela'
@@ -15,7 +10,7 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   rtlTextContainer,
-  StyledComponentProps,
+  UIComponentProps,
 } from '../../utils'
 import {
   ProviderContextPrepared,
@@ -25,20 +20,18 @@ import {
 } from '../../types'
 
 export interface BoxProps
-  extends StyledComponentProps<BoxProps>,
+  extends UIComponentProps<BoxProps>,
     ContentComponentProps,
-    ChildrenComponentProps {
-  /** Additional CSS class name(s) to apply.  */
-  className?: string
-  design?: ComponentDesignProp
-}
+    ChildrenComponentProps {}
 
 const Box: React.FC<WithAsProp<BoxProps>> & FluentComponentStaticProps<BoxProps> = props => {
-  const { className, design, styles, variables, children, content } = props
+  const { animation, className, design, styles, variables, children, content } = props
+
   const context: ProviderContextPrepared = React.useContext(ThemeContext)
   const [classes] = useStyles(Box.displayName, {
     className: Box.className,
     mapPropsToInlineStyles: () => ({
+      unstable_animation: animation,
       className,
       design,
       styles,
