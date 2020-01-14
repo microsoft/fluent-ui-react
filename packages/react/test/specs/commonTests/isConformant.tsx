@@ -542,7 +542,7 @@ export default function isConformant(
   // ----------------------------------------
   describe('static displayName (common)', () => {
     test('matches constructor name', () => {
-      expect(Component.displayName).toEqual(info.constructorName)
+      expect(Component.displayName).toEqual(constructorName)
     })
   })
 

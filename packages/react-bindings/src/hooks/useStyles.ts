@@ -64,13 +64,16 @@ const useStyles = <StyleProps extends PrimitiveProps>(
 
   // Stores debug information for component.
   const debug = React.useRef<{ fluentUIDebug: DebugData | null }>({ fluentUIDebug: null })
+  const inlineProps = mapPropsToInlineStyles()
+
   const { classes, styles: resolvedStyles } = getStyles({
     // Input values
     className,
     displayName,
     props: {
       ...mapPropsToStyles(),
-      ...mapPropsToInlineStyles(),
+      ...inlineProps,
+      animation: inlineProps.unstable_animation,
     },
 
     // Context values

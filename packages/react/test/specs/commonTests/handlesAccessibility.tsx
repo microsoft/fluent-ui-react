@@ -136,19 +136,23 @@ export default (
       const wrapper = mountWithProvider(<Component {...wrapperProps} />)
       const component = wrapper.find(Component)
       const instance = component.instance() as UIComponent<any, any>
-      if (instance.actionHandlers) {
-        instance.actionHandlers.mockAction = actionHandler
+
+      if (instance) {
+        if (instance.actionHandlers) {
+          instance.actionHandlers.mockAction = actionHandler
+        }
+        // Force render component to apply updated key handlers
+        wrapper.setProps({})
       }
-      // Force render component to apply updated key handlers
-      wrapper.setProps({})
 
       getEventTargetComponent(component, 'onKeyDown').simulate('keydown', {
         keyCode: keyboardKey.Enter,
       })
 
-      if (instance.actionHandlers) {
+      if (instance && instance.actionHandlers) {
         expect(actionHandler).toBeCalledTimes(1)
       }
+
       expect(eventHandler).toBeCalledTimes(1)
     })
   }

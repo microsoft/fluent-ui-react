@@ -100,6 +100,7 @@ const Button: React.FC<WithAsProp<ButtonProps>> &
   FluentComponentStaticProps<ButtonProps> & { Group: any } = props => {
   const {
     accessibility,
+    active,
     as,
     children,
     content,
@@ -124,6 +125,22 @@ const Button: React.FC<WithAsProp<ButtonProps>> &
   const context: ProviderContextPrepared = React.useContext(ThemeContext)
   const hasChildren = childrenExist(children)
 
+  const getA11Props = useAccessibility(accessibility, {
+    debugName: Button.displayName,
+    mapPropsToBehavior: () => ({
+      as,
+      active,
+      disabled,
+      loading,
+    }),
+    actionHandlers: {
+      performClick: event => {
+        event.preventDefault()
+        handleClick(event)
+      },
+    },
+    rtl: context.rtl,
+  })
   const [classes, resolvedStyles] = useStyles(Button.displayName, {
     className: Button.className,
     mapPropsToStyles: () => ({
@@ -145,22 +162,6 @@ const Button: React.FC<WithAsProp<ButtonProps>> &
       styles,
       variables,
     }),
-    rtl: context.rtl,
-  })
-
-  const getA11Props = useAccessibility(accessibility, {
-    debugName: Button.displayName,
-    mapPropsToBehavior: () => ({
-      as,
-      disabled,
-      loading,
-    }),
-    actionHandlers: {
-      performClick: event => {
-        event.preventDefault()
-        handleClick(event)
-      },
-    },
     rtl: context.rtl,
   })
 
