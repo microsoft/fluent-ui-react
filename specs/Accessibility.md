@@ -19,7 +19,7 @@ In general, components need to conform to the [WAI-ARIA Authoring Practices 1.2]
 ## Screen reader support
 User needs to be able to interact with the application using:
 - screen reader with virtual cursor navigation (browse mode)
-- screen reader witout virtual cursor navigation (application mode)
+- screen reader without virtual cursor navigation (application mode)
 
 All requirements for keyboard navigation are valid in both of these screen reader use cases. User needs to be able to understand which element is focused and how he can interact with it just based on the information provided by the screen reader.
 
@@ -45,14 +45,14 @@ There are two areas that come together to achieve accessibility:
 Accessibility behavior is a function that takes properties of the component combined with state and maps it to:
 - `role`, `aria-*` attributes, `tabIndex` and other attributes related to accessibility
 - assignement of keyboard keys to component actions
-- focus zone (arrow key navigation) definition
+- focus zone (arrow keys navigation) definition
 
 ## Component creation process
 1. Create accessible component prototype
 2. Validate the prototype (test with all supported screen reader / OS combinations)
 3. Design and develop the component
 4. Test the component
-5. Formulate meaningful best practices providing information, what the consumer need to do in order to achive optimal experience
+5. Formulate meaningful best practices providing information, what the consumer need to do in order to achieve optimal experience
 6. Extend accessibility validation schema to reflect the best practices
 
 ## Using behaviors in the components
@@ -60,7 +60,7 @@ Every component relevant to accessibility needs to have:
 - default accessibility behavior, including specification or description in it's `@accessibility` jsdoc section
 - optionally other available accessibility attributes, listed in `@available` jsdoc section
 - `accessibility` property with default value specified
-- Best practices section describing concerns that are not covered by the component itself and the user need to implement them or provide required information
+- `Best practices` section describing concerns that are not covered by the component itself and the user need to implement them or provide required information
 
 # Testing
 Every change needs to be tested for following use cases mentioned above.
