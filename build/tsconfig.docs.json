@@ -1,10 +1,7 @@
 {
   "extends": "./tsconfig.common.json",
   "compilerOptions": {
-    "module": "esnext",
-    "paths": {
-      "@fluentui/*": ["packages/*/src"]
-    }
+    "module": "esnext"
   },
-  "include": ["../docs/src", "../packages/react/src", "../types"]
+  "include": ["../docs/src"]
 }
