@@ -15,7 +15,6 @@
     "perf:test": "just-scripts perf-test"
   },
   "devDependencies": {
-    "@fluentui/docs": "^0.43.0",
     "@fluentui/digest": "^0.43.0",
     "@types/react": "^16.8.10",
     "@types/react-dom": "^16.8.3",
