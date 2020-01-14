@@ -12,11 +12,11 @@ The `Checkbox` component allows a user to choose between two mutually exclusive 
 
 https://codesandbox.io/s/checkboxes-ggpx1
 
-Note about the Stardust example: there's some weirdness with how the theme providers are interacting with each other, the Stardust checkbox's styling is messing up as a result.
+Note about the Current Fluent example: there's some weirdness with how the theme providers are interacting with each other, the Current Fluent checkbox's styling is messing up as a result.
 
 Fabric Checkbox [docs](https://developer.microsoft.com/en-us/fabric#/controls/web/Checkbox)
 
-Stardust Checkbox [docs](https://microsoft.github.io/fluent-ui-react/components/checkbox/definition)
+Current Fluent Checkbox [docs](https://microsoft.github.io/fluent-ui-react/components/checkbox/definition)
 
 Open UI Checkbox [docs](https://open-ui.org/components/checkbox)
 
@@ -69,7 +69,7 @@ https://developer.microsoft.com/en-us/fabric#/controls/web/checkbox
 | styles               | IStyleFunctionOrObject<ICheckboxStyleProps, ICheckboxStyles>|                                                                                |
 | theme                | ITheme                                                      |                                                                                |
 
-### Stardust Checkbox props
+### Current Fluent Checkbox props
 
 
 | Name                 | Type                                                        | Notes                                                                          |
@@ -91,7 +91,7 @@ https://developer.microsoft.com/en-us/fabric#/controls/web/checkbox
 | toggle               | boolean                                                     | default false                                                                   |
 | variables            | any                                                         |                                                                                 |
 
-### Differences of Fabric/Stardust to resolve
+### Differences of Fabric/Current Fluent to resolve
 
 | Name                 | Type                                                        | Notes                                                                          |
 | -------------------- | --------------------------------------------------------    | -------------------------------------------------------------------------------|
@@ -222,7 +222,7 @@ Could consider supporting an invalid state/error state but this might just be su
 </div>
 ```
 
-### Stardust Checkbox example DOM
+### Current Fluent Checkbox example DOM
 
 ```html
 <div class="ui-checkbox dd ol om gz de nb on cd oo op cb oq ha hb hc hd he hf hg hh hi hj hk hl hm hn ho hp or os ot ou hu hv hw hx ov ow ox oy ic id ie if ig ih ii ij ik il im oz pa pb pc ir is it iu pd pe pf pg lu ph pi pj pk" aria-checked="false" role="checkbox" tabindex="0">
@@ -372,7 +372,7 @@ TBD
 | iconColorPressed    |                |
 | iconSize            |                |
 
-NOTE! Stardust does not follow this convention. Their Checkbox currently uses these tokens:
+NOTE! Current Fluent does not follow this convention. Their Checkbox currently uses these tokens:
 
 ```
 background: string

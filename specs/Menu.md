@@ -26,7 +26,7 @@ Most menus have a concept of a specific menuitem. It is an integral part of the 
 
 * [Aria practices](https://www.w3.org/TR/wai-aria-1.1/#menu)
 * [Fabric](https://developer.microsoft.com/en-us/fabric#/controls/web/contextualmenu)
-* [Stardust](https://microsoft.github.io/fluent-ui-react/components/menu/definition)
+* [Current Fluent](https://microsoft.github.io/fluent-ui-react/components/menu/definition)
 * [Material-ui](https://material-ui.com/components/menus/)
 * [Chakra-ui](https://chakra-ui.com/menu)
 * [AntDesign](https://ant.design/components/menu/)
@@ -44,7 +44,7 @@ Most menus have a concept of a specific menuitem. It is an integral part of the 
 * The line between list and menu is fuzzy.
 
 ## API
-### Prop comparison \(Stardust vs Fabric\)
+### Prop comparison \(Current Fluent vs Fabric\)
 _Note:_ I've skipped some of the boilerplate props like className.
 
 #### Fabric
@@ -124,7 +124,7 @@ _Note:_ I've skipped some of the boilerplate props like className.
 | text | string | Text description for the menu item to display |
 | title | string | Optional title for displaying text when hovering over an item. |
 
-#### Stardust
+#### Current Fluent
 
 ##### Menu
 | Prop Name | Type | Description |
@@ -225,7 +225,7 @@ To help provide additional information to menu items and their context, the menu
 Similarly Submenus should control their open state through context.
 
 #### Discussion:
-This is a large departure from the way that both Stardust and Fabric implement menus but it is more in line with the way a lot of other frameworks menus work. Additionally I believe it gives a lot more flexibility through composition which removes some of the pressure to add many props.
+This is a large departure from the way that both Current Fluent and Fabric implement menus but it is more in line with the way a lot of other frameworks menus work. Additionally I believe it gives a lot more flexibility through composition which removes some of the pressure to add many props.
 
 There should be a lot more discussion to see if this relaxed approach to props is appropriate. Additionally it could make SplitButton menu items difficult to implement. 
 
@@ -307,7 +307,7 @@ There should be a lot more discussion to see if this relaxed approach to props i
 | text | &#x274C; | &#x274C; | &#x274C; |
 | title | &#x274C; | &#x274C; | &#x274C; |
 
-#### Stardust to Fluent
+#### Current Fluent to Fluent
 
 ##### Menu
 
@@ -386,7 +386,7 @@ Based on my recommendations, the MenuItem ends up doing a lot of work compared t
 </ul> 
 ```
 
-### Stardust Dom Structure
+### Current Fluent Dom Structure
 Note: Class names removed
 ```HTML
 <ul role="menu" data-aa-class="Menu" >
