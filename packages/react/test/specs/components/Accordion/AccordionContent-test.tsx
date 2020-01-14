@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import AccordionContent from '@fluentui/react/src/components/Accordion/AccordionContent'
+import { AccordionContent } from '@fluentui/react'
 import { isConformant, handlesAccessibility, getRenderedAttribute } from '../../commonTests'
 import { mountWithProviderAndGetComponent } from '../../../utils'
 

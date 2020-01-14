@@ -4,8 +4,7 @@ import { isConformant, handlesAccessibility, htmlIsAccessibilityCompliant } from
 import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
 import { mountWithProvider } from '../../../utils'
 
-import RadioGroup from '@fluentui/react/src/components/RadioGroup/RadioGroup'
-import RadioGroupItem from '@fluentui/react/src/components/RadioGroup/RadioGroupItem'
+import { RadioGroup, RadioGroupItem } from '@fluentui/react'
 
 const radioGroupImplementsCollectionShorthandProp = implementsCollectionShorthandProp(RadioGroup)
 

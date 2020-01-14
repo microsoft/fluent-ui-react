@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import * as FluentUI from '@fluentui/react/src/index'
+import * as FluentUI from '@fluentui/react'
 
 // ----------------------------------------
 // Is exported or private

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { domEvent, nextFrame, mountWithProvider } from '../../../utils'
 
-import Portal from '@fluentui/react/src/components/Portal/Portal'
+import { Portal } from '@fluentui/react'
 import PortalInner from '@fluentui/react/src/components/Portal/PortalInner'
 
 describe('Portal', () => {

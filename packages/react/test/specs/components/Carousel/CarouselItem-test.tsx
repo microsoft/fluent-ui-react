@@ -1,9 +1,7 @@
 import * as React from 'react'
 
 import { isConformant } from '../../commonTests'
-import CarouselItem, {
-  CarouselItemProps,
-} from '@fluentui/react/src/components/Carousel/CarouselItem'
+import { CarouselItem, CarouselItemProps } from '@fluentui/react'
 import { ReactWrapper, CommonWrapper } from 'enzyme'
 import { findIntrinsicElement, mountWithProvider } from '../../../utils'
 

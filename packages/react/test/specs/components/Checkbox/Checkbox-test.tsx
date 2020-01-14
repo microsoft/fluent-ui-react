@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Checkbox from '@fluentui/react/src/components/Checkbox/Checkbox'
+import { Checkbox } from '@fluentui/react'
 import { isConformant, handlesAccessibility, htmlIsAccessibilityCompliant } from '../../commonTests'
 
 describe('Checkbox', () => {

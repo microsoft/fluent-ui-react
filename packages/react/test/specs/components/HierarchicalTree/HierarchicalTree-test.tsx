@@ -3,9 +3,7 @@ import * as keyboardKey from 'keyboard-key'
 
 import { isConformant } from '../../commonTests'
 import { mountWithProvider } from '../../../utils'
-import HierarchicalTree from '@fluentui/react/src/components/HierarchicalTree/HierarchicalTree'
-import HierarchicalTreeTitle from '@fluentui/react/src/components/HierarchicalTree/HierarchicalTreeTitle'
-import HierarchicalTreeItem from '@fluentui/react/src/components/HierarchicalTree/HierarchicalTreeItem'
+import { HierarchicalTree, HierarchicalTreeTitle, HierarchicalTreeItem } from '@fluentui/react'
 import { ReactWrapper, CommonWrapper } from 'enzyme'
 
 const items = [

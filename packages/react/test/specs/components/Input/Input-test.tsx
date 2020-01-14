@@ -6,9 +6,7 @@ import { ReactWrapper } from 'enzyme'
 import { mountWithProvider as mount } from '../../../utils'
 import { isConformant, implementsShorthandProp, implementsWrapperProp } from '../../commonTests'
 
-import Input from '@fluentui/react/src/components/Input/Input'
-import Icon from '@fluentui/react/src/components/Icon/Icon'
-import Box from '@fluentui/react/src/components/Box/Box'
+import { Input, Icon, Box } from '@fluentui/react'
 
 const testValue = 'test value'
 const htmlInputAttrs = ['id', 'name', 'pattern', 'placeholder', 'type', 'value']

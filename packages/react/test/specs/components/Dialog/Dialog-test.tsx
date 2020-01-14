@@ -1,7 +1,6 @@
 import * as React from 'react'
 
-import Dialog from '@fluentui/react/src/components/Dialog/Dialog'
-import Button from '@fluentui/react/src/components/Button/Button'
+import { Dialog, Button } from '@fluentui/react'
 import { mountWithProvider, findIntrinsicElement } from '../../../utils'
 
 describe('Dialog', () => {

@@ -3,7 +3,7 @@ import * as React from 'react'
 import { isConformant } from '../../commonTests'
 import { mountWithProvider } from '../../../utils'
 
-import Text from '@fluentui/react/src/components/Text/Text'
+import { Text } from '@fluentui/react'
 
 describe('Text', () => {
   isConformant(Text)

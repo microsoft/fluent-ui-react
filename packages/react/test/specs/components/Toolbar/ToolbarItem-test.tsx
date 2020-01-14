@@ -1,5 +1,5 @@
 import * as React from 'react'
-import ToolbarItem from '@fluentui/react/src/components/Toolbar/ToolbarItem'
+import { ToolbarItem } from '@fluentui/react'
 
 import { isConformant } from '../../commonTests'
 import { mountWithProvider } from '../../../utils'

@@ -1,10 +1,9 @@
 import * as React from 'react'
 
-import Menu from '@fluentui/react/src/components/Menu/Menu'
+import { Menu, MenuItem } from '@fluentui/react'
 import { isConformant, handlesAccessibility, getRenderedAttribute } from '../../commonTests'
 import { mountWithProvider, mountWithProviderAndGetComponent } from '../../../utils'
 import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
-import MenuItem from '@fluentui/react/src/components/Menu/MenuItem'
 import {
   AccessibilityDefinition,
   menuBehavior,

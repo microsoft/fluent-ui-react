@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Embed from '@fluentui/react/src/components/Embed/Embed'
+import { Embed } from '@fluentui/react'
 import { isConformant, handlesAccessibility } from '../../commonTests'
 import { mountWithProviderAndGetComponent } from '../../../utils'
 

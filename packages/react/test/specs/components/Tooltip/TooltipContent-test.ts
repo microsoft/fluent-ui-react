@@ -1,6 +1,6 @@
 import { isConformant } from '../../commonTests'
 
-import TooltipContent from '@fluentui/react/src/components/Tooltip/TooltipContent'
+import { TooltipContent } from '@fluentui/react'
 
 describe('TooltipContent', () => {
   isConformant(TooltipContent)

@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import DropdownSelectedItem from '@fluentui/react/src/components/Dropdown/DropdownSelectedItem'
+import { DropdownSelectedItem } from '@fluentui/react'
 import { getRenderedAttribute } from '../../commonTests'
 import { mountWithProviderAndGetComponent } from '../../../utils'
 

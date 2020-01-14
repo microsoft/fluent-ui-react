@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { mountWithProvider as mount } from '../../../utils'
-import TextArea from '@fluentui/react/src/components/TextArea/TextArea'
+import { TextArea } from '@fluentui/react'
 import { isConformant } from '../../commonTests'
 import * as faker from 'faker'
 

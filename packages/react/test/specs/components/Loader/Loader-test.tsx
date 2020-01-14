@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import Loader from '@fluentui/react/src/components/Loader/Loader'
+import { Loader } from '@fluentui/react'
 import { isConformant } from '../../commonTests'
 import { mountWithProvider } from '../../../utils'
 

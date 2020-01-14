@@ -1,11 +1,14 @@
 import * as React from 'react'
 
 import { isConformant } from '../../commonTests'
-import Carousel, { CarouselProps } from '@fluentui/react/src/components/Carousel/Carousel'
-import CarouselItem from '@fluentui/react/src/components/Carousel/CarouselItem'
-import CarouselNavigation from '@fluentui/react/src/components/Carousel/CarouselNavigation'
-import CarouselNavigationItem from '@fluentui/react/src/components/Carousel/CarouselNavigationItem'
-import Text from '@fluentui/react/src/components/Text/Text'
+import {
+  Carousel,
+  CarouselProps,
+  CarouselItem,
+  CarouselNavigation,
+  CarouselNavigationItem,
+  Text,
+} from '@fluentui/react'
 import { ReactWrapper, CommonWrapper } from 'enzyme'
 import { findIntrinsicElement, mountWithProvider } from '../../../utils'
 

@@ -1,6 +1,6 @@
 import { isConformant, handlesAccessibility } from '../../commonTests'
 
-import ToolbarRadioGroup from '@fluentui/react/src/components/Toolbar/ToolbarRadioGroup'
+import { ToolbarRadioGroup } from '@fluentui/react'
 import { ReactWrapper } from 'enzyme'
 import { mountWithProvider } from '../../../utils'
 import * as React from 'react'

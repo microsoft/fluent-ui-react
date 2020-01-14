@@ -1,6 +1,5 @@
 import { isConformant, implementsShorthandProp } from '../../commonTests'
-import ChatItem from '@fluentui/react/src/components/Chat/ChatItem'
-import Box from '@fluentui/react/src/components/Box/Box'
+import { ChatItem, Box } from '@fluentui/react'
 
 const chatItemImplementsShorthandProp = implementsShorthandProp(ChatItem)
 

@@ -1,5 +1,5 @@
 import { isConformant } from '../../commonTests'
-import PopupContent from '@fluentui/react/src/components/Popup/PopupContent'
+import { PopupContent } from '@fluentui/react'
 
 describe('PopupContent', () => {
   isConformant(PopupContent, { rendersPortal: true })

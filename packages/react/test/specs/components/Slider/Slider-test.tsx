@@ -1,5 +1,5 @@
 import { isConformant, handlesAccessibility } from '../../commonTests'
-import Slider from '@fluentui/react/src/components/Slider/Slider'
+import { Slider } from '@fluentui/react'
 
 describe('Slider', () => {
   isConformant(Slider, {

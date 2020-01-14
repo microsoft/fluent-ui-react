@@ -2,12 +2,7 @@ import * as React from 'react'
 
 import { isConformant, implementsShorthandProp } from '../../commonTests'
 import { mountWithProvider } from '../../../utils'
-import Button from '@fluentui/react/src/components/Button/Button'
-import RadioGroup from '@fluentui/react/src/components/RadioGroup/RadioGroup'
-import Input from '@fluentui/react/src/components/Input/Input'
-import Text from '@fluentui/react/src/components/Text/Text'
-import FormField from '@fluentui/react/src/components/Form/FormField'
-import Box from '@fluentui/react/src/components/Box/Box'
+import { Button, RadioGroup, Input, Text, FormField, Box } from '@fluentui/react'
 
 const formFieldImplementsShorthandProp = implementsShorthandProp(FormField)
 

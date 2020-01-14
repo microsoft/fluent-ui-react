@@ -1,6 +1,6 @@
 import { Placement } from 'popper.js'
 
-import { Alignment, Position } from '@fluentui/react/src/utils/positioner'
+import { Alignment, Position } from '@fluentui/react'
 import {
   getPlacement,
   applyRtlToOffset,

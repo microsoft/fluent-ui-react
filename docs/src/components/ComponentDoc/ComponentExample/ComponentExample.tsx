@@ -7,6 +7,7 @@ import {
 } from '@fluentui/docs-components'
 import {
   ComponentVariablesInput,
+  constants,
   Flex,
   ICSSInJSStyle,
   Menu,
@@ -22,7 +23,6 @@ import qs from 'qs'
 import SourceRender from 'react-source-render'
 
 import { examplePathToHash, getFormattedHash, scrollToAnchor } from '../../../utils'
-import { constants } from '@fluentui/react/src/utils'
 import Editor, { EDITOR_BACKGROUND_COLOR, EDITOR_GUTTER_COLOR } from '../../Editor'
 import { babelConfig, importResolver } from '../../Playground/renderConfig'
 import ExampleContext, { ExampleContextValue } from '../../../context/ExampleContext'

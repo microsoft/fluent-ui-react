@@ -4,9 +4,7 @@ import * as React from 'react'
 import { handlesAccessibility, implementsShorthandProp, isConformant } from '../../commonTests'
 import { mountWithProvider } from '../../../utils'
 
-import ChatMessage from '@fluentui/react/src/components/Chat/ChatMessage'
-import Text from '@fluentui/react/src/components/Text/Text'
-import Box from '@fluentui/react/src/components/Box/Box'
+import { ChatMessage, Text, Box } from '@fluentui/react'
 
 const chatMessageImplementsShorthandProp = implementsShorthandProp(ChatMessage)
 

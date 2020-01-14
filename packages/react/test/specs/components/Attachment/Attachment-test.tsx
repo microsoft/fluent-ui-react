@@ -3,10 +3,7 @@ import { isConformant, implementsShorthandProp, handlesAccessibility } from '../
 import { mountWithProvider, findIntrinsicElement } from '../../../utils'
 import * as keyboardKey from 'keyboard-key'
 
-import Attachment from '@fluentui/react/src/components/Attachment/Attachment'
-import Text from '@fluentui/react/src/components/Text/Text'
-import Icon from '@fluentui/react/src/components/Icon/Icon'
-import Button from '@fluentui/react/src/components/Button/Button'
+import { Attachment, Text, Icon, Button } from '@fluentui/react'
 import { ReactWrapper } from 'enzyme'
 
 const attachmentImplementsShorthandProp = implementsShorthandProp(Attachment)

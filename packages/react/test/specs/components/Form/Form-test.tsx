@@ -1,8 +1,7 @@
 import { isConformant } from '../../commonTests'
 
-import Form from '@fluentui/react/src/components/Form/Form'
+import { Form, FormField } from '@fluentui/react'
 import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
-import FormField from '@fluentui/react/src/components/Form/FormField'
 
 const formImplementsCollectionShorthandProp = implementsCollectionShorthandProp(Form)
 

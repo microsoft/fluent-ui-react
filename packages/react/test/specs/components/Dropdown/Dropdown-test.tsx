@@ -2,14 +2,10 @@ import * as React from 'react'
 import * as keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
 
-import Dropdown from '@fluentui/react/src/components/Dropdown/Dropdown'
-import DropdownSearchInput from '@fluentui/react/src/components/Dropdown/DropdownSearchInput'
-import DropdownSelectedItem from '@fluentui/react/src/components/Dropdown/DropdownSelectedItem'
+import { Dropdown, DropdownSearchInput, DropdownItemProps, ShorthandValue } from '@fluentui/react'
 import { isConformant } from '../../commonTests'
 import { findIntrinsicElement, mountWithProvider } from '../../../utils'
 import { ReactWrapper, CommonWrapper } from 'enzyme'
-import { DropdownItemProps } from '@fluentui/react/src/components/Dropdown/DropdownItem'
-import { ShorthandValue } from '@fluentui/react/src/types'
 
 jest.dontMock('keyboard-key')
 jest.useFakeTimers()

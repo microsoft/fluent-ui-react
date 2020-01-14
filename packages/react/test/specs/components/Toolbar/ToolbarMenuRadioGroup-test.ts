@@ -1,7 +1,6 @@
 import { handlesAccessibility, isConformant } from '../../commonTests'
 
-import Box from '@fluentui/react/src/components/Box/Box'
-import ToolbarMenuRadioGroup from '@fluentui/react/src/components/Toolbar/ToolbarMenuRadioGroup'
+import { Box, ToolbarMenuRadioGroup } from '@fluentui/react'
 
 describe('ToolbarMenuRadioGroup', () => {
   isConformant(ToolbarMenuRadioGroup, {

@@ -2,7 +2,7 @@ import { Extendable, ICSSInJSStyle } from '@fluentui/styles'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
-import { UIComponent } from '@fluentui/react/src/utils'
+import { UIComponent } from '@fluentui/react'
 import { mountWithProviderAndGetComponent } from '../../utils'
 
 type AttrValue = 'props' | 'state'

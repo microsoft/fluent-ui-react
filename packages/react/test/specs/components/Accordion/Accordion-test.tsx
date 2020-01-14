@@ -1,10 +1,9 @@
 import * as React from 'react'
 import * as keyboardKey from 'keyboard-key'
 
-import Accordion from '@fluentui/react/src/components/Accordion/Accordion'
+import { Accordion, AccordionTitle } from '@fluentui/react'
 import { isConformant, handlesAccessibility } from '../../commonTests'
 import { mountWithProvider, mountWithProviderAndGetComponent } from '../../../utils'
-import AccordionTitle from '@fluentui/react/src/components/Accordion/AccordionTitle'
 import { ReactWrapper, CommonWrapper } from 'enzyme'
 
 const panels = [

@@ -1,13 +1,10 @@
 import * as React from 'react'
 import * as keyboardKey from 'keyboard-key'
 
-import SplitButton from '@fluentui/react/src/components/SplitButton/SplitButton'
+import { SplitButton, Menu, MenuButton, Button } from '@fluentui/react'
 import { isConformant } from '../../commonTests'
 import { ReactWrapper, CommonWrapper } from 'enzyme'
 import { mountWithProvider, findIntrinsicElement } from '../../../utils'
-import Menu from '@fluentui/react/src/components/Menu/Menu'
-import MenuButton from '@fluentui/react/src/components/MenuButton/MenuButton'
-import Button from '@fluentui/react/src/components/Button/Button'
 
 const mockMenu = { items: ['1', '2', '3'] }
 

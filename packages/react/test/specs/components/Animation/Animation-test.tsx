@@ -1,6 +1,6 @@
 import { isConformant } from '../../commonTests'
 
-import Animation from '@fluentui/react/src/components/Animation/Animation'
+import { Animation } from '@fluentui/react'
 
 describe('Animation', () => {
   isConformant(Animation, { hasAccessibilityProp: false })

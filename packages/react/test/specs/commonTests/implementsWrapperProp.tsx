@@ -2,8 +2,7 @@ import * as React from 'react'
 import { ReactWrapper } from 'enzyme'
 import { mountWithProvider as mount } from '../../utils'
 
-import Box from '@fluentui/react/src/components/Box/Box'
-import { Props, ShorthandValue } from '@fluentui/react/src/types'
+import { Box, Props, ShorthandValue } from '@fluentui/react'
 
 export interface ImplementsWrapperPropOptions {
   wrapppedComponentSelector: any

@@ -3,9 +3,8 @@ import * as React from 'react'
 import { isConformant, handlesAccessibility } from '../../commonTests'
 import { mountWithProvider } from '../../../utils'
 
-import List from '@fluentui/react/src/components/List/List'
+import { List, ListItem, ListItemProps } from '@fluentui/react'
 import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
-import ListItem, { ListItemProps } from '@fluentui/react/src/components/List/ListItem'
 
 const listImplementsCollectionShorthandProp = implementsCollectionShorthandProp(List)
 

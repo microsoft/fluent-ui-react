@@ -1,8 +1,6 @@
 import { isConformant, implementsShorthandProp } from '../../commonTests'
 
-import Label from '@fluentui/react/src/components/Label/Label'
-import Icon from '@fluentui/react/src/components/Icon/Icon'
-import Image from '@fluentui/react/src/components/Image/Image'
+import { Label, Icon, Image } from '@fluentui/react'
 
 const labelImplementsShorthandProp = implementsShorthandProp(Label)
 

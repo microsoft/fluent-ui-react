@@ -2,8 +2,7 @@ import { ComponentStyleFunctionParam, emptyTheme, ThemeInput } from '@fluentui/s
 import * as React from 'react'
 import { mount } from 'enzyme'
 
-import Provider from '@fluentui/react/src/components/Provider/Provider'
-import ProviderConsumer from '@fluentui/react/src/components/Provider/ProviderConsumer'
+import { Provider, ProviderConsumer } from '@fluentui/react'
 
 const styleParam: ComponentStyleFunctionParam = {
   disableAnimations: false,
@@ -15,10 +14,6 @@ const styleParam: ComponentStyleFunctionParam = {
 }
 
 describe('ProviderConsumer', () => {
-  test('is exported', () => {
-    expect(require('@fluentui/react/src/index.ts').ProviderConsumer).toEqual(ProviderConsumer)
-  })
-
   test('is a subcomponent of the Provider', () => {
     expect(Provider.Consumer).toEqual(ProviderConsumer)
   })

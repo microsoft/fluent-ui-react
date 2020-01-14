@@ -4,7 +4,7 @@ import * as keyboardKey from 'keyboard-key'
 import { isConformant, handlesAccessibility } from '../../commonTests'
 import { mountWithProvider } from '../../../utils'
 
-import ListItem from '@fluentui/react/src/components/List/ListItem'
+import { ListItem } from '@fluentui/react'
 
 describe('ListItem', () => {
   isConformant(ListItem)

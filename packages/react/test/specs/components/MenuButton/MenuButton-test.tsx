@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import MenuButton from '@fluentui/react/src/components/MenuButton/MenuButton'
+import { MenuButton } from '@fluentui/react'
 import { isConformant, handlesAccessibility } from '../../commonTests'
 import { mountWithProvider } from '../../../utils'
 

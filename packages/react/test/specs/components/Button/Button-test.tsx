@@ -10,8 +10,7 @@ import {
 import { mountWithProvider, mountWithProviderAndGetComponent } from '../../../utils'
 import { toggleButtonBehavior } from '@fluentui/accessibility'
 
-import Button from '@fluentui/react/src/components/Button/Button'
-import Icon from '@fluentui/react/src/components/Icon/Icon'
+import { Button, Icon } from '@fluentui/react'
 
 const buttonImplementsShorthandProp = implementsShorthandProp(Button)
 

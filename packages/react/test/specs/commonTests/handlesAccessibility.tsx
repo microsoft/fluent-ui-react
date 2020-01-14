@@ -9,7 +9,7 @@ import * as React from 'react'
 import * as keyboardKey from 'keyboard-key'
 
 import { mountWithProviderAndGetComponent, mountWithProvider } from '../../utils'
-import { UIComponent } from '@fluentui/react/src/utils'
+import { UIComponent } from '@fluentui/react'
 import { EVENT_TARGET_ATTRIBUTE, getEventTargetComponent } from './eventTarget'
 
 export const getRenderedAttribute = (renderedComponent, propName, partSelector) => {

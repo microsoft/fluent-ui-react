@@ -3,9 +3,7 @@ import * as keyboardKey from 'keyboard-key'
 
 import { isConformant } from '../../commonTests'
 import { mountWithProvider } from '../../../utils'
-import Tree from '@fluentui/react/src/components/Tree/Tree'
-import TreeTitle from '@fluentui/react/src/components/Tree/TreeTitle'
-import TreeItem from '@fluentui/react/src/components/Tree/TreeItem'
+import { Tree, TreeTitle, TreeItem } from '@fluentui/react'
 import { ReactWrapper, CommonWrapper } from 'enzyme'
 
 const items = [

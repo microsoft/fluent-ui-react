@@ -1,5 +1,6 @@
 import {
   Box,
+  constants,
   Flex,
   HierarchicalTree,
   HierarchicalTreeItemProps,
@@ -20,8 +21,6 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { NavLink, NavLinkProps, withRouter } from 'react-router-dom'
-
-import { constants } from '@fluentui/react/src/utils'
 
 type ComponentMenuItem = { displayName: string; type: string }
 

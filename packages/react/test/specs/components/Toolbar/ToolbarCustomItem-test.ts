@@ -1,6 +1,6 @@
 import { isConformant } from '../../commonTests'
 
-import ToolbarCustomItem from '@fluentui/react/src/components/Toolbar/ToolbarCustomItem'
+import { ToolbarCustomItem } from '@fluentui/react'
 
 describe('ToolbarCustomItem', () => {
   isConformant(ToolbarCustomItem, {

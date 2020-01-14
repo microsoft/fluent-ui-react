@@ -1,7 +1,6 @@
 import { isConformant } from '../../commonTests'
 
-import ToolbarMenuItem from '@fluentui/react/src/components/Toolbar/ToolbarMenuItem'
-import Box from '@fluentui/react/src/components/Box/Box'
+import { ToolbarMenuItem, Box } from '@fluentui/react'
 
 describe('ToolbarMenuItem', () => {
   isConformant(ToolbarMenuItem, {

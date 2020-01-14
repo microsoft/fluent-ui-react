@@ -1,9 +1,7 @@
 import * as React from 'react'
 import { isConformant, handlesAccessibility } from '../../commonTests'
 import { mountWithProviderAndGetComponent } from '../../../utils'
-import TableRow from '@fluentui/react/src/components/Table/TableRow'
-
-import Table from '@fluentui/react/src/components/Table/Table'
+import { TableRow, Table } from '@fluentui/react'
 
 describe('Table', () => {
   isConformant(Table)
