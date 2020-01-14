@@ -1,5 +1,6 @@
 import {
   ComponentSlotStyle,
+  ComponentSlotStylesPrepared,
   ComponentVariablesInput,
   DebugData,
   emptyTheme,
@@ -8,8 +9,13 @@ import * as React from 'react'
 // @ts-ignore We have this export in package, but it is not present in typings
 import { ThemeContext } from 'react-fela'
 
-import { ComponentDesignProp, RendererRenderRule, StylesContextValue } from '../styles/types'
-import getStyles, { GetStylesResult } from '../styles/getStyles'
+import {
+  ComponentDesignProp,
+  ComponentSlotClasses,
+  RendererRenderRule,
+  StylesContextValue,
+} from '../styles/types'
+import getStyles from '../styles/getStyles'
 
 type PrimitiveProps = Record<string, boolean | number | string | undefined>
 type UseStylesOptions<StyleProps extends PrimitiveProps> = {
@@ -42,7 +48,7 @@ const defaultContext: StylesContextValue<{ renderRule: RendererRenderRule }> = {
 const useStyles = <StyleProps extends PrimitiveProps>(
   displayName: string,
   options: UseStylesOptions<StyleProps>,
-): [GetStylesResult['classes'], GetStylesResult['styles']] => {
+): [ComponentSlotClasses, ComponentSlotStylesPrepared] => {
   const context: StylesContextValue<{ renderRule: RendererRenderRule }> =
     React.useContext(ThemeContext) || defaultContext
 
