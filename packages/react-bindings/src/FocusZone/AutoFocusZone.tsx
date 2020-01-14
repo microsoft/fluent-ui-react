@@ -1,11 +1,11 @@
 import { Ref } from '@fluentui/react-component-ref'
+import { callable } from '@fluentui/styles'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 
 import getElementType from '../utils/getElementType'
 import getUnhandledProps from '../utils/getUnhandledProps'
-import callable from '../utils/callable'
 import { AutoFocusZoneProps } from './AutoFocusZone.types'
 import { getNextElement, focusAsync } from './focusUtilities'
 

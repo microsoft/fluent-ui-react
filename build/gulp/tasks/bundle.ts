@@ -1,8 +1,7 @@
 import { task, series, parallel, src, dest } from 'gulp'
 import babel from 'gulp-babel'
-import rimraf from 'rimraf'
+import del from 'del'
 import webpack from 'webpack'
-import { argv } from 'yargs'
 
 import config from '../../../config'
 import sh from '../sh'
@@ -12,27 +11,19 @@ const g = require('gulp-load-plugins')()
 const { paths } = config
 const { log, PluginError } = g.util
 
-const packageName = (argv.package as string) || 'react'
+const packageName = config.package
 
 // ----------------------------------------
 // Clean
 // ----------------------------------------
 
-task('bundle:package:clean:es', cb => {
-  rimraf(`${config.paths.packageDist(packageName)}/es/*`, cb)
-})
-
-task('bundle:package:clean:commonjs', cb => {
-  rimraf(`${config.paths.packageDist(packageName)}/commonjs/*`, cb)
-})
-
-task('bundle:package:clean:umd', cb => {
-  rimraf(`${config.paths.packageDist(packageName)}/umd/*`, cb)
-})
-
-task(
-  'bundle:package:clean',
-  parallel('bundle:package:clean:es', 'bundle:package:clean:commonjs', 'bundle:package:clean:umd'),
+task('bundle:package:clean', () =>
+  del([
+    `${paths.packageDist(packageName)}/es/*`,
+    `${paths.packageDist(packageName)}/commonjs/*`,
+    `${paths.packageDist(packageName)}/umd/*`,
+    `${paths.packageDist(packageName)}/dts`,
+  ]),
 )
 
 // ----------------------------------------
@@ -51,22 +42,23 @@ task('bundle:package:commonjs', () =>
 
 task('bundle:package:es', () =>
   src(componentsSrc)
-    .pipe(babel({ caller: { useESModules: true } }))
+    .pipe(babel({ caller: { useESModules: true } } as any))
     .pipe(dest(paths.packageDist(packageName, 'es'))),
 )
 
-task('bundle:package:types', () => {
-  const tsConfig = paths.base('build/tsconfig.json')
-  const typescript = g.typescript.createProject(tsConfig, {
-    declaration: true,
-    isolatedModules: false,
-    module: 'esnext',
-  })
-
-  return src(componentsSrc)
-    .pipe(typescript())
-    .dts.pipe(dest(paths.packageDist(packageName, 'es')))
+task('bundle:package:types:tsc', () => {
+  let cmd = 'tsc -b'
+  if (process.cwd() === config.path_base) {
+    cmd = `cd packages && cd ${packageName} && ${cmd}`
+  }
+  return sh(cmd)
 })
+task('bundle:package:types:copy', () => {
+  return src(paths.packageDist(packageName, 'dts/src/**/*.d.ts')).pipe(
+    dest(paths.packageDist(packageName, 'es')),
+  )
+})
+task('bundle:package:types', series('bundle:package:types:tsc', 'bundle:package:types:copy'))
 
 task('bundle:package:umd', cb => {
   process.env.NODE_ENV = 'build'
@@ -107,4 +99,7 @@ task(
 )
 task('bundle:package', series('bundle:package:no-umd', 'bundle:package:umd'))
 
-task('bundle:all-packages', () => sh('lerna run build'))
+task('bundle:all-packages', async () => {
+  await sh('lerna run build')
+  return del(`${config.paths.packages()}/*/dist/dts`)
+})

@@ -1,5 +1,5 @@
 import { pxToRem } from '../../../../utils'
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import { LabelProps } from '../../../../components/Label/Label'
 import { LabelVariables } from './labelVariables'
 import { getColorScheme } from '../../colors'

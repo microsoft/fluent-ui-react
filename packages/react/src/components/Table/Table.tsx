@@ -13,8 +13,7 @@ import {
   applyAccessibilityKeyHandlers,
   childrenExist,
 } from '../../utils'
-import { ComponentVariablesObject } from '../../themes/types'
-import { mergeComponentVariables } from '../../utils/mergeThemes'
+import { ComponentVariablesObject, mergeComponentVariables } from '@fluentui/styles'
 import TableRow, { TableRowProps } from './TableRow'
 import TableCell from './TableCell'
 import { WithAsProp, ShorthandCollection, ShorthandValue } from '../../types'

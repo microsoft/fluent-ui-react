@@ -1,4 +1,4 @@
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import { ButtonProps } from '../../../../components/Button/Button'
 import { ButtonVariables } from '../../../teams/components/Button/buttonVariables'
 import { ButtonHighContrastVariables } from './buttonVariables'

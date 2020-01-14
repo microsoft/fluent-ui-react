@@ -41,7 +41,7 @@ export interface Conformant {
 export default function isConformant(
   Component: React.ComponentType<any> & {
     handledProps: FluentUI.ObjectOf<any>
-    autoControlledProps: string[]
+    autoControlledProps?: string[]
     className: string
   },
   options: Conformant = {},

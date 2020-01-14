@@ -26,7 +26,10 @@
   },
   "repository": "microsoft/fluent-ui-react.git",
   "scripts": {
-    "build": "gulp bundle:package:no-umd --package react-proptypes"
+    "build": "gulp bundle:package:no-umd",
+    "clean": "gulp bundle:package:clean",
+    "test": "gulp test",
+    "test:watch": "gulp test:watch"
   },
   "sideEffects": false,
   "types": "dist/es/index.d.ts"

@@ -1,12 +1,8 @@
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import * as _ from 'lodash'
 
 import { childrenExist, pxToRem } from '../../../../utils'
-import {
-  ComponentSlotStylesPrepared,
-  ICSSInJSStyle,
-  StrictColorScheme,
-  ItemType,
-} from '../../../types'
+import { StrictColorScheme, ItemType } from '../../../types'
 import { DividerVariables, dividerColorAreas } from './dividerVariables'
 import { DividerProps } from '../../../../components/Divider/Divider'
 

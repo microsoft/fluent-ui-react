@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { Extendable, ShorthandValue } from 'src/types'
-import { Avatar, AvatarProps, Divider, Grid } from '@fluentui/react'
+import { ShorthandValue } from 'src/types'
+import { Avatar, AvatarProps, Divider, Extendable, Grid } from '@fluentui/react'
 import CustomText from './CustomText'
 
 export interface EmployeeCardProps {

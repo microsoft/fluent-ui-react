@@ -1,4 +1,22 @@
 {
   "extends": "../../build/tsconfig.common",
-  "include": ["src"]
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "dist/dts",
+    "paths": {
+      "docs/*": ["docs/*"],
+      "src/*": ["packages/react/src/*"],
+      "test/*": ["packages/react/test/*"]
+    }
+  },
+  "include": ["src", "test"],
+  "references": [
+    { "path": "../accessibility" },
+    { "path": "../styles" },
+    { "path": "../react-bindings" },
+    { "path": "../react-component-event-listener" },
+    { "path": "../react-component-nesting-registry" },
+    { "path": "../react-component-ref" },
+    { "path": "../react-proptypes" }
+  ]
 }

@@ -8,6 +8,7 @@ import {
   MenuItemProps,
   ShorthandCollection,
   IconXSpacing,
+  ICSSInJSStyle,
 } from '@fluentui/react'
 
 import { Props } from 'src/types'
@@ -52,7 +53,7 @@ const ComposeMessage: React.FunctionComponent<ComposeMessageProps> = props => (
   />
 )
 
-const getInputWrapperStyles = ({ attached }: ComposeMessageProps): React.CSSProperties => {
+const getInputWrapperStyles = ({ attached }: ComposeMessageProps): ICSSInJSStyle => {
   const borderTopRadius = '3px'
   const borderBottomRadius = '2px'
   const borderWidth = '1px'

@@ -6,7 +6,7 @@ import path from 'path'
 import portfinder from 'portfinder'
 import puppeteer from 'puppeteer'
 import sh from '../sh'
-import rimraf from 'rimraf'
+import del from 'del'
 
 import config from '../../../config'
 import tmp from 'tmp'
@@ -87,7 +87,7 @@ const createReactApp = async (atTempDirectory: string, appName: string): Promise
     await runIn(tempUtilProjectPath)(`yarn create-react-app ${appProjectPath} --typescript`)
   } finally {
     // remove temp util directory
-    rimraf.sync(tempUtilProjectPath)
+    del.sync(tempUtilProjectPath, { force: true })
   }
 
   return appProjectPath

@@ -51,15 +51,18 @@ const PerfChart: React.FC<PerfChartProps> = ({ perfData, withExtremes }) => {
       <LineSeries
         {...props}
         key={chartName + key}
-        data={perfData.map(sample => ({
-          x: sampleToXAxis(sample),
-          y: _.get(sample, `performance.${chartName}.${data}`, 0),
-        }))}
-        {...(index === 0 && {
-          onNearestX: (d: { x: number }) => {
-            setNearestX(d.x)
-          },
-        })}
+        data={_.filter(
+          perfData.map(sample => {
+            const y = _.get(sample, `performance.${chartName}.${data}`)
+            if (_.isUndefined(y)) {
+              return undefined
+            }
+            return {
+              x: sampleToXAxis(sample),
+              y,
+            }
+          }),
+        )}
       />
     ))
 
@@ -148,6 +151,18 @@ const PerfChart: React.FC<PerfChartProps> = ({ perfData, withExtremes }) => {
         stroke: tpiColor,
         strokeWidth: '2px',
       })}
+
+      <LineSeries
+        opacity={0}
+        key="vertical-axis-hack"
+        data={perfData.map(sample => ({
+          x: sampleToXAxis(sample),
+          y: 0,
+        }))}
+        onNearestX={(d: { x: number }) => {
+          setNearestX(d.x)
+        }}
+      />
 
       {nearestX && (
         <PerfChartTooltip

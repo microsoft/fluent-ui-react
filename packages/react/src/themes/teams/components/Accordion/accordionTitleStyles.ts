@@ -1,4 +1,4 @@
-import { ComponentSlotStylesPrepared } from '../../../types'
+import { ComponentSlotStylesPrepared } from '@fluentui/styles'
 import { AccordionTitleProps } from '../../../../components/Accordion/AccordionTitle'
 
 const accordionTitleStyles: ComponentSlotStylesPrepared<AccordionTitleProps> = {
