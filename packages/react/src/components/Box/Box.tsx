@@ -1,4 +1,9 @@
-import { getElementType, getUnhandledProps, useStyles } from '@fluentui/react-bindings'
+import {
+  ComponentDesignProp,
+  getElementType,
+  getUnhandledProps,
+  useStyles,
+} from '@fluentui/react-bindings'
 import * as React from 'react'
 // @ts-ignore
 import { ThemeContext } from 'react-fela'
@@ -6,11 +11,11 @@ import { ThemeContext } from 'react-fela'
 import {
   childrenExist,
   createShorthandFactory,
-  UIComponentProps,
   ContentComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
   rtlTextContainer,
+  StyledComponentProps,
 } from '../../utils'
 import {
   ProviderContextPrepared,
@@ -20,9 +25,13 @@ import {
 } from '../../types'
 
 export interface BoxProps
-  extends UIComponentProps<BoxProps>,
+  extends StyledComponentProps<BoxProps>,
     ContentComponentProps,
-    ChildrenComponentProps {}
+    ChildrenComponentProps {
+  /** Additional CSS class name(s) to apply.  */
+  className?: string
+  design?: ComponentDesignProp
+}
 
 const Box: React.FC<WithAsProp<BoxProps>> & FluentComponentStaticProps<BoxProps> = props => {
   const { className, design, styles, variables, children, content } = props
