@@ -5,6 +5,7 @@ In general, components need to conform to the [WAI-ARIA Authoring Practices 1.2]
 
 ## Keyboard navigation
 - All elements that are interactive need to be focusable using keyboard keys (TAB/Shift+Tab or arrow keys)
+- Elements that have click or right-click (contextmenu) handlers need to respond to Enter/Space or secondary action shortcuts. Users need to be able to initiate the click or right click when using screen readers.
 - Focused element needs to be highlighted if it was focused by keyboard
 - Focus should never go to the ``<body>`` element
 - User needs to be able to move focus at any time, focus should not be be 'stuck' on one element
@@ -17,8 +18,8 @@ In general, components need to conform to the [WAI-ARIA Authoring Practices 1.2]
 
 ## Screen reader support
 User needs to be able to interact with the application using:
-- screen reader with virtual cursor navigation
-- screen reader witout virtual cursor navigation
+- screen reader with virtual cursor navigation (browse mode)
+- screen reader witout virtual cursor navigation (application mode)
 
 All requirements for keyboard navigation are valid in both of these screen reader use cases. User needs to be able to understand which element is focused and how he can interact with it just based on the information provided by the screen reader.
 
