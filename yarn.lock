@@ -4984,17 +4984,17 @@ ability-attributes@^0.0.8:
   dependencies:
     ability-attributes-js-constraints "^0.0.8"
 
-ability-helpers-react@0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/ability-helpers-react/-/ability-helpers-react-0.0.3.tgz#e8f566034f1c0f14cdc2a3888f6e494f9e814851"
-  integrity sha512-q/d78V6sA8TBHluvyfU36EMKIDwb2NE57n5evBrglRzVNMsep7zFroLncamaZ6RxINNGoJfwUBC7LZCLtMAtKg==
+ability-helpers-react@0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/ability-helpers-react/-/ability-helpers-react-0.0.5.tgz#8104f0d15205eda2d2a869be859b74a32bb968a3"
+  integrity sha512-cceDDHesj0h8Y5iRHS9Ft391som8tCDauEzLnTJEnEgOyBz4IRzQSa/B9ZW+qSSEaFg4W8Re0qgwWR5dKcAHFw==
   dependencies:
-    ability-helpers "^0.0.3"
+    ability-helpers "^0.0.5"
 
-ability-helpers@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/ability-helpers/-/ability-helpers-0.0.3.tgz#8c768fae3223d6a2eddb53deb5c6c02a7562b6e6"
-  integrity sha512-OnAThPW9w8zxZPzbr8lByzKl9PJue8vYFd1n0ehUGqfDyKoYPgBeft3cYy8CvEghem8hNVt/3cS1aGxQ5JhxXA==
+ability-helpers@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/ability-helpers/-/ability-helpers-0.0.5.tgz#58b6be6d479e24b11f102dfeef168a1e022a8055"
+  integrity sha512-/xbViWthJBrqVBsjufaY8Gt5zcLDu26J6cTd0BnATmy6EfCHiW9GJuS9LXX/J47oUeWR1p0URJkK2rbdmgsGSg==
 
 accepts@~1.3.5, accepts@~1.3.7:
   version "1.3.7"

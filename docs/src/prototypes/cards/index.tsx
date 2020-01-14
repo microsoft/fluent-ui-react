@@ -22,7 +22,6 @@ class EmployeeCardPrototype extends React.Component<any> {
           aria-labelledby={`user-name-${i} user-card-${i}`}
           id={`user-card-${i}`}
           aria-label=",card"
-          tabIndex={0}
           role={this.state.cardRole}
           aria-roledescription={this.state.ariaRoleDescription}
           // aria-label={`${employee.firstName} user card`}

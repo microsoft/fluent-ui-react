@@ -2,7 +2,7 @@ import * as React from 'react'
 import { Extendable, ShorthandValue } from 'src/types'
 import { Avatar, AvatarProps, Divider, Grid, Button } from '@fluentui/react'
 import CustomText from './CustomText'
-import { Group } from 'ability-helpers-react'
+import { Group, NextGroupDirection } from 'ability-helpers-react'
 
 export interface EmployeeCardProps {
   firstName?: string
@@ -32,7 +32,12 @@ class EmployeeCard extends React.Component<Extendable<EmployeeCardProps>, any> {
       ...restProps
     } = this.props
     return (
-      <Group>
+      <Group
+        isFocusable={true}
+        isLimited={true}
+        nextGroupDirection={NextGroupDirection.Grid}
+        {...restProps}
+      >
         <Grid
           columns="80% 20%"
           styles={{
@@ -41,7 +46,6 @@ class EmployeeCard extends React.Component<Extendable<EmployeeCardProps>, any> {
             margin: '10px 10px 10px 10px',
             background: 'white',
           }}
-          {...restProps}
         >
           <div>
             <CustomText id={`user-name-${cardOrder}`} size={'medium'} weight={'bold'} as="div">
