@@ -11,7 +11,7 @@ import del from 'del'
 import config from '../../../config'
 import tmp from 'tmp'
 import http from 'http'
-import { safeLaunchOptions } from 'build/puppeteer.config'
+import { safeLaunchOptions } from '../../puppeteer.config'
 
 type PackedPackages = Record<string, string>
 

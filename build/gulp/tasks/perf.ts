@@ -17,7 +17,7 @@ import {
 } from '../../../perf/types'
 import config from '../../../config'
 import webpackPlugin from '../plugins/gulp-webpack'
-import { safeLaunchOptions } from 'build/puppeteer.config'
+import { safeLaunchOptions } from '../../puppeteer.config'
 
 const { paths } = config
 const { colors, log } = require('gulp-load-plugins')().util
