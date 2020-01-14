@@ -324,13 +324,39 @@ class FiberNavigator {
   }
 
   get instance() {
-    return this.isClassComponent
-      ? this.__fiber.stateNode
-      : this.isFunctionComponent // TODO: assumes functional component w/useRef
-      ? this.__fiber.memoizedState &&
-        this.__fiber.memoizedState.memoizedState &&
-        this.__fiber.memoizedState.memoizedState.current
-      : null
+    if (this.isClassComponent) {
+      return this.__fiber.stateNode
+    }
+
+    if (this.isFunctionComponent) {
+      // assumes functional component w/useRef
+      return this.findDebugHookState(this.__fiber.memoizedState)
+    }
+
+    return null
+  }
+
+  /**
+   * Hooks state is represented by a recursive structure where:
+   * - `memoizedState` is a current value if applicable
+   * - `next` is next hook in order
+   * @param node - fiber
+   */
+  findDebugHookState(node) {
+    if (
+      node &&
+      node.memoizedState &&
+      node.memoizedState.current &&
+      node.memoizedState.current.fluentUIDebug
+    ) {
+      return node.memoizedState.current
+    }
+
+    if (node === null || node.next === null) {
+      return null
+    }
+
+    return this.findDebugHookState(node.next)
   }
 
   get reactComponent() {
@@ -356,10 +382,6 @@ class FiberNavigator {
   isEqual(fiberNav: FiberNavigator) {
     // TODO: do equality check on __fiber instead, however, see fromFiber TODO :/
     return !!fiberNav && fiberNav.instance === this.instance
-  }
-
-  usesHook(name) {
-    return this.__fiber._debugHookTypes.some(hook => hook === name)
   }
 
   find(condition, move) {
