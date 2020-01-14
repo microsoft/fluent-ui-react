@@ -32,6 +32,9 @@ export interface CarouselItemProps
    * up by screen readers.
    */
   itemPositionText?: string
+
+  /** Whether or not navigation exists in carousel. */
+  navigation?: boolean
 }
 
 class CarouselItem extends UIComponent<WithAsProp<CarouselItemProps>> {
@@ -44,6 +47,7 @@ class CarouselItem extends UIComponent<WithAsProp<CarouselItemProps>> {
   static propTypes = {
     ...commonPropTypes.createCommon(),
     active: PropTypes.bool,
+    navigation: PropTypes.bool,
     itemPositionText: PropTypes.string,
   }
 
