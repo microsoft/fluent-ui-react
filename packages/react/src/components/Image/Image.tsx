@@ -1,19 +1,29 @@
-import { Accessibility, imageBehavior } from '@fluentui/accessibility'
+import {
+  Accessibility,
+  AccessibilityAttributes,
+  imageBehavior,
+  ImageBehaviorProps,
+} from '@fluentui/accessibility'
+import {
+  getElementType,
+  getUnhandledProps,
+  useAccessibility,
+  useStyles,
+} from '@fluentui/react-bindings'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import {
-  createShorthandFactory,
-  UIComponent,
-  UIComponentProps,
-  commonPropTypes,
-  ShorthandFactory,
-} from '../../utils'
-import { WithAsProp, withSafeTypeForAs } from '../../types'
+import { createShorthandFactory, UIComponentProps, commonPropTypes } from '../../utils'
+import { FluentComponentStaticProps, WithAsProp, withSafeTypeForAs } from '../../types'
 
-export interface ImageProps extends UIComponentProps {
+export interface ImageProps extends UIComponentProps, ImageBehaviorProps {
+  /** Alternative text. */
+  alt?: string
+
+  'aria-label'?: AccessibilityAttributes['aria-label']
+
   /** Accessibility behavior if overridden by the user. */
-  accessibility?: Accessibility
+  accessibility?: Accessibility<ImageBehaviorProps>
 
   /** An image may be formatted to appear inline with text as an avatar. */
   avatar?: boolean
@@ -28,38 +38,69 @@ export interface ImageProps extends UIComponentProps {
   src?: string
 }
 
-class Image extends UIComponent<WithAsProp<ImageProps>, any> {
-  static create: ShorthandFactory<ImageProps>
+const Image: React.FC<WithAsProp<ImageProps>> & FluentComponentStaticProps<ImageProps> = props => {
+  const {
+    accessibility,
+    alt,
+    animation,
+    'aria-label': ariaLabel,
+    avatar,
+    circular,
+    className,
+    design,
+    fluid,
+    styles,
+    variables,
+  } = props
 
-  static className = 'ui-image'
-
-  static displayName = 'Image'
-
-  static propTypes = {
-    ...commonPropTypes.createCommon({
-      children: false,
-      content: false,
+  const getA11Props = useAccessibility(accessibility, {
+    debugName: Image.displayName,
+    mapPropsToBehavior: () => ({
+      alt,
+      'aria-label': ariaLabel,
     }),
-    avatar: PropTypes.bool,
-    circular: PropTypes.bool,
-    fluid: PropTypes.bool,
-  }
+  })
+  const [classes] = useStyles(Image.displayName, {
+    className: Image.className,
+    mapPropsToStyles: () => ({
+      avatar,
+      circular,
+      fluid,
+    }),
+    mapPropsToInlineStyles: () => ({
+      unstable_animation: animation,
+      className,
+      design,
+      styles,
+      variables,
+    }),
+  })
 
-  static defaultProps = {
-    as: 'img',
-    accessibility: imageBehavior as Accessibility,
-  }
+  const ElementType = getElementType(props)
+  const unhandledProps = getUnhandledProps(Image.handledProps, props)
 
-  renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
-    return (
-      <ElementType
-        {...accessibility.attributes.root}
-        {...unhandledProps}
-        className={classes.root}
-      />
-    )
-  }
+  return <ElementType {...getA11Props('root', { className: classes.root, ...unhandledProps })} />
 }
+
+Image.className = 'ui-image'
+Image.displayName = 'Image'
+Image.defaultProps = {
+  as: 'img',
+  accessibility: imageBehavior,
+}
+
+Image.propTypes = {
+  ...commonPropTypes.createCommon({
+    children: false,
+    content: false,
+  }),
+  accessibility: PropTypes.func,
+  avatar: PropTypes.bool,
+  circular: PropTypes.bool,
+  fluid: PropTypes.bool,
+}
+
+Image.handledProps = Object.keys(Image.propTypes) as any
 
 Image.create = createShorthandFactory({ Component: Image, mappedProp: 'src', allowsJSX: false })
 
