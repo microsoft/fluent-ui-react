@@ -4,7 +4,6 @@
     "composite": true,
     "outDir": "dist/dts",
     "paths": {
-      "@fluentui/*": ["packages/*/src"],
       "docs/*": ["docs/*"],
       "src/*": ["packages/react/src/*"],
       "test/*": ["packages/react/test/*"]
