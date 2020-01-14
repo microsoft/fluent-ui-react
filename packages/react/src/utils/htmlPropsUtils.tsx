@@ -55,9 +55,11 @@ export type HtmlInputAttrs =
   | 'autoCorrect'
   | 'autoFocus'
   | 'checked'
+  | 'defaultIndeterminate'
   | 'disabled'
   | 'form'
   | 'id'
+  | 'indeterminate'
   | 'list'
   | 'max'
   | 'maxLength'
@@ -92,9 +94,11 @@ export const htmlInputAttrs: HtmlInputAttrs[] = [
   'autoCorrect',
   'autoFocus',
   'checked',
+  'defaultIndeterminate',
   'disabled',
   'form',
   'id',
+  'indeterminate',
   'list',
   'max',
   'maxLength',
