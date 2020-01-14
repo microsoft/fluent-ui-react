@@ -8,7 +8,10 @@ import { ButtonVariables } from './buttonVariables'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 
-const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = {
+const buttonStyles: ComponentSlotStylesPrepared<
+  ButtonProps & { hasContent?: boolean },
+  ButtonVariables
+> = {
   root: ({ props: p, variables: v, theme }): ICSSInJSStyle => {
     const { siteVariables } = theme
     const { borderWidth } = siteVariables
@@ -265,7 +268,7 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
       },
     },
 
-    ...(p.content && {
+    ...(p.hasContent && {
       marginRight: pxToRem(4),
     }),
   }),

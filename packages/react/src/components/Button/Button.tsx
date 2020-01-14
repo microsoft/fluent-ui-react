@@ -5,7 +5,6 @@ import * as React from 'react'
 import * as _ from 'lodash'
 
 import {
-  UIComponent,
   childrenExist,
   createShorthandFactory,
   UIComponentProps,
@@ -13,15 +12,28 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   rtlTextContainer,
-  applyAccessibilityKeyHandlers,
   SizeValue,
-  ShorthandFactory,
 } from '../../utils'
 import Icon, { IconProps } from '../Icon/Icon'
 import Box, { BoxProps } from '../Box/Box'
 import Loader, { LoaderProps } from '../Loader/Loader'
-import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
+import {
+  ComponentEventHandler,
+  WithAsProp,
+  ShorthandValue,
+  withSafeTypeForAs,
+  FluentComponentStaticProps,
+  ProviderContextPrepared,
+} from '../../types'
 import ButtonGroup from './ButtonGroup'
+import {
+  getElementType,
+  getUnhandledProps,
+  useAccessibility,
+  useStyles,
+} from '@fluentui/react-bindings'
+// @ts-ignore
+import { ThemeContext } from 'react-fela'
 
 export interface ButtonProps
   extends UIComponentProps,
@@ -84,119 +96,164 @@ export interface ButtonProps
   size?: SizeValue
 }
 
-class Button extends UIComponent<WithAsProp<ButtonProps>> {
-  static create: ShorthandFactory<ButtonProps>
-
-  static displayName = 'Button'
-
-  static className = 'ui-button'
-
-  static propTypes = {
-    ...commonPropTypes.createCommon({
-      content: 'shorthand',
-    }),
-    circular: PropTypes.bool,
-    disabled: PropTypes.bool,
-    fluid: PropTypes.bool,
-    icon: customPropTypes.itemShorthandWithoutJSX,
-    iconOnly: PropTypes.bool,
-    iconPosition: PropTypes.oneOf(['before', 'after']),
-    loader: customPropTypes.itemShorthandWithoutJSX,
-    loading: PropTypes.bool,
-    onClick: PropTypes.func,
-    onFocus: PropTypes.func,
-    primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
-    text: PropTypes.bool,
-    secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
-    size: customPropTypes.size,
-  }
-
-  static defaultProps = {
-    as: 'button',
-    accessibility: buttonBehavior as Accessibility,
-    size: 'medium',
-  }
-
-  static Group = ButtonGroup
-
-  actionHandlers = {
-    performClick: event => {
-      event.preventDefault()
-      this.handleClick(event)
-    },
-  }
-
-  renderComponent({
-    ElementType,
-    classes,
+const Button: React.FC<WithAsProp<ButtonProps>> &
+  FluentComponentStaticProps<ButtonProps> & { Group: any } = props => {
+  const {
     accessibility,
-    variables,
+    as,
+    children,
+    content,
+    icon,
+    loader,
+    disabled,
+    iconPosition,
+    loading,
+    text,
+    primary,
+    inverted,
+    size,
+    iconOnly,
+    fluid,
+    circular,
+    className,
     styles,
-    unhandledProps,
-  }): React.ReactNode {
-    const { children, content, disabled, iconPosition, loading } = this.props
-    const hasChildren = childrenExist(children)
+    variables,
+    animation,
+    design,
+  } = props
+  const context: ProviderContextPrepared = React.useContext(ThemeContext)
+  const hasChildren = childrenExist(children)
 
-    return (
-      <ElementType
-        className={classes.root}
-        disabled={disabled}
-        onClick={this.handleClick}
-        onFocus={this.handleFocus}
-        {...accessibility.attributes.root}
-        {...rtlTextContainer.getAttributes({ forElements: [children] })}
-        {...unhandledProps}
-        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
-      >
-        {hasChildren && children}
-        {!hasChildren && loading && this.renderLoader(variables, styles)}
-        {!hasChildren && iconPosition !== 'after' && this.renderIcon(variables, styles)}
-        {Box.create(!hasChildren && content, {
-          defaultProps: () => ({ as: 'span', styles: styles.content }),
-        })}
-        {!hasChildren && iconPosition === 'after' && this.renderIcon(variables, styles)}
-      </ElementType>
-    )
-  }
+  const [classes, resolvedStyles] = useStyles(Button.displayName, {
+    className: Button.className,
+    mapPropsToStyles: () => ({
+      text,
+      primary,
+      disabled,
+      circular,
+      size,
+      loading,
+      inverted,
+      iconOnly,
+      fluid,
+      hasContent: !!content,
+    }),
+    mapPropsToInlineStyles: () => ({
+      unstable_animation: animation,
+      className,
+      design,
+      styles,
+      variables,
+    }),
+    rtl: context.rtl,
+  })
 
-  renderIcon = (variables, styles) => {
-    const { icon, iconPosition, content } = this.props
+  const getA11Props = useAccessibility(accessibility, {
+    debugName: Button.displayName,
+    mapPropsToBehavior: () => ({
+      as,
+      disabled,
+      loading,
+    }),
+    actionHandlers: {
+      performClick: event => {
+        event.preventDefault()
+        handleClick(event)
+      },
+    },
+    rtl: context.rtl,
+  })
 
+  const unhandledProps = getUnhandledProps(Button.handledProps, props)
+  const ElementType = getElementType(props)
+
+  const renderIcon = () => {
     return Icon.create(icon, {
-      defaultProps: () => ({
-        styles: styles.icon,
-        xSpacing: !content ? 'none' : iconPosition === 'after' ? 'before' : 'after',
-        variables: variables.icon,
-      }),
+      defaultProps: () =>
+        getA11Props('icon', {
+          styles: resolvedStyles.icon,
+          xSpacing: !content ? 'none' : iconPosition === 'after' ? 'before' : 'after',
+        }),
     })
   }
 
-  renderLoader = (variables, styles) => {
-    const { loader } = this.props
-
+  const renderLoader = () => {
     return Loader.create(loader || {}, {
-      defaultProps: () => ({
-        role: undefined,
-        styles: styles.loader,
-      }),
+      defaultProps: () =>
+        getA11Props('loader', {
+          role: undefined,
+          styles: resolvedStyles.loader,
+        }),
     })
   }
 
-  handleClick = (e: React.SyntheticEvent) => {
-    const { disabled } = this.props
-
+  const handleClick = (e: React.SyntheticEvent) => {
     if (disabled) {
       e.preventDefault()
       return
     }
 
-    _.invoke(this.props, 'onClick', e, this.props)
+    _.invoke(props, 'onClick', e, props)
   }
 
-  handleFocus = (e: React.SyntheticEvent) => {
-    _.invoke(this.props, 'onFocus', e, this.props)
+  const handleFocus = (e: React.SyntheticEvent) => {
+    _.invoke(props, 'onFocus', e, props)
   }
+
+  return (
+    <ElementType
+      {...rtlTextContainer.getAttributes({ forElements: [children] })}
+      {...getA11Props('root', {
+        onClick: handleClick,
+        disabled,
+        className: classes.root,
+        onFocus: handleFocus,
+        ...unhandledProps,
+      })}
+    >
+      {hasChildren && children}
+      {!hasChildren && loading && renderLoader()}
+      {!hasChildren && iconPosition !== 'after' && renderIcon()}
+      {Box.create(!hasChildren && content, {
+        defaultProps: () => getA11Props('content', { as: 'span', styles: resolvedStyles.content }),
+      })}
+      {!hasChildren && iconPosition === 'after' && renderIcon()}
+    </ElementType>
+  )
 }
+
+Button.defaultProps = {
+  as: 'button',
+  accessibility: buttonBehavior,
+  size: 'medium',
+}
+
+Button.displayName = 'Button'
+Button.className = 'ui-button'
+
+Button.propTypes = {
+  ...commonPropTypes.createCommon({
+    content: 'shorthand',
+  }),
+  circular: PropTypes.bool,
+  disabled: PropTypes.bool,
+  fluid: PropTypes.bool,
+  icon: customPropTypes.itemShorthandWithoutJSX,
+  iconOnly: PropTypes.bool,
+  iconPosition: PropTypes.oneOf(['before', 'after']),
+  loader: customPropTypes.itemShorthandWithoutJSX,
+  loading: PropTypes.bool,
+  onClick: PropTypes.func,
+  onFocus: PropTypes.func,
+  primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
+  text: PropTypes.bool,
+  secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
+  size: customPropTypes.size,
+}
+
+Button.handledProps = Object.keys(Button.propTypes) as any
+
+Button.Group = ButtonGroup
 
 Button.create = createShorthandFactory({ Component: Button, mappedProp: 'content' })
 
