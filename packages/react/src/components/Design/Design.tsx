@@ -1,4 +1,4 @@
-import { ComponentDesignProp } from '@fluentui/react-bindings'
+import { ComponentDesignProp, RendererParam } from '@fluentui/react-bindings'
 import * as customPropTypes from '@fluentui/react-proptypes'
 // @ts-ignore
 import { ThemeContext } from 'react-fela'
@@ -19,15 +19,17 @@ export type DesignProps = {
  * The Design component provides a theme safe subset of CSS for designing layouts.
  */
 function Design<DesignProps>({ config, children }) {
-  const theme = React.useContext<ProviderContextPrepared>(ThemeContext)
+  const context = React.useContext<ProviderContextPrepared>(ThemeContext)
   const getConfig = React.useCallback(() => config, [config])
 
   // Heads Up! Keep in sync with renderComponent.tsx
-  const styleParam = {
-    theme: { direction: theme.rtl ? 'rtl' : 'ltr' },
+  const styleParam: RendererParam = {
+    displayName: Design.displayName,
+    disableAnimations: context.disableAnimations,
+    theme: { direction: context.rtl ? 'rtl' : 'ltr' },
   }
 
-  const className = theme.renderer.renderRule(getConfig, styleParam)
+  const className = context.renderer.renderRule(getConfig, styleParam)
 
   return children({ className })
 }

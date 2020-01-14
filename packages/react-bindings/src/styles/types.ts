@@ -57,7 +57,7 @@ export type RendererParam = {
 }
 
 export type RendererRenderRule = (rule: () => ICSSInJSStyle, param: RendererParam) => string
-export type Renderer = FelaRenderer & {
+export type Renderer = Omit<FelaRenderer, 'renderRule'> & {
   renderRule: RendererRenderRule
 }
 

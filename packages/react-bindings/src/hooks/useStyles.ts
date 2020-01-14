@@ -47,7 +47,7 @@ const useStyles = <StyleProps extends PrimitiveProps>(
     React.useContext(ThemeContext) || defaultContext
 
   const {
-    className = 'no-classname-🙉',
+    className = process.env.NODE_ENV === 'production' ? '' : 'no-classname-🙉',
     mapPropsToStyles = () => ({} as StyleProps),
     mapPropsToInlineStyles = () => ({} as InlineStyleProps<StyleProps>),
     rtl = false,
