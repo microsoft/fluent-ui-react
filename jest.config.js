@@ -20,7 +20,7 @@ const projects = Object.keys(packagePaths)
       !excludedPackages.includes(packageName) &&
       !fs.existsSync(path.join(packagePaths[packageName], 'just.config.ts')),
   )
-  .map(packageName => projects[packageName])
+  .map(packageName => packagePaths[packageName])
 
 module.exports = {
   coverageReporters,

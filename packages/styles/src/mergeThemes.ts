@@ -145,7 +145,9 @@ export const mergeComponentStyles__DEV = (
   }, initial)
 }
 
-export const mergeComponentStyles =
+export const mergeComponentStyles: (
+  ...sources: (ComponentSlotStylesInput | null | undefined)[]
+) => ComponentSlotStylesPrepared =
   process.env.NODE_ENV === 'production' ? mergeComponentStyles__PROD : mergeComponentStyles__DEV
 
 /**

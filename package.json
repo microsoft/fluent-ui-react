@@ -1,5 +1,8 @@
 {
   "private": true,
+  "engines": {
+    "node": ">= 10.0.0"
+  },
   "scripts": {
     "build": "gulp build",
     "build:bundle": "gulp bundle:all-packages",

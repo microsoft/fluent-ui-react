@@ -1,4 +1,4 @@
-import { createAnimationStyles } from 'src/utils'
+import { unstable_createAnimationStyles as createAnimationStyles } from '@fluentui/react-bindings'
 
 const theme = {
   siteVariables: { fontSizes: {} },
