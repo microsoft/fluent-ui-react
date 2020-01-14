@@ -8,7 +8,9 @@ const avatarImplementsShorthandProp = implementsShorthandProp(Avatar)
 const { getInitials } = (Avatar as any).defaultProps
 
 describe('Avatar', () => {
-  isConformant(Avatar)
+  isConformant(Avatar, {
+    constructorName: 'Avatar',
+  })
   avatarImplementsShorthandProp('label', Label)
   avatarImplementsShorthandProp('image', Image, { mapsValueToProp: 'src' })
 

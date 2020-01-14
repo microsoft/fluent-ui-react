@@ -12,9 +12,16 @@ import {
 } from '@fluentui/react-bindings'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+// @ts-ignore
+import { ThemeContext } from 'react-fela'
 
 import { createShorthandFactory, UIComponentProps, commonPropTypes } from '../../utils'
-import { FluentComponentStaticProps, WithAsProp, withSafeTypeForAs } from '../../types'
+import {
+  FluentComponentStaticProps,
+  ProviderContextPrepared,
+  WithAsProp,
+  withSafeTypeForAs,
+} from '../../types'
 
 export interface ImageProps extends UIComponentProps, ImageBehaviorProps {
   /** Alternative text. */
@@ -52,6 +59,7 @@ const Image: React.FC<WithAsProp<ImageProps>> & FluentComponentStaticProps<Image
     styles,
     variables,
   } = props
+  const context: ProviderContextPrepared = React.useContext(ThemeContext)
 
   const getA11Props = useAccessibility(accessibility, {
     debugName: Image.displayName,
@@ -59,6 +67,7 @@ const Image: React.FC<WithAsProp<ImageProps>> & FluentComponentStaticProps<Image
       alt,
       'aria-label': ariaLabel,
     }),
+    rtl: context.rtl,
   })
   const [classes] = useStyles(Image.displayName, {
     className: Image.className,
@@ -74,6 +83,7 @@ const Image: React.FC<WithAsProp<ImageProps>> & FluentComponentStaticProps<Image
       styles,
       variables,
     }),
+    rtl: context.rtl,
   })
 
   const ElementType = getElementType(props)
@@ -94,7 +104,6 @@ Image.propTypes = {
     children: false,
     content: false,
   }),
-  accessibility: PropTypes.func,
   avatar: PropTypes.bool,
   circular: PropTypes.bool,
   fluid: PropTypes.bool,
