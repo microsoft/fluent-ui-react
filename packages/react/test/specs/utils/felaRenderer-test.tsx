@@ -2,6 +2,7 @@ import * as React from 'react'
 import { createSnapshot } from 'jest-react-fela'
 import { EmptyThemeProvider } from 'test/utils'
 import Box from 'src/components/Box/Box'
+import Animation from 'src/components/Animation/Animation'
 import Provider from 'src/components/Provider/Provider'
 import Text from 'src/components/Text/Text'
 import { felaRenderer } from 'src/utils'
@@ -48,7 +49,9 @@ describe('felaRenderer', () => {
 
     const snapshot = createSnapshot(
       <Provider theme={{ animations: { spinner } }}>
-        <Box animation="spinner" />
+        <Animation name="spinner">
+          <Box />
+        </Animation>
       </Provider>,
       {},
       felaRenderer,
@@ -72,7 +75,9 @@ describe('felaRenderer', () => {
 
     const snapshot = createSnapshot(
       <Provider theme={{ animations: { spinner } }}>
-        <Box animation="spinner" />
+        <Animation name="spinner">
+          <Box />
+        </Animation>
       </Provider>,
       {},
       felaRenderer,
@@ -96,7 +101,9 @@ describe('felaRenderer', () => {
 
     const snapshot = createSnapshot(
       <Provider disableAnimations theme={{ animations: { spinner } }}>
-        <Box animation="spinner" />
+        <Animation name="spinner">
+          <Box />
+        </Animation>
       </Provider>,
       {},
       felaRenderer,
