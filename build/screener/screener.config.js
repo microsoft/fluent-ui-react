@@ -1,13 +1,5 @@
 require('@fluentui/internal-tooling/babel/register')
 
-const config = require('../../config').default
-const { compilerOptions } = require('../../build/tsconfig.docs.json')
-
-require('tsconfig-paths').register({
-  baseUrl: config.path_base,
-  paths: compilerOptions.paths,
-})
-
 // https://github.com/screener-io/screener-runner
 module.exports = {
   projectRepo: 'microsoft/fluent-ui-react',
