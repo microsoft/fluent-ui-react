@@ -9,6 +9,7 @@ docs/src/currentBundleStats.json
 docs/src/exampleMenus
 docs/src/exampleSources
 e2e
+lib/
 node_modules
 packages/**/dist
 packages/**/test

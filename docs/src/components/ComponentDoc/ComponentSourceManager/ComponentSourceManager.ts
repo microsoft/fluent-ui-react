@@ -1,13 +1,14 @@
-import { prettifyCode } from '@stardust-ui/docs-components'
+import { prettifyCode } from '@fluentui/docs-components'
 import * as _ from 'lodash'
 import * as React from 'react'
 
 import { ExampleSource } from 'docs/src/types'
 import { componentAPIs as APIdefinitions, ComponentAPIs } from './componentAPIs'
-import getExampleModule from './getExampeSource'
+import getExampleModule from './getExampeModule'
 
 export type ComponentSourceManagerRenderProps = ComponentSourceManagerState & {
-  component: React.ElementType
+  defaultExport: React.ElementType
+  namedExports: { [key: string]: React.ElementType }
   handleCodeAPIChange: (newApi: keyof ComponentAPIs) => void
   handleCodeChange: (newCode: string) => void
   handleCodeFormat: () => void
@@ -23,7 +24,8 @@ export type ComponentSourceManagerProps = {
 }
 
 type ComponentSourceManagerAPIs = ComponentAPIs<{
-  component: React.ElementType
+  defaultExport: React.ElementType
+  namedExports: { [key: string]: React.ElementType }
   sourceCode: ExampleSource | undefined
   supported: boolean
 }>
@@ -54,7 +56,8 @@ export default class ComponentSourceManager extends React.Component<
 
       return {
         ...definition,
-        component: module && module.component,
+        defaultExport: module && module.defaultExport,
+        namedExports: module && module.namedExports,
         sourceCode: module ? module.source : '',
         supported: !!module,
       }
@@ -139,7 +142,8 @@ export default class ComponentSourceManager extends React.Component<
   render() {
     return this.props.children({
       ...this.state,
-      component: this.state.componentAPIs[this.state.currentCodeAPI].component,
+      defaultExport: this.state.componentAPIs[this.state.currentCodeAPI].defaultExport,
+      namedExports: this.state.componentAPIs[this.state.currentCodeAPI].namedExports,
       handleCodeAPIChange: this.handleCodeAPIChange,
       handleCodeChange: this.handleCodeChange,
       handleCodeFormat: this.handleCodeFormat,

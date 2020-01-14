@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Flex, Button } from '@stardust-ui/react'
+import { Flex, Button } from '@fluentui/react'
 
 const FlexExampleNavMenu = () => (
   <Flex gap="gap.small" debug>

@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { LogContext } from './KnobContexts'
-import { LogFormatter } from '@stardust-ui/docs-components'
+import { LogFormatter } from '@fluentui/docs-components'
 
 const defaultFormatter: LogFormatter = (name: string) =>
   `${new Date().toLocaleTimeString()}: ${name}`

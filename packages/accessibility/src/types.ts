@@ -98,6 +98,7 @@ export interface AriaWidgetAttributes {
   'aria-invalid'?: boolean | 'false' | 'true' | 'grammar' | 'spelling'
   'aria-label'?: string
   'aria-level'?: number
+  'aria-live'?: 'polite' | 'off' | 'assertive'
   'aria-modal'?: boolean
   'aria-multiline'?: boolean | 'false' | 'true'
   'aria-multiselectable'?: boolean | 'false' | 'true'
@@ -140,6 +141,10 @@ export interface AccessibilityAttributes
   extends AriaWidgetAttributes,
     AriaRelationshipAttributes,
     ElementStateAttributes {
+  // Is used in @fluentui/ability-attributes for accessibility validations.
+  // Do not set it manually and do not rely on it in production
+  'data-aa-class'?: string
+
   role?: AriaRole
   tabIndex?: number
   id?: string

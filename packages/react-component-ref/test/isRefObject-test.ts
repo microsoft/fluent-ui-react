@@ -1,4 +1,4 @@
-import { isRefObject } from '@stardust-ui/react-component-ref'
+import { isRefObject } from '@fluentui/react-component-ref'
 
 describe('isRefObject', () => {
   it('checks for a valid param', () => {

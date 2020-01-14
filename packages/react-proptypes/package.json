@@ -1,22 +1,22 @@
 {
-  "name": "@stardust-ui/react-proptypes",
-  "description": "Set of custom reusable PropTypes for React components, some of them are specific for Stardust UI.",
-  "version": "0.40.0",
+  "name": "@fluentui/react-proptypes",
+  "description": "Set of custom reusable PropTypes for React components, some of them are specific for Fluent UI.",
+  "version": "0.43.0",
   "author": "Oleksandr Fediashov <olfedias@microsoft.com>",
-  "bugs": "https://github.com/stardust-ui/react/issues",
+  "bugs": "https://github.com/microsoft/fluent-ui-react/issues",
   "dependencies": {
     "@babel/runtime": "^7.1.2",
     "lodash": "^4.17.15",
     "prop-types": "^15.7.2"
   },
   "devDependencies": {
-    "@stardust-ui/internal-tooling": "^0.40.0",
+    "@fluentui/internal-tooling": "^0.43.0",
     "lerna-alias": "^3.0.3-0"
   },
   "files": [
     "dist"
   ],
-  "homepage": "https://github.com/stardust-ui/react/tree/master/packages/react-proptypes",
+  "homepage": "https://github.com/microsoft/fluent-ui-react/tree/master/packages/react-proptypes",
   "jsnext:main": "dist/es/index.js",
   "license": "MIT",
   "main": "dist/commonjs/index.js",
@@ -24,9 +24,12 @@
   "publishConfig": {
     "access": "public"
   },
-  "repository": "stardust-ui/react.git",
+  "repository": "microsoft/fluent-ui-react.git",
   "scripts": {
-    "build": "gulp bundle:package:no-umd --package react-proptypes"
+    "build": "gulp bundle:package:no-umd",
+    "clean": "gulp bundle:package:clean",
+    "test": "gulp test",
+    "test:watch": "gulp test:watch"
   },
   "sideEffects": false,
   "types": "dist/es/index.d.ts"

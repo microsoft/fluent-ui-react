@@ -17,6 +17,7 @@ import ColorSchemes from './views/ColorSchemes'
 import CategoryColorSchemes from './views/CategoryColorSchemes'
 
 import FAQ from './views/FAQ'
+import Performance from './views/Performance'
 import * as ShorthandProps from './pages/ShorthandProps.mdx'
 import Introduction from './views/Introduction'
 import PageNotFound from './views/PageNotFound'
@@ -47,6 +48,7 @@ import ParticipantsListPrototype from './prototypes/ParticipantsList'
 import CustomScrollbarPrototype from './prototypes/customScrollbar'
 import EditorToolbarPrototype from './prototypes/EditorToolbar'
 import HexagonalAvatarPrototype from './prototypes/hexagonalAvatar'
+import TablePrototype from './prototypes/table'
 
 const Routes = () => (
   <BrowserRouter basename={__BASENAME__}>
@@ -79,6 +81,7 @@ const Routes = () => (
           <Route exact path="/prototype-alerts" component={AlertsPrototype} />
           <Route exact path="/prototype-editor-toolbar" component={EditorToolbarPrototype} />
           <Route exact path="/prototype-hexagonal-avatar" component={HexagonalAvatarPrototype} />
+          <Route exact path="/prototype-table" component={TablePrototype} />
           <Route
             exact
             path="/prototype-nested-popups-and-dialogs"
@@ -101,6 +104,7 @@ const Routes = () => (
             <MarkdownPage page={ShorthandProps} />
           </Route>
           <Route exact path="/integrate-custom-components" component={IntegrateCustomComponents} />
+          <Route exact path="/performance" component={Performance} />
           <Route exact path="/composition">
             <MarkdownPage page={Composition} />
           </Route>

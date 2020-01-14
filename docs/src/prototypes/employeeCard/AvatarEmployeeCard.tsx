@@ -1,7 +1,6 @@
 import * as React from 'react'
-import { Avatar, Popup } from '@stardust-ui/react'
+import { Avatar, Extendable, Popup } from '@fluentui/react'
 import EmployeeCard, { EmployeeCardProps } from './EmployeeCard'
-import { Extendable } from 'src/types'
 
 export interface AvatarEmployeeCardState {
   popupOpen: boolean

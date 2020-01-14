@@ -1,6 +1,6 @@
-import { ICSSInJSStyle } from '../../../types'
+import { ICSSInJSStyle } from '@fluentui/styles'
 import { getColorScheme } from '../../colors'
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../../../utils'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 const toolbarMenuItemStyles = {

@@ -43,7 +43,7 @@ describe('Tooltip', () => {
       )
     })
 
-    // https://github.com/stardust-ui/react/pull/619
+    // https://github.com/microsoft/fluent-ui-react/pull/619
     test('is called on hover when controlled', () => {
       const onOpenChange = jest.fn()
 
@@ -66,7 +66,7 @@ describe('Tooltip', () => {
       const wrapper = mountWithProvider(<Tooltip trigger={<button />} content="Foo" />)
       expect(wrapper.find('Popper').prop('enabled')).toBe(false)
 
-      wrapper.setProps({ open: true })
+      wrapper.setProps({ open: true } as any)
       expect(wrapper.find('Popper').prop('enabled')).toBe(true)
     })
   })

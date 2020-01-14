@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
 import * as React from 'react'
-import { createComponent, ComponentSlotStylesInput, ProviderConsumer } from '@stardust-ui/react'
+import { createComponent, ComponentSlotStylesInput, ProviderConsumer } from '@fluentui/react'
 
 import ColorBox from './ColorBox'
 
@@ -20,7 +20,7 @@ export const colorVariantsStyles: ComponentSlotStylesInput<ColorVariantsProps> =
 
 const ColorVariants = createComponent<ColorVariantsProps>({
   displayName: 'ColorVariants',
-  render: ({ name, headerOnly, size, stardust: { classes } }) => (
+  render: ({ name, headerOnly, size, config: { classes } }) => (
     <ProviderConsumer
       render={({ siteVariables: { colors } }) => (
         <div className={classes.root}>

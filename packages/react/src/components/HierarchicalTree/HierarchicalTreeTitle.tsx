@@ -1,4 +1,4 @@
-import { Accessibility, hierarchicalTreeTitleBehavior } from '@stardust-ui/accessibility'
+import { Accessibility, hierarchicalTreeTitleBehavior } from '@fluentui/accessibility'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -14,7 +14,7 @@ import {
   rtlTextContainer,
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import { ComponentEventHandler, WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface HierarchicalTreeTitleProps
@@ -27,8 +27,8 @@ export interface HierarchicalTreeTitleProps
   /**
    * Called on click.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onClick?: ComponentEventHandler<HierarchicalTreeTitleProps>
 

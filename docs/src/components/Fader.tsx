@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import { createComponent, ComponentSlotStylesInput, Button, Flex } from '@stardust-ui/react'
+import { createComponent, ComponentSlotStylesInput, Button, Flex } from '@fluentui/react'
 
 type FaderProps = {
   children: JSX.Element
@@ -28,7 +28,7 @@ export const faderStyles: ComponentSlotStylesInput<FaderProps> = {
 
 const Fader = createComponent<FaderProps>({
   displayName: 'Fader',
-  render: ({ children, url, stardust: { classes } }) => {
+  render: ({ children, url, config: { classes } }) => {
     return (
       <Flex column hAlign="center" vAlign="center">
         <div className={classes.fader}>{children}</div>

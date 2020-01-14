@@ -3,7 +3,7 @@ import {
   useNumberKnob,
   useSelectKnob,
   useStringKnob,
-} from '@stardust-ui/docs-components'
+} from '@fluentui/docs-components'
 import * as _ from 'lodash'
 
 import { ComponentInfo, KnobComponentGenerators, KnobGenerator } from 'docs/src/types'

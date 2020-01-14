@@ -8,7 +8,8 @@ import {
   MenuItemProps,
   ShorthandCollection,
   IconXSpacing,
-} from '@stardust-ui/react'
+  ICSSInJSStyle,
+} from '@fluentui/react'
 
 import { Props } from 'src/types'
 import chatProtoStyle from './chatProtoStyle'
@@ -52,7 +53,7 @@ const ComposeMessage: React.FunctionComponent<ComposeMessageProps> = props => (
   />
 )
 
-const getInputWrapperStyles = ({ attached }: ComposeMessageProps): React.CSSProperties => {
+const getInputWrapperStyles = ({ attached }: ComposeMessageProps): ICSSInJSStyle => {
   const borderTopRadius = '3px'
   const borderBottomRadius = '2px'
   const borderWidth = '1px'

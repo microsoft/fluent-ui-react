@@ -1,4 +1,4 @@
-import { Segment } from '@stardust-ui/react'
+import { Segment } from '@fluentui/react'
 import * as React from 'react'
 import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
 import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'

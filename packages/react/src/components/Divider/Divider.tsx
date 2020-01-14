@@ -1,4 +1,4 @@
-import { Accessibility } from '@stardust-ui/accessibility'
+import { Accessibility } from '@fluentui/accessibility'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 
@@ -13,7 +13,7 @@ import {
   commonPropTypes,
   rtlTextContainer,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
@@ -35,6 +35,9 @@ export interface DividerProps
 
   /** A divider can be emphasized to draw a user's attention. */
   important?: boolean
+
+  /** A divider can be positioned vertically. */
+  vertical?: boolean
 }
 
 class Divider extends UIComponent<WithAsProp<DividerProps>, any> {
@@ -49,6 +52,7 @@ class Divider extends UIComponent<WithAsProp<DividerProps>, any> {
     fitted: PropTypes.bool,
     size: PropTypes.number,
     important: PropTypes.bool,
+    vertical: PropTypes.bool,
   }
 
   static defaultProps = {

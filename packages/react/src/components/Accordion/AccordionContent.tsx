@@ -1,4 +1,4 @@
-import { accordionContentBehavior } from '@stardust-ui/accessibility'
+import { accordionContentBehavior } from '@fluentui/accessibility'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as _ from 'lodash'
@@ -13,7 +13,7 @@ import {
   commonPropTypes,
   rtlTextContainer,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import { WithAsProp, ComponentEventHandler, withSafeTypeForAs } from '../../types'
 
 export interface AccordionContentProps
@@ -29,8 +29,8 @@ export interface AccordionContentProps
   /**
    * Called on click.
    *
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
    */
   onClick?: ComponentEventHandler<AccordionContentProps>
 }

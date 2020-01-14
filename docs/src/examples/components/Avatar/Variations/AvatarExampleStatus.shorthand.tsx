@@ -1,11 +1,11 @@
 import * as React from 'react'
-import { Avatar } from '@stardust-ui/react'
+import { Avatar } from '@fluentui/react'
 
 const AvatarExampleStatusShorthand = () => (
   <div>
     <Avatar
       image="public/images/avatar/small/matt.jpg"
-      status={{ color: 'green', icon: 'stardust-checkmark', title: 'Available' }}
+      status={{ color: 'green', icon: 'icon-checkmark', title: 'Available' }}
     />
     &emsp;
     <Avatar image="public/images/avatar/small/matt.jpg" status={{ color: 'red', title: 'Busy' }} />

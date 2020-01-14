@@ -1,8 +1,9 @@
-import { ComponentStyleFunctionParam, ICSSInJSStyle } from '../../../types'
+import { ComponentStyleFunctionParam, ICSSInJSStyle } from '@fluentui/styles'
 import { TeamsTextVariables } from './textVariables'
 import { TextProps } from '../../../../components/Text/Text'
 import { getColorSchemeKey } from '../../colors'
 import translateAlignProp from '../../../../styles/translateAlignProp'
+import { WithAsProp } from '../../../../types'
 
 export default {
   root: ({
@@ -23,7 +24,7 @@ export default {
       size,
     },
     variables: v,
-  }: ComponentStyleFunctionParam<TextProps, TeamsTextVariables>): ICSSInJSStyle => {
+  }: ComponentStyleFunctionParam<WithAsProp<TextProps>, TeamsTextVariables>): ICSSInJSStyle => {
     const colors = v.colorScheme[getColorSchemeKey(color)]
     return {
       ...(color && { color: colors.foreground }),

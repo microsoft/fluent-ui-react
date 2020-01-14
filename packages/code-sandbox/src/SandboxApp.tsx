@@ -1,7 +1,7 @@
-import { KnobInspector, KnobProvider } from '@stardust-ui/docs-components'
-import { Divider, Flex, Header, Provider, RadioGroup, Text, themes } from '@stardust-ui/react'
+import { KnobInspector, KnobProvider } from '@fluentui/docs-components'
+import { Divider, Flex, Header, Provider, RadioGroup, Text, themes } from '@fluentui/react'
 // @ts-ignore
-import pkg from '@stardust-ui/react/package.json'
+import pkg from '@fluentui/react/package.json'
 import * as React from 'react'
 
 import KnobsSnippet from './KnobsSnippet'
@@ -39,14 +39,14 @@ const SandboxApp: React.FunctionComponent = props => {
 
       <KnobProvider components={knobComponents}>
         <div>
-          <Header>Stardust UI @ {pkg.version}</Header>
+          <Header>Fluent UI @ {pkg.version}</Header>
           <p>
-            This example is powered by Stardust UI, check{' '}
-            <Text as="a" href="https://stardust-ui.github.io/react/">
+            This example is powered by Fluent UI, check{' '}
+            <Text as="a" href="https://microsoft.github.io/fluent-ui-react/">
               our docs
             </Text>{' '}
             and{' '}
-            <Text as="a" href="https://github.com/stardust-ui/react">
+            <Text as="a" href="https://github.com/microsoft/fluent-ui-react">
               GitHub
             </Text>
             .

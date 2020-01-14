@@ -11,12 +11,18 @@ const scrollToAnchor = (lastOffsetY?, lastAcceleration = 0.1) => {
   const anchor = location.hash && document.querySelector(location.hash)
   const offsetY = window.scrollY || window.pageYOffset
 
+  // take the sticky ComponentDoc header into account when scrolling
+  const stickyHeader = document.querySelector('#docs-sticky-header')
+  const stickyHeaderOffset = stickyHeader
+    ? Math.ceil(stickyHeader.getBoundingClientRect().bottom)
+    : 0
+
   // no scroll to target, stop
   if (!anchor) return
 
-  const elementTop = Math.round(anchor.getBoundingClientRect().top)
+  const elementTop = Math.round(anchor.getBoundingClientRect().top) - stickyHeaderOffset
   const scrollStep = Math.ceil(Math.abs(elementTop / 8)) * mathSign(elementTop)
-  const acceleration = Math.min(1, (lastAcceleration * 100) ** 1.1 / 100)
+  const acceleration = Math.min(1, Math.pow(lastAcceleration * 100, 1.1) / 100)
 
   // if our last step was not applied, stop
   // we've either hit the top, bottom, or arrived at the element

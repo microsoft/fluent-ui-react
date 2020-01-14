@@ -30,6 +30,11 @@ const Usage = () => (
       description="Static table with no rows"
       examplePath="components/Table/Usage/TableExampleStaticRowless"
     />
+    <ComponentExample
+      title="Nested navigation in table by row and cell"
+      description="Navigable table by row and cell"
+      examplePath="components/Table/Usage/TableExampleNavigable"
+    />
   </ExampleSection>
 )
 

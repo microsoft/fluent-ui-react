@@ -1,16 +1,17 @@
 {
-  "name": "@stardust-ui/code-sandbox",
-  "description": "Stardust UI tools for CodeSandbox.",
-  "version": "0.40.3",
+  "name": "@fluentui/code-sandbox",
+  "description": "Fluent UI tools for CodeSandbox.",
+  "version": "0.43.0",
   "author": "Oleksandr Fediashov <a@fedyashov.com>",
-  "bugs": "https://github.com/stardust-ui/react/issues",
+  "bugs": "https://github.com/microsoft/fluent-ui-react/issues",
   "dependencies": {
-    "@stardust-ui/react": "^0.40.3"
+    "@fluentui/docs-components": "^0.43.0",
+    "@fluentui/react": "*"
   },
   "files": [
     "dist"
   ],
-  "homepage": "https://github.com/stardust-ui/react/tree/master/packages/code-sandbox",
+  "homepage": "https://github.com/microsoft/fluent-ui-react/tree/master/packages/code-sandbox",
   "jsnext:main": "dist/es/index.js",
   "license": "MIT",
   "main": "dist/commonjs/index.js",
@@ -22,9 +23,10 @@
   "publishConfig": {
     "access": "public"
   },
-  "repository": "stardust-ui/react.git",
+  "repository": "microsoft/fluent-ui-react.git",
   "scripts": {
-    "build": "gulp bundle:package:no-umd --package code-sandbox"
+    "build": "gulp bundle:package:no-umd",
+    "clean": "gulp bundle:package:clean"
   },
   "sideEffects": false,
   "types": "dist/es/index.d.ts"

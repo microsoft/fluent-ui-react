@@ -8,7 +8,7 @@ import {
   Header,
   HeaderProps,
   ShorthandCollection,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 
 import ColorBox from './ColorBox'
 
@@ -28,7 +28,7 @@ export const colorVariantsStyles: ComponentSlotStylesInput<ColorVariantsProps> =
 
 const ColorSchemes = createComponent<ColorVariantsProps>({
   displayName: 'ColorVariants',
-  render: ({ name, themes, headers, stardust: { classes } }) => {
+  render: ({ name, themes, headers, config: { classes } }) => {
     if (themes.length === 0) return <></>
 
     const colorSchemes = _.map(themes, theme => theme.siteVariables.colorScheme[name])

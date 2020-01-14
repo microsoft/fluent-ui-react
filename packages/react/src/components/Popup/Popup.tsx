@@ -1,9 +1,13 @@
-import { Accessibility, popupBehavior } from '@stardust-ui/accessibility'
-import { AutoFocusZoneProps, FocusTrapZoneProps } from '@stardust-ui/react-bindings'
-import { EventListener } from '@stardust-ui/react-component-event-listener'
-import { NodeRef, Unstable_NestingAuto } from '@stardust-ui/react-component-nesting-registry'
-import { handleRef, toRefObject, Ref } from '@stardust-ui/react-component-ref'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import { Accessibility, popupBehavior } from '@fluentui/accessibility'
+import {
+  ReactAccessibilityBehavior,
+  AutoFocusZoneProps,
+  FocusTrapZoneProps,
+} from '@fluentui/react-bindings'
+import { EventListener } from '@fluentui/react-component-event-listener'
+import { NodeRef, Unstable_NestingAuto } from '@fluentui/react-component-nesting-registry'
+import { handleRef, toRefObject, Ref } from '@fluentui/react-component-ref'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as keyboardKey from 'keyboard-key'
@@ -21,7 +25,7 @@ import {
   isFromKeyboard,
   doesNodeContainClick,
   setWhatInputSource,
-} from '../../lib'
+} from '../../utils'
 import { ComponentEventHandler, ShorthandValue } from '../../types'
 import {
   ALIGNMENTS,
@@ -29,13 +33,12 @@ import {
   Popper,
   PositioningProps,
   PopperChildrenProps,
-} from '../../lib/positioner'
+} from '../../utils/positioner'
 import PopupContent, { PopupContentProps } from './PopupContent'
 
-import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
-import { createShorthandFactory, ShorthandFactory } from '../../lib/factories'
+import { createShorthandFactory, ShorthandFactory } from '../../utils/factories'
 import createReferenceFromContextClick from './createReferenceFromContextClick'
-import isRightClick from '../../lib/isRightClick'
+import isRightClick from '../../utils/isRightClick'
 import PortalInner from '../Portal/PortalInner'
 
 export type PopupEvents = 'click' | 'hover' | 'focus' | 'context'
@@ -84,8 +87,8 @@ export interface PopupProps
 
   /**
    * Event for request to change 'open' value.
-   * @param {SyntheticEvent} event - React's original SyntheticEvent.
-   * @param {object} data - All props and proposed value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
    */
   onOpenChange?: ComponentEventHandler<PopupProps>
 
@@ -94,7 +97,7 @@ export interface PopupProps
 
   /**
    * Function to render popup content.
-   * @param {Function} updatePosition - function to request popup position update.
+   * @param updatePosition - function to request popup position update.
    */
   renderContent?: (updatePosition: Function) => ShorthandValue<PopupContentProps>
 
@@ -195,6 +198,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
 
   actionHandlers = {
     closeAndFocusTrigger: e => {
+      e.preventDefault()
       this.close(e, () => _.invoke(this.triggerFocusableDomElement, 'focus'))
     },
     close: e => {
@@ -214,7 +218,12 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   }
 
   componentDidMount() {
-    const { inline, trapFocus, autoFocus } = this.props
+    const { inline, trapFocus, autoFocus, open } = this.props
+
+    if (open) {
+      // when new state 'open' === 'true', save the last focused element
+      this.updateTriggerFocusableDomElement()
+    }
 
     if (process.env.NODE_ENV !== 'production') {
       if (inline && trapFocus) {
@@ -227,6 +236,13 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
           'Beware, "autoFocus" prop will just grab focus at the moment of mount and will not trap it. As user is able to TAB out from popup, better use "inline" prop to keep correct tab order.',
         )
       }
+    }
+  }
+
+  componentDidUpdate({ open }) {
+    if (open) {
+      // when new state 'open' === 'true', save the last focused element
+      this.updateTriggerFocusableDomElement()
     }
   }
 
@@ -283,11 +299,11 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
 
   isOutsidePopupElementAndOutsideTriggerElement(refs: NodeRef[], e) {
     const isOutsidePopupElement = this.isOutsidePopupElement(refs, e)
-    const isOutsideTriggerElement =
+    const isInsideTriggerElement =
       this.triggerRef.current &&
-      !doesNodeContainClick(this.triggerRef.current, e, this.context.target)
+      doesNodeContainClick(this.triggerRef.current, e, this.context.target)
 
-    return isOutsidePopupElement && isOutsideTriggerElement
+    return isOutsidePopupElement && !isInsideTriggerElement
   }
 
   isOutsidePopupElement(refs: NodeRef[], e) {
@@ -611,9 +627,10 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     const activeDocument = mountDocument || this.context.target
     const activeElement = activeDocument.activeElement
 
-    this.triggerFocusableDomElement = this.triggerRef.current.contains(activeElement)
-      ? activeElement
-      : this.triggerRef.current
+    this.triggerFocusableDomElement =
+      this.triggerRef.current && this.triggerRef.current.contains(activeElement)
+        ? activeElement
+        : this.triggerRef.current
   }
 
   updateContextPosition(nativeEvent: MouseEvent) {

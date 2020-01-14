@@ -1,4 +1,4 @@
-import { useSelectKnob, useStringKnob } from '@stardust-ui/docs-components'
+import { useSelectKnob, useStringKnob } from '@fluentui/docs-components'
 import {
   AvatarProps,
   BoxProps,
@@ -8,7 +8,7 @@ import {
   IconProps,
   ImageProps,
   VideoProps,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 import * as _ from 'lodash'
 import * as faker from 'faker'
 

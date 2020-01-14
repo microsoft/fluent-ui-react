@@ -7,7 +7,7 @@ const dialogTrigger = `#${selectors.dialogTrigger}`
 const popupContent = `#${selectors.popupContent}`
 const popupTrigger = `#${selectors.popupTrigger}`
 
-// https://github.com/stardust-ui/react/issues/1674
+// https://github.com/microsoft/fluent-ui-react/issues/1674
 describe('Dialog in Popup', () => {
   beforeEach(async () => {
     await e2e.gotoTestCase(__filename, popupTrigger)

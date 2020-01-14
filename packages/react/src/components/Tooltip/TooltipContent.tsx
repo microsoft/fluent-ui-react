@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import * as customPropTypes from '@fluentui/react-proptypes'
 
 import {
   childrenExist,
@@ -13,10 +13,10 @@ import {
   commonPropTypes,
   rtlTextContainer,
   ShorthandFactory,
-} from '../../lib'
-import { Accessibility } from '@stardust-ui/accessibility'
+} from '../../utils'
+import { Accessibility } from '@fluentui/accessibility'
 
-import { PopperChildrenProps } from '../../lib/positioner'
+import { PopperChildrenProps } from '../../utils/positioner'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface TooltipContentProps

@@ -1,0 +1,99 @@
+# Right now this definition just runs component registration on master.
+# The rest of the build is a port of the circleci config and left there
+# for reference in case we want to use it later.
+
+pr: none
+# pr: [master]
+
+trigger: [master]
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  # emulate circleci method of detecting whether build is running in CI or local
+  CI: 1
+
+steps:
+  - task: ComponentGovernanceComponentDetection@0
+    inputs:
+      scanType: 'Register'
+      verbosity: 'Verbose'
+      alertWarningLevel: 'High'
+    displayName: Component governance registration
+# Rest of build is not being used for now, but leaving setup for reference
+
+#   - task: NodeTool@0
+#     inputs:
+#       versionSpec: '10.x'
+#     displayName: 'Install Node.js'
+
+#   - script: |
+#       yarn
+#     displayName: Install dependencies
+
+#   - script: |
+#       yarn lint
+#     displayName: Lint
+
+#   - script: |
+#       yarn prettier
+#     displayName: Prettier
+
+#   - script: |
+#       yarn test
+#     displayName: Unit tests
+
+#   - script: |
+#       bash <(curl -s https://codecov.io/bash)
+#     displayName: Report coverage
+
+#   - script: |
+#       yarn test:e2e
+#     displayName: E2E tests
+
+#   - script: |
+#       yarn test:projects
+#     displayName: Project tests
+
+#   - script: |
+#       yarn test:circulars
+#     displayName: Circular dependency tests
+
+#   - script: |
+#       if [ $BUILD_SOURCEBRANCHNAME == 'master' ]; then
+#         yarn stats:build
+#       else
+#         echo 'skip bundle statistics collection'
+#       fi
+#     displayName: Bundle statistics (master only)
+
+#   - script: |
+#       if [ $BUILD_SOURCEBRANCHNAME == 'master' ]; then
+#         yarn perf
+#       else
+#         echo "Skipping performance tests"
+#       fi
+#     displayName: Performance tests (master only)
+
+#   - script: |
+#       if [ $BUILD_SOURCEBRANCHNAME == 'master' ]; then
+#         yarn stats:save --tag=`git tag --points-at HEAD`
+#       else
+#         echo 'skip saving statistics'
+#       fi
+#     env:
+#       STATS_URI: $(statsUri)
+#     displayName: Save statistics to DB (master only)
+
+#   - script: |
+#       if [ $BUILD_REASON == "PullRequest" ] && [ ! -z $DANGER_GITHUB_API_TOKEN ]; then
+#         yarn danger ci
+#       elif [ $BUILD_REASON != "PullRequest" ]; then
+#         echo "Skipping Danger JS because BUILD_REASON ${BUILD_REASON} != PullRequest"
+#       else
+#         echo "Skipping Danger JS because API token wasn't found"
+#       fi
+#     env:
+#       DANGER_GITHUB_API_TOKEN: $(dangerKey)
+#     displayName: Danger JS

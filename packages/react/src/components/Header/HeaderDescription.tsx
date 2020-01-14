@@ -1,4 +1,4 @@
-import { Accessibility } from '@stardust-ui/accessibility'
+import { Accessibility } from '@fluentui/accessibility'
 import * as React from 'react'
 
 import {
@@ -12,7 +12,7 @@ import {
   ColorComponentProps,
   rtlTextContainer,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 

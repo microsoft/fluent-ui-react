@@ -1,4 +1,4 @@
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import { ToolbarVariables } from './toolbarVariables'
 import { ToolbarProps } from '../../../../components/Toolbar/Toolbar'
 

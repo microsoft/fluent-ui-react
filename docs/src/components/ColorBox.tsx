@@ -1,11 +1,11 @@
-import { CopyToClipboard } from '@stardust-ui/docs-components'
+import { CopyToClipboard } from '@fluentui/docs-components'
 import {
   ComponentSlotStylesInput,
   ComponentSlotStyle,
   createComponent,
   Icon,
   ICSSInJSStyle,
-} from '@stardust-ui/react'
+} from '@fluentui/react'
 import * as Color from 'color'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -89,14 +89,7 @@ export const colorBoxStyles: ComponentSlotStylesInput<ColorBoxProps, ColorBoxVar
 
 const ColorBox = createComponent<ColorBoxProps>({
   displayName: 'ColorBox',
-  render: ({
-    children,
-    name,
-    value,
-    showColorValue,
-    copyToClipboardIcon,
-    stardust: { classes },
-  }) => (
+  render: ({ children, name, value, showColorValue, copyToClipboardIcon, config: { classes } }) => (
     <div className={classes.root}>
       <div className={classes.inner}>
         <div className={classes.name}>{children || _.startCase(name)}</div>

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Table, tableHeaderCellBehavior } from '@stardust-ui/react'
+import { Table, tableHeaderCellBehavior } from '@fluentui/react'
 
 const StaticTable = () => (
   <Table aria-label="table">

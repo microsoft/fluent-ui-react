@@ -1,5 +1,5 @@
-import { useBooleanKnob } from '@stardust-ui/docs-components'
-import { SplitButton } from '@stardust-ui/react'
+import { useBooleanKnob } from '@fluentui/docs-components'
+import { SplitButton } from '@fluentui/react'
 import * as React from 'react'
 
 const SplitButtonExampleToggleButtonShorthand = () => {
@@ -18,7 +18,10 @@ const SplitButtonExampleToggleButtonShorthand = () => {
           'aria-describedby': 'instruction-message-icon',
         }}
         toggleButton={{
-          icon: open ? 'triangle-up' : 'triangle-down',
+          icon: {
+            name: 'icon-menu-arrow-down',
+            style: open ? { transform: 'rotate(180deg)' } : null,
+          },
           'aria-label': 'more options',
         }}
         onOpenChange={(e, { open }) => setOpen(open)}

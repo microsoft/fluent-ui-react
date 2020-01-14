@@ -1,4 +1,4 @@
-import { Provider, themes, pxToRem, createTheme } from '@stardust-ui/react'
+import { Provider, themes, pxToRem, createTheme } from '@fluentui/react'
 import AnchorJS from 'anchor-js'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom'
 
 import Sidebar from 'docs/src/components/Sidebar/Sidebar'
 import { scrollToAnchor } from 'docs/src/utils'
-import { mergeThemes } from 'src/lib'
+import { mergeThemes } from '@fluentui/styles'
 
 const anchors = new AnchorJS({
   class: 'anchor-link',

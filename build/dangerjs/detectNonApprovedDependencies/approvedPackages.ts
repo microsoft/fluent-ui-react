@@ -87,5 +87,5 @@ export default [
 ]
 
 export const isIgnored = (packageId: string): boolean => {
-  return packageId.startsWith('@stardust-ui/')
+  return packageId.startsWith('@fluentui/')
 }

@@ -1,7 +1,7 @@
-import { CodeSnippet } from '@stardust-ui/docs-components'
+import { CodeSnippet } from '@fluentui/docs-components'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import { Header } from '@stardust-ui/react'
+import { Header } from '@fluentui/react'
 import DocPage from '../components/DocPage'
 import { link, code } from '../utils/helpers'
 
@@ -25,7 +25,7 @@ export default () => (
       propagated outside {code('FocusTrapZone')}, hence {code('Popup')} or {code('Dialog')}.
     </p>
     <p>
-      Stardust leverages Focus Trap Zone component which is based on the{' '}
+      Fluent UI leverages Focus Trap Zone component which is based on the{' '}
       {link(
         'Focus Trap Zone from Office UI Fabric.',
         'https://developer.microsoft.com/en-us/fabric#/components/focustrapzone',
@@ -47,7 +47,7 @@ export default () => (
       {code('FocusTrapZone')}'s props which can be applied to {code('trapFocus')} prop (
       {link(
         'lookup for API on GitHub',
-        'https://github.com/stardust-ui/react/blob/master/packages/react/src/lib/accessibility/FocusTrapZone/FocusTrapZone.types.tsx',
+        'https://github.com/microsoft/fluent-ui-react/blob/master/packages/react/src/utils/accessibility/FocusTrapZone/FocusTrapZone.types.tsx',
       )}
       ):
     </p>
@@ -88,7 +88,7 @@ export default () => (
       {code('FocusTrapZone')} code on{' '}
       {link(
         'GitHub.',
-        'https://github.com/stardust-ui/react/blob/master/packages/react/src/lib/accessibility/FocusZone/FocusTrapZone.tsx',
+        'https://github.com/microsoft/fluent-ui-react/blob/master/packages/react/src/utils/accessibility/FocusZone/FocusTrapZone.tsx',
       )}
     </p>
   </DocPage>

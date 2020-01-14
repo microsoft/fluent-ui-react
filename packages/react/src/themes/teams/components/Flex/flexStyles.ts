@@ -1,4 +1,4 @@
-import { ComponentSlotStylesPrepared } from '../../../types'
+import { ComponentSlotStylesPrepared } from '@fluentui/styles'
 import { FlexProps } from '../../../../components/Flex/Flex'
 
 import { toFlexAlignment } from './utils'

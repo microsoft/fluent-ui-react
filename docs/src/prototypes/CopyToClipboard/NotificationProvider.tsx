@@ -1,4 +1,4 @@
-import { Portal, Tooltip, createComponent, TooltipProps } from '@stardust-ui/react'
+import { Portal, Tooltip, createComponent, TooltipProps } from '@fluentui/react'
 import * as React from 'react'
 
 type NotificationProps = {
@@ -46,7 +46,7 @@ export const NotificationProvider: React.FC = props => {
 
 export const Notification = createComponent<NotificationProps>({
   displayName: 'Notification',
-  render: ({ target, trigger, content, stardust: { classes } }) => {
+  render: ({ target, trigger, content, config: { classes } }) => {
     const tooltipProps: TooltipProps = {
       content,
       open: true,

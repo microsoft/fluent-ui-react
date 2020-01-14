@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { Button } from '@stardust-ui/react'
-import { useBooleanKnob } from '@stardust-ui/docs-components'
+import { Button } from '@fluentui/react'
+import { useBooleanKnob } from '@fluentui/docs-components'
 
 const ButtonExampleLoading = () => {
   const [loading] = useBooleanKnob({ name: 'loading', initialValue: true })

@@ -1,4 +1,4 @@
-import { Menu } from '@stardust-ui/react'
+import { Menu } from '@fluentui/react'
 import getScreenerSteps from '../commonScreenerSteps'
 
 const selectors = {

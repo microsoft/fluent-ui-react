@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Grid, Input, Text } from '@stardust-ui/react'
+import { Grid, Input, Text } from '@fluentui/react'
 
 const InputExampleWrapperSlot = () => (
   <Grid columns="1fr 2fr" styles={{ justifyItems: 'start', alignItems: 'center', gap: '10px' }}>

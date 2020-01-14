@@ -1,8 +1,8 @@
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import { DropdownVariables } from './dropdownVariables'
 import DropdownItem, { DropdownItemProps } from '../../../../components/Dropdown/DropdownItem'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../../../utils'
 
 const dropdownItemStyles: ComponentSlotStylesPrepared<DropdownItemProps, DropdownVariables> = {
   root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({

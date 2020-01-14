@@ -1,4 +1,4 @@
-import { Alert } from '@stardust-ui/react'
+import { Alert } from '@fluentui/react'
 import * as React from 'react'
 
 const AlertExampleFitted = () => (

@@ -2,6 +2,7 @@ import { danger, fail, warn, markdown } from 'danger'
 import checkChangelog from './build/dangerjs/checkChangelog'
 import detectChangedDependencies from './build/dangerjs/detectChangedDependencies'
 import detectNonApprovedDependencies from './build/dangerjs/detectNonApprovedDependencies'
+import checkPerfRegressions from './build/dangerjs/checkPerfRegressions'
 
 /**
  * This trick (of explicitly passing Danger JS utils as function arg, instead of importing them at places where needed)
@@ -13,4 +14,5 @@ export default async () => {
   await checkChangelog(dangerJS)
   await detectChangedDependencies(dangerJS)
   await detectNonApprovedDependencies(dangerJS)
+  await checkPerfRegressions(dangerJS)
 }

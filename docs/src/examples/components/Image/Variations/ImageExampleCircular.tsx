@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Image } from '@stardust-ui/react'
+import { Image } from '@fluentui/react'
 
 const ImageExampleCircular = () => <Image circular src="public/images/avatar/small/matt.jpg" />
 

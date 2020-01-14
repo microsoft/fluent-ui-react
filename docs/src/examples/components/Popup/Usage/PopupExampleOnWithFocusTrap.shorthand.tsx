@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Alert, Button, Flex, Popup } from '@stardust-ui/react'
+import { Alert, Button, Flex, Popup } from '@fluentui/react'
 
 const contentWithButtons = (
   <Flex gap="gap.smaller">

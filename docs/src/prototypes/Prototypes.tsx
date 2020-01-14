@@ -1,9 +1,9 @@
 import * as React from 'react'
-import { Box, Header, Segment } from '@stardust-ui/react'
+import { Box, Header, ICSSInJSStyle, Segment } from '@fluentui/react'
 
 interface PrototypeSectionProps {
   title?: React.ReactNode
-  styles?: React.CSSProperties
+  styles?: ICSSInJSStyle
 }
 
 interface ComponentPrototypeProps extends PrototypeSectionProps {

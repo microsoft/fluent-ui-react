@@ -1,4 +1,4 @@
-import * as customPropTypes from '@stardust-ui/react-proptypes'
+import * as customPropTypes from '@fluentui/react-proptypes'
 import * as React from 'react'
 import * as _ from 'lodash'
 
@@ -13,8 +13,8 @@ import {
   rtlTextContainer,
   createShorthandFactory,
   ShorthandFactory,
-} from '../../lib'
-import { Accessibility } from '@stardust-ui/accessibility'
+} from '../../utils'
+import { Accessibility } from '@fluentui/accessibility'
 import Reaction, { ReactionProps } from './Reaction'
 
 export interface ReactionGroupProps

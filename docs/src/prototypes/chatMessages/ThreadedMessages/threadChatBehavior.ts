@@ -1,4 +1,4 @@
-import { chatBehavior, Accessibility } from '@stardust-ui/react'
+import { chatBehavior, Accessibility } from '@fluentui/react'
 import classNames from './classNames'
 
 const threadChatBehavior: Accessibility = props => {
@@ -15,7 +15,7 @@ export default threadChatBehavior
 
 const getLastTabbableElement = (root: HTMLElement): HTMLElement => {
   // In real chat, it should focus the message with data-last-visible="true"
-  // Since we don't have this logic in Stardust, overriding a selector to focus the last thread message
+  // Since we don't have this logic in Fluent UI, overriding a selector to focus the last thread message
   const chatItemsElements = root.querySelectorAll(
     `[chat-focuszone] .${classNames.threadedMessage.thread}[data-is-focusable="true"]`,
   )

@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
 import { exampleIndexContext, exampleSourcesContext } from 'docs/src/utils'
-import { List, Segment } from '@stardust-ui/react'
+import { List, Segment } from '@fluentui/react'
 import { componentAPIs } from './ComponentSourceManager'
 
 import ContributionPrompt from './ContributionPrompt'

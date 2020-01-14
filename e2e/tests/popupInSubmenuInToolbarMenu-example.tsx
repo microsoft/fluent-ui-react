@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Toolbar, ToolbarItemShorthandKinds, Input } from '@stardust-ui/react'
+import { Toolbar, ToolbarItemShorthandKinds, Input } from '@fluentui/react'
 
 export const selectors = {
   toolbarMenuId: 'toolbarMenu',

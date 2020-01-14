@@ -11,7 +11,7 @@ import {
   menuAsToolbarBehavior,
   tabListBehavior,
   tabBehavior,
-} from '@stardust-ui/accessibility'
+} from '@fluentui/accessibility'
 import { ReactWrapper } from 'enzyme'
 import * as keyboardKey from 'keyboard-key'
 
@@ -32,7 +32,10 @@ describe('Menu', () => {
       key: 'users',
       content: 'users',
       'data-foo': 'something',
-      menu: [{ key: '1', content: 'Alice' }, { key: '2', content: 'Bob' }],
+      menu: [
+        { key: '1', content: 'Alice' },
+        { key: '2', content: 'Bob' },
+      ],
     },
   ]
 

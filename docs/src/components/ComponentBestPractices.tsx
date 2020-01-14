@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import {
+  Extendable,
   Box,
   Flex,
   Header,
@@ -9,8 +10,7 @@ import {
   ListItemProps,
   Segment,
   ShorthandCollection,
-} from '@stardust-ui/react'
-import { Extendable } from 'src/types'
+} from '@fluentui/react'
 
 export type ComponentBestPracticesProps = Extendable<{
   doList?: ShorthandCollection<ListItemProps>

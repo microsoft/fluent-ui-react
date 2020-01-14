@@ -1,6 +1,6 @@
-import { pxToRem } from '../../../../lib'
-import { screenReaderContainerStyles } from '../../../../lib/accessibility/Styles/accessibilityStyles'
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { pxToRem } from '../../../../utils'
+import { screenReaderContainerStyles } from '../../../../utils/accessibility/Styles/accessibilityStyles'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import { default as ListItem, ListItemProps } from '../../../../components/List/ListItem'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 

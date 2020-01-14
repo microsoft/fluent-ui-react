@@ -1,4 +1,4 @@
-import { chatMessageBehavior, AccessibilityDefinition } from '@stardust-ui/accessibility'
+import { chatMessageBehavior, AccessibilityDefinition } from '@fluentui/accessibility'
 import * as React from 'react'
 
 import { handlesAccessibility, implementsShorthandProp, isConformant } from 'test/specs/commonTests'
@@ -26,7 +26,7 @@ describe('ChatMessage', () => {
   describe('onMouseEnter', () => {
     it('performs position update', () => {
       const wrapper = mountWithProvider(<ChatMessage />)
-      const update = jest.spyOn(wrapper.instance(), 'updateActionsMenuPosition')
+      const update = jest.spyOn(wrapper.instance() as any, 'updateActionsMenuPosition')
 
       wrapper.simulate('mouseenter')
       expect(update).toBeCalledTimes(1)

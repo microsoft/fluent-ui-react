@@ -2,10 +2,11 @@ import {
   FocusZoneDirection,
   FocusZoneTabbableElements,
   IS_FOCUSABLE_ATTRIBUTE,
-} from '@stardust-ui/accessibility'
+} from '@fluentui/accessibility'
 import * as React from 'react'
 import cx from 'classnames'
 import * as _ from 'lodash'
+// @ts-ignore
 import * as keyboardKey from 'keyboard-key'
 import * as ReactDOM from 'react-dom'
 import * as PropTypes from 'prop-types'
@@ -129,10 +130,12 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
       return
     }
 
+    // @ts-ignore
     this.windowElement = getWindow(this._root.current)
     let parentElement = getParent(this._root.current)
     const doc = getDocument(this._root.current)
 
+    // @ts-ignore
     while (parentElement && parentElement !== doc.body && parentElement.nodeType === 1) {
       if (isElementFocusZone(parentElement)) {
         this._isInnerZone = true
@@ -143,10 +146,10 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
 
     if (!this._isInnerZone) {
       _outerZones.add(this)
-    }
 
-    if (this.windowElement && _outerZones.size === 1) {
-      this.windowElement.addEventListener('keydown', this._onKeyDownCapture, true)
+      if (this.windowElement && _outerZones.size === 1) {
+        this.windowElement.addEventListener('keydown', this._onKeyDownCapture, true)
+      }
     }
 
     this._root.current.addEventListener('blur', this._onBlur, true)
@@ -194,10 +197,10 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
 
     if (!this._isInnerZone) {
       _outerZones.delete(this)
-    }
 
-    if (this.windowElement && _outerZones.size === 0) {
-      this.windowElement.removeEventListener('keydown', this._onKeyDownCapture, true)
+      if (this.windowElement && _outerZones.size === 0) {
+        this.windowElement.removeEventListener('keydown', this._onKeyDownCapture, true)
+      }
     }
 
     if (this._root.current) {
@@ -234,7 +237,7 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
 
   /**
    * Sets focus to the first tabbable item in the zone.
-   * @param {boolean} forceIntoFirstElement If true, focus will be forced into the first element, even if focus is already in the focus zone.
+   * @param forceIntoFirstElement - If true, focus will be forced into the first element, even if focus is already in the focus zone.
    * @returns True if focus could be set to an active element, false if no operation was taken.
    */
   focus(forceIntoFirstElement: boolean = false): boolean {
@@ -280,13 +283,9 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
     if (this._root.current) {
       const lastChild = this._root.current && (this._root.current.lastChild as HTMLElement | null)
 
-      return this.focusElement(getPreviousElement(
-        this._root.current,
-        lastChild,
-        true,
-        true,
-        true,
-      ) as HTMLElement)
+      return this.focusElement(
+        getPreviousElement(this._root.current, lastChild, true, true, true) as HTMLElement,
+      )
     }
 
     return false
@@ -296,7 +295,7 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
    * Sets focus to a specific child element within the zone. This can be used in conjunction with
    * onBeforeFocus to created delayed focus scenarios (like animate the scroll position to the correct
    * location and then focus.)
-   * @param {HTMLElement} element The child element within the zone to focus.
+   * @param element - The child element within the zone to focus.
    * @returns True if focus could be set to an active element, false if no operation was taken.
    */
   focusElement(element: HTMLElement): boolean {
@@ -412,6 +411,7 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
         this.focus(true)
         if (this._activeElement) {
           // set to null as new active element was handled in method above
+          // @ts-ignore
           newActiveElement = null
         }
       }
@@ -513,14 +513,15 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
 
     const doc = getDocument(this._root.current)
 
+    if (this.props.onKeyDown) {
+      this.props.onKeyDown(ev)
+    }
+
+    // @ts-ignore
     if (doc.activeElement === this._root.current && this._isInnerZone) {
       // If this element has focus, it is being controlled by a parent.
       // Ignore the keystroke.
       return undefined
-    }
-
-    if (this.props.onKeyDown) {
-      this.props.onKeyDown(ev)
     }
 
     // If the default has been prevented, do not process keyboard events.
@@ -542,11 +543,13 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
         }
       } else if (isElementFocusSubZone(ev.target as HTMLElement)) {
         if (
-          !this.focusElement(getNextElement(
-            ev.target as HTMLElement,
-            (ev.target as HTMLElement).firstChild as HTMLElement,
-            true,
-          ) as HTMLElement)
+          !this.focusElement(
+            getNextElement(
+              ev.target as HTMLElement,
+              (ev.target as HTMLElement).firstChild as HTMLElement,
+              true,
+            ) as HTMLElement,
+          )
         ) {
           return undefined
         }
@@ -558,6 +561,7 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
     } else {
       switch (keyboardKey.getCode(ev)) {
         case keyboardKey.Spacebar:
+          // @ts-ignore
           if (this.tryInvokeClickForFocusable(ev.target as HTMLElement)) {
             break
           }
@@ -657,19 +661,16 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
             this._root.current && (this._root.current.lastChild as HTMLElement | null)
           if (
             this._root.current &&
-            this.focusElement(getPreviousElement(
-              this._root.current,
-              lastChild,
-              true,
-              true,
-              true,
-            ) as HTMLElement)
+            this.focusElement(
+              getPreviousElement(this._root.current, lastChild, true, true, true) as HTMLElement,
+            )
           ) {
             break
           }
           return undefined
 
         case keyboardKey.Enter:
+          // @ts-ignore
           if (this.tryInvokeClickForFocusable(ev.target as HTMLElement)) {
             break
           }
@@ -690,7 +691,7 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
    * Walk up the dom try to find a focusable element.
    * TODO
    */
-  tryInvokeClickForFocusable(onTarget: HTMLElement): boolean {
+  tryInvokeClickForFocusable(): boolean {
     return false
   }
 
@@ -729,6 +730,7 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
   moveFocus(
     isForward: boolean,
     getDistanceFromCenter: (activeRect: ClientRect, targetRect: ClientRect) => number,
+    // @ts-ignore
     ev?: Event,
     useDefaultWrap: boolean = true,
   ): boolean {
@@ -789,19 +791,23 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
       this.focusElement(candidateElement)
     } else if (this.props.isCircularNavigation && useDefaultWrap) {
       if (isForward) {
-        return this.focusElement(getNextElement(
-          this._root.current,
-          this._root.current.firstElementChild as HTMLElement,
-          true,
-        ) as HTMLElement)
+        return this.focusElement(
+          getNextElement(
+            this._root.current,
+            this._root.current.firstElementChild as HTMLElement,
+            true,
+          ) as HTMLElement,
+        )
       }
-      return this.focusElement(getPreviousElement(
-        this._root.current,
-        this._root.current.lastElementChild as HTMLElement,
-        true,
-        true,
-        true,
-      ) as HTMLElement)
+      return this.focusElement(
+        getPreviousElement(
+          this._root.current,
+          this._root.current.lastElementChild as HTMLElement,
+          true,
+          true,
+          true,
+        ) as HTMLElement,
+      )
     }
 
     return changedFocus
@@ -897,6 +903,7 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
   moveFocusLeft(): boolean {
     if (
       this.moveFocus(
+        // @ts-ignore
         this.props.isRtl,
         (activeRect: ClientRect, targetRect: ClientRect) => {
           let distance = -1
@@ -1007,6 +1014,7 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
     const doc = getDocument(this._root.current)
     let parentElement = getParent(element as HTMLElement)
 
+    // @ts-ignore
     while (parentElement && parentElement !== this._root.current && parentElement !== doc.body) {
       if (isElementFocusZone(parentElement)) {
         return parentElement
@@ -1022,6 +1030,7 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
     let element = onElement
 
     if (!this._activeElement && this.props.defaultTabbableElement) {
+      // @ts-ignore
       this._activeElement = this.props.defaultTabbableElement(this._root.current)
     }
 

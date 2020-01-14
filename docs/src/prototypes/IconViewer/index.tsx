@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { CopyToClipboard } from '@stardust-ui/docs-components'
-import { Provider, Grid, Divider, Header, Icon, Menu, Segment } from '@stardust-ui/react'
+import { CopyToClipboard } from '@fluentui/docs-components'
+import { Provider, Grid, Divider, Header, Icon, Menu, Segment } from '@fluentui/react'
 import themeWithProcessedIcons from 'src/themes/teams/withProcessedIcons'
 import { TeamsProcessedSvgIconSpec } from 'src/themes/teams/components/Icon/svg/types'
 
@@ -10,7 +10,7 @@ const cellStyles = {
 
 const processedIconsNamePrefix = 'processedIcons_'
 
-const renderStardustIconName = (icon, isOutline = false) => {
+const renderIconName = (icon, isOutline = false) => {
   const maybeExportedAs = (icon as any).exportedAs
   return (
     maybeExportedAs && (
@@ -55,7 +55,7 @@ class IconViewerExample extends React.Component<any, {}> {
           content="Teams Icons"
           description={{
             content:
-              'These icons have been pulled directly from the Angular app and are ready to be added to the Teams theme in Stardust as needed.',
+              'These icons have been pulled directly from the Angular app and are ready to be added to the Teams theme in Fluent UI as needed.',
             styles: { fontSize: '16px' },
           }}
         />
@@ -89,7 +89,7 @@ class IconViewerExample extends React.Component<any, {}> {
                             <br />
                             <code>{name.replace(processedIconsNamePrefix, '')}</code>
                             <br />
-                            {renderStardustIconName(theme.icons[name])}
+                            {renderIconName(theme.icons[name])}
                           </div>
                         ))}
                     </Grid>
@@ -109,7 +109,7 @@ class IconViewerExample extends React.Component<any, {}> {
                             <br />
                             <code>{name.replace(processedIconsNamePrefix, '')} outline</code>
                             <br />
-                            {renderStardustIconName(theme.icons[name], /* isOutline */ true)}
+                            {renderIconName(theme.icons[name], /* isOutline */ true)}
                           </div>
                         ))}
                     </Grid>

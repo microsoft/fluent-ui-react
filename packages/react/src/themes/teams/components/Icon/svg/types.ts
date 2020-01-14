@@ -1,6 +1,6 @@
-import { SvgIconSpec, ComponentSlotStyleFunction } from '../../../../types'
 import { ObjectOf } from '../../../../../types'
 import { IconProps } from '../../../../../components/Icon/Icon'
+import { ComponentSlotStyleFunction, SvgIconSpec } from '@fluentui/styles'
 
 export type SvgIconSpecWithStyles = {
   icon: SvgIconSpec
@@ -10,7 +10,7 @@ export type SvgIconSpecWithStyles = {
 export type TeamsSvgIconSpec = SvgIconSpec | SvgIconSpecWithStyles
 
 // TEMPORARY, till the moment when all necessary Teams icons will be moved
-// to this Stardust theme
+// to this Fluent UI theme
 export type TeamsProcessedSvgIconSpec = SvgIconSpecWithStyles & {
   exportedAs?: string
 }

@@ -9,10 +9,10 @@ import config from '../../../../config'
 const { paths } = config
 
 const prefix = (argv.prefix as string) || ''
-const packageName = (argv.package as string) || 'react'
+const packageName = config.package
 
 /**
- * Lists runtime dependencies (by crawling the actual code) of the requested Stardust package.
+ * Lists runtime dependencies (by crawling the actual code) of the requested Fluent UI package.
  */
 task('test:dependencies:list', cb => {
   const tempOutputFilePath = paths.base('test.js')

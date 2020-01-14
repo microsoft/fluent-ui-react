@@ -1,4 +1,4 @@
-import { Accessibility, imageBehavior } from '@stardust-ui/accessibility'
+import { Accessibility, imageBehavior } from '@fluentui/accessibility'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
@@ -8,7 +8,7 @@ import {
   UIComponentProps,
   commonPropTypes,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface ImageProps extends UIComponentProps {

@@ -1,4 +1,4 @@
-import { chatBehavior, Accessibility } from '@stardust-ui/react'
+import { chatBehavior, Accessibility } from '@fluentui/react'
 
 const controlMessagesGroupBehavior: Accessibility<any> = props => {
   const behaviorData = chatBehavior(props)
