@@ -88,32 +88,35 @@ const Avatar: React.FC<WithAsProp<AvatarProps>> &
   return (
     <ElementType {...getA11Props('root', { className: classes.root, ...unhandledProps })}>
       {Image.create(image, {
-        defaultProps: () => ({
-          fluid: true,
-          avatar: true,
-          title: name,
-          styles: resolvedStyles.image,
-        }),
+        defaultProps: () =>
+          getA11Props('image', {
+            fluid: true,
+            avatar: true,
+            title: name,
+            styles: resolvedStyles.image,
+          }),
       })}
       {!image &&
         Label.create(label || {}, {
-          defaultProps: () => ({
-            content: getInitials(name),
-            circular: true,
-            title: name,
-            styles: resolvedStyles.label,
-          }),
+          defaultProps: () =>
+            getA11Props('label', {
+              content: getInitials(name),
+              circular: true,
+              title: name,
+              styles: resolvedStyles.label,
+            }),
         })}
       {Status.create(status, {
-        defaultProps: () => ({
-          size,
-          styles: resolvedStyles.status,
-          variables: {
-            // TODO: Fix me
-            // borderColor: variables.statusBorderColor,
-            // borderWidth: variables.statusBorderWidth,
-          },
-        }),
+        defaultProps: () =>
+          getA11Props('status', {
+            size,
+            styles: resolvedStyles.status,
+            variables: {
+              // TODO: Fix me
+              // borderColor: variables.statusBorderColor,
+              // borderWidth: variables.statusBorderWidth,
+            },
+          }),
       })}
     </ElementType>
   )
