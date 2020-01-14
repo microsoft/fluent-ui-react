@@ -82,12 +82,12 @@ const ScrollbarDropdownPrototype = () => {
     <div>
       <Dropdown
         items={items}
-        list={{ container: { as: Scrollbars, style: { height: '20rem' } } }}
+        list={{ wrap: children => <Scrollbars style={{ height: '20rem' }}>{children}</Scrollbars> }}
       />
       <Dropdown
         search
         items={items}
-        list={{ container: { as: Scrollbars, style: { height: '20rem' } } }}
+        list={{ wrap: children => <Scrollbars style={{ height: '20rem' }}>{children}</Scrollbars> }}
       />
     </div>
   )
