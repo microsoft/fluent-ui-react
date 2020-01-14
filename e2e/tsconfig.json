@@ -1,5 +1,5 @@
 {
-  "extends": "@fluentui/internal-tooling/tsconfig.common.json",
+  "extends": "../build/tsconfig.common.json",
   "compilerOptions": {
     "module": "esnext",
     "allowSyntheticDefaultImports": true
