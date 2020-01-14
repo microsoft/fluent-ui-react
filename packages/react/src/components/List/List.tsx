@@ -87,7 +87,6 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
     ...commonPropTypes.createCommon({
       content: false,
     }),
-    container: customPropTypes.itemShorthand,
     debug: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
     selectable: customPropTypes.every([customPropTypes.disallow(['navigable']), PropTypes.bool]),
@@ -98,6 +97,7 @@ class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
     defaultSelectedIndex: PropTypes.number,
     onSelectedIndexChange: PropTypes.func,
     horizontal: PropTypes.bool,
+    wrap: PropTypes.func,
   }
 
   static defaultProps = {
