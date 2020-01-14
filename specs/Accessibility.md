@@ -41,6 +41,11 @@ There are two areas that come together to achieve accessibility:
 
 **Accessibility behaviors** reflect the need to have a set of validated and carefully tested alternatives available for the consumers that guarantee the accessibility of the component in various use cases. In some cases, accessibility can be highly oppinionated and the behaviors allow consumers to implement accessibility aspects of the components in a customized way, that better fits the requirements of the consumer.
 
+Accessibility behavior is a function that takes properties of the component combined with state and maps it to:
+- `role`, `aria-*` attributes, `tabIndex` and other attributes related to accessibility
+- assignement of keyboard keys to component actions
+- focus zone (arrow key navigation) definition
+
 ## Component creation process
 1. Create accessible component prototype
 2. Validate the prototype (test with all supported screen reader / OS combinations)
@@ -49,7 +54,7 @@ There are two areas that come together to achieve accessibility:
 5. Formulate meaningful best practices providing information, what the consumer need to do in order to achive optimal experience
 6. Extend accessibility validation schema to reflect the best practices
 
-## Usage in the components
+## Using behaviors in the components
 Every component relevant to accessibility needs to have:
 - default accessibility behavior, including specification or description in it's `@accessibility` jsdoc section
 - optionally other available accessibility attributes, listed in `@available` jsdoc section
