@@ -45,11 +45,7 @@ task('bundle:package:es', () =>
 )
 
 task('bundle:package:types:tsc', () => {
-  let cmd = 'tsc -b'
-  if (process.cwd() === config.path_base) {
-    cmd = `cd packages && cd ${packageName} && ${cmd}`
-  }
-  return sh(cmd)
+  return sh('tsc -b', paths.packages(packageName))
 })
 task('bundle:package:types:copy', () => {
   return src(paths.packageDist(packageName, 'dts/src/**/*.d.ts')).pipe(
