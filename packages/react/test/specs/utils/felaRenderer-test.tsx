@@ -6,6 +6,34 @@ import Animation from 'src/components/Animation/Animation'
 import Provider from 'src/components/Provider/Provider'
 import Text from 'src/components/Text/Text'
 import { felaRenderer } from 'src/utils'
+import {
+  ComponentAnimationProp,
+  unstable_createAnimationStyles as createAnimationStyles,
+} from '@fluentui/react-bindings'
+
+// Animation component depends on theme styles 💣
+// Issue: https://github.com/microsoft/fluent-ui-react/issues/2247
+// This adds required styles when needed.
+const AnimationComponentStyles = {
+  root: () => ({
+    display: 'inline-block',
+  }),
+  children: ({ props: p, theme }) => {
+    const animation: ComponentAnimationProp = {
+      name: p.name,
+      keyframeParams: p.keyframeParams,
+      duration: p.duration,
+      delay: p.delay,
+      iterationCount: p.iterationCount,
+      direction: p.direction,
+      fillMode: p.fillMode,
+      playState: p.playState,
+      timingFunction: p.timingFunction,
+    }
+
+    return createAnimationStyles(animation, theme)
+  },
+}
 
 describe('felaRenderer', () => {
   test('basic styles are rendered', () => {
@@ -48,7 +76,12 @@ describe('felaRenderer', () => {
     }
 
     const snapshot = createSnapshot(
-      <Provider theme={{ animations: { spinner } }}>
+      <Provider
+        theme={{
+          componentStyles: { Animation: AnimationComponentStyles },
+          animations: { spinner },
+        }}
+      >
         <Animation name="spinner">
           <Box />
         </Animation>
@@ -74,7 +107,12 @@ describe('felaRenderer', () => {
     }
 
     const snapshot = createSnapshot(
-      <Provider theme={{ animations: { spinner } }}>
+      <Provider
+        theme={{
+          componentStyles: { Animation: AnimationComponentStyles },
+          animations: { spinner },
+        }}
+      >
         <Animation name="spinner">
           <Box />
         </Animation>
@@ -100,7 +138,13 @@ describe('felaRenderer', () => {
     }
 
     const snapshot = createSnapshot(
-      <Provider disableAnimations theme={{ animations: { spinner } }}>
+      <Provider
+        disableAnimations
+        theme={{
+          componentStyles: { Animation: AnimationComponentStyles },
+          animations: { spinner },
+        }}
+      >
         <Animation name="spinner">
           <Box />
         </Animation>
