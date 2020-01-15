@@ -59,11 +59,7 @@ export const prepareWebpackConfig = (options: WebpackOptions) => {
     ],
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.json'],
-      alias: {
-        ...lernaAliases(),
-        src: paths.packageSrc('react'),
-        docs: paths.base('docs'),
-      },
+      alias: lernaAliases(),
     },
   }
 }

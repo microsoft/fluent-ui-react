@@ -116,11 +116,7 @@ const webpackConfig: any = {
   ].filter(Boolean),
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json'],
-    alias: {
-      ...lernaAliases(),
-      src: paths.packageSrc('react'),
-      docs: paths.base('docs'),
-    },
+    alias: lernaAliases(),
   },
   optimization: {
     // Automatically split vendor and commons
