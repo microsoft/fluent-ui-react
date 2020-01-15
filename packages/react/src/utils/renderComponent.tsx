@@ -69,10 +69,10 @@ const renderComponent = <P extends {}>(
     logProviderMissingWarning()
   }
 
-  const [telemetryStart, telemetryEnd] = useTelemetry(displayName, context.telemetry)
+  const { setStart, setEnd } = useTelemetry(displayName, context.telemetry)
   const rtl = context.rtl || false
 
-  telemetryStart()
+  setStart()
 
   const ElementType = getElementType(props) as React.ReactType<P>
   const unhandledProps = getUnhandledProps(handledProps, props)
@@ -109,7 +109,7 @@ const renderComponent = <P extends {}>(
   }
   let wrapInFocusZone: (element: React.ReactElement) => React.ReactElement = element => element
 
-  telemetryEnd()
+  setEnd()
 
   if (accessibility.focusZone && accessibility.focusZone.mode === FocusZoneMode.Wrap) {
     wrapInFocusZone = element =>

@@ -125,10 +125,10 @@ const Button: React.FC<WithAsProp<ButtonProps>> &
     design,
   } = props
   const context: ProviderContextPrepared = React.useContext(ThemeContext)
-  const [startTelemetry, endTelemetry] = useTelemetry(Button.displayName, context.telemetry)
+  const { setStart, setEnd } = useTelemetry(Button.displayName, context.telemetry)
   const hasChildren = childrenExist(children)
 
-  startTelemetry()
+  setStart()
 
   const getA11Props = useAccessibility(accessibility, {
     debugName: Button.displayName,
@@ -206,7 +206,8 @@ const Button: React.FC<WithAsProp<ButtonProps>> &
     _.invoke(props, 'onFocus', e, props)
   }
 
-  endTelemetry()
+  setEnd()
+
   return (
     <ElementType
       {...rtlTextContainer.getAttributes({ forElements: [children] })}
