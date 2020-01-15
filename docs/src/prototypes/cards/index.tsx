@@ -1,15 +1,19 @@
 import * as React from 'react'
 import EmployeeCard from './EmployeeCard'
 import { Dropdown, DropdownProps } from '@fluentui/react'
-// import { cardStyle } from 'docs/src/components/ComponentDoc/ComponentProps/ComponentPropCard'
+import { screenReaderContainerStyles } from '../../../../packages/react/src/utils/accessibility/Styles/accessibilityStyles'
 
 class EmployeeCardPrototype extends React.Component<any> {
+  instructionMessageTimeout
+
   state = {
     parentRole: null,
     cardRole: 'group',
     ariaRoleDescription: null,
     ariaExpanded: null,
     isLimitedNavigation: true,
+    // a11yInstructionMessage: 'Press arrow keys to navigate between cards.'
+    a11yInstructionMessage: null,
   }
 
   getCards(numberOfCards, employee) {
@@ -40,6 +44,7 @@ class EmployeeCardPrototype extends React.Component<any> {
         this.setState({ cardRole: 'group' })
         this.setState({ ariaExpanded: null })
         this.setState({ ariaRoleDescription: null })
+        this.setState({ parentRole: 'null' })
         return
       case 'card as group with aria-expanded':
         this.setState({ cardRole: 'group' })
@@ -69,6 +74,27 @@ class EmployeeCardPrototype extends React.Component<any> {
         this.setState({ isLimitedNavigation: false })
         return
     }
+  }
+
+  onFocusSetMessage() {
+    clearTimeout(this.instructionMessageTimeout)
+    if (!this.state.a11yInstructionMessage) {
+      this.setState({
+        a11yInstructionMessage: 'Press arrow keys to navigate between cards.',
+      })
+    }
+    // clear out the content of aria-live region to disable to navigate there by virtual cursor
+    setTimeout(() => {
+      this.setState({ a11yInstructionMessage: ' ' })
+    }, 200)
+  }
+
+  onBlurClearMessage() {
+    this.instructionMessageTimeout = setTimeout(() => {
+      if (this.state.a11yInstructionMessage) {
+        this.setState({ a11yInstructionMessage: null })
+      }
+    }, 0)
   }
 
   render() {
@@ -106,11 +132,19 @@ class EmployeeCardPrototype extends React.Component<any> {
         />
         <div
           role={this.state.parentRole}
-          // aria-label="Use arrows to navigate between cards."
+          onFocus={this.onFocusSetMessage.bind(this)}
+          onBlur={this.onBlurClearMessage.bind(this)}
           style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}
+          id="parent"
         >
           {this.getCards(15, employee)}
         </div>
+        {/* <Portal open={!!this.state.a11yInstructionMessage}> */}
+        <div aria-live="polite" style={screenReaderContainerStyles}>
+          {this.state.a11yInstructionMessage}
+        </div>
+        <button>last one</button>
+        {/* </Portal> */}
       </div>
     )
   }
