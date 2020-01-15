@@ -12,7 +12,12 @@ import { ProfilerMeasure, ProfilerMeasureCycle } from '../types'
 const Profiler = (React as any).unstable_Profiler
 
 const mountNode = document.querySelector('#root')
-const performanceExamplesContext = require.context('docs/src/examples/', true, /.perf.tsx$/)
+const performanceExamplesContext = require.context(
+  // TODO (@ecraig12345) - switch to @fluentui/docs and add dep
+  '../../docs/src/examples/',
+  true,
+  /.perf.tsx$/,
+)
 
 // Heads up!
 // We want to randomize examples to avoid any notable issues with always first example

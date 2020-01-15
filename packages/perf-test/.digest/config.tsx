@@ -2,8 +2,7 @@ import * as React from 'react'
 import { Provider, themes } from '@fluentui/react'
 
 const reqContexts = [
-  // TODO: Relative pathing isn't the best here, but docs containing perf stories isn't a package that can be added as a dep.
-  require.context('../../../docs/src', true, /\.perf\.tsx$/),
+  require.context('@fluentui/docs/src', true, /\.perf\.tsx$/),
   require.context('..', true, /\.perf\.tsx$/),
   // TODO: why does this break index.html?? seems to pull in stories the same way...
   // require.context('../stories', true, /\.perf\.tsx$/),
