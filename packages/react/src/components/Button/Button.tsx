@@ -31,6 +31,7 @@ import {
   getUnhandledProps,
   useAccessibility,
   useStyles,
+  useTelemetry,
 } from '@fluentui/react-bindings'
 // @ts-ignore
 import { ThemeContext } from 'react-fela'
@@ -124,7 +125,10 @@ const Button: React.FC<WithAsProp<ButtonProps>> &
     design,
   } = props
   const context: ProviderContextPrepared = React.useContext(ThemeContext)
+  const [startTelemetry, endTelemetry] = useTelemetry(Button.displayName, context)
   const hasChildren = childrenExist(children)
+
+  startTelemetry()
 
   const getA11Props = useAccessibility(accessibility, {
     debugName: Button.displayName,
@@ -202,6 +206,7 @@ const Button: React.FC<WithAsProp<ButtonProps>> &
     _.invoke(props, 'onFocus', e, props)
   }
 
+  endTelemetry()
   return (
     <ElementType
       {...rtlTextContainer.getAttributes({ forElements: [children] })}
