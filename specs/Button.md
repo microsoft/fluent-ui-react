@@ -43,7 +43,7 @@ The following are variants that exist because of the need of `Buttons` to reside
   - In Ant Design
   - In Semantic UI
   - In Shards React
-  - In Current Fluent UI
+  - In Fluent UI
 - `Button group/set`
   - In Ant Design
   - In Atlaskit
@@ -54,7 +54,7 @@ The following are variants that exist because of the need of `Buttons` to reside
   - In React Bootstrap
   - In Semantic UI
   - In Shards React
-  - In Current Fluent UI
+  - In Fluent UI
 - `Conditional button`
   - In Semantic UI
 - `Floating action/Raised button`
@@ -119,11 +119,11 @@ The following section documents links to different UI libraries implementations 
 
 - [Shards React Button docs](https://designrevision.com/docs/shards-react/component/button)
 
-- [Current Fluent Button docs](https://microsoft.github.io/fluent-ui-react/components/button/definition)
+- [Fluent UI Button docs](https://microsoft.github.io/fluent-ui-react/components/button/definition)
 
 ## Props
 
-The following section documents the properties that will become part of the new component, as well as the process for mitigating all changes when moving from Fabric and Current Fluent to Fluent UI.
+The following section documents the properties that will become part of the new component, as well as the process for mitigating all changes when moving to Fluent UI.
 
 > TODO: Consult the prop wizard to derive consistently defined props.
 
@@ -223,7 +223,7 @@ https://developer.microsoft.com/en-us/fabric#/controls/web/button
 | `toggled`                          | `boolean`                                                                                                  | Already deprecated in favor of `checked`.                                                                                                   |
 | `uniqueId`                         | `string \| number`                                                                                         | This is used for keytip support in Fabric. Maybe remove it until we add `Keytips` in Fluent UI?                                             |
 
-### Current Fluent Button props
+### Fluent UI Button props
 
 #### ButtonProps interface
 
@@ -306,7 +306,7 @@ https://developer.microsoft.com/en-us/fabric#/controls/web/button
 | `toggled`                          | Removing as it is already deprecated. | &#9745;                | No, because prop is already deprecated. | &#x274C;              |
 | `uniqueId`                         | TBD                                   | &#x274C;               | &#x274C;                                | &#x274C;              |
 
-### Conversion process from Current Fluent to Fluent UI Button
+### Conversion process from old Fluent UI to new Fluent UI Button
 
 #### ButtonProps interface
 
@@ -632,7 +632,7 @@ None.
 
 - Has no built-in support for icons via props.
 
-### Current Fluent Button
+### Fluent UI Button
 
 #### Example DOM
 
@@ -899,7 +899,7 @@ render() {
 | `endIconColorPrimaryHovered`    |                |
 | `endIconColorPrimaryPressed`    |                |
 
-NOTE! Current Fluent does not follow this convention. Their `Button` currently uses these tokens:
+NOTE! Fluent UI does not follow this convention. Their `Button` currently uses these tokens:
 
 ```
 backgroundColor: string

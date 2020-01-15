@@ -23,7 +23,7 @@ https://codesandbox.io/s/sliders-xi0zw
 
 Fabric Slider [docs](https://developer.microsoft.com/en-us/fabric#/controls/web/slider)
 
-Current Fluent Slider [docs](http://localhost:8080/components/slider/definition)
+Fluent UI Slider [docs](http://localhost:8080/components/slider/definition)
 
 Material UI Slider [docs](https://material-ui.com/components/slider/)
 
@@ -98,7 +98,7 @@ https://developer.microsoft.com/en-us/fabric#/controls/web/slider
 | valueFormat    | (value: number) => string                                | Could be depreacted; consider slots override?                                                            |
 | vertical       | boolean                                                  |                                                                                                          |
 
-### Current Fluent Slider props
+### Fluent UI Slider props
 
 | Name                        | Type                                   | Notes                                                  |
 | --------------------------- | -------------------------------------- | ------------------------------------------------------ |
@@ -121,7 +121,7 @@ https://developer.microsoft.com/en-us/fabric#/controls/web/slider
 | variables                   | any                                    | Consider only recomposition                            |
 | vertical                    | boolean                                |                                                        |
 
-### Differences of Fabric/Current Fluent to resolve
+### Differences of Fabric/Fluent to resolve
 
 | Name                        | Fx  | Recommendation                                                                                                                                                                              |
 | --------------------------- | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -230,7 +230,7 @@ General considerations:
 </div>
 ```
 
-### Current Fluent Slider example DOM
+### Fluent UI Slider example DOM
 
 - Extra wrapper div
 - input element to receive focus
@@ -411,7 +411,7 @@ render() {
 | trackColorPressed  |                |
 | trackSize          |                |
 
-NOTE! Current Fluent does not follow this convention. Slider currently uses these tokens:
+NOTE! Fluent UI does not follow this convention. Slider currently uses these tokens:
 
 ```
 activeThumbColor: string
