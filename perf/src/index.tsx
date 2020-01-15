@@ -13,8 +13,7 @@ const Profiler = (React as any).unstable_Profiler
 
 const mountNode = document.querySelector('#root')
 const performanceExamplesContext = require.context(
-  // TODO (@ecraig12345) - switch to @fluentui/docs and add dep
-  '../../docs/src/examples/',
+  '@fluentui/docs/src/examples/',
   true,
   /.perf.tsx$/,
 )
