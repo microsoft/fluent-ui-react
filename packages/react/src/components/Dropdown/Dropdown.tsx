@@ -188,6 +188,15 @@ export interface DropdownProps
   renderItem?: ShorthandRenderFunction<DropdownItemProps>
 
   /**
+   * Callback that provides rendered tree items to be used by react-virtualized for instance.
+   * Acts as a render prop, with the rendered tree items being the re-used logic.
+   *
+   * @param renderedItem - The array of rendered items.
+   * @returns The render prop result.
+   */
+  renderedItems?: (renderedItems: React.ReactElement[]) => React.ReactNode
+
+  /**
    * A custom render function for the selected item. Only applicable with the `multiple` prop.
    *
    * @param Component - The computed component for this slot.
@@ -293,6 +302,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     placeholder: PropTypes.string,
     position: PropTypes.oneOf(POSITIONS),
     renderItem: PropTypes.func,
+    renderedItems: PropTypes.func,
     renderSelectedItem: PropTypes.func,
     search: PropTypes.oneOfType([PropTypes.bool, PropTypes.func]),
     searchQuery: PropTypes.string,
@@ -423,6 +433,8 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       getA11yStatusMessage,
       itemToString,
       toggleIndicator,
+      renderedItems,
+      items,
     } = this.props
     const { highlightedIndex, open, searchQuery, value } = this.state
 
@@ -441,6 +453,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
           onStateChange={this.handleStateChange}
           labelId={this.props['aria-labelledby']}
           environment={this.context.target.defaultView}
+          itemCount={renderedItems ? items.length : undefined}
           inputId={
             this.props.searchInput && this.props.searchInput['id']
               ? this.props.searchInput['id']
@@ -653,7 +666,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     getInputProps: (options?: GetInputPropsOptions) => any,
     rtl: boolean,
   ) {
-    const { align, offset, position, search, unstable_pinned } = this.props
+    const { align, offset, position, renderedItems, search, unstable_pinned } = this.props
     const { open } = this.state
     const items = open ? this.renderItems(styles, variables, getItemProps, highlightedIndex) : []
     const { innerRef, ...accessibilityMenuProps } = getMenuProps(
@@ -703,8 +716,10 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
             aria-hidden={!open}
             onFocus={this.handleTriggerButtonOrListFocus}
             onBlur={this.handleListBlur}
-            items={items}
-          />
+            items={renderedItems ? undefined : items}
+          >
+            {renderedItems ? renderedItems(items) : null}
+          </List>
         </Popper>
       </Ref>
     )
@@ -715,7 +730,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     variables: ComponentVariablesInput,
     getItemProps: (options: GetItemPropsOptions<ShorthandValue<DropdownItemProps>>) => any,
     highlightedIndex: number,
-  ) {
+  ): React.ReactElement[] {
     const {
       loading,
       loadingMessage,
@@ -750,24 +765,23 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       },
     }))
 
-    return [
-      ...items,
-      loading &&
-        ListItem.create(loadingMessage, {
-          defaultProps: () => ({
-            key: 'loading-message',
-            styles: styles.loadingMessage,
-          }),
+    if (loading) {
+      items.push(ListItem.create(loadingMessage, {
+        defaultProps: () => ({
+          key: 'loading-message',
+          styles: styles.loadingMessage,
         }),
-      !loading &&
-        items.length === 0 &&
-        ListItem.create(noResultsMessage, {
-          defaultProps: () => ({
-            key: 'no-results-message',
-            styles: styles.noResultsMessage,
-          }),
+      }) as any)
+    } else if (items.length === 0) {
+      items.push(ListItem.create(noResultsMessage, {
+        defaultProps: () => ({
+          key: 'no-results-message',
+          styles: styles.noResultsMessage,
         }),
-    ]
+      }) as any)
+    }
+
+    return items as any[]
   }
 
   renderSelectedItems(variables, rtl: boolean) {
