@@ -1,6 +1,6 @@
 import * as React from 'react'
 import EmployeeCard from './EmployeeCard'
-import { Dropdown, DropdownProps } from '@fluentui/react'
+import { Dropdown, DropdownProps, Divider } from '@fluentui/react'
 import { screenReaderContainerStyles } from '../../../../packages/react/src/utils/accessibility/Styles/accessibilityStyles'
 
 class EmployeeCardPrototype extends React.Component<any> {
@@ -12,11 +12,11 @@ class EmployeeCardPrototype extends React.Component<any> {
     ariaRoleDescription: null,
     ariaExpanded: null,
     isLimitedNavigation: true,
-    // a11yInstructionMessage: 'Press arrow keys to navigate between cards.'
     a11yInstructionMessage: null,
+    a11yDescribedByInstructionMessage: null,
   }
 
-  getCards(numberOfCards, employee) {
+  getCards(numberOfCards, employee, shouldHaveDescribedByMessage = false) {
     const cards = []
     for (let i = 0; i < numberOfCards; i++) {
       const cardOrder = { cardOrder: i }
@@ -26,6 +26,7 @@ class EmployeeCardPrototype extends React.Component<any> {
           {...cardOrder}
           isLimitedNavigation={this.state.isLimitedNavigation}
           aria-labelledby={`user-name-${i} user-card-${i}`}
+          aria-describedby={shouldHaveDescribedByMessage ? 'instruction-messsage' : null}
           id={`user-card-${i}`}
           aria-label=",card"
           role={this.state.cardRole}
@@ -97,6 +98,27 @@ class EmployeeCardPrototype extends React.Component<any> {
     }, 0)
   }
 
+  onFocusSetMessageDescribedBy() {
+    clearTimeout(this.instructionMessageTimeout)
+    if (!this.state.a11yDescribedByInstructionMessage) {
+      this.setState({
+        a11yDescribedByInstructionMessage: 'Press arrow keys to navigate between cards.',
+      })
+    }
+    // clear out the content of aria-live region to disable to navigate there by virtual cursor
+    setTimeout(() => {
+      this.setState({ a11yDescribedByInstructionMessage: ' ' })
+    }, 200)
+  }
+
+  onBlurClearMessageDescribedBy() {
+    this.instructionMessageTimeout = setTimeout(() => {
+      if (this.state.a11yDescribedByInstructionMessage) {
+        this.setState({ a11yDescribedByInstructionMessage: null })
+      }
+    }, 0)
+  }
+
   render() {
     const employee = {
       firstName: 'John',
@@ -139,12 +161,26 @@ class EmployeeCardPrototype extends React.Component<any> {
         >
           {this.getCards(15, employee)}
         </div>
-        {/* <Portal open={!!this.state.a11yInstructionMessage}> */}
         <div aria-live="polite" style={screenReaderContainerStyles}>
           {this.state.a11yInstructionMessage}
         </div>
-        <button>last one</button>
-        {/* </Portal> */}
+        <button>any random element</button>
+
+        <Divider key={10} size={30} />
+
+        <div
+          role={this.state.parentRole}
+          onFocus={this.onFocusSetMessageDescribedBy.bind(this)}
+          onBlur={this.onBlurClearMessageDescribedBy.bind(this)}
+          style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}
+          id="parent"
+        >
+          {this.getCards(6, employee, true)}
+        </div>
+        <div id="instruction-messsage" style={screenReaderContainerStyles}>
+          {this.state.a11yDescribedByInstructionMessage}
+        </div>
+        <button>any random element</button>
       </div>
     )
   }
