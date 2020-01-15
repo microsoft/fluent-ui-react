@@ -1,6 +1,6 @@
 import * as FluentUI from '@fluentui/react'
 
-import { KnobDefinition, KnobGeneratorOptions, KnobGenerator } from 'docs/src/types'
+import { KnobDefinition, KnobGeneratorOptions, KnobGenerator } from '../../types'
 import * as componentGenerators from './componentGenerators'
 import * as propGenerators from './propGenerators'
 import * as typeGenerators from './typeGenerators'

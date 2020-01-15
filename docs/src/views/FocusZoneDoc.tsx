@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Header } from '@fluentui/react'
 import { CodeSnippet } from '@fluentui/docs-components'
 
-import ComponentPropsTable from 'docs/src/components/ComponentDoc/ComponentPropsTable'
+import ComponentPropsTable from '../components/ComponentDoc/ComponentPropsTable'
 import DocPage from '../components/DocPage'
 import { code, link } from '../utils/helpers'
 

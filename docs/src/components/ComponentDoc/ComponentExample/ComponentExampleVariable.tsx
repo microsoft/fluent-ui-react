@@ -1,6 +1,6 @@
 import { Input, InputProps, Popup } from '@fluentui/react'
 import * as React from 'react'
-import ComponentExampleColorPicker from 'docs/src/components/ComponentDoc/ComponentExample/ComponentExampleColorPicker'
+import ComponentExampleColorPicker from './ComponentExampleColorPicker'
 
 export type ComponentExampleVariableProps = {
   componentName: string

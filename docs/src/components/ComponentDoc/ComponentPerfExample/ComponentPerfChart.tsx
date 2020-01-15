@@ -1,8 +1,8 @@
 import * as _ from 'lodash'
 import { Box, Flex, RadioGroup, Text, Checkbox } from '@fluentui/react'
-import { PerfChart, usePerfData } from 'docs/src/components/ComponentDoc/PerfChart'
+import { PerfChart, usePerfData } from '../PerfChart'
 import * as React from 'react'
-import { PerfData, PerfSample } from 'docs/src/components/ComponentDoc/PerfChart/PerfDataContext'
+import { PerfData, PerfSample } from '../PerfChart/PerfDataContext'
 
 enum FILTER_BY {
   CI_BUILD = 'ci build',
