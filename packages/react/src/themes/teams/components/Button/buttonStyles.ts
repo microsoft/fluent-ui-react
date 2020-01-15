@@ -1,5 +1,6 @@
 import * as _ from 'lodash'
-import { pxToRem, createAnimationStyles } from '../../../../utils'
+import { unstable_createAnimationStyles as createAnimationStyles } from '@fluentui/react-bindings'
+import { pxToRem } from '../../../../utils'
 import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import Loader from '../../../../components/Loader/Loader'
 import { ButtonProps } from '../../../../components/Button/Button'

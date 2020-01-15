@@ -1,9 +1,18 @@
-import { ThemeInput } from '@fluentui/styles'
+import { ComponentStyleFunctionParam, emptyTheme, ThemeInput } from '@fluentui/styles'
 import * as React from 'react'
 import { mount } from 'enzyme'
 
 import Provider from 'src/components/Provider/Provider'
 import ProviderConsumer from 'src/components/Provider/ProviderConsumer'
+
+const styleParam: ComponentStyleFunctionParam = {
+  disableAnimations: false,
+  displayName: 'Test',
+  props: {},
+  rtl: false,
+  theme: emptyTheme,
+  variables: {},
+}
 
 describe('ProviderConsumer', () => {
   test('is exported', () => {
@@ -49,7 +58,7 @@ describe('ProviderConsumer', () => {
               // componentStyles
               expect(preparedTheme).toHaveProperty('componentStyles.Button.root')
               expect(preparedTheme.componentStyles.Button.root).toBeInstanceOf(Function)
-              expect(preparedTheme.componentStyles.Button.root()).toMatchObject(
+              expect(preparedTheme.componentStyles.Button.root(styleParam)).toMatchObject(
                 inputTheme.componentStyles.Button.root,
               )
 

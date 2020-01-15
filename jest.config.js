@@ -9,11 +9,13 @@ const packagePaths = lernaAliases({ sourceDirectory: false })
 
 // Exclude packages which build with just, and other special packages
 const excludedPackages = ['@fluentui/internal-tooling']
-const projects = Object.keys(packagePaths).filter(
-  packageName =>
-    !excludedPackages.includes(packageName) &&
-    !fs.existsSync(path.join(packagePaths[packageName], 'just.config.ts')),
-)
+const projects = Object.keys(packagePaths)
+  .filter(
+    packageName =>
+      !excludedPackages.includes(packageName) &&
+      !fs.existsSync(path.join(packagePaths[packageName], 'just.config.ts')),
+  )
+  .map(packageName => packagePaths[packageName])
 
 module.exports = {
   coverageReporters,
