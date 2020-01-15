@@ -1,8 +1,6 @@
 import { Telemetry } from './types'
 
-const useTelemetry = (displayName: string, context: any) => {
-  const { telemetry = undefined as Telemetry | undefined } = context || {}
-
+const useTelemetry = (displayName: string, telemetry: Telemetry | undefined) => {
   let start: number = -1
   let end: number = -1
 

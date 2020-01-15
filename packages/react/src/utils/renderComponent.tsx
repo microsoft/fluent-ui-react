@@ -69,7 +69,7 @@ const renderComponent = <P extends {}>(
     logProviderMissingWarning()
   }
 
-  const [telemetryStart, telemetryEnd] = useTelemetry(displayName, context)
+  const [telemetryStart, telemetryEnd] = useTelemetry(displayName, context.telemetry)
   const rtl = context.rtl || false
 
   telemetryStart()

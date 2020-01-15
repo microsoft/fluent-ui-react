@@ -125,7 +125,7 @@ const Button: React.FC<WithAsProp<ButtonProps>> &
     design,
   } = props
   const context: ProviderContextPrepared = React.useContext(ThemeContext)
-  const [startTelemetry, endTelemetry] = useTelemetry(Button.displayName, context)
+  const [startTelemetry, endTelemetry] = useTelemetry(Button.displayName, context.telemetry)
   const hasChildren = childrenExist(children)
 
   startTelemetry()
