@@ -1,4 +1,4 @@
-import { pxToRem } from 'src/utils'
+import { pxToRem } from '@fluentui/react'
 
 describe('fontSizeUtility', () => {
   describe('pxToRem', () => {

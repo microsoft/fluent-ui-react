@@ -1,7 +1,6 @@
-import { isConformant } from 'test/specs/commonTests'
-import ButtonGroup from 'src/components/Button/ButtonGroup'
+import { isConformant } from '../../commonTests'
+import { ButtonGroup, Button } from '@fluentui/react'
 import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
-import Button from 'src/components/Button/Button'
 
 const buttonGroupImplementsCollectionShorthandProp = implementsCollectionShorthandProp(ButtonGroup)
 

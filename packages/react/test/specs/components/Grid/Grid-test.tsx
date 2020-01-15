@@ -1,6 +1,6 @@
-import { isConformant } from 'test/specs/commonTests'
+import { isConformant } from '../../commonTests'
 
-import Grid from 'src/components/Grid/Grid'
+import { Grid } from '@fluentui/react'
 
 describe('Grid', () => {
   isConformant(Grid)

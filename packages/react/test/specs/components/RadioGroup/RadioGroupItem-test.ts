@@ -1,6 +1,6 @@
-import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
+import { isConformant, handlesAccessibility } from '../../commonTests'
 
-import RadioGroupItem from 'src/components/RadioGroup/RadioGroupItem'
+import { RadioGroupItem } from '@fluentui/react'
 
 describe('RadioGroupItem', () => {
   isConformant(RadioGroupItem)

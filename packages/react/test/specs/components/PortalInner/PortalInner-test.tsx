@@ -1,7 +1,7 @@
 import * as React from 'react'
 
-import PortalInner, { PortalInnerProps } from 'src/components/Portal/PortalInner'
-import { mountWithProvider } from 'test/utils'
+import PortalInner, { PortalInnerProps } from '@fluentui/react/src/components/Portal/PortalInner'
+import { mountWithProvider } from '../../../utils'
 
 const mountPortalInner = (props: PortalInnerProps) =>
   mountWithProvider(

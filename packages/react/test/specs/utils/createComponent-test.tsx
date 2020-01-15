@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { createComponent } from 'src/utils'
+import { createComponent } from '@fluentui/react'
 
 describe('createComponent', () => {
   describe('className', () => {

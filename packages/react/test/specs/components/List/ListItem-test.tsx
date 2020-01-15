@@ -1,10 +1,10 @@
 import { selectableListItemBehavior } from '@fluentui/accessibility'
 import * as React from 'react'
 import * as keyboardKey from 'keyboard-key'
-import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
-import { mountWithProvider } from 'test/utils'
+import { isConformant, handlesAccessibility } from '../../commonTests'
+import { mountWithProvider } from '../../../utils'
 
-import ListItem from 'src/components/List/ListItem'
+import { ListItem } from '@fluentui/react'
 
 describe('ListItem', () => {
   isConformant(ListItem)

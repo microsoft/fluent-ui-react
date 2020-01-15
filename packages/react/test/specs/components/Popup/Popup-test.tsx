@@ -2,7 +2,7 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as ReactTestUtils from 'react-dom/test-utils'
 
-import Popup, { PopupEvents } from 'src/components/Popup/Popup'
+import { Popup, PopupEvents } from '@fluentui/react'
 import { domEvent, EmptyThemeProvider, mountWithProvider } from '../../../utils'
 import * as keyboardKey from 'keyboard-key'
 import { ReactWrapper } from 'enzyme'

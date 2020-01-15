@@ -2,7 +2,7 @@ import { createRenderer } from 'fela'
 import { renderToString } from 'fela-tools'
 import { RULE_TYPE } from 'fela-utils'
 
-import felaFocusVisibleEnhancer from 'src/utils/felaFocusVisibleEnhancer'
+import { felaFocusVisibleEnhancer } from '@fluentui/react'
 
 describe('felaFocusVisibleEnhancer', () => {
   test('replaces :focus-visible', () => {

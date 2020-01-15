@@ -1,8 +1,8 @@
 import * as React from 'react'
-import { domEvent, nextFrame, mountWithProvider } from 'test/utils'
+import { domEvent, nextFrame, mountWithProvider } from '../../../utils'
 
-import Portal from 'src/components/Portal/Portal'
-import PortalInner from 'src/components/Portal/PortalInner'
+import { Portal } from '@fluentui/react'
+import PortalInner from '@fluentui/react/src/components/Portal/PortalInner'
 
 describe('Portal', () => {
   const testPortalInnerIsOpen = (rootWrapper, visible: boolean) => {

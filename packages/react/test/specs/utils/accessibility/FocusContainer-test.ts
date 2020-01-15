@@ -1,4 +1,4 @@
-import { ContainerFocusHandler } from 'src/utils/accessibility/FocusHandling/FocusContainer'
+import { ContainerFocusHandler } from '@fluentui/react/src/utils/accessibility/FocusHandling/FocusContainer'
 
 const createFocusContainer = (
   { itemsCount, setFocusAtFn }: { itemsCount: number; setFocusAtFn?: () => void } = {

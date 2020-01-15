@@ -3,7 +3,7 @@ import * as React from 'react'
 import { isConformant, handlesAccessibility, getRenderedAttribute } from '../../commonTests'
 
 import Icon from '../../../../src/components/Icon/Icon'
-import { mountWithProviderAndGetComponent } from 'test/utils'
+import { mountWithProviderAndGetComponent } from '../../../utils'
 
 describe('Icon', () => {
   isConformant(Icon, { requiredProps: { name: 'at' } })

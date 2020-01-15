@@ -1,8 +1,8 @@
 import * as React from 'react'
-import ToolbarMenu from 'src/components/Toolbar/ToolbarMenu'
+import { ToolbarMenu } from '@fluentui/react'
 
-import { isConformant } from 'test/specs/commonTests'
-import { mountWithProvider } from 'test/utils'
+import { isConformant } from '../../commonTests'
+import { mountWithProvider } from '../../../utils'
 import { ReactWrapper } from 'enzyme'
 
 describe('ToolbarMenu', () => {

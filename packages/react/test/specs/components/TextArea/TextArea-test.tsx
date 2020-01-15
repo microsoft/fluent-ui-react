@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { mountWithProvider as mount } from 'test/utils'
-import TextArea from 'src/components/TextArea/TextArea'
-import { isConformant } from 'test/specs/commonTests'
+import { mountWithProvider as mount } from '../../../utils'
+import { TextArea } from '@fluentui/react'
+import { isConformant } from '../../commonTests'
 import * as faker from 'faker'
 
 describe('TextArea', () => {

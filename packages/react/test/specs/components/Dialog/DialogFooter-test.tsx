@@ -1,6 +1,6 @@
-import { isConformant } from 'test/specs/commonTests'
+import { isConformant } from '../../commonTests'
 
-import DialogFooter from 'src/components/Dialog/DialogFooter'
+import { DialogFooter } from '@fluentui/react'
 
 describe('DialogFooter', () => {
   isConformant(DialogFooter)

@@ -1,12 +1,10 @@
 import { chatMessageBehavior, AccessibilityDefinition } from '@fluentui/accessibility'
 import * as React from 'react'
 
-import { handlesAccessibility, implementsShorthandProp, isConformant } from 'test/specs/commonTests'
-import { mountWithProvider } from 'test/utils'
+import { handlesAccessibility, implementsShorthandProp, isConformant } from '../../commonTests'
+import { mountWithProvider } from '../../../utils'
 
-import ChatMessage from 'src/components/Chat/ChatMessage'
-import Text from 'src/components/Text/Text'
-import Box from 'src/components/Box/Box'
+import { ChatMessage, Text, Box } from '@fluentui/react'
 
 const chatMessageImplementsShorthandProp = implementsShorthandProp(ChatMessage)
 

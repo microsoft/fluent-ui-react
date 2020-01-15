@@ -1,8 +1,8 @@
 import * as React from 'react'
 
-import AccordionContent from 'src/components/Accordion/AccordionContent'
-import { isConformant, handlesAccessibility, getRenderedAttribute } from 'test/specs/commonTests'
-import { mountWithProviderAndGetComponent } from 'test/utils'
+import { AccordionContent } from '@fluentui/react'
+import { isConformant, handlesAccessibility, getRenderedAttribute } from '../../commonTests'
+import { mountWithProviderAndGetComponent } from '../../../utils'
 
 describe('AccordionContent', () => {
   isConformant(AccordionContent)

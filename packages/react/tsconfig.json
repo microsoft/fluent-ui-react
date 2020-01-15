@@ -2,12 +2,7 @@
   "extends": "../../build/tsconfig.common",
   "compilerOptions": {
     "composite": true,
-    "outDir": "dist/dts",
-    "paths": {
-      "docs/*": ["docs/*"],
-      "src/*": ["packages/react/src/*"],
-      "test/*": ["packages/react/test/*"]
-    }
+    "outDir": "dist/dts"
   },
   "include": ["src", "test"],
   "references": [
