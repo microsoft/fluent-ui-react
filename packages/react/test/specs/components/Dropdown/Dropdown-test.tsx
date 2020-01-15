@@ -2,7 +2,13 @@ import * as React from 'react'
 import * as keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
 
-import { Dropdown, DropdownSearchInput, DropdownItemProps, ShorthandValue } from '@fluentui/react'
+import {
+  Dropdown,
+  DropdownSearchInput,
+  DropdownItemProps,
+  DropdownSelectedItem,
+  ShorthandValue,
+} from '@fluentui/react'
 import { isConformant } from '../../commonTests'
 import { findIntrinsicElement, mountWithProvider } from '../../../utils'
 import { ReactWrapper, CommonWrapper } from 'enzyme'
