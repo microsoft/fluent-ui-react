@@ -2,6 +2,7 @@ import { dest, lastRun, parallel, series, src, task, watch } from 'gulp'
 import chalk from 'chalk'
 import cache from 'gulp-cache'
 import remember from 'gulp-remember'
+import { log } from 'gulp-util'
 import fs from 'fs'
 import path from 'path'
 import del from 'del'
@@ -11,7 +12,7 @@ import WebpackDevMiddleware from 'webpack-dev-middleware'
 import WebpackHotMiddleware from 'webpack-hot-middleware'
 
 import sh from '../sh'
-import config from '../../../config'
+import config from '../../config'
 import gulpComponentMenu from '../plugins/gulp-component-menu'
 import gulpComponentMenuBehaviors from '../plugins/gulp-component-menu-behaviors'
 import gulpDoctoc from '../plugins/gulp-doctoc'
@@ -24,9 +25,6 @@ import { Server } from 'http'
 import serve, { forceClose } from '../serve'
 
 const { paths } = config
-const g = require('gulp-load-plugins')()
-
-const { log } = g.util
 
 const logWatchAdd = (filePath: string) => log('Created', chalk.blue(path.basename(filePath)))
 const logWatchChange = (filePath: string) => log('Changed', chalk.magenta(path.basename(filePath)))
@@ -139,7 +137,7 @@ task('build:docs:toc', () =>
 task('build:docs:schema', () =>
   src(schemaSrc, { since: lastRun('build:docs:schema') }).pipe(
     through2.obj((file, enc, done) => {
-      sh(`cd packages/ability-attributes && npm run schema`)
+      sh('npm run schema', paths.packages('ability-attributes'))
         .then(() => done(null, file))
         .catch(done)
     }),

@@ -1,12 +1,3 @@
 {
-  "extends": "./build/tsconfig.common.json",
-  "include": [
-    "docs/src",
-    "build",
-    "gulp",
-    "packages/react/src",
-    "packages/react/test",
-    "perf/src",
-    "types"
-  ]
+  "extends": "./build/tsconfig.common.json"
 }
