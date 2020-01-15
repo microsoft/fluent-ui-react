@@ -2,7 +2,7 @@ import { useBooleanKnob } from '@fluentui/docs-components'
 import { Menu } from '@fluentui/react'
 import * as React from 'react'
 
-import useAccessibilityKnob from 'docs/src/components/ComponentDoc/useAccessibilityKnob'
+import useAccessibilityKnob from '../../../components/ComponentDoc/useAccessibilityKnob'
 
 const MenuPlayground: React.FunctionComponent = () => {
   const accessibility = useAccessibilityKnob('Menu')

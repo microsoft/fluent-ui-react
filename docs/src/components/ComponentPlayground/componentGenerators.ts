@@ -12,8 +12,8 @@ import {
 import * as _ from 'lodash'
 import * as faker from 'faker'
 
-import { KnobComponentGenerators } from 'docs/src/types'
-import { number } from 'docs/src/components/ComponentPlayground/typeGenerators'
+import { KnobComponentGenerators } from '../../types'
+import { number } from '../ComponentPlayground/typeGenerators'
 
 export const Avatar: KnobComponentGenerators<AvatarProps> = {
   name: ({ propName }) => ({

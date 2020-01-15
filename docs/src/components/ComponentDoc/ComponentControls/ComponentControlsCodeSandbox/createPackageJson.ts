@@ -1,7 +1,7 @@
 import * as _ from 'lodash'
 
-import { imports } from 'docs/src/components/Playground/renderConfig'
-import { ComponentSourceManagerLanguage } from 'docs/src/components/ComponentDoc/ComponentSourceManager'
+import { imports } from '../../../Playground/renderConfig'
+import { ComponentSourceManagerLanguage } from '../../ComponentSourceManager'
 
 const name = 'fluent-ui-example'
 const description =
