@@ -1,10 +1,11 @@
+// These are not exported
 import {
   find,
   isOverridden,
   filter,
   getValues,
   removeNulls,
-} from '@fluentui/react/src/components/Debug/utils'
+} from '../../../../src/components/Debug/utils'
 
 describe('debugUtils', () => {
   describe('find', () => {

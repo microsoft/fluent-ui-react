@@ -4,7 +4,8 @@ import {
   emptyTheme,
   ICSSInJSStyle,
 } from '@fluentui/styles'
-import resolveStylesAndClasses from '@fluentui/react-bindings/src/styles/resolveStylesAndClasses'
+// This is not exported
+import resolveStylesAndClasses from '../../src/styles/resolveStylesAndClasses'
 
 const styleParam: ComponentStyleFunctionParam = {
   disableAnimations: false,

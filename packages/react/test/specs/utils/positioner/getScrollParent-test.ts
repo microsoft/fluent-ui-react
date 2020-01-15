@@ -1,6 +1,7 @@
 import * as _ from 'lodash'
 
-import getScrollParent from '@fluentui/react/src/utils/positioner/getScrollParent'
+// This is not exported
+import getScrollParent from '../../../../src/utils/positioner/getScrollParent'
 
 const overflowStyles: Partial<CSSStyleDeclaration>[] = [
   { overflow: 'scroll' },

@@ -1,5 +1,6 @@
 import { ComponentStyleFunctionParam, emptyTheme, withDebugId } from '@fluentui/styles'
 
+// These are not exported
 import * as debugEnabled from '../../src/debugEnabled'
 import { mergeComponentStyles__PROD, mergeComponentStyles__DEV } from '../../src/mergeThemes'
 

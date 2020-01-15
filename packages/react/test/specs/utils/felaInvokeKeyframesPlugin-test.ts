@@ -1,4 +1,5 @@
-import felaInvokeKeyframesPlugin from '@fluentui/react/src/utils/felaInvokeKeyframesPlugin'
+// This is not exported
+import felaInvokeKeyframesPlugin from '../../../src/utils/felaInvokeKeyframesPlugin'
 
 const renderInvokeKeyframes = felaInvokeKeyframesPlugin()
 

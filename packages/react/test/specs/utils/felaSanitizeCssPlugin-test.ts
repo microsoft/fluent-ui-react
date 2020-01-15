@@ -1,4 +1,5 @@
-import sanitizeCss from '@fluentui/react/src/utils/felaSanitizeCssPlugin'
+// This is not exported
+import sanitizeCss from '../../../src/utils/felaSanitizeCssPlugin'
 
 const assertCssPropertyValue = (value: string, isValid: boolean) => {
   test(`assert that '${value}' is ${isValid ? 'valid' : 'invalid'}`, () => {

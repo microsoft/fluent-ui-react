@@ -2,7 +2,7 @@ import { ThemeInput } from '@fluentui/styles'
 import * as React from 'react'
 import { isConformant, handlesAccessibility, getRenderedAttribute } from '../../commonTests'
 
-import Icon from '../../../../src/components/Icon/Icon'
+import { Icon } from '@fluentui/react'
 import { mountWithProviderAndGetComponent } from '../../../utils'
 
 describe('Icon', () => {

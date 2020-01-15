@@ -1,10 +1,8 @@
 import { Placement } from 'popper.js'
 
 import { Alignment, Position } from '@fluentui/react'
-import {
-  getPlacement,
-  applyRtlToOffset,
-} from '@fluentui/react/src/utils/positioner/positioningHelper'
+// These are not exported
+import { getPlacement, applyRtlToOffset } from '../../../../src/utils/positioner/positioningHelper'
 
 type PositionTestInput = {
   align: Alignment

@@ -1,4 +1,5 @@
-import { mergeRenderers } from '@fluentui/react/src/utils/mergeProviderContexts'
+// This is not exported
+import { mergeRenderers } from '../../../../src/utils/mergeProviderContexts'
 import { felaRenderer, mergeProviderContexts } from '@fluentui/react'
 
 describe('mergeRenderers', () => {
