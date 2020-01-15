@@ -3,14 +3,6 @@
     "module": "commonjs",
     "target": "es5",
     "lib": ["es2015", "dom"],
-    "baseUrl": "../",
-    "paths": {
-      "@fluentui/docs": ["docs"],
-      "@fluentui/e2e": ["e2e"],
-      "@fluentui/internal-tooling": ["build"],
-      "@fluentui/perf": ["perf"],
-      "@fluentui/*": ["packages/*/src"]
-    },
     "types": ["node", "jest"],
     "typeRoots": ["../types", "../node_modules/@types"],
     "jsx": "react",

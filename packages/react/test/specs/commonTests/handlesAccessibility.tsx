@@ -8,8 +8,8 @@ import { FocusZone, FOCUSZONE_WRAP_ATTRIBUTE } from '@fluentui/react-bindings'
 import * as React from 'react'
 import * as keyboardKey from 'keyboard-key'
 
-import { mountWithProviderAndGetComponent, mountWithProvider } from 'test/utils'
-import { UIComponent } from 'src/utils'
+import { mountWithProviderAndGetComponent, mountWithProvider } from '../../utils'
+import { UIComponent } from '@fluentui/react'
 import { EVENT_TARGET_ATTRIBUTE, getEventTargetComponent } from './eventTarget'
 
 export const getRenderedAttribute = (renderedComponent, propName, partSelector) => {

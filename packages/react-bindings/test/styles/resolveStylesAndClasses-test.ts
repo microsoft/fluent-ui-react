@@ -4,6 +4,7 @@ import {
   emptyTheme,
   ICSSInJSStyle,
 } from '@fluentui/styles'
+// This is not exported
 import resolveStylesAndClasses from '../../src/styles/resolveStylesAndClasses'
 
 const styleParam: ComponentStyleFunctionParam = {

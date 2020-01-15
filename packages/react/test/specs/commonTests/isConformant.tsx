@@ -14,10 +14,10 @@ import {
   getDisplayName,
   mountWithProvider as mount,
   syntheticEvent,
-} from 'test/utils'
+} from '../../utils'
 import helpers from './commonHelpers'
 
-import * as FluentUI from 'src/index'
+import * as FluentUI from '@fluentui/react'
 import { getEventTargetComponent, EVENT_TARGET_ATTRIBUTE } from './eventTarget'
 
 export interface Conformant {
@@ -112,7 +112,8 @@ export default function isConformant(
   // This is pretty ugly because:
   // - jest doesn't support custom error messages
   // - jest will run all test
-  const infoJSONPath = `docs/src/componentInfo/${constructorName}.info.json`
+  // TODO (@ecraig12345) - remove relative docs import
+  const infoJSONPath = `../../../../../docs/src/componentInfo/${constructorName}.info.json`
 
   let info
 
@@ -124,7 +125,7 @@ export default function isConformant(
       throw new Error(
         [
           '!! ==========================================================',
-          `!! Missing ${infoJSONPath}.`,
+          `!! Missing ${infoJSONPath.replace('../../../../../', '')}.`,
           '!! Run `yarn test` or `yarn test:watch` again to generate one.',
           '!! ==========================================================',
         ].join('\n'),

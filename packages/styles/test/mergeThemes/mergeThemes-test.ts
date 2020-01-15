@@ -8,6 +8,7 @@ import {
   emptyTheme,
 } from '@fluentui/styles'
 
+// This is not exported
 import * as debugEnabled from '../../src/debugEnabled'
 
 const styleParam: ComponentStyleFunctionParam = {

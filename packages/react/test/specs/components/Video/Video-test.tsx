@@ -1,6 +1,6 @@
-import { isConformant } from 'test/specs/commonTests'
+import { isConformant } from '../../commonTests'
 
-import Video from 'src/components/Video/Video'
+import { Video } from '@fluentui/react'
 
 describe('Video', () => {
   isConformant(Video)

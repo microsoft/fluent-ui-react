@@ -1,6 +1,6 @@
-import { isConformant } from 'test/specs/commonTests'
+import { isConformant } from '../../commonTests'
 
-import HeaderDescription from 'src/components/Header/HeaderDescription'
+import { HeaderDescription } from '@fluentui/react'
 
 describe('HeaderDescription', () => {
   isConformant(HeaderDescription)

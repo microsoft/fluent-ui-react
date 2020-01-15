@@ -1,7 +1,10 @@
 require('@fluentui/internal-tooling/babel/register')
 
 const config = require('../config').default
-const { compilerOptions } = require('../tsconfig.docs.json')
+
+// Ensure that paths to local packages are interpreted properly
+// (see https://github.com/microsoft/fluent-ui-react/pull/837)
+const { compilerOptions } = require('../../tsconfig.json')
 
 require('tsconfig-paths').register({
   baseUrl: config.path_base,

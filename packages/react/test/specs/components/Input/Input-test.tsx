@@ -3,16 +3,10 @@ import * as React from 'react'
 import * as keyboardKey from 'keyboard-key'
 
 import { ReactWrapper } from 'enzyme'
-import { mountWithProvider as mount } from 'test/utils'
-import {
-  isConformant,
-  implementsShorthandProp,
-  implementsWrapperProp,
-} from 'test/specs/commonTests'
+import { mountWithProvider as mount } from '../../../utils'
+import { isConformant, implementsShorthandProp, implementsWrapperProp } from '../../commonTests'
 
-import Input from 'src/components/Input/Input'
-import Icon from 'src/components/Icon/Icon'
-import Box from 'src/components/Box/Box'
+import { Input, Icon, Box } from '@fluentui/react'
 
 const testValue = 'test value'
 const htmlInputAttrs = ['id', 'name', 'pattern', 'placeholder', 'type', 'value']

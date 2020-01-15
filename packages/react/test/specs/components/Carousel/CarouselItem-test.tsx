@@ -1,9 +1,9 @@
 import * as React from 'react'
 
-import { isConformant } from 'test/specs/commonTests'
-import CarouselItem, { CarouselItemProps } from 'src/components/Carousel/CarouselItem'
+import { isConformant } from '../../commonTests'
+import { CarouselItem, CarouselItemProps } from '@fluentui/react'
 import { ReactWrapper, CommonWrapper } from 'enzyme'
-import { findIntrinsicElement, mountWithProvider } from 'test/utils'
+import { findIntrinsicElement, mountWithProvider } from '../../../utils'
 
 function renderCarouselItem(props?: CarouselItemProps): ReactWrapper {
   return mountWithProvider(<CarouselItem {...props} />)

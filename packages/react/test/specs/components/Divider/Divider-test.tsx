@@ -1,6 +1,6 @@
-import { isConformant } from 'test/specs/commonTests'
+import { isConformant } from '../../commonTests'
 
-import Divider from 'src/components/Divider/Divider'
+import { Divider } from '@fluentui/react'
 
 describe('Divider', () => {
   isConformant(Divider)

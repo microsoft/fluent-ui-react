@@ -83,6 +83,7 @@ import {
 import { TestHelper } from './testHelper'
 import definitions from './testDefinitions'
 
+// TODO (@ecraig12345) - remove relative docs import
 const behaviorMenuItems = require('../../../../docs/src/behaviorMenu')
 
 const testHelper = new TestHelper()

@@ -1,8 +1,8 @@
 import * as React from 'react'
-import { isConformant, handlesAccessibility, getRenderedAttribute } from 'test/specs/commonTests'
+import { isConformant, handlesAccessibility, getRenderedAttribute } from '../../commonTests'
 
-import Image from 'src/components/Image/Image'
-import { mountWithProviderAndGetComponent } from 'test/utils'
+import { Image } from '@fluentui/react'
+import { mountWithProviderAndGetComponent } from '../../../utils'
 
 describe('Image', () => {
   isConformant(Image)

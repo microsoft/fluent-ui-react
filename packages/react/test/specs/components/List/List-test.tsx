@@ -1,11 +1,10 @@
 import * as React from 'react'
 
-import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
-import { mountWithProvider } from 'test/utils'
+import { isConformant, handlesAccessibility } from '../../commonTests'
+import { mountWithProvider } from '../../../utils'
 
-import List from 'src/components/List/List'
+import { List, ListItem, ListItemProps } from '@fluentui/react'
 import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
-import ListItem, { ListItemProps } from 'src/components/List/ListItem'
 
 const listImplementsCollectionShorthandProp = implementsCollectionShorthandProp(List)
 

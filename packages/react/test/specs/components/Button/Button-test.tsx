@@ -6,12 +6,11 @@ import {
   htmlIsAccessibilityCompliant,
   implementsShorthandProp,
   getRenderedAttribute,
-} from 'test/specs/commonTests'
-import { mountWithProvider, mountWithProviderAndGetComponent } from 'test/utils'
+} from '../../commonTests'
+import { mountWithProvider, mountWithProviderAndGetComponent } from '../../../utils'
 import { toggleButtonBehavior } from '@fluentui/accessibility'
 
-import Button from 'src/components/Button/Button'
-import Icon from 'src/components/Icon/Icon'
+import { Button, Icon } from '@fluentui/react'
 
 const buttonImplementsShorthandProp = implementsShorthandProp(Button)
 

@@ -3,10 +3,10 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "dist/dts",
+    "baseUrl": ".",
     "paths": {
-      "docs/*": ["docs/*"],
-      "src/*": ["packages/react/src/*"],
-      "test/*": ["packages/react/test/*"]
+      // For tests
+      "@fluentui/react": ["./src"]
     }
   },
   "include": ["src", "test"],

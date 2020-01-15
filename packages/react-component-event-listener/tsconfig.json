@@ -7,7 +7,12 @@
     "noImplicitThis": true,
     "noImplicitAny": true,
     "noUnusedParameters": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "baseUrl": ".",
+    "paths": {
+      // For tests
+      "@fluentui/react-component-event-listener": ["./src"]
+    }
   },
   "include": ["src", "test"],
   "references": []
