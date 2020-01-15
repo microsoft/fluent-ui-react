@@ -1,6 +1,18 @@
 import * as React from 'react'
 import { Dropdown, Grid } from '@fluentui/react'
 
+const inputItems = [
+  'Bruce Wayne',
+  'Natasha Romanoff',
+  'Steven Strange',
+  'Alfred Pennyworth',
+  `Scarlett O'Hara`,
+  'Imperator Furiosa',
+  'Bruce Banner',
+  'Peter Parker',
+  'Selina Kyle',
+]
+
 const DropdownExampleInverted = () => (
   <div>
     <Grid
@@ -9,7 +21,7 @@ const DropdownExampleInverted = () => (
         padding: '20px',
       })}
     >
-      <Dropdown inverted placeholder="Start typing a name" />
+      <Dropdown inverted items={inputItems} placeholder="Select your hero" />
     </Grid>
   </div>
 )

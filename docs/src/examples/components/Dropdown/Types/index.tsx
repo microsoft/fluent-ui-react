@@ -26,7 +26,7 @@ const Types = () => (
     />
     <ComponentExample
       title="Inverted"
-      description="A dropdown can be on an lighter or darker background."
+      description="A dropdown can show an inverted background color."
       examplePath="components/Dropdown/Types/DropdownExampleInverted"
     />
     <ComponentExample

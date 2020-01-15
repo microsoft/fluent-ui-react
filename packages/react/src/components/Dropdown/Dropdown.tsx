@@ -53,7 +53,6 @@ export interface DropdownSlotClassNames {
   selectedItem: string
   selectedItems: string
   triggerButton: string
-  inverted: string
 }
 
 export interface DropdownProps
@@ -123,7 +122,7 @@ export interface DropdownProps
   /** A dropdown can be formatted to appear inline next to other elements. */
   inline?: boolean
 
-  /** It can be on a dark background */
+  /** A dropdown can have inverted colors. */
   inverted?: boolean
 
   /** Array of props for generating list options (Dropdown.Item[]) and selected item labels (Dropdown.SelectedItem[]), if it's a multiple selection. */
@@ -1381,7 +1380,6 @@ Dropdown.slotClassNames = {
   selectedItem: `${Dropdown.className}__selecteditem`,
   selectedItems: `${Dropdown.className}__selected-items`,
   triggerButton: `${Dropdown.className}__trigger-button`,
-  inverted: '',
 }
 
 /**

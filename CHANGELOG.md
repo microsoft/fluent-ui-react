@@ -22,7 +22,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixes
 - Fix event lister leak in `FocusZone` @miroslavstastny ([#2227](https://github.com/microsoft/fluent-ui-react/pull/2227))
-- Fix `dropdown` styles to match Teams theme @notandrew ([#2172](https://github.com/microsoft/fluent-ui-react/pull/2172))
+- Fix `Dropdown` component styles to match Teams theme @notandrew ([#2172](https://github.com/microsoft/fluent-ui-react/pull/2172))
 
 <!--------------------------------[ v0.43.0 ]------------------------------- -->
 ## [v0.43.0](https://github.com/microsoft/fluent-ui-react/tree/v0.43.0) (2020-01-08)
