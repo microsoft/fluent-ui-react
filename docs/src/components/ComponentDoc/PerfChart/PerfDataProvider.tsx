@@ -17,21 +17,18 @@ const PerfDataProvider: React.FC = ({ children }) => {
   const [data, setData] = React.useState()
 
   React.useEffect(() => {
-    if (process.env.NODE_ENV === 'production') {
-      setError(new Error('Stats data not available in production'))
-      setLoading(false)
-    } else {
-      fetch(config.getStatsUri)
-        .then(response => response.json())
-        .then(responseJson => {
-          setData(responseJson)
-          setLoading(false)
-        })
-        .catch(e => {
-          setError(e)
-          setLoading(false)
-        })
-    }
+    const query = process.env.NODE_ENV === 'production' ? '' : '?withPrivateBuilds=true'
+
+    fetch(`${config.getStatsUri}${query}`)
+      .then(response => response.json())
+      .then(responseJson => {
+        setData(responseJson)
+        setLoading(false)
+      })
+      .catch(e => {
+        setError(e)
+        setLoading(false)
+      })
   }, [])
 
   return (
