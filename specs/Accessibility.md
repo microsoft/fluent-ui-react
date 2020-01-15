@@ -37,7 +37,7 @@ Following combinations of clients and screen readers is supported/required:
 
 # Components and Behaviors
 There are two areas that come together to achieve accessibility:
-* Components - implemented for each supported framwork (currently React), when rendered, need to be [semantically correct](https://en.wikipedia.org/wiki/Semantic_HTML)
+* Components - implemented for each supported framework (currently React), when rendered, need to be [semantically correct](https://en.wikipedia.org/wiki/Semantic_HTML)
 * Behaviors - framework independent, intended to add ARIA roles, ARIA attributes and keyboard handling on top of the components based on their type and state. In the future, behaviors development will move from the [Stardust react](https://github.com/stardust-ui/react) repo to [Stardust accessibility](https://github.com/stardust-ui/accessibility) repo.
 
 **Accessibility behaviors** reflect the need to have a set of validated and carefully tested alternatives available for the consumers that guarantee the accessibility of the component in various use cases. In some cases, accessibility can be highly oppinionated and the behaviors allow consumers to implement accessibility aspects of the components in a customized way, that better fits the requirements of the consumer.
