@@ -5,6 +5,7 @@ import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
 import cx from 'classnames'
 import * as keyboardKey from 'keyboard-key'
+import memoize from 'fast-memoize'
 
 import {
   ShorthandRenderFunction,
@@ -851,13 +852,22 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     return index === this.state.activeSelectedIndex
   }
 
+  getDownshiftMemoizedItemHandlers = memoize(
+    (handlers, itemId, index) => {
+      return handlers
+    },
+    {
+      serializer: args => `${args[1]}-${args[2]}`,
+    },
+  )
+
   handleItemOverrides = (
     item: ShorthandValue<DropdownItemProps>,
     index: number,
     getItemProps: (options: GetItemPropsOptions<ShorthandValue<DropdownItemProps>>) => any,
     selected: boolean,
-  ) => (predefinedProps: DropdownItemProps) => ({
-    ...getItemProps({
+  ) => (predefinedProps: DropdownItemProps) => {
+    const { onMouseMove, onMouseDown, onClick, ...downshiftItemPropsRest } = getItemProps({
       item,
       index,
       onClick: e => {
@@ -865,12 +875,25 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
         e.nativeEvent.stopImmediatePropagation()
         _.invoke(predefinedProps, 'onClick', e, predefinedProps)
       },
-    }),
-    // for single selection the selected item should have aria-selected, instead of the highlighted
-    ...(!this.props.multiple && {
-      'aria-selected': selected,
-    }),
-  })
+    })
+
+    return {
+      ...this.getDownshiftMemoizedItemHandlers(
+        {
+          onMouseMove,
+          onMouseDown,
+          onClick,
+        },
+        this.props.itemToValue(item),
+        index,
+      ),
+      ...downshiftItemPropsRest,
+      // for single selection the selected item should have aria-selected, instead of the highlighted
+      ...(!this.props.multiple && {
+        'aria-selected': selected,
+      }),
+    }
+  }
 
   handleSelectedItemOverrides = (item: ShorthandValue<DropdownItemProps>, rtl: boolean) => (
     predefinedProps: DropdownSelectedItemProps,
