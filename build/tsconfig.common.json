@@ -17,8 +17,6 @@
     "importHelpers": true,
     "isolatedModules": true,
     "moduleResolution": "node",
-    "declaration": true,
-    "emitDeclarationOnly": true,
     "pretty": true,
     "allowJs": false,
     "noImplicitReturns": true,
