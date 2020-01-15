@@ -124,22 +124,24 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
     // components should handle events transparently.
     const { disabled, indeterminate } = this.props
     const checked = !this.state.checked
+    const isIndeterminate = !this.state.indeterminate
 
     if (!disabled) {
       this.setState({ checked, indeterminate })
-      _.invoke(this.props, 'onChange', e, { ...this.props, checked, indeterminate })
+      _.invoke(this.props, 'onChange', e, { ...this.props, checked, isIndeterminate })
     }
   }
 
   handleClick = (e: React.MouseEvent | React.KeyboardEvent) => {
     const { disabled, indeterminate } = this.props
     const checked = !this.state.checked
+    const isIndeterminate = !this.state.indeterminate
 
     if (!disabled) {
       this.setState({ checked, indeterminate })
 
-      _.invoke(this.props, 'onClick', e, { ...this.props, checked, indeterminate })
-      _.invoke(this.props, 'onChange', e, { ...this.props, checked, indeterminate })
+      _.invoke(this.props, 'onClick', e, { ...this.props, checked, isIndeterminate })
+      _.invoke(this.props, 'onChange', e, { ...this.props, checked, isIndeterminate })
     }
   }
 
