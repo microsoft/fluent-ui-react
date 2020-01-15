@@ -1,16 +1,16 @@
 import * as React from 'react'
 
 import ComponentPerfExample from 'docs/src/components/ComponentDoc/ComponentPerfExample'
-import NonPublicSection from 'docs/src/components/ComponentDoc/NonPublicSection'
+import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
 
 const Performance = () => (
-  <NonPublicSection title="Performance">
+  <ExampleSection title="Performance">
     <ComponentPerfExample
       title="Default"
       description="A default test."
       examplePath="components/Divider/Performance/DividerMinimal.perf"
     />
-  </NonPublicSection>
+  </ExampleSection>
 )
 
 export default Performance
