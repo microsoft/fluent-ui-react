@@ -3,7 +3,12 @@
   "compilerOptions": {
     "composite": true,
     "rootDir": "src",
-    "outDir": "lib"
+    "outDir": "lib",
+    "baseUrl": ".",
+    "paths": {
+      // For tests
+      "@fluentui/react-theming": ["./src"]
+    }
   },
   "include": ["src"]
 }

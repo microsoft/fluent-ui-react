@@ -2,7 +2,12 @@
   "extends": "../../build/tsconfig.common",
   "compilerOptions": {
     "composite": true,
-    "outDir": "dist/dts"
+    "outDir": "dist/dts",
+    "baseUrl": ".",
+    "paths": {
+      // For tests
+      "@fluentui/accessibility": ["./src"]
+    }
   },
   "include": ["src", "test"]
 }
