@@ -6,7 +6,7 @@ import DocumentTitle from 'react-document-title'
 import ComponentExampleTitle from './ComponentDoc/ComponentExample/ComponentExampleTitle'
 import BehaviorDescription from './ComponentDoc/BehaviorDescription'
 
-const behaviorMenuItems = require('docs/src/behaviorMenu')
+const behaviorMenuItems = require('../behaviorMenu')
 
 class DocsBehaviorRoot extends React.Component<any, any> {
   static propTypes = {

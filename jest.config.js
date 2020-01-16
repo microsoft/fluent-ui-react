@@ -8,7 +8,12 @@ const fs = require('fs')
 const packagePaths = lernaAliases({ sourceDirectory: false })
 
 // Exclude packages which build with just, and other special packages
-const excludedPackages = ['@fluentui/internal-tooling']
+const excludedPackages = [
+  '@fluentui/docs',
+  '@fluentui/e2e',
+  '@fluentui/internal-tooling',
+  '@fluentui/perf',
+]
 const projects = Object.keys(packagePaths)
   .filter(
     packageName =>

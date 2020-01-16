@@ -5,7 +5,7 @@ import {
   getPackageName,
   FailedConstraintsExplanation,
 } from './utils'
-import config from '../../../config'
+import config from '../../config'
 import { DangerJS } from '../types'
 
 const { paths } = config

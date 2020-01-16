@@ -1,5 +1,5 @@
-import componentInfoContext from 'docs/src/utils/componentInfoContext'
-import { ComponentInfo } from 'docs/src/types'
+import componentInfoContext from '../../utils/componentInfoContext'
+import { ComponentInfo } from '../../types'
 
 const useComponentProps = (componentName: string): ComponentInfo['props'] => {
   const info = componentInfoContext.byDisplayName[componentName]

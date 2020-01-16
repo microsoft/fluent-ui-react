@@ -32,7 +32,7 @@ import {
   UIComponentProps,
   isFromKeyboard,
 } from '../../utils'
-import List from '../List/List'
+import List, { ListProps } from '../List/List'
 import DropdownItem, { DropdownItemProps } from './DropdownItem'
 import DropdownSelectedItem, { DropdownSelectedItemProps } from './DropdownSelectedItem'
 import DropdownSearchInput, { DropdownSearchInputProps } from './DropdownSearchInput'
@@ -138,6 +138,9 @@ export interface DropdownProps
 
   /** Used when comparing two items in multiple selection. Default comparison is by the header prop. */
   itemToValue?: (item: ShorthandValue<DropdownItemProps>) => any
+
+  /** A slot for dropdown list. */
+  list?: ShorthandValue<ListProps>
 
   /** A dropdown can show that it is currently loading data. */
   loading?: boolean
@@ -285,6 +288,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     items: customPropTypes.collectionShorthand,
     itemToString: PropTypes.func,
     itemToValue: PropTypes.func,
+    list: customPropTypes.itemShorthand,
     loading: PropTypes.bool,
     loadingMessage: customPropTypes.itemShorthand,
     moveFocusOnTab: PropTypes.bool,
@@ -332,6 +336,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       // targets DropdownItem shorthand objects
       return (item as any).header || String(item)
     },
+    list: {},
     position: 'below',
     toggleIndicator: {},
     triggerButton: {},
@@ -659,7 +664,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     getInputProps: (options?: GetInputPropsOptions) => any,
     rtl: boolean,
   ) {
-    const { align, offset, position, search, unstable_pinned } = this.props
+    const { align, offset, position, search, unstable_pinned, list } = this.props
     const { open } = this.state
     const items = open ? this.renderItems(styles, variables, getItemProps, highlightedIndex) : []
     const { innerRef, ...accessibilityMenuProps } = getMenuProps(
@@ -701,16 +706,27 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
           unstable_pinned={unstable_pinned}
           positioningDependencies={[items.length]}
         >
-          <List
-            className={Dropdown.slotClassNames.itemsList}
-            {...accessibilityMenuProps}
-            styles={styles.list}
-            tabIndex={search ? undefined : -1} // needs to be focused when trigger button is activated.
-            aria-hidden={!open}
-            onFocus={this.handleTriggerButtonOrListFocus}
-            onBlur={this.handleListBlur}
-            items={items}
-          />
+          {List.create(list, {
+            defaultProps: () => ({
+              className: Dropdown.slotClassNames.itemsList,
+              ...accessibilityMenuProps,
+              styles: styles.list,
+              items,
+              tabIndex: search ? undefined : -1, // needs to be focused when trigger button is activated.
+              'aria-hidden': !open,
+            }),
+
+            overrideProps: (predefinedProps: ListProps) => ({
+              onFocus: (e: React.SyntheticEvent<HTMLElement>, listProps: IconProps) => {
+                this.handleTriggerButtonOrListFocus()
+                _.invoke(predefinedProps, 'onClick', e, listProps)
+              },
+              onBlur: (e: React.SyntheticEvent<HTMLElement>, listProps: IconProps) => {
+                this.handleListBlur(e)
+                _.invoke(predefinedProps, 'onBlur', e, listProps)
+              },
+            }),
+          })}
         </Popper>
       </Ref>
     )

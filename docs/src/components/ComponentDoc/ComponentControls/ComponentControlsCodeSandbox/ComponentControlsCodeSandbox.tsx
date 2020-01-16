@@ -1,7 +1,7 @@
 import * as React from 'react'
 import CodeSandboxer from 'react-codesandboxer'
 
-import { ComponentSourceManagerLanguage } from 'docs/src/components/ComponentDoc/ComponentSourceManager'
+import { ComponentSourceManagerLanguage } from '../../ComponentSourceManager'
 import { appTemplate } from './indexTemplates'
 import createPackageJson from './createPackageJson'
 

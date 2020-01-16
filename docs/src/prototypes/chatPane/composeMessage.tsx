@@ -9,9 +9,9 @@ import {
   ShorthandCollection,
   IconXSpacing,
   ICSSInJSStyle,
+  Props,
 } from '@fluentui/react'
 
-import { Props } from 'src/types'
 import chatProtoStyle from './chatProtoStyle'
 
 type ComposeMessageProps = Props<{

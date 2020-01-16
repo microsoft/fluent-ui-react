@@ -1,15 +1,13 @@
 import { task, series, parallel, src, dest } from 'gulp'
 import babel from 'gulp-babel'
+import { log, PluginError } from 'gulp-util'
 import del from 'del'
 import webpack from 'webpack'
 
-import config from '../../../config'
+import config from '../../config'
 import sh from '../sh'
 
-const g = require('gulp-load-plugins')()
-
 const { paths } = config
-const { log, PluginError } = g.util
 
 const packageName = config.package
 
@@ -47,11 +45,7 @@ task('bundle:package:es', () =>
 )
 
 task('bundle:package:types:tsc', () => {
-  let cmd = 'tsc -b'
-  if (process.cwd() === config.path_base) {
-    cmd = `cd packages && cd ${packageName} && ${cmd}`
-  }
-  return sh(cmd)
+  return sh('tsc -b', paths.packages(packageName))
 })
 task('bundle:package:types:copy', () => {
   return src(paths.packageDist(packageName, 'dts/src/**/*.d.ts')).pipe(

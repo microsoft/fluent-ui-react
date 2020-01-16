@@ -31,7 +31,7 @@ class ComponentSidebar extends React.Component<ComponentSidebarProps, any> {
   }
 
   fetchSections = (displayName: string) => {
-    import(`docs/src/exampleMenus/${displayName}.examples.json`).then(sections => {
+    import(`../../../exampleMenus/${displayName}.examples.json`).then(sections => {
       this.setState({ sections: sections.default })
     })
   }

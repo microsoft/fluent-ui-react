@@ -3,7 +3,7 @@ import yargs from 'yargs'
 
 import jest, { JestPluginConfig } from '../plugins/gulp-jest'
 
-import config from '../../../config'
+import config from '../../config'
 
 const argv = yargs
   .option('runInBand', {})
