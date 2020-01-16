@@ -1,9 +1,8 @@
 import * as _ from 'lodash'
 import * as React from 'react'
 import { shallow, ShallowWrapper } from 'enzyme'
-import { AutoControlledComponent } from 'src/utils'
-import { consoleUtil } from 'test/utils'
-import { Props } from 'src/types'
+import { AutoControlledComponent, Props } from '@fluentui/react'
+import { consoleUtil } from '../../utils'
 
 let TestClass
 

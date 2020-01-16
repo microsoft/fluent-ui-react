@@ -1,4 +1,4 @@
-import isBrowser from 'src/utils/isBrowser'
+import { isBrowser } from '@fluentui/react'
 
 describe('isBrowser', () => {
   describe('browser', () => {

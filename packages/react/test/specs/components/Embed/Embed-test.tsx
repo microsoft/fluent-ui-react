@@ -1,7 +1,7 @@
 import * as React from 'react'
-import Embed from 'src/components/Embed/Embed'
-import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
-import { mountWithProviderAndGetComponent } from 'test/utils'
+import { Embed } from '@fluentui/react'
+import { isConformant, handlesAccessibility } from '../../commonTests'
+import { mountWithProviderAndGetComponent } from '../../../utils'
 
 describe('Embed', () => {
   isConformant(Embed)

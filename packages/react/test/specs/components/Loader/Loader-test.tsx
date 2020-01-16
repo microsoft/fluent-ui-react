@@ -1,8 +1,8 @@
 import * as React from 'react'
 
-import Loader from 'src/components/Loader/Loader'
-import { isConformant } from 'test/specs/commonTests'
-import { mountWithProvider } from 'test/utils'
+import { Loader } from '@fluentui/react'
+import { isConformant } from '../../commonTests'
+import { mountWithProvider } from '../../../utils'
 
 describe('Loader', () => {
   isConformant(Loader)

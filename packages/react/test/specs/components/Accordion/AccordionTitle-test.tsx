@@ -1,5 +1,5 @@
-import AccordionTitle from 'src/components/Accordion/AccordionTitle'
-import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
+import { AccordionTitle } from '@fluentui/react'
+import { isConformant, handlesAccessibility } from '../../commonTests'
 
 describe('AccordionTitle', () => {
   isConformant(AccordionTitle, {

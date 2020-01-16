@@ -1,5 +1,5 @@
-import { isConformant } from 'test/specs/commonTests'
-import TreeTitle from 'src/components/Tree/TreeTitle'
+import { isConformant } from '../../commonTests'
+import { TreeTitle } from '@fluentui/react'
 
 describe('TreeTitle', () => {
   isConformant(TreeTitle)

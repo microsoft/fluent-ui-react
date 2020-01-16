@@ -1,8 +1,8 @@
 import * as React from 'react'
-import ToolbarItem from 'src/components/Toolbar/ToolbarItem'
+import { ToolbarItem } from '@fluentui/react'
 
-import { isConformant } from 'test/specs/commonTests'
-import { mountWithProvider } from 'test/utils'
+import { isConformant } from '../../commonTests'
+import { mountWithProvider } from '../../../utils'
 import { ReactWrapper } from 'enzyme'
 
 describe('ToolbarItem', () => {

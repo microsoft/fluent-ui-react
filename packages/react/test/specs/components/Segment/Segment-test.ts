@@ -1,6 +1,6 @@
-import { isConformant } from 'test/specs/commonTests'
+import { isConformant } from '../../commonTests'
 
-import Segment from 'src/components/Segment/Segment'
+import { Segment } from '@fluentui/react'
 
 describe('Segment', () => {
   isConformant(Segment)

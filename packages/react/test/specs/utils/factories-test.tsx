@@ -2,9 +2,15 @@ import { callable } from '@fluentui/styles'
 import * as React from 'react'
 import * as _ from 'lodash'
 import { shallow } from 'enzyme'
-import { createShorthand, createShorthandFactory } from 'src/utils'
-import { Props, ShorthandValue, ObjectOf, ShorthandRenderFunction } from 'src/types'
-import { consoleUtil } from 'test/utils'
+import {
+  createShorthand,
+  createShorthandFactory,
+  Props,
+  ShorthandValue,
+  ObjectOf,
+  ShorthandRenderFunction,
+} from '@fluentui/react'
+import { consoleUtil } from '../../utils'
 
 // ----------------------------------------
 // Utils

@@ -1,6 +1,7 @@
 import { withDebugId } from '@fluentui/styles'
 import * as _ from 'lodash'
 
+// These are not exported
 import * as debugEnabled from '../../src/debugEnabled'
 import { mergeThemeVariables__PROD, mergeThemeVariables__DEV } from '../../src/mergeThemes'
 

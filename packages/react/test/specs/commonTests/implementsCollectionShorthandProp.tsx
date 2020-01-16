@@ -1,7 +1,7 @@
 import * as React from 'react'
-import { mountWithProvider as mount } from 'test/utils'
+import { mountWithProvider as mount } from '../../utils'
 import * as _ from 'lodash'
-import { PropsOf } from 'src/types'
+import { PropsOf } from '@fluentui/react'
 
 export type CollectionShorthandTestOptions<TProps = any> = {
   mapsValueToProp: keyof (TProps & React.HTMLProps<HTMLElement>) | false

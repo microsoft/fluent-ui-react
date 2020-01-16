@@ -1,12 +1,9 @@
 import * as React from 'react'
-import { isConformant, implementsShorthandProp, handlesAccessibility } from 'test/specs/commonTests'
-import { mountWithProvider, findIntrinsicElement } from 'test/utils'
+import { isConformant, implementsShorthandProp, handlesAccessibility } from '../../commonTests'
+import { mountWithProvider, findIntrinsicElement } from '../../../utils'
 import * as keyboardKey from 'keyboard-key'
 
-import Attachment from 'src/components/Attachment/Attachment'
-import Text from 'src/components/Text/Text'
-import Icon from 'src/components/Icon/Icon'
-import Button from 'src/components/Button/Button'
+import { Attachment, Text, Icon, Button } from '@fluentui/react'
 import { ReactWrapper } from 'enzyme'
 
 const attachmentImplementsShorthandProp = implementsShorthandProp(Attachment)

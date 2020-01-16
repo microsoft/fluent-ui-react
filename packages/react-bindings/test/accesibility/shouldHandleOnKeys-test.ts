@@ -1,3 +1,4 @@
+// This is not exported
 import shouldHandleOnKeys from '../../src/accessibility/shouldHandleOnKeys'
 
 const getEventArg = (

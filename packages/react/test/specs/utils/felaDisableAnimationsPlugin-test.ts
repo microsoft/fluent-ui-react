@@ -1,4 +1,5 @@
-import felaDisableAnimationsPlugin from 'src/utils/felaDisableAnimationsPlugin'
+// This is not exported
+import felaDisableAnimationsPlugin from '../../../src/utils/felaDisableAnimationsPlugin'
 
 const disableAnimationsPlugin = felaDisableAnimationsPlugin()
 

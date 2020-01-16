@@ -1,3 +1,4 @@
+// This is not exported
 import getKeyDownHandlers from '../../src/accessibility/getKeyDownHandlers'
 // @ts-ignore
 import * as keyboardKey from 'keyboard-key'

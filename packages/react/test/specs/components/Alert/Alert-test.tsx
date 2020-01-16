@@ -5,11 +5,9 @@ import {
   implementsShorthandProp,
   handlesAccessibility,
   htmlIsAccessibilityCompliant,
-} from 'test/specs/commonTests'
+} from '../../commonTests'
 
-import Alert from 'src/components/Alert/Alert'
-import Box from 'src/components/Box/Box'
-import Button from 'src/components/Button/Button'
+import { Alert, Box, Button } from '@fluentui/react'
 
 const alertImplementsShorthandProp = implementsShorthandProp(Alert)
 

@@ -1,4 +1,5 @@
-import felaExpandCssShorthandsPlugin from 'src/utils/felaExpandCssShorthandsPlugin'
+// This is not exported
+import felaExpandCssShorthandsPlugin from '../../../src/utils/felaExpandCssShorthandsPlugin'
 
 const expandCssShorthands = felaExpandCssShorthandsPlugin()
 

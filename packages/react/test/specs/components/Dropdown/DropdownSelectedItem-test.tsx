@@ -1,8 +1,8 @@
 import * as React from 'react'
 
-import DropdownSelectedItem from 'src/components/Dropdown/DropdownSelectedItem'
-import { getRenderedAttribute } from 'test/specs/commonTests'
-import { mountWithProviderAndGetComponent } from 'test/utils'
+import { DropdownSelectedItem } from '@fluentui/react'
+import { getRenderedAttribute } from '../../commonTests'
+import { mountWithProviderAndGetComponent } from '../../../utils'
 
 describe('DropdownSelectedItem', () => {
   describe('active', () => {

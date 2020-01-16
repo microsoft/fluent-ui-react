@@ -2,6 +2,7 @@ import * as _ from 'lodash'
 import * as React from 'react'
 import { shallow } from 'enzyme'
 
+// These are not exported
 import icons, { teamsIconClassNames } from '../../../../../../src/themes/teams/components/Icon/svg'
 import processedIcons from '../../../../../../src/themes/teams/components/Icon/svg/processedIndex'
 import { SvgIconSpecWithStyles } from '../../../../../../src/themes/teams/components/Icon/svg/types'

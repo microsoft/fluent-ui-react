@@ -1,3 +1,13 @@
 {
-  "extends": "./build/tsconfig.common.json"
+  "extends": "./build/tsconfig.docs.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@fluentui/docs": ["docs"],
+      "@fluentui/e2e": ["e2e"],
+      "@fluentui/internal-tooling": ["build"],
+      "@fluentui/perf": ["perf"],
+      "@fluentui/*": ["packages/*/src"]
+    }
+  }
 }

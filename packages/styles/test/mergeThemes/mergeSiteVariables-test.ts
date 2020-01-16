@@ -1,5 +1,6 @@
 import { withDebugId } from '@fluentui/styles'
 
+// These are not exported
 import * as debugEnabled from '../../src/debugEnabled'
 import { mergeSiteVariables__PROD, mergeSiteVariables__DEV } from '../../src/mergeThemes'
 

@@ -1,4 +1,11 @@
-import { find, isOverridden, filter, getValues, removeNulls } from 'src/components/Debug/utils'
+// These are not exported
+import {
+  find,
+  isOverridden,
+  filter,
+  getValues,
+  removeNulls,
+} from '../../../../src/components/Debug/utils'
 
 describe('debugUtils', () => {
   describe('find', () => {

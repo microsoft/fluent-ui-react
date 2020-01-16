@@ -1,5 +1,5 @@
 import * as _ from 'lodash'
-import * as FluentUI from 'src/index'
+import * as FluentUI from '@fluentui/react'
 
 // ----------------------------------------
 // Is exported or private
@@ -12,7 +12,7 @@ export default (constructorName: string, displayName: string) => {
   test('is exported at the top level', () => {
     const message = [
       `'${displayName}' must be exported at top level.`,
-      "Export it in 'src/index.js'.",
+      "Export it in 'src/index.ts'.",
     ].join(' ')
 
     expect({ isTopLevelAPIProp, message }).toEqual({
