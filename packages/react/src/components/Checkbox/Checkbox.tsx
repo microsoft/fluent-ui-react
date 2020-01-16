@@ -33,6 +33,12 @@ export interface CheckboxProps extends UIComponentProps, ChildrenComponentProps 
   /** A checkbox's checked state can be controlled. */
   checked?: SupportedIntrinsicInputProps['checked']
 
+  /** A checkbox can be indetermiante by default - uncontrolled state. */
+  defaultIndeterminate?: SupportedIntrinsicInputProps['defaultIndeterminate']
+
+  /** A checkbox's indeterminate state can be controlled. */
+  indeterminate?: SupportedIntrinsicInputProps['indeterminate']
+
   /** A checkbox can appear disabled and be unable to change states. */
   disabled?: SupportedIntrinsicInputProps['disabled']
 
@@ -65,6 +71,7 @@ export interface CheckboxProps extends UIComponentProps, ChildrenComponentProps 
 
 export interface CheckboxState {
   checked: CheckboxProps['checked']
+  indeterminate: CheckboxProps['indeterminate']
 }
 
 class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, CheckboxState> {
@@ -82,8 +89,10 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
     }),
     checked: PropTypes.bool,
     defaultChecked: PropTypes.bool,
+    defaultIndeterminate: PropTypes.bool,
     disabled: PropTypes.bool,
     icon: customPropTypes.itemShorthandWithoutJSX,
+    indeterminate: PropTypes.bool,
     label: customPropTypes.itemShorthand,
     labelPosition: PropTypes.oneOf(['start', 'end']),
     onChange: PropTypes.func,
@@ -107,30 +116,42 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
   }
 
   getInitialAutoControlledState(): CheckboxState {
-    return { checked: false }
+    return { checked: false, indeterminate: false }
   }
 
   handleChange = (e: React.ChangeEvent) => {
     // Checkbox component doesn't present any `input` component in markup, however all of our
     // components should handle events transparently.
-    const { disabled } = this.props
+    const { disabled, indeterminate } = this.props
     const checked = !this.state.checked
 
     if (!disabled) {
-      this.setState({ checked })
-      _.invoke(this.props, 'onChange', e, { ...this.props, checked })
+      this.setState({ checked, indeterminate })
+      _.invoke(this.props, 'onChange', e, {
+        ...this.props,
+        checked,
+        indetermiante: !this.state.indeterminate,
+      })
     }
   }
 
   handleClick = (e: React.MouseEvent | React.KeyboardEvent) => {
-    const { disabled } = this.props
+    const { disabled, indeterminate } = this.props
     const checked = !this.state.checked
 
     if (!disabled) {
-      this.setState({ checked })
+      this.setState({ checked, indeterminate })
 
-      _.invoke(this.props, 'onClick', e, { ...this.props, checked })
-      _.invoke(this.props, 'onChange', e, { ...this.props, checked })
+      _.invoke(this.props, 'onClick', e, {
+        ...this.props,
+        checked,
+        indetermiante: !this.state.indeterminate,
+      })
+      _.invoke(this.props, 'onChange', e, {
+        ...this.props,
+        checked,
+        indetermiante: !this.state.indeterminate,
+      })
     }
   }
 
@@ -164,7 +185,11 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
             outline: toggle && !this.state.checked,
             size: toggle ? 'medium' : 'smaller',
             className: Checkbox.slotClassNames.indicator,
-            name: toggle ? 'icon-circle' : 'icon-checkmark',
+            name: toggle
+              ? 'icon-circle'
+              : this.state.indeterminate
+              ? 'icon-square'
+              : 'icon-checkmark',
             styles: toggle ? styles.toggle : styles.checkbox,
           }),
         })}
