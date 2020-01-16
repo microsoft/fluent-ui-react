@@ -11,6 +11,7 @@ interface ComposeOptions {
   slots?: any;
   tokens?: any;
   styles?: any;
+  defaultTheme?: any;
 }
 
 export interface Composeable {
@@ -49,7 +50,7 @@ export const _composeFactory = (useThemeHook: any = useTheme) => {
 
     const renderFn = baseComponent.__directRender || baseComponent.render || baseComponent;
     const Component: ComposedFunctionComponent<TProps> = (props: TProps) => {
-      const theme: ITheme = useThemeHook();
+      const theme: ITheme = useThemeHook() || options.defaultTheme;
       const slots = resolveSlots(componentName, optionsSet, theme);
 
       if (!theme) {

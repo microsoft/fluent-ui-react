@@ -1,6 +1,11 @@
 # Summary
 
-`react-compose` provides a set of tools for creating themable components. The `compose` tool takes a functional component and, given default options and contextual overrides provided through React context, computes injected props including `classes`, `slots`, and `slotProps`. Styles are computed only when encountering unique theme objects per component, resulting in optimized performance.
+`react-compose` provides a set of tools for creating themable
+components. The `compose` tool takes a functional component and, given
+default options and contextual overrides provided through React
+context, computes injected props including `classes`, `slots`, and
+`slotProps`. Styles are computed only when encountering unique theme
+objects per component, resulting in optimized performance.
 
 Example:
 
@@ -50,23 +55,16 @@ const App = () => (
 );
 ```
 
-## Principles
-
-`compose` follows 3 principles:
-
-- Prefer faster components over more flexible components (if a decision between the 2 must be made.)
-
-- Decouple theming/styling from implementation in order to ensure the styling approach can be replaced without rewriting the component.
-
-- Keep it simple; avoid adding too many concepts for developers to learn.
-
 ## Who is `compose` for?
 
 Components created with `compose` are meant for use by anyone.
 
-`compose` itself is primarily intended for use by component authors; it provides a consistent means of attaching to a "themed context".
+`compose` itself is primarily intended for use by component authors;
+it provides a consistent means of attaching to a "themed context".
 
-`compose` can also be used by application developers to enable a greater level of customization when the "theme" does not provide enough flexibility.
+`compose` can also be used by application developers to enable a
+greater level of customization when the "theme" does not provide
+enough flexibility.
 
 ## When should I use `compose`?
 
@@ -85,7 +83,9 @@ each and every component\'s look and feel as well as behavior.
 
 # Using components created with `compose`
 
-There is no requirement around using components build with `compose`. If you use them without a theme, they will render with whichever default token/styling values, if any, are provided.
+There is no requirement around using components build with `compose`.
+If you use them without a theme, they will render with whichever
+default token/styling values, if any, are provided.
 
 It is recommended the default styling provide very limited styling, leaving tokens as the preferred method for customizing the component.
 
@@ -93,7 +93,20 @@ It is recommended the default styling provide very limited styling, leaving toke
 
 Default styling and tokens can always be overridden using theme.
 
-> TODO: how would one replace styling completely, instead of overriding it?
+In the event that a consumer desires to use their own theming/styling
+system, there are multiple entry points which can be used to inject
+information.
+
+All components derive from base components, which have a simple class
+name contract. A consumer is free to bring along their own styles and
+pass class names to components and they will render the correct
+result.
+
+Additionally, `createComponent` itself is derived from a factory which
+takes a CSS-in-JS engine as an argument. Consumers are free to create
+their own derivatives of `createComponent` with alternate
+implementations, or simple no-ops in the event that some other
+mechanism is handling the styling concerns.
 
 ## Customizing with tokens
 
@@ -323,8 +336,6 @@ to replace. Additionally, sensible defaults should be provided. Slots
 provide an opportunity for callers to late-bind sections for
 replacement.
 
-TODO: examples of more slots
-
 ## Writing the base component
 
 Any functional component can be used with `compose`. However, there are
@@ -365,11 +376,33 @@ downlevel slots.
 
 ### Slots
 
-TODO: Describe how to interact with slots
+`props.slots` will be a dictionary mapping individual slots to
+`ReactType` values which can then be used in JSX.
+
+`slots` are defined in createComponent by specifying a slots argument:
+
+```jsx
+const CreatedComponent = createComponent(BaseComponent, {
+  slots: {
+    root: 'div',
+    button: MyLibrary.FancyButton
+  }
+});
+
+```
 
 ### Slot Props
 
-TODO: Describe how to interact with slotProps
+`props.slotProps` defines the props that are distributed to each slot.
+It is the responsibility of the base component to blend `slotProps`
+with internal state and assign props to the correct slots.
+
+`slotProps` can be specified at several places in code. These are the
+expected locations, with items higher on the list taking precedence
+over lower items:
+- On rendering the control (`<CreateComponent slotProps={{ foo: { bar: 'baz' } }} />`)
+- When calling `createComponent`. (`createComponent(BaseComponent, { slotProps: { foo: { bar: 'baz' } } })`)
+- Specifying defaults in the base control (`const { foo = { bar: 'unknown' } } = props.slotProps`)
 
 ### Building in practice
 
@@ -407,5 +440,19 @@ will be developed to resolve state and intelligently merge `props` into
 
 ## Conformance
 
-TODO: Describe how to run conformance tests to make sure that base
-components appropriately react to theme changes.
+In order to validate that a base control conforms to the interface,
+simply add one test per slot test alongside the implementation and run
+within your CI environment:
+
+```jsx
+describe('My Base Component', () => {
+  it('should conform to the base component interface', () => {
+    expect(MyBaseComponent).toHaveRootSlot();
+    expect(MyBaseComponent).toHaveSlot('image');
+    expect(MyBaseComponent).toHaveSlot('button');
+  });
+});
+```
+
+The tests will validate that each slot accepts the expected parameters
+and renders them correctly.

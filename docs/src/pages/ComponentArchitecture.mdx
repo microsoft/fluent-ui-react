@@ -1,0 +1,242 @@
+import { Flex, Grid, Segment } from '@fluentui/react'
+import { BaseTextControl } from '../prototypes/ComponentArchitecture/BaseTextControl'
+import { BasePrefixedInput } from '../prototypes/ComponentArchitecture/BasePrefixedInput'
+import { CustomIcon } from '../prototypes/ComponentArchitecture/CustomIcon'
+import { DemoTextControl } from '../prototypes/ComponentArchitecture/DemoTextControl'
+import { DemoPrefixedInput } from '../prototypes/ComponentArchitecture/DemoPrefixedInput'
+import { DemoButton } from '../prototypes/ComponentArchitecture/DemoButton'
+import { ThemeProvider } from '../prototypes/ComponentArchitecture/ThemeProvider'
+import ExampleSnippet from '../components/ExampleSnippet/ExampleSnippet'
+
+export const meta = {
+  title: 'Component Architecture',
+}
+
+The design and architecture of components should follow from a set of first principles.
+
+- There is 1 right way to do things, and it's easy to do the right thing.
+- Consumers should not be penalized for code they don't use (through size, perf, etc).
+- Don't overgeneralize until we have a clear need (abstracting should solve a bundle size goal, or DRY goal, or partner use case)
+
+# Base components
+
+Each component should be built upon a "base component".
+
+In order to keep sorted lists formatted neatly, each base component should be named with the form: `ComponentNameBase.tsx`
+
+## Base components expect class names to be passed as a `classes` prop
+
+#### What
+
+Base components should expect a prop called `classes`, which is either a
+dictionary of keys to classnames (where a key represents a portion of the DOM), or
+a callback which will return the same dictionary when called with the component's
+state.
+
+#### Why
+
+Applications which load their own CSS in other means should not pay the penalty of loading
+a runtime CSS-in-JS package, especially if the class names are known at time of authoring.
+
+#### Example
+<ExampleSnippet>
+<>
+  <style dangerouslySetInnerHTML={{__html: `div.my-app--foo.my-app--bar { background: red; padding: 5px; border-radius: 2px; } .my-app--bar:hover { box-shadow: 0 0 3px 3px red; }`}} />
+  <BaseTextControl classes={{ root: 'my-app--foo my-app--bar'}}>This is my text control.</BaseTextControl>
+</>
+</ExampleSnippet>
+
+## Base components expect sub components to be passed as a `slots` prop
+
+#### What
+
+Base components should expect a prop called `slots`, which is a dictionary of element names mapped
+to their respective concrete implementation. The base component should default to rendering native DOM
+elements for each slot unless an override is passed.
+
+#### Why
+
+Applications which want to override specific aspects of a component should not incur a penalty of loading
+a concretely referenced component that will not be rendered in the final output.
+
+#### Example
+
+<ExampleSnippet>
+<>
+  <div>
+    <BasePrefixedInput value="vanilla" />
+  </div>
+  <div>
+    <BasePrefixedInput value="custom icon" slots={{ icon: CustomIcon }} />
+  </div>
+</>
+</ExampleSnippet>
+
+## Base components should not depend on any context
+
+#### What
+
+Base components should get all outside information exclusively from `props`. 
+
+#### Why
+
+Any external dependencies mean negative parsing time, bundle size and runtime impact for consumers that don't intend to use them.
+
+## Base components should handle their own state
+
+#### What
+
+Base components primary concern is handling of internal state, and should be encapsulated.
+
+## Base components should manage internal state via hooks
+
+#### What
+
+Hooks should be created to manage internal state of base components. For sets
+of functionality common to several components, shared hooks should be abstracted
+and exported from a common platform package.
+
+#### Why
+
+Hooks provide a desirable level of abstraction between business logic and markup. Reusable hooks
+further provide consumers with the ability to reuse smaller pieces of library controls.
+
+
+## Base components should handle their own accessibility
+
+#### What
+
+Each base component with accessibility concerns should provide its own implementation of accessibility props and handlers.
+For variants that are expected in the overall component library, state hooks should be reused and a new component simply
+created with a different use-case.
+
+It is important to have consistent accessibility, and passing in a new accessibility model might create major
+challenges to keep our components accessible, and also predictable. If a particular component needs to have multiple
+accessibility models (keyboarding, attributes), it should make that decision based on a single prop with a fixed set
+of implementation options (i.e. a `accessibilityMode` prop that accepted a fixed set of string values as input).
+
+#### Why
+
+There is a limited set of accessibility options that work well together, and each combination should be tested cohesively.
+Further, accessibility is closely tied to a components internal state, and they are likely to iterate concurrently.
+
+# Themed components
+
+The control library should ship a set of unopinionated components (i.e. base components) but also components which are
+pre-scaffolded with Fluent opinions (themed components). Fluent will be opinionated but customizable.
+
+## Themed components should pass `classes` to base components
+
+#### What
+
+Themed components should pass a set of classes to base components. In practice, this will mean pulling
+together information about theming and styling from context, and ensuring the correct CSS is rendered on
+the page.
+
+#### Why
+
+Themed components are the glue that ties together context, theming, and the base component. There are several potential
+implementations (`createComponent`, other HoCs), but serve as the higher level abstraction that brings only the necessary
+pieces to a consumer's application bundle.
+
+#### Example
+
+<ExampleSnippet>
+<ThemeProvider>
+  <DemoTextControl>This is a themed text control</DemoTextControl>
+</ThemeProvider>
+</ExampleSnippet>
+
+## Themed components should provide opinions on default slots
+
+#### What
+
+Each themed component that relies on sub-components should specify which components to render through
+a slots prop.
+
+The slots prop must be accessible in several means to ensure that a "recursive component" can be accurately described.
+
+#### Why
+
+The themed layer is the preferred layer to add hard graph edges. Each themed control should be intuitive 
+to use for a developer, and should come with "batteries included".
+
+#### Example
+
+<ExampleSnippet>
+<ThemeProvider>
+  <DemoPrefixedInput value="custom icon" />
+</ThemeProvider>
+</ExampleSnippet>
+
+## Themed components should have a default out-of-the-box themed
+
+#### What
+
+Each component should render a known-good theme out of the box when used without a provider.
+
+#### Why
+
+We want to offer a delightful first-run experience, and bundle size will not be negatively impacted by
+including the default theme.
+
+#### Example
+
+<ExampleSnippet>
+<DemoTextControl>Default styling</DemoTextControl>
+</ExampleSnippet>
+
+## Themed components should allow for variants
+
+#### What
+
+The HoC used to glue base components to the rest of the system should also provide a facility
+to define a variant. A variant is defined as an additional prop on the created component which has
+the ability to adjust the look and feel of the component.
+
+#### Why
+
+As a component library cannot anticipate all needs to applications' design systems, allowances should
+be made to extend the design system while maintaining rich levels of type safety.
+
+#### Example
+
+`TODO`
+
+## Themed components pass through unhandled but filtered props, which should be rendered on the `root` of a base component
+
+#### What
+
+Each themed control should accept any number of props that will be rendered by the base control's root slot.
+The base control should leverage a platform library function to pass all relevant native props to appropriate
+controls whenever available.
+
+#### Example
+
+<ThemeProvider>
+  <DemoButton onClick={() => alert('clicked')}>Show an alert</DemoButton>
+  <p>Notice <code>onClick</code> is passed implicitly to the DOM.</p>
+</ThemeProvider>
+
+# Code organization
+
+## Each component (both base and themed) should live in its own package
+
+#### What
+
+Each component will live in its own package, with `@next`
+versions of components published at will. This allows consumers to
+opt-in to speicifc versions of new components without requiring a
+sweeping set of changes to an application.
+
+A “meta-package” will also be published for casual consumers. A
+meta-package will allow a consumer to snap to major versions of all
+components and will be the quickest path to get up and running in a new
+project.
+
+#### Why
+
+Iterating on both Fluent UI and Fabric has shed light on several
+difficult versioning issues. A feature of a code organization approach
+would let customers opt in to potential breaking changes without
+requiring a major release for a nominally trivial breaking change.
