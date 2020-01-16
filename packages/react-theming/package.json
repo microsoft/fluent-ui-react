@@ -39,8 +39,8 @@
   "devDependencies": {
     "@fluentui/scripts": "^0.43.0",
     "@types/jss": "^9.5.8",
-    "@types/react": "^16.8.10",
-    "react": "^16.8.0"
+    "@types/react": "~16.8.10",
+    "react": "~16.8.0"
   },
   "peerDependencies": {
     "react": "^16.8.0"
