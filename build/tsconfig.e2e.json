@@ -5,5 +5,5 @@
     "allowSyntheticDefaultImports": true,
     "types": ["node", "webpack-env"]
   },
-  "include": ["../e2e"]
+  "include": ["../e2e", "../types"]
 }
