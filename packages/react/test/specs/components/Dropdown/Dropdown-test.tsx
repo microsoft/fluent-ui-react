@@ -41,7 +41,10 @@ const getSelectedItemHeaderAtIndexWrapper = (
 
 describe('Dropdown', () => {
   const items = ['item1', 'item2', 'item3', 'item4', 'item5']
-  isConformant(Dropdown, { hasAccessibilityProp: false })
+  isConformant(Dropdown, {
+    hasAccessibilityProp: false,
+    autocontrolledPropMappings: { value: 'onSelectedChange' },
+  })
 
   describe('clearable', () => {
     it('calls onChange on Icon click with an `empty` value', () => {

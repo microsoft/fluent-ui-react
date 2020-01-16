@@ -4,7 +4,7 @@ import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
 import { mountWithProviderAndGetComponent } from 'test/utils'
 
 describe('Embed', () => {
-  isConformant(Embed)
+  isConformant(Embed, { autocontrolledPropMappings: { active: 'onActiveChanged' } })
 
   describe('accessibility', () => {
     handlesAccessibility(Embed, { defaultRootRole: 'presentation' })

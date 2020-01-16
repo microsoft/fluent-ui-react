@@ -91,6 +91,13 @@ export interface ToolbarMenuItemProps
   onClick?: ComponentEventHandler<ToolbarMenuItemProps>
 
   /**
+   * Called when the menu inside the item opens or closes.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props, with `menuOpen` reflecting the new state.
+   */
+  onMenuOpenChange?: ComponentEventHandler<ToolbarMenuItemProps>
+
+  /**
    * Attaches a `Popup` component to the ToolbarMenuItem.
    * Accepts all props as a `Popup`, except `trigger` and `children`.
    * Traps focus by default.
@@ -141,6 +148,7 @@ class ToolbarMenuItem extends AutoControlledComponent<
     menu: PropTypes.oneOfType([customPropTypes.itemShorthand, customPropTypes.collectionShorthand]),
     menuOpen: PropTypes.bool,
     onClick: PropTypes.func,
+    onMenuOpenChange: PropTypes.func,
     popup: PropTypes.oneOfType([
       PropTypes.shape({
         ...Popup.propTypes,

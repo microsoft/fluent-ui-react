@@ -1,0 +1,282 @@
+{
+  "implementsCreateShorthand": true,
+  "mappedShorthandProp": "children",
+  "apiPath": "List",
+  "componentClassName": "ui-list",
+  "constructorName": "List",
+  "displayName": "List",
+  "docblock": {
+    "description": "A List displays a group of related sequential items.",
+    "tags": [
+      {
+        "title": "accessibility",
+        "description": "List may follow one of the following accessibility semantics:\n- Static non-navigable list. Implements [ARIA list](https://www.w3.org/TR/wai-aria-1.1/#list) role.\n- Selectable list: allows the user to select item from a list of choices. Implements [ARIA Listbox](https://www.w3.org/TR/wai-aria-practices-1.1/#Listbox) design pattern."
+      }
+    ]
+  },
+  "filename": "List.tsx",
+  "filenameWithoutExt": "List",
+  "isChild": false,
+  "isParent": true,
+  "parentDisplayName": null,
+  "props": [
+    {
+      "description": "Accessibility behavior if overridden by the user.",
+      "defaultValue": "ListBehavior",
+      "tags": [],
+      "types": [
+        {
+          "name": "Accessibility",
+          "parameters": [
+            {
+              "name": "any",
+              "keyword": true
+            }
+          ]
+        }
+      ],
+      "name": "accessibility",
+      "required": false
+    },
+    {
+      "description": "Generic animation property that can be used for applying different theme animations.",
+      "tags": [],
+      "types": [
+        {
+          "name": "any",
+          "keyword": true
+        }
+      ],
+      "name": "animation",
+      "required": false
+    },
+    {
+      "description": "An element type to render as (string or component).",
+      "defaultValue": "ul",
+      "tags": [],
+      "types": [
+        {
+          "name": "React.ElementType"
+        }
+      ],
+      "name": "as",
+      "required": false
+    },
+    {
+      "description": "Additional CSS class name(s) to apply.",
+      "tags": [],
+      "types": [
+        {
+          "name": "string",
+          "keyword": true
+        }
+      ],
+      "name": "className",
+      "required": false
+    },
+    {
+      "description": "Toggle debug mode",
+      "defaultValue": false,
+      "tags": [],
+      "types": [
+        {
+          "name": "boolean",
+          "keyword": true
+        }
+      ],
+      "name": "debug",
+      "required": false
+    },
+    {
+      "description": "Initial selectedIndex value.",
+      "tags": [],
+      "types": [
+        {
+          "name": "number",
+          "keyword": true
+        }
+      ],
+      "name": "defaultSelectedIndex",
+      "required": false
+    },
+    {
+      "description": "",
+      "tags": [],
+      "types": [
+        {
+          "name": "any",
+          "keyword": true
+        }
+      ],
+      "name": "design",
+      "required": false
+    },
+    {
+      "description": "A horizontal list displays elements horizontally.",
+      "defaultValue": false,
+      "tags": [],
+      "types": [
+        {
+          "name": "boolean",
+          "keyword": true
+        }
+      ],
+      "name": "horizontal",
+      "required": false
+    },
+    {
+      "description": "Shorthand array of props for ListItem.",
+      "tags": [],
+      "types": [
+        {
+          "name": "ShorthandCollection",
+          "parameters": [
+            {
+              "name": "ListItemProps"
+            },
+            {
+              "name": "never",
+              "keyword": true
+            }
+          ]
+        }
+      ],
+      "name": "items",
+      "required": false
+    },
+    {
+      "description": "A navigable list allows user to navigate through items.",
+      "defaultValue": false,
+      "tags": [],
+      "types": [
+        {
+          "name": "boolean",
+          "keyword": true
+        }
+      ],
+      "name": "navigable",
+      "required": false
+    },
+    {
+      "description": "Event for request to change 'selectedIndex' value.",
+      "tags": [
+        {
+          "title": "param",
+          "description": "React's original SyntheticEvent.",
+          "type": null,
+          "name": "event"
+        },
+        {
+          "title": "param",
+          "description": "All props and proposed value.",
+          "type": null,
+          "name": "data"
+        }
+      ],
+      "types": [
+        {
+          "name": "ComponentEventHandler",
+          "parameters": [
+            {
+              "name": "ListProps"
+            }
+          ]
+        }
+      ],
+      "name": "onSelectedIndexChange",
+      "required": false
+    },
+    {
+      "description": "A selectable list formats list items as possible choices.",
+      "defaultValue": false,
+      "tags": [],
+      "types": [
+        {
+          "name": "boolean",
+          "keyword": true
+        }
+      ],
+      "name": "selectable",
+      "required": false
+    },
+    {
+      "description": "Index of the currently selected item.",
+      "tags": [],
+      "types": [
+        {
+          "name": "number",
+          "keyword": true
+        }
+      ],
+      "name": "selectedIndex",
+      "required": false
+    },
+    {
+      "description": "Additional CSS styles to apply to the component instance.",
+      "tags": [],
+      "types": [
+        {
+          "name": "any",
+          "keyword": true
+        }
+      ],
+      "name": "styles",
+      "required": false
+    },
+    {
+      "description": "Truncates content",
+      "defaultValue": false,
+      "tags": [],
+      "types": [
+        {
+          "name": "boolean",
+          "keyword": true
+        }
+      ],
+      "name": "truncateContent",
+      "required": false
+    },
+    {
+      "description": "Truncates header",
+      "defaultValue": false,
+      "tags": [],
+      "types": [
+        {
+          "name": "boolean",
+          "keyword": true
+        }
+      ],
+      "name": "truncateHeader",
+      "required": false
+    },
+    {
+      "description": "Override for theme site variables to allow modifications of component styling via themes.",
+      "tags": [],
+      "types": [
+        {
+          "name": "any",
+          "keyword": true
+        }
+      ],
+      "name": "variables",
+      "required": false
+    },
+    {
+      "description": "An optional wrapper function.",
+      "defaultValue": "wrap",
+      "tags": [],
+      "types": [
+        {
+          "name": "function",
+          "value": "(children: ReactNode) => ReactNode"
+        }
+      ],
+      "name": "wrap",
+      "required": false
+    }
+  ],
+  "repoPath": "src/components/List/List.tsx",
+  "subcomponentName": null,
+  "subcomponents": ["ListItem"],
+  "type": "component"
+}
