@@ -3,10 +3,11 @@
   "compilerOptions": {
     "composite": true,
     "outDir": "dist/dts",
+    "baseUrl": ".",
     "paths": {
-      "docs/*": ["docs/*"],
-      "src/*": ["packages/react/src/*"],
-      "test/*": ["packages/react/test/*"]
+      "docs/*": ["../..docs/*"],
+      "src/*": ["./src/*"],
+      "test/*": ["./test/*"]
     }
   },
   "include": ["src", "test"],

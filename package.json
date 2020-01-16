@@ -24,7 +24,7 @@
     "prettier:fix": "prettier --write \"**/*.{ts,tsx}\"",
     "precommit": "lint-staged",
     "postcommit": "git update-index --again",
-    "prerelease": "yarn ci && cross-env NODE_ENV=production yarn build",
+    "prerelease": "yarn ci && cross-env NODE_ENV=production yarn build && just-scripts publish:prepare",
     "postrelease": "yarn deploy:docs",
     "release:major": "yarn prerelease && lerna publish major && yarn postrelease",
     "release:minor": "yarn prerelease && lerna publish minor && yarn postrelease",

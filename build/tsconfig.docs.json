@@ -1,13 +1,24 @@
 {
   "extends": "./tsconfig.common.json",
   "compilerOptions": {
+    // "composite": true,
     "module": "esnext",
+    "baseUrl": "../",
     "paths": {
-      "@fluentui/*": ["packages/*/src"],
       "docs/*": ["docs/*"],
       "src/*": ["packages/react/src/*"],
       "test/*": ["packages/react/test/*"]
     }
   },
-  "include": ["../docs/src", "../packages/react/src", "../types"]
+  "include": ["../docs/src", "../types"]
+  // "references": [
+  //   { "path": "../packages/ability-attributes" },
+  //   { "path": "../packages/accessibility" },
+  //   { "path": "../packages/code-sandbox" },
+  //   { "path": "../packages/docs-components" },
+  //   { "path": "../packages/react" },
+  //   { "path": "../packages/react-component-event-listener" },
+  //   { "path": "../packages/react-component-ref" },
+  //   { "path": "../packages/styles" }
+  // ]
 }
