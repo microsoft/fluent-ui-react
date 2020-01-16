@@ -7,8 +7,12 @@ import {
 } from 'test/specs/commonTests'
 
 describe('Checkbox', () => {
-  isConformant(Checkbox)
-  handlesAccessibility(Checkbox, { defaultRootRole: 'checkbox' })
+  isConformant(Checkbox, {
+    autocontrolledPropMappings: { checked: 'onChange' },
+  })
+  handlesAccessibility(Checkbox, {
+    defaultRootRole: 'checkbox',
+  })
 
   describe('HTML accessibility rules validation', () => {
     describe('icon button must have textual representation for screen readers', () => {

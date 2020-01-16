@@ -1,0 +1,797 @@
+{
+  "implementsCreateShorthand": false,
+  "apiPath": "Dropdown",
+  "componentClassName": "ui-dropdown",
+  "constructorName": "Dropdown",
+  "displayName": "Dropdown",
+  "docblock": {
+    "description": "A Dropdown allows user to select one or more values from a list of options.\nCan be created with search and multi-selection capabilities.",
+    "tags": [
+      {
+        "title": "accessibility",
+        "description": "Implements [ARIA Combo Box](https://www.w3.org/TR/wai-aria-practices-1.1/#combobox) design pattern, uses aria-live to announce state changes."
+      },
+      {
+        "title": "accessibilityIssues",
+        "description": "[Issue 991203: VoiceOver doesn't narrate properly elements in the input/combobox](https://bugs.chromium.org/p/chromium/issues/detail?id=991203)"
+      }
+    ]
+  },
+  "filename": "Dropdown.tsx",
+  "filenameWithoutExt": "Dropdown",
+  "isChild": false,
+  "isParent": true,
+  "parentDisplayName": null,
+  "props": [
+    {
+      "description": "The index of the currently selected item, if the dropdown supports multiple selection.",
+      "tags": [],
+      "types": [
+        {
+          "name": "number",
+          "keyword": true
+        }
+      ],
+      "name": "activeSelectedIndex",
+      "required": false
+    },
+    {
+      "description": "Alignment for the component.",
+      "defaultValue": "start",
+      "tags": [],
+      "types": [
+        {
+          "name": "Alignment"
+        }
+      ],
+      "name": "align",
+      "required": false
+    },
+    {
+      "description": "Generic animation property that can be used for applying different theme animations.",
+      "tags": [],
+      "types": [
+        {
+          "name": "any",
+          "keyword": true
+        }
+      ],
+      "name": "animation",
+      "required": false
+    },
+    {
+      "description": "An element type to render as (string or component).",
+      "defaultValue": "div",
+      "tags": [],
+      "types": [
+        {
+          "name": "React.ElementType"
+        }
+      ],
+      "name": "as",
+      "required": false
+    },
+    {
+      "description": "A dropdown item can show a check indicator if it is selected.",
+      "defaultValue": false,
+      "tags": [],
+      "types": [
+        {
+          "name": "boolean",
+          "keyword": true
+        }
+      ],
+      "name": "checkable",
+      "required": false
+    },
+    {
+      "description": "A slot for a selected indicator in the dropdown list.",
+      "defaultValue": "icon-checkmark",
+      "tags": [],
+      "types": [
+        {
+          "name": "ShorthandValue",
+          "parameters": [
+            {
+              "name": "IconProps"
+            }
+          ]
+        }
+      ],
+      "name": "checkableIndicator",
+      "required": false
+    },
+    {
+      "description": "Additional CSS class name(s) to apply.",
+      "tags": [],
+      "types": [
+        {
+          "name": "string",
+          "keyword": true
+        }
+      ],
+      "name": "className",
+      "required": false
+    },
+    {
+      "description": "A slot for the clearing indicator.",
+      "defaultValue": "icon-close",
+      "tags": [],
+      "types": [
+        {
+          "name": "ShorthandValue",
+          "parameters": [
+            {
+              "name": "IconProps"
+            }
+          ]
+        }
+      ],
+      "name": "clearIndicator",
+      "required": false
+    },
+    {
+      "description": "A dropdown can be clearable to let users remove their selection.",
+      "defaultValue": false,
+      "tags": [],
+      "types": [
+        {
+          "name": "boolean",
+          "keyword": true
+        }
+      ],
+      "name": "clearable",
+      "required": false
+    },
+    {
+      "description": "The initial value for the index of the currently selected item in a multiple selection.",
+      "tags": [],
+      "types": [
+        {
+          "name": "number",
+          "keyword": true
+        }
+      ],
+      "name": "defaultActiveSelectedIndex",
+      "required": false
+    },
+    {
+      "description": "The initial list item index to highlight.",
+      "tags": [],
+      "types": [
+        {
+          "name": "number",
+          "keyword": true
+        }
+      ],
+      "name": "defaultHighlightedIndex",
+      "required": false
+    },
+    {
+      "description": "The initial value for 'open' in uncontrolled mode.",
+      "defaultValue": false,
+      "tags": [],
+      "types": [
+        {
+          "name": "boolean",
+          "keyword": true
+        }
+      ],
+      "name": "defaultOpen",
+      "required": false
+    },
+    {
+      "description": "The initial value for the search query if the dropdown has `search` enabled.",
+      "tags": [],
+      "types": [
+        {
+          "name": "string",
+          "keyword": true
+        }
+      ],
+      "name": "defaultSearchQuery",
+      "required": false
+    },
+    {
+      "description": "The initial value (or value array if the array has multiple selection).",
+      "tags": [],
+      "types": [
+        {
+          "name": "ShorthandValue",
+          "parameters": [
+            {
+              "name": "DropdownItemProps"
+            }
+          ]
+        },
+        {
+          "name": "ShorthandCollection",
+          "parameters": [
+            {
+              "name": "DropdownItemProps"
+            }
+          ]
+        }
+      ],
+      "name": "defaultValue",
+      "required": false
+    },
+    {
+      "description": "",
+      "tags": [],
+      "types": [
+        {
+          "name": "any",
+          "keyword": true
+        }
+      ],
+      "name": "design",
+      "required": false
+    },
+    {
+      "description": "A dropdown can fill the width of its container.",
+      "defaultValue": false,
+      "tags": [],
+      "types": [
+        {
+          "name": "boolean",
+          "keyword": true
+        }
+      ],
+      "name": "fluid",
+      "required": false
+    },
+    {
+      "description": "Object with callbacks for generating announcements for item selection and removal.",
+      "tags": [],
+      "types": [
+        {
+          "name": "object",
+          "value": "{ onAdd?: (item: ShorthandValue<DropdownItemProps>) => string; onRemove?: (item: ShorthandValue<DropdownItemProps>) => string; }"
+        }
+      ],
+      "name": "getA11ySelectionMessage",
+      "required": false
+    },
+    {
+      "description": "Callback that provides status announcement message with number of items in the list, using Arrow Up/Down keys to navigate through them and, if multiple, using Arrow Left/Right to navigate through selected items.",
+      "tags": [
+        {
+          "title": "param",
+          "description": "Object with properties to generate message from. See getA11yStatusMessage from Downshift repo.",
+          "type": null,
+          "name": "messageGenerationProps"
+        }
+      ],
+      "types": [
+        {
+          "name": "function",
+          "value": "(options: A11yStatusMessageOptions<ShorthandValue<DropdownItemProps>>) => string"
+        }
+      ],
+      "name": "getA11yStatusMessage",
+      "required": false
+    },
+    {
+      "description": "A dropdown can highlight the first option when it opens.",
+      "defaultValue": false,
+      "tags": [],
+      "types": [
+        {
+          "name": "boolean",
+          "keyword": true
+        }
+      ],
+      "name": "highlightFirstItemOnOpen",
+      "required": false
+    },
+    {
+      "description": "The index of the list item to highlight.",
+      "tags": [],
+      "types": [
+        {
+          "name": "number",
+          "keyword": true
+        }
+      ],
+      "name": "highlightedIndex",
+      "required": false
+    },
+    {
+      "description": "A dropdown can be formatted to appear inline next to other elements.",
+      "defaultValue": false,
+      "tags": [],
+      "types": [
+        {
+          "name": "boolean",
+          "keyword": true
+        }
+      ],
+      "name": "inline",
+      "required": false
+    },
+    {
+      "description": "A function that converts an item to string. Used when dropdown has `search` enabled.\nBy default, it:\n- returns the `header` property if it exists on an item\n- stringifies the item if it is a primitive type",
+      "defaultValue": "itemToString",
+      "tags": [],
+      "types": [
+        {
+          "name": "function",
+          "value": "(item: ShorthandValue<DropdownItemProps>) => string"
+        }
+      ],
+      "name": "itemToString",
+      "required": false
+    },
+    {
+      "description": "Used when comparing two items in multiple selection. Default comparison is by the header prop.",
+      "defaultValue": "itemToValue",
+      "tags": [],
+      "types": [
+        {
+          "name": "function",
+          "value": "(item: ShorthandValue<DropdownItemProps>) => any"
+        }
+      ],
+      "name": "itemToValue",
+      "required": false
+    },
+    {
+      "description": "Array of props for generating list options (Dropdown.Item[]) and selected item labels (Dropdown.SelectedItem[]), if it's a multiple selection.",
+      "tags": [],
+      "types": [
+        {
+          "name": "ShorthandCollection",
+          "parameters": [
+            {
+              "name": "DropdownItemProps"
+            },
+            {
+              "name": "never",
+              "keyword": true
+            }
+          ]
+        }
+      ],
+      "name": "items",
+      "required": false
+    },
+    {
+      "description": "A slot for dropdown list.",
+      "defaultValue": {},
+      "tags": [],
+      "types": [
+        {
+          "name": "ShorthandValue",
+          "parameters": [
+            {
+              "name": "ListProps"
+            }
+          ]
+        }
+      ],
+      "name": "list",
+      "required": false
+    },
+    {
+      "description": "A dropdown can show that it is currently loading data.",
+      "defaultValue": false,
+      "tags": [],
+      "types": [
+        {
+          "name": "boolean",
+          "keyword": true
+        }
+      ],
+      "name": "loading",
+      "required": false
+    },
+    {
+      "description": "A message to be displayed in the list when the dropdown is loading.",
+      "tags": [],
+      "types": [
+        {
+          "name": "ShorthandValue",
+          "parameters": [
+            {
+              "name": "ListItemProps"
+            }
+          ]
+        }
+      ],
+      "name": "loadingMessage",
+      "required": false
+    },
+    {
+      "description": "When selecting an element with Tab, focus stays on the dropdown by default. If true, the focus will jump to next/previous element in DOM. Only available to multiple selection dropdowns.",
+      "defaultValue": false,
+      "tags": [],
+      "types": [
+        {
+          "name": "boolean",
+          "keyword": true
+        }
+      ],
+      "name": "moveFocusOnTab",
+      "required": false
+    },
+    {
+      "description": "A dropdown can allow a user to select multiple items.",
+      "defaultValue": false,
+      "tags": [],
+      "types": [
+        {
+          "name": "boolean",
+          "keyword": true
+        }
+      ],
+      "name": "multiple",
+      "required": false
+    },
+    {
+      "description": "A message to be displayed in the list when the dropdown has no items.",
+      "tags": [],
+      "types": [
+        {
+          "name": "ShorthandValue",
+          "parameters": [
+            {
+              "name": "ListItemProps"
+            }
+          ]
+        }
+      ],
+      "name": "noResultsMessage",
+      "required": false
+    },
+    {
+      "description": "Offset value to apply to rendered component. Accepts the following units:\n- px or unit-less, interpreted as pixels\n- %, percentage relative to the length of the trigger element\n- %p, percentage relative to the length of the component element\n- vw, CSS viewport width unit\n- vh, CSS viewport height unit",
+      "tags": [],
+      "types": [
+        {
+          "name": "string",
+          "keyword": true
+        }
+      ],
+      "name": "offset",
+      "required": false
+    },
+    {
+      "description": "Called when the dropdown opens or closes.",
+      "tags": [
+        {
+          "title": "param",
+          "description": "React's original SyntheticEvent.",
+          "type": null,
+          "name": "event"
+        },
+        {
+          "title": "param",
+          "description": "All props, with `open` reflecting the new open state.",
+          "type": null,
+          "name": "data"
+        }
+      ],
+      "types": [
+        {
+          "name": "ComponentEventHandler",
+          "parameters": [
+            {
+              "name": "DropdownProps"
+            }
+          ]
+        }
+      ],
+      "name": "onOpenChange",
+      "required": false
+    },
+    {
+      "description": "Called when the dropdown's search query changes.",
+      "tags": [
+        {
+          "title": "param",
+          "description": "React's original SyntheticEvent.",
+          "type": null,
+          "name": "event"
+        },
+        {
+          "title": "param",
+          "description": "All props, with `searchQuery` reflecting its new value.",
+          "type": null,
+          "name": "data"
+        }
+      ],
+      "types": [
+        {
+          "name": "ComponentEventHandler",
+          "parameters": [
+            {
+              "name": "DropdownProps"
+            }
+          ]
+        }
+      ],
+      "name": "onSearchQueryChange",
+      "required": false
+    },
+    {
+      "description": "Called when the dropdown's selected item(s) change.",
+      "tags": [
+        {
+          "title": "param",
+          "description": "React's original SyntheticEvent.",
+          "type": null,
+          "name": "event"
+        },
+        {
+          "title": "param",
+          "description": "All props and the new selected value(s).",
+          "type": null,
+          "name": "data"
+        }
+      ],
+      "types": [
+        {
+          "name": "ComponentEventHandler",
+          "parameters": [
+            {
+              "name": "DropdownProps"
+            }
+          ]
+        }
+      ],
+      "name": "onSelectedChange",
+      "required": false
+    },
+    {
+      "description": "A dropdown's open state can be controlled.",
+      "defaultValue": false,
+      "tags": [],
+      "types": [
+        {
+          "name": "boolean",
+          "keyword": true
+        }
+      ],
+      "name": "open",
+      "required": false
+    },
+    {
+      "description": "A placeholder message for the input field.",
+      "tags": [],
+      "types": [
+        {
+          "name": "string",
+          "keyword": true
+        }
+      ],
+      "name": "placeholder",
+      "required": false
+    },
+    {
+      "description": "Position for the component. Position has higher priority than align. If position is vertical ('above' | 'below')\nand align is also vertical ('top' | 'bottom') or if both position and align are horizontal ('before' | 'after'\nand 'start' | 'end' respectively), then provided value for 'align' will be ignored and 'center' will be used instead.",
+      "defaultValue": "below",
+      "tags": [],
+      "types": [
+        {
+          "name": "Position"
+        }
+      ],
+      "name": "position",
+      "required": false
+    },
+    {
+      "description": "A render function to customize how items are rendered in the dropdown.",
+      "tags": [
+        {
+          "title": "param",
+          "description": "The computed component for this slot.",
+          "type": null,
+          "name": "Component"
+        },
+        {
+          "title": "param",
+          "description": "The computed props for this slot.",
+          "type": null,
+          "name": "props"
+        },
+        {
+          "title": "param",
+          "description": "The computed children for this slot.",
+          "type": null,
+          "name": "children"
+        }
+      ],
+      "types": [
+        {
+          "name": "ShorthandRenderFunction",
+          "parameters": [
+            {
+              "name": "DropdownItemProps"
+            }
+          ]
+        }
+      ],
+      "name": "renderItem",
+      "required": false
+    },
+    {
+      "description": "A custom render function for the selected item. Only applicable with the `multiple` prop.",
+      "tags": [
+        {
+          "title": "param",
+          "description": "The computed component for this slot.",
+          "type": null,
+          "name": "Component"
+        },
+        {
+          "title": "param",
+          "description": "The computed props for this slot.",
+          "type": null,
+          "name": "props"
+        },
+        {
+          "title": "param",
+          "description": "The computed children for this slot.",
+          "type": null,
+          "name": "children"
+        }
+      ],
+      "types": [
+        {
+          "name": "ShorthandRenderFunction",
+          "parameters": [
+            {
+              "name": "DropdownSelectedItemProps"
+            }
+          ]
+        }
+      ],
+      "name": "renderSelectedItem",
+      "required": false
+    },
+    {
+      "description": "A dropdown can have a search field instead of trigger button. Can receive a custom search function that will replace the default equivalent.",
+      "tags": [],
+      "types": [
+        {
+          "name": "boolean",
+          "keyword": true
+        },
+        {
+          "name": "function",
+          "value": "boolean | ((items: ShorthandCollection<DropdownItemProps, never>, searchQuery: string) => ShorthandCollection<DropdownItemProps, never>)"
+        }
+      ],
+      "name": "search",
+      "required": false
+    },
+    {
+      "description": "A search dropdown's input can be customized.",
+      "tags": [],
+      "types": [
+        {
+          "name": "ShorthandValue",
+          "parameters": [
+            {
+              "name": "DropdownSearchInputProps"
+            }
+          ]
+        }
+      ],
+      "name": "searchInput",
+      "required": false
+    },
+    {
+      "description": "Sets search query value (controlled mode).",
+      "tags": [],
+      "types": [
+        {
+          "name": "string",
+          "keyword": true
+        }
+      ],
+      "name": "searchQuery",
+      "required": false
+    },
+    {
+      "description": "Additional CSS styles to apply to the component instance.",
+      "tags": [],
+      "types": [
+        {
+          "name": "any",
+          "keyword": true
+        }
+      ],
+      "name": "styles",
+      "required": false
+    },
+    {
+      "description": "Controls the appearance of the indicator that shows/hides the list of items.",
+      "defaultValue": {},
+      "tags": [],
+      "types": [
+        {
+          "name": "ShorthandValue",
+          "parameters": [
+            {
+              "name": "IconProps"
+            }
+          ]
+        }
+      ],
+      "name": "toggleIndicator",
+      "required": false
+    },
+    {
+      "description": "Controls the appearance of the trigger button if it's a selection dropdown (not a search).",
+      "defaultValue": {},
+      "tags": [],
+      "types": [
+        {
+          "name": "ShorthandValue",
+          "parameters": [
+            {
+              "name": "ButtonProps"
+            }
+          ]
+        }
+      ],
+      "name": "triggerButton",
+      "required": false
+    },
+    {
+      "description": "Disables automatic repositioning of the component; it will always be placed according to the values of `align` and\n`position` props, regardless of the size of the component, the reference element or the viewport.",
+      "defaultValue": false,
+      "tags": [],
+      "types": [
+        {
+          "name": "boolean",
+          "keyword": true
+        }
+      ],
+      "name": "unstable_pinned",
+      "required": false
+    },
+    {
+      "description": "Sets the dropdown's currently selected value(s) in controlled mode.",
+      "tags": [],
+      "types": [
+        {
+          "name": "ShorthandValue",
+          "parameters": [
+            {
+              "name": "DropdownItemProps"
+            }
+          ]
+        },
+        {
+          "name": "ShorthandCollection",
+          "parameters": [
+            {
+              "name": "DropdownItemProps"
+            }
+          ]
+        }
+      ],
+      "name": "value",
+      "required": false
+    },
+    {
+      "description": "Override for theme site variables to allow modifications of component styling via themes.",
+      "tags": [],
+      "types": [
+        {
+          "name": "any",
+          "keyword": true
+        }
+      ],
+      "name": "variables",
+      "required": false
+    }
+  ],
+  "repoPath": "src/components/Dropdown/Dropdown.tsx",
+  "subcomponentName": null,
+  "subcomponents": ["DropdownItem", "DropdownSearchInput", "DropdownSelectedItem"],
+  "type": "component"
+}
