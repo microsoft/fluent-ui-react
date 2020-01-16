@@ -34,6 +34,8 @@ export interface Conformant {
   /** This component uses wrapper slot to wrap the 'meaningful' element. */
   wrapperComponent?: React.ReactType
   handlesAsProp?: boolean
+  /** In the case when a onChange prop name is custom in relation to the controlled prop. */
+  autocontrolledPropMappings?: object
 }
 
 /**
@@ -57,6 +59,7 @@ export default function isConformant(
     rendersPortal = false,
     wrapperComponent = null,
     handlesAsProp = true,
+    autocontrolledPropMappings = {},
   } = options
   const { throwError } = helpers('isConformant', Component)
 
@@ -313,11 +316,10 @@ export default function isConformant(
       if (Component.autoControlledProps && Component.autoControlledProps.length) {
         Component.autoControlledProps.forEach(autoControlledProp => {
           const expectedOnChangeProp =
-            autoControlledProp === 'value'
-              ? 'onChange'
-              : `on${autoControlledProp.slice(0, 1).toLocaleUpperCase()}${autoControlledProp.slice(
-                  1,
-                )}Change`
+            autocontrolledPropMappings[autoControlledProp] ||
+            `on${autoControlledProp.slice(0, 1).toLocaleUpperCase()}${autoControlledProp.slice(
+              1,
+            )}Change`
 
           expect(Component.handledProps).toContain(expectedOnChangeProp)
         })
