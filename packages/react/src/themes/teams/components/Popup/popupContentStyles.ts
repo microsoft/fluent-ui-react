@@ -1,4 +1,4 @@
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import { PopupContentProps } from '../../../../components/Popup/PopupContent'
 import { PopupContentVariables } from './popupContentVariables'
 import getPointerStyles from '../../getPointerStyles'

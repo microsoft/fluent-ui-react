@@ -2,12 +2,9 @@ import express from 'express'
 
 import historyApiFallback from 'connect-history-api-fallback'
 import { Server } from 'http'
+import { colors, log } from 'gulp-util'
 
 type Express = ReturnType<typeof express>
-
-const g = require('gulp-load-plugins')()
-
-const { colors, log } = g.util
 
 const serve = (
   directoryPath: string,

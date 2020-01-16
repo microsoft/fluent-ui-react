@@ -1,4 +1,4 @@
-import { ComponentSlotStylesPrepared } from '../../../types'
+import { ComponentSlotStylesPrepared } from '@fluentui/styles'
 import { ReactionProps } from '../../../../components/Reaction/Reaction'
 import { ReactionGroupVariables } from './reactionGroupVariables'
 

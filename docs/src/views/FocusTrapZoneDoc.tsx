@@ -5,7 +5,7 @@ import { Header } from '@fluentui/react'
 import DocPage from '../components/DocPage'
 import { link, code } from '../utils/helpers'
 
-import ComponentPropsTable from 'docs/src/components/ComponentDoc/ComponentPropsTable'
+import ComponentPropsTable from '../components/ComponentDoc/ComponentPropsTable'
 
 export default () => (
   <DocPage title="Focus Trap Zone">

@@ -3,7 +3,7 @@ import * as ReactDOMServer from 'react-dom/server'
 import { axe, toHaveNoViolations } from 'jest-axe'
 import { EmptyThemeProvider } from 'test/utils'
 
-type AxeMatcher<R> = jest.Matchers<R> & {
+type AxeMatcher<R> = jest.Matchers<R, any> & {
   toHaveNoViolations: () => R
 }
 

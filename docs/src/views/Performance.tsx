@@ -7,7 +7,7 @@ import ExampleSnippet from '../components/ExampleSnippet'
 export default () => (
   <DocPage title="Performance">
     <p>
-      In general, to make your application that is using FluentUi performant, it is important to
+      In general, to make your application that is using Fluent UI performant, it is important to
       follow all{' '}
       {link(
         'React performance best practices',

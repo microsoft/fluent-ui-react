@@ -1,20 +1,15 @@
+import { StylesContextInputValue, StylesContextValue } from '@fluentui/react-bindings'
+import * as React from 'react'
+
+import Telemetry from './utils/Telemetry'
+
 // ========================================================
 // Utilities
 // ========================================================
 
-import * as React from 'react'
-import { ThemeInput, Renderer, ThemePrepared } from './themes/types'
-import Telemetry from './utils/Telemetry'
-
-export type Extendable<T, V = any> = T & {
-  [key: string]: V
-}
-
 export type ResultOf<T> = T extends (...arg: any[]) => infer TResult ? TResult : never
 
 export type ObjectOf<T> = { [key: string]: T }
-
-export type ObjectOrFunc<TResult, TArg = {}> = ((arg: TArg) => TResult) | TResult
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 
@@ -158,21 +153,14 @@ export const UNSAFE_typed = <TComponentType>(componentType: TComponentType) => {
 // Provider's context
 // ========================================================
 
-export interface ProviderContextInput {
-  renderer?: Renderer
+export interface ProviderContextInput extends StylesContextInputValue {
   rtl?: boolean
-  disableAnimations?: boolean
   target?: Document
-  theme?: ThemeInput
   telemetry?: Telemetry
 }
 
-export interface ProviderContextPrepared {
-  renderer: Renderer
+export interface ProviderContextPrepared extends StylesContextValue {
   rtl: boolean
-  disableAnimations: boolean
   target: Document
-  theme: ThemePrepared
   telemetry: Telemetry | undefined
-  _internal_resolvedComponentVariables: Record<string, object>
 }

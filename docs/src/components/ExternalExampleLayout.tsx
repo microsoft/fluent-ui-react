@@ -5,12 +5,8 @@ import { match } from 'react-router-dom'
 import SourceRender from 'react-source-render'
 import { KnobProvider } from '@fluentui/docs-components'
 
-import { ExampleSource } from 'docs/src/types'
-import {
-  exampleSourcesContext,
-  exampleKebabNameToSourceFilename,
-  parseExamplePath,
-} from 'docs/src/utils'
+import { ExampleSource } from '../types'
+import { exampleSourcesContext, exampleKebabNameToSourceFilename, parseExamplePath } from '../utils'
 import PageNotFound from '../views/PageNotFound'
 import { babelConfig, importResolver } from './Playground/renderConfig'
 

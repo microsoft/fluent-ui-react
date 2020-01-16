@@ -4,9 +4,9 @@ import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { withRouter } from 'react-router-dom'
 
-import Sidebar from 'docs/src/components/Sidebar/Sidebar'
-import { scrollToAnchor } from 'docs/src/utils'
-import { mergeThemes } from '@fluentui/react/src/utils'
+import Sidebar from './Sidebar/Sidebar'
+import { scrollToAnchor } from '../utils'
+import { mergeThemes } from '@fluentui/styles'
 
 const anchors = new AnchorJS({
   class: 'anchor-link',

@@ -18,6 +18,26 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### BREAKING CHANGES
+- Add `@fluentui/styles` package for all styles' related utilities and TS types @layershifter, @mnajdova ([#2222](https://github.com/microsoft/fluent-ui-react/pull/2222))
+
+### Fixes
+- Fix event listener leak in `FocusZone` @miroslavstastny ([#2227](https://github.com/microsoft/fluent-ui-react/pull/2227))
+- Fix styleParam to always be required in the styles functions @layershifter, @mnajdova ([#2235](https://github.com/microsoft/fluent-ui-react/pull/2235))
+- Update iconOnly button hover, focus styles and add new `background5` and `backgroundHover2` design tokens in Teams theme @codepretty ([#2211](https://github.com/microsoft/fluent-ui-react/pull/2211))
+
+### Features
+- Allow `useRef` hook used for storing debugging data to be defined in any order with other hooks in functional components @layershifter, @mnajdova ([#2236](https://github.com/microsoft/fluent-ui-react/pull/2236))
+- Add `useStyles()` hook to use theming capabilities in custom components @layershifter, @mnajdova ([#2217](https://github.com/microsoft/fluent-ui-react/pull/2217))
+- Add optional wrapper function to `List` which can be used to inject custom scrollbars to `Dropdown` @jurokapsiar ([#2092](https://github.com/microsoft/fluent-ui-react/pull/2092))
+
+### Documentation
+- Add per-component performance charts @miroslavstastny ([#2240](https://github.com/microsoft/fluent-ui-react/pull/2240))
+
+<!--------------------------------[ v0.43.0 ]------------------------------- -->
+## [v0.43.0](https://github.com/microsoft/fluent-ui-react/tree/v0.43.0) (2020-01-08)
+[Compare changes](https://github.com/microsoft/fluent-ui-react/compare/v0.42.0..v0.43.0)
+
+### BREAKING CHANGES
 - Use `tooltipAsLabelBehavior` as default `Tooltip` behavior @silviuavram ([#2195](https://github.com/microsoft/fluent-ui-react/pull/2195))
 
 ### Features
@@ -28,9 +48,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Fixes
 - Fix `toggle` changing width during animation in Teams theme @mnajdova ([#2189](https://github.com/microsoft/fluent-ui-react/pull/2189))
+- Update `SplitButton` styles in Teams theme [redlines] @notandrew ([#2108](https://github.com/microsoft/fluent-ui-react/pull/2108))
 - Fix `Popup` positioning in multiple cases @layershifter ([#2187](https://github.com/microsoft/fluent-ui-react/pull/2187))
 - Fix click outside in `Popup` when `trigger` is not defined @layershifter ([#2202](https://github.com/microsoft/fluent-ui-react/pull/2202))
-- Update iconOnly button hover, focus styles and add new `background5` and `backgroundHover2` design tokens in Teams theme @codepretty ([#2211](https://github.com/microsoft/fluent-ui-react/pull/2211))
+- Use `debounce` from `lodash` in `Dropdown` and `Carouel` @silviuavram ([#2203](https://github.com/microsoft/fluent-ui-react/pull/2203))
 
 <!--------------------------------[ v0.42.0 ]------------------------------- -->
 ## [v0.42.0](https://github.com/microsoft/fluent-ui-react/tree/v0.42.0) (2019-12-12)

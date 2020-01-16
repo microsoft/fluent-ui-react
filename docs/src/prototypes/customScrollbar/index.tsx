@@ -1,7 +1,7 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import Scrollbars from 'react-custom-scrollbars'
-import { Text, Menu, List, Button, Popup, Dialog } from '@fluentui/react'
+import { Text, Menu, List, Button, Popup, Dialog, Dropdown } from '@fluentui/react'
 import { PrototypeSection, ComponentPrototype } from '../Prototypes'
 
 const ScrollbarMenuPrototype = () => {
@@ -71,6 +71,28 @@ const ScrollbarListPrototype = () => {
   )
 }
 
+const ScrollbarDropdownPrototype = () => {
+  const items = _.range(50).map((i: number) => ({
+    header: `Header ${i}`,
+    content: `Content ${i}`,
+    key: `item-${i}`,
+  }))
+
+  return (
+    <div>
+      <Dropdown
+        items={items}
+        list={{ wrap: children => <Scrollbars style={{ height: '20rem' }}>{children}</Scrollbars> }}
+      />
+      <Dropdown
+        search
+        items={items}
+        list={{ wrap: children => <Scrollbars style={{ height: '20rem' }}>{children}</Scrollbars> }}
+      />
+    </div>
+  )
+}
+
 const CustomScrollbarPrototypes: React.FC = () => {
   return (
     <PrototypeSection title="Custom Scrollbar">
@@ -92,6 +114,9 @@ const CustomScrollbarPrototypes: React.FC = () => {
       </ComponentPrototype>
       <ComponentPrototype title="List" description="Scrollbar can be integrated in selectable List">
         <ScrollbarListPrototype />
+      </ComponentPrototype>
+      <ComponentPrototype title="Dropdown" description="Scrollbar can be integrated in Dropdown">
+        <ScrollbarDropdownPrototype />
       </ComponentPrototype>
     </PrototypeSection>
   )

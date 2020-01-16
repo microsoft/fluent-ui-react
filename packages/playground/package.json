@@ -1,6 +1,6 @@
 {
   "name": "@fluentui/playground",
-  "version": "0.42.0",
+  "version": "0.43.0",
   "description": "> TODO: description",
   "homepage": "https://github.com/microsoft/fluent-ui#readme",
   "bugs": {
@@ -34,11 +34,11 @@
     "update-snapshots": "just-scripts jest:snapshots"
   },
   "dependencies": {
-    "@fluentui/react-theming": "^0.42.0",
+    "@fluentui/react-theming": "^0.43.0",
     "classnames": "^2.2.6"
   },
   "devDependencies": {
-    "@fluentui/scripts": "^0.42.0",
+    "@fluentui/scripts": "^0.43.0",
     "@types/enzyme": "^3.10.3",
     "@types/enzyme-adapter-react-16": "1.0.5",
     "@types/jest": "^24.0.19",

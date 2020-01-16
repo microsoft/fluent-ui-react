@@ -1,15 +1,14 @@
-import { callable } from '@fluentui/react-bindings'
 import * as _ from 'lodash'
+import {
+  callable,
+  ComponentSlotStylesPrepared,
+  FontIconSpec,
+  ICSSInJSStyle,
+  ThemeIconSpec,
+} from '@fluentui/styles'
 
 import { pxToRem, SizeValue } from '../../../../utils'
-import {
-  ComponentSlotStylesPrepared,
-  ICSSInJSStyle,
-  StrictColorScheme,
-  ItemType,
-  ThemeIconSpec,
-  FontIconSpec,
-} from '../../../types'
+import { StrictColorScheme, ItemType } from '../../../types'
 import { IconXSpacing, IconProps } from '../../../../components/Icon/Icon'
 import { getStyle as getSvgStyle } from './svg'
 import { IconVariables, iconColorAreas } from './iconVariables'

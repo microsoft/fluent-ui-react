@@ -1,4 +1,10 @@
-import { ThemeIconSpec, ThemeIcons, SvgIconSpec, ThemePrepared } from '../types'
+import {
+  createTheme,
+  SvgIconSpec,
+  ThemeIcons,
+  ThemeIconSpec,
+  ThemePrepared,
+} from '@fluentui/styles'
 
 import animations from './animations'
 import * as siteVariables from './siteVariables'
@@ -6,11 +12,11 @@ import * as componentVariables from './componentVariables'
 import * as componentStyles from './componentStyles'
 import fontFaces from './fontFaces'
 import staticStyles from './staticStyles'
+import { TeamsThemeStylesProps } from './types'
 
 import { default as svgIconsAndStyles } from './components/Icon/svg'
 
 import { TeamsSvgIconSpec, SvgIconSpecWithStyles } from './components/Icon/svg/types'
-import { createTheme } from '../createTheme'
 
 const declareSvg = (svgIcon: SvgIconSpec): ThemeIconSpec => ({
   isSvg: true,
@@ -49,7 +55,7 @@ const icons: ThemeIcons = {
   'icon-play': themeIcons['play'],
 }
 
-const teamsTheme: ThemePrepared = createTheme(
+const teamsTheme: ThemePrepared<TeamsThemeStylesProps> = createTheme(
   {
     siteVariables,
     componentVariables,

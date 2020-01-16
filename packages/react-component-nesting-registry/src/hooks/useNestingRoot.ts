@@ -22,13 +22,13 @@ const useNestingRoot = <T extends Node>(): UseNestingHookResult<T> => {
     [],
   )
   const getRefs = React.useCallback(() => {
-    return registry.getContextRefs(parentRef)
+    return registry.getContextRefs(parentRef as any)
   }, [])
 
   React.useEffect(() => {
-    registry.register(parentRef)
+    registry.register(parentRef as any)
 
-    return () => registry.unregister(parentRef)
+    return () => registry.unregister(parentRef as any)
   }, [])
 
   return {

@@ -1,4 +1,4 @@
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import { AttachmentProps } from '../../../../components/Attachment/Attachment'
 import { AttachmentVariables } from '../../../teams/components/Attachment/attachmentVariables'
 import Button from '../../../../components/Button/Button'
