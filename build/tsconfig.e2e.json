@@ -1,7 +1,9 @@
 {
   "extends": "./tsconfig.common.json",
   "compilerOptions": {
-    "module": "esnext"
+    "module": "esnext",
+    "allowSyntheticDefaultImports": true,
+    "types": ["node", "webpack-env"]
   },
-  "include": ["../packages/react/src", "../e2e", "../types"]
+  "include": ["../e2e"]
 }

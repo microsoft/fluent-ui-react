@@ -7,7 +7,7 @@ import { ComponentInfo } from '../types'
 const requireContext = require.context('../componentInfo', true, /\.info\.json$/)
 
 const keys: string[] = requireContext.keys()
-const infoObjects: ComponentInfo[] = keys.map(requireContext)
+const infoObjects = keys.map(requireContext) as ComponentInfo[]
 
 const componentInfoContext: {
   byDisplayName: { [componentName: string]: ComponentInfo }
