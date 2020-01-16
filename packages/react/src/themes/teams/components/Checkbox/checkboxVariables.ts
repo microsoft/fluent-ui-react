@@ -122,4 +122,5 @@ export default (siteVars: any): CheckboxVariables => ({
     'colorScheme.default.foregroundDisabled',
     defaultValue,
   ),
+  // TODO: add variables for indeterminate state.
 })

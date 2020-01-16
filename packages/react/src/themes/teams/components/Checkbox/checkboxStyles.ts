@@ -84,6 +84,13 @@ const checkboxStyles: ComponentSlotStylesPrepared<
         background: v.disabledBackgroundChecked,
         borderColor: 'transparent',
       }),
+
+    // TODO: in the case of indeterminate, set icon-square
+    // to be smaller on all sides inside the larger input box.
+    // ...(p.indeterminate && {
+    //   boxSizing: 'border-box',
+    //   flexShrink: 0,
+    // }),
   }),
 
   toggle: ({ props: p, variables: v }): ICSSInJSStyle => ({

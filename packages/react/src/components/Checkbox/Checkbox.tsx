@@ -92,7 +92,7 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
     defaultIndeterminate: PropTypes.bool,
     disabled: PropTypes.bool,
     icon: customPropTypes.itemShorthandWithoutJSX,
-    indeterminate: customPropTypes.itemShorthandWithoutJSX,
+    indeterminate: PropTypes.bool,
     label: customPropTypes.itemShorthand,
     labelPosition: PropTypes.oneOf(['start', 'end']),
     onChange: PropTypes.func,
@@ -124,24 +124,34 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
     // components should handle events transparently.
     const { disabled, indeterminate } = this.props
     const checked = !this.state.checked
-    const isIndeterminate = !this.state.indeterminate
 
     if (!disabled) {
       this.setState({ checked, indeterminate })
-      _.invoke(this.props, 'onChange', e, { ...this.props, checked, isIndeterminate })
+      _.invoke(this.props, 'onChange', e, {
+        ...this.props,
+        checked,
+        indetermiante: !this.state.indeterminate,
+      })
     }
   }
 
   handleClick = (e: React.MouseEvent | React.KeyboardEvent) => {
     const { disabled, indeterminate } = this.props
     const checked = !this.state.checked
-    const isIndeterminate = !this.state.indeterminate
 
     if (!disabled) {
       this.setState({ checked, indeterminate })
 
-      _.invoke(this.props, 'onClick', e, { ...this.props, checked, isIndeterminate })
-      _.invoke(this.props, 'onChange', e, { ...this.props, checked, isIndeterminate })
+      _.invoke(this.props, 'onClick', e, {
+        ...this.props,
+        checked,
+        indetermiante: !this.state.indeterminate,
+      })
+      _.invoke(this.props, 'onChange', e, {
+        ...this.props,
+        checked,
+        indetermiante: !this.state.indeterminate,
+      })
     }
   }
 
@@ -175,7 +185,11 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
             outline: toggle && !this.state.checked,
             size: toggle ? 'medium' : 'smaller',
             className: Checkbox.slotClassNames.indicator,
-            name: toggle ? 'icon-circle' : 'icon-checkmark',
+            name: toggle
+              ? 'icon-circle'
+              : this.state.indeterminate
+              ? 'icon-square'
+              : 'icon-checkmark',
             styles: toggle ? styles.toggle : styles.checkbox,
           }),
         })}
