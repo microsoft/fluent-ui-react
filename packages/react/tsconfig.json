@@ -12,11 +12,11 @@
   "include": ["src", "test"],
   "references": [
     { "path": "../accessibility" },
-    { "path": "../styles" },
     { "path": "../react-bindings" },
     { "path": "../react-component-event-listener" },
     { "path": "../react-component-nesting-registry" },
     { "path": "../react-component-ref" },
-    { "path": "../react-proptypes" }
+    { "path": "../react-proptypes" },
+    { "path": "../styles" }
   ]
 }

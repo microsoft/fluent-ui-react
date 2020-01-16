@@ -1,12 +1,13 @@
 {
   "compilerOptions": {
+    "composite": true,
     "outDir": "lib",
     "lib": ["es2015", "dom"],
     "jsx": "react",
     "moduleResolution": "node",
     "declaration": true,
     "skipLibCheck": true,
-    "types": ["node", "react"],
+    "types": ["node"],
     "baseUrl": ".",
     "allowSyntheticDefaultImports": true,
     "paths": {
