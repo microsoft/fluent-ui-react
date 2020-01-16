@@ -126,11 +126,14 @@ const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, Dropdow
       ':focus-visible': {
         color: v.color,
         ...transparentColorStyle,
+        borderRightWidth: 0,
         ':after': {
           borderColor: 'transparent',
+          borderRightWidth: 0,
         },
         ':before': {
           borderColor: 'transparent',
+          borderRightWidth: 0,
         },
       },
       ':active': {
