@@ -10,7 +10,6 @@ import * as React from 'react'
 import { ThemeContext } from 'react-fela'
 
 import {
-  ComponentAnimationProp,
   ComponentDesignProp,
   ComponentSlotClasses,
   RendererRenderRule,
@@ -32,8 +31,6 @@ type UseStylesResult = {
 }
 
 type InlineStyleProps<StyleProps> = {
-  unstable_animation?: ComponentAnimationProp
-
   /** Additional CSS class name(s) to apply.  */
   className?: string
 
