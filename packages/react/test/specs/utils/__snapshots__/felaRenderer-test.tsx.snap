@@ -12,10 +12,15 @@ exports[`felaRenderer CSS fallback values are rendered 1`] = `
 `;
 
 exports[`felaRenderer animations are not applied if animations are disabled 1`] = `
-"
+".a {
+  display: inline-block;
+}
+
 
 <div className=ui-provider__box dir=ltr>
-  <div className=ui-box />
+  <div className=ui-animation a>
+    <div className=ui-box />
+  </div>
 </div>;
 "
 `;
@@ -58,12 +63,17 @@ exports[`felaRenderer array returned by keyframe results in CSS fallback values 
   }
 }
 .a {
+  display: inline-block;
+}
+.b {
   animation-name: k1;
 }
 
 
 <div className=ui-provider__box dir=ltr>
-  <div className=ui-box a />
+  <div className=ui-animation a>
+    <div className=ui-box b />
+  </div>
 </div>;
 "
 `;
@@ -104,15 +114,20 @@ exports[`felaRenderer keyframe colors are rendered 1`] = `
   }
 }
 .a {
-  animation-name: k1;
+  display: inline-block;
 }
 .b {
+  animation-name: k1;
+}
+.c {
   animation-duration: 5s;
 }
 
 
 <div className=ui-provider__box dir=ltr>
-  <div className=ui-box a b />
+  <div className=ui-animation a>
+    <div className=ui-box b c />
+  </div>
 </div>;
 "
 `;
