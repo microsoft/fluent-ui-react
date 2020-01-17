@@ -125,9 +125,10 @@ const Button: React.FC<WithAsProp<ButtonProps>> &
   } = props
   const context: ProviderContextPrepared = React.useContext(ThemeContext)
   const { setStart, setEnd } = useTelemetry(Button.displayName, context.telemetry)
-  const hasChildren = childrenExist(children)
 
   setStart()
+
+  const hasChildren = childrenExist(children)
 
   const getA11Props = useAccessibility(accessibility, {
     debugName: Button.displayName,
@@ -217,13 +218,19 @@ const Button: React.FC<WithAsProp<ButtonProps>> &
         ...unhandledProps,
       })}
     >
-      {hasChildren && children}
-      {!hasChildren && loading && renderLoader()}
-      {!hasChildren && iconPosition !== 'after' && renderIcon()}
-      {Box.create(!hasChildren && content, {
-        defaultProps: () => getA11Props('content', { as: 'span', styles: resolvedStyles.content }),
-      })}
-      {!hasChildren && iconPosition === 'after' && renderIcon()}
+      {hasChildren ? (
+        children
+      ) : (
+        <>
+          {loading && renderLoader()}
+          {iconPosition !== 'after' && renderIcon()}
+          {Box.create(content, {
+            defaultProps: () =>
+              getA11Props('content', { as: 'span', styles: resolvedStyles.content }),
+          })}
+          {iconPosition === 'after' && renderIcon()}
+        </>
+      )}
     </ElementType>
   )
 }
