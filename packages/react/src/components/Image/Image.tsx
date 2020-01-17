@@ -9,6 +9,7 @@ import {
   getUnhandledProps,
   useAccessibility,
   useStyles,
+  useTelemetry,
 } from '@fluentui/react-bindings'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -46,6 +47,10 @@ export interface ImageProps extends UIComponentProps, ImageBehaviorProps {
 }
 
 const Image: React.FC<WithAsProp<ImageProps>> & FluentComponentStaticProps<ImageProps> = props => {
+  const context: ProviderContextPrepared = React.useContext(ThemeContext)
+  const { setStart, setEnd } = useTelemetry(Image.displayName, context.telemetry)
+  setStart()
+
   const {
     accessibility,
     alt,
@@ -58,7 +63,6 @@ const Image: React.FC<WithAsProp<ImageProps>> & FluentComponentStaticProps<Image
     styles,
     variables,
   } = props
-  const context: ProviderContextPrepared = React.useContext(ThemeContext)
 
   const getA11Props = useAccessibility(accessibility, {
     debugName: Image.displayName,
@@ -86,6 +90,8 @@ const Image: React.FC<WithAsProp<ImageProps>> & FluentComponentStaticProps<Image
 
   const ElementType = getElementType(props)
   const unhandledProps = getUnhandledProps(Image.handledProps, props)
+
+  setEnd()
 
   return <ElementType {...getA11Props('root', { className: classes.root, ...unhandledProps })} />
 }

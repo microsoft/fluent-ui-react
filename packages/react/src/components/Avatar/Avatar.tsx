@@ -4,6 +4,7 @@ import {
   getUnhandledProps,
   useAccessibility,
   useStyles,
+  useTelemetry,
 } from '@fluentui/react-bindings'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
@@ -50,6 +51,10 @@ export interface AvatarProps extends UIComponentProps {
 
 const Avatar: React.FC<WithAsProp<AvatarProps>> &
   FluentComponentStaticProps<AvatarProps> = props => {
+  const context: ProviderContextPrepared = React.useContext(ThemeContext)
+  const { setStart, setEnd } = useTelemetry(Avatar.displayName, context.telemetry)
+  setStart()
+
   const {
     accessibility,
     className,
@@ -63,7 +68,6 @@ const Avatar: React.FC<WithAsProp<AvatarProps>> &
     styles,
     variables,
   } = props
-  const context: ProviderContextPrepared = React.useContext(ThemeContext)
 
   const getA11Props = useAccessibility(accessibility, {
     debugName: Avatar.displayName,
@@ -82,6 +86,8 @@ const Avatar: React.FC<WithAsProp<AvatarProps>> &
 
   const ElementType = getElementType(props)
   const unhandledProps = getUnhandledProps(Avatar.handledProps, props)
+
+  setEnd()
 
   return (
     <ElementType {...getA11Props('root', { className: classes.root, ...unhandledProps })}>

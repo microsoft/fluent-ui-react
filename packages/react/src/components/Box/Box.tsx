@@ -1,4 +1,9 @@
-import { getElementType, getUnhandledProps, useStyles } from '@fluentui/react-bindings'
+import {
+  getElementType,
+  getUnhandledProps,
+  useStyles,
+  useTelemetry,
+} from '@fluentui/react-bindings'
 import * as React from 'react'
 // @ts-ignore
 import { ThemeContext } from 'react-fela'
@@ -25,9 +30,12 @@ export interface BoxProps
     ChildrenComponentProps {}
 
 const Box: React.FC<WithAsProp<BoxProps>> & FluentComponentStaticProps<BoxProps> = props => {
+  const context: ProviderContextPrepared = React.useContext(ThemeContext)
+  const { setStart, setEnd } = useTelemetry(Box.displayName, context.telemetry)
+  setStart()
+
   const { className, design, styles, variables, children, content } = props
 
-  const context: ProviderContextPrepared = React.useContext(ThemeContext)
   const { classes } = useStyles(Box.displayName, {
     className: Box.className,
     mapPropsToInlineStyles: () => ({
@@ -41,6 +49,8 @@ const Box: React.FC<WithAsProp<BoxProps>> & FluentComponentStaticProps<BoxProps>
 
   const unhandledProps = getUnhandledProps(Box.handledProps, props)
   const ElementType = getElementType(props)
+
+  setEnd()
 
   return (
     <ElementType
