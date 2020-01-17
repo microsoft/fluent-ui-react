@@ -1,4 +1,4 @@
-import config from '../config'
+import config from '@fluentui/internal-tooling/config'
 import { Page } from 'puppeteer'
 import * as path from 'path'
 import * as _ from 'lodash'

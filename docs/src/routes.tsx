@@ -5,7 +5,7 @@ import ExternalExampleLayout from './components/ExternalExampleLayout'
 import DocsLayout from './components/DocsLayout'
 import DocsRoot from './components/DocsRoot'
 import DocsBehaviorRoot from './components/DocsBehaviorRoot'
-import MarkdownPage from 'docs/src/components/MarkdownPage'
+import MarkdownPage from './components/MarkdownPage'
 
 import * as Composition from './pages/Composition.mdx'
 import * as Layout from './pages/Layout.mdx'

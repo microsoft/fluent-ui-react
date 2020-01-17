@@ -1,7 +1,7 @@
 import { task, series } from 'gulp'
 import * as yargs from 'yargs'
 import del from 'del'
-import config from '../../../config'
+import config from '../../config'
 import webpackPlugin from '../plugins/gulp-webpack'
 
 import jest from '../plugins/gulp-jest'
@@ -18,7 +18,7 @@ const argv = yargs
 task('test:e2e:clean', () => del(paths.e2eDist()))
 
 task('test:e2e:build', cb => {
-  webpackPlugin(require('../../../build/webpack.config.e2e').default, cb)
+  webpackPlugin(require('../../webpack.config.e2e').default, cb)
 })
 
 let server: Server

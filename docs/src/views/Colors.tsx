@@ -14,14 +14,14 @@ import * as _ from 'lodash'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 
-import ColorBox, { colorBoxStyles, colorBoxVariables } from 'docs/src/components/ColorBox'
-import Fader, { faderStyles } from 'docs/src/components/Fader'
-import ColorVariants, { colorVariantsStyles } from 'docs/src/components/ColorVariants'
-import DocPage from 'docs/src/components/DocPage/DocPage'
+import ColorBox, { colorBoxStyles, colorBoxVariables } from '../components/ColorBox'
+import Fader, { faderStyles } from '../components/Fader'
+import ColorVariants, { colorVariantsStyles } from '../components/ColorVariants'
+import DocPage from '../components/DocPage/DocPage'
 import ExampleSnippet from '../components/ExampleSnippet'
-import ColorSchemes from 'docs/src/components/ColorSchemes'
-import GuidesNavigationFooter from 'docs/src/components/GuidesNavigationFooter'
-import { link, code } from 'docs/src/utils/helpers'
+import ColorSchemes from '../components/ColorSchemes'
+import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
+import { link, code } from '../utils/helpers'
 
 const theme = {
   componentVariables: {
