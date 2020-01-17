@@ -118,16 +118,14 @@ const useStyles = <StyleProps extends PrimitiveProps>(
     classes = result.classes
     resolvedStyles = result.styles
   } else {
-    const inlineProps = mapPropsToInlineStyles()
-
     const result = getStyles({
       // Input values
       className,
       displayName,
       props: {
-        ...mapPropsToStyles(),
-        ...inlineProps,
-        animation: inlineProps.unstable_animation,
+        ...styleProps,
+        ...inlineStyleOverrides,
+        animation: inlineStyleOverrides.unstable_animation,
       },
 
       // Context values
