@@ -37,7 +37,7 @@ const TestComponent: React.FunctionComponent<TestComponentProps> = props => {
       }
     },
   )
-  const [state, actions] = useStateManager(createTestManager, {
+  const { state, actions } = useStateManager(createTestManager, {
     mapPropsToInitialState: () => ({ value: props.defaultValue }),
     mapPropsToState: () => ({ value: props.value }),
     sideEffects: [dispatchEffect],
