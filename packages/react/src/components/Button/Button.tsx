@@ -204,9 +204,7 @@ const Button: React.FC<WithAsProp<ButtonProps>> &
     _.invoke(props, 'onFocus', e, props)
   }
 
-  setEnd()
-
-  return (
+  const result = (
     <ElementType
       {...rtlTextContainer.getAttributes({ forElements: [children] })}
       {...getA11Props('root', {
@@ -232,6 +230,10 @@ const Button: React.FC<WithAsProp<ButtonProps>> &
       )}
     </ElementType>
   )
+
+  setEnd()
+
+  return result
 }
 
 Button.defaultProps = {

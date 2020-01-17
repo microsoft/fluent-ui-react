@@ -50,9 +50,7 @@ const Box: React.FC<WithAsProp<BoxProps>> & FluentComponentStaticProps<BoxProps>
   const unhandledProps = getUnhandledProps(Box.handledProps, props)
   const ElementType = getElementType(props)
 
-  setEnd()
-
-  return (
+  const result = (
     <ElementType
       {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
       {...unhandledProps}
@@ -61,6 +59,10 @@ const Box: React.FC<WithAsProp<BoxProps>> & FluentComponentStaticProps<BoxProps>
       {childrenExist(children) ? children : content}
     </ElementType>
   )
+
+  setEnd()
+
+  return result
 }
 
 Box.className = 'ui-box'

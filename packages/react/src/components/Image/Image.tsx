@@ -91,9 +91,13 @@ const Image: React.FC<WithAsProp<ImageProps>> & FluentComponentStaticProps<Image
   const ElementType = getElementType(props)
   const unhandledProps = getUnhandledProps(Image.handledProps, props)
 
+  const result = (
+    <ElementType {...getA11Props('root', { className: classes.root, ...unhandledProps })} />
+  )
+
   setEnd()
 
-  return <ElementType {...getA11Props('root', { className: classes.root, ...unhandledProps })} />
+  return result
 }
 
 Image.className = 'ui-image'

@@ -87,9 +87,7 @@ const Avatar: React.FC<WithAsProp<AvatarProps>> &
   const ElementType = getElementType(props)
   const unhandledProps = getUnhandledProps(Avatar.handledProps, props)
 
-  setEnd()
-
-  return (
+  const result = (
     <ElementType {...getA11Props('root', { className: classes.root, ...unhandledProps })}>
       {Image.create(image, {
         defaultProps: () =>
@@ -119,6 +117,10 @@ const Avatar: React.FC<WithAsProp<AvatarProps>> &
       })}
     </ElementType>
   )
+
+  setEnd()
+
+  return result
 }
 
 Avatar.className = 'ui-avatar'

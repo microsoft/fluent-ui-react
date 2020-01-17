@@ -109,8 +109,6 @@ const renderComponent = <P extends {}>(
   }
   let wrapInFocusZone: (element: React.ReactElement) => React.ReactElement = element => element
 
-  setEnd()
-
   if (accessibility.focusZone && accessibility.focusZone.mode === FocusZoneMode.Wrap) {
     wrapInFocusZone = element =>
       React.createElement(
@@ -136,7 +134,11 @@ const renderComponent = <P extends {}>(
     resolvedConfig.unhandledProps.isRtl = resolvedConfig.rtl
   }
 
-  return wrapInFocusZone(render(resolvedConfig))
+  const result = wrapInFocusZone(render(resolvedConfig))
+
+  setEnd()
+
+  return result
 }
 
 export default renderComponent
