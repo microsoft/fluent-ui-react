@@ -10,9 +10,13 @@ export * from './FocusZone/FocusZone.types'
 export * from './FocusZone/focusUtilities'
 
 export { default as useAccessibility } from './hooks/useAccessibility'
+export { default as useStyles } from './hooks/useStyles'
 export { default as unstable_useDispatchEffect } from './hooks/useDispatchEffect'
 export { default as useStateManager } from './hooks/useStateManager'
 
-export { default as callable } from './utils/callable'
+export { default as unstable_createAnimationStyles } from './styles/createAnimationStyles'
+export { default as unstable_getStyles } from './styles/getStyles'
+export * from './styles/types'
+
 export { default as getElementType } from './utils/getElementType'
 export { default as getUnhandledProps } from './utils/getUnhandledProps'

@@ -1,5 +1,5 @@
 import { pxToRem } from '../../../../utils'
-import { SiteVariablesPrepared } from '../../../types'
+import { SiteVariablesPrepared } from '@fluentui/styles'
 
 export interface SliderVariables {
   height: string

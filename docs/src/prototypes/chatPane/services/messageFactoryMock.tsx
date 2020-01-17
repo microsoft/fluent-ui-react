@@ -1,16 +1,17 @@
 import {
   Attachment,
+  Extendable,
   Popup,
   Menu,
   AvatarProps,
   ChatMessageProps,
   DividerProps,
   StatusProps,
+  ShorthandValue,
 } from '@fluentui/react'
 import * as React from 'react'
 import * as _ from 'lodash'
 import * as keyboardKey from 'keyboard-key'
-import { Extendable, ShorthandValue } from 'src/types'
 import { ChatData, UserStatus, MessageData, UserData, areSameDay, getFriendlyDateString } from '.'
 
 export enum ChatItemTypes {

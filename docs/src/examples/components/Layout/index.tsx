@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Alert } from '@fluentui/react/'
 
-import { LayoutSuggestions } from 'docs/src/components/ComponentDoc/Suggestions'
+import { LayoutSuggestions } from '../../../components/ComponentDoc/Suggestions'
 import Types from './Types'
 import Variations from './Variations'
 

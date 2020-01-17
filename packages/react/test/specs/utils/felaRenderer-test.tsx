@@ -21,7 +21,7 @@ describe('felaRenderer', () => {
   test('CSS fallback values are rendered', () => {
     const snapshot = createSnapshot(
       <EmptyThemeProvider>
-        <Box styles={{ color: ['red', 'blue'] }} />
+        <Box styles={{ color: ['red', 'blue'] as any }} />
       </EmptyThemeProvider>,
       {},
       felaRenderer,

@@ -1,12 +1,12 @@
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { Header, Segment, Divider } from '@fluentui/react'
+import { Header, Segment, Divider, ICSSInJSStyle } from '@fluentui/react'
 import DocumentTitle from 'react-document-title'
 import ComponentExampleTitle from './ComponentDoc/ComponentExample/ComponentExampleTitle'
 import BehaviorDescription from './ComponentDoc/BehaviorDescription'
 
-const behaviorMenuItems = require('docs/src/behaviorMenu')
+const behaviorMenuItems = require('../behaviorMenu')
 
 class DocsBehaviorRoot extends React.Component<any, any> {
   static propTypes = {
@@ -24,7 +24,7 @@ class DocsBehaviorRoot extends React.Component<any, any> {
   }
 
   render() {
-    const exampleStyle: React.CSSProperties = {
+    const exampleStyle: ICSSInJSStyle = {
       boxShadow: '0 1px 2px rgba(0, 0, 0, 0.2)',
     }
 

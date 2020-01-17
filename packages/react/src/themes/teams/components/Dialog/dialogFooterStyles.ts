@@ -1,4 +1,4 @@
-import { ICSSInJSStyle } from '../../../types'
+import { ICSSInJSStyle } from '@fluentui/styles'
 
 export default {
   root: (): ICSSInJSStyle => ({

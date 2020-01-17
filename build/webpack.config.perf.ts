@@ -3,7 +3,7 @@ import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import { webpack as lernaAliases } from 'lerna-alias'
 import { argv } from 'yargs'
 
-import config from '../config'
+import config from './config'
 
 const { paths } = config
 

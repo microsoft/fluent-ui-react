@@ -97,6 +97,7 @@ describe('Button', () => {
         test('is set to true, if active attribute is provided', () => {
           const renderedComponent = mountWithProviderAndGetComponent(
             Button,
+            // @ts-ignore
             <Button active="true" accessibility={toggleButtonBehavior} />,
           )
           expect(getRenderedAttribute(renderedComponent, 'aria-pressed', '')).toBe('true')

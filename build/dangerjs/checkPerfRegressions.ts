@@ -3,7 +3,7 @@ import * as fs from 'fs-extra'
 import * as path from 'path'
 
 import { DangerJS } from './types'
-import config from '../../config'
+import config from '../config'
 
 function linkToFlamegraph(value, filename) {
   // This as well as the whole flamegrill URL is hardcoded to only work with CircleCI.

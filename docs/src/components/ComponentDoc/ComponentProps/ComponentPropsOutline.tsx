@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
 import * as React from 'react'
-import { link } from 'docs/src/utils/helpers'
+import { link } from '../../../utils/helpers'
 
 const ComponentPropsOutline: any = (props: ComponentPropsOutlineProps) => {
   const { displayNames } = props

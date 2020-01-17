@@ -1,13 +1,13 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import { Flex, Loader, Text, Segment, Header } from '@fluentui/react'
-import { link } from './../../utils/helpers'
-import { BehaviorInfo, ComponentInfo, BehaviorVariantionInfo } from 'docs/src/types'
+import { link } from '../../utils/helpers'
+import { BehaviorInfo, ComponentInfo, BehaviorVariantionInfo } from '../../types'
 import { BehaviorCard, exampleStyle, behaviorVariantDisplayName } from './BehaviorCard'
 
 const InlineMarkdown = React.lazy(() => import('./InlineMarkdown'))
 
-const behaviorMenu = require('docs/src/behaviorMenu')
+const behaviorMenu = require('../../behaviorMenu')
 
 const knownIsusesId = 'known-issues'
 

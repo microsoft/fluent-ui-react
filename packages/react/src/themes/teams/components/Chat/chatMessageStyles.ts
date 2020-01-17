@@ -1,4 +1,4 @@
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import * as _ from 'lodash'
 import {
   default as ChatMessage,
@@ -115,7 +115,8 @@ const chatMessageStyles: ComponentSlotStylesPrepared<
     },
   }),
   author: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    ...((p.mine || p.attached === 'bottom' || p.attached === true) && screenReaderContainerStyles),
+    ...((p.mine || p.attached === 'bottom' || p.attached === true) &&
+      (screenReaderContainerStyles as ICSSInJSStyle)),
     color: v.authorColor,
     marginRight: v.authorMarginRight,
     marginBottom: v.headerMarginBottom,
@@ -129,7 +130,7 @@ const chatMessageStyles: ComponentSlotStylesPrepared<
     }),
     ...((p.attached === 'bottom' || p.attached === true) &&
       !p.reactionGroup &&
-      screenReaderContainerStyles),
+      (screenReaderContainerStyles as ICSSInJSStyle)),
   }),
 
   content: ({ props: p, variables: v }): ICSSInJSStyle => ({

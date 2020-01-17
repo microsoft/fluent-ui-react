@@ -5,6 +5,9 @@
   "author": "Oleksandr Fediashov <a@fedyashov.com>",
   "bugs": "https://github.com/microsoft/fluent-ui-react/issues",
   "dependencies": {
+    "@fluentui/docs-components": "^0.43.0"
+  },
+  "devDependencies": {
     "@fluentui/react": "^0.43.0"
   },
   "files": [
@@ -16,6 +19,7 @@
   "main": "dist/commonjs/index.js",
   "module": "dist/es/index.js",
   "peerDependencies": {
+    "@fluentui/react": "*",
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
   },
@@ -24,7 +28,8 @@
   },
   "repository": "microsoft/fluent-ui-react.git",
   "scripts": {
-    "build": "gulp bundle:package:no-umd --package code-sandbox"
+    "build": "gulp bundle:package:no-umd",
+    "clean": "gulp bundle:package:clean"
   },
   "sideEffects": false,
   "types": "dist/es/index.d.ts"
