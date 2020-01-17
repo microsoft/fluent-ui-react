@@ -4540,6 +4540,11 @@
     "@types/express-serve-static-core" "*"
     "@types/mime" "*"
 
+"@types/simulant@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@types/simulant/-/simulant-0.2.0.tgz#a55e2a080f5409a6ea13e1adb9ce889c8cb413df"
+  integrity sha512-pQcnO5/JMR9KEnQGuYkDNQ9IDFAp0nrCfCjxqZ03WY2QDcuMPR6w0VpL6MO5VQEn93YkNCW9nTuRl/q0+iasVg==
+
 "@types/source-list-map@*":
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/@types/source-list-map/-/source-list-map-0.1.2.tgz#0078836063ffaf17412349bba364087e0ac02ec9"

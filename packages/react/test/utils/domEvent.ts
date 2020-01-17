@@ -1,4 +1,9 @@
-import * as simulant from 'simulant'
+// simulant is written with `export = simulant` which means types must be imported like this
+// without esModuleInterop
+import * as SimulantType from 'simulant'
+
+// But at runtime it has to be imported like this
+const simulant: typeof SimulantType = require('simulant')
 
 // ----------------------------------------
 // Simulate DOM Events on real DOM nodes
