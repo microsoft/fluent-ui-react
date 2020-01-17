@@ -144,46 +144,6 @@ export const mergeComponentStyles__DEV = (
   }, initial)
 }
 
-const mergeComponentStylesCache = new WeakMap()
-
-const containsFunctionProp = obj => {
-  const keys = Object.keys(obj)
-  for (let i = 0; i < keys.length; i++) {
-    if (typeof obj[keys[i]] === 'function') {
-      return true
-    }
-  }
-  return false
-}
-
-export const mergeComponentStylesWithCache = (
-  theme,
-  hashObj,
-  sources: (ComponentSlotStylesInput | null | undefined)[],
-) => {
-  try {
-    if (containsFunctionProp(hashObj)) {
-      return mergeComponentStyles(...sources)
-    }
-
-    if (!mergeComponentStylesCache.get(theme)) {
-      mergeComponentStylesCache.set(theme, {})
-    }
-
-    const hashVal = JSON.stringify(hashObj)
-
-    if (!mergeComponentStylesCache.get(theme)[hashVal]) {
-      const value = mergeComponentStylesCache.get(theme)
-      value[hashVal] = mergeComponentStyles(...sources)
-      mergeComponentStylesCache.set(theme, value)
-    }
-
-    return mergeComponentStylesCache.get(theme)[hashVal]
-  } catch (e) {
-    return mergeComponentStyles(...sources)
-  }
-}
-
 export const mergeComponentStyles =
   process.env.NODE_ENV === 'production' ? mergeComponentStyles__PROD : mergeComponentStyles__DEV
 
