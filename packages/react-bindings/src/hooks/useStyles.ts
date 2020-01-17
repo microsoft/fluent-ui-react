@@ -67,30 +67,85 @@ const useStyles = <StyleProps extends PrimitiveProps>(
     rtl = false,
   } = options
 
+  let classes
+  let resolvedStyles
+
+  const styleProps = mapPropsToStyles()
+  const inlineStyleOverrides = mapPropsToInlineStyles()
+
+  // TODO I don't care for now
+  const noInlineStylesOverrides = Object.values(inlineStyleOverrides).every(
+    x => x === null || x === undefined,
+  )
+
   // Stores debug information for component.
   const debug = React.useRef<{ fluentUIDebug: DebugData | null }>({ fluentUIDebug: null })
-  const inlineProps = mapPropsToInlineStyles()
 
-  const { classes, styles: resolvedStyles } = getStyles({
-    // Input values
-    className,
-    displayName,
-    props: {
-      ...mapPropsToStyles(),
-      ...inlineProps,
-      animation: inlineProps.unstable_animation,
-    },
+  if (noInlineStylesOverrides) {
+    // get value from cache
+    if (!useStyles.cache.get(context.theme)) {
+      useStyles.cache.set(context.theme, {})
+    }
 
-    // Context values
-    disableAnimations: context.disableAnimations,
-    renderer: context.renderer,
-    rtl,
-    saveDebug: fluentUIDebug => (debug.current = { fluentUIDebug }),
-    theme: context.theme,
-    _internal_resolvedComponentVariables: context._internal_resolvedComponentVariables,
-  })
+    const themeCache = useStyles.cache.get(context.theme)
+
+    if (!themeCache[displayName]) {
+      themeCache[displayName] = {}
+    }
+
+    const propsCache =
+      JSON.stringify(styleProps) +
+      JSON.stringify({ rtl, disableAnimations: context.disableAnimations })
+
+    if (!themeCache[displayName][propsCache]) {
+      themeCache[displayName][propsCache] = getStyles({
+        // Input values
+        className,
+        displayName,
+        props: styleProps,
+
+        // Context values
+        disableAnimations: context.disableAnimations,
+        renderer: context.renderer, // TODO: this should invalidate the cache
+        rtl,
+        saveDebug: fluentUIDebug => (debug.current = { fluentUIDebug }),
+        theme: context.theme,
+        _internal_resolvedComponentVariables: context._internal_resolvedComponentVariables,
+      })
+    }
+
+    const result = themeCache[displayName][propsCache]
+    classes = result.classes
+    resolvedStyles = result.styles
+  } else {
+    const inlineProps = mapPropsToInlineStyles()
+
+    const result = getStyles({
+      // Input values
+      className,
+      displayName,
+      props: {
+        ...mapPropsToStyles(),
+        ...inlineProps,
+        animation: inlineProps.unstable_animation,
+      },
+
+      // Context values
+      disableAnimations: context.disableAnimations,
+      renderer: context.renderer,
+      rtl,
+      saveDebug: fluentUIDebug => (debug.current = { fluentUIDebug }),
+      theme: context.theme,
+      _internal_resolvedComponentVariables: context._internal_resolvedComponentVariables,
+    })
+
+    classes = result.classes
+    resolvedStyles = result.styles
+  }
 
   return { classes, styles: resolvedStyles }
 }
+
+useStyles.cache = new WeakMap()
 
 export default useStyles
