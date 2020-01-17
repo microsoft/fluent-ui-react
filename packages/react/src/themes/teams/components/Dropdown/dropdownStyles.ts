@@ -27,6 +27,7 @@ const transparentColorStyleObj: ICSSInJSStyle = {
 
 const getIndicatorStyles: ComponentSlotStyleFunction<DropdownPropsAndState, DropdownVariables> = ({
   variables: v,
+  props: p,
 }): ICSSInJSStyle => ({
   alignItems: 'center',
   display: 'flex',
@@ -41,6 +42,13 @@ const getIndicatorStyles: ComponentSlotStyleFunction<DropdownPropsAndState, Drop
   right: 0,
   height: '100%',
   width: v.toggleIndicatorSize,
+  ...(p.inverted && {
+    backgroundColor: v.backgroundColorInverted,
+
+    ':hover': {
+      backgroundColor: v.backgroundColorInverted,
+    },
+  }),
 })
 
 const getWidth = (p: DropdownPropsAndState, v: DropdownVariables): string => {
@@ -97,6 +105,15 @@ const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, Dropdow
     }),
     ...(p.inverted && {
       backgroundColor: v.backgroundColorInverted,
+      ':hover': {
+        backgroundColor: v.backgroundColorInverted,
+      },
+      ':active': {
+        backgroundColor: v.backgroundColorInverted,
+      },
+      ':focus': {
+        backgroundColor: v.backgroundColorInverted,
+      },
     }),
   }),
 
@@ -150,9 +167,6 @@ const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, Dropdow
         paddingLeft: 0,
         paddingRight: 0,
         width: 'initial',
-      }),
-      ...(p.inverted && {
-        backgroundColor: v.backgroundColorInverted,
       }),
     }
   },
