@@ -5,7 +5,7 @@ type ComponentPerfStats = {
   msMax: number
 }
 
-export type UseTelemetryReturnValue = {
+export type UseTelemetryResult = {
   setStart: () => void
   setEnd: () => void
 }

@@ -28,7 +28,7 @@ const Box: React.FC<WithAsProp<BoxProps>> & FluentComponentStaticProps<BoxProps>
   const { animation, className, design, styles, variables, children, content } = props
 
   const context: ProviderContextPrepared = React.useContext(ThemeContext)
-  const [classes] = useStyles(Box.displayName, {
+  const { classes } = useStyles(Box.displayName, {
     className: Box.className,
     mapPropsToInlineStyles: () => ({
       unstable_animation: animation,

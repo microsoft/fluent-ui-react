@@ -146,7 +146,7 @@ const Button: React.FC<WithAsProp<ButtonProps>> &
     },
     rtl: context.rtl,
   })
-  const [classes, resolvedStyles] = useStyles(Button.displayName, {
+  const { classes, styles: resolvedStyles } = useStyles(Button.displayName, {
     className: Button.className,
     mapPropsToStyles: () => ({
       text,

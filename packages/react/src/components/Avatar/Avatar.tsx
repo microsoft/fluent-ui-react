@@ -70,7 +70,7 @@ const Avatar: React.FC<WithAsProp<AvatarProps>> &
     debugName: Avatar.displayName,
     rtl: context.rtl,
   })
-  const [classes, resolvedStyles] = useStyles(Avatar.displayName, {
+  const { classes, styles: resolvedStyles } = useStyles(Avatar.displayName, {
     className: Avatar.className,
     mapPropsToStyles: () => ({ size }),
     mapPropsToInlineStyles: () => ({

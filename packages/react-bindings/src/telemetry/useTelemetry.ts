@@ -1,9 +1,9 @@
-import { Telemetry, UseTelemetryReturnValue } from './types'
+import { Telemetry, UseTelemetryResult } from './types'
 
 const useTelemetry = (
   displayName: string,
   telemetry: Telemetry | undefined,
-): UseTelemetryReturnValue => {
+): UseTelemetryResult => {
   let start: number = -1
   let end: number = -1
 
