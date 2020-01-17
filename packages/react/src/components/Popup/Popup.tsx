@@ -37,6 +37,7 @@ import { createShorthandFactory, ShorthandFactory } from '../../utils/factories'
 import createReferenceFromContextClick from './createReferenceFromContextClick'
 import isRightClick from '../../utils/isRightClick'
 import PortalInner from '../Portal/PortalInner'
+import Animation from '../Animation/Animation'
 
 export type PopupEvents = 'click' | 'hover' | 'focus' | 'context'
 export type RestrictedClickEvents = 'click' | 'focus'
@@ -176,7 +177,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   static defaultProps: PopupProps = {
     accessibility: popupBehavior,
     align: 'start',
-    position: 'above',
+    position: 'below',
     on: 'click',
     mouseLeaveDelay: 500,
     tabbableTrigger: true,
@@ -224,11 +225,13 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
 
     if (process.env.NODE_ENV !== 'production') {
       if (inline && trapFocus) {
+        // eslint-disable-next-line no-console
         console.warn(
           'Using "trapFocus" in inline popup leads to broken behavior for screen reader users.',
         )
       }
       if (!inline && autoFocus) {
+        // eslint-disable-next-line no-console
         console.warn(
           'Beware, "autoFocus" prop will just grab focus at the moment of mount and will not trap it. As user is able to TAB out from popup, better use "inline" prop to keep correct tab order.',
         )
@@ -250,7 +253,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   }: RenderResultConfig<PopupProps>): React.ReactNode {
     const { inline, mountNode } = this.props
     const { open } = this.state
-    const popupContent = open && this.renderPopupContent(classes.popup, rtl, accessibility)
+    const popupContent = open && this.renderPopupContent(classes.popup, rtl, accessibility, open)
 
     return (
       <>
@@ -468,6 +471,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     popupPositionClasses: string,
     rtl: boolean,
     accessibility: ReactAccessibilityBehavior,
+    open: boolean,
   ): JSX.Element {
     const { align, position, offset, target, unstable_pinned } = this.props
 
@@ -482,7 +486,13 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
         targetRef={
           this.rightClickReferenceObject || (target ? toRefObject(target) : this.triggerRef)
         }
-        children={this.renderPopperChildren.bind(this, popupPositionClasses, rtl, accessibility)}
+        children={this.renderPopperChildren.bind(
+          this,
+          popupPositionClasses,
+          rtl,
+          accessibility,
+          open,
+        )}
       />
     )
   }
@@ -491,6 +501,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     popupPositionClasses: string,
     rtl: boolean,
     accessibility: ReactAccessibilityBehavior,
+    open: boolean,
     { placement, scheduleUpdate }: PopperChildrenProps,
   ) => {
     const {
@@ -523,18 +534,29 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     })
 
     return (
+      // name={open ? 'spinner' : 'fadeExitSlow'}
+      // unmountOnExit
+      // mountOnEnter
+      // name={'spinner'}
       <Unstable_NestingAuto>
         {(getRefs, nestingRef) => (
           <>
-            <Ref
-              innerRef={domElement => {
-                this.popupDomElement = domElement
-                handleRef(contentRef, domElement)
-                nestingRef.current = domElement
-              }}
+            <Animation
+              name={open ? 'fadeEnterSlow' : 'spinner'}
+              visible={open}
+              timeout={5000}
+              mountOnEnter
             >
-              {popupContent}
-            </Ref>
+              <Ref
+                innerRef={domElement => {
+                  this.popupDomElement = domElement
+                  handleRef(contentRef, domElement)
+                  nestingRef.current = domElement
+                }}
+              >
+                {popupContent}
+              </Ref>
+            </Animation>
 
             <EventListener
               listener={this.handleDocumentClick(getRefs)}
