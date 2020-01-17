@@ -5,12 +5,17 @@ interface Props {
   onChange?: any
   onClick?: any
   slots?: any
+  slotProps?: any
+  classes?: any
 }
 
 const CheckboxBase: React.FunctionComponent<Props> = props => {
-  const { root: RootSlot = 'div' } = props.slots || {}
-  const [isChecked, setIsChecked] = React.useState(!!props.checked)
-  const realIsChecked = props.checked === undefined ? isChecked : !!props.checked
+  const { checked, classes = {}, slots = {}, slotProps = {}, ...rest } = props
+  const { root: RootSlot = 'div', input: InputSlot = 'input' } = slots
+  const { root: rootClass, input: inputClass } = classes
+  const { root: rootProps, input: inputProps } = slotProps
+  const [isChecked, setIsChecked] = React.useState(!!checked)
+  const realIsChecked = checked === undefined ? isChecked : !!checked
   const onChange = React.useCallback(
     (ev: any) => {
       if (props.onClick) {
@@ -25,9 +30,23 @@ const CheckboxBase: React.FunctionComponent<Props> = props => {
     },
     [setIsChecked, realIsChecked, props.onChange],
   )
+  const onKeyDown = React.useCallback(
+    (ev: React.KeyboardEvent) => {
+      if (ev.keyCode === 13) {
+        setIsChecked(!realIsChecked)
+      }
+    },
+    [setIsChecked, realIsChecked],
+  )
   return (
-    <RootSlot onClick={onChange}>
-      <input checked={realIsChecked} type="checkbox" />
+    <RootSlot
+      onKeyDown={onKeyDown}
+      onClick={onChange}
+      className={rootClass}
+      {...rest}
+      {...rootProps}
+    >
+      <InputSlot checked={realIsChecked} type="checkbox" className={inputClass} {...inputProps} />
       {props.children}
     </RootSlot>
   )

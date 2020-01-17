@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
 import CheckboxBase from 'src/components/Checkbox/CheckboxBase'
+import * as keyboardKey from 'keyboard-key'
 
 describe("Baby's first test", () => {
   it('renders something', () => {
@@ -127,5 +128,43 @@ describe("Baby's first test", () => {
     )
     const control = mount(<CheckboxBase slots={{ input: MyInput }} />)
     expect(control.find('a').length).toBe(1)
+  })
+
+  it('changes on enter press', () => {
+    const control = mount(<CheckboxBase />)
+    control.simulate('keydown', {
+      keyCode: keyboardKey.Enter,
+      key: 'Enter',
+    })
+    expect(control.find('input').prop('checked')).toBe(true)
+  })
+
+  describe('class handling', () => {
+    it('renders classes', () => {
+      const control = mount(<CheckboxBase classes={{ root: 'foo' }} />)
+      expect(control.find('div.foo').length).toBe(1)
+    })
+
+    it('renders classes for input', () => {
+      const control = mount(<CheckboxBase classes={{ input: 'foo' }} />)
+      expect(control.find('input.foo').length).toBe(1)
+    })
+  })
+
+  describe('slotProps', () => {
+    it('renders slotProps for input', () => {
+      const control = mount(<CheckboxBase slotProps={{ input: { 'data-foo': 'bar' } }} />)
+      expect(control.find('input[data-foo="bar"]').length).toBe(1)
+    })
+
+    it('renders slotProps for root', () => {
+      const control = mount(<CheckboxBase slotProps={{ root: { 'data-foo': 'bar' } }} />)
+      expect(control.find('div[data-foo="bar"]').length).toBe(1)
+    })
+
+    it('applies unused props to the root element', () => {
+      const control = mount(<CheckboxBase data-foo="bar" />)
+      expect(control.find('div[data-foo="bar"]').length).toBe(1)
+    })
   })
 })
