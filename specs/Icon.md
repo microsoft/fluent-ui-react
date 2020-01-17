@@ -67,7 +67,7 @@ The following section documents links to different UI libraries implementations 
 
 - [Semantic UI Icon docs](https://react.semantic-ui.com/elements/icon/)
 
-- [Fluent Icon docs](https://microsoft.github.io/fluent-ui-react/components/icon/definition)
+- [Fluent UI Icon docs](https://microsoft.github.io/fluent-ui-react/components/icon/definition)
 
 ## Props
 

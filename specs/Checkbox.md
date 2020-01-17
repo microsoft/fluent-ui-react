@@ -12,7 +12,7 @@ The `Checkbox` component allows a user to choose between two mutually exclusive 
 
 https://codesandbox.io/s/checkboxes-ggpx1
 
-Note about the Fluent example: there's some weirdness with how the theme providers are interacting with each other, the Fluent checkbox's styling is messing up as a result.
+Note about the Fluent UI example: there's some weirdness with how the theme providers are interacting with each other, the Fluent UI checkbox's styling is messing up as a result.
 
 Fabric Checkbox [docs](https://developer.microsoft.com/en-us/fabric#/controls/web/Checkbox)
 
@@ -91,7 +91,7 @@ https://developer.microsoft.com/en-us/fabric#/controls/web/checkbox
 | toggle               | boolean                                                     | default false                                                                   |
 | variables            | any                                                         |                                                                                 |
 
-### Differences of Fabric/Fluent to resolve
+### Differences of Fabric/Fluent UI to resolve
 
 | Name                 | Type                                                        | Notes                                                                          |
 | -------------------- | --------------------------------------------------------    | -------------------------------------------------------------------------------|
@@ -147,7 +147,7 @@ Removing the following two props because the ARIA spec dictates role='checkbox' 
 
 ### Conversion process from Fabric 7 to Fluent UI Checkbox
 
-#### Fluent Checkbox recommended props interface
+#### Fluent UI Checkbox recommended props interface
 
 | Name                         | To transition or not?| Property transitioned? | Breaking change? | Codemod/Shim created? |
 | -----------------------------| -------------------- | :--------------------: | :--------------: | :-------------------: |
@@ -316,7 +316,7 @@ If there's additional static text representing that is descriptive, `aria-descri
 
 ### Themability and customization
 
-Both Fluent and Teams themes and other custom themes will be made with compose and the design tokens specified below. Screenshots of themed variants will be posted here soon after that work is done like the example code below.
+Both Fluent UI and Teams themes and other custom themes will be made with compose and the design tokens specified below. Screenshots of themed variants will be posted here soon after that work is done like the example code below.
 
 The `Checkbox` uses `react-texture` to provide a recomposable implementation that has no runtime performance penalties. The `BaseCheckbox` implementation can be used to provide new `slots` and default `props`:
 

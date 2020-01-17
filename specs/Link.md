@@ -96,7 +96,7 @@ https://developer.microsoft.com/en-us/fabric#/controls/web/link
 
 ### Fluent UI Link props
 
-Fluent does not currently have a `Link` component implementation.
+Fluent UI does not currently have a `Link` component implementation.
 
 ### Conversion process from Fabric 7 to Fluent UI Link
 
@@ -117,7 +117,7 @@ Fluent does not currently have a `Link` component implementation.
 | `styles`       | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
 | `theme`        | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
 
-### Conversion process from Fluent to Fluent UI Link
+### Conversion process from old Fluent UI to Fluent UI Link
 
 Fluent UI does not currently have a `Link` component implementation.
 

@@ -121,7 +121,7 @@ https://developer.microsoft.com/en-us/fabric#/controls/web/slider
 | variables                   | any                                    | Consider only recomposition                            |
 | vertical                    | boolean                                |                                                        |
 
-### Differences of Fabric/Fluent to resolve
+### Differences of Fabric/Fluent UI to resolve
 
 | Name                        | Fx  | Recommendation                                                                                                                                                                              |
 | --------------------------- | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

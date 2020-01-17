@@ -225,12 +225,12 @@ To help provide additional information to menu items and their context, the menu
 Similarly Submenus should control their open state through context.
 
 #### Discussion:
-This is a large departure from the way that both Fluent and Fabric implement menus but it is more in line with the way a lot of other frameworks menus work. Additionally I believe it gives a lot more flexibility through composition which removes some of the pressure to add many props.
+This is a large departure from the way that both Fluent UI and Fabric implement menus but it is more in line with the way a lot of other frameworks menus work. Additionally I believe it gives a lot more flexibility through composition which removes some of the pressure to add many props.
 
 There should be a lot more discussion to see if this relaxed approach to props is appropriate. Additionally it could make SplitButton menu items difficult to implement. 
 
 ### Conversion Plan: 
-#### Fabric to Fluent:
+#### Fabric to Fluent UI:
 
 ##### Menu
 | Action to take/taken | Property transitioned? | Breaking change? | Codemod/Shim created? |
