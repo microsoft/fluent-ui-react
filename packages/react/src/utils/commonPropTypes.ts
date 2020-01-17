@@ -3,7 +3,6 @@ import * as PropTypes from 'prop-types'
 
 export interface CreateCommonConfig {
   accessibility?: boolean
-  animated?: boolean
   children?: boolean | 'node' | 'element'
   as?: boolean
   className?: boolean
@@ -15,7 +14,6 @@ export interface CreateCommonConfig {
 export const createCommon = (config: CreateCommonConfig = {}) => {
   const {
     accessibility = true,
-    animated = true,
     as = true,
     children = 'node',
     className = true,
@@ -26,9 +24,6 @@ export const createCommon = (config: CreateCommonConfig = {}) => {
   return {
     ...(accessibility && {
       accessibility: customPropTypes.accessibility,
-    }),
-    ...(animated && {
-      animation: customPropTypes.animation,
     }),
     ...(as && {
       as: PropTypes.elementType,
