@@ -7,9 +7,5 @@
     "types": ["node", "jest", "expect-puppeteer", "jest-environment-puppeteer"]
   },
   "include": ["src"],
-  "references": [
-    {
-      "path": "../react-theming/tsconfig.json"
-    }
-  ]
+  "references": [{ "path": "../react-theming" }]
 }

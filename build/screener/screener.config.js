@@ -1,11 +1,19 @@
 require('@fluentui/internal-tooling/babel/register')
 
 const config = require('../config').default
-const { compilerOptions } = require('../tsconfig.docs.json')
 
 require('tsconfig-paths').register({
   baseUrl: config.path_base,
-  paths: compilerOptions.paths,
+  paths: {
+    '@fluentui/docs': ['docs'],
+    '@fluentui/e2e': ['e2e'],
+    '@fluentui/internal-tooling': ['build'],
+    '@fluentui/perf': ['perf'],
+    '@fluentui/*': ['packages/*/src'],
+    'docs/*': ['docs/*'],
+    'src/*': ['packages/react/src/*'],
+    'test/*': ['packages/react/test/*'],
+  },
 })
 
 // https://github.com/screener-io/screener-runner

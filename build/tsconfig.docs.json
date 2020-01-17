@@ -1,7 +1,7 @@
 {
   "extends": "./tsconfig.common.json",
   "compilerOptions": {
-    // "composite": true,
+    "composite": true,
     "module": "esnext",
     "baseUrl": "../",
     "paths": {
@@ -10,15 +10,15 @@
       "test/*": ["packages/react/test/*"]
     }
   },
-  "include": ["../docs/src", "../types"]
-  // "references": [
-  //   { "path": "../packages/ability-attributes" },
-  //   { "path": "../packages/accessibility" },
-  //   { "path": "../packages/code-sandbox" },
-  //   { "path": "../packages/docs-components" },
-  //   { "path": "../packages/react" },
-  //   { "path": "../packages/react-component-event-listener" },
-  //   { "path": "../packages/react-component-ref" },
-  //   { "path": "../packages/styles" }
-  // ]
+  "include": ["../docs/src", "../types"],
+  "references": [
+    { "path": "../packages/ability-attributes" },
+    { "path": "../packages/accessibility" },
+    { "path": "../packages/code-sandbox" },
+    { "path": "../packages/docs-components" },
+    { "path": "../packages/react" },
+    { "path": "../packages/react-component-event-listener" },
+    { "path": "../packages/react-component-ref" },
+    { "path": "../packages/styles" }
+  ]
 }

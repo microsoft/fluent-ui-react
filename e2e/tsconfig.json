@@ -1,3 +1,12 @@
 {
-  "extends": "../build/tsconfig.e2e.json"
+  "extends": "../build/tsconfig.common.json",
+  "compilerOptions": {
+    "composite": true,
+    "module": "esnext",
+    "allowSyntheticDefaultImports": true,
+    "traceResolution": true,
+    "types": ["node", "jest", "webpack-env"]
+  },
+  "references": [{ "path": "../packages/react" }],
+  "include": ["."]
 }

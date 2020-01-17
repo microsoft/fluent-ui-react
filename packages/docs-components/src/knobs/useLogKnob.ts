@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { LogContext } from './KnobContexts'
-import { LogFormatter } from '@fluentui/docs-components'
+import { LogFormatter } from './types'
 
 const defaultFormatter: LogFormatter = (name: string) =>
   `${new Date().toLocaleTimeString()}: ${name}`

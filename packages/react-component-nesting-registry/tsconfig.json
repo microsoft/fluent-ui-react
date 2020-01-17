@@ -2,12 +2,16 @@
   "extends": "../../build/tsconfig.common",
   "compilerOptions": {
     "composite": true,
-    "outDir": "dist/dts",
+    "outDir": "dist-temp",
     "noImplicitReturns": true,
     "noImplicitThis": true,
     "noImplicitAny": true,
     "noUnusedParameters": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "baseUrl": ".",
+    "paths": {
+      "@fluentui/react-component-nesting-registry": ["src"]
+    }
   },
   "include": ["src", "test"],
   "references": []

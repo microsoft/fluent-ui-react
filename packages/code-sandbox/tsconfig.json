@@ -2,7 +2,7 @@
   "extends": "../../build/tsconfig.common",
   "compilerOptions": {
     "composite": true,
-    "outDir": "dist/dts"
+    "outDir": "dist-temp"
   },
   "include": ["src"],
   "references": [{ "path": "../docs-components" }, { "path": "../react" }]

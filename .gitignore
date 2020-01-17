@@ -8,6 +8,7 @@
 
 coverage/
 dist/
+dist-temp/
 docs/src/componentInfo
 docs/src/componentMenu.json
 docs/src/behaviorMenu.json

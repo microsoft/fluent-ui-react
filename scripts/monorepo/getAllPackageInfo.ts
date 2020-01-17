@@ -2,7 +2,7 @@ import { spawnSync } from 'child_process'
 import path from 'path'
 import { findGitRoot } from './findGitRoot'
 
-interface PackageJson {
+export interface PackageJson {
   name: string
   version: string
   main: string
@@ -12,14 +12,14 @@ interface PackageJson {
   devDependencies?: { [key: string]: string }
 }
 
-interface PackageInfo {
+export interface PackageInfo {
   packagePath: string
   packageJson: PackageJson
 }
 
-type AllPackageInfo = { [key: string]: PackageInfo }
+export type AllPackageInfo = { [key: string]: PackageInfo }
 
-let packageInfoCache: AllPackageInfo = null
+let packageInfoCache: AllPackageInfo | null = null
 
 export function getAllPackageInfo(): AllPackageInfo {
   if (packageInfoCache) {

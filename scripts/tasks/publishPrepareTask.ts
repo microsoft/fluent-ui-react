@@ -1,4 +1,4 @@
-import { getAllPackageInfo } from '../monorepo/getAllPackageInfo'
+import { getAllPackageInfo, PackageJson } from '../monorepo/getAllPackageInfo'
 import { findGitRoot } from '../monorepo/findGitRoot'
 import fs from 'fs'
 import path from 'path'
@@ -8,23 +8,31 @@ export function publishPrepareTask() {
   const allInfo = getAllPackageInfo()
 
   for (const info of Object.values(allInfo)) {
-    if (info.packageJson.main && info.packageJson.main.startsWith('src/')) {
-      const newPackageJson = {
+    const oldMain = info.packageJson.main
+    if (!oldMain) {
+      continue
+    }
+
+    let newPackageJson: PackageJson | undefined
+    if (oldMain.startsWith('src/')) {
+      // just project
+      newPackageJson = {
         ...info.packageJson,
+        main: oldMain.replace('src/', 'lib/').replace(/\.tsx?/, '.js'),
       }
-
-      if (fs.existsSync(path.join(info.packagePath, 'just.config.ts'))) {
-        newPackageJson.main = info.packageJson.main.replace('src/', 'lib/').replace(/\.tsx?/, '.js')
-      } else {
-        const entry = info.packageJson.main.replace('src/', 'dist/es/').replace(/\.tsx?/, '.js')
-        Object.assign(newPackageJson, {
-          main: entry.replace('/es/', '/commonjs/'),
-          module: entry,
-          'jsnext:main': entry,
-          types: entry.replace('.js', '.d.ts'),
-        })
+    } else if (oldMain.startsWith('dist-temp')) {
+      // gulp project
+      // main:    dist/commonjs/index.js
+      // typings:   dist/es/index.d.ts
+      // module:  dist/es/index.js
+      newPackageJson = {
+        ...info.packageJson,
+        main: oldMain.replace('dist-temp/src', 'dist/commonjs'),
+        typings: oldMain.replace('dist-temp/src', 'dist/es').replace('.js', '.d.ts'),
       }
+    }
 
+    if (newPackageJson) {
       fs.writeFileSync(
         path.join(root, info.packagePath, 'package.json'),
         `${JSON.stringify(newPackageJson, null, 2)}\n`,

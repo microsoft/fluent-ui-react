@@ -16,8 +16,10 @@
     "dist"
   ],
   "homepage": "https://github.com/microsoft/fluent-ui-react/tree/master/packages/react-component-event-listener",
+  "jsnext:main": "dist/es/index.js",
   "license": "MIT",
-  "main": "src/index.ts",
+  "main": "dist-temp/src/index.js",
+  "module": "dist/es/index.js",
   "peerDependencies": {
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
@@ -32,5 +34,6 @@
     "test": "gulp test",
     "test:watch": "gulp test:watch"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "typings": "dist-temp/src/index.d.ts"
 }

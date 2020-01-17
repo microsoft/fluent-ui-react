@@ -48,6 +48,8 @@ const tempPaths = {
   e2eDist: fromBase(envConfig.dir_e2e_dist),
   packageDist: (packageName: string, ...paths: string[]) =>
     base(envConfig.dir_packages, packageName, 'dist', ...paths),
+  packageDistTemp: (packageName: string, ...paths: string[]) =>
+    base(envConfig.dir_packages, packageName, 'dist-temp', ...paths),
   packageSrc: (packageName: string, ...paths: string[]) =>
     base(envConfig.dir_packages, packageName, 'src', ...paths),
   packages: fromBase(envConfig.dir_packages),

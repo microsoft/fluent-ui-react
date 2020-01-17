@@ -2,7 +2,11 @@
   "extends": "../../build/tsconfig.common",
   "compilerOptions": {
     "composite": true,
-    "outDir": "dist/dts"
+    "outDir": "dist-temp",
+    "baseUrl": ".",
+    "paths": {
+      "@fluentui/react-proptypes": ["src"]
+    }
   },
   "include": ["src", "test"],
   "references": []

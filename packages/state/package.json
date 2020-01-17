@@ -15,8 +15,10 @@
     "dist"
   ],
   "homepage": "https://github.com/microsoft/fluent-ui-react/tree/master/packages/state",
+  "jsnext:main": "dist/es/index.js",
   "license": "MIT",
-  "main": "src/index.ts",
+  "main": "dist-temp/src/index.js",
+  "module": "dist/es/index.js",
   "publishConfig": {
     "access": "public"
   },
@@ -25,5 +27,6 @@
     "build": "gulp bundle:package:no-umd",
     "clean": "gulp bundle:package:clean"
   },
-  "sideEffects": false
+  "sideEffects": false,
+  "typings": "dist-temp/src/index.d.ts"
 }

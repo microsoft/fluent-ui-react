@@ -16,12 +16,7 @@ const packageName = config.package
 // ----------------------------------------
 
 task('bundle:package:clean', () =>
-  del([
-    `${paths.packageDist(packageName)}/es/*`,
-    `${paths.packageDist(packageName)}/commonjs/*`,
-    `${paths.packageDist(packageName)}/umd/*`,
-    `${paths.packageDist(packageName)}/dts`,
-  ]),
+  del([paths.packageDist(packageName), paths.packageDistTemp(packageName)]),
 )
 
 // ----------------------------------------
@@ -48,7 +43,7 @@ task('bundle:package:types:tsc', () => {
   return sh('tsc -b', paths.packages(packageName))
 })
 task('bundle:package:types:copy', () => {
-  return src(paths.packageDist(packageName, 'dts/src/**/*.d.ts')).pipe(
+  return src(paths.packageDistTemp(packageName, 'src/**/*.d.ts')).pipe(
     dest(paths.packageDist(packageName, 'es')),
   )
 })
@@ -93,7 +88,4 @@ task(
 )
 task('bundle:package', series('bundle:package:no-umd', 'bundle:package:umd'))
 
-task('bundle:all-packages', async () => {
-  await sh('lerna run build')
-  return del(`${config.paths.packages()}/*/dist/dts`)
-})
+task('bundle:all-packages', () => sh('lerna run build'))
