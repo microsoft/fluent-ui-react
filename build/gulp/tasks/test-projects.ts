@@ -8,7 +8,7 @@ import puppeteer from 'puppeteer'
 import sh from '../sh'
 import del from 'del'
 
-import config from '../../../config'
+import config from '../../config'
 import tmp from 'tmp'
 import http from 'http'
 import { safeLaunchOptions } from 'build/puppeteer.config'
@@ -24,7 +24,7 @@ const log = (context: string) => (message: string) => {
   console.log('='.repeat(80))
 }
 
-export const runIn = targetPath => cmd => sh(`cd ${targetPath} && ${cmd}`)
+export const runIn = targetPath => cmd => sh(cmd, targetPath)
 
 const addResolutionPathsForProjectPackages = async (
   testProjectDir: string,
@@ -47,11 +47,14 @@ const packProjectPackages = async (logger: Function): Promise<PackedPackages> =>
   const projectPackages = lernaAliases({ sourceDirectory: false })
 
   // We don't want to pack a package with our dev tools
+  delete projectPackages['@fluentui/digest']
+  delete projectPackages['@fluentui/docs']
+  delete projectPackages['@fluentui/e2e']
   delete projectPackages['@fluentui/eslint-plugin']
   delete projectPackages['@fluentui/internal-tooling']
-  delete projectPackages['@fluentui/scripts']
-  delete projectPackages['@fluentui/digest']
+  delete projectPackages['@fluentui/perf']
   delete projectPackages['@fluentui/perf-test']
+  delete projectPackages['@fluentui/scripts']
 
   await Promise.all(
     Object.keys(projectPackages).map(async (packageName: string) => {

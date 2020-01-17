@@ -19,7 +19,7 @@ const envConfig = {
   // ----------------------------------
   // Project Structure
   // ----------------------------------
-  path_base: __dirname,
+  path_base: path.resolve(__dirname, '..'),
   dir_build: 'build',
   dir_docs_dist: 'docs/dist',
   dir_docs_src: 'docs/src',
@@ -68,7 +68,7 @@ const paths = {
   ),
 }
 
-const isRoot = process.cwd() === __dirname
+const isRoot = process.cwd() === envConfig.path_base
 let packageName = isRoot ? 'react' : path.basename(process.cwd())
 // don't use yargs here because it causes build errors in certain circumstances
 const packageArgIndex = process.argv.indexOf('--package')

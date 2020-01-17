@@ -2,9 +2,9 @@ import { Provider, ProviderConsumer, Grid } from '@fluentui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 
-import ColorBox, { colorBoxStyles, colorBoxVariables } from 'docs/src/components/ColorBox'
-import { colorVariantsStyles } from 'docs/src/components/ColorVariants'
-import DocPage from 'docs/src/components/DocPage/DocPage'
+import ColorBox, { colorBoxStyles, colorBoxVariables } from '../components/ColorBox'
+import { colorVariantsStyles } from '../components/ColorVariants'
+import DocPage from '../components/DocPage/DocPage'
 
 const ColorPalette = () => (
   <Provider

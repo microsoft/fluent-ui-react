@@ -7,7 +7,7 @@ import TerserPlugin from 'terser-webpack-plugin'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 
-import config from '../config'
+import config from './config'
 
 const { paths } = config
 const { __DEV__, __PROD__ } = config.compiler_globals

@@ -1,8 +1,8 @@
 import * as _ from 'lodash'
 import { Box, Flex, RadioGroup, Text, Checkbox } from '@fluentui/react'
-import { PerfChart, usePerfData } from 'docs/src/components/ComponentDoc/PerfChart'
+import { PerfChart, usePerfData } from '../PerfChart'
 import * as React from 'react'
-import { PerfData, PerfSample } from 'docs/src/components/ComponentDoc/PerfChart/PerfDataContext'
+import { PerfData, PerfSample } from '../PerfChart/PerfDataContext'
 
 enum FILTER_BY {
   CI_BUILD = 'ci build',
@@ -90,16 +90,18 @@ export const ComponentPerfChart = ({ perfTestName }) => {
   return (
     <div>
       <Flex vAlign="center" gap="gap.large">
-        <RadioGroup
-          defaultCheckedValue={FILTER_BY.CI_BUILD}
-          checkedValueChanged={handleFilterChange}
-          items={[
-            { key: 'ci-build', label: FILTER_BY.CI_BUILD, value: FILTER_BY.CI_BUILD },
-            { key: 'release', label: FILTER_BY.RELEASE, value: FILTER_BY.RELEASE },
-            { key: 'day', label: FILTER_BY.DAY, value: FILTER_BY.DAY },
-            { key: 'month', label: FILTER_BY.MONTH, value: FILTER_BY.MONTH },
-          ]}
-        />
+        {process.env.NODE_ENV !== 'production' && (
+          <RadioGroup
+            defaultCheckedValue={FILTER_BY.CI_BUILD}
+            checkedValueChanged={handleFilterChange}
+            items={[
+              { key: 'ci-build', label: FILTER_BY.CI_BUILD, value: FILTER_BY.CI_BUILD },
+              { key: 'release', label: FILTER_BY.RELEASE, value: FILTER_BY.RELEASE },
+              { key: 'day', label: FILTER_BY.DAY, value: FILTER_BY.DAY },
+              { key: 'month', label: FILTER_BY.MONTH, value: FILTER_BY.MONTH },
+            ]}
+          />
+        )}
         <Checkbox
           label="Show extremes"
           defaultChecked={withExtremes}

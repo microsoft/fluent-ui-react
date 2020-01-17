@@ -1,7 +1,7 @@
 import * as React from 'react'
 
-import { ExampleSource } from 'docs/src/types'
-import { examplesContext, exampleSourcesContext } from 'docs/src/utils'
+import { ExampleSource } from '../../../types'
+import { examplesContext, exampleSourcesContext } from '../../../utils'
 import { componentAPIs, ComponentAPIs } from './componentAPIs'
 
 const getExampleModule = (

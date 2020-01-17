@@ -1,13 +1,13 @@
 /**
  * The Webpack Context for doc site example groups.
  */
-export const exampleIndexContext = require.context('docs/src/examples/', true, /index.tsx$/)
+export const exampleIndexContext = require.context('../examples/', true, /index.tsx$/)
 
 /**
  * The Webpack Context for doc examples.
  */
 export const examplesContext = require.context(
-  'docs/src/examples/',
+  '../examples/',
   true,
   /(\w+Example(\w|\.)*|\w+.perf)\.tsx$/,
 )
@@ -15,13 +15,13 @@ export const examplesContext = require.context(
 /**
  * The Webpack Context for doc site usage groups.
  */
-export const usageIndexContext = require.context('docs/src/examples', true, /Usage\/index.tsx$/)
+export const usageIndexContext = require.context('../examples', true, /Usage\/index.tsx$/)
 
 /**
  * The Webpack Context for doc site example groups.
  */
 export const exampleBestPracticesContext = require.context(
-  'docs/src/examples/',
+  '../examples/',
   true,
   /BestPractices.tsx$/,
 )
@@ -29,22 +29,14 @@ export const exampleBestPracticesContext = require.context(
 /**
  * The Webpack Context for component playgrounds.
  */
-export const examplePlaygroundContext = require.context(
-  'docs/src/examples/',
-  true,
-  /Playground.tsx$/,
-)
+export const examplePlaygroundContext = require.context('../examples/', true, /Playground.tsx$/)
 
 /**
  * The Webpack Context for doc site example sources.
  */
 //                          It's required for a hot reload
 // eslint-disable-next-line import/no-mutable-exports
-export let exampleSourcesContext = require.context(
-  'docs/src/exampleSources/',
-  true,
-  /.source.json$/,
-)
+export let exampleSourcesContext = require.context('../exampleSources/', true, /.source.json$/)
 
 // ----------------------------------------
 // HMR
@@ -56,7 +48,7 @@ if (__DEV__) {
     // We need this to catch cases unhandled by RHL
     // https://github.com/webpack/webpack/issues/834#issuecomment-76590576
     module.hot.accept(exampleSourcesContext.id, () => {
-      exampleSourcesContext = require.context('docs/src/exampleSources/', true, /.source.json$/)
+      exampleSourcesContext = require.context('../exampleSources/', true, /.source.json$/)
     })
   }
 }

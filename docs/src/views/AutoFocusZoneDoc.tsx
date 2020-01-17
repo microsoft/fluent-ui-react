@@ -4,7 +4,7 @@ import { Header } from '@fluentui/react'
 import { Link } from 'react-router-dom'
 import DocPage from '../components/DocPage'
 import { code, link } from '../utils/helpers'
-import ComponentPropsTable from 'docs/src/components/ComponentDoc/ComponentPropsTable'
+import ComponentPropsTable from '../components/ComponentDoc/ComponentPropsTable'
 
 export default () => (
   <DocPage title="Auto Focus Zone">

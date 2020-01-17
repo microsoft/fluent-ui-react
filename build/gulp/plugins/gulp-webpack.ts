@@ -1,8 +1,8 @@
 import webpack from 'webpack'
-import config from '../../../config'
+import config from '../../config'
+import { log, PluginError } from 'gulp-util'
 
 const { __DEV__, __SKIP_ERRORS__ } = config.compiler_globals
-const { log, PluginError } = require('gulp-load-plugins')().util
 
 const DEV_SKIP_ERRORS = __DEV__ && __SKIP_ERRORS__
 

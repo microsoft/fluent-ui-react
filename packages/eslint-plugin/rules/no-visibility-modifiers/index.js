@@ -4,7 +4,7 @@ const { AST_NODE_TYPES, ESLintUtils } = require('@typescript-eslint/experimental
 
 const createRule = ESLintUtils.RuleCreator(
   name =>
-    `https://github.com/microsoft/fluent-ui-react/tree/master/packages/internal-tooling/eslint/${name}.js`,
+    `https://github.com/microsoft/fluent-ui-react/tree/master/packages/eslint-plugin/rules/${name}/index.js`,
 )
 
 module.exports = createRule({
