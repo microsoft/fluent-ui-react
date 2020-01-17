@@ -36,6 +36,7 @@ const carouselItems = [
 
 const CarouselExample = () => (
   <Carousel
+    a11yNavigationInstructionMessage="Use left and right arrow keys to rotate carosel."
     ariaRoleDescription="carousel"
     navigation={{
       'aria-label': 'people portraits',

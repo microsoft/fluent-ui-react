@@ -12,6 +12,7 @@ const carouselItemBehavior: Accessibility<CarouselItemProps> = props => ({
       role: props.navigation ? 'tabpanel' : 'group',
       'aria-hidden': props.active ? 'false' : 'true',
       tabIndex: props.active ? 0 : -1,
+      "aria-describedby": props.instructionMessageId
     },
   },
 
@@ -26,4 +27,5 @@ export type CarouselItemProps = {
   /** If item is visible in the carousel. */
   active?: boolean
   navigation?: boolean
+  instructionMessageId?: string
 }

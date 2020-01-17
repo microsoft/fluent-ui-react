@@ -4,6 +4,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import { Ref } from '@fluentui/react-component-ref'
+import { screenReaderContainerStyles } from '../../utils/accessibility/Styles/accessibilityStyles'
 
 import {
   UIComponentProps,
@@ -71,8 +72,8 @@ export interface CarouselProps extends UIComponentProps, ChildrenComponentProps 
 
   /** Shorthand array of props for the buttons of the CarouselNavigation. */
   navigation?:
-    | ShorthandValue<CarouselNavigationProps>
-    | ShorthandCollection<CarouselNavigationItemProps>
+  | ShorthandValue<CarouselNavigationProps>
+  | ShorthandCollection<CarouselNavigationItemProps>
 
   /**
    * A Carousel can position its navigation below the content by default,
@@ -99,20 +100,29 @@ export interface CarouselProps extends UIComponentProps, ChildrenComponentProps 
 
   /** Shorthand for the paddle that navigates to the previous item. */
   paddlePrevious?: ShorthandValue<ButtonProps>
+
+  /** Message inform user how to navigate through the carousel. */
+  a11yNavigationInstructionMessage?: string
 }
 
 export interface CarouselState {
   activeIndex: number
   ariaLiveOn: boolean
   itemIds: string[]
+  a11yNavigationInstructionMessage: string
 }
 
 class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, CarouselState> {
-  static create: ShorthandFactory<CarouselProps>
+  static create: ShorthandFactory<CarouselProps>  
 
   static displayName = 'Carousel'
 
   static className = 'ui-carousel'
+
+  instructionMessageId = `instruction-message-${_.uniqueId()}`
+
+  instructionMessageTimeout;
+  static a11yStatusCleanupTime = 500
 
   static slotClassNames: CarouselSlotClassNames = {
     itemsContainer: `${Carousel.className}__itemscontainer`,
@@ -141,6 +151,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
     paddleNext: customPropTypes.itemShorthand,
     paddlesPosition: PropTypes.string,
     paddlePrevious: customPropTypes.itemShorthand,
+    a11yNavigationInstructionMessage: PropTypes.string,
   }
 
   static autoControlledProps = ['activeIndex']
@@ -210,7 +221,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
   }
 
   getInitialAutoControlledState(): CarouselState {
-    return { activeIndex: 0, ariaLiveOn: false, itemIds: [] as string[] }
+    return { activeIndex: 0, ariaLiveOn: false, itemIds: [] as string[], a11yNavigationInstructionMessage: this.props.a11yNavigationInstructionMessage, }
   }
 
   itemRefs = [] as React.RefObject<HTMLElement>[]
@@ -250,8 +261,23 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
     }
   }
 
+  clearA11yNavigationInstructionMessage = _.debounce(() => {
+    this.setState({ a11yNavigationInstructionMessage: null })
+  }, Carousel.a11yStatusCleanupTime)
+
+  setA11yNavigationInstructionMessage() {
+    clearTimeout(this.instructionMessageTimeout)    
+    this.clearA11yNavigationInstructionMessage()
+  }
+
+  removeA11yNavigationInstructionMessage() {
+    this.instructionMessageTimeout = setTimeout(() => {      
+      this.setState({ a11yNavigationInstructionMessage: this.props.a11yNavigationInstructionMessage })      
+    }, 0)
+  }
+
   renderContent = (accessibility, styles, unhandledProps) => {
-    const { ariaRoleDescription, getItemPositionText, items } = this.props
+    const { ariaRoleDescription, getItemPositionText, items, a11yNavigationInstructionMessage } = this.props
     const { activeIndex, itemIds } = this.state
 
     this.itemRefs = []
@@ -279,6 +305,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
                       active: activeIndex === index,
                       id: itemIds[index],
                       navigation: !!this.props.navigation,
+                      instructionMessageId: a11yNavigationInstructionMessage ? this.instructionMessageId : null,
                       ...(getItemPositionText && {
                         itemPositionText: getItemPositionText(index, items.length),
                       }),
@@ -287,6 +314,13 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
                 </Ref>
               )
             })}
+          {a11yNavigationInstructionMessage ?
+            <div aria-hidden="true" style={screenReaderContainerStyles} id={this.instructionMessageId}>
+              {this.state.a11yNavigationInstructionMessage}
+            </div>
+            :
+            null
+          }
         </div>
       </div>
     )
@@ -389,11 +423,11 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
         }),
       })
     ) : (
-      <Text
-        className={Carousel.slotClassNames.pagination}
-        content={getItemPositionText(activeIndex, items.length)}
-      />
-    )
+        <Text
+          className={Carousel.slotClassNames.pagination}
+          content={getItemPositionText(activeIndex, items.length)}
+        />
+      )
   }
 
   renderComponent({ ElementType, classes, styles, accessibility, unhandledProps }) {
@@ -401,6 +435,8 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
     return (
       <ElementType
         className={classes.root}
+        onFocus={this.setA11yNavigationInstructionMessage.bind(this)}
+        onBlur={this.removeA11yNavigationInstructionMessage.bind(this)}
         {...accessibility.attributes.root}
         {...unhandledProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
@@ -408,12 +444,12 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
         {childrenExist(children) ? (
           children
         ) : (
-          <>
-            {this.renderContent(accessibility, styles, unhandledProps)}
-            {this.renderPaddles(accessibility, styles)}
-            {this.renderNavigation()}
-          </>
-        )}
+            <>
+              {this.renderContent(accessibility, styles, unhandledProps)}
+              {this.renderPaddles(accessibility, styles)}
+              {this.renderNavigation()}
+            </>
+          )}
       </ElementType>
     )
   }

@@ -21,8 +21,9 @@ const carouselItems = [
 ]
 
 const CarouselExample = () => (
-  <Carousel
+  <Carousel    
     ariaRoleDescription="carousel"
+    a11yNavigationInstructionMessage="Use left and right arrow keys to rotate carosel."
     items={carouselItems}
     paddleNext={{ 'aria-label': 'go to next slide' }}
     paddlePrevious={{ 'aria-label': 'go to previous slide' }}
