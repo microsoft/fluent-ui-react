@@ -2,7 +2,7 @@
   "name": "@fluentui/digest",
   "version": "0.43.0",
   "private": true,
-  "main": "lib/digest.js",
+  "main": "src/digest.ts",
   "module": "lib/digest.js",
   "license": "MIT",
   "bin": {

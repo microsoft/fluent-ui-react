@@ -3,7 +3,6 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-
 - [Getting started](#getting-started)
   - [Useful Commands](#useful-commands)
 - [Workflow](#workflow)
@@ -153,10 +152,7 @@ These changes are required to setup internal tooling and package publishing.
 -  "files": [
 -    "lib"
 -  ],
-+  "jsnext:main": "dist/es/index.js",
-+  "main": "dist/commonjs/index.js",
-+  "module": "dist/es/index.js",
-+  "types": "dist/es/index.d.ts",
++  "main": "src/index.ts",
 +  "sideEffects": false,
 +  "files": [
 +    "dist"
@@ -173,6 +169,8 @@ These changes are required to setup internal tooling and package publishing.
 ```
 
 You can also use `gulp bundle:package` to bundle your package with UMD.
+
+The `main` field is locally set to point to the source to help project references work. It will be updated before publish to point to `dist/commonjs/index.js`. `module` and `jsnext:main` (`dist/es/index.js`) and `types` (`dist/es/index.d.ts`) will also be added. See `scripts/tasks/publishPrepareTask.ts` for details. (Having `types` present earlier with its final value causes problems resolving project references.)
 
 #### Create `tsconfig.json`
 

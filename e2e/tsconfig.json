@@ -1,8 +1,3 @@
 {
-  "extends": "../build/tsconfig.common.json",
-  "compilerOptions": {
-    "module": "esnext",
-    "allowSyntheticDefaultImports": true
-  },
-  "include": ["../packages/react/src", "../e2e", "../types"]
+  "extends": "../build/tsconfig.e2e.json"
 }
