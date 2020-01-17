@@ -49,7 +49,6 @@ const Image: React.FC<WithAsProp<ImageProps>> & FluentComponentStaticProps<Image
   const {
     accessibility,
     alt,
-    animation,
     'aria-label': ariaLabel,
     avatar,
     circular,
@@ -77,7 +76,6 @@ const Image: React.FC<WithAsProp<ImageProps>> & FluentComponentStaticProps<Image
       fluid,
     }),
     mapPropsToInlineStyles: () => ({
-      unstable_animation: animation,
       className,
       design,
       styles,

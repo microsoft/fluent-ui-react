@@ -52,7 +52,6 @@ const Avatar: React.FC<WithAsProp<AvatarProps>> &
   FluentComponentStaticProps<AvatarProps> = props => {
   const {
     accessibility,
-    animation,
     className,
     design,
     getInitials,
@@ -74,7 +73,6 @@ const Avatar: React.FC<WithAsProp<AvatarProps>> &
     className: Avatar.className,
     mapPropsToStyles: () => ({ size }),
     mapPropsToInlineStyles: () => ({
-      unstable_animation: animation,
       className,
       design,
       styles,

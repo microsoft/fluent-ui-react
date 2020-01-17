@@ -121,7 +121,6 @@ const Button: React.FC<WithAsProp<ButtonProps>> &
     className,
     styles,
     variables,
-    animation,
     design,
   } = props
   const context: ProviderContextPrepared = React.useContext(ThemeContext)
@@ -161,7 +160,6 @@ const Button: React.FC<WithAsProp<ButtonProps>> &
       hasContent: !!content,
     }),
     mapPropsToInlineStyles: () => ({
-      unstable_animation: animation,
       className,
       design,
       styles,
