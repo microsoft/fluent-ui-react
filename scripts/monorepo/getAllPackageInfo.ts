@@ -37,7 +37,7 @@ export function getAllPackageInfo(): AllPackageInfo {
   for (const [packageName, packagePath] of Object.entries(packagePaths)) {
     try {
       packageInfo[packageName] = {
-        packagePath: packagePath.replace(`${gitRoot}[\\/\\\]`, ''),
+        packagePath: path.relative(gitRoot, packagePath),
         packageJson: require(path.join(packagePath, 'package.json')),
       }
     } catch (ex) {
