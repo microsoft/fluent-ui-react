@@ -3,20 +3,37 @@ import { findGitRoot } from '../monorepo/findGitRoot'
 import fs from 'fs'
 import path from 'path'
 
-export function publishPrepareTask() {
+export interface IPublishPrepareOptions {
+  /** Don't update package.json for these packages */
+  excludePackages?: string[]
+}
+
+/**
+ * Update package.json for each project so that its `main` points to the build output
+ * rather than the source.
+ */
+export function publishPrepare(options: IPublishPrepareOptions = {}) {
   const root = findGitRoot()
   const allInfo = getAllPackageInfo()
 
-  for (const info of Object.values(allInfo)) {
-    if (info.packageJson.main && info.packageJson.main.startsWith('src/index')) {
+  const { excludePackages = [] } = options
+
+  for (const [packageName, info] of Object.entries(allInfo)) {
+    const oldMain = info.packageJson.main
+    if (oldMain && oldMain.startsWith('src/') && !excludePackages.includes(packageName)) {
       const newPackageJson = {
         ...info.packageJson,
-        main: info.packageJson.main.replace('src/', 'lib/').replace(/\.tsx?/, '.js'),
+        main: oldMain.replace('src/', 'lib/').replace(/\.tsx?/, '.js'),
       }
+
       fs.writeFileSync(
         path.join(root, info.packagePath, 'package.json'),
         `${JSON.stringify(newPackageJson, null, 2)}\n`,
       )
     }
   }
+}
+
+export function publishPrepareTask() {
+  publishPrepare()
 }
