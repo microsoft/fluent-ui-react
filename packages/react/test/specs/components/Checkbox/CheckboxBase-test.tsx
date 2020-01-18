@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { mount } from 'enzyme'
 import CheckboxBase from 'src/components/Checkbox/CheckboxBase'
-import * as keyboardKey from 'keyboard-key'
 
 describe("Baby's first test", () => {
   it('renders something', () => {
@@ -99,6 +98,14 @@ describe("Baby's first test", () => {
     ).toBe(false)
   })
 
+  it('does not call onChange value when onClick prevents default', () => {
+    const click = jest.fn((e: any) => e.preventDefault())
+    const change = jest.fn()
+    const control = mount(<CheckboxBase onClick={click} onChange={change} />)
+    control.simulate('click')
+    expect(change).not.toHaveBeenCalled()
+  })
+
   it('calls onClick', () => {
     const click = jest.fn()
     const control = mount(<CheckboxBase onClick={click} />)
@@ -133,8 +140,16 @@ describe("Baby's first test", () => {
   it('changes on enter press', () => {
     const control = mount(<CheckboxBase />)
     control.simulate('keydown', {
-      keyCode: keyboardKey.Enter,
+      keyCode: 13,
       key: 'Enter',
+    })
+    expect(control.find('input').prop('checked')).toBe(true)
+  })
+
+  it('changes on space press', () => {
+    const control = mount(<CheckboxBase />)
+    control.simulate('keydown', {
+      keyCode: 32,
     })
     expect(control.find('input').prop('checked')).toBe(true)
   })

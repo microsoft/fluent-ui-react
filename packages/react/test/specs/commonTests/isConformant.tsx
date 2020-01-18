@@ -32,6 +32,8 @@ export interface Conformant {
   rendersPortal?: boolean
   /** This component uses wrapper slot to wrap the 'meaningful' element. */
   wrapperComponent?: React.ReactType
+  /** This component uses a base element */
+  baseComponent?: React.ReactType
 }
 
 /**
@@ -53,6 +55,7 @@ export default function isConformant(
     requiredProps = {},
     rendersPortal = false,
     wrapperComponent = null,
+    baseComponent = null,
   } = options
   const { throwError } = helpers('isConformant', Component)
 
@@ -61,6 +64,7 @@ export default function isConformant(
   const helperComponentNames = [
     ...[Ref, RefFindNode],
     ...(wrapperComponent ? [wrapperComponent] : []),
+    ...(baseComponent ? [baseComponent] : []),
   ].map(getDisplayName)
 
   const toNextNonTrivialChild = (from: ReactWrapper) => {
