@@ -34,7 +34,7 @@ Following combinations of clients and screen readers is supported/required:
 
 ## Zoom
 - Elements need to be rendered correctly when zoomed up to 400%
-- Content need to be able to [reflow](https://www.w3.org/WAI/standards-guidelines/wcag/new-in-21/#1410-reflow-aa)
+- Content need to be able to [reflow](https://www.w3.org/WAI/WCAG21/Understanding/reflow.html)
 
 # Components and Behaviors
 There are two areas that come together to achieve accessibility:
