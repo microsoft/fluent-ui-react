@@ -99,12 +99,15 @@ export interface CarouselProps extends UIComponentProps, ChildrenComponentProps 
 
   /** Shorthand for the paddle that navigates to the previous item. */
   paddlePrevious?: ShorthandValue<ButtonProps>
+
+  /** Message inform user how to navigate through the carousel. */
+  a11yInstructionMessage?: string
 }
 
 export interface CarouselState {
   activeIndex: number
   ariaLiveOn: boolean
-  itemIds: string[]
+  itemIds: string[]  
 }
 
 class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, CarouselState> {
@@ -141,6 +144,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
     paddleNext: customPropTypes.itemShorthand,
     paddlesPosition: PropTypes.string,
     paddlePrevious: customPropTypes.itemShorthand,
+    a11yInstructionMessage: PropTypes.string,
   }
 
   static autoControlledProps = ['activeIndex']
@@ -251,16 +255,17 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
   }
 
   renderContent = (accessibility, styles, unhandledProps) => {
-    const { ariaRoleDescription, getItemPositionText, items } = this.props
+    const { getItemPositionText, items, a11yInstructionMessage  } = this.props
     const { activeIndex, itemIds } = this.state
 
-    this.itemRefs = []
+       this.itemRefs = []
 
     return (
       <div style={styles.itemsContainerWrapper} {...accessibility.attributes.itemsContainerWrapper}>
         <div
           className={Carousel.slotClassNames.itemsContainer}
-          aria-roledescription={ariaRoleDescription}
+          role="region"
+          aria-label={a11yInstructionMessage}
           style={styles.itemsContainer}
           {...accessibility.attributes.itemsContainer}
           {...applyAccessibilityKeyHandlers(

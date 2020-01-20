@@ -32,8 +32,8 @@ const carouselItems = [
 
 const CarouselExample = () => (
   <Carousel
-    circular
-    ariaRoleDescription="carousel"
+    a11yInstructionMessage="Circular carousel. To rotate use left and right arrow keys."
+    circular    
     navigation={{
       'aria-label': 'people portraits',
       items: carouselItems.map((item, index) => ({

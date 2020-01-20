@@ -15,10 +15,7 @@ import * as keyboardKey from 'keyboard-key'
  * Triggers 'showPreviousSlideByPaddlePress' action with 'Enter' or 'Spacebar' on 'paddlePrevious'.
  */
 const carouselBehavior: Accessibility<CarouselBehaviorProps> = props => ({
-  attributes: {
-    root: {
-      role: 'region',
-    },
+  attributes: {    
     itemsContainerWrapper: {
       'aria-live': props.ariaLiveOn ? 'polite' : 'off',
     },
