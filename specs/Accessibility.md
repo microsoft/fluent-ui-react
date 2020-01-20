@@ -14,7 +14,7 @@ In general, components need to conform to the [WAI-ARIA Authoring Practices 1.2]
 ## Focus
 - Whenever possible, focus should land only on elements that have concrete implicit or explicit ARIA role (`<button />`, `role='button'`, `role='menuitem'`, ....)
 - onClick event handlers need to be handled on focusable elements with implicit or explicit ARIA role and not on their parent/child elements
-- When reacting on focus or on hover screen reader interaction needs to be specified. Some screen readers do not have concept of hovering and not always focus elements, so there needs to be another way for the screen reader users to interact with such elements. For example showing popups on focus or on hover needs to be justified and alternative interaction compatible with the screen readers need to be provided
+- When reacting to on focus or on hover events, screen reader interaction needs to be specified. Some screen readers do not have the concept of hovering and not always focus elements, so the screen reader needs another way to interact with the elements. For example showing popups on focus or on hover needs to have an alternatve interaction compatible with the screen readers.
 
 ## Screen reader support
 User needs to be able to interact with the application using:
@@ -38,7 +38,7 @@ Following combinations of clients and screen readers is supported/required:
 # Components and Behaviors
 There are two areas that come together to achieve accessibility:
 * Components - implemented for each supported framework (currently React), when rendered, need to be [semantically correct](https://en.wikipedia.org/wiki/Semantic_HTML)
-* Behaviors - framework independent, intended to add ARIA roles, ARIA attributes and keyboard handling on top of the components based on their type and state. In the future, behaviors development will move from the [Stardust react](https://github.com/stardust-ui/react) repo to [Stardust accessibility](https://github.com/stardust-ui/accessibility) repo.
+* Behaviors - framework independent, intended to add ARIA roles, ARIA attributes and keyboard handling on top of the components based on their type and state.
 
 **Accessibility behaviors** reflect the need to have a set of validated and carefully tested alternatives available for the consumers that guarantee the accessibility of the component in various use cases. In some cases, accessibility can be highly oppinionated and the behaviors allow consumers to implement accessibility aspects of the components in a customized way, that better fits the requirements of the consumer.
 
@@ -47,6 +47,8 @@ Accessibility behavior is a function that takes properties of the component comb
 - assignement of keyboard keys to component actions
 - focus zone (arrow keys navigation) definition
 
+ Behaviors code is located in [accessibility](https://github.com/microsoft/fluent-ui-react/tree/master/packages/accessibility) package.
+ 
 ## Component creation process
 1. Create accessible component prototype
 2. Validate the prototype (test with all supported screen reader / OS combinations)
@@ -75,4 +77,4 @@ Manual testing with all supported client/screen reader combinations is required.
 ## Validation framework
 Fluent UI development build includes [Ability attributes](https://github.com/microsoft/ability-attributes) validation framework that validates the accessibility on the documentation page in real time. Any detected error is immediately reported in the bottom edge of the window.
 
-The [schema](https://github.com/microsoft/fluent-ui-react/blob/master/packages/ability-attributes/schema.json) that defines the accessibility rules is higly customizable and needs to reflect current state of the components.
+The [schema](https://github.com/microsoft/fluent-ui-react/blob/master/packages/ability-attributes/schema.json) that defines the accessibility rules is highly customizable and needs to reflect current state of the components.
