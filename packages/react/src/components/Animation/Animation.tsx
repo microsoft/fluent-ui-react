@@ -8,16 +8,17 @@ import {
   childrenExist,
   StyledComponentProps,
   commonPropTypes,
-  ChildrenComponentProps,
   ShorthandFactory,
 } from '../../utils'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
-export interface AnimationProps
-  extends StyledComponentProps,
-    ChildrenComponentProps<React.ReactChild> {
+export type AnimationChildrenProp = (props: { classes: Record<string, string> }) => React.ReactNode
+
+export interface AnimationProps extends StyledComponentProps {
   /** Additional CSS class name(s) to apply.  */
   className?: string
+
+  children: AnimationChildrenProp | React.ReactChild
 
   /** The name for the animation that should be applied, defined in the theme. */
   name?: string
@@ -168,9 +169,13 @@ class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
       onExiting,
     } = this.props
 
-    const child =
-      childrenExist(children) && (React.Children.only(children) as React.ReactElement<any>)
+    // const child =
+    //   childrenExist(children) && (React.Children.only(children) as React.ReactElement<any>)
 
+    const child =
+      typeof children === 'function'
+        ? (children as AnimationChildrenProp)({ classes })
+        : childrenExist(children) && (React.Children.only(children) as React.ReactElement<any>)
     return (
       <Transition
         in={visible}
@@ -185,7 +190,10 @@ class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
         onExiting={onExiting}
         onExited={onExited}
         {...unhandledProps}
-        className={cx(classes.root, child.props.className)}
+        className={cx(
+          classes.root,
+          typeof child === 'object' && (child as any).props && (child as any).props.className,
+        )}
       >
         {child}
       </Transition>

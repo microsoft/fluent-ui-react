@@ -8,6 +8,7 @@ import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import * as keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
+import cx from 'classnames'
 
 import {
   applyAccessibilityKeyHandlers,
@@ -177,7 +178,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   static defaultProps: PopupProps = {
     accessibility: popupBehavior,
     align: 'start',
-    position: 'below',
+    position: 'above',
     on: 'click',
     mouseLeaveDelay: 500,
     tabbableTrigger: true,
@@ -253,13 +254,31 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
   }: RenderResultConfig<PopupProps>): React.ReactNode {
     const { inline, mountNode } = this.props
     const { open } = this.state
-    const popupContent = open && this.renderPopupContent(classes.popup, rtl, accessibility, open)
 
     return (
       <>
         {this.renderTrigger(accessibility)}
-        {open &&
-          (inline ? popupContent : <PortalInner mountNode={mountNode}>{popupContent}</PortalInner>)}
+        <Animation
+          name={open ? 'fadeEnterSlow' : 'fadeExitSlow'}
+          visible={open}
+          timeout={500}
+          mountOnEnter
+          unmountOnExit
+        >
+          {({ classes: animationClasses }) => {
+            return inline ? (
+              this.renderPopupContent(cx(classes.popup, animationClasses.root), rtl, accessibility)
+            ) : (
+              <PortalInner mountNode={mountNode}>
+                {this.renderPopupContent(
+                  cx(classes.popup, animationClasses.root),
+                  rtl,
+                  accessibility,
+                )}
+              </PortalInner>
+            )
+          }}
+        </Animation>
       </>
     )
   }
@@ -471,7 +490,6 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     popupPositionClasses: string,
     rtl: boolean,
     accessibility: ReactAccessibilityBehavior,
-    open: boolean,
   ): JSX.Element {
     const { align, position, offset, target, unstable_pinned } = this.props
 
@@ -522,7 +540,10 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
         ...(rtl && { dir: 'rtl' }),
         ...accessibility.attributes.popup,
         ...accessibility.keyHandlers.popup,
-        className: popupPositionClasses,
+        className: cx(
+          popupPositionClasses,
+          typeof content === 'object' && (content as any).className,
+        ),
         ...this.getContentProps(),
         placement,
         pointing,
@@ -541,22 +562,15 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
       <Unstable_NestingAuto>
         {(getRefs, nestingRef) => (
           <>
-            <Animation
-              name={open ? 'fadeEnterSlow' : 'spinner'}
-              visible={open}
-              timeout={5000}
-              mountOnEnter
+            <Ref
+              innerRef={domElement => {
+                this.popupDomElement = domElement
+                handleRef(contentRef, domElement)
+                nestingRef.current = domElement
+              }}
             >
-              <Ref
-                innerRef={domElement => {
-                  this.popupDomElement = domElement
-                  handleRef(contentRef, domElement)
-                  nestingRef.current = domElement
-                }}
-              >
-                {popupContent}
-              </Ref>
-            </Animation>
+              {popupContent}
+            </Ref>
 
             <EventListener
               listener={this.handleDocumentClick(getRefs)}
