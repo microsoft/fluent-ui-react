@@ -30,10 +30,11 @@ Following combinations of clients and screen readers is supported/required:
 - macOS/Chrome - VoiceOver
 
 ## Contrast
-- There has to be sufficient contrast between background and foreground of the component (text, icon...) in all component states and themes.
+- There has to be [sufficient contrast](https://accessibility.umn.edu/core-skills/color-contrast) between background and foreground of the component (text, icon...) in all component states and themes.
 
 ## Zoom
 - Elements need to be rendered correctly when zoomed up to 400%
+- Content need to be able to [reflow](https://www.w3.org/WAI/standards-guidelines/wcag/new-in-21/#1410-reflow-aa)
 
 # Components and Behaviors
 There are two areas that come together to achieve accessibility:
@@ -44,11 +45,11 @@ There are two areas that come together to achieve accessibility:
 
 Accessibility behavior is a function that takes properties of the component combined with state and maps it to:
 - `role`, `aria-*` attributes, `tabIndex` and other attributes related to accessibility
-- assignement of keyboard keys to component actions
+- assignment of keyboard keys to component actions
 - focus zone (arrow keys navigation) definition
 
  Behaviors code is located in [accessibility](https://github.com/microsoft/fluent-ui-react/tree/master/packages/accessibility) package.
- 
+
 ## Component creation process
 1. Create accessible component prototype
 2. Validate the prototype (test with all supported screen reader / OS combinations)
@@ -63,6 +64,32 @@ Every component relevant to accessibility needs to have:
 - optionally other available accessibility attributes, listed in `@available` jsdoc section
 - `accessibility` property with default value specified
 - `Best practices` section describing concerns that are not covered by the component itself and the user need to implement them or provide required information
+
+## Overriding and extending accessibility
+Consumers can override any attribute that has been evaluated by the behavior simply by passing it directly to the component:
+```jsx
+<Checkbox aria-checked={false} ... />
+```
+
+Components also respect onKeyDown prop for event listeners. If used, the listener is called after the keys from the behavior have been processed.
+```jsx
+<Checkbox onKeyDown={handleKeyDown} ... />
+```
+
+As accessibility behaviors are functions, they can be composed and extended:
+```jsx
+const autoFocusMenuBehavior = (props) => {
+  const result = menuBehavior(props);
+  if (result.focusZone && result.focusZone.props) {
+      result.focusZone.props.shouldFocusOnMount = true;
+  }
+  return result;
+}
+
+...
+
+<Menu accessibility={autoFocusMenuBehavior} ... />
+```
 
 # Testing
 Every change needs to be tested for following use cases mentioned above.
