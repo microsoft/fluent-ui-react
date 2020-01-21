@@ -15,7 +15,13 @@ export type IButtonSlotProps = ISlotProps<IButtonSlots>;
 
 export interface IButtonClasses extends IClasses<IButtonSlots> {}
 
+export interface IButton {
+  focus: () => void;
+}
+
 export interface IButtonProps extends IWithSlots<IButtonSlots>, IWithClasses<IButtonClasses> {
+  ref?: React.Ref<IButton>;
+
   /** Defines the children of the Button component. */
   children?: React.ReactNode;
 

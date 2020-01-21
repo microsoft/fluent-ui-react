@@ -20,7 +20,7 @@ export const ButtonBase: IComponentWithSlotsAndRef<IButtonProps, IButtonSlots> =
 ) as any; // can't get the forward ref to work here.
 
 ButtonBase.slots = {
-  root: 'span',
+  root: 'button',
   startIcon: 'i',
   endIcon: 'i',
 };
