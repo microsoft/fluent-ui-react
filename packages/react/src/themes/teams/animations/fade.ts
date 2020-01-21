@@ -1,6 +1,18 @@
 import { easeEasy } from './timingFunctions'
 
 const fadeInOutAnimations = {
+  spinner: {
+    keyframe: {
+      from: {
+        transform: 'rotate(0deg)',
+      },
+      to: {
+        transform: 'rotate(360deg)',
+      },
+    },
+    duration: '2s',
+    iterationCount: '1',
+  },
   // Basic Fade In Animation -- Fast
   fadeEnterFast: {
     keyframe: {
