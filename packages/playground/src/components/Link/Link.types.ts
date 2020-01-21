@@ -1,8 +1,8 @@
-import { IClasses, ISlotProps, ISlottableProps } from '@fluentui/react-theming';
+import { IClasses, ISlotProps, IWithSlots, IWithClasses } from '@fluentui/react-theming';
 
 export interface ILinkSlots {
   /** Intended to contain the link. */
-  root: React.ReactType;
+  root: string | React.ReactType;
 }
 
 export type ILinkSlotProps = ISlotProps<ILinkSlots>;
@@ -12,7 +12,10 @@ export interface ILinkClasses extends IClasses<ILinkSlots> {
   rootDisabled: string;
 }
 
-export interface ILinkProps extends ISlottableProps<ILinkSlots, ILinkClasses> {
+export interface ILinkProps
+  extends IWithSlots<ILinkSlots>,
+    IWithClasses<ILinkClasses>,
+    React.AnchorHTMLAttributes<any> {
   /** Defines the children of the Link component. */
   children?: React.ReactNode;
 
