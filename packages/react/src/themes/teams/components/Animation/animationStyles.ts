@@ -1,9 +1,11 @@
-import { AnimationProp } from '../../../types'
-import createAnimationStyles from '../../../../utils/createAnimationStyles'
+import {
+  ComponentAnimationProp,
+  unstable_createAnimationStyles as createAnimationStyles,
+} from '@fluentui/react-bindings'
 
 export default {
   root: ({ props: p, theme }) => {
-    const animation: AnimationProp = {
+    const animation: ComponentAnimationProp = {
       name: p.name,
       keyframeParams: p.keyframeParams,
       duration: p.duration,

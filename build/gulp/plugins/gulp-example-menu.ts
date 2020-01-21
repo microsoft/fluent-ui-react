@@ -5,7 +5,6 @@ import through2 from 'through2'
 import Vinyl from 'vinyl'
 
 import { parseDocSection } from './util'
-import { ObjectOf } from 'packages/react/src/types'
 
 const SECTION_ORDER = {
   Types: 1,
@@ -25,11 +24,17 @@ const getSectionOrder = sectionName =>
 const pluginName = 'gulp-example-menu'
 
 export default () => {
-  const exampleFilesByDisplayName: ObjectOf<ObjectOf<{
-    sectionName: string
-    examples: ObjectOf<any>
-    order: number
-  }>> = {}
+  const exampleFilesByDisplayName: Record<
+    string,
+    Record<
+      string,
+      {
+        sectionName: string
+        examples: Record<string, any>
+        order: number
+      }
+    >
+  > = {}
 
   function bufferContents(file, enc, cb) {
     if (file.isNull()) {

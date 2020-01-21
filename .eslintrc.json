@@ -1,4 +1,4 @@
 {
-  "extends": ["./packages/internal-tooling/eslint/index.js"],
+  "extends": ["./build/eslint/index.js"],
   "root": true
 }

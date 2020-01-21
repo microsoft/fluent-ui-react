@@ -2,8 +2,8 @@ import { Alert } from '@fluentui/react'
 import * as React from 'react'
 import { Link } from 'react-router-dom'
 
-import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
-import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
+import ComponentExample from '../../../../components/ComponentDoc/ComponentExample'
+import ExampleSection from '../../../../components/ComponentDoc/ExampleSection'
 
 const Content = () => (
   <ExampleSection title="Content">

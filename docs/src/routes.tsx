@@ -5,7 +5,7 @@ import ExternalExampleLayout from './components/ExternalExampleLayout'
 import DocsLayout from './components/DocsLayout'
 import DocsRoot from './components/DocsRoot'
 import DocsBehaviorRoot from './components/DocsBehaviorRoot'
-import MarkdownPage from 'docs/src/components/MarkdownPage'
+import MarkdownPage from './components/MarkdownPage'
 
 import * as Composition from './pages/Composition.mdx'
 import * as Layout from './pages/Layout.mdx'
@@ -48,6 +48,7 @@ import ParticipantsListPrototype from './prototypes/ParticipantsList'
 import CustomScrollbarPrototype from './prototypes/customScrollbar'
 import EditorToolbarPrototype from './prototypes/EditorToolbar'
 import HexagonalAvatarPrototype from './prototypes/hexagonalAvatar'
+import TablePrototype from './prototypes/table'
 
 const Routes = () => (
   <BrowserRouter basename={__BASENAME__}>
@@ -80,6 +81,7 @@ const Routes = () => (
           <Route exact path="/prototype-alerts" component={AlertsPrototype} />
           <Route exact path="/prototype-editor-toolbar" component={EditorToolbarPrototype} />
           <Route exact path="/prototype-hexagonal-avatar" component={HexagonalAvatarPrototype} />
+          <Route exact path="/prototype-table" component={TablePrototype} />
           <Route
             exact
             path="/prototype-nested-popups-and-dialogs"

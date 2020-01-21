@@ -11,16 +11,28 @@ import getScrollParent from './getScrollParent'
 // https://github.com/rollup/rollup/issues/1267#issuecomment-446681320
 const createPopper = (
   reference: Element | _PopperJS.ReferenceObject,
-  popper: Element,
+  popper: HTMLElement,
   options?: PopperJS.PopperOptions,
 ): PopperJS => {
   const instance = new ((_PopperJS as any).default || _PopperJS)(reference, popper, {
     ...options,
     eventsEnabled: false,
   })
+
+  const originalUpdate = instance.update
+  instance.update = () => {
+    // Fix Popper.js initial positioning display issue
+    // https://github.com/popperjs/popper.js/issues/457#issuecomment-367692177
+    popper.style.left = '0'
+    popper.style.top = '0'
+
+    originalUpdate()
+  }
+
   const actualWindow = popper.ownerDocument.defaultView
   instance.scheduleUpdate = () => actualWindow.requestAnimationFrame(instance.update)
   instance.enableEventListeners()
+
   return instance
 }
 /**

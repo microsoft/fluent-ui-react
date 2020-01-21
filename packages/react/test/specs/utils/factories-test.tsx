@@ -1,4 +1,4 @@
-import { callable } from '@fluentui/react-bindings'
+import { callable } from '@fluentui/styles'
 import * as React from 'react'
 import * as _ from 'lodash'
 import { shallow } from 'enzyme'
@@ -18,7 +18,7 @@ type ShorthandConfig = {
   overrideProps?: (Props & ((props: Props) => Props)) | Props
   generateKey?: boolean
   valueOrRenderCallback?: ShorthandValue<Props>
-  render?: ShorthandRenderFunction
+  render?: ShorthandRenderFunction<any>
 }
 
 /**
@@ -167,6 +167,7 @@ describe('factories', () => {
 
     test('does not throw if passed a function Component', () => {
       const goodUsage = () =>
+        // @ts-ignore
         createShorthandFactory({ Component: () => <div />, mappedProp: 'children' })
 
       expect(goodUsage).not.toThrowError()

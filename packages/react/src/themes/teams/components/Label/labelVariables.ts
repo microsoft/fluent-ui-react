@@ -1,7 +1,8 @@
 import { pxToRem, stringLiteralsArray } from '../../../../utils'
-import { SiteVariablesPrepared, ItemType } from '../../../types'
+import { ItemType } from '../../../types'
 import { TeamsSchemeMappingWithAreas } from '../../types'
 import { extendColorScheme, pickValuesFromColorScheme } from '../../../colorUtils'
+import { SiteVariablesPrepared } from '@fluentui/styles'
 
 export const labelColorAreas = stringLiteralsArray('foreground', 'background')
 export type LabelColorSchemeMapping = TeamsSchemeMappingWithAreas<ItemType<typeof labelColorAreas>>

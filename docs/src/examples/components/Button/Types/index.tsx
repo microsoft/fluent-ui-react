@@ -1,6 +1,6 @@
 import * as React from 'react'
-import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
-import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
+import ComponentExample from '../../../../components/ComponentDoc/ComponentExample'
+import ExampleSection from '../../../../components/ComponentDoc/ExampleSection'
 
 const Types = () => (
   <ExampleSection title="Types">
@@ -13,6 +13,11 @@ const Types = () => (
       title="Emphasis"
       description="A button can be formatted to show different levels of emphasis."
       examplePath="components/Button/Types/ButtonExampleEmphasis"
+    />
+    <ComponentExample
+      title="Inverted Button"
+      description="A button that inherits its background."
+      examplePath="components/Button/Types/ButtonExampleInverted"
     />
     <ComponentExample
       title="Text"

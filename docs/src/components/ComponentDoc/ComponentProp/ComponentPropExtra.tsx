@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Extendable } from 'src/types'
+import { Extendable } from '@fluentui/react'
 
 export interface ComponentPropExtraProps {
   children?: JSX.Element[]

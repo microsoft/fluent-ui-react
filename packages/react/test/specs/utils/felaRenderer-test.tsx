@@ -2,9 +2,38 @@ import * as React from 'react'
 import { createSnapshot } from 'jest-react-fela'
 import { EmptyThemeProvider } from 'test/utils'
 import Box from 'src/components/Box/Box'
+import Animation from 'src/components/Animation/Animation'
 import Provider from 'src/components/Provider/Provider'
 import Text from 'src/components/Text/Text'
 import { felaRenderer } from 'src/utils'
+import {
+  ComponentAnimationProp,
+  unstable_createAnimationStyles as createAnimationStyles,
+} from '@fluentui/react-bindings'
+
+// Animation component depends on theme styles 💣
+// Issue: https://github.com/microsoft/fluent-ui-react/issues/2247
+// This adds required styles when needed.
+const AnimationComponentStyles = {
+  root: () => ({
+    display: 'inline-block',
+  }),
+  children: ({ props: p, theme }) => {
+    const animation: ComponentAnimationProp = {
+      name: p.name,
+      keyframeParams: p.keyframeParams,
+      duration: p.duration,
+      delay: p.delay,
+      iterationCount: p.iterationCount,
+      direction: p.direction,
+      fillMode: p.fillMode,
+      playState: p.playState,
+      timingFunction: p.timingFunction,
+    }
+
+    return createAnimationStyles(animation, theme)
+  },
+}
 
 describe('felaRenderer', () => {
   test('basic styles are rendered', () => {
@@ -21,7 +50,7 @@ describe('felaRenderer', () => {
   test('CSS fallback values are rendered', () => {
     const snapshot = createSnapshot(
       <EmptyThemeProvider>
-        <Box styles={{ color: ['red', 'blue'] }} />
+        <Box styles={{ color: ['red', 'blue'] as any }} />
       </EmptyThemeProvider>,
       {},
       felaRenderer,
@@ -47,8 +76,15 @@ describe('felaRenderer', () => {
     }
 
     const snapshot = createSnapshot(
-      <Provider theme={{ animations: { spinner } }}>
-        <Box animation="spinner" />
+      <Provider
+        theme={{
+          componentStyles: { Animation: AnimationComponentStyles },
+          animations: { spinner },
+        }}
+      >
+        <Animation name="spinner">
+          <Box />
+        </Animation>
       </Provider>,
       {},
       felaRenderer,
@@ -71,8 +107,15 @@ describe('felaRenderer', () => {
     }
 
     const snapshot = createSnapshot(
-      <Provider theme={{ animations: { spinner } }}>
-        <Box animation="spinner" />
+      <Provider
+        theme={{
+          componentStyles: { Animation: AnimationComponentStyles },
+          animations: { spinner },
+        }}
+      >
+        <Animation name="spinner">
+          <Box />
+        </Animation>
       </Provider>,
       {},
       felaRenderer,
@@ -95,8 +138,16 @@ describe('felaRenderer', () => {
     }
 
     const snapshot = createSnapshot(
-      <Provider disableAnimations theme={{ animations: { spinner } }}>
-        <Box animation="spinner" />
+      <Provider
+        disableAnimations
+        theme={{
+          componentStyles: { Animation: AnimationComponentStyles },
+          animations: { spinner },
+        }}
+      >
+        <Animation name="spinner">
+          <Box />
+        </Animation>
       </Provider>,
       {},
       felaRenderer,
@@ -106,8 +157,19 @@ describe('felaRenderer', () => {
 
   test('marginLeft is rendered into marginRight due to RTL', () => {
     const snapshot = createSnapshot(
-      <Provider rtl={true}>
+      <Provider rtl>
         <Text content="Hello" styles={{ marginLeft: '10px' }} />
+      </Provider>,
+      {},
+      felaRenderer,
+    )
+    expect(snapshot).toMatchSnapshot()
+  })
+
+  test('marginLeft is rendered into marginLeft due to RTL with `noFlip`', () => {
+    const snapshot = createSnapshot(
+      <Provider rtl>
+        <Text content="Hello" styles={{ marginLeft: '10px /* @noflip */' }} />
       </Provider>,
       {},
       felaRenderer,

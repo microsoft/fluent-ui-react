@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
-import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
-import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
+import ComponentExample from '../../../../components/ComponentDoc/ComponentExample'
+import ExampleSection from '../../../../components/ComponentDoc/ExampleSection'
 
 const Usage = () => (
   <ExampleSection title="Usage">
@@ -17,7 +17,7 @@ const Usage = () => (
     />
     <ComponentExample
       title="Tinted Example"
-      description='A button used in cards is a "tinted" version of a default button.'
+      description="A button used in cards is a 'tinted' version of a default button.  This button's styling is using color scheme variables."
       examplePath="components/Button/Usage/ButtonUsageExample"
     />
     <ComponentExample

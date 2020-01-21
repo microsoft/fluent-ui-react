@@ -1,3 +1,5 @@
+import { Accessibility, tooltipAsLabelBehavior } from '@fluentui/accessibility'
+import { ReactAccessibilityBehavior } from '@fluentui/react-bindings'
 import { toRefObject, Ref } from '@fluentui/react-component-ref'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import * as React from 'react'
@@ -28,8 +30,6 @@ import {
   PopperChildrenProps,
 } from '../../utils/positioner'
 import TooltipContent, { TooltipContentProps } from './TooltipContent'
-import { Accessibility, tooltipBehavior } from '@fluentui/accessibility'
-import { ReactAccessibilityBehavior } from '../../utils/accessibility/reactTypes'
 import PortalInner from '../Portal/PortalInner'
 
 export interface TooltipSlotClassNames {
@@ -111,7 +111,6 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
 
   static propTypes = {
     ...commonPropTypes.createCommon({
-      animated: false,
       as: false,
       content: false,
     }),
@@ -135,7 +134,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     position: 'above',
     mouseLeaveDelay: 10,
     pointing: true,
-    accessibility: tooltipBehavior,
+    accessibility: tooltipAsLabelBehavior,
   }
 
   static autoControlledProps = ['open']
@@ -290,6 +289,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
         pointing,
         pointerRef: this.pointerTargetRef,
       }),
+      generateKey: false,
       overrideProps: this.getContentProps,
     })
 

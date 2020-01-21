@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Text } from '@fluentui/react'
 import { link } from '../../../../utils/helpers'
-import ComponentBestPractices from 'docs/src/components/ComponentBestPractices'
+import ComponentBestPractices from '../../../../components/ComponentBestPractices'
 
 const doList = [
   <Text>

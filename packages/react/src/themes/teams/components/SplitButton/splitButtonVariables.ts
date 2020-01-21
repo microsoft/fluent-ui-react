@@ -1,29 +1,28 @@
-import { SiteVariablesPrepared } from '../../../types'
-
+import { SiteVariablesPrepared } from '@fluentui/styles'
 import { pxToRem } from '../../../../utils'
 
 export interface SplitButtonVariables {
   borderRadius: string
-  backgroundColorFocus: string
-  boxShadow: string
+  borderColorPrimary: string
   borderColor: string
-  colorFocus: string
-  primaryBackgroundColorFocus: string
-  primaryColorFocus: string
+  borderColorDisabled: string
+  smallDimension: string
+  smallPadding: string
+  smallMinWidth: string
+  smallBoxShadow: string
   padding: string
-  iconMargin: string
 }
 
 export default (siteVars: SiteVariablesPrepared): SplitButtonVariables => {
   return {
     borderRadius: siteVars.borderRadius,
-    backgroundColorFocus: siteVars.colors.grey[200],
-    boxShadow: siteVars.shadowLevel1,
-    borderColor: siteVars.colors.grey[200],
-    colorFocus: siteVars.colors.grey[750],
-    primaryBackgroundColorFocus: siteVars.colors.brand[800],
-    primaryColorFocus: siteVars.colors.white,
+    borderColor: siteVars.colorScheme.default.border,
+    borderColorPrimary: siteVars.colors.brand[500],
+    borderColorDisabled: siteVars.colorScheme.brand.foregroundDisabled,
+    smallDimension: pxToRem(24),
+    smallPadding: `0 ${pxToRem(8)}`,
+    smallMinWidth: '0',
+    smallBoxShadow: 'none',
     padding: `0 ${pxToRem(16)}`,
-    iconMargin: `0 0 ${pxToRem(8)} 0`,
   }
 }

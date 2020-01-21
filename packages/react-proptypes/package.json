@@ -1,7 +1,7 @@
 {
   "name": "@fluentui/react-proptypes",
   "description": "Set of custom reusable PropTypes for React components, some of them are specific for Fluent UI.",
-  "version": "0.42.0",
+  "version": "0.43.0",
   "author": "Oleksandr Fediashov <olfedias@microsoft.com>",
   "bugs": "https://github.com/microsoft/fluent-ui-react/issues",
   "dependencies": {
@@ -10,7 +10,7 @@
     "prop-types": "^15.7.2"
   },
   "devDependencies": {
-    "@fluentui/internal-tooling": "^0.42.0",
+    "@fluentui/internal-tooling": "^0.43.0",
     "lerna-alias": "^3.0.3-0"
   },
   "files": [
@@ -26,7 +26,10 @@
   },
   "repository": "microsoft/fluent-ui-react.git",
   "scripts": {
-    "build": "gulp bundle:package:no-umd --package react-proptypes"
+    "build": "gulp bundle:package:no-umd",
+    "clean": "gulp bundle:package:clean",
+    "test": "gulp test",
+    "test:watch": "gulp test:watch"
   },
   "sideEffects": false,
   "types": "dist/es/index.d.ts"

@@ -1,5 +1,5 @@
 import { SegmentProps } from '../../../../components/Segment/Segment'
-import { ICSSInJSStyle, ComponentSlotStylesPrepared } from '../../../types'
+import { ICSSInJSStyle, ComponentSlotStylesPrepared } from '@fluentui/styles'
 import { SegmentVariables } from './segmentVariables'
 import { getColorScheme } from '../../colors'
 

@@ -15,7 +15,6 @@ import {
   ChildrenComponentProps,
   getOrGenerateIdFromShorthand,
   AutoControlledComponent,
-  debounce,
 } from '../../utils'
 import {
   WithAsProp,
@@ -171,6 +170,10 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
     }
   }
 
+  componentWillUnmount() {
+    this.focusItemAtIndex.cancel()
+  }
+
   actionHandlers = {
     showNextSlideByKeyboardNavigation: e => {
       e.preventDefault()
@@ -213,8 +216,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
   itemRefs = [] as React.RefObject<HTMLElement>[]
   paddleNextRef = React.createRef<HTMLElement>()
   paddlePreviousRef = React.createRef<HTMLElement>()
-
-  focusItemAtIndex = debounce((index: number) => {
+  focusItemAtIndex = _.debounce((index: number) => {
     this.itemRefs[index].current.focus()
   }, 400)
 
@@ -276,6 +278,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
                     defaultProps: () => ({
                       active: activeIndex === index,
                       id: itemIds[index],
+                      navigation: !!this.props.navigation,
                       ...(getItemPositionText && {
                         itemPositionText: getItemPositionText(index, items.length),
                       }),
@@ -426,5 +429,7 @@ Carousel.create = createShorthandFactory({
  *
  * @accessibility
  * Implements [ARIA Carousel](https://www.w3.org/WAI/tutorials/carousels/structure/) design pattern.
+ * @accessibilityIssues
+ * [VoiceOver doens't narrate label referenced by aria-labelledby attribute, when role is "tabpanel"](https://bugs.chromium.org/p/chromium/issues/detail?id=1040924)
  */
 export default withSafeTypeForAs<typeof Carousel, CarouselProps, 'div'>(Carousel)

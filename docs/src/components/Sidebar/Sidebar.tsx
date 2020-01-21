@@ -1,5 +1,6 @@
 import {
   Box,
+  constants,
   Flex,
   HierarchicalTree,
   HierarchicalTreeItemProps,
@@ -10,24 +11,22 @@ import {
   Input,
   Segment,
   Text,
+  ShorthandValue,
 } from '@fluentui/react'
 import { CopyToClipboard } from '@fluentui/docs-components'
-import { ShorthandValue } from '../../../../packages/react/src/types'
-import Logo from 'docs/src/components/Logo/Logo'
-import { getComponentPathname } from 'docs/src/utils'
+import Logo from '../Logo/Logo'
+import { getComponentPathname } from '../../utils'
 import keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { NavLink, NavLinkProps, withRouter } from 'react-router-dom'
 
-import { constants } from '@fluentui/react/src/utils'
-
 type ComponentMenuItem = { displayName: string; type: string }
 
 const pkg = require('../../../../packages/react/package.json')
-const componentMenu: ComponentMenuItem[] = require('docs/src/componentMenu')
-const behaviorMenu: ComponentMenuItem[] = require('docs/src/behaviorMenu')
+const componentMenu: ComponentMenuItem[] = require('../../componentMenu')
+const behaviorMenu: ComponentMenuItem[] = require('../../behaviorMenu')
 
 const componentsBlackList = ['Debug', 'Design']
 
@@ -381,6 +380,15 @@ class Sidebar extends React.Component<any, any> {
           content: 'Hexagonal Avatar',
           as: NavLink,
           to: '/prototype-hexagonal-avatar',
+        },
+        public: true,
+      },
+      {
+        key: 'table',
+        title: {
+          content: 'Table',
+          as: NavLink,
+          to: '/prototype-table',
         },
         public: true,
       },

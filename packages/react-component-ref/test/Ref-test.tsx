@@ -8,14 +8,14 @@ describe('Ref', () => {
   describe('children', () => {
     it('renders single child', () => {
       const child = <div data-child="whatever" />
-      const innerRef = React.createRef()
+      const innerRef = React.createRef<HTMLDivElement>()
       const component = shallow(<Ref innerRef={innerRef}>{child}</Ref>)
 
       expect(component.contains(child)).toBeTruthy()
     })
 
     it('renders RefFindNode when a component is passed', () => {
-      const innerRef = React.createRef()
+      const innerRef = React.createRef<HTMLDivElement>()
       const wrapper = shallow(
         <Ref innerRef={innerRef}>
           <CompositeClass />
@@ -26,7 +26,7 @@ describe('Ref', () => {
     })
 
     it('renders RefForward when a component wrapper with forwardRef() is passed', () => {
-      const innerRef = React.createRef()
+      const innerRef = React.createRef<HTMLDivElement>()
       const wrapper = shallow(
         <Ref innerRef={innerRef}>
           <ForwardedRef />

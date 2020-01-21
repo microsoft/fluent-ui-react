@@ -5,7 +5,7 @@ import minimatch from 'minimatch'
 import path from 'path'
 
 import getScreenerSteps from './screener.steps'
-import config from '../../config'
+import config from '../config'
 
 const examplePaths = glob.sync('docs/src/examples/**/*.tsx', {
   ignore: ['**/index.tsx', '**/*.knobs.tsx', '**/BestPractices/*.tsx', '**/Playground.tsx'],

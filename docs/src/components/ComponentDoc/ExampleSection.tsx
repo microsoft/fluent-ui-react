@@ -1,9 +1,7 @@
 import * as React from 'react'
-import { Grid, Header } from '@fluentui/react'
+import { Grid, Extendable, Header, ICSSInJSStyle } from '@fluentui/react'
 
-import { Extendable } from 'src/types'
-
-const headerStyle: React.CSSProperties = {
+const headerStyle: ICSSInJSStyle = {
   marginTop: '1.5em',
   marginBottom: '0.5em',
   color: '#999',

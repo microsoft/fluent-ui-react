@@ -39,6 +39,8 @@ export type CheckboxVariables = {
   checkboxToggleCheckedBorderColor: string
   toggleCheckedPadding: string
   toggleIndicatorSize: string
+  toggleWidth: string
+  toggleHeight: string
 
   disabledColor: string
   disabledBackground: string
@@ -94,6 +96,8 @@ export default (siteVars: any): CheckboxVariables => ({
   toggleIndicatorSize: pxToRem(14),
   toggleMargin: '0',
   togglePadding: `${padding} ${toggleMovementDistance} ${padding} ${padding}`,
+  toggleWidth: pxToRem(38),
+  toggleHeight: pxToRem(20),
 
   checkedTextColor: _.get(siteVars, 'colorScheme.default.foreground', defaultValue),
   checkedBackground: _.get(siteVars, 'colorScheme.brand.backgroundActive1', defaultValue),
