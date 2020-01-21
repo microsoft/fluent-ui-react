@@ -12,19 +12,24 @@ export const useLink = (
   Component: IComponentWithExtras<ILinkSlots>,
   props: IStateProps<ILinkProps>,
 ) => {
-  const { disabled, href } = props;
+  const { disabled, href, componentRef, onKeyUp } = props;
   const rootRef = React.useRef<HTMLElement>(null);
 
-  React.useImperativeHandle(props.componentRef, () => ({
+  React.useImperativeHandle(componentRef, () => ({
     focus: () => {
       rootRef.current && rootRef.current.focus();
     },
   }));
 
-  const onHandleKeyDown = (ev: KeyboardEvent) => {
+  const onHandleKeyUp = (ev: React.KeyboardEvent) => {
     // If the Link is disabled we need to prevent navigation via 'Enter' key presses.
     if (disabled) {
       ev.preventDefault();
+      return;
+    }
+
+    if (onKeyUp) {
+      onKeyUp(ev);
     }
   };
 
@@ -32,11 +37,9 @@ export const useLink = (
     root: {
       'aria-disabled': disabled,
       href,
-      onKeyDown: onHandleKeyDown,
+      onKeyUp: onHandleKeyUp,
       ref: rootRef,
       role: 'link',
-      tabIndex: 0,
-      type: 'link',
     },
   });
 

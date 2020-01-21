@@ -6,7 +6,7 @@ import { FluentTheme } from '../styles/fluent/FluentTheme';
 
 export default {
   component: 'Checkbox',
-  title: 'Base Checkbox',
+  title: 'Checkbox',
 };
 
 const theme = createTheme(FluentTheme, CheckboxFluentTheme);
