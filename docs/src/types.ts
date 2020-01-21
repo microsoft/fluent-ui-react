@@ -57,7 +57,7 @@ export type ComponentProp = {
 }
 
 export type ComponentPropType = {
-  name?: 'any' | 'boolean' | 'never' | 'string' | 'array' | 'literal' | string
+  name?: 'any' | 'boolean' | 'never' | 'string' | 'array' | 'literal' | 'ShorthandValue' | string
   keyword?: boolean
   parameters?: ComponentPropType[]
   value?: string

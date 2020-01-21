@@ -2,21 +2,22 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { exampleIndexContext, exampleSourcesContext } from '../../utils'
-import { List, Segment } from '@fluentui/react'
-import { componentAPIs } from './ComponentSourceManager'
+import { constants, Header, Segment, Text } from '@fluentui/react'
+import { CodeSnippet } from '@fluentui/docs-components'
 
-import ContributionPrompt from './ContributionPrompt'
+import { exampleIndexContext, getMissingExamples } from 'docs/src/utils'
+
+const pkg = require('@fluentui/react/package.json')
 
 interface ComponentExamplesProps {
   displayName: string
 }
 
 function getExamplesElement(displayName: string) {
-  // rule #1
   const indexPath = _.find(exampleIndexContext.keys(), path =>
     new RegExp(`\/${displayName}\/index\.tsx$`).test(path),
   )
+
   if (!indexPath) {
     return null
   }
@@ -29,81 +30,107 @@ function getExamplesElement(displayName: string) {
   return ExamplesElement
 }
 
+/**
+ Avoid the boiler plate.
+ If we can show what the file should look like, just generate it and notify the dev.
+
+ prepush - confirm missing examples, plop to file if requested.
+ */
+
 export class ComponentExamples extends React.Component<ComponentExamplesProps, any> {
   static propTypes = {
     displayName: PropTypes.string.isRequired,
   }
 
   render() {
-    return this.renderExamples() || this.renderMissingExamples()
-  }
-
-  /**
-   * RULES for a component with displayName=MyComponent:
-   * 1. create a file at ./docs/src/examples/components/MyComponent/index.tsx referencing all MyComponent examples (except for Usage examples)
-   * 2. all example file names must contain the word 'Example'; e.g.: MyComponentExampleCircular.tsx
-   * 3. all example files must be under ./docs/src/examples/components/MyComponent path; e.g.: ./docs/src/examples/components/MyComponent/SomeType/SomeExample.tsx
-   * 4. for every ./docs/src/examples/components/{...}/{...}MyComponent{...}Example{...}.tsx there needs to be a shorthand version of it:
-   *              ./docs/src/examples/components/{...}/{...}MyComponent{...}Example{...}.shorthand.tsx
-   */
-  renderExamples = (): JSX.Element | null => {
     const { displayName } = this.props
-
     const ExamplesElement = getExamplesElement(displayName)
-    if (!ExamplesElement) {
-      return null
-    }
 
-    // rules #3 and #4
-    const missingPaths = this.getMissingExamplePaths(displayName, exampleSourcesContext.keys())
-    return missingPaths && missingPaths.length ? (
-      <div>
-        {this.renderMissingShorthandExamples(missingPaths)} {ExamplesElement}
-      </div>
-    ) : (
-      ExamplesElement
-    )
-  }
+    const ignoreMissingPropPatterns = [
+      /animation/,
+      /accessibility/,
+      /as/,
+      /className/,
+      /design/,
+      /styles/,
+      /variables/,
+      /default[A-Z]/,
+    ]
+    const missingExamples = getMissingExamples(displayName).filter(({ prop }) => {
+      return !ignoreMissingPropPatterns.some(re => re.test(prop.name))
+    })
 
-  renderMissingExamples = () => {
-    const { displayName } = this.props
+    return (
+      <>
+        {missingExamples && missingExamples.length > 0 && (
+          <div style={{ padding: '1em', margin: '2em 0', border: '2px solid #A22' }}>
+            <Header
+              className="no-anchor"
+              style={{ margin: '0' }}
+              align="center"
+              content="⚠ Missing Examples ⚠"
+            />
+            <Text align="center">
+              There should be an example for each component prop.
+              <br />
+              See{' '}
+              <a
+                href={`${constants.repoURL}/blob/master/.github/document-a-feature.md`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                .github/document-a-feature.md
+              </a>{' '}
+              for more.
+            </Text>
+            {_.map(missingExamples, ({ prop }) => {
+              const exampleName = [_.startCase(displayName), _.startCase(prop.name), 'Example']
+                .join('')
+                .replace(/ /g, '')
 
-    return this.renderElementWrappedInGrid(
-      <ContributionPrompt>
-        Looks like we're missing <code title={displayName}>{`<${displayName} />`}</code> examples.
-      </ContributionPrompt>,
-    )
-  }
+              const docsFilePath = `/docs/src/examples/components/${displayName}/<category>/${exampleName}.tsx`
 
-  renderMissingShorthandExamples = (missingPaths: string[]) => {
-    return this.renderElementWrappedInGrid(
-      <ContributionPrompt>
-        <div>Looks like we're missing examples at following paths:</div>
-        <List items={missingPaths} />
-      </ContributionPrompt>,
-    )
-  }
+              return (
+                <div key={prop.name} style={{ margin: '2em 0' }}>
+                  <Segment>
+                    <Header
+                      as="h4"
+                      className="no-anchor"
+                      styles={{ display: 'inline-block', color: 'inherit', margin: 0 }}
+                    >
+                      {prop.name}
+                    </Header>
+                    <Text style={{ float: 'right' }}>
+                      <code>{docsFilePath}</code>
+                    </Text>
 
-  renderElementWrappedInGrid = (Element: JSX.Element) => <Segment content={Element} />
+                    <Text style={{ display: 'block' }}>{prop.description}</Text>
+                  </Segment>
 
-  getMissingExamplePaths(displayName: string, allPaths: string[]): string[] {
-    const examplesPattern = `\./${displayName}/[\\w/]+Example`
-    const [normalExtension, shorthandExtension] = [
-      componentAPIs.children.fileSuffix,
-      componentAPIs.shorthand.fileSuffix,
-    ].map(pattern => `${pattern}.source.json`)
+                  <CodeSnippet
+                    fitted
+                    label={null}
+                    mode="jsx"
+                    value={`
+                      import { ${displayName} } from '${pkg.name}'
 
-    const [normalRegExp, shorthandRegExp] = [normalExtension, shorthandExtension].map(
-      extension => new RegExp(`${examplesPattern}${extension}$`),
-    )
+                      const ${exampleName} = () => <${displayName} ${prop.name}={} />
 
-    const expectedShorthandExamples = allPaths
-      .filter(path => normalRegExp.test(path))
-      .map(path => path.replace(normalExtension, shorthandExtension))
-    const actualShorthandExamples = allPaths.filter(path => shorthandRegExp.test(path))
-
-    return _.difference(expectedShorthandExamples, actualShorthandExamples).map(exampleFile =>
-      exampleFile.replace(/\.source\.json$/, '.tsx'),
+                      export default ${exampleName}
+                    `}
+                  />
+                </div>
+              )
+            })}
+          </div>
+        )}
+        {ExamplesElement || (
+          <Segment inverted color="red">
+            Looks like we're missing <code title={displayName}>{`<${displayName} />`}</code>{' '}
+            examples.
+          </Segment>
+        )}
+      </>
     )
   }
 }

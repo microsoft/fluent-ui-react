@@ -10,6 +10,7 @@ import parseDefaultValue from './parseDefaultValue'
 import parseDocblock from './parseDocblock'
 import parseType from './parseType'
 import getShorthandInfo from './getShorthandInfo'
+import config from '../../../../config'
 
 const getAvailableBehaviors = (accessibilityProp: ComponentProp): BehaviorInfo[] => {
   const docTags = accessibilityProp && accessibilityProp.tags
@@ -31,6 +32,20 @@ const getAvailableBehaviors = (accessibilityProp: ComponentProp): BehaviorInfo[]
 }
 
 const getComponentInfo = (filepath: string, ignoredParentInterfaces: string[]): ComponentInfo => {
+  //
+  // First, try reading an existing info file
+  //
+  const infoFilename = path.basename(filepath).replace(/\.tsx$/, '.info.json')
+  const infoFilePath = config.paths.docsSrc('componentInfo', infoFilename)
+
+  if (fs.existsSync(infoFilePath)) {
+    const jsonInfo = fs.readFileSync(infoFilePath)
+    return JSON.parse(jsonInfo.toString())
+  }
+
+  //
+  // Second, generate the info file
+  //
   const absPath = path.resolve(process.cwd(), filepath)
 
   const dir = path.dirname(absPath)

@@ -1,5 +1,6 @@
 import { danger, fail, warn, markdown } from 'danger'
 import checkChangelog from './build/dangerjs/checkChangelog'
+import checkDocExamples from './build/dangerjs/checkDocExamples'
 import detectChangedDependencies from './build/dangerjs/detectChangedDependencies'
 import detectNonApprovedDependencies from './build/dangerjs/detectNonApprovedDependencies'
 import checkPerfRegressions from './build/dangerjs/checkPerfRegressions'
@@ -15,4 +16,5 @@ export default async () => {
   await detectChangedDependencies(dangerJS)
   await detectNonApprovedDependencies(dangerJS)
   await checkPerfRegressions(dangerJS)
+  await checkDocExamples(dangerJS)
 }

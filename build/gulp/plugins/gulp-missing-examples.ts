@@ -5,16 +5,13 @@ import through2 from 'through2'
 import Vinyl from 'vinyl'
 
 import getComponentInfo from './util/getComponentInfo'
+import { getMissingExamples } from '../../../docs/src/utils'
+import { MissingExample } from '../../../docs/src/utils/getMissingExamples'
 
-const pluginName = 'gulp-component-menu'
-
-type ComponentMenuItem = {
-  displayName: string
-  type: string
-}
+const pluginName = 'gulp-missing-examples'
 
 export default () => {
-  const result: ComponentMenuItem[] = []
+  const result: MissingExample[] = []
 
   function bufferContents(file, enc, cb) {
     if (file.isNull()) {
@@ -31,10 +28,7 @@ export default () => {
       const componentInfo = getComponentInfo(file.path, [])
 
       if (componentInfo.isParent) {
-        result.push({
-          displayName: componentInfo.displayName,
-          type: componentInfo.type,
-        })
+        result.concat(getMissingExamples(componentInfo.displayName))
       }
       cb()
     } catch (err) {
@@ -51,8 +45,10 @@ export default () => {
 
   function endStream(cb) {
     const file = new Vinyl({
-      path: './componentMenu.json',
-      contents: Buffer.from(JSON.stringify(_.sortBy(result, 'displayName'), null, 2)),
+      path: './missingExamples.json',
+      contents: Buffer.from(
+        JSON.stringify(_.sortBy(result, ['info.displayName', 'prop.name']), null, 2),
+      ),
     })
 
     this.push(file)

@@ -67,6 +67,20 @@ export interface CheckboxState {
   checked: CheckboxProps['checked']
 }
 
+/**
+ * KNOWN
+ * - UIComponent goes away (must retain all features)
+ * - Full suite of hooks for each area of functionality
+ * - Partners can define component design variants based on their design orgs requirements.
+ * - Perf gains (30% avg base)
+ * - Importing a single component should not bloat consumers bundle.
+
+ * UNKNOWN
+ * - Runtime memory footprint needs to be small as possible, HOW SMALL?
+ * - what does the API look like for building custom components?
+ * - How many layers of functionality do we export and from what package?
+ */
+
 class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, CheckboxState> {
   static slotClassNames: CheckboxSlotClassNames
 

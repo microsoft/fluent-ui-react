@@ -15,6 +15,7 @@ import sh from '../sh'
 import config from '../../config'
 import gulpComponentMenu from '../plugins/gulp-component-menu'
 import gulpComponentMenuBehaviors from '../plugins/gulp-component-menu-behaviors'
+import gulpMissingExamples from '../plugins/gulp-missing-examples'
 import gulpDoctoc from '../plugins/gulp-doctoc'
 import gulpExampleMenu from '../plugins/gulp-example-menu'
 import gulpExampleSource from '../plugins/gulp-example-source'
@@ -110,6 +111,12 @@ task('build:docs:example-sources', () =>
     .pipe(dest(paths.docsSrc('exampleSources'))),
 )
 
+task('build:docs:missing-examples', () =>
+  src(componentsSrc, { since: lastRun('build:docs:missing-examples') })
+    .pipe(gulpMissingExamples())
+    .pipe(dest(paths.docsSrc('missingExamples'))),
+)
+
 task(
   'build:docs:json',
   parallel(
@@ -117,6 +124,7 @@ task(
     'build:docs:component-menu-behaviors',
     'build:docs:example-menu',
     'build:docs:example-sources',
+    'build:docs:missing-examples',
   ),
 )
 
