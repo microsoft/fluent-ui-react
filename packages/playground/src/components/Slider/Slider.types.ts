@@ -1,4 +1,4 @@
-import { IClasses, ISlotProps, ISlottableProps } from '@fluentui/react-theming';
+import { IClasses, ISlotProps, IWithSlots, IWithClasses } from '@fluentui/react-theming';
 
 export interface ISliderSlots {
   /** Intended to contain the slider */
@@ -19,7 +19,7 @@ export interface ISliderClasses extends IClasses<ISliderSlots> {
   rootDisabled: string;
 }
 
-export interface ISliderProps extends ISlottableProps<ISliderSlots, ISliderClasses> {
+export interface ISliderProps extends IWithSlots<ISliderSlots>, IWithClasses<ISliderClasses> {
   /** Sets the disabled flag, causing the control to be inactive. */
   disabled?: boolean;
 

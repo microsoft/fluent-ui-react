@@ -1,6 +1,7 @@
 import React from 'react';
 import { mergeSlotProps, IStateProps } from '@fluentui/react-theming';
-import { IButtonProps } from './Button.types';
+import { IButtonProps, IButtonSlots } from './Button.types';
+import { IComponentWithExtras } from '@fluentui/react-theming/src/slots.types';
 
 export interface IButtonState {
   onClick: (ev: MouseEvent) => void;
@@ -34,13 +35,16 @@ const useButtonState = (userProps: IStateProps<IButtonProps>): IButtonState => {
   };
 };
 
-export const useButton = (props: IStateProps<IButtonProps>) => {
+export const useButton = (
+  Component: IComponentWithExtras<IButtonSlots>,
+  props: IStateProps<IButtonProps>,
+) => {
   const { disabled, href } = props;
 
   const state = useButtonState(props);
   const { onClick, rootRef } = state;
 
-  const slotProps = mergeSlotProps(props, {
+  const slotProps = mergeSlotProps(Component, props, {
     endIcon: {},
     root: {
       'aria-disabled': disabled,

@@ -96,6 +96,7 @@ export const resolveTokens = (name: string | undefined, theme: ITheme, sourceTok
   }
 
   let allResolved: boolean;
+
   do {
     allResolved = true;
     let progressed = false;

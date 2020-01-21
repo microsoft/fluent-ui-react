@@ -1,37 +1,60 @@
+import * as React from 'react';
 import cx from 'classnames';
+import { IWithSlots, IComponentWithExtras } from '../slots.types';
+import { getNativeProps, htmlElementProperties } from '@uifabric/utilities';
 
-export interface IStandardProps {
+export interface IStandardProps<TSlots = { root: React.ReactType }> {
   id?: string;
-  name?: string;
   className?: string;
-  style?: string;
-  classes?: any;
-  slotProps?: any;
-  slots?: any;
+  style?: React.CSSProperties;
+  classes?: { [key in keyof TSlots]?: string };
 }
 
-export const mergeSlotProps = <TUserProps extends IStandardProps>(
-  userProps: TUserProps = {} as any,
-  baseSlotProps: TUserProps['slotProps'],
-) => {
-  const userSlotProps: any = userProps.slotProps || {};
-  const { id, className, style, classes = {} } = userProps;
+export const mergeSlotProps = <
+  TUserProps extends IWithSlots<TSlots> & IStandardProps<TSlots>,
+  TSlots
+>(
+  Component: IComponentWithExtras<TSlots>,
+  state: any,
+  baseSlotProps: TUserProps['slotProps'] = {},
+): NonNullable<Required<TUserProps['slotProps']>> => {
+  const userSlotProps: any = state.slotProps || {};
+  const { className, classes = {} } = state;
+  const slotProps: any = {};
 
-  // First distribute standard userProps.
-  for (const name in baseSlotProps) {
+  // Build root class names, adding variants if needed.
+  const rootClasses = [className];
+
+  if (Component.variants) {
+    for (const variant of Component.variants) {
+      const variantValue = state[variant] as any;
+      if (typeof variantValue === 'boolean' && variantValue) {
+        rootClasses.push((classes as any)[variant]);
+      } else if (typeof variantValue === 'string') {
+        rootClasses.push(
+          (classes as any)[
+            variant + variantValue.substr(0, 1).toUpperCase() + variantValue.substr(1)
+          ],
+        );
+      }
+    }
+  }
+
+  for (const name in Component.slots) {
     const isRoot = name === 'root';
+    const baseProps = (baseSlotProps as any)[name];
 
-    baseSlotProps[name] = {
-      ...(isRoot && {
-        id,
-        name,
-        style,
-      }),
-      ...baseSlotProps[name],
+    slotProps[name] = {
+      ...(isRoot && getNativeProps(state, htmlElementProperties)),
+      ...baseProps,
       ...userSlotProps[name],
-      className: cx(isRoot && className, (classes as any)[name], baseSlotProps[name].className),
+      className: cx(
+        isRoot && rootClasses,
+        (classes as any)[name],
+        baseProps && baseProps.className,
+      ),
     };
   }
 
-  return baseSlotProps;
+  return slotProps as any;
 };

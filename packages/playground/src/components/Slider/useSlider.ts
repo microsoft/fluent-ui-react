@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { useControlledState } from '../../hooks/useControlledState';
 import { useWindowEvent } from '../../hooks/useWindowEvent';
-import { ISliderProps } from './Slider.types';
-import { mergeSlotProps } from '@fluentui/react-theming';
+import { ISliderProps, ISliderSlots } from './Slider.types';
+import { mergeSlotProps, IComponentWithSlots } from '@fluentui/react-theming';
 
 import cx from 'classnames';
 
@@ -182,7 +182,10 @@ const useSliderState = (userProps: ISliderProps): ISliderState => {
   };
 };
 
-export const useSlider = (props: ISliderProps) => {
+export const useSlider = (
+  Component: IComponentWithSlots<ISliderProps, ISliderSlots>,
+  props: ISliderProps,
+) => {
   const { classes = {}, disabled, vertical } = props;
   const state = useSliderState(props);
   const {
@@ -200,7 +203,7 @@ export const useSlider = (props: ISliderProps) => {
   } = state;
   const { rootFocused, rootDisabled, rootVertical } = classes;
 
-  const slotProps = mergeSlotProps(props, {
+  const slotProps = mergeSlotProps(Component, props, {
     root: {
       ref: rootRef,
       onMouseDown,

@@ -1,7 +1,15 @@
 import preset from 'jss-preset-default';
 import jss from 'jss';
 
-export { IClasses, ISlotProps, ISlottableProps, IStateProps } from './slots.types';
+export {
+  IClasses,
+  IComponentWithSlots,
+  IComponentWithSlotsAndRef,
+  ISlotProps,
+  IWithClasses,
+  IWithSlots,
+  IStateProps,
+} from './slots.types';
 export {
   ICastableToString,
   IColorRamp,
@@ -12,6 +20,7 @@ export {
   ITokenResolver,
 } from './theme.types';
 export { mergeSlotProps } from './utilities/mergeSlotProps';
+export { getSlots } from './utilities/getSlots';
 export { compose } from './compose';
 
 // Workaround for webpack warnings

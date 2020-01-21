@@ -49,14 +49,8 @@ export const _composeFactory = (useThemeHook: any = useTheme) => {
 
     const renderFn = baseComponent.__directRender || baseComponent.render || baseComponent;
     const Component: ComposedFunctionComponent<TProps> = (props: TProps) => {
-      const theme: ITheme = useThemeHook();
+      const theme: ITheme = useThemeHook() || { components: {} };
       const slots = resolveSlots(componentName, optionsSet, theme);
-
-      if (!theme) {
-        throw new Error(
-          'No theme specified. Plese provide a ThemeProvider. See aka.ms/react-theming for more details.',
-        );
-      }
 
       return renderFn({
         ...props,
@@ -156,10 +150,17 @@ const _getClasses = (
       }
     });
 
+    const themeOptions = theme.components[name || ''];
+
+    if (themeOptions && themeOptions.styles) {
+      styles = { ...styles, ...themeOptions.styles };
+    }
+
     // Create a stylesheet for this permutation.
     const sheet = jss.createStyleSheet(styles, {
       classNamePrefix: `${name}-`,
     });
+
     sheet.update(theme);
     sheet.attach();
 

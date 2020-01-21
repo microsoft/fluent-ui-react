@@ -1,17 +1,26 @@
 import React from 'react';
 import { ISliderProps, ISliderSlots } from './Slider.types';
 import { useSlider } from './useSlider';
+import { IComponentWithSlots, getSlots } from '@fluentui/react-theming';
 
-export const SliderBase: React.FunctionComponent<ISliderProps> = (props: ISliderProps) => {
-  const { root: Root = 'div', rail: Rail = 'div', thumb: Thumb = 'div', track: Track = 'div' } =
-    props.slots || ({} as ISliderSlots);
-  const { slotProps = {} } = useSlider(props);
+export const SliderBase: IComponentWithSlots<ISliderProps, ISliderSlots> = (
+  props: ISliderProps,
+) => {
+  const slots = getSlots(SliderBase, props);
+  const { slotProps } = useSlider(SliderBase, props);
 
   return (
-    <Root {...slotProps.root}>
-      <Rail {...slotProps.rail} />
-      <Track {...slotProps.track} />
-      <Thumb {...slotProps.thumb} />
-    </Root>
+    <slots.root {...slotProps.root}>
+      <slots.rail {...slotProps.rail} />
+      <slots.track {...slotProps.track} />
+      <slots.thumb {...slotProps.thumb} />
+    </slots.root>
   );
+};
+
+SliderBase.slots = {
+  root: 'div',
+  rail: 'div',
+  thumb: 'div',
+  track: 'div',
 };
