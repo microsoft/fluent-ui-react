@@ -122,7 +122,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
   instructionMessageId = `instruction-message-${_.uniqueId()}`
 
   instructionMessageTimeout;
-  static a11yStatusCleanupTime = 500
+  static a11yStatusCleanupTime = 5000
 
   static slotClassNames: CarouselSlotClassNames = {
     itemsContainer: `${Carousel.className}__itemscontainer`,
