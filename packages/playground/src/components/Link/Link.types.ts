@@ -12,10 +12,16 @@ export interface ILinkClasses extends IClasses<ILinkSlots> {
   rootDisabled: string;
 }
 
+export interface ILink {
+  focus: () => void;
+}
+
 export interface ILinkProps
   extends IWithSlots<ILinkSlots>,
     IWithClasses<ILinkClasses>,
     React.AnchorHTMLAttributes<any> {
+  ref?: React.Ref<ILink>;
+
   /** Defines the children of the Link component. */
   children?: React.ReactNode;
 

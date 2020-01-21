@@ -11,7 +11,7 @@ export const LinkBase: IComponentWithSlotsAndRef<ILinkProps, ILinkSlots> = React
 
     return <slots.root {...slotProps.root}>{children}</slots.root>;
   },
-) as any; // ???
+) as any;
 
 LinkBase.slots = {
   root: 'a',

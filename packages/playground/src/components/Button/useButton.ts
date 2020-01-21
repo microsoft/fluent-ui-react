@@ -10,7 +10,6 @@ export interface IButtonState {
 
 const useButtonState = (userProps: IStateProps<IButtonProps>): IButtonState => {
   const { componentRef, disabled, onClick } = userProps;
-
   const rootRef = React.useRef<HTMLElement>(null);
 
   React.useImperativeHandle(componentRef, () => ({

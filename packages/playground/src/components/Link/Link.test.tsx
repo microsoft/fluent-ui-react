@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { mount } from 'enzyme';
 import { LinkBase } from './Link.base';
 
@@ -16,7 +16,9 @@ describe('LinkBase', () => {
         <LinkBase ref={link2} href="#">
           Link 2
         </LinkBase>
-        <LinkBase ref={link3}>Link 3</LinkBase>
+        <LinkBase ref={link3} href="#">
+          Link 3
+        </LinkBase>
       </div>,
     );
 

@@ -10,7 +10,6 @@
     "type": "git",
     "url": "git+https://github.com/microsoft/fluent-ui.git"
   },
-  "license": "ISC",
   "author": "JD Huntington <jdh@microsoft.com>",
   "files": [
     "lib"
@@ -35,7 +34,8 @@
   },
   "dependencies": {
     "@fluentui/react-theming": "^0.43.0",
-    "classnames": "^2.2.6"
+    "classnames": "^2.2.6",
+    "webpack-bundle-analyzer": "^3.6.0"
   },
   "devDependencies": {
     "@fluentui/scripts": "^0.43.0",
@@ -48,10 +48,10 @@
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.15.1",
     "enzyme-to-json": "^3.3.4",
-    "react": "^16.8.0"
+    "react": "^16.12.0"
   },
   "peerDependencies": {
-    "react": "^16.8.0"
+    "react": "^16.12.0"
   },
   "publishConfig": {
     "access": "public"
