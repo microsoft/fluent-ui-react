@@ -1,7 +1,7 @@
 import * as keyboardKey from 'keyboard-key'
 
 import { Accessibility, AccessibilityAttributes } from '../../types'
-import { FocusZoneMode, FocusZoneDirection } from '../../focusZone/types'
+import { FocusZoneDirection } from '../../focusZone/types'
 import treeItemBehavior from './treeItemBehavior'
 
 /**
@@ -30,7 +30,6 @@ const treeBehavior: Accessibility<TreeBehaviorProps> = props => {
       },
     },
     focusZone: {
-      mode: FocusZoneMode.Embed,
       props: {
         direction: FocusZoneDirection.vertical,
       },

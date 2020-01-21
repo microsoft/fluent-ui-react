@@ -1,9 +1,4 @@
-import {
-  Accessibility,
-  AriaRole,
-  FocusZoneMode,
-  FocusZoneDefinition,
-} from '@fluentui/accessibility'
+import { Accessibility, AriaRole, FocusZoneDefinition } from '@fluentui/accessibility'
 import { FocusZone, FOCUSZONE_WRAP_ATTRIBUTE } from '@fluentui/react-bindings'
 import * as React from 'react'
 import * as keyboardKey from 'keyboard-key'
@@ -154,30 +149,11 @@ export default (
   }
 
   if (focusZoneDefinition) {
-    if (focusZoneDefinition.mode === FocusZoneMode.Wrap) {
-      test('gets wrapped in FocusZone', () => {
-        const rendered = mountWithProviderAndGetComponent(
-          Component,
-          <Component {...requiredProps} />,
-        )
+    test('gets embedded with FocusZone', () => {
+      const rendered = mountWithProviderAndGetComponent(Component, <Component {...requiredProps} />)
 
-        const focusZone = rendered.childAt(0).childAt(0) // skip thru FelaTheme
-        expect(focusZone.type()).toEqual(FocusZone)
-
-        const focusZoneDiv = focusZone.childAt(0)
-        expect(focusZoneDiv.type()).toBe('div')
-        expect(focusZoneDiv.children().length).toBeGreaterThan(0)
-      })
-    } else if (focusZoneDefinition.mode === FocusZoneMode.Embed) {
-      test('gets embedded with FocusZone', () => {
-        const rendered = mountWithProviderAndGetComponent(
-          Component,
-          <Component {...requiredProps} />,
-        )
-
-        const focusZone = rendered.childAt(0).childAt(0) // skip thru FelaTheme
-        expect(focusZone.type()).toEqual(FocusZone)
-      })
-    }
+      const focusZone = rendered.childAt(0).childAt(0) // skip thru FelaTheme
+      expect(focusZone.type()).toEqual(FocusZone)
+    })
   }
 }

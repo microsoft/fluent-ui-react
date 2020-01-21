@@ -1,5 +1,5 @@
 import { Accessibility } from '../../types'
-import { FocusZoneMode, FocusZoneDirection } from '../../focusZone/types'
+import { FocusZoneDirection } from '../../focusZone/types'
 import menuItemBehavior from './menuItemBehavior'
 import menuDividerBehavior from './menuDividerBehavior'
 
@@ -22,7 +22,6 @@ const menuBehavior: Accessibility<MenuBehaviorProps> = props => ({
     },
   },
   focusZone: {
-    mode: FocusZoneMode.Embed,
     props: {
       isCircularNavigation: true,
       shouldFocusInnerElementWhenReceivedFocus: true,

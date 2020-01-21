@@ -2,7 +2,7 @@ import * as keyboardKey from 'keyboard-key'
 
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../attributes'
 import { Accessibility } from '../../types'
-import { FocusZoneMode, FocusZoneDirection } from '../../focusZone/types'
+import { FocusZoneDirection } from '../../focusZone/types'
 
 const CHAT_FOCUSZONE_ATTRIBUTE = 'chat-focuszone'
 
@@ -22,7 +22,6 @@ const ChatBehavior: Accessibility = () => ({
     root: {},
   },
   focusZone: {
-    mode: FocusZoneMode.Embed,
     props: {
       shouldEnterInnerZone: event => keyboardKey.getCode(event) === keyboardKey.Enter,
       direction: FocusZoneDirection.vertical,

@@ -1,5 +1,5 @@
 import { Accessibility } from '../../types'
-import { FocusZoneMode, FocusZoneDirection } from '../../focusZone/types'
+import { FocusZoneDirection } from '../../focusZone/types'
 import menuItemAsToolbarButtonBehavior from './menuItemAsToolbarButtonBehavior'
 
 /**
@@ -19,7 +19,6 @@ const menuAsToolbarBehavior: Accessibility = () => ({
     },
   },
   focusZone: {
-    mode: FocusZoneMode.Embed,
     props: {
       shouldFocusInnerElementWhenReceivedFocus: true,
       direction: FocusZoneDirection.bidirectionalDomOrder,

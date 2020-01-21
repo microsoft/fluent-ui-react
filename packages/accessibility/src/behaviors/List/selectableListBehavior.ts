@@ -1,5 +1,5 @@
 import { Accessibility } from '../../types'
-import { FocusZoneMode, FocusZoneDirection } from '../../focusZone/types'
+import { FocusZoneDirection } from '../../focusZone/types'
 import { ListBehaviorProps } from './listBehavior'
 
 /**
@@ -24,7 +24,6 @@ const selectableListBehavior: Accessibility<ListBehaviorProps> = props => ({
     },
   },
   focusZone: {
-    mode: FocusZoneMode.Embed,
     props: {
       shouldFocusInnerElementWhenReceivedFocus: true,
       direction: FocusZoneDirection.bidirectionalDomOrder,

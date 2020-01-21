@@ -1,5 +1,5 @@
 import { Accessibility } from '../../types'
-import { FocusZoneMode, FocusZoneDirection } from '../../focusZone/types'
+import { FocusZoneDirection } from '../../focusZone/types'
 import menuItemBehavior from './menuItemBehavior'
 
 /**
@@ -20,7 +20,6 @@ const submenuBehavior: Accessibility = () => ({
     },
   },
   focusZone: {
-    mode: FocusZoneMode.Embed,
     props: {
       isCircularNavigation: true,
       shouldFocusOnMount: true,

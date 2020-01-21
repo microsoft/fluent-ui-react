@@ -1,6 +1,6 @@
 import { Accessibility } from '../../types'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../attributes'
-import { FocusZoneMode, FocusZoneDirection } from '../../focusZone/types'
+import { FocusZoneDirection } from '../../focusZone/types'
 import * as keyboardKey from 'keyboard-key'
 import gridHeaderCellBehavior from './gridHeaderCellBehavior'
 
@@ -23,7 +23,6 @@ const gridHeaderRowBehavior: Accessibility = props => ({
     },
   },
   focusZone: {
-    mode: FocusZoneMode.Embed,
     props: {
       direction: FocusZoneDirection.horizontal,
       shouldFocusInnerElementWhenReceivedFocus: true,

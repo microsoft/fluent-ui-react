@@ -1,5 +1,5 @@
 import { Accessibility } from '../../types'
-import { FocusZoneMode, FocusZoneDirection } from '../../focusZone/types'
+import { FocusZoneDirection } from '../../focusZone/types'
 import tabBehavior from './tabBehavior'
 
 /**
@@ -19,7 +19,6 @@ const tabListBehavior: Accessibility = () => ({
     },
   },
   focusZone: {
-    mode: FocusZoneMode.Embed,
     props: {
       shouldFocusInnerElementWhenReceivedFocus: true,
       direction: FocusZoneDirection.bidirectionalDomOrder,

@@ -1,4 +1,4 @@
-import { FocusZoneMode, FocusZoneDirection } from '../../focusZone/types'
+import { FocusZoneDirection } from '../../focusZone/types'
 import { Accessibility } from '../../types'
 import { ListBehaviorProps } from './listBehavior'
 
@@ -15,7 +15,6 @@ const navigableListBehavior: Accessibility<ListBehaviorProps> = props => ({
     },
   },
   focusZone: {
-    mode: FocusZoneMode.Embed,
     props: {
       shouldFocusInnerElementWhenReceivedFocus: true,
       direction: FocusZoneDirection.bidirectionalDomOrder,

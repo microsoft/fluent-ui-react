@@ -1,6 +1,6 @@
 import { Accessibility } from '../../types'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../attributes'
-import { FocusZoneMode, FocusZoneDirection } from '../../focusZone/types'
+import { FocusZoneDirection } from '../../focusZone/types'
 import * as keyboardKey from 'keyboard-key'
 
 /**
@@ -19,7 +19,6 @@ const gridCellMultipleFocusableBehavior: Accessibility = props => ({
     },
   },
   focusZone: {
-    mode: FocusZoneMode.Embed,
     props: {
       direction: FocusZoneDirection.bidirectional,
     },

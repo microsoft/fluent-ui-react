@@ -1,5 +1,5 @@
 import { Accessibility } from '../../types'
-import { FocusZoneMode, FocusZoneDirection } from '../../focusZone/types'
+import { FocusZoneDirection } from '../../focusZone/types'
 
 /**
  * @description
@@ -13,7 +13,6 @@ import { FocusZoneMode, FocusZoneDirection } from '../../focusZone/types'
 const gridHorizontalBehavior: Accessibility = () => ({
   attributes: {},
   focusZone: {
-    mode: FocusZoneMode.Embed,
     props: {
       direction: FocusZoneDirection.bidirectionalDomOrder,
     },

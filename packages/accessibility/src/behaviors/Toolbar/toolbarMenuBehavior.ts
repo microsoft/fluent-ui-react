@@ -1,5 +1,5 @@
 import { Accessibility } from '../../types'
-import { FocusZoneMode, FocusZoneDirection } from '../../focusZone/types'
+import { FocusZoneDirection } from '../../focusZone/types'
 import toolbarMenuItemBehavior from './toolbarMenuItemBehavior'
 import * as keyboardKey from 'keyboard-key'
 
@@ -29,7 +29,6 @@ const toolbarMenuBehavior: Accessibility = () => ({
     },
   },
   focusZone: {
-    mode: FocusZoneMode.Embed,
     props: {
       isCircularNavigation: true,
       shouldFocusOnMount: true,

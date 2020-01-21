@@ -1,5 +1,5 @@
 import { Accessibility, AccessibilityAttributes } from '../../types'
-import { FocusZoneMode, FocusZoneDirection } from '../../focusZone/types'
+import { FocusZoneDirection } from '../../focusZone/types'
 import hierarchicalSubtreeBehavior from './hierarchicalSubtreeBehavior'
 
 /**
@@ -26,7 +26,6 @@ const hierarchicalTreeBehavior: Accessibility<TreeBehaviorProps> = props => {
       },
     },
     focusZone: {
-      mode: FocusZoneMode.Embed,
       props: {
         direction: FocusZoneDirection.vertical,
       },
