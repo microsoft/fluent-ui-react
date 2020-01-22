@@ -1,9 +1,7 @@
 import * as _ from 'lodash'
-import { ComponentInfo, ComponentProp } from '../types'
+import { MissingExample } from '../types'
 import componentInfoContext from './componentInfoContext'
 import { exampleSourcesContext } from './exampleContexts'
-
-export type MissingExample = { info: ComponentInfo; prop: ComponentProp }
 
 /**
  * Given a `displayName`, return all the `componentInfo` prop definitions for this component

@@ -10,7 +10,7 @@ import parseDefaultValue from './parseDefaultValue'
 import parseDocblock from './parseDocblock'
 import parseType from './parseType'
 import getShorthandInfo from './getShorthandInfo'
-import config from '../../../../config'
+import config from '../../../config'
 
 const getAvailableBehaviors = (accessibilityProp: ComponentProp): BehaviorInfo[] => {
   const docTags = accessibilityProp && accessibilityProp.tags

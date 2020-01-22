@@ -112,7 +112,7 @@ task('build:docs:example-sources', () =>
 )
 
 task('build:docs:missing-examples', () =>
-  src(componentsSrc, { since: lastRun('build:docs:missing-examples') })
+  src(examplesSrc, { since: lastRun('build:docs:missing-examples') })
     .pipe(gulpMissingExamples())
     .pipe(dest(paths.docsSrc('missingExamples'))),
 )

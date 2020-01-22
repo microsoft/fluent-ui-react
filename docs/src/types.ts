@@ -69,8 +69,11 @@ export type KnobGeneratorOptions = {
   componentInfo: ComponentInfo
   theme: ThemePrepared
 }
+
 export type KnobDefinition = UseKnobOptions<any> & { hook: Function }
 
 export type KnobGenerator<T> = (options: KnobGeneratorOptions) => KnobDefinition
 
 export type KnobComponentGenerators<P> = Partial<Record<keyof P, KnobGenerator<any>>>
+
+export type MissingExample = { info: ComponentInfo; prop: ComponentProp }
