@@ -1,7 +1,6 @@
 import * as React from 'react'
-import { Provider, Animation, Icon, Button } from '@fluentui/react'
+import { Provider, Animation, Button, Icon } from '@fluentui/react'
 import { useLogKnob } from '@fluentui/docs-components'
-import { easeEasy } from 'src/themes/teams/animations/timingFunctions'
 
 const AnimationExampleVisible = () => {
   const [visible, setVisible] = React.useState(false)
@@ -24,7 +23,7 @@ const AnimationExampleVisible = () => {
               '100%': { opacity: 1 },
             },
             duration: '500ms',
-            timingFunction: easeEasy,
+            timingFunction: 'cubic-bezier(0.33,0.00,0.67,1.00)',
             fillMode: 'forwards',
           },
           fadeExitSlow: {
@@ -33,7 +32,7 @@ const AnimationExampleVisible = () => {
               '100%': { opacity: 0 },
             },
             duration: '500ms',
-            timingFunction: easeEasy,
+            timingFunction: 'cubic-bezier(0.33,0.00,0.67,1.00)',
             fillMode: 'forwards',
           },
         },
@@ -56,7 +55,25 @@ const AnimationExampleVisible = () => {
         mountOnEnter
         unmountOnExit
       >
-        <Icon name="mention" circular bordered />
+        {({ classes }) => <Icon name="mention" className={classes} />}
+      </Animation>
+      <Animation
+        visible={visible}
+        timeout={{
+          enter: 1000,
+          exit: 2000,
+        }}
+        onEnter={onEnter}
+        onEntering={onEntering}
+        onEntered={onEntered}
+        onExit={onExit}
+        onExiting={onExiting}
+        onExited={onExited}
+        name={visible ? 'fadeEnterSlow' : 'fadeExitSlow'}
+        mountOnEnter
+        unmountOnExit
+      >
+        <Icon name="mention" />
       </Animation>
     </Provider>
   )

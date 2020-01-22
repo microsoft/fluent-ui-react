@@ -8,16 +8,17 @@ import {
   childrenExist,
   StyledComponentProps,
   commonPropTypes,
-  ChildrenComponentProps,
   ShorthandFactory,
 } from '../../utils'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
-export interface AnimationProps
-  extends StyledComponentProps,
-    ChildrenComponentProps<React.ReactChild> {
+export type AnimationChildrenProp = (props: { classes: string }) => React.ReactNode
+
+export interface AnimationProps extends StyledComponentProps {
   /** Additional CSS class name(s) to apply.  */
   className?: string
+
+  children: AnimationChildrenProp | React.ReactChild
 
   /** The name for the animation that should be applied, defined in the theme. */
   name?: string
@@ -122,8 +123,9 @@ class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
       accessibility: false,
       as: false,
       content: false,
-      children: 'element',
+      children: false,
     }),
+    children: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
     name: PropTypes.string,
     delay: PropTypes.string,
     direction: PropTypes.string,
@@ -168,7 +170,9 @@ class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
     } = this.props
 
     const child =
-      childrenExist(children) && (React.Children.only(children) as React.ReactElement<any>)
+      childrenExist(children) &&
+      typeof children !== 'function' &&
+      (React.Children.only(children) as React.ReactElement<any>)
 
     return (
       <Transition
@@ -184,9 +188,13 @@ class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
         onExiting={onExiting}
         onExited={onExited}
         {...unhandledProps}
-        className={cx(classes.root, child.props.className)}
+        className={
+          typeof children !== 'function' ? cx(classes.root, (child as any).props.className) : ''
+        }
       >
-        {child}
+        {typeof children !== 'function'
+          ? child
+          : () => (children as AnimationChildrenProp)({ classes: classes.root })}
       </Transition>
     )
   }
