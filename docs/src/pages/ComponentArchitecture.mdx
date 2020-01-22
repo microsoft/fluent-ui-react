@@ -46,12 +46,12 @@ created with a different use-case.
 It is important to have consistent accessibility, and passing in a new accessibility model might create major
 challenges to keep our components accessible, and also predictable. If a particular component needs to have multiple
 accessibility models (keyboarding, attributes), it should make that decision based on a single prop with a fixed set
-of implementation options (i.e. a `accessibilityMode` prop that accepted a fixed set of string values as input).
+of implementation options (i.e. a `accessibilityMode` prop that accepts a fixed set of string values as input).
 
 # Themed components
 
 The control library should ship a set of unopinionated components (i.e. base components) but also components which are
-pre-scaffolded with Fluent opinions (themed components). Fluent will be opinionated but customizable.
+pre-scaffolded with Fluent design opinions (themed components). Fluent will be opinionated but customizable.
 
 #### Themed components are the glue that ties together context, theming, and the base component. There are several potential implementations (`createComponent`, other HoCs), but serve as the higher level abstraction that brings only the necessary pieces to a consumer's application bundle.
 
@@ -62,7 +62,7 @@ the page.
 #### The themed layer is the preferred layer to add hard graph edges. Each themed control should be intuitive to use for a developer, and should come with "batteries included".
 
 Each themed component that relies on sub-components should specify which components to render through
-a slots prop.
+the slots prop.
 
 The slots prop must be accessible in several means to ensure that a "recursive component" can be accurately described.
 
@@ -79,7 +79,7 @@ the ability to adjust the look and feel of the component.
 #### Themed components pass through unhandled but filtered props, which should be rendered on the `root` of a base component
 
 Each themed control should accept any number of props that will be rendered by the base control's root slot.
-The base control should leverage a platform library function to pass all relevant native props to appropriate
+The base control should leverage a platform library's function to pass all relevant native props to appropriate
 controls whenever available.
 
 # Code organization
@@ -88,7 +88,7 @@ controls whenever available.
 
 Each component will live in its own package, with `@next`
 versions of components published at will. This allows consumers to
-opt-in to speicifc versions of new components without requiring a
+opt-in to specific versions of new components without requiring a
 sweeping set of changes to an application.
 
 A “meta-package” will also be published for casual consumers. A

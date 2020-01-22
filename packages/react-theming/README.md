@@ -83,7 +83,7 @@ each and every component\'s look and feel as well as behavior.
 
 # Using components created with `compose`
 
-There is no requirement around using components build with `compose`.
+There is no requirement around using components built with `compose`.
 If you use them without a theme, they will render with whichever
 default token/styling values, if any, are provided.
 
@@ -99,7 +99,7 @@ information.
 
 All components derive from base components, which have a simple class
 name contract. A consumer is free to bring along their own styles and
-pass class names to components and they will render the correct
+pass class names to components, which will render the expected
 result.
 
 Additionally, `createComponent` itself is derived from a factory which
@@ -379,7 +379,7 @@ downlevel slots.
 `props.slots` will be a dictionary mapping individual slots to
 `ReactType` values which can then be used in JSX.
 
-`slots` are defined in createComponent by specifying a slots argument:
+`slots` are defined in `createComponent` by specifying a slots argument:
 
 ```jsx
 const CreatedComponent = createComponent(BaseComponent, {
@@ -441,7 +441,7 @@ will be developed to resolve state and intelligently merge `props` into
 ## Conformance
 
 In order to validate that a base control conforms to the interface,
-simply add one test per slot test alongside the implementation and run
+simply add one test per slot alongside the implementation and run
 within your CI environment:
 
 ```jsx
