@@ -1,4 +1,5 @@
 import { Accessibility, checkboxBehavior } from '@fluentui/accessibility'
+import CheckboxBase from './CheckboxBase'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -149,11 +150,14 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
     })
 
     return (
-      <ElementType
-        className={classes.root}
+      <CheckboxBase
+        slots={{ root: ElementType }}
+        slotProps={{ input: { style: { visibility: 'hidden', display: 'none' } } }}
+        classes={classes}
         onClick={this.handleClick}
         onChange={this.handleChange}
         onFocus={this.handleFocus}
+        checked={this.state.checked}
         {...accessibility.attributes.root}
         {...unhandledProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
@@ -169,7 +173,7 @@ class Checkbox extends AutoControlledComponent<WithAsProp<CheckboxProps>, Checkb
           }),
         })}
         {labelPosition === 'end' && labelElement}
-      </ElementType>
+      </CheckboxBase>
     )
   }
 }
