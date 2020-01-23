@@ -110,7 +110,6 @@ export interface CarouselState {
   ariaLiveOn: boolean
   itemIds: string[]
   a11yNavigationInstructionMessage: string
-  a11yInstructionMessageVisibility: string
 }
 
 class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, CarouselState> {
@@ -147,7 +146,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
     paddleNext: customPropTypes.itemShorthand,
     paddlesPosition: PropTypes.string,
     paddlePrevious: customPropTypes.itemShorthand,
-    a11yNavigationInstructionMessage: PropTypes.string,    
+    a11yNavigationInstructionMessage: PropTypes.string,
   }
 
   static autoControlledProps = ['activeIndex']
@@ -217,7 +216,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
   }
 
   getInitialAutoControlledState(): CarouselState {
-    return { activeIndex: 0, ariaLiveOn: false, itemIds: [] as string[], a11yNavigationInstructionMessage: null, a11yInstructionMessageVisibility: "false"}
+    return { activeIndex: 0, ariaLiveOn: false, itemIds: [] as string[], a11yNavigationInstructionMessage: null }
   }
 
   itemRefs = [] as React.RefObject<HTMLElement>[]
@@ -258,29 +257,28 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
   }
 
   instructionMessageTimeout;
-  static a11yStatusCleanupTime = 2000
+  static a11yStatusCleanupTime = 500
 
   clearA11yNavigationInstructionMessage = _.debounce(() => {
-    this.setState({ a11yInstructionMessageVisibility: "true"})
+    this.setState({ a11yNavigationInstructionMessage: " " })
   }, Carousel.a11yStatusCleanupTime)
 
   setA11yNavigationInstructionMessageOnComponent() {
-    clearTimeout(this.instructionMessageTimeout)  
+    clearTimeout(this.instructionMessageTimeout)
   }
 
   removeA11yNavigationInstructionMessageOnComponent() {
     this.instructionMessageTimeout = setTimeout(() => {
       this.setState({ a11yNavigationInstructionMessage: null })
-      this.setState({ a11yInstructionMessageVisibility: "false" })
     }, 0)
   }
 
-  setA11yNavigationInstructionMessageCarousel() {    
-    if (!this.state.a11yNavigationInstructionMessage)
-    {      
-      this.setState({ a11yNavigationInstructionMessage: this.props.a11yNavigationInstructionMessage })          
+  setA11yNavigationInstructionMessageCarousel() {
+    if (!this.state.a11yNavigationInstructionMessage) {
+      // setTimeout( ()=> this.setState({ a11yNavigationInstructionMessage: this.props.a11yNavigationInstructionMessage }), 500)
+      this.setState({ a11yNavigationInstructionMessage: this.props.a11yNavigationInstructionMessage })
     }
-     this.clearA11yNavigationInstructionMessage()
+    this.clearA11yNavigationInstructionMessage()
   }
 
 
@@ -295,7 +293,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
         <div
           onFocus={this.setA11yNavigationInstructionMessageCarousel.bind(this)}
           className={Carousel.slotClassNames.itemsContainer}
-          aria-roledescription={ariaRoleDescription}          
+          aria-roledescription={ariaRoleDescription}
           style={styles.itemsContainer}
           {...accessibility.attributes.itemsContainer}
           {...applyAccessibilityKeyHandlers(
@@ -322,9 +320,8 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
                 </Ref>
               )
             })}
-          <div            
-            aria-live="polite"            
-            aria-hidden={this.state.a11yInstructionMessageVisibility}
+          <div
+            aria-live="polite"
             style={screenReaderContainerStyles}
           >
             {this.state.a11yNavigationInstructionMessage}
