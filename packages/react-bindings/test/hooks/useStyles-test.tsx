@@ -16,7 +16,7 @@ type TestComponentProps = {
 const TestComponent: React.FunctionComponent<TestComponentProps> = props => {
   const { className, color, styles, variables } = props
 
-  const [classes] = useStyles('Test', {
+  const { classes } = useStyles('Test', {
     className: 'ui-test',
     mapPropsToStyles: () => ({ color }),
     mapPropsToInlineStyles: () => ({ className, styles, variables }),

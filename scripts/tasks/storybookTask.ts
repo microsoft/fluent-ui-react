@@ -1,6 +1,7 @@
 import { resolveCwd, argv } from 'just-scripts'
 import path from 'path'
 
+// @ts-ignore
 import storybook from '@storybook/react/standalone'
 
 interface StorybookTaskOptions {

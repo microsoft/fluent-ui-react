@@ -24,6 +24,7 @@
     "@types/gulp-remember": "^0.0.31",
     "@types/jest-axe": "^3.2.1",
     "@types/jest": "^24.0.19",
+    "@types/lerna-alias": "^3.0.0",
     "@types/node": "^10.3.2",
     "@types/puppeteer": "^1.11.1",
     "@types/webpack-dev-middleware": "^2.0.1",

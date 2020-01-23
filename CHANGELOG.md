@@ -19,15 +19,18 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### BREAKING CHANGES
 - Add `@fluentui/styles` package for all styles' related utilities and TS types @layershifter, @mnajdova ([#2222](https://github.com/microsoft/fluent-ui-react/pull/2222))
+- Remove `animation` prop from all components @joschect ([#2239](https://github.com/microsoft/fluent-ui-react/pull/2239))
 
 ### Fixes
 - Fix event listener leak in `FocusZone` @miroslavstastny ([#2227](https://github.com/microsoft/fluent-ui-react/pull/2227))
 - Fix styleParam to always be required in the styles functions @layershifter, @mnajdova ([#2235](https://github.com/microsoft/fluent-ui-react/pull/2235))
+- Check input and button refs exist before focus in `Dropdown` @silviuavram ([#2248](https://github.com/microsoft/fluent-ui-react/pull/2248))
 
 ### Features
 - Allow `useRef` hook used for storing debugging data to be defined in any order with other hooks in functional components @layershifter, @mnajdova ([#2236](https://github.com/microsoft/fluent-ui-react/pull/2236))
 - Add `useStyles()` hook to use theming capabilities in custom components @layershifter, @mnajdova ([#2217](https://github.com/microsoft/fluent-ui-react/pull/2217))
 - Add optional wrapper function to `List` which can be used to inject custom scrollbars to `Dropdown` @jurokapsiar ([#2092](https://github.com/microsoft/fluent-ui-react/pull/2092))
+- Add `useTelemetry()` hook for adding telemetry information for the Fluent components and improve return types for the `useStyles` and `useStateManager` hooks @mnajdova ([#2257](https://github.com/microsoft/fluent-ui-react/pull/2257))
 
 ### Documentation
 - Add per-component performance charts @miroslavstastny ([#2240](https://github.com/microsoft/fluent-ui-react/pull/2240))

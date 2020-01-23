@@ -145,7 +145,6 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
 
   static propTypes = {
     ...commonPropTypes.createCommon({
-      animated: false,
       as: false,
       content: false,
     }),

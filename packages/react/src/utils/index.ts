@@ -43,4 +43,3 @@ export module commonPropTypes {
   export type CreateCommonConfig = CreateCommonConfigLocal
   export const createCommon = createCommonLocal
 }
-export { default as Telemetry } from './Telemetry'

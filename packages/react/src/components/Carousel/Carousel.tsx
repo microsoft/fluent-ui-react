@@ -278,6 +278,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
                     defaultProps: () => ({
                       active: activeIndex === index,
                       id: itemIds[index],
+                      navigation: !!this.props.navigation,
                       ...(getItemPositionText && {
                         itemPositionText: getItemPositionText(index, items.length),
                       }),
@@ -428,5 +429,7 @@ Carousel.create = createShorthandFactory({
  *
  * @accessibility
  * Implements [ARIA Carousel](https://www.w3.org/WAI/tutorials/carousels/structure/) design pattern.
+ * @accessibilityIssues
+ * [VoiceOver doens't narrate label referenced by aria-labelledby attribute, when role is "tabpanel"](https://bugs.chromium.org/p/chromium/issues/detail?id=1040924)
  */
 export default withSafeTypeForAs<typeof Carousel, CarouselProps, 'div'>(Carousel)

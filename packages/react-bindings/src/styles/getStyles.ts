@@ -15,7 +15,6 @@ import {
 import cx from 'classnames'
 import * as _ from 'lodash'
 
-import createAnimationStyles from './createAnimationStyles'
 import resolveStylesAndClasses from './resolveStylesAndClasses'
 import {
   ComponentDesignProp,
@@ -69,22 +68,19 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
       )(theme.siteVariables)
     : resolvedComponentVariables[displayName]
 
-  const animationStyles = props.animation
-    ? createAnimationStyles(props.animation, theme)
-    : undefined
-
   // Resolve styles using resolved variables, merge results, allow props.styles to override
   let mergedStyles: ComponentSlotStylesPrepared = theme.componentStyles[displayName] || {
     root: () => ({}),
   }
 
-  if (!_.isNil(props.design) || !_.isNil(props.animation) || !_.isNil(props.styles)) {
+  const hasInlineOverrides = !_.isNil(props.design) || !_.isNil(props.styles)
+
+  if (hasInlineOverrides) {
     mergedStyles = mergeComponentStyles(
       mergedStyles,
       props.design && withDebugId({ root: props.design }, 'props.design'),
       props.styles &&
         withDebugId({ root: props.styles } as ComponentSlotStylesInput, 'props.styles'),
-      animationStyles && withDebugId({ root: animationStyles }, 'props.animation'),
     )
   }
 
