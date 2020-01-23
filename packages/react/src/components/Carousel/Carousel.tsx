@@ -257,7 +257,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
   }
 
   instructionMessageTimeout;
-  static a11yStatusCleanupTime = 500
+  static a11yStatusCleanupTime = 4000
 
   clearA11yNavigationInstructionMessage = _.debounce(() => {
     this.setState({ a11yNavigationInstructionMessage: " " })
