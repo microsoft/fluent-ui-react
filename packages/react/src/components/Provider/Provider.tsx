@@ -150,6 +150,9 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
     if (this.props.target) {
       tryCleanupWhatInput(this.props.target)
     }
+
+    delete this.outgoingContext.target
+    console.log('DD', this.outgoingContext)
   }
 
   render() {

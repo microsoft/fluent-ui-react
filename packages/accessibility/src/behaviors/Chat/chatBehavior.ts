@@ -11,7 +11,6 @@ const CHAT_FOCUSZONE_ATTRIBUTE = 'chat-focuszone'
  * Adds a vertical focus zone navigation with a last message as a default tabbable element, pressing enter key focuses inside a message.
  *
  * @specification
- * Embeds component into FocusZone.
  * Provides arrow key navigation in vertical direction.
  * Focus is set initially on the specified default tabbable element.
  * Focused active element of the component is reset when TAB from the component.

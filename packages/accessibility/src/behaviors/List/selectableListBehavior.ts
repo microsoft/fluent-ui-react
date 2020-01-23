@@ -10,7 +10,6 @@ import { ListBehaviorProps } from './listBehavior'
  * Adds role='listbox'.
  * Adds attribute 'tabIndex=-1' to 'root' slot.
  * Adds attribute 'aria-orientation=horizontal' to 'root' slot if 'horizontal' property is true. Does not set the attribute otherwise.
- * Embeds component into FocusZone.
  * Provides arrow key navigation in bidirectionalDomOrder direction.
  */
 const selectableListBehavior: Accessibility<ListBehaviorProps> = props => ({

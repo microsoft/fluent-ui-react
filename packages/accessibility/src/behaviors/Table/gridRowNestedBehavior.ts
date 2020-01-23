@@ -8,7 +8,6 @@ import gridCellBehavior from './gridCellBehavior'
  * @specification
  * Adds role='row'.
  * Adds attribute 'data-is-focusable=true' to 'root' slot.
- * Embeds component into FocusZone.
  * Focus can be moved inside a child component with embeded inner FocusZone by pressing a specified key.
  * Provides arrow key navigation in horizontal direction.
  * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'root'.

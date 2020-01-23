@@ -8,7 +8,6 @@ import gridHeaderCellBehavior from './gridHeaderCellBehavior'
  * @specification
  * Adds role='row'.
  * Adds attribute 'data-is-focusable=true' to 'root' slot.
- * Embeds component into FocusZone.
  * Provides arrow key navigation in horizontal direction.
  * Focused active element of the component is reset when TAB from the component.
  * When component's container element receives focus, focus will be set to the default focusable child element of the component.

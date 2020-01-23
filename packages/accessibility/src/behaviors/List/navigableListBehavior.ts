@@ -5,7 +5,6 @@ import { ListBehaviorProps } from './listBehavior'
 /**
  * @specification
  * Adds role='menu'.
- * Embeds component into FocusZone.
  * Provides arrow key navigation in bidirectionalDomOrder direction.
  */
 const navigableListBehavior: Accessibility<ListBehaviorProps> = props => ({

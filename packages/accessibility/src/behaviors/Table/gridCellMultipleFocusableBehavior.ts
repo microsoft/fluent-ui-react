@@ -7,7 +7,6 @@ import * as keyboardKey from 'keyboard-key'
  * @specification
  * Adds role='gridcell'.
  * Adds attribute 'data-is-focusable=true' to 'root' slot.
- * Embeds component into FocusZone.
  * Provides arrow key navigation in bidirectional direction.
  * Triggers 'focusCell' action with 'Escape' on 'root'.
  */

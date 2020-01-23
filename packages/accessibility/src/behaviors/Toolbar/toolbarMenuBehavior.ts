@@ -9,7 +9,6 @@ import * as keyboardKey from 'keyboard-key'
  *
  * @specification
  * Adds role='menu'.
- * Embeds component into FocusZone.
  * Provides arrow key navigation in vertical direction.
  * Keyboard navigation is circular.
  * Component will get focus when mounted.

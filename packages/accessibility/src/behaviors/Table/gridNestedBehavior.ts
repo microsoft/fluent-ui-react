@@ -6,7 +6,6 @@ import gridRowBehavior from './gridRowBehavior'
 /**
  * @specification
  * Adds role='grid'.
- * Embeds component into FocusZone.
  * Focus can be moved inside a child component with embeded inner FocusZone by pressing a specified key.
  * Provides arrow key navigation in vertical direction.
  * Focused active element of the component is reset when TAB from the component.
