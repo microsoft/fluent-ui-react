@@ -110,10 +110,11 @@ export interface CarouselState {
   ariaLiveOn: boolean
   itemIds: string[]
   a11yNavigationInstructionMessage: string
+  wasInstructionMessageSet: boolean
 }
 
 class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, CarouselState> {
-  static create: ShorthandFactory<CarouselProps>  
+  static create: ShorthandFactory<CarouselProps>
 
   static displayName = 'Carousel'
 
@@ -121,8 +122,6 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
 
   instructionMessageId = `instruction-message-${_.uniqueId()}`
 
-  instructionMessageTimeout;
-  static a11yStatusCleanupTime = 5000
 
   static slotClassNames: CarouselSlotClassNames = {
     itemsContainer: `${Carousel.className}__itemscontainer`,
@@ -221,7 +220,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
   }
 
   getInitialAutoControlledState(): CarouselState {
-    return { activeIndex: 0, ariaLiveOn: false, itemIds: [] as string[], a11yNavigationInstructionMessage: this.props.a11yNavigationInstructionMessage, }
+    return { activeIndex: 0, ariaLiveOn: false, itemIds: [] as string[], a11yNavigationInstructionMessage: this.props.a11yNavigationInstructionMessage, wasInstructionMessageSet: false }
   }
 
   itemRefs = [] as React.RefObject<HTMLElement>[]
@@ -261,18 +260,37 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
     }
   }
 
+  instructionMessageTimeout;
+  instructionCarouselTimeout
+  static a11yStatusCleanupTime = 1000
+
   clearA11yNavigationInstructionMessage = _.debounce(() => {
-    this.setState({ a11yNavigationInstructionMessage: null })
+    this.setState({ a11yNavigationInstructionMessage: null })    
   }, Carousel.a11yStatusCleanupTime)
 
-  setA11yNavigationInstructionMessage() {
-    clearTimeout(this.instructionMessageTimeout)    
+
+  onFocusA11yNavigationInstructionMessageOnComponent() {
+    clearTimeout(this.instructionMessageTimeout)
+    if (!this.state.wasInstructionMessageSet) {
+      this.setState({ a11yNavigationInstructionMessage: this.props.a11yNavigationInstructionMessage })
+      this.setState({ wasInstructionMessageSet: true })
+    }
+  }
+
+  onBlurA11yNavigationInstructionMessageOnComponent() {
+    this.instructionMessageTimeout = setTimeout(() => {
+      this.setState({ wasInstructionMessageSet: false }) 
+    }, 0)
+  }
+
+  onFocusA11yNavigationInstructionMessageCarousel() {
+    clearTimeout(this.instructionCarouselTimeout)
     this.clearA11yNavigationInstructionMessage()
   }
 
-  removeA11yNavigationInstructionMessage() {
-    this.instructionMessageTimeout = setTimeout(() => {      
-      this.setState({ a11yNavigationInstructionMessage: this.props.a11yNavigationInstructionMessage })      
+  onBlurA11yNavigationInstructionMessageCarousel() {
+    this.instructionCarouselTimeout = setTimeout(() => {
+      // this.clearA11yNavigationInstructionMessage()
     }, 0)
   }
 
@@ -285,6 +303,8 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
     return (
       <div style={styles.itemsContainerWrapper} {...accessibility.attributes.itemsContainerWrapper}>
         <div
+          onBlur={this.onBlurA11yNavigationInstructionMessageCarousel.bind(this)}
+          onFocus={this.onFocusA11yNavigationInstructionMessageCarousel.bind(this)}
           className={Carousel.slotClassNames.itemsContainer}
           aria-roledescription={ariaRoleDescription}
           style={styles.itemsContainer}
@@ -435,8 +455,8 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
     return (
       <ElementType
         className={classes.root}
-        onFocus={this.setA11yNavigationInstructionMessage.bind(this)}
-        onBlur={this.removeA11yNavigationInstructionMessage.bind(this)}
+        onFocus={this.onFocusA11yNavigationInstructionMessageOnComponent.bind(this)}
+        onBlur={this.onBlurA11yNavigationInstructionMessageOnComponent.bind(this)}
         {...accessibility.attributes.root}
         {...unhandledProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
