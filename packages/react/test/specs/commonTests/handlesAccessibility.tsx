@@ -1,5 +1,4 @@
-import { Accessibility, AriaRole, FocusZoneDefinition } from '@fluentui/accessibility'
-import { FocusZone, FOCUSZONE_WRAP_ATTRIBUTE } from '@fluentui/react-bindings'
+import { Accessibility, AriaRole } from '@fluentui/accessibility'
 import * as React from 'react'
 import * as keyboardKey from 'keyboard-key'
 
@@ -12,11 +11,7 @@ export const getRenderedAttribute = (renderedComponent, propName, partSelector) 
     ? renderedComponent.render().find(partSelector)
     : renderedComponent.render()
 
-  let node = target.first()
-  if (node.attr(FOCUSZONE_WRAP_ATTRIBUTE)) {
-    node = node.children().first() // traverse through FocusZone wrap <div>
-  }
-  return node.prop(propName)
+  return target.first().prop(propName)
 }
 
 const overriddenRootRole = 'test-mock-role' as AriaRole
@@ -42,7 +37,6 @@ export default (
     defaultRootRole?: string
     /** Selector to scope the test to a part */
     partSelector?: string
-    focusZoneDefinition?: FocusZoneDefinition
     usesWrapperSlot?: boolean
   } = {},
 ) => {
@@ -50,7 +44,6 @@ export default (
     requiredProps = {},
     defaultRootRole,
     partSelector = '',
-    focusZoneDefinition = {} as FocusZoneDefinition,
     usesWrapperSlot = false,
   } = options
 
@@ -145,15 +138,6 @@ export default (
         expect(actionHandler).toBeCalledTimes(1)
       }
       expect(eventHandler).toBeCalledTimes(1)
-    })
-  }
-
-  if (focusZoneDefinition) {
-    test('gets embedded with FocusZone', () => {
-      const rendered = mountWithProviderAndGetComponent(Component, <Component {...requiredProps} />)
-
-      const focusZone = rendered.childAt(0).childAt(0) // skip thru FelaTheme
-      expect(focusZone.type()).toEqual(FocusZone)
     })
   }
 }
