@@ -221,8 +221,7 @@ export default () => (
     <p>
       This is done with the Provider's <code>theme</code> prop. The animations are then applied
       based on their name by using the <NavLink to="components/Animation">Animation</NavLink>{' '}
-      component, or the <code>animation</code> property available on all Fluent UI component. Here's
-      how we can use them in our components.
+      component. Here's how we can use them in our components.
     </p>
     <ExampleSnippet
       render={() => (
@@ -244,7 +243,6 @@ export default () => (
             <Animation name="spinner">
               <Icon name="calendar" circular />
             </Animation>
-            <Icon name="emoji" animation="spinner" circular />
           </div>
         </Provider>
       )}
@@ -252,8 +250,7 @@ export default () => (
 
     <p>
       You can also override some of the defined <code>animation</code> properties, by providing
-      additional properties to the <code>Animation</code> component, or the <code>animation</code>{' '}
-      prop.
+      additional properties to the <code>Animation</code> component.
     </p>
 
     <blockquote>
@@ -283,26 +280,13 @@ export default () => (
             <Animation name="spinner" delay="2s" duration="1s">
               <Icon name="calendar" circular />
             </Animation>
-            <Icon
-              name="emoji"
-              animation={{ name: 'spinner', delay: '5s', duration: '2s' }}
-              circular
-            />
+            <Animation name="spinner" delay="5s" duration="2s">
+              <Icon name="emoji" circular />
+            </Animation>
           </div>
         </Provider>
       )}
     />
-
-    <p>
-      The difference between using the Animation component versus the animation property is that,
-      the Animation component can be safely used for applying animations on{' '}
-      <i>all components (Fluent UI, custom and third party components)</i>. For the Fluent UI
-      components, we recommend using the animation property as there will be no wrapper element
-      added just for the purpose of defining the animation. For more details, please see the
-      examples in the <NavLink to="components/Animation">Animation</NavLink> component, or the
-      structure of the <code>animation</code> property in any of the Fluent UI components.
-    </p>
-
     <GuidesNavigationFooter
       previous={{ name: 'Accessibility', url: 'accessibility' }}
       next={{ name: 'Theming Examples', url: 'theming-examples' }}

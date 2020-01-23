@@ -116,7 +116,7 @@ const createInputManager: ManagerFactory<InputState, InputActions> = config =>
   })
 
 const Input: React.FC<InputProps> = props => {
-  const [state, actions] = useStateManager(createInputManager, {
+  const { state, actions } = useStateManager(createInputManager, {
     mapPropsToInitialState: () => ({ value: props.defaultValue }),
     mapPropsToState: () => ({ value: props.value }),
   })
@@ -136,8 +136,8 @@ const Input: React.FC<InputProps> = props => {
 ### Reference
 
 ```tsx
-const [state, actions] = useStateManager(createInputManager)
-const [state, actions] = useStateManager(
+const { state, actions } = useStateManager(createInputManager)
+const { state, actions } = useStateManager(
   managerFactory: ManagerFactory<State, Actions>,
   options: UseStateManagerOptions<Props>,
 )
@@ -164,7 +164,7 @@ type TextComponentProps = {
 const Text: React.FunctionComponent<TextComponentProps> = props => {
   const { className, children, color } = props
 
-  const [classes] = useStyles('Text', {
+  const { classes } = useStyles('Text', {
     className: 'ui-text',
     mapPropsToStyles: () => ({ color }),
   })
@@ -176,7 +176,7 @@ const Text: React.FunctionComponent<TextComponentProps> = props => {
 ### Reference
 
 ```tsx
-const [classes] = useStyles(
+const { classes } = useStyles(
   displayName: string,
   options: UseStylesOptions<Props>,
 )

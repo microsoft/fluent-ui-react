@@ -113,7 +113,6 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
 
   static propTypes = {
     ...commonPropTypes.createCommon({
-      animated: false,
       as: true,
       content: false,
     }),

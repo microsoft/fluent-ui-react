@@ -1,5 +1,4 @@
 import * as _ from 'lodash'
-import * as fs from 'fs-extra'
 import * as path from 'path'
 
 import { DangerJS } from './types'
@@ -42,15 +41,6 @@ function fluentFabricComparision(danger, markdown, warn) {
       }
     },
   )
-
-  fs.mkdirpSync(config.paths.ciArtifacts('perf'))
-
-  _.forEach(results, value => {
-    fs.copyFileSync(
-      value.fluentFlamegraphFile,
-      config.paths.ciArtifacts('perf', path.basename(value.fluentFlamegraphFile)),
-    )
-  })
 
   const getStatus = fluentToFabric =>
     fluentToFabric > 1 ? '🔧' : fluentToFabric >= 0.7 ? '🎯' : '🦄'

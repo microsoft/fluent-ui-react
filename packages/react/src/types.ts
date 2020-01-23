@@ -1,7 +1,5 @@
-import { StylesContextInputValue, StylesContextValue } from '@fluentui/react-bindings'
+import { StylesContextInputValue, StylesContextValue, Telemetry } from '@fluentui/react-bindings'
 import * as React from 'react'
-
-import Telemetry from './utils/Telemetry'
 
 // ========================================================
 // Utilities

@@ -1,6 +1,6 @@
 import { IStyle } from 'fela'
 import * as _ from 'lodash'
-import { Renderer } from '@fluentui/react-bindings'
+import { Renderer, Telemetry } from '@fluentui/react-bindings'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import {
   mergeSiteVariables,
@@ -28,7 +28,6 @@ import {
   withSafeTypeForAs,
 } from '../../types'
 import mergeContexts from '../../utils/mergeProviderContexts'
-import Telemetry from '../../utils/Telemetry'
 
 export interface ProviderProps extends ChildrenComponentProps {
   renderer?: Renderer

@@ -1,7 +1,6 @@
-import { ComponentAnimationProp, ComponentDesignProp } from '@fluentui/react-bindings'
+import { ComponentDesignProp } from '@fluentui/react-bindings'
 import { ComponentSlotStyle, ComponentVariablesInput } from '@fluentui/styles'
 import * as React from 'react'
-
 import { ReactChildren } from '../types'
 
 export interface StyledComponentProps<P = any, V = any> {
@@ -12,14 +11,7 @@ export interface StyledComponentProps<P = any, V = any> {
   variables?: ComponentVariablesInput
 }
 
-export interface AnimatedComponentProps {
-  /** Generic animation property that can be used for applying different theme animations. */
-  animation?: ComponentAnimationProp
-}
-
-export interface UIComponentProps<P = any, V = any>
-  extends StyledComponentProps<P, V>,
-    AnimatedComponentProps {
+export interface UIComponentProps<P = any, V = any> extends StyledComponentProps<P, V> {
   /** Additional CSS class name(s) to apply.  */
   className?: string
   design?: ComponentDesignProp

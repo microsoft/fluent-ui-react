@@ -10,6 +10,7 @@ import {
   ReactAccessibilityBehavior,
   unstable_getAccessibility as getAccessibility,
   unstable_getStyles as getStyles,
+  useTelemetry,
 } from '@fluentui/react-bindings'
 import {
   emptyTheme,
@@ -24,7 +25,6 @@ import * as React from 'react'
 
 import { Props, ProviderContextPrepared } from '../types'
 import logProviderMissingWarning from './providerMissingHandler'
-import Telemetry from './Telemetry'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
@@ -69,10 +69,10 @@ const renderComponent = <P extends {}>(
     logProviderMissingWarning()
   }
 
-  const { telemetry = undefined as Telemetry } = context || {}
+  const { setStart, setEnd } = useTelemetry(displayName, context.telemetry)
   const rtl = context.rtl || false
 
-  const startTime = telemetry && telemetry.enabled ? performance.now() : 0
+  setStart()
 
   const ElementType = getElementType(props) as React.ReactType<P>
   const unhandledProps = getUnhandledProps(handledProps, props)
@@ -109,29 +109,7 @@ const renderComponent = <P extends {}>(
   }
   let wrapInFocusZone: (element: React.ReactElement) => React.ReactElement = element => element
 
-  if (telemetry && telemetry.enabled) {
-    const duration = performance.now() - startTime
-
-    if (telemetry.performance[displayName]) {
-      telemetry.performance[displayName].count++
-      telemetry.performance[displayName].msTotal += duration
-      telemetry.performance[displayName].msMin = Math.min(
-        duration,
-        telemetry.performance[displayName].msMin,
-      )
-      telemetry.performance[displayName].msMax = Math.max(
-        duration,
-        telemetry.performance[displayName].msMax,
-      )
-    } else {
-      telemetry.performance[displayName] = {
-        count: 1,
-        msTotal: duration,
-        msMin: duration,
-        msMax: duration,
-      }
-    }
-  }
+  setEnd()
 
   if (accessibility.focusZone && accessibility.focusZone.mode === FocusZoneMode.Wrap) {
     wrapInFocusZone = element =>

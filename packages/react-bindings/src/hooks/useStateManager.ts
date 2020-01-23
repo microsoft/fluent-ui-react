@@ -7,6 +7,11 @@ type UseStateManagerOptions<State> = {
   sideEffects?: SideEffect<State>[]
 }
 
+type UseStateManagerResult<State, Actions> = {
+  state: Readonly<State>
+  actions: Readonly<Actions>
+}
+
 const getDefinedProps = <Props extends Record<string, any>>(props: Props): Partial<Props> => {
   const definedProps: Partial<Props> = {}
 
@@ -25,7 +30,7 @@ const useStateManager = <
 >(
   managerFactory: ManagerFactory<State, Actions>,
   options: UseStateManagerOptions<State> = {},
-): [Readonly<State>, Readonly<Actions>] => {
+): UseStateManagerResult<State, Actions> => {
   const {
     mapPropsToInitialState = () => ({} as Partial<State>),
     mapPropsToState = () => ({} as Partial<State>),
@@ -58,11 +63,14 @@ const useStateManager = <
   // https://github.com/facebook/react/issues/11527#issuecomment-360199710
 
   if (process.env.NODE_ENV === 'production') {
-    return [latestManager.current.state, latestManager.current.actions]
+    return { state: latestManager.current.state, actions: latestManager.current.actions }
   }
 
   // Object.freeze() is used only in dev-mode to avoid usage mistakes
-  return [Object.freeze(latestManager.current.state), Object.freeze(latestManager.current.actions)]
+  return {
+    state: Object.freeze(latestManager.current.state),
+    actions: Object.freeze(latestManager.current.actions),
+  }
 }
 
 export default useStateManager
