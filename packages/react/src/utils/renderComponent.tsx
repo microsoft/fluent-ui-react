@@ -1,10 +1,7 @@
-import { FocusZoneMode } from '@fluentui/accessibility'
 import {
   AccessibilityActionHandlers,
   ComponentSlotClasses,
   FocusZone,
-  FocusZoneProps,
-  FOCUSZONE_WRAP_ATTRIBUTE,
   getElementType,
   getUnhandledProps,
   ReactAccessibilityBehavior,
@@ -107,24 +104,8 @@ const renderComponent = <P extends {}>(
     rtl,
     theme,
   }
-  let wrapInFocusZone: (element: React.ReactElement) => React.ReactElement = element => element
 
-  setEnd()
-
-  if (accessibility.focusZone && accessibility.focusZone.mode === FocusZoneMode.Wrap) {
-    wrapInFocusZone = element =>
-      React.createElement(
-        FocusZone,
-        {
-          [FOCUSZONE_WRAP_ATTRIBUTE]: true,
-          ...accessibility.focusZone.props,
-          isRtl: rtl,
-        } as FocusZoneProps & { [FOCUSZONE_WRAP_ATTRIBUTE]: boolean },
-        element,
-      )
-  }
-
-  if (accessibility.focusZone && accessibility.focusZone.mode === FocusZoneMode.Embed) {
+  if (accessibility.focusZone) {
     const originalElementType = resolvedConfig.ElementType
 
     resolvedConfig.ElementType = FocusZone as any
@@ -136,7 +117,10 @@ const renderComponent = <P extends {}>(
     resolvedConfig.unhandledProps.isRtl = resolvedConfig.rtl
   }
 
-  return wrapInFocusZone(render(resolvedConfig))
+  const element = render(resolvedConfig)
+  setEnd()
+
+  return element
 }
 
 export default renderComponent

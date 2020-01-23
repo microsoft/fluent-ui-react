@@ -1,5 +1,5 @@
 import { Accessibility } from '../../types'
-import { FocusZoneMode, FocusZoneDirection } from '../../focusZone/types'
+import { FocusZoneDirection } from '../../focusZone/types'
 import { ListBehaviorProps } from './listBehavior'
 
 /**
@@ -10,7 +10,6 @@ import { ListBehaviorProps } from './listBehavior'
  * Adds role='listbox'.
  * Adds attribute 'tabIndex=-1' to 'root' slot.
  * Adds attribute 'aria-orientation=horizontal' to 'root' slot if 'horizontal' property is true. Does not set the attribute otherwise.
- * Embeds component into FocusZone.
  * Provides arrow key navigation in bidirectionalDomOrder direction.
  */
 const selectableListBehavior: Accessibility<ListBehaviorProps> = props => ({
@@ -24,7 +23,6 @@ const selectableListBehavior: Accessibility<ListBehaviorProps> = props => ({
     },
   },
   focusZone: {
-    mode: FocusZoneMode.Embed,
     props: {
       shouldFocusInnerElementWhenReceivedFocus: true,
       direction: FocusZoneDirection.bidirectionalDomOrder,
