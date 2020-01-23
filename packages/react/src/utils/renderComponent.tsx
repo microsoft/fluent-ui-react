@@ -104,9 +104,6 @@ const renderComponent = <P extends {}>(
     rtl,
     theme,
   }
-  const wrapInFocusZone: (element: React.ReactElement) => React.ReactElement = element => element
-
-  setEnd()
 
   if (accessibility.focusZone) {
     const originalElementType = resolvedConfig.ElementType
@@ -120,7 +117,10 @@ const renderComponent = <P extends {}>(
     resolvedConfig.unhandledProps.isRtl = resolvedConfig.rtl
   }
 
-  return wrapInFocusZone(render(resolvedConfig))
+  const element = render(resolvedConfig)
+  setEnd()
+
+  return element
 }
 
 export default renderComponent
