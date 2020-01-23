@@ -99,6 +99,10 @@ export interface ButtonProps
 
 const Button: React.FC<WithAsProp<ButtonProps>> &
   FluentComponentStaticProps<ButtonProps> & { Group: any } = props => {
+  const context: ProviderContextPrepared = React.useContext(ThemeContext)
+  const { setStart, setEnd } = useTelemetry(Button.displayName, context.telemetry)
+  setStart()
+
   const {
     accessibility,
     // @ts-ignore
@@ -123,9 +127,6 @@ const Button: React.FC<WithAsProp<ButtonProps>> &
     variables,
     design,
   } = props
-  const context: ProviderContextPrepared = React.useContext(ThemeContext)
-  const { setStart, setEnd } = useTelemetry(Button.displayName, context.telemetry)
-  setStart()
 
   const hasChildren = childrenExist(children)
 
