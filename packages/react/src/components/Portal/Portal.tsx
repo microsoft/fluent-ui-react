@@ -126,7 +126,7 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
 
     const contentToRender = childrenExist(children) ? children : content
     const focusTrapZoneProps = (_.keys(trapFocus).length && trapFocus) || {}
-    const targetRef = toRefObject(this.context.target) // { current: Document }
+    const targetRef = toRefObject(this.context.target)
 
     return (
       open && (
