@@ -117,7 +117,7 @@ Fluent UI does not currently have a `Link` component implementation.
 | `styles`       | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
 | `theme`        | TBD                  | &#x274C;               | &#x274C;         | &#x274C;              |
 
-### Conversion process from old Fluent UI to Fluent UI Link
+### Conversion process from old Fluent UI to new Fluent UI Link
 
 Fluent UI does not currently have a `Link` component implementation.
 
