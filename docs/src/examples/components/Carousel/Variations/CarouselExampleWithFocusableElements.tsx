@@ -8,6 +8,13 @@ const imageAltTags = {
   nan: 'Portrait of Nan',
 }
 
+const tabAriaLabel = {
+  ade: 'Ade',
+  elliot: 'Elliot',
+  kristy: 'Kristy',
+  nan: 'Nan',
+}
+
 const carouselTextContent = <Text>
   <Header as="h3"> Card </Header>
   text or any other text 1 , text or any other text 2, text or any other text 3
@@ -53,7 +60,7 @@ const carouselItems = [
       </Flex>
       <Button content="Open" styles={buttonStyles} />
     </div>,
-    'aria-label': 'card 1',
+    'aria-label': 'Ade card',
   },
   {
     key: 'elliot',
@@ -65,7 +72,7 @@ const carouselItems = [
       </Flex>
       {carouselToolbarContent}
     </div>,
-    'aria-label': 'card 2',
+    'aria-label': 'Elliot card',
   },
   {
     key: 'kristy',
@@ -80,19 +87,18 @@ const carouselItems = [
         <Button content="Video call" />
       </Flex>
     </div>,
-    'aria-label': 'card 3',
+    'aria-label': 'Kristy card',
   },
-
 ]
 
 const CarouselExample = () => (
   <Carousel
     ariaRoleDescription="carousel"
     navigation={{
-      'aria-label': 'people portraits',
+      'aria-label': 'people cards',
       items: carouselItems.map((item, index) => ({
         key: item.id,
-        'aria-label': imageAltTags[item.id],
+        'aria-label': tabAriaLabel[item.id],
         'aria-controls': item.id,
       })),
     }}
