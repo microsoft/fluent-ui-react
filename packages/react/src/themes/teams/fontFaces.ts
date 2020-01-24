@@ -6,7 +6,7 @@ const fontFaces: FontFaces = [
     paths: [
       'https://statics.teams.cdn.office.net/evergreen-assets/fonts/segoeui-roman-vf_web.woff2',
     ],
-    props: { fontFeatureSettings: '"liga", "kern", "rvrn", "ss01"' },
+    props: { fontWeight: `300 700`, fontFeatureSettings: '"liga", "kern", "rvrn", "ss01"' },
   },
 ]
 
