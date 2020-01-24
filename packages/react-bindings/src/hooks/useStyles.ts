@@ -10,7 +10,6 @@ import * as React from 'react'
 import { ThemeContext } from 'react-fela'
 
 import {
-  ComponentAnimationProp,
   ComponentDesignProp,
   ComponentSlotClasses,
   RendererRenderRule,
@@ -35,8 +34,6 @@ type UseStylesResult = {
 }
 
 type InlineStyleProps<StyleProps> = {
-  unstable_animation?: ComponentAnimationProp
-
   /** Additional CSS class name(s) to apply.  */
   className?: string
 
@@ -74,16 +71,13 @@ const useStyles = <StyleProps extends PrimitiveProps>(
 
   // Stores debug information for component.
   const debug = React.useRef<{ fluentUIDebug: DebugData | null }>({ fluentUIDebug: null })
-  const inlineProps = mapPropsToInlineStyles()
-
   const { classes, styles: resolvedStyles } = getStyles({
     // Input values
     className,
     displayName,
     props: {
       ...mapPropsToStyles(),
-      ...inlineProps,
-      animation: inlineProps.unstable_animation,
+      ...mapPropsToInlineStyles(),
     },
 
     // Context values
