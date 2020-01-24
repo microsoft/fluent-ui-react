@@ -18,7 +18,7 @@ const imageBehavior: Accessibility<ImageBehaviorProps> = props => ({
 
 export default imageBehavior
 
-type ImageBehaviorProps = {
+export type ImageBehaviorProps = {
   /** Alternative text. */
   alt?: string
 } & Pick<AccessibilityAttributes, 'aria-label'>

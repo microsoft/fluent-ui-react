@@ -476,17 +476,11 @@ export const deprecate = (help: string, validator?: Function) => (
   return error
 }
 
-export const accessibility = PropTypes.oneOfType([PropTypes.func, PropTypes.object])
+export const accessibility = PropTypes.func
 
-export const size = PropTypes.oneOf([
-  'smallest',
-  'smaller',
-  'small',
-  'medium',
-  'large',
-  'larger',
-  'largest',
-])
+export const size = PropTypes.oneOf<
+  'smallest' | 'smaller' | 'small' | 'medium' | 'large' | 'larger' | 'largest'
+>(['smallest', 'smaller', 'small', 'medium', 'large', 'larger', 'largest'])
 
 export const align = PropTypes.oneOf(['start', 'end', 'center', 'justify'])
 
