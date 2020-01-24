@@ -61,6 +61,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
             fontStretch: PropTypes.string,
             fontStyle: PropTypes.string,
             fontVariant: PropTypes.string,
+            fontFeatureSettings: PropTypes.string,
             fontWeight: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
             localAlias: PropTypes.string,
             unicodeRange: PropTypes.string,
