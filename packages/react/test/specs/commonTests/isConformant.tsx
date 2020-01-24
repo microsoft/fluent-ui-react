@@ -21,6 +21,7 @@ import * as FluentUI from 'src/index'
 import { getEventTargetComponent, EVENT_TARGET_ATTRIBUTE } from './eventTarget'
 
 export interface Conformant {
+  constructorName?: string
   /** Map of events and the child component to target. */
   eventTargets?: object
   hasAccessibilityProp?: boolean
@@ -47,6 +48,7 @@ export default function isConformant(
   options: Conformant = {},
 ) {
   const {
+    constructorName = Component.prototype.constructor.name,
     eventTargets = {},
     exportedAtTopLevel = true,
     hasAccessibilityProp = true,
@@ -93,7 +95,6 @@ export default function isConformant(
   }
 
   // tests depend on Component constructor names, enforce them
-  const constructorName = Component.prototype.constructor.name
   if (!constructorName) {
     throwError(
       [
@@ -299,7 +300,7 @@ export default function isConformant(
 
       expect({
         message,
-        handledProps: Component.handledProps,
+        handledProps: Component.handledProps.sort(),
       }).toEqual({
         message,
         handledProps: expectedProps,
@@ -454,6 +455,8 @@ export default function isConformant(
   // Handles className
   // ----------------------------------------
   describe('static className (common)', () => {
+    const componentClassName =
+      info.componentClassName || `ui-${Component.displayName}`.toLowerCase()
     const getClassesOfRootElement = component => {
       const classes = component
         .find('[className]')
@@ -463,8 +466,8 @@ export default function isConformant(
       return classes
     }
 
-    test(`is a static equal to "${info.componentClassName}"`, () => {
-      expect(Component.className).toEqual(info.componentClassName)
+    test(`is a static equal to "${componentClassName}"`, () => {
+      expect(Component.className).toEqual(componentClassName)
     })
 
     test(`is applied to the root element`, () => {
@@ -472,9 +475,7 @@ export default function isConformant(
 
       // only test components that implement className
       if (component.find('[className]').hostNodes().length > 0) {
-        expect(
-          _.includes(getClassesOfRootElement(component), `${info.componentClassName}`),
-        ).toEqual(true)
+        expect(_.includes(getClassesOfRootElement(component), componentClassName)).toEqual(true)
       }
     })
 
@@ -537,7 +538,7 @@ export default function isConformant(
   // ----------------------------------------
   describe('static displayName (common)', () => {
     test('matches constructor name', () => {
-      expect(Component.displayName).toEqual(info.constructorName)
+      expect(Component.displayName).toEqual(constructorName)
     })
   })
 

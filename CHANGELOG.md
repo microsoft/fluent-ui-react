@@ -22,6 +22,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Remove `animation` prop from all components @joschect ([#2239](https://github.com/microsoft/fluent-ui-react/pull/2239))
 - `mode` property from `focusZone` configuration in accessibility behaviors is no longer supported - the focus zone will always be in embed mode @layershifter ([#2265](https://github.com/microsoft/fluent-ui-react/pull/2265))
 - `FocusZoneMode` and `FOCUSZONE_WRAP_ATTRIBUTE` are no longer exported @layershifter ([#2265](https://github.com/microsoft/fluent-ui-react/pull/2265))
+- Changed `avatarBorderWidth` and `statusBorderWidth` avatar variables types from number to string and updated styles in Teams theme @mnajdova ([#2238](https://github.com/microsoft/fluent-ui-react/pull/2238))
 
 ### Fixes
 - Fix event listener leak in `FocusZone` @miroslavstastny ([#2227](https://github.com/microsoft/fluent-ui-react/pull/2227))
