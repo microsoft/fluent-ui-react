@@ -8,10 +8,22 @@ import { ButtonVariables } from './buttonVariables'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 
-const buttonStyles: ComponentSlotStylesPrepared<
-  ButtonProps & { hasContent?: boolean },
-  ButtonVariables
-> = {
+export type ButtonStylesProps = Pick<
+  ButtonProps,
+  | 'text'
+  | 'primary'
+  | 'disabled'
+  | 'circular'
+  | 'size'
+  | 'loading'
+  | 'inverted'
+  | 'iconOnly'
+  | 'fluid'
+> & {
+  hasContent?: boolean
+}
+
+const buttonStyles: ComponentSlotStylesPrepared<ButtonStylesProps, ButtonVariables> = {
   root: ({ props: p, variables: v, theme }): ICSSInJSStyle => {
     const { siteVariables } = theme
     const { borderWidth } = siteVariables
@@ -239,7 +251,7 @@ const buttonStyles: ComponentSlotStylesPrepared<
     }),
   }),
 
-  icon: ({ props: p, variables: v }) => ({
+  icon: ({ props: p }) => ({
     // when loading, hide the icon
     ...(p.loading && {
       margin: 0,

@@ -1,6 +1,9 @@
 import { pxToRem } from '../../../../utils'
 import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import { AvatarProps } from '../../../../components/Avatar/Avatar'
+import { AvatarVariables } from './avatarVariables'
+
+export type AvatarStylesProps = Pick<AvatarProps, 'size'>
 
 const sizeToPxValue = {
   smallest: 24,
@@ -12,7 +15,7 @@ const sizeToPxValue = {
   largest: 48,
 }
 
-const avatarStyles: ComponentSlotStylesPrepared<AvatarProps, any> = {
+const avatarStyles: ComponentSlotStylesPrepared<AvatarStylesProps, AvatarVariables> = {
   root: ({ props: { size } }): ICSSInJSStyle => {
     const sizeInRem = pxToRem(sizeToPxValue[size])
 
