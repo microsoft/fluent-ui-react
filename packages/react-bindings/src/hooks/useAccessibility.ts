@@ -23,6 +23,7 @@ const mergeProps = <SlotProps extends Record<string, any>>(
 ): MergedProps<SlotProps> => {
   const finalProps: MergedProps<SlotProps> = {
     ...definition.attributes[slotName],
+    ...(slotName === 'root' && definition.focusZone && definition.focusZone.props),
     ...slotProps,
   }
   const slotHandlers = definition.keyHandlers[slotName]

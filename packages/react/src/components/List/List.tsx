@@ -1,5 +1,6 @@
 import { Accessibility, listBehavior, ListBehaviorProps } from '@fluentui/accessibility'
 import {
+  FocusZone,
   getElementType,
   getUnhandledProps,
   useAccessibility,
@@ -167,15 +168,16 @@ const List: React.FC<WithAsProp<ListProps>> &
     })
 
   return (
-    <ElementType
+    <FocusZone
       {...getA11Props('root', {
+        as: ElementType,
         className: classes.root,
         ...rtlTextContainer.getAttributes({ forElements: [children] }),
         ...unhandledProps,
       })}
     >
       {hasContent && wrap(childrenExist(children) ? children : renderItems())}
-    </ElementType>
+    </FocusZone>
   )
 }
 
