@@ -1,5 +1,5 @@
 import { Accessibility, AriaRole, IS_FOCUSABLE_ATTRIBUTE } from '@fluentui/accessibility'
-import { FocusZone, FOCUSZONE_WRAP_ATTRIBUTE } from '@fluentui/react-bindings'
+import { FocusZone } from '@fluentui/react-bindings'
 import { Ref, RefFindNode } from '@fluentui/react-component-ref'
 import * as faker from 'faker'
 import * as _ from 'lodash'
@@ -80,11 +80,8 @@ export default function isConformant(
 
     // passing through Focus Zone wrappers
     if (componentElement.type() === FocusZone) {
-      // another HOC component is added: FocuZone
+      // another HOC component is added: FocusZone
       componentElement = componentElement.childAt(0) // skip through <FocusZone>
-      if (componentElement.prop(FOCUSZONE_WRAP_ATTRIBUTE)) {
-        componentElement = componentElement.childAt(0) // skip the additional wrap <div> of the FocusZone
-      }
     }
 
     // in that case 'topLevelChildElement' we've found so far is a wrapper's topmost child
@@ -464,7 +461,6 @@ export default function isConformant(
       const classes = component
         .find('[className]')
         .hostNodes()
-        .filterWhere(c => !c.prop(FOCUSZONE_WRAP_ATTRIBUTE)) // filter out FocusZone wrap <div>
         .at(wrapperComponent ? 1 : 0)
         .prop('className')
       return classes
