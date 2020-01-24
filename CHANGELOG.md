@@ -22,11 +22,13 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Remove `animation` prop from all components @joschect ([#2239](https://github.com/microsoft/fluent-ui-react/pull/2239))
 - `mode` property from `focusZone` configuration in accessibility behaviors is no longer supported - the focus zone will always be in embed mode @layershifter ([#2265](https://github.com/microsoft/fluent-ui-react/pull/2265))
 - `FocusZoneMode` and `FOCUSZONE_WRAP_ATTRIBUTE` are no longer exported @layershifter ([#2265](https://github.com/microsoft/fluent-ui-react/pull/2265))
+- Returned function from `useAccessibility` no longer keeps the same reference @layershifter ([#2268](https://github.com/microsoft/fluent-ui-react/pull/2268))
 
 ### Fixes
 - Fix event listener leak in `FocusZone` @miroslavstastny ([#2227](https://github.com/microsoft/fluent-ui-react/pull/2227))
 - Fix styleParam to always be required in the styles functions @layershifter, @mnajdova ([#2235](https://github.com/microsoft/fluent-ui-react/pull/2235))
 - Check input and button refs exist before focus in `Dropdown` @silviuavram ([#2248](https://github.com/microsoft/fluent-ui-react/pull/2248))
+- Fix `forceUpdate` to get synced updates in React's Concurrent mode @layershifter ([#2268](https://github.com/microsoft/fluent-ui-react/pull/2268))
 
 ### Features
 - Allow `useRef` hook used for storing debugging data to be defined in any order with other hooks in functional components @layershifter, @mnajdova ([#2236](https://github.com/microsoft/fluent-ui-react/pull/2236))
