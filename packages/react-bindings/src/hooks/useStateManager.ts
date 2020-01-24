@@ -39,11 +39,8 @@ const useStateManager = <
   const latestManager = React.useRef<Manager<State, Actions> | null>(null)
 
   // Heads up! forceUpdate() is used only for triggering rerenders stateManager is SSOT()
-  const [, forceUpdate] = React.useState()
-  const syncState = React.useCallback(
-    (_prevState: State, nextState: State) => forceUpdate(nextState),
-    [],
-  )
+  const [, forceUpdate] = React.useReducer((c: number) => c + 1, 0) as [never, () => void]
+  const syncState = () => forceUpdate()
 
   // If manager exists, the current state will be used
   const initialState = latestManager.current
