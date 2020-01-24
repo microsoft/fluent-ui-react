@@ -20,13 +20,13 @@ import {
   ComponentEventHandler,
   withSafeTypeForAs,
   ProviderContextPrepared,
+  FluentComponentStaticProps,
 } from '../../types'
 import {
   createShorthandFactory,
   UIComponentProps,
   commonPropTypes,
   ContentComponentProps,
-  ShorthandFactory,
 } from '../../utils'
 
 export interface ListItemSlotClassNames {
@@ -77,12 +77,10 @@ export interface ListItemProps
   onClick?: ComponentEventHandler<ListItemProps>
 }
 
-const ListItem: React.FC<WithAsProp<ListItemProps> & { index: number }> & {
-  className: string
-  create: ShorthandFactory<ListItemProps>
-  handledProps: string[]
-  slotClassNames: ListItemSlotClassNames
-} = props => {
+const ListItem: React.FC<WithAsProp<ListItemProps> & { index: number }> &
+  FluentComponentStaticProps<ListItemProps> & {
+    slotClassNames: ListItemSlotClassNames
+  } = props => {
   const context: ProviderContextPrepared = React.useContext(ThemeContext)
   const { setStart, setEnd } = useTelemetry(ListItem.displayName, context.telemetry)
 
@@ -141,7 +139,7 @@ const ListItem: React.FC<WithAsProp<ListItemProps> & { index: number }> & {
   })
 
   const ElementType = getElementType(props)
-  const unhandledProps = getUnhandledProps(ListItem.handledProps as any, props)
+  const unhandledProps = getUnhandledProps(ListItem.handledProps, props)
 
   const handleClick = (e: React.MouseEvent | React.KeyboardEvent) => {
     _.invoke(props, 'onClick', e, props)

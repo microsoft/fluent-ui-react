@@ -21,6 +21,7 @@ import {
   ShorthandCollection,
   ReactChildren,
   ProviderContextPrepared,
+  FluentComponentStaticProps,
 } from '../../types'
 import {
   childrenExist,
@@ -29,7 +30,6 @@ import {
   commonPropTypes,
   rtlTextContainer,
   createShorthandFactory,
-  ShorthandFactory,
 } from '../../utils'
 import ListItem, { ListItemProps } from './ListItem'
 
@@ -85,13 +85,10 @@ const itemProps = [
   'variables',
 ]
 
-const List: React.FC<WithAsProp<ListProps>> & {
-  className: string
-  create: ShorthandFactory<ListProps>
-  handledProps: string[]
-
-  Item: typeof ListItem
-} = props => {
+const List: React.FC<WithAsProp<ListProps>> &
+  FluentComponentStaticProps<ListProps> & {
+    Item: typeof ListItem
+  } = props => {
   const {
     accessibility,
     as,
@@ -128,7 +125,7 @@ const List: React.FC<WithAsProp<ListProps>> & {
   })
 
   const ElementType = getElementType(props)
-  const unhandledProps = getUnhandledProps(List.handledProps as any, props)
+  const unhandledProps = getUnhandledProps(List.handledProps, props)
 
   const hasContent = childrenExist(children) || (items && items.length > 0)
 
@@ -202,7 +199,7 @@ List.propTypes = {
   wrap: PropTypes.func,
 }
 
-List.handledProps = Object.keys(List.propTypes)
+List.handledProps = Object.keys(List.propTypes) as any
 List.Item = ListItem
 
 List.create = createShorthandFactory({ Component: List, mappedArrayProp: 'items' })
