@@ -3,7 +3,7 @@ import { screenReaderContainerStyles } from '../../../../utils/accessibility/Sty
 import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import { default as ListItem, ListItemProps } from '../../../../components/List/ListItem'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
-import { ListItemVariables } from 'src/themes/teams/components/List/listItemVariables'
+import { ListItemVariables } from './listItemVariables'
 
 type ListItemStyleProps = Pick<
   ListItemProps,
