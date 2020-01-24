@@ -4,6 +4,7 @@ import {
   getUnhandledProps,
   useAccessibility,
   useStyles,
+  useTelemetry,
 } from '@fluentui/react-bindings'
 import cx from 'classnames'
 import * as _ from 'lodash'
@@ -82,6 +83,11 @@ const ListItem: React.FC<WithAsProp<ListItemProps> & { index: number }> & {
   handledProps: string[]
   slotClassNames: ListItemSlotClassNames
 } = props => {
+  const context: ProviderContextPrepared = React.useContext(ThemeContext)
+  const { setStart, setEnd } = useTelemetry(ListItem.displayName, context.telemetry)
+
+  setStart()
+
   const {
     accessibility,
     className,
@@ -103,8 +109,6 @@ const ListItem: React.FC<WithAsProp<ListItemProps> & { index: number }> & {
     variables,
   } = props
 
-  const context: ProviderContextPrepared = React.useContext(ThemeContext)
-
   const getA11Props = useAccessibility(accessibility, {
     debugName: ListItem.displayName,
     actionHandlers: {
@@ -117,6 +121,7 @@ const ListItem: React.FC<WithAsProp<ListItemProps> & { index: number }> & {
     rtl: context.rtl,
   })
   const { classes, styles: resolvedStyles } = useStyles(ListItem.displayName, {
+    className: ListItem.className,
     mapPropsToStyles: () => ({
       debug,
       navigable,
@@ -179,7 +184,7 @@ const ListItem: React.FC<WithAsProp<ListItemProps> & { index: number }> & {
     }),
   })
 
-  return (
+  const element = (
     <ElementType
       {...getA11Props('root', {
         className: classes.root,
@@ -207,6 +212,10 @@ const ListItem: React.FC<WithAsProp<ListItemProps> & { index: number }> & {
       {endMediaElement}
     </ElementType>
   )
+
+  setEnd()
+
+  return element
 }
 
 ListItem.className = 'ui-list__item'
@@ -235,7 +244,7 @@ ListItem.propTypes = {
 
   selectable: PropTypes.bool,
   navigable: PropTypes.bool,
-  index: PropTypes.number.isRequired,
+  index: PropTypes.number,
   selected: PropTypes.bool,
 
   truncateContent: PropTypes.bool,
