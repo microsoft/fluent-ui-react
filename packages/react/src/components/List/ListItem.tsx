@@ -5,7 +5,6 @@ import {
   useAccessibility,
   useStyles,
 } from '@fluentui/react-bindings'
-import { useContextSelectors } from '@fluentui/react-context-selector'
 import cx from 'classnames'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -28,7 +27,6 @@ import {
   ContentComponentProps,
   ShorthandFactory,
 } from '../../utils'
-import { ListContext } from './context'
 
 export interface ListItemSlotClassNames {
   header: string
@@ -93,34 +91,19 @@ const ListItem: React.FC<WithAsProp<ListItemProps> & { index: number }> & {
     endMedia,
     header,
     important,
-    index,
     headerMedia,
     media,
     styles,
+    debug,
+    navigable,
+    selectable,
+    selected,
+    truncateContent,
+    truncateHeader,
+    variables,
   } = props
 
   const context: ProviderContextPrepared = React.useContext(ThemeContext)
-
-  const parentProps = useContextSelectors(ListContext, {
-    debug: v => v.debug,
-    navigable: v => v.navigable,
-    selectable: v => v.selectable,
-    truncateContent: v => v.truncateContent,
-    truncateHeader: v => v.truncateHeader,
-    variables: v => v.variables,
-
-    onItemClick: v => v.onItemClick,
-    selected: v => v.selectedIndex === props.index,
-  })
-  const {
-    debug = parentProps.debug,
-    navigable = parentProps.navigable,
-    selectable = parentProps.selectable,
-    selected = parentProps.selected,
-    truncateContent = parentProps.truncateContent,
-    truncateHeader = parentProps.truncateHeader,
-    variables = parentProps.variables,
-  } = props
 
   const getA11Props = useAccessibility(accessibility, {
     debugName: ListItem.displayName,
@@ -157,7 +140,6 @@ const ListItem: React.FC<WithAsProp<ListItemProps> & { index: number }> & {
 
   const handleClick = (e: React.MouseEvent | React.KeyboardEvent) => {
     _.invoke(props, 'onClick', e, props)
-    parentProps.onItemClick(e, index)
   }
 
   const contentElement = Box.create(content, {

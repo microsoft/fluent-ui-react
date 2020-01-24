@@ -31,7 +31,6 @@ import {
   createShorthandFactory,
   ShorthandFactory,
 } from '../../utils'
-import { Provider, ListContextValue } from './context'
 import ListItem, { ListItemProps } from './ListItem'
 
 export interface ListProps extends UIComponentProps, ChildrenComponentProps {
@@ -76,6 +75,16 @@ export interface ListProps extends UIComponentProps, ChildrenComponentProps {
   wrap?: (children: ReactChildren) => React.ReactNode
 }
 
+// List props that are passed to each individual Item props
+const itemProps = [
+  'debug',
+  'selectable',
+  'navigable',
+  'truncateContent',
+  'truncateHeader',
+  'variables',
+]
+
 const List: React.FC<WithAsProp<ListProps>> & {
   className: string
   create: ShorthandFactory<ListProps>
@@ -93,12 +102,9 @@ const List: React.FC<WithAsProp<ListProps>> & {
     design,
     horizontal,
     items,
-    navigable,
     selectable,
     selectedIndex,
     styles,
-    truncateContent,
-    truncateHeader,
     variables,
     wrap,
   } = props
@@ -125,21 +131,38 @@ const List: React.FC<WithAsProp<ListProps>> & {
   const unhandledProps = getUnhandledProps(List.handledProps as any, props)
 
   const hasContent = childrenExist(children) || (items && items.length > 0)
-  const value: ListContextValue = {
-    debug,
-    navigable,
-    selectable,
-    selectedIndex: state.selectedIndex,
-    truncateContent,
-    truncateHeader,
-    variables,
-    onItemClick: (e, itemIndex) => {
+
+  const handleItemOverrides = (predefinedProps: ListItemProps) => ({
+    onClick: (e: React.SyntheticEvent, itemProps: ListItemProps) => {
+      _.invoke(predefinedProps, 'onClick', e, itemProps)
+
       if (selectable) {
-        actions.select(itemIndex)
-        _.invoke(props, 'onSelectedIndexChange', e, { ...props, selectedIndex: itemIndex })
+        actions.select(itemProps.index)
+        _.invoke(props, 'onSelectedIndexChange', e, {
+          ...props,
+          ...{ selectedIndex: itemProps.index },
+        })
       }
     },
-  }
+  })
+
+  const renderItems = () =>
+    _.map(items, (item, index) => {
+      const maybeSelectableItemProps = {} as any
+
+      if (selectable) {
+        maybeSelectableItemProps.selected = index === state.selectedIndex
+      }
+
+      return ListItem.create(item, {
+        defaultProps: () => ({
+          ..._.pick(props, itemProps),
+          ...maybeSelectableItemProps,
+          index,
+        }),
+        overrideProps: handleItemOverrides,
+      })
+    })
 
   return (
     <ElementType
@@ -149,18 +172,7 @@ const List: React.FC<WithAsProp<ListProps>> & {
         ...unhandledProps,
       })}
     >
-      <Provider value={value}>
-        {hasContent &&
-          wrap(
-            childrenExist(children)
-              ? children
-              : _.map(items, (item, index) =>
-                  ListItem.create(item, {
-                    defaultProps: () => ({ index }),
-                  }),
-                ),
-          )}
-      </Provider>
+      {hasContent && wrap(childrenExist(children) ? children : renderItems())}
     </ElementType>
   )
 }
