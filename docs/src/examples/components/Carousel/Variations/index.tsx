@@ -11,7 +11,7 @@ const Variations = () => (
     />
 
     <ComponentExample
-      title="Carousle with actionable elements"
+      title="Carousel with actionable elements"
       description="A Carousel can have actionable elements inside."
       examplePath="components/Carousel/Variations/CarouselExampleWithFocusableElements"
     />
