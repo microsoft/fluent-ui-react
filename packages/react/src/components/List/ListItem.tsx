@@ -115,7 +115,11 @@ const ListItem: React.FC<WithAsProp<ListItemProps> & { index: number }> &
         handleClick(e)
       },
     },
-    mapPropsToBehavior: () => ({}),
+    mapPropsToBehavior: () => ({
+      navigable,
+      selectable,
+      selected,
+    }),
     rtl: context.rtl,
   })
   const { classes, styles: resolvedStyles } = useStyles(ListItem.displayName, {

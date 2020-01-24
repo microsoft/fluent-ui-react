@@ -98,6 +98,7 @@ const List: React.FC<WithAsProp<ListProps>> &
     defaultSelectedIndex,
     design,
     horizontal,
+    navigable,
     items,
     selectable,
     selectedIndex,
@@ -114,7 +115,11 @@ const List: React.FC<WithAsProp<ListProps>> &
   })
   const getA11Props = useAccessibility(accessibility, {
     debugName: List.displayName,
-    mapPropsToBehavior: () => ({}),
+    mapPropsToBehavior: () => ({
+      horizontal,
+      navigable,
+      selectable,
+    }),
     rtl: context.rtl,
   })
   const { classes } = useStyles(List.displayName, {
