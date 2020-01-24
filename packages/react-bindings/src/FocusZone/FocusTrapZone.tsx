@@ -120,6 +120,10 @@ export default class FocusTrapZone extends React.Component<FocusTrapZoneProps, {
     ) {
       this._releaseFocusTrapZone()
     }
+
+    // Dispose of element references so the DOM Nodes can be garbage-collected
+    delete this._previouslyFocusedElementInTrapZone
+    delete this._previouslyFocusedElementOutsideTrapZone
   }
 
   render(): JSX.Element {
