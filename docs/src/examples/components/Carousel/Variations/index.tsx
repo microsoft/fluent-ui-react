@@ -9,6 +9,12 @@ const Variations = () => (
       description="A Carousel's items navigation can be circular."
       examplePath="components/Carousel/Variations/CarouselCircularExample"
     />
+
+    <ComponentExample
+      title="Carousle with actionable elements"
+      description="A Carousel can have actionable elements inside."
+      examplePath="components/Carousel/Variations/CarouselExampleWithFocusableElements"
+    />
   </ExampleSection>
 )
 

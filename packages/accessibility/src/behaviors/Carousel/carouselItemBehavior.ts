@@ -1,4 +1,5 @@
 import { Accessibility } from '../../types'
+import * as keyboardKey from 'keyboard-key'
 
 /**
  * @specification
@@ -15,9 +16,17 @@ const carouselItemBehavior: Accessibility<CarouselItemProps> = props => ({
     },
   },
 
-  keyActions: {
-    root: {},
+  keyActions: {    
+    root: {
+      handleRightArrowKey: {
+        keyCombinations: [{ keyCode: keyboardKey.ArrowRight }],
+      },
+      handleLeftArrowKey: {
+        keyCombinations: [{ keyCode: keyboardKey.ArrowLeft }],
+      },
+    },    
   },
+  
 })
 
 export default carouselItemBehavior

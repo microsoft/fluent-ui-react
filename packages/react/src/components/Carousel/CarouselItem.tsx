@@ -22,8 +22,8 @@ export interface CarouselItemSlotClassNames {
 
 export interface CarouselItemProps
   extends UIComponentProps,
-    ChildrenComponentProps,
-    ContentComponentProps {
+  ChildrenComponentProps,
+  ContentComponentProps {
   /** Whether or not the item is in view or not. */
   active?: boolean
 
@@ -57,6 +57,21 @@ class CarouselItem extends UIComponent<WithAsProp<CarouselItemProps>> {
 
   static slotClassNames: CarouselItemSlotClassNames = {
     itemPositionText: `${CarouselItem.className}__itemPositionText`,
+  }
+
+  actionHandlers = {
+    handleRightArrowKey: e => {
+      // let event propagate, when it was invoke on the element where arrow key should rotate carousel
+      if (e.currentTarget !== e.target) {
+        e.stopPropagation()
+      }
+    },
+    handleLeftArrowKey: e => {
+      // let event propagate, when it was invoke on the element where arrow key should rotate carousel
+      if (e.currentTarget !== e.target) {
+        e.stopPropagation()
+      }
+    },
   }
 
   renderComponent({ ElementType, classes, styles, accessibility, unhandledProps }) {
