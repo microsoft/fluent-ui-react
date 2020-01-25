@@ -88,7 +88,6 @@ export interface FontFaceProps {
   fontStyle?: string
   fontVariant?: string
   fontWeight?: string
-  fontFeatureSettings?: string
   localAlias?: string | string[]
   unicodeRange?: string
 }
