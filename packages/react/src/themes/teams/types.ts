@@ -13,9 +13,9 @@ import { AccordionTitleProps } from '../../components/Accordion/AccordionTitle'
 import { AlertProps } from '../../components/Alert/Alert'
 import { AnimationProps } from '../../components/Animation/Animation'
 import { AttachmentProps } from '../../components/Attachment/Attachment'
-import { AvatarProps } from '../../components/Avatar/Avatar'
+import { AvatarStylesProps } from './components/Avatar/avatarStyles'
 import { ButtonGroupProps } from '../../components/Button/ButtonGroup'
-import { ButtonProps } from '../../components/Button/Button'
+import { ButtonStylesProps } from './components/Button/buttonStyles'
 import { ChatItemProps } from '../../components/Chat/ChatItem'
 import { ChatMessageProps } from '../../components/Chat/ChatMessage'
 import { ChatProps } from '../../components/Chat/Chat'
@@ -31,7 +31,7 @@ import { GridProps } from '../../components/Grid/Grid'
 import { HeaderDescriptionProps } from '../../components/Header/HeaderDescription'
 import { HeaderProps } from '../../components/Header/Header'
 import { IconProps } from '../../components/Icon/Icon'
-import { ImageProps } from '../../components/Image/Image'
+import { ImageStylesProps } from './components/Image/imageStyles'
 import { InputProps } from '../../components/Input/Input'
 import { ItemLayoutProps } from '../../components/ItemLayout/ItemLayout'
 import { LabelProps } from '../../components/Label/Label'
@@ -70,8 +70,8 @@ export type TeamsThemeStylesProps = {
   Alert?: AlertProps
   Animation?: AnimationProps
   Attachment?: AttachmentProps
-  Avatar?: AvatarProps
-  Button?: ButtonProps
+  Avatar?: AvatarStylesProps
+  Button?: ButtonStylesProps
   ButtonGroup?: ButtonGroupProps
   Chat?: ChatProps
   ChatItem?: ChatItemProps
@@ -88,7 +88,7 @@ export type TeamsThemeStylesProps = {
   Header?: HeaderProps
   HeaderDescription?: HeaderDescriptionProps
   Icon?: IconProps
-  Image?: ImageProps
+  Image?: ImageStylesProps
   Input?: InputProps
   ItemLayout?: ItemLayoutProps
   Label?: LabelProps

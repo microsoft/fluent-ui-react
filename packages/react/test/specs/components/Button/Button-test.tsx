@@ -16,7 +16,9 @@ import Icon from 'src/components/Icon/Icon'
 const buttonImplementsShorthandProp = implementsShorthandProp(Button)
 
 describe('Button', () => {
-  isConformant(Button)
+  isConformant(Button, {
+    constructorName: 'Button',
+  })
   buttonImplementsShorthandProp('icon', Icon, {
     mapsValueToProp: 'name',
     requiredShorthandProps: { name: 'at' },
