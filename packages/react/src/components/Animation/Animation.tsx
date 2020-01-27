@@ -138,8 +138,8 @@ class Animation extends UIComponent<AnimationProps, any> {
     playState: PropTypes.string,
     timingFunction: PropTypes.string,
     visible: PropTypes.bool,
-    mountOnEnter: PropTypes.bool,
     appear: PropTypes.bool,
+    mountOnEnter: PropTypes.bool,
     unmountOnExit: PropTypes.bool,
     timeout: PropTypes.oneOfType([
       PropTypes.number,
@@ -149,6 +149,12 @@ class Animation extends UIComponent<AnimationProps, any> {
         exit: PropTypes.number,
       }),
     ]),
+    onEnter: PropTypes.func,
+    onEntering: PropTypes.func,
+    onEntered: PropTypes.func,
+    onExit: PropTypes.func,
+    onExiting: PropTypes.func,
+    onExited: PropTypes.func,
   }
 
   static defaultProps = {
@@ -171,9 +177,11 @@ class Animation extends UIComponent<AnimationProps, any> {
       onExiting,
     } = this.props
 
+    const isChildrenFunction = typeof children === 'function'
+
     const child =
       childrenExist(children) &&
-      typeof children !== 'function' &&
+      !isChildrenFunction &&
       (React.Children.only(children) as React.ReactElement<any>)
 
     return (
@@ -190,13 +198,11 @@ class Animation extends UIComponent<AnimationProps, any> {
         onExiting={onExiting}
         onExited={onExited}
         {...unhandledProps}
-        className={
-          typeof children !== 'function' ? cx(classes.root, (child as any).props.className) : ''
-        }
+        className={!isChildrenFunction ? cx(classes.root, (child as any).props.className) : ''}
       >
-        {typeof children !== 'function'
-          ? child
-          : () => (children as AnimationChildrenProp)({ classes: classes.root })}
+        {isChildrenFunction
+          ? () => (children as AnimationChildrenProp)({ classes: classes.root })
+          : child}
       </Transition>
     )
   }
