@@ -5,7 +5,7 @@ import { default as ListItem, ListItemProps } from '../../../../components/List/
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 import { ListItemVariables } from './listItemVariables'
 
-type ListItemStyleProps = Pick<
+export type ListItemStylesProps = Pick<
   ListItemProps,
   | 'debug'
   | 'important'
@@ -27,7 +27,7 @@ const truncateStyle: ICSSInJSStyle = {
   whiteSpace: 'nowrap',
 }
 
-const selectableHoverStyle = (p: ListItemStyleProps, v): ICSSInJSStyle => ({
+const selectableHoverStyle = (p: ListItemStylesProps, v): ICSSInJSStyle => ({
   background: v.selectableFocusHoverBackgroundColor,
   color: v.selectableFocusHoverColor,
   cursor: 'pointer',
@@ -51,7 +51,7 @@ const selectedStyle = variables => ({
   color: variables.selectedColor,
 })
 
-const listItemStyles: ComponentSlotStylesPrepared<ListItemStyleProps, ListItemVariables> = {
+const listItemStyles: ComponentSlotStylesPrepared<ListItemStylesProps, ListItemVariables> = {
   root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
     const borderFocusStyles = getBorderFocusStyles({
       siteVariables,

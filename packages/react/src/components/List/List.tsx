@@ -32,6 +32,7 @@ import {
   createShorthandFactory,
 } from '../../utils'
 import ListItem, { ListItemProps } from './ListItem'
+import { useTelemetry } from '@fluentui/react-bindings/src'
 
 export interface ListProps extends UIComponentProps, ChildrenComponentProps {
   /** Accessibility behavior if overridden by the user. */
@@ -89,6 +90,10 @@ const List: React.FC<WithAsProp<ListProps>> &
   FluentComponentStaticProps<ListProps> & {
     Item: typeof ListItem
   } = props => {
+  const context: ProviderContextPrepared = React.useContext(ThemeContext)
+  const { setStart, setEnd } = useTelemetry(List.displayName, context.telemetry)
+  setStart()
+
   const {
     accessibility,
     as,
@@ -106,8 +111,7 @@ const List: React.FC<WithAsProp<ListProps>> &
     variables,
     wrap,
   } = props
-
-  const context: ProviderContextPrepared = React.useContext(ThemeContext)
+  setStart()
 
   const { state, actions } = useStateManager(createListManager, {
     mapPropsToInitialState: () => ({ selectedIndex: defaultSelectedIndex }),
@@ -166,7 +170,7 @@ const List: React.FC<WithAsProp<ListProps>> &
       })
     })
 
-  return getA11Props.unstable_withFocusZone(
+  const element = getA11Props.unstable_withFocusZone(
     <ElementType
       {...getA11Props('root', {
         className: classes.root,
@@ -177,6 +181,9 @@ const List: React.FC<WithAsProp<ListProps>> &
       {hasContent && wrap(childrenExist(children) ? children : renderItems())}
     </ElementType>,
   )
+  setEnd()
+
+  return element
 }
 
 List.className = 'ui-list'
