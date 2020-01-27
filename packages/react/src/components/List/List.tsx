@@ -128,7 +128,7 @@ const List: React.FC<WithAsProp<ListProps>> &
   })
   const { classes } = useStyles(List.displayName, {
     className: List.className,
-    mapPropsToStyles: () => ({ as: String(as), debug, horizontal }),
+    mapPropsToStyles: () => ({ isListTag: as === 'ol' || as === 'ul', debug, horizontal }),
     mapPropsToInlineStyles: () => ({ className, design, styles, variables }),
     rtl: context.rtl,
   })
