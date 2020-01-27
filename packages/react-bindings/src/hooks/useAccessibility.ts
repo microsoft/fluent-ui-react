@@ -3,12 +3,20 @@ import * as React from 'react'
 
 import getAccessibility from '../accessibility/getAccessibility'
 import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from '../accessibility/types'
+import FocusZone from '../FocusZone/FocusZone'
 
 type UseAccessibilityOptions<Props> = {
   actionHandlers?: AccessibilityActionHandlers
   debugName?: string
   mapPropsToBehavior?: () => Props
   rtl?: boolean
+}
+
+type UseAccessibilityResult = (<SlotProps extends Record<string, any>>(
+  slotName: string,
+  slotProps: SlotProps,
+) => MergedProps<SlotProps>) & {
+  unstable_wrapWithFocusZone: (children: React.ReactElement) => React.ReactElement
 }
 
 type MergedProps<SlotProps extends Record<string, any>> = SlotProps &
@@ -62,8 +70,30 @@ const useAccessibility = <Props>(
     actionHandlers,
   )
 
-  return <SlotProps extends Record<string, any>>(slotName: string, slotProps: SlotProps) =>
+  const getA11Props: UseAccessibilityResult = (slotName, slotProps) =>
     mergeProps(slotName, slotProps, definition)
+
+  // Provides an experimental handling for FocusZone definition in behaviors
+  getA11Props.unstable_wrapWithFocusZone = (element: React.ReactElement) => {
+    if (definition.focusZone) {
+      let child: React.ReactElement = element
+
+      if (process.env.NODE_ENV !== 'production') {
+        child = React.Children.only(element)
+      }
+
+      return React.createElement(FocusZone, {
+        ...definition.focusZone.props,
+        ...child.props,
+        as: child.type,
+        isRtl: rtl,
+      })
+    }
+
+    return element
+  }
+
+  return getA11Props
 }
 
 export default useAccessibility
