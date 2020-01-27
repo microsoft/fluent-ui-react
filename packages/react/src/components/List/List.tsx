@@ -170,7 +170,7 @@ const List: React.FC<WithAsProp<ListProps>> &
       })
     })
 
-  const element = getA11Props.unstable_withFocusZone(
+  const element = getA11Props.unstable_wrapWithFocusZone(
     <ElementType
       {...getA11Props('root', {
         className: classes.root,
