@@ -16,7 +16,13 @@ const useLogKnob = <T = (...args: any[]) => any>(
   const proxy = React.useCallback<any>(
     (...a) => {
       appendLog(formatter(name, ...a))
-      return (callback as any)(...a)
+      if (typeof callback === 'function') {
+        return (callback as any)(...a)
+      }
+      if (process.env.NODE_ENV !== 'production') {
+        console.log(`Please provide a function to "useLogKnob(${name}, callback)"`)
+      }
+      return null
     },
     [appendLog, callback, name, formatter],
   )

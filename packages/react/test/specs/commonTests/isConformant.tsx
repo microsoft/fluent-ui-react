@@ -33,6 +33,7 @@ export interface Conformant {
   rendersPortal?: boolean
   /** This component uses wrapper slot to wrap the 'meaningful' element. */
   wrapperComponent?: React.ReactType
+  handlesAsProp?: boolean
 }
 
 /**
@@ -55,6 +56,7 @@ export default function isConformant(
     requiredProps = {},
     rendersPortal = false,
     wrapperComponent = null,
+    handlesAsProp = true,
   } = options
   const { throwError } = helpers('isConformant', Component)
 
@@ -189,7 +191,7 @@ export default function isConformant(
     expect(component.find(props).length).toBeGreaterThan(1)
   })
 
-  if (!rendersPortal) {
+  if (!rendersPortal && handlesAsProp) {
     describe('"as" prop (common)', () => {
       test('renders the component as HTML tags or passes "as" to the next component', () => {
         // silence element nesting warnings
