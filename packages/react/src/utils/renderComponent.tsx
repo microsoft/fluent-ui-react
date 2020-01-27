@@ -1,15 +1,13 @@
-import { FocusZoneMode } from '@fluentui/accessibility'
 import {
   AccessibilityActionHandlers,
   ComponentSlotClasses,
   FocusZone,
-  FocusZoneProps,
-  FOCUSZONE_WRAP_ATTRIBUTE,
   getElementType,
   getUnhandledProps,
   ReactAccessibilityBehavior,
   unstable_getAccessibility as getAccessibility,
   unstable_getStyles as getStyles,
+  useTelemetry,
 } from '@fluentui/react-bindings'
 import {
   emptyTheme,
@@ -24,7 +22,6 @@ import * as React from 'react'
 
 import { Props, ProviderContextPrepared } from '../types'
 import logProviderMissingWarning from './providerMissingHandler'
-import Telemetry from './Telemetry'
 
 export interface RenderResultConfig<P> {
   ElementType: React.ElementType<P>
@@ -69,10 +66,10 @@ const renderComponent = <P extends {}>(
     logProviderMissingWarning()
   }
 
-  const { telemetry = undefined as Telemetry } = context || {}
+  const { setStart, setEnd } = useTelemetry(displayName, context.telemetry)
   const rtl = context.rtl || false
 
-  const startTime = telemetry && telemetry.enabled ? performance.now() : 0
+  setStart()
 
   const ElementType = getElementType(props) as React.ReactType<P>
   const unhandledProps = getUnhandledProps(handledProps, props)
@@ -107,46 +104,8 @@ const renderComponent = <P extends {}>(
     rtl,
     theme,
   }
-  let wrapInFocusZone: (element: React.ReactElement) => React.ReactElement = element => element
 
-  if (telemetry && telemetry.enabled) {
-    const duration = performance.now() - startTime
-
-    if (telemetry.performance[displayName]) {
-      telemetry.performance[displayName].count++
-      telemetry.performance[displayName].msTotal += duration
-      telemetry.performance[displayName].msMin = Math.min(
-        duration,
-        telemetry.performance[displayName].msMin,
-      )
-      telemetry.performance[displayName].msMax = Math.max(
-        duration,
-        telemetry.performance[displayName].msMax,
-      )
-    } else {
-      telemetry.performance[displayName] = {
-        count: 1,
-        msTotal: duration,
-        msMin: duration,
-        msMax: duration,
-      }
-    }
-  }
-
-  if (accessibility.focusZone && accessibility.focusZone.mode === FocusZoneMode.Wrap) {
-    wrapInFocusZone = element =>
-      React.createElement(
-        FocusZone,
-        {
-          [FOCUSZONE_WRAP_ATTRIBUTE]: true,
-          ...accessibility.focusZone.props,
-          isRtl: rtl,
-        } as FocusZoneProps & { [FOCUSZONE_WRAP_ATTRIBUTE]: boolean },
-        element,
-      )
-  }
-
-  if (accessibility.focusZone && accessibility.focusZone.mode === FocusZoneMode.Embed) {
+  if (accessibility.focusZone) {
     const originalElementType = resolvedConfig.ElementType
 
     resolvedConfig.ElementType = FocusZone as any
@@ -158,7 +117,10 @@ const renderComponent = <P extends {}>(
     resolvedConfig.unhandledProps.isRtl = resolvedConfig.rtl
   }
 
-  return wrapInFocusZone(render(resolvedConfig))
+  const element = render(resolvedConfig)
+  setEnd()
+
+  return element
 }
 
 export default renderComponent

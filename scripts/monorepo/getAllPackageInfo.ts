@@ -1,8 +1,8 @@
-import { spawnSync } from 'child_process'
+import { rollup as lernaAliases } from 'lerna-alias'
 import path from 'path'
 import { findGitRoot } from './findGitRoot'
 
-interface PackageJson {
+export interface PackageJson {
   name: string
   version: string
   main: string
@@ -10,16 +10,19 @@ interface PackageJson {
   module?: string
   dependencies?: { [key: string]: string }
   devDependencies?: { [key: string]: string }
+  [key: string]: any
 }
 
-interface PackageInfo {
+export interface PackageInfo {
+  /** Package path relative to the project root */
   packagePath: string
+  /** package.json contents */
   packageJson: PackageJson
 }
 
-type AllPackageInfo = { [key: string]: PackageInfo }
+export type AllPackageInfo = { [packageName: string]: PackageInfo }
 
-let packageInfoCache: AllPackageInfo = null
+let packageInfoCache: AllPackageInfo | null = null
 
 export function getAllPackageInfo(): AllPackageInfo {
   if (packageInfoCache) {
@@ -27,26 +30,21 @@ export function getAllPackageInfo(): AllPackageInfo {
   }
 
   const gitRoot = findGitRoot()
-  const results = spawnSync('git', ['ls-tree', '-r', '--name-only', '--full-tree', 'HEAD'])
+  const packagePaths = lernaAliases({ sourceDirectory: false })
+
   const packageInfo: { [key: string]: PackageInfo } = {}
 
-  results.stdout
-    .toString()
-    .split('\n')
-    .map((line: string) => {
-      return line.trim()
-    })
-    .filter((line: string) => line.endsWith('package.json'))
-    .forEach((packageJsonFile: string) => {
-      const packageJson = require(path.join(gitRoot, packageJsonFile))
-
-      if (packageJson) {
-        packageInfo[packageJson.name] = {
-          packagePath: path.dirname(packageJsonFile),
-          packageJson,
-        }
+  for (const [packageName, packagePath] of Object.entries(packagePaths)) {
+    try {
+      packageInfo[packageName] = {
+        packagePath: path.relative(gitRoot, packagePath),
+        packageJson: require(path.join(packagePath, 'package.json')),
       }
-    })
+    } catch (ex) {
+      /* eslint-disable-next-line no-console */
+      console.warn(`Error parsing package.json for ${packageName}: ${ex}`)
+    }
+  }
 
   packageInfoCache = packageInfo
 

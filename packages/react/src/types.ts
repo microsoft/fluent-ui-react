@@ -1,7 +1,7 @@
-import { StylesContextInputValue, StylesContextValue } from '@fluentui/react-bindings'
+import { StylesContextInputValue, StylesContextValue, Telemetry } from '@fluentui/react-bindings'
 import * as React from 'react'
 
-import Telemetry from './utils/Telemetry'
+import { ShorthandFactory } from './utils/factories'
 
 // ========================================================
 // Utilities
@@ -12,6 +12,16 @@ export type ResultOf<T> = T extends (...arg: any[]) => infer TResult ? TResult :
 export type ObjectOf<T> = { [key: string]: T }
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
+
+// ========================================================
+// Components
+// ========================================================
+
+export type FluentComponentStaticProps<P = {}> = {
+  className: string
+  handledProps: (keyof P)[]
+  create: ShorthandFactory<P>
+}
 
 // ========================================================
 // Props

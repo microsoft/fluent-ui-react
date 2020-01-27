@@ -111,7 +111,6 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
 
   static propTypes = {
     ...commonPropTypes.createCommon({
-      animated: false,
       as: false,
       content: false,
     }),

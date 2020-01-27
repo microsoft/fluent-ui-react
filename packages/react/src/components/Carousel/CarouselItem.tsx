@@ -32,6 +32,9 @@ export interface CarouselItemProps
    * up by screen readers.
    */
   itemPositionText?: string
+
+  /** Whether or not navigation exists in carousel. */
+  navigation?: boolean
 }
 
 class CarouselItem extends UIComponent<WithAsProp<CarouselItemProps>> {
@@ -44,6 +47,7 @@ class CarouselItem extends UIComponent<WithAsProp<CarouselItemProps>> {
   static propTypes = {
     ...commonPropTypes.createCommon(),
     active: PropTypes.bool,
+    navigation: PropTypes.bool,
     itemPositionText: PropTypes.string,
   }
 
@@ -64,13 +68,13 @@ class CarouselItem extends UIComponent<WithAsProp<CarouselItemProps>> {
         {...unhandledProps}
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
+        {childrenExist(children) ? children : content}
         <div
           className={CarouselItem.slotClassNames.itemPositionText}
           style={screenReaderContainerStyles}
         >
           {itemPositionText}
         </div>
-        {childrenExist(children) ? children : content}
       </ElementType>
     )
   }

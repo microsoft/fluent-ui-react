@@ -1,13 +1,14 @@
 import * as _ from 'lodash'
 import * as React from 'react'
 import { KnobsSnippet } from '@fluentui/code-sandbox'
+import { Telemetry } from '@fluentui/react-bindings'
 import {
   KnobProvider,
   useBooleanKnob,
   useSelectKnob,
   KnobInspector,
 } from '@fluentui/docs-components'
-import { Provider, Flex, themes, mergeThemes, Telemetry } from '@fluentui/react'
+import { Provider, Flex, themes, mergeThemes } from '@fluentui/react'
 
 import { darkThemeOverrides } from './darkThemeOverrides'
 import { highContrastThemeOverrides } from './highContrastThemeOverrides'

@@ -29,6 +29,15 @@ const testBehavior: Accessibility<TestBehaviorProps> = props => ({
   },
 })
 
+const focusZoneBehavior: Accessibility<never> = () => ({
+  focusZone: {
+    props: {
+      disabled: true,
+      shouldFocusOnMount: true,
+    },
+  },
+})
+
 type TestComponentProps = {
   disabled?: boolean
   onClick?: (e: React.KeyboardEvent<HTMLDivElement>, slotName: string) => void
@@ -48,14 +57,28 @@ const TestComponent: React.FunctionComponent<TestComponentProps> = props => {
     },
   })
 
-  return (
+  return getA11Props.unstable_wrapWithFocusZone(
     <div {...getA11Props('root', { onKeyDown, ...rest })}>
       <img
         {...getA11Props('img', {
           src: 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==',
         })}
       />
-    </div>
+    </div>,
+  )
+}
+
+type FocusZoneComponentProps = {
+  as?: React.ElementType
+  rtl?: boolean
+}
+
+const FocusZoneComponent: React.FunctionComponent<FocusZoneComponentProps> = props => {
+  const { as: ElementType = 'div', children, rtl = false } = props
+  const getA11Props = useAccessibility(focusZoneBehavior, { rtl })
+
+  return getA11Props.unstable_wrapWithFocusZone(
+    <ElementType {...getA11Props('root', {})}>{children}</ElementType>,
   )
 }
 
@@ -114,5 +137,41 @@ describe('useAccessibility', () => {
       }),
       'root',
     )
+  })
+
+  describe('FocusZone', () => {
+    it('do not render FocusZone without the definition in a behavior', () => {
+      expect(shallow(<TestComponent />).find('FocusZone')).toHaveLength(0)
+    })
+
+    it('renders FocusZone with the definition in a behavior', () => {
+      expect(shallow(<FocusZoneComponent />).find('FocusZone')).toHaveLength(1)
+    })
+
+    it('applies props from the behavior to a FocusZone component', () => {
+      expect(
+        shallow(<FocusZoneComponent />)
+          .find('FocusZone')
+          .props(),
+      ).toEqual(
+        expect.objectContaining({
+          disabled: true,
+          shouldFocusOnMount: true,
+        }),
+      )
+    })
+
+    it('passes "rtl" value', () => {
+      expect(
+        shallow(<FocusZoneComponent />)
+          .find('FocusZone')
+          .prop('isRtl'),
+      ).toBe(false)
+      expect(
+        shallow(<FocusZoneComponent rtl />)
+          .find('FocusZone')
+          .prop('isRtl'),
+      ).toBe(true)
+    })
   })
 })

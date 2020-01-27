@@ -5,7 +5,12 @@ type ComponentPerfStats = {
   msMax: number
 }
 
-export default class Telemetry {
+export type UseTelemetryResult = {
+  setStart: () => void
+  setEnd: () => void
+}
+
+export class Telemetry {
   performance: Record<string, ComponentPerfStats>
   enabled: boolean
 

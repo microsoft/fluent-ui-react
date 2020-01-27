@@ -35,7 +35,6 @@ class PortalInner extends React.Component<PortalInnerProps> {
   static propTypes = {
     ...commonPropTypes.createCommon({
       accessibility: false,
-      animated: false,
       as: false,
       className: false,
       content: false,

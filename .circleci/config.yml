@@ -105,8 +105,8 @@ jobs:
               yarn danger ci
             fi
       - store_artifacts:
-          path: dist/artifacts
-          destination: artifacts
+          path: packages/perf-test/dist
+          destination: artifacts/perf
       - run:
           name: Publish npm package (master only)
           command: |

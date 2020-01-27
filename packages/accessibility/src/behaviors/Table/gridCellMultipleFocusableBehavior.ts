@@ -1,13 +1,12 @@
 import { Accessibility } from '../../types'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../attributes'
-import { FocusZoneMode, FocusZoneDirection } from '../../focusZone/types'
+import { FocusZoneDirection } from '../../focusZone/types'
 import * as keyboardKey from 'keyboard-key'
 
 /**
  * @specification
  * Adds role='gridcell'.
  * Adds attribute 'data-is-focusable=true' to 'root' slot.
- * Embeds component into FocusZone.
  * Provides arrow key navigation in bidirectional direction.
  * Triggers 'focusCell' action with 'Escape' on 'root'.
  */
@@ -19,7 +18,6 @@ const gridCellMultipleFocusableBehavior: Accessibility = props => ({
     },
   },
   focusZone: {
-    mode: FocusZoneMode.Embed,
     props: {
       direction: FocusZoneDirection.bidirectional,
     },

@@ -1292,13 +1292,13 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
   }
 
   tryFocusTriggerButton = () => {
-    if (!this.props.search) {
+    if (!this.props.search && this.buttonRef.current) {
       this.buttonRef.current.focus()
     }
   }
 
   tryFocusSearchInput = () => {
-    if (this.props.search) {
+    if (this.props.search && this.inputRef.current) {
       this.inputRef.current.focus()
     }
   }

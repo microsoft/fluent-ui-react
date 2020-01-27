@@ -1,17 +1,32 @@
 import { getAllPackageDeps } from '../monorepo/getAllPackageDeps'
 import path from 'path'
 import fs from 'fs'
+import jju from 'jju'
 import { getAllPackageInfo } from '../monorepo/getAllPackageInfo'
 import { findGitRoot } from '../monorepo/findGitRoot'
 import { logger } from 'just-task'
+
+interface TSConfig {
+  references: { path: string }[]
+  [key: string]: any
+}
 
 export function autoProjectRefsTask() {
   const updatedTsconfigs = getUpdatedTsconfigs()
 
   if (updatedTsconfigs.size > 0) {
-    for (const [file, blob] of updatedTsconfigs.entries()) {
+    for (const [file, [originalText, updatedJson]] of updatedTsconfigs.entries()) {
       logger.info(`Updating ${file} with project references`)
-      fs.writeFileSync(file, JSON.stringify(blob, null, 2))
+      fs.writeFileSync(
+        file,
+        jju.update(originalText, updatedJson, {
+          mode: 'json5',
+          indent: 2,
+          quote: '"',
+          quote_keys: true,
+          no_trailing_comma: true,
+        }),
+      )
     }
   }
 }
@@ -28,12 +43,12 @@ export function autoProjectRefsVerifyTask() {
 }
 
 function getUpdatedTsconfigs() {
-  const excluded = ['@fluentui/scripts', 'fluent-ui-monorepo']
+  const excluded = ['@fluentui/scripts', '@fluentui/build']
   const repoDeps = getAllPackageDeps()
   const allInfo = getAllPackageInfo()
   const root = findGitRoot()
   let isDirty = false
-  const updatedTsconfigs = new Map<string, string>()
+  const updatedTsconfigs = new Map<string, [string, TSConfig]>()
 
   for (const [name, info] of Object.entries(allInfo)) {
     if (excluded.includes(name)) {
@@ -41,9 +56,10 @@ function getUpdatedTsconfigs() {
     }
 
     isDirty = false
-    const deps = repoDeps.get(name)
+    const deps = repoDeps.get(name)!
     const tsconfigFile = path.join(root, info.packagePath, 'tsconfig.json')
-    const tsconfigJson = JSON.parse(fs.readFileSync(tsconfigFile, 'utf-8'))
+    const tsconfigText = fs.readFileSync(tsconfigFile, 'utf-8')
+    const tsconfigJson: TSConfig = jju.parse(tsconfigText)
 
     const newRefs = [...deps]
       .sort()
@@ -64,7 +80,7 @@ function getUpdatedTsconfigs() {
     }
 
     if (isDirty) {
-      updatedTsconfigs.set(tsconfigFile, tsconfigJson)
+      updatedTsconfigs.set(tsconfigFile, [tsconfigText, tsconfigJson])
     }
   }
   return updatedTsconfigs
