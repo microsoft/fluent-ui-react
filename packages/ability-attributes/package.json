@@ -1,7 +1,7 @@
 {
   "name": "@fluentui/ability-attributes",
   "description": "Accessibility attributes schema for Fluent UI",
-  "version": "0.42.0",
+  "version": "0.43.0",
   "author": "Marat Abdullin <marata@microsoft.com>",
   "bugs": "https://github.com/microsoft/fluent-ui-react/issues",
   "dependencies": {
@@ -23,7 +23,8 @@
   },
   "repository": "microsoft/fluent-ui-react.git",
   "scripts": {
-    "build": "npm run schema && gulp bundle:package:no-umd --package ability-attributes",
+    "build": "npm run schema && gulp bundle:package:no-umd",
+    "clean": "gulp bundle:package:clean",
     "schema": "allyschema -c \"process.env.NODE_ENV !== 'production'\" schema.json > ./src/schema.ts"
   },
   "sideEffects": false,

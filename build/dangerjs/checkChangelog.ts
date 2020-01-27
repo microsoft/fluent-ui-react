@@ -1,6 +1,6 @@
 import * as fs from 'fs'
 
-import config from '../../config'
+import config from '../config'
 import { DangerJS } from './types'
 
 const CHANGELOG_FILE = 'CHANGELOG.md'

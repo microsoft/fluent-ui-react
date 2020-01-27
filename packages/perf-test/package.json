@@ -1,7 +1,7 @@
 {
   "name": "@fluentui/perf-test",
   "description": "Perf tests for fluentui.",
-  "version": "0.42.0",
+  "version": "0.43.0",
   "private": true,
   "dependencies": {
     "office-ui-fabric-react": "^7.44.0",
@@ -15,7 +15,7 @@
     "perf:test": "just-scripts perf-test"
   },
   "devDependencies": {
-    "@fluentui/digest": "^0.42.0",
+    "@fluentui/digest": "^0.43.0",
     "@types/react": "^16.8.10",
     "@types/react-dom": "^16.8.3",
     "flamegrill": "^0.1.3",

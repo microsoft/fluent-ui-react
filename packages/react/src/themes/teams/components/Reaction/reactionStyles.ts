@@ -1,5 +1,5 @@
 import { FontWeightProperty } from 'csstype'
-import { ICSSInJSStyle, ComponentSlotStylesPrepared } from '../../../types'
+import { ICSSInJSStyle, ComponentSlotStylesPrepared } from '@fluentui/styles'
 import { default as Reaction, ReactionProps } from '../../../../components/Reaction/Reaction'
 import { pxToRem } from '../../../../utils'
 import { ReactionVariables } from './reactionVariables'

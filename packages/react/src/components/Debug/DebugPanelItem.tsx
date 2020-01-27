@@ -1,7 +1,7 @@
 import * as React from 'react'
 import DebugPanelData from './DebugPanelData'
 import { filter } from './utils'
-import deepmerge from '../../utils/deepmerge'
+import { deepmerge } from '@fluentui/styles'
 
 interface DebugPanelItemProps {
   data: any

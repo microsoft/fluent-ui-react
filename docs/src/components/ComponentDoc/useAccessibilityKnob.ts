@@ -1,7 +1,7 @@
 import { useSelectKnob } from '@fluentui/docs-components'
 import * as FluentUI from '@fluentui/react'
 
-import componentInfoContext from 'docs/src/utils/componentInfoContext'
+import componentInfoContext from '../../utils/componentInfoContext'
 import useComponentProps from './useComponentProps'
 
 const useAccessibilityKnob = (componentName: string): FluentUI.Accessibility => {

@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { Extendable, ShorthandValue } from 'src/types'
-import { Avatar, AvatarProps, Divider, Grid, Button } from '@fluentui/react'
+import { ShorthandValue } from 'src/types'
+import { Avatar, AvatarProps, Divider, Grid, Button, Extendable } from '@fluentui/react'
 import CustomText from './CustomText'
 import { Group, NextGroupDirection } from 'ability-helpers-react'
 

@@ -1,14 +1,14 @@
 {
   "name": "@fluentui/state",
   "description": "A set of utils to create framework agnostic and reusable state managers",
-  "version": "0.42.0",
+  "version": "0.43.0",
   "author": "Oleksandr Fediashov <a@fedyashov.com>",
   "bugs": "https://github.com/microsoft/fluent-ui-react/issues",
   "dependencies": {
     "@babel/runtime": "^7.1.2"
   },
   "devDependencies": {
-    "@fluentui/internal-tooling": "^0.42.0",
+    "@fluentui/internal-tooling": "^0.43.0",
     "lerna-alias": "^3.0.3-0"
   },
   "files": [
@@ -24,7 +24,8 @@
   },
   "repository": "microsoft/fluent-ui-react.git",
   "scripts": {
-    "build": "cross-env TS_NODE_PROJECT=../../tsconfig.json gulp bundle:package:no-umd --package state"
+    "build": "gulp bundle:package:no-umd",
+    "clean": "gulp bundle:package:clean"
   },
   "sideEffects": false,
   "types": "dist/es/index.d.ts"

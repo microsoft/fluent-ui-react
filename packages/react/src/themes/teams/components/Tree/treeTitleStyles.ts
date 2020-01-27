@@ -1,4 +1,4 @@
-import { ICSSInJSStyle } from '../../../types'
+import { ICSSInJSStyle } from '@fluentui/styles'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 const treeTitleStyles = {

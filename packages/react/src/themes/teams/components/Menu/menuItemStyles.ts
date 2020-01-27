@@ -1,14 +1,10 @@
 import { pxToRem } from '../../../../utils'
-import {
-  ComponentSlotStylesPrepared,
-  ICSSInJSStyle,
-  StrictColorScheme,
-  ItemType,
-} from '../../../types'
+import { StrictColorScheme, ItemType } from '../../../types'
 import { MenuVariables, menuColorAreas } from './menuVariables'
 import { MenuItemProps, MenuItemState } from '../../../../components/Menu/MenuItem'
 import { getColorScheme } from '../../colors'
 import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 
 type MenuItemPropsAndState = MenuItemProps & MenuItemState
 

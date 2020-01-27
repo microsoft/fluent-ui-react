@@ -1,9 +1,13 @@
-import createComponentInternal, { CreateComponentReturnType } from './createComponentInternal'
-import * as React from 'react'
+import {
+  ComponentSlotClasses,
+  ReactAccessibilityBehavior,
+  AccessibilityActionHandlers,
+} from '@fluentui/react-bindings'
+import { ComponentSlotStylesPrepared } from '@fluentui/styles'
 import * as _ from 'lodash'
+import * as React from 'react'
 
-import { ComponentSlotClasses, ComponentSlotStylesPrepared } from '../themes/types'
-import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from './accessibility/reactTypes'
+import createComponentInternal, { CreateComponentReturnType } from './createComponentInternal'
 import { ObjectOf } from '../types'
 
 export interface CreateComponentRenderConfig {

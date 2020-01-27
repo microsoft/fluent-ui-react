@@ -5,7 +5,7 @@ import { toRefObject } from '@fluentui/react-component-ref'
 import { EventListener } from '@fluentui/react-component-event-listener'
 
 import { isBrowser } from '../../utils'
-import { isEnabled as isDebugEnabled } from '../../utils/debug/debugEnabled'
+import { isDebugEnabled } from '@fluentui/styles'
 
 import DebugPanel from './DebugPanel'
 import FiberNavigator from './FiberNavigator'
