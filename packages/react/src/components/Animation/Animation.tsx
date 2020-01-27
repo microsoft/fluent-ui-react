@@ -110,6 +110,9 @@ export interface AnimationProps extends StyledComponentProps {
   onExited?: (node: HTMLElement) => void
 }
 
+/**
+ * An Animation provides animation effects to rendered elements.
+ */
 class Animation extends UIComponent<AnimationProps, any> {
   static create: ShorthandFactory<AnimationProps>
 
@@ -199,7 +202,4 @@ class Animation extends UIComponent<AnimationProps, any> {
   }
 }
 
-/**
- * An Animation provides animation effects to rendered elements.
- */
 export default Animation
