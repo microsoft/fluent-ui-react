@@ -38,12 +38,8 @@ const useStateManager = <
   } = options
   const latestManager = React.useRef<Manager<State, Actions> | null>(null)
 
-  // Heads up! forceUpdate() is used only for triggering rerenders stateManager is SSOT()
-  const [, forceUpdate] = React.useState()
-  const syncState = React.useCallback(
-    (_prevState: State, nextState: State) => forceUpdate(nextState),
-    [],
-  )
+  // Heads up! forceUpdate() is used only for triggering rerenders, stateManager is SSOT
+  const [, forceUpdate] = React.useReducer((c: number) => c + 1, 0) as [never, () => void]
 
   // If manager exists, the current state will be used
   const initialState = latestManager.current
@@ -54,7 +50,12 @@ const useStateManager = <
     // Factory has already configured actions
     actions: {} as EnhancedActions<State, Actions>,
     state: { ...initialState, ...getDefinedProps(mapPropsToState()) },
-    sideEffects: [...sideEffects, syncState],
+    sideEffects: [
+      ...sideEffects,
+      // `sideEffect` is called with two arguments, but hooks don't support the second callback
+      // argument
+      () => forceUpdate(),
+    ],
   })
 
   // We need to pass exactly `manager.state` to provide the same state object during the same render
