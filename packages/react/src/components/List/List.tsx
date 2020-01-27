@@ -111,7 +111,6 @@ const List: React.FC<WithAsProp<ListProps>> &
     variables,
     wrap,
   } = props
-  setStart()
 
   const { state, actions } = useStateManager(createListManager, {
     mapPropsToInitialState: () => ({ selectedIndex: defaultSelectedIndex }),
