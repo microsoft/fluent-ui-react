@@ -1,4 +1,3 @@
-import { chatMessageBehavior, AccessibilityDefinition } from '@fluentui/accessibility'
 import * as React from 'react'
 
 import { handlesAccessibility, implementsShorthandProp, isConformant } from 'test/specs/commonTests'
@@ -18,9 +17,7 @@ describe('ChatMessage', () => {
   chatMessageImplementsShorthandProp('content', Box, { mapsValueToProp: 'children' })
 
   describe('accessibility', () => {
-    handlesAccessibility(ChatMessage, {
-      focusZoneDefinition: (chatMessageBehavior as AccessibilityDefinition).focusZone,
-    })
+    handlesAccessibility(ChatMessage)
   })
 
   describe('onMouseEnter', () => {
