@@ -5,6 +5,7 @@ import {
   useAccessibility,
   useStateManager,
   useStyles,
+  useTelemetry,
 } from '@fluentui/react-bindings'
 import { createListManager } from '@fluentui/state'
 import * as customPropTypes from '@fluentui/react-proptypes'
@@ -32,7 +33,6 @@ import {
   createShorthandFactory,
 } from '../../utils'
 import ListItem, { ListItemProps } from './ListItem'
-import { useTelemetry } from '@fluentui/react-bindings/src'
 
 export interface ListProps extends UIComponentProps, ChildrenComponentProps {
   /** Accessibility behavior if overridden by the user. */
