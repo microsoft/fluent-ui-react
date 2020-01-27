@@ -161,7 +161,7 @@ describe('useAccessibility', () => {
       )
     })
 
-    it.only('passes "rtl" value', () => {
+    it('passes "rtl" value', () => {
       expect(
         shallow(<FocusZoneComponent />)
           .find('FocusZone')
