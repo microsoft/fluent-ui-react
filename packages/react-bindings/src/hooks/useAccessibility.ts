@@ -3,12 +3,20 @@ import * as React from 'react'
 
 import getAccessibility from '../accessibility/getAccessibility'
 import { ReactAccessibilityBehavior, AccessibilityActionHandlers } from '../accessibility/types'
+import FocusZone from '../FocusZone/FocusZone'
 
 type UseAccessibilityOptions<Props> = {
   actionHandlers?: AccessibilityActionHandlers
   debugName?: string
   mapPropsToBehavior?: () => Props
   rtl?: boolean
+}
+
+type UseAccessibilityResult = (<SlotProps extends Record<string, any>>(
+  slotName: string,
+  slotProps: SlotProps,
+) => MergedProps<SlotProps>) & {
+  unstable_withFocusZone: (children: React.ReactElement) => React.ReactElement
 }
 
 type MergedProps<SlotProps extends Record<string, any>> = SlotProps &
@@ -23,7 +31,6 @@ const mergeProps = <SlotProps extends Record<string, any>>(
 ): MergedProps<SlotProps> => {
   const finalProps: MergedProps<SlotProps> = {
     ...definition.attributes[slotName],
-    ...(slotName === 'root' && definition.focusZone && definition.focusZone.props),
     ...slotProps,
   }
   const slotHandlers = definition.keyHandlers[slotName]
@@ -63,8 +70,30 @@ const useAccessibility = <Props>(
     actionHandlers,
   )
 
-  return <SlotProps extends Record<string, any>>(slotName: string, slotProps: SlotProps) =>
+  const getA11Props: UseAccessibilityResult = (slotName, slotProps) =>
     mergeProps(slotName, slotProps, definition)
+
+  // Provides an experimental handling for FocusZone definition in behaviors
+  getA11Props.unstable_withFocusZone = (children: React.ReactElement) => {
+    if (definition.focusZone) {
+      let element: React.ReactElement = children
+
+      if (process.env.NODE_ENV !== 'production') {
+        element = React.Children.only(children)
+      }
+
+      return React.createElement(FocusZone, {
+        ...definition.focusZone.props,
+        ...element.props,
+        as: element.type,
+        isRtl: rtl,
+      })
+    }
+
+    return children
+  }
+
+  return getA11Props
 }
 
 export default useAccessibility
