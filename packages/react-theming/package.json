@@ -23,6 +23,7 @@
     "build": "just-scripts build",
     "clean": "just-scripts clean",
     "just": "just-scripts",
+    "start": "just-scripts start",
     "start-test": "just-scripts test:watch",
     "test": "just-scripts test",
     "update-snapshots": "just-scripts jest:snapshots"

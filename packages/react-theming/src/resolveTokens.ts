@@ -1,5 +1,6 @@
 import { ITheme } from './theme.types';
 
+export type TokenDictShorthand = { [name: string]: any };
 type TokenDict = { [name: string]: IToken };
 
 interface IToken {
@@ -79,14 +80,12 @@ class TokenFactory {
  * @param sourceTokensSet
  * @internal
  */
-export const resolveTokens = (name: string | undefined, theme: ITheme, sourceTokensSet: any[]) => {
+export const resolveTokens = (name: string | undefined, theme: ITheme, sourceTokens: any) => {
   const tokens: TokenDict = {};
 
-  sourceTokensSet.forEach(sourceTokens => {
-    for (const tokenName in sourceTokens) {
-      tokens[tokenName] = TokenFactory.from(tokens, sourceTokens[tokenName], tokenName);
-    }
-  });
+  for (const tokenName in sourceTokens) {
+    tokens[tokenName] = TokenFactory.from(tokens, sourceTokens[tokenName], tokenName);
+  }
 
   if (name && theme.components[name] && theme.components[name].tokens) {
     const sourceTokens = theme.components[name].tokens;
