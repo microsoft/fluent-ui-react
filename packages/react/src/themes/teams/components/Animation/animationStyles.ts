@@ -4,10 +4,7 @@ import {
 } from '@fluentui/react-bindings'
 
 export default {
-  root: () => ({
-    display: 'inline-block',
-  }),
-  children: ({ props: p, theme }) => {
+  root: ({ props: p, theme }) => {
     const animation: ComponentAnimationProp = {
       name: p.name,
       keyframeParams: p.keyframeParams,

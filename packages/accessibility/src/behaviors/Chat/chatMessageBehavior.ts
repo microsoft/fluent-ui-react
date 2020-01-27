@@ -2,7 +2,7 @@ import * as keyboardKey from 'keyboard-key'
 
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../attributes'
 import { Accessibility } from '../../types'
-import { FocusZoneTabbableElements, FocusZoneDirection, FocusZoneMode } from '../../focusZone/types'
+import { FocusZoneTabbableElements, FocusZoneDirection } from '../../focusZone/types'
 
 /**
  * @description
@@ -12,7 +12,6 @@ import { FocusZoneTabbableElements, FocusZoneDirection, FocusZoneMode } from '..
  * Adds an escape key action which focuses the chat message, i.e., moves key handling from inside a message back to the chat list.
  *
  * @specification
- * Embeds component into FocusZone.
  * Provides arrow key navigation in vertical direction.
  * Keyboard navigation is circular.
  * Focus is moved within the focusable children of the component using TAB key.
@@ -25,7 +24,6 @@ const chatMessageBehavior: Accessibility = () => ({
     },
   },
   focusZone: {
-    mode: FocusZoneMode.Embed,
     props: {
       handleTabKey: FocusZoneTabbableElements.all,
       isCircularNavigation: true,
