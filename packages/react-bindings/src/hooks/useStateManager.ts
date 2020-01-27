@@ -50,7 +50,12 @@ const useStateManager = <
     // Factory has already configured actions
     actions: {} as EnhancedActions<State, Actions>,
     state: { ...initialState, ...getDefinedProps(mapPropsToState()) },
-    sideEffects: [...sideEffects, forceUpdate],
+    sideEffects: [
+      ...sideEffects,
+      // `sideEffect` is called with two arguments, but hooks don't support the second callback
+      // argument
+      () => forceUpdate(),
+    ],
   })
 
   // We need to pass exactly `manager.state` to provide the same state object during the same render
