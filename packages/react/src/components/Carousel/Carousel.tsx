@@ -184,28 +184,12 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
       this.showPreviousSlide(e, true)
     },
     showNextSlideByPaddlePress: e => {
-      e.preventDefault()
-      const { activeIndex } = this.state
-      const { circular, items, navigation } = this.props
-
-      this.showNextSlide(e, false)
-
-      // if 'next' paddle will disappear, will focus 'previous' one.
-      if (!navigation && activeIndex >= items.length - 2 && !circular) {
-        this.paddlePreviousRef.current.focus()
-      }
+      e.preventDefault()      
+      this.showNextSlide(e, false)      
     },
     showPreviousSlideByPaddlePress: e => {
       e.preventDefault()
-      const { activeIndex } = this.state
-      const { circular, navigation } = this.props
-
       this.showPreviousSlide(e, false)
-
-      // if 'previous' paddle will disappear, will focus 'next' one.
-      if (!navigation && activeIndex <= 1 && !circular) {
-        this.paddleNextRef.current.focus()
-      }
     },
   }
 
@@ -260,7 +244,8 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
       <div style={styles.itemsContainerWrapper} {...accessibility.attributes.itemsContainerWrapper}>
         <div
           className={Carousel.slotClassNames.itemsContainer}
-          aria-roledescription={ariaRoleDescription}
+          aria-roledescription={ariaRoleDescription}          
+          aria-label="Portrait collection"
           style={styles.itemsContainer}
           {...accessibility.attributes.itemsContainer}
           {...applyAccessibilityKeyHandlers(
@@ -294,10 +279,18 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
 
   showPreviousSlide = (e: React.SyntheticEvent, focusItem: boolean) => {
     this.setActiveIndex(e, this.state.activeIndex - 1, focusItem)
+       // if 'previous' paddle will disappear, will focus 'next' one.
+       if (!this.props.navigation && this.state.activeIndex <= 1 && !this.props.circular) {
+        this.paddleNextRef.current.focus()
+      }
   }
 
   showNextSlide = (e: React.SyntheticEvent, focusItem: boolean) => {
     this.setActiveIndex(e, this.state.activeIndex + 1, focusItem)
+    // if 'next' paddle will disappear, will focus 'previous' one.
+    if (!this.props.navigation && this.state.activeIndex >= this.props.items.length - 2 && !this.props.circular) {
+      this.paddlePreviousRef.current.focus()
+    }
   }
 
   handlePaddleOverrides = (predefinedProps: ButtonProps, paddleName: string) => ({
@@ -390,6 +383,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
       })
     ) : (
       <Text
+        aria-hidden="true"
         className={Carousel.slotClassNames.pagination}
         content={getItemPositionText(activeIndex, items.length)}
       />
