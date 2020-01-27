@@ -39,6 +39,7 @@ const AnimationExampleVisible = () => {
       }}
     >
       <Button onClick={() => setVisible(!visible)}>{visible ? 'Hide' : 'Show'}</Button>&emsp;
+      {/* Children as function */}
       <Animation
         visible={visible}
         timeout={{
@@ -57,6 +58,7 @@ const AnimationExampleVisible = () => {
       >
         {({ classes }) => <Icon name="mention" className={classes} />}
       </Animation>
+      {/* Children as element */}
       <Animation
         visible={visible}
         timeout={{

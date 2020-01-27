@@ -1,6 +1,7 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import cx from 'classnames'
+import * as _ from 'lodash'
 import { Transition } from 'react-transition-group'
 
 import {
@@ -10,6 +11,7 @@ import {
   commonPropTypes,
   ShorthandFactory,
 } from '../../utils'
+import { ComponentEventHandler } from '../../types'
 
 export type AnimationChildrenProp = (props: { classes: string }) => React.ReactNode
 
@@ -91,23 +93,47 @@ export interface AnimationProps extends StyledComponentProps {
   /** The duration of the transition, in milliseconds. */
   timeout?: number | { enter?: number; exit?: number; appear?: number }
 
-  /** Callback fired before the "entering" status is applied. An extra parameter isAppearing is supplied to indicate if the enter stage is occurring on the initial mount. */
-  onEnter?: (node: HTMLElement, isAppearing: boolean) => void
+  /**
+   * Callback fired before the "entering" status is applied.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
+   */
+  onEnter?: ComponentEventHandler<AnimationProps>
 
-  /** Callback fired after the "entering" status is applied. An extra parameter isAppearing is supplied to indicate if the enter stage is occurring on the initial mount. */
-  onEntering?: (node: HTMLElement, isAppearing: boolean) => void
+  /**
+   * Callback fired after the "entering" status is applied.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
+   */
+  onEntering?: ComponentEventHandler<AnimationProps>
 
-  /** Callback fired after the "entered" status is applied. An extra parameter isAppearing is supplied to indicate if the enter stage is occurring on the initial mount. */
-  onEntered?: (node: HTMLElement, isAppearing: boolean) => void
+  /**
+   * Callback fired after the "entered" status is applied.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
+   */
+  onEntered?: ComponentEventHandler<AnimationProps>
 
-  /** Callback fired before the "exiting" status is applied. */
-  onExit?: (node: HTMLElement) => void
+  /**
+   * Callback fired before the "exiting" status is applied.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
+   */
+  onExit?: ComponentEventHandler<AnimationProps>
 
-  /** Callback fired after the "exiting" status is applied. */
-  onExiting?: (node: HTMLElement) => void
+  /**
+   * Callback fired after the "exiting" status is applied.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
+   */
+  onExiting?: ComponentEventHandler<AnimationProps>
 
-  /** Callback fired after the "exited" status is applied. */
-  onExited?: (node: HTMLElement) => void
+  /**
+   * Callback fired after the "exited" status is applied.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
+   */
+  onExited?: ComponentEventHandler<AnimationProps>
 }
 
 /**
@@ -161,21 +187,14 @@ class Animation extends UIComponent<AnimationProps, any> {
     timeout: 0,
   }
 
+  handleAnimationEvent = (
+    event: 'onEnter' | 'onEntering' | 'onEntered' | 'onExit' | 'onExiting' | 'onExited',
+  ) => () => {
+    _.invoke(this.props, event, null, this.props)
+  }
+
   renderComponent({ ElementType, classes, unhandledProps }) {
-    const {
-      children,
-      mountOnEnter,
-      unmountOnExit,
-      timeout,
-      appear,
-      visible,
-      onEnter,
-      onEntering,
-      onEntered,
-      onExit,
-      onExited,
-      onExiting,
-    } = this.props
+    const { children, mountOnEnter, unmountOnExit, timeout, appear, visible } = this.props
 
     const isChildrenFunction = typeof children === 'function'
 
@@ -191,12 +210,12 @@ class Animation extends UIComponent<AnimationProps, any> {
         mountOnEnter={mountOnEnter}
         unmountOnExit={unmountOnExit}
         timeout={timeout}
-        onEnter={onEnter}
-        onEntering={onEntering}
-        onEntered={onEntered}
-        onExit={onExit}
-        onExiting={onExiting}
-        onExited={onExited}
+        onEnter={this.handleAnimationEvent('onEnter')}
+        onEntering={this.handleAnimationEvent('onEntering')}
+        onEntered={this.handleAnimationEvent('onEntered')}
+        onExit={this.handleAnimationEvent('onExit')}
+        onExiting={this.handleAnimationEvent('onExiting')}
+        onExited={this.handleAnimationEvent('onExited')}
         {...unhandledProps}
         className={!isChildrenFunction ? cx(classes.root, (child as any).props.className) : ''}
       >
