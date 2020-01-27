@@ -24,6 +24,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - `FocusZoneMode` and `FOCUSZONE_WRAP_ATTRIBUTE` are no longer exported @layershifter ([#2265](https://github.com/microsoft/fluent-ui-react/pull/2265))
 - Returned function from `useAccessibility` no longer keeps the same reference @layershifter ([#2268](https://github.com/microsoft/fluent-ui-react/pull/2268))
 - Changed `avatarBorderWidth` and `statusBorderWidth` avatar variables types from number to string and updated styles in Teams theme @mnajdova ([#2238](https://github.com/microsoft/fluent-ui-react/pull/2238))
+- Add logic for mounting/removing elements when they are shown/hidden using the `Animation` component; `Animation` component is not rendering element anymore, just applying classes to it's children @mnajdova ([#2115](https://github.com/microsoft/fluent-ui-react/pull/2115))
 
 ### Fixes
 - Fix event listener leak in `FocusZone` @miroslavstastny ([#2227](https://github.com/microsoft/fluent-ui-react/pull/2227))
