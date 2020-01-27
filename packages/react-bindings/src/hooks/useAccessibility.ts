@@ -63,14 +63,8 @@ const useAccessibility = <Props>(
     actionHandlers,
   )
 
-  const latestDefinition = React.useRef<ReactAccessibilityBehavior>(definition)
-  latestDefinition.current = definition
-
-  return React.useCallback(
-    <SlotProps extends Record<string, any>>(slotName: string, slotProps: SlotProps) =>
-      mergeProps(slotName, slotProps, latestDefinition.current),
-    [],
-  )
+  return <SlotProps extends Record<string, any>>(slotName: string, slotProps: SlotProps) =>
+    mergeProps(slotName, slotProps, definition)
 }
 
 export default useAccessibility
