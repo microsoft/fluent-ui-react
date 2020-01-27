@@ -57,7 +57,7 @@ const TestComponent: React.FunctionComponent<TestComponentProps> = props => {
     },
   })
 
-  return getA11Props.unstable_withFocusZone(
+  return getA11Props.unstable_wrapWithFocusZone(
     <div {...getA11Props('root', { onKeyDown, ...rest })}>
       <img
         {...getA11Props('img', {
@@ -77,7 +77,7 @@ const FocusZoneComponent: React.FunctionComponent<FocusZoneComponentProps> = pro
   const { as: ElementType = 'div', children, rtl = false } = props
   const getA11Props = useAccessibility(focusZoneBehavior, { rtl })
 
-  return getA11Props.unstable_withFocusZone(
+  return getA11Props.unstable_wrapWithFocusZone(
     <ElementType {...getA11Props('root', {})}>{children}</ElementType>,
   )
 }
@@ -161,7 +161,7 @@ describe('useAccessibility', () => {
       )
     })
 
-    it.only('passes "rtl" value', () => {
+    it('passes "rtl" value', () => {
       expect(
         shallow(<FocusZoneComponent />)
           .find('FocusZone')

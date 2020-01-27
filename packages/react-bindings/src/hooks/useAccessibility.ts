@@ -16,7 +16,7 @@ type UseAccessibilityResult = (<SlotProps extends Record<string, any>>(
   slotName: string,
   slotProps: SlotProps,
 ) => MergedProps<SlotProps>) & {
-  unstable_withFocusZone: (children: React.ReactElement) => React.ReactElement
+  unstable_wrapWithFocusZone: (children: React.ReactElement) => React.ReactElement
 }
 
 type MergedProps<SlotProps extends Record<string, any>> = SlotProps &
@@ -74,23 +74,23 @@ const useAccessibility = <Props>(
     mergeProps(slotName, slotProps, definition)
 
   // Provides an experimental handling for FocusZone definition in behaviors
-  getA11Props.unstable_withFocusZone = (children: React.ReactElement) => {
+  getA11Props.unstable_wrapWithFocusZone = (element: React.ReactElement) => {
     if (definition.focusZone) {
-      let element: React.ReactElement = children
+      let child: React.ReactElement = element
 
       if (process.env.NODE_ENV !== 'production') {
-        element = React.Children.only(children)
+        child = React.Children.only(element)
       }
 
       return React.createElement(FocusZone, {
         ...definition.focusZone.props,
-        ...element.props,
-        as: element.type,
+        ...child.props,
+        as: child.type,
         isRtl: rtl,
       })
     }
 
-    return children
+    return element
   }
 
   return getA11Props
