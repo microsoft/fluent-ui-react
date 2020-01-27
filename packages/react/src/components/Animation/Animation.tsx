@@ -10,7 +10,6 @@ import {
   commonPropTypes,
   ShorthandFactory,
 } from '../../utils'
-import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export type AnimationChildrenProp = (props: { classes: string }) => React.ReactNode
 
@@ -111,7 +110,7 @@ export interface AnimationProps extends StyledComponentProps {
   onExited?: (node: HTMLElement) => void
 }
 
-class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
+class Animation extends UIComponent<AnimationProps, any> {
   static create: ShorthandFactory<AnimationProps>
 
   static className = 'ui-animation'
@@ -203,4 +202,4 @@ class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
 /**
  * An Animation provides animation effects to rendered elements.
  */
-export default withSafeTypeForAs<typeof Animation, AnimationProps>(Animation)
+export default Animation

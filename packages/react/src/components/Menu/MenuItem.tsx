@@ -24,7 +24,6 @@ import {
 import Icon, { IconProps } from '../Icon/Icon'
 import Menu, { MenuProps, MenuShorthandKinds } from './Menu'
 import Box, { BoxProps } from '../Box/Box'
-import Animation from '../Animation/Animation'
 import {
   ComponentEventHandler,
   WithAsProp,
@@ -252,18 +251,9 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
         </ElementType>
       </Ref>
     )
-    const submenuVisible = menu && active && menuOpen
-
-    // TODO: allow the users to define these via props
-    const maybeSubmenu = menu ? (
-      <>
-        <Animation
-          visible={submenuVisible}
-          timeout={2000}
-          mountOnEnter
-          unmountOnExit
-          name={submenuVisible ? 'fadeEnterSlow' : 'fadeExitSlow'}
-        >
+    const maybeSubmenu =
+      menu && active && menuOpen ? (
+        <>
           <Ref innerRef={this.menuRef}>
             <Popper
               align={vertical ? 'top' : rtl ? 'end' : 'start'}
@@ -284,12 +274,9 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
               })}
             </Popper>
           </Ref>
-        </Animation>
-        {submenuVisible && (
           <EventListener listener={this.outsideClickHandler} targetRef={targetRef} type="click" />
-        )}
-      </>
-    ) : null
+        </>
+      ) : null
 
     if (wrapper) {
       return Box.create(wrapper, {
