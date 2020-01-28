@@ -43,6 +43,8 @@ export interface ButtonProps
   /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
 
+  active?: boolean
+
   /** A button can appear circular. */
   circular?: boolean
 

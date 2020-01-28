@@ -49,6 +49,7 @@ import CustomScrollbarPrototype from './prototypes/customScrollbar'
 import EditorToolbarPrototype from './prototypes/EditorToolbar'
 import HexagonalAvatarPrototype from './prototypes/hexagonalAvatar'
 import TablePrototype from './prototypes/table'
+import Tokens from './prototypes/tokens/Tokens'
 
 const Routes = () => (
   <BrowserRouter basename={__BASENAME__}>
@@ -73,6 +74,7 @@ const Routes = () => (
           <Route exact path="/prototype-employee-card" component={EmployeeCardPrototype} />
           <Route exact path="/prototype-meeting-options" component={MeetingOptionsPrototype} />
           <Route exact path="/prototype-participants-list" component={ParticipantsListPrototype} />
+          <Route exact path="/prototype-tokens" component={Tokens} />
           <Route exact path="/prototype-search-page" component={SearchPagePrototype} />
           <Route exact path="/prototype-mentions" component={MentionsPrototype} />
           <Route exact path="/prototype-dropdowns" component={DropdownsPrototype} />

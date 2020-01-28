@@ -392,6 +392,11 @@ class Sidebar extends React.Component<any, any> {
         },
         public: true,
       },
+      {
+        key: 'tokens',
+        title: { content: 'Tokens', as: NavLink, to: '/prototype-tokens' },
+        public: false,
+      },
     ]
 
     const componentTreeSection = {
