@@ -15,10 +15,10 @@ export type ListItemStylesProps = Pick<
   | 'truncateContent'
   | 'truncateHeader'
 > & {
-  hasContent: boolean
-  hasContentMedia: boolean
-  hasHeader: boolean
-  hasHeaderMedia: boolean
+  hasContent?: boolean
+  hasContentMedia?: boolean
+  hasHeader?: boolean
+  hasHeaderMedia?: boolean
 }
 
 const truncateStyle: ICSSInJSStyle = {
