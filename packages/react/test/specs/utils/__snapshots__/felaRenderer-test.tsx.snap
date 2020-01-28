@@ -15,7 +15,7 @@ exports[`felaRenderer animations are not applied if animations are disabled 1`] 
 "
 
 <div className=ui-provider__box dir=ltr>
-  <div className=ui-box />
+  <div className=ui-box ui-animation />
 </div>;
 "
 `;
@@ -63,7 +63,7 @@ exports[`felaRenderer array returned by keyframe results in CSS fallback values 
 
 
 <div className=ui-provider__box dir=ltr>
-  <div className=ui-box a />
+  <div className=ui-box ui-animation a />
 </div>;
 "
 `;
@@ -112,7 +112,7 @@ exports[`felaRenderer keyframe colors are rendered 1`] = `
 
 
 <div className=ui-provider__box dir=ltr>
-  <div className=ui-box a b />
+  <div className=ui-box ui-animation a b />
 </div>;
 "
 `;

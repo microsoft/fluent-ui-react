@@ -57,7 +57,7 @@ export default () => (
           these navigable components (navigate between Menu and List components by pressing TAB and
           use arrow keys to navigate between their items).{' '}
           <Link to="focus-zone">Read more about FocusZone.</Link>
-          <p>Type: {code('{ mode: FocusZoneMode, props?: FocusZoneProps }')}.</p>
+          <p>Type: {code('{ props?: FocusZoneProps }')}.</p>
         </li>
         <li>
           <b>childBehaviors</b> - {code('{ [childBehaviorSlot: string]: Accessibility }')} are used

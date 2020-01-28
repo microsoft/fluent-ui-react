@@ -1,13 +1,13 @@
 import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
-import { ButtonProps } from '../../../../components/Button/Button'
+import { ButtonStylesProps } from '../../../teams/components/Button/buttonStyles'
 import { ButtonVariables } from '../../../teams/components/Button/buttonVariables'
 import { ButtonHighContrastVariables } from './buttonVariables'
 
 const buttonStyles: ComponentSlotStylesPrepared<
-  ButtonProps,
+  ButtonStylesProps,
   ButtonVariables & ButtonHighContrastVariables
 > = {
-  root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
+  root: ({ props: p, variables: v }): ICSSInJSStyle => {
     return {
       // rectangular button defaults
       ...(!p.text && {
