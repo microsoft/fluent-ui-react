@@ -1,3 +1,5 @@
+// Due to the react reference, putting these under /types doesn't work well
+
 /* eslint-disable spaced-comment */
 /// <reference types="react" />
 

@@ -11,5 +11,5 @@
     "typeRoots": ["../types", "../node_modules/@types"],
     "types": ["node", "webpack-env", "screener-runner"]
   },
-  "include": ["../docs/src", "../docs/types"]
+  "include": ["../docs/src"]
 }
