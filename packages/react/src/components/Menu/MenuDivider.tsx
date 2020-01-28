@@ -1,18 +1,10 @@
 import { Accessibility, menuDividerBehavior } from '@fluentui/accessibility'
-import {
-  getElementType,
-  getUnhandledProps,
-  useAccessibility,
-  useStyles,
-} from '@fluentui/react-bindings'
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
-// @ts-ignore
-import { ThemeContext } from 'react-fela'
+import * as PropTypes from 'prop-types'
 
-import { ProviderContextPrepared, WithAsProp, withSafeTypeForAs } from '../../types'
 import {
   createShorthandFactory,
+  UIComponent,
   UIComponentProps,
   commonPropTypes,
   childrenExist,
@@ -21,6 +13,7 @@ import {
   rtlTextContainer,
   ShorthandFactory,
 } from '../../utils'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface MenuDividerProps
   extends UIComponentProps,
@@ -35,69 +28,41 @@ export interface MenuDividerProps
   inSubmenu?: boolean
 }
 
-const MenuDivider: React.FC<WithAsProp<MenuDividerProps>> & {
-  className: string
-  create: ShorthandFactory<MenuDividerProps>
-  handledProps: string[]
-} = props => {
-  const {
-    accessibility,
-    children,
-    className,
-    content,
-    design,
-    inSubmenu,
-    primary,
-    secondary,
-    styles,
-    variables,
-    vertical,
-  } = props
+class MenuDivider extends UIComponent<WithAsProp<MenuDividerProps>> {
+  static displayName = 'MenuDivider'
 
-  const context: ProviderContextPrepared = React.useContext(ThemeContext)
+  static create: ShorthandFactory<MenuDividerProps>
 
-  const getA11Props = useAccessibility(accessibility, {
-    debugName: MenuDivider.displayName,
-    rtl: context.rtl,
-  })
-  const { classes } = useStyles(MenuDivider.displayName, {
-    className: MenuDivider.className,
-    mapPropsToStyles: () => ({ inSubmenu, primary, secondary, vertical }),
-    mapPropsToInlineStyles: () => ({ className, design, styles, variables }),
-    rtl: context.rtl,
-  })
+  static className = 'ui-menu__divider'
 
-  const ElementType = getElementType(props)
-  const unhandledProps = getUnhandledProps(MenuDivider.handledProps as any, props)
+  static defaultProps = {
+    as: 'li',
+    accessibility: menuDividerBehavior as Accessibility,
+  }
 
-  return (
-    <ElementType
-      {...getA11Props('root', {
-        className: classes.root,
-        ...rtlTextContainer.getAttributes({ forElements: [children, content] }),
-        ...unhandledProps,
-      })}
-    >
-      {childrenExist(children) ? children : content}
-    </ElementType>
-  )
+  static propTypes = {
+    ...commonPropTypes.createCommon(),
+    primary: PropTypes.bool,
+    secondary: PropTypes.bool,
+    vertical: PropTypes.bool,
+    inSubmenu: PropTypes.bool,
+  }
+
+  renderComponent({ ElementType, classes, unhandledProps, accessibility }) {
+    const { children, content } = this.props
+
+    return (
+      <ElementType
+        {...accessibility.attributes.root}
+        {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
+        {...unhandledProps}
+        className={classes.root}
+      >
+        {childrenExist(children) ? children : content}
+      </ElementType>
+    )
+  }
 }
-
-MenuDivider.className = 'ui-menu__divider'
-MenuDivider.displayName = 'MenuDivider'
-
-MenuDivider.defaultProps = {
-  as: 'li',
-  accessibility: menuDividerBehavior as Accessibility,
-}
-MenuDivider.propTypes = {
-  ...commonPropTypes.createCommon(),
-  primary: PropTypes.bool,
-  secondary: PropTypes.bool,
-  vertical: PropTypes.bool,
-  inSubmenu: PropTypes.bool,
-}
-MenuDivider.handledProps = Object.keys(MenuDivider.propTypes)
 
 MenuDivider.create = createShorthandFactory({ Component: MenuDivider, mappedProp: 'content' })
 
