@@ -49,9 +49,9 @@ class EmployeeCard extends React.Component<Extendable<EmployeeCardProps>, any> {
           }}
         >
           <div>
-            <span> is limited navigation: {`${isLimitedNavigation}`} </span>
+            {/* <span> is limited navigation: {`${isLimitedNavigation}`} </span> */}
             <CustomText id={`user-name-${cardOrder}`} size={'medium'} weight={'bold'} as="div">
-              {firstName} {`${lastName} ${cardOrder}`}
+              {firstName} {lastName}
             </CustomText>
             <CustomText muted as="div">
               {status}
@@ -62,12 +62,12 @@ class EmployeeCard extends React.Component<Extendable<EmployeeCardProps>, any> {
                 {position}
               </CustomText>
             )}
-            {team && <Button>{team}</Button>}
             {location && (
               <CustomText muted as="div">
                 {location}
               </CustomText>
             )}
+            <Button> Call </Button>            
             {phone && (
               <CustomText muted as="div">
                 {phone}

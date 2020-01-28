@@ -5,24 +5,25 @@ import { screenReaderContainerStyles } from '../../../../packages/react/src/util
 
 class EmployeeCardPrototype extends React.Component<any> {
   instructionMessageTimeout
+  instructionMessageDescribedByTimeout
 
   state = {
     parentRole: null,
     cardRole: 'group',
     ariaRoleDescription: null,
     ariaExpanded: null,
-    isLimitedNavigation: true,
-    a11yInstructionMessage: null,
+    isLimitedNavigation: true,    
     a11yDescribedByInstructionMessage: null,
+    messageWasSet: false,
   }
 
-  getCards(numberOfCards, employee, shouldHaveDescribedByMessage = false) {
+  getCards(numberOfCards, employees, shouldHaveDescribedByMessage = false) {
     const cards = []
     for (let i = 0; i < numberOfCards; i++) {
       const cardOrder = { cardOrder: i }
       cards.push(
         <EmployeeCard
-          {...employee}
+          {...employees[i]}
           {...cardOrder}
           isLimitedNavigation={this.state.isLimitedNavigation}
           aria-labelledby={`user-name-${i} user-card-${i}`}
@@ -77,65 +78,74 @@ class EmployeeCardPrototype extends React.Component<any> {
     }
   }
 
-  onFocusSetMessage() {
-    clearTimeout(this.instructionMessageTimeout)
-    if (!this.state.a11yInstructionMessage) {
-      this.setState({
-        a11yInstructionMessage: 'Press arrow keys to navigate between cards.',
-      })
-    }
-    // clear out the content of aria-live region to disable to navigate there by virtual cursor
-    setTimeout(() => {
-      this.setState({ a11yInstructionMessage: ' ' })
-    }, 200)
-  }
-
-  onBlurClearMessage() {
-    this.instructionMessageTimeout = setTimeout(() => {
-      if (this.state.a11yInstructionMessage) {
-        this.setState({ a11yInstructionMessage: null })
-      }
-    }, 0)
-  }
-
   onFocusSetMessageDescribedBy() {
-    clearTimeout(this.instructionMessageTimeout)
-    if (!this.state.a11yDescribedByInstructionMessage) {
+    clearTimeout(this.instructionMessageDescribedByTimeout)
+     if (!this.state.messageWasSet) {
       this.setState({
         a11yDescribedByInstructionMessage: 'Press arrow keys to navigate between cards.',
+        messageWasSet: true,
       })
-    }
+     }
     // clear out the content of aria-live region to disable to navigate there by virtual cursor
     setTimeout(() => {
-      this.setState({ a11yDescribedByInstructionMessage: ' ' })
-    }, 200)
+      this.setState({ a11yDescribedByInstructionMessage: null })
+    }, 5000)
   }
 
   onBlurClearMessageDescribedBy() {
-    this.instructionMessageTimeout = setTimeout(() => {
-      if (this.state.a11yDescribedByInstructionMessage) {
-        this.setState({ a11yDescribedByInstructionMessage: null })
-      }
+    this.instructionMessageDescribedByTimeout = setTimeout(() => {      
+        this.setState({ 
+          a11yDescribedByInstructionMessage: null,
+          messageWasSet: false,
+        })      
     }, 0)
   }
 
+
+
   render() {
-    const employee = {
-      firstName: 'John',
-      lastName: 'Doe',
-      position: 'SR. SOFTWARE ENGINEER',
-      location: 'Prague, Czech Republic',
-      status: 'Avaiable',
-      team: 'Fluent UI Engineering',
-      email: 'John.Doe@company.com',
-      avatar: {
-        label: { variables: { backgroundColor: '#00b5ad', color: 'white' } },
-        status: { color: 'green', icon: 'check', title: 'Available' },
-      },
-    }
+    const userFirstName = ["John", "Marry", "James", "Emma", "Michael", "Sophia", "Thomas", "Matthew", "Mia"]
+    const userLastName = ["Doe", "Garcia", "Wilson", "Wat", "Anderson", "Brown", "Wilson", "Miller", "Yang"]
+
+    const userStatuses = [
+      { color: 'green', icon: 'check', title: 'Available' },
+      { color: 'red', icon: 'minus', title: 'Do not disturb' },
+      { color: 'yellow', icon: 'clock', title: 'Away' },
+      { color: 'grey', title: 'Offline' },
+  ]
+  const location = ['Prague, Czech Republic', 'Tallinn, Estonia', 'Redmond, USA', 'Palo Alto, USA']
+  const position = ['SR. SOFTWARE ENGINEER', 'SOFTWARE ENGINEER', 'SOFTWARE ENGINEER 2', 'PROGRAM MANAGER']
+
+    const getEmployees = (numberOfEmployees) => {      
+      let employees = []
+      for (let i = 0; i < numberOfEmployees; i++) {
+        const lessDataStructure = i > 3 ? Math.round(i/4) : i
+                
+        employees.push(
+          {
+            firstName: userFirstName[i],
+            lastName: userLastName[i],
+            position: position[lessDataStructure],
+            location: location[lessDataStructure],
+            status: 'Available',
+            team: 'Fluent UI Engineering',
+            email: `${userFirstName[i]}.${userLastName[i]}@company.com`,
+            avatar: {
+              label: { variables: { backgroundColor: '#00b5ad', color: 'white' } },
+              status: { color: userStatuses[lessDataStructure].color, icon: userStatuses[lessDataStructure].icon, title: userStatuses[lessDataStructure].title},
+            },
+          },
+
+        )
+      }  
+      return employees;          
+    } 
+
+
+
     return (
       <div>
-        <Dropdown
+        {/* <Dropdown
           inline
           items={[
             'card as group',
@@ -145,17 +155,15 @@ class EmployeeCardPrototype extends React.Component<any> {
           ]}
           defaultValue={'Select aria roles to be used'}
           onSelectedChange={this.handleSelectedChange}
-        />
+        /> */}
         <Dropdown
           inline
           items={['use Enter key go inside the card', 'use TAB key go inside the card']}
-          defaultValue={'Select type of navigaton'}
+          defaultValue={'Select type of navigation'}
           onSelectedChange={this.handleSelectedNavigation}
         />
-        <div
-          role={this.state.parentRole}
-          onFocus={this.onFocusSetMessage.bind(this)}
-          onBlur={this.onBlurClearMessage.bind(this)}
+        {/* <div
+          role={this.state.parentRole}          
           style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}
           id="parent"
         >
@@ -164,7 +172,7 @@ class EmployeeCardPrototype extends React.Component<any> {
         <div aria-live="polite" style={screenReaderContainerStyles}>
           {this.state.a11yInstructionMessage}
         </div>
-        <button>any random element</button>
+        <button>any random element</button> */}
 
         <Divider key={10} size={30} />
 
@@ -175,12 +183,12 @@ class EmployeeCardPrototype extends React.Component<any> {
           style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}
           id="parent"
         >
-          {this.getCards(6, employee, true)}
+          {this.getCards(9, getEmployees(9), true)}
         </div>
         <div id="instruction-messsage" style={screenReaderContainerStyles}>
           {this.state.a11yDescribedByInstructionMessage}
         </div>
-        <button>any random element</button>
+        <button> button outside the card example</button>
       </div>
     )
   }

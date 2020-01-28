@@ -288,22 +288,22 @@ class Sidebar extends React.Component<any, any> {
       {
         key: 'chatMssages',
         title: { content: 'Chat Messages', as: NavLink, to: '/prototype-chat-messages' },
-        public: true,
+        public: false,
       },
       {
         key: 'customscrollbar',
         title: { content: 'Custom Scrollbar', as: NavLink, to: '/prototype-custom-scrollbar' },
-        public: true,
+        public: false,
       },
       {
         key: 'customtoolbar',
         title: { content: 'Custom Styled Toolbar', as: NavLink, to: '/prototype-custom-toolbar' },
-        public: true,
+        public: false,
       },
       {
         key: 'editor-toolbar',
         title: { content: 'Editor Toolbar', as: NavLink, to: '/prototype-editor-toolbar' },
-        public: true,
+        public: false,
       },
       {
         key: 'dropdowns',
@@ -342,12 +342,12 @@ class Sidebar extends React.Component<any, any> {
       {
         key: 'mentions',
         title: { content: 'Mentions', as: NavLink, to: '/prototype-mentions' },
-        public: true,
+        public: false,
       },
       {
         key: 'participants-list',
         title: { content: 'Participants list', as: NavLink, to: '/prototype-participants-list' },
-        public: true,
+        public: false,
       },
       {
         key: 'searchpage',
@@ -366,7 +366,7 @@ class Sidebar extends React.Component<any, any> {
           as: NavLink,
           to: '/prototype-nested-popups-and-dialogs',
         },
-        public: true,
+        public: false,
       },
       {
         key: 'iconviewer',
@@ -376,12 +376,12 @@ class Sidebar extends React.Component<any, any> {
       {
         key: 'virtualized-tree',
         title: { content: 'VirtualizedTree', as: NavLink, to: '/virtualized-tree' },
-        public: true,
+        public: false,
       },
       {
         key: 'copy-to-clipboard',
         title: { content: 'Copy to Clipboard', as: NavLink, to: '/prototype-copy-to-clipboard' },
-        public: true,
+        public: false,
       },
       {
         key: 'hexagonal-avatar',
@@ -390,7 +390,7 @@ class Sidebar extends React.Component<any, any> {
           as: NavLink,
           to: '/prototype-hexagonal-avatar',
         },
-        public: true,
+        public: false,
       },
       {
         key: 'table',
@@ -399,7 +399,7 @@ class Sidebar extends React.Component<any, any> {
           as: NavLink,
           to: '/prototype-table',
         },
-        public: true,
+        public: false,
       },
     ]
 
