@@ -16,7 +16,7 @@ const items = [
   {
     key: 'item1',
     content: (
-      <div>        
+      <div>
         <Text content={'item1'} /> <Button id={buttonName} content={buttonName} />
       </div>
     ),
