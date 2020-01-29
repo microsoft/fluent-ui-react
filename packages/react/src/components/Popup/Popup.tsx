@@ -70,9 +70,6 @@ export interface PopupProps
   /** Whether the Popup should be rendered inline with the trigger or in the body. */
   inline?: boolean
 
-  /** Existing document the popup should add listeners. */
-  mountDocument?: Document
-
   /** Existing element the popup should be bound to. */
   mountNode?: HTMLElement
 
@@ -151,7 +148,6 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     align: PropTypes.oneOf(ALIGNMENTS),
     defaultOpen: PropTypes.bool,
     inline: PropTypes.bool,
-    mountDocument: PropTypes.object,
     mountNode: customPropTypes.domNode,
     mouseLeaveDelay: PropTypes.number,
     offset: PropTypes.string,
@@ -288,7 +284,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     const isLastOpenedPopup: boolean =
       lastContentRef && lastContentRef.current === this.popupDomElement
 
-    const activeDocument = this.props.mountDocument || this.context.target
+    const activeDocument: HTMLDocument = this.context.target
     const bodyHasFocus: boolean = activeDocument.activeElement === activeDocument.body
 
     if (keyCode === keyboardKey.Escape && bodyHasFocus && isLastOpenedPopup) {
@@ -618,9 +614,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
    * Can be either trigger DOM element itself or the element inside it.
    */
   updateTriggerFocusableDomElement() {
-    const { mountDocument } = this.props
-
-    const activeDocument = mountDocument || this.context.target
+    const activeDocument: HTMLDocument = this.context.target
     const activeElement = activeDocument.activeElement
 
     this.triggerFocusableDomElement =
