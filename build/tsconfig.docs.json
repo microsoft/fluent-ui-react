@@ -2,6 +2,7 @@
   "extends": "./tsconfig.common.json",
   "compilerOptions": {
     "module": "esnext",
+    "skipLibCheck": true,
     "paths": {
       "@fluentui/*": ["packages/*/src"],
       "docs/*": ["docs/*"],

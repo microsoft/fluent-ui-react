@@ -2,6 +2,7 @@ import * as Accessibility from '@fluentui/accessibility'
 import * as CodeSandbox from '@fluentui/code-sandbox'
 import * as DocsComponent from '@fluentui/docs-components'
 import * as FluentUI from '@fluentui/react'
+// @ts-ignore
 import * as ReactFela from 'react-fela'
 import * as ReactThemingAdapters from '@fluentui/react-theming-adapters'
 import * as _ from 'lodash'

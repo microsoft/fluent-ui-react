@@ -1,13 +1,14 @@
 {
   "author": "Marija Najdova <mnajdova@gmail.com>",
   "bugs": "https://github.com/microsoft/fluent-ui-react/issues",
+  "version": "0.43.0",
   "dependencies": {
-    "@fluentui/react": "^0.41.0",
-    "office-ui-fabric-react": "^7.44.0"
+    "@fluentui/react": "^0.43.0",
+    "office-ui-fabric-react": "^7.86.0"
   },
   "description": "Adapters for interop for the Teams and Fabric themes.",
   "devDependencies": {
-    "@fluentui/internal-tooling": "^0.41.0",
+    "@fluentui/internal-tooling": "^0.43.0",
     "lerna-alias": "^3.0.3-0"
   },
   "files": [
@@ -31,6 +32,5 @@
     "build": "gulp bundle:package --package react"
   },
   "sideEffects": false,
-  "types": "dist/es/index.d.ts",
-  "version": "0.0.1"
+  "types": "dist/es/index.d.ts"
 }
