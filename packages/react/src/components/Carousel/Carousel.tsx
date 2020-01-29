@@ -184,8 +184,8 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
       this.showPreviousSlide(e, true)
     },
     showNextSlideByPaddlePress: e => {
-      e.preventDefault()      
-      this.showNextSlide(e, false)      
+      e.preventDefault()
+      this.showNextSlide(e, false)
     },
     showPreviousSlideByPaddlePress: e => {
       e.preventDefault()
@@ -244,7 +244,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
       <div style={styles.itemsContainerWrapper} {...accessibility.attributes.itemsContainerWrapper}>
         <div
           className={Carousel.slotClassNames.itemsContainer}
-          aria-roledescription={ariaRoleDescription}          
+          aria-roledescription={ariaRoleDescription}
           aria-label="Portrait collection"
           style={styles.itemsContainer}
           {...accessibility.attributes.itemsContainer}
@@ -279,16 +279,20 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
 
   showPreviousSlide = (e: React.SyntheticEvent, focusItem: boolean) => {
     this.setActiveIndex(e, this.state.activeIndex - 1, focusItem)
-       // if 'previous' paddle will disappear, will focus 'next' one.
-       if (!this.props.navigation && this.state.activeIndex <= 1 && !this.props.circular) {
-        this.paddleNextRef.current.focus()
-      }
+    // if 'previous' paddle will disappear, will focus 'next' one.
+    if (!this.props.navigation && this.state.activeIndex <= 1 && !this.props.circular) {
+      this.paddleNextRef.current.focus()
+    }
   }
 
   showNextSlide = (e: React.SyntheticEvent, focusItem: boolean) => {
     this.setActiveIndex(e, this.state.activeIndex + 1, focusItem)
     // if 'next' paddle will disappear, will focus 'previous' one.
-    if (!this.props.navigation && this.state.activeIndex >= this.props.items.length - 2 && !this.props.circular) {
+    if (
+      !this.props.navigation &&
+      this.state.activeIndex >= this.props.items.length - 2 &&
+      !this.props.circular
+    ) {
       this.paddlePreviousRef.current.focus()
     }
   }

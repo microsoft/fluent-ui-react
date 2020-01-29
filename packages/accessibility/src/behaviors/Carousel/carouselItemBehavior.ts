@@ -14,7 +14,7 @@ const carouselItemBehavior: Accessibility<CarouselItemProps> = props => ({
     root: {
       role: props.navigation ? 'tabpanel' : 'group',
       'aria-hidden': props.active ? 'false' : 'true',
-      tabIndex: props.navigation ? props.active ? 0 : -1 : -1,
+      tabIndex: props.navigation ? (props.active ? 0 : -1) : -1,
     },
   },
 
