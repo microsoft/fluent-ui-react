@@ -1,8 +1,4 @@
-import {
-  FocusZoneMode,
-  FocusZoneDirection,
-  FocusZoneTabbableElements,
-} from '@fluentui/accessibility'
+import { FocusZoneDirection, FocusZoneTabbableElements } from '@fluentui/accessibility'
 import * as keyboardKey from 'keyboard-key'
 
 import { TestDefinition, TestMethod, TestHelper } from './testHelper'
@@ -133,15 +129,23 @@ definitions.push({
       attributeToBeAdded,
       valueOfAttributeToBeAdded,
       component,
+      propertyBasedOn,
       overridingProperty,
     ] = parameters.props
+    const propertyWithOverride = { [overridingProperty]: valueOfAttributeToBeAdded }
+    const propertyWithoutOverride = { [propertyBasedOn]: valueOfAttributeToBeAdded }
 
-    const propertyWithOverride = {}
-    propertyWithOverride[overridingProperty] = valueOfAttributeToBeAdded
-    const expectedResultAttributeDefined = parameters.behavior(propertyWithOverride).attributes[
+    const expectedResultPropOveride = parameters.behavior(propertyWithOverride).attributes[
       component
     ][attributeToBeAdded]
-    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResultAttributeDefined)).toEqual(
+    const expectedResultPropBasedOn = parameters.behavior(propertyWithoutOverride).attributes[
+      component
+    ][attributeToBeAdded]
+
+    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResultPropOveride)).toEqual(
+      testHelper.convertToMatchingTypeIfApplicable(valueOfAttributeToBeAdded),
+    )
+    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResultPropBasedOn)).toEqual(
       testHelper.convertToMatchingTypeIfApplicable(valueOfAttributeToBeAdded),
     )
   },
@@ -468,19 +472,20 @@ definitions.push({
   },
 })
 
-/*
- * ********************** FOCUS ZONE **********************
- */
+// Example: Applies 'gridRowBehavior' for 'row' child component.
 definitions.push({
-  regexp: /Embeds component into FocusZone\./g,
+  regexp: /Applies '(\w+)' for '(\w+)' child component\./g,
   testMethod: (parameters: TestMethod) => {
-    const actualFocusZone = parameters.behavior({}).focusZone
-
-    const expectedFocusZoneMode = FocusZoneMode.Embed
-    expect(actualFocusZone.mode).toBe(expectedFocusZoneMode)
+    const [behaviorToBeUsed, childComponent] = parameters.props
+    const property = {}
+    const expectedResult = parameters.behavior(property).childBehaviors[childComponent]
+    expect(expectedResult.name).toBe(behaviorToBeUsed)
   },
 })
 
+/*
+ * ********************** FOCUS ZONE **********************
+ */
 definitions.push({
   regexp: /arrow key navigation in horizontal direction/g,
   testMethod: (parameters: TestMethod) => {
@@ -606,6 +611,20 @@ definitions.push({
       action
     ].keyCombinations[0].keyCode
     expect(expectedKeyNumber).toBe(keyboardKey[key])
+  },
+})
+
+// Triggers 'unsetRowTabbable' action using 'shiftKey' + 'Tab' key on 'root'.
+definitions.push({
+  regexp: /Triggers '(\w+)' action using '(\w+)' \+ '(\w+)' key on '(\w+)'\./g,
+  testMethod: (parameters: TestMethod) => {
+    const [action, keyModifier, key, elementToPerformAction] = [...parameters.props]
+    const property = {}
+    const keyCombinations = parameters.behavior(property).keyActions[elementToPerformAction][action]
+      .keyCombinations[0]
+
+    expect(keyCombinations.keyCode).toBe(keyboardKey[key])
+    expect(keyCombinations[keyModifier]).toBe(true)
   },
 })
 

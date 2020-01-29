@@ -1,7 +1,7 @@
 require('@fluentui/internal-tooling/babel/register')
 
-const config = require('../../config').default
-const { compilerOptions } = require('../../build/tsconfig.docs.json')
+const config = require('../config').default
+const { compilerOptions } = require('../tsconfig.docs.json')
 
 require('tsconfig-paths').register({
   baseUrl: config.path_base,
@@ -10,7 +10,7 @@ require('tsconfig-paths').register({
 
 // https://github.com/screener-io/screener-runner
 module.exports = {
-  projectRepo: 'stardust-ui/react',
+  projectRepo: 'microsoft/fluent-ui-react',
 
   apiKey: process.env.SCREENER_API_KEY,
 

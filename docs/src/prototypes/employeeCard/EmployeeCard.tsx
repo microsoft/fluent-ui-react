@@ -1,7 +1,6 @@
 import * as React from 'react'
-import { Extendable, ShorthandValue } from 'src/types'
-import { Avatar, AvatarProps, Divider, Grid } from '@fluentui/react'
-import Text from './Text'
+import { Avatar, AvatarProps, Divider, Extendable, Grid, ShorthandValue } from '@fluentui/react'
+import CustomText from './CustomText'
 
 export interface EmployeeCardProps {
   firstName?: string
@@ -36,37 +35,37 @@ class EmployeeCard extends React.Component<Extendable<EmployeeCardProps>, any> {
         {...restProps}
       >
         <div>
-          <Text size={'medium'} weight={'bold'} as="div">
+          <CustomText size={'medium'} weight={'bold'} as="div">
             {firstName} {lastName}
-          </Text>
-          <Text muted as="div">
+          </CustomText>
+          <CustomText muted as="div">
             {status}
-          </Text>
+          </CustomText>
           <Divider variables={{ dividerColor: 'white' }} />
           {position && (
-            <Text muted as="div">
+            <CustomText muted as="div">
               {position}
-            </Text>
+            </CustomText>
           )}
           {team && (
-            <Text muted as="div">
+            <CustomText muted as="div">
               {team}
-            </Text>
+            </CustomText>
           )}
           {location && (
-            <Text muted as="div">
+            <CustomText muted as="div">
               {location}
-            </Text>
+            </CustomText>
           )}
           {phone && (
-            <Text muted as="div">
+            <CustomText muted as="div">
               {phone}
-            </Text>
+            </CustomText>
           )}
           {email && (
-            <Text muted as="div">
+            <CustomText muted as="div">
               {email}
-            </Text>
+            </CustomText>
           )}
         </div>
         {Avatar.create(avatar, {

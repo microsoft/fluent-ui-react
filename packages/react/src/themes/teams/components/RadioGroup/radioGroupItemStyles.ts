@@ -1,10 +1,10 @@
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import {
   RadioGroupItemProps,
   RadioGroupItemState,
 } from '../../../../components/RadioGroup/RadioGroupItem'
 import { RadioGroupItemVariables } from './radioGroupItemVariables'
-import { pxToRem } from '../../../../lib'
+import { pxToRem } from '../../../../utils'
 import Icon from '../../../../components/Icon/Icon'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'

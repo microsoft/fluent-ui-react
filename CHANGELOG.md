@@ -17,9 +17,81 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### BREAKING CHANGES
+- Add `@fluentui/styles` package for all styles' related utilities and TS types @layershifter, @mnajdova ([#2222](https://github.com/microsoft/fluent-ui-react/pull/2222))
+- Remove `animation` prop from all components @joschect ([#2239](https://github.com/microsoft/fluent-ui-react/pull/2239))
+- `mode` property from `focusZone` configuration in accessibility behaviors is no longer supported - the focus zone will always be in embed mode @layershifter ([#2265](https://github.com/microsoft/fluent-ui-react/pull/2265))
+- `FocusZoneMode` and `FOCUSZONE_WRAP_ATTRIBUTE` are no longer exported @layershifter ([#2265](https://github.com/microsoft/fluent-ui-react/pull/2265))
+- Returned function from `useAccessibility` no longer keeps the same reference @layershifter ([#2268](https://github.com/microsoft/fluent-ui-react/pull/2268))
+- Add logic for mounting/removing elements when they are shown/hidden using the `Animation` component; `Animation` component is not rendering element anymore, just applying classes to it's children @mnajdova ([#2115](https://github.com/microsoft/fluent-ui-react/pull/2115))
+- Restricted prop set in the `Button`, `Avatar`, `Box` and `Image` styles; changed `avatarBorderWidth` and `statusBorderWidth` avatar variables types from number to string and updated styles in Teams theme @mnajdova ([#2238](https://github.com/microsoft/fluent-ui-react/pull/2238))
+- Restricted prop set in the `List` & `ListItem` @layershifter ([#2238](https://github.com/microsoft/fluent-ui-react/pull/2238))
+
+### Fixes
+- Fix event listener leak in `FocusZone` @miroslavstastny ([#2227](https://github.com/microsoft/fluent-ui-react/pull/2227))
+- Fix styleParam to always be required in the styles functions @layershifter, @mnajdova ([#2235](https://github.com/microsoft/fluent-ui-react/pull/2235))
+- Check input and button refs exist before focus in `Dropdown` @silviuavram ([#2248](https://github.com/microsoft/fluent-ui-react/pull/2248))
+- Fix `forceUpdate` to get synced updates in React's Concurrent mode @layershifter ([#2268](https://github.com/microsoft/fluent-ui-react/pull/2268))
+- Fix element reference memory leaks @jurokapsiar ([#2270](https://github.com/microsoft/fluent-ui-react/pull/2270))
+
+### Features
+- Allow `useRef` hook used for storing debugging data to be defined in any order with other hooks in functional components @layershifter, @mnajdova ([#2236](https://github.com/microsoft/fluent-ui-react/pull/2236))
+- Add `useStyles()` hook to use theming capabilities in custom components @layershifter, @mnajdova ([#2217](https://github.com/microsoft/fluent-ui-react/pull/2217))
+- Add optional wrapper function to `List` which can be used to inject custom scrollbars to `Dropdown` @jurokapsiar ([#2092](https://github.com/microsoft/fluent-ui-react/pull/2092))
+- Add `useTelemetry()` hook for adding telemetry information for the Fluent components and improve return types for the `useStyles` and `useStateManager` hooks @mnajdova ([#2257](https://github.com/microsoft/fluent-ui-react/pull/2257))
+
+### Documentation
+- Add per-component performance charts @miroslavstastny ([#2240](https://github.com/microsoft/fluent-ui-react/pull/2240))
+
+<!--------------------------------[ v0.43.0 ]------------------------------- -->
+## [v0.43.0](https://github.com/microsoft/fluent-ui-react/tree/v0.43.0) (2020-01-08)
+[Compare changes](https://github.com/microsoft/fluent-ui-react/compare/v0.42.0..v0.43.0)
+
+### BREAKING CHANGES
+- Use `tooltipAsLabelBehavior` as default `Tooltip` behavior @silviuavram ([#2195](https://github.com/microsoft/fluent-ui-react/pull/2195))
+
+### Features
+- Add `tag` icon in Teams theme @codepretty ([#2180](https://github.com/microsoft/fluent-ui-react/pull/2180))
+- Add `inverted` prop and style for `Button` for Teams theme @notandrew ([#2076](https://github.com/microsoft/fluent-ui-react/pull/2076))
+- Add `vertical` prop to `Divider` @silviuavram ([#2141](https://github.com/microsoft/fluent-ui-react/pull/2141))
+- Support clickable cells in `Table`, add prototype for table with sorting @jurokapsiar ([#2183](https://github.com/microsoft/fluent-ui-react/pull/2183))
+
+### Fixes
+- Fix `toggle` changing width during animation in Teams theme @mnajdova ([#2189](https://github.com/microsoft/fluent-ui-react/pull/2189))
+- Update `SplitButton` styles in Teams theme [redlines] @notandrew ([#2108](https://github.com/microsoft/fluent-ui-react/pull/2108))
+- Fix `Popup` positioning in multiple cases @layershifter ([#2187](https://github.com/microsoft/fluent-ui-react/pull/2187))
+- Fix click outside in `Popup` when `trigger` is not defined @layershifter ([#2202](https://github.com/microsoft/fluent-ui-react/pull/2202))
+- Use `debounce` from `lodash` in `Dropdown` and `Carouel` @silviuavram ([#2203](https://github.com/microsoft/fluent-ui-react/pull/2203))
+
+<!--------------------------------[ v0.42.0 ]------------------------------- -->
+## [v0.42.0](https://github.com/microsoft/fluent-ui-react/tree/v0.42.0) (2019-12-12)
+[Compare changes](https://github.com/microsoft/fluent-ui-react/compare/v0.41.01..v0.42.0)
+
+### BREAKING CHANGES
+- Rename all "Stardust UI" references to "Fluent UI" @levithomason ([#2165](https://github.com/microsoft/fluent-ui-react/pull/2165))
+
+### Fixes
+- Fix colors expand for `border-color` shorthand @layershifter ([#2160](https://github.com/microsoft/fluent-ui-react/pull/2160))
+
+### Features
+- Adding `table` navigation @kolaps33 ([#2147](https://github.com/microsoft/fluent-ui-react/pull/2147))
+
+<!--------------------------------[ v0.41.1 ]------------------------------- -->
+## [v0.41.1](https://github.com/microsoft/fluent-ui-react/tree/v0.41.1) (2019-12-10)
+[Compare changes](https://github.com/microsoft/fluent-ui-react/compare/v0.41.0...v0.41.1)
+
 ### Fixes
 - Prevent text highlight on icon consecutive clicks in `Checkbox` @silviuavram ([#2154](https://github.com/microsoft/fluent-ui-react/pull/2154))
 - Always handle provided onKeyDown event be propagated in inner zone @kolaps33 ([#2140](https://github.com/microsoft/fluent-ui-react/pull/2140))
+- Fixed newly packages to have publishConfig set to public @kenotron ([#2161](https://github.com/microsoft/fluent-ui-react/pull/2161))
+- Rename `lib` directories to `utils` @ecraig12345 ([#2153](https://github.com/microsoft/fluent-ui-react/pull/2153))
+
+### Features
+- Add a new experimental @fluentui/react-theming package that includes a `compose()` @kenotron ([#2152](https://github.com/microsoft/fluent-ui-react/pull/2152))
+- Add `closed-captions` icon in Teams theme @codepretty ([#2100](https://github.com/stardust-ui/react/pull/2100))
+
+### Features
+- Add `presenter`, `no-presenter`, `volume-down`, `volume`, `volume-up` icons to Teams theme @codepretty ([#2156](https://github.com/microsoft/fluent-ui-react/pull/2156))
 
 <!--------------------------------[ v0.41.0 ]------------------------------- -->
 ## [v0.41.0](https://github.com/microsoft/fluent-ui-react/tree/v0.41.0) (2019-12-04)

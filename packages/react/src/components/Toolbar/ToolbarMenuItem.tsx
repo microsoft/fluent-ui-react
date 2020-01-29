@@ -21,7 +21,7 @@ import {
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
   doesNodeContainClick,
-} from '../../lib'
+} from '../../utils'
 import {
   ComponentEventHandler,
   ShorthandValue,
@@ -30,7 +30,7 @@ import {
   Omit,
   ShorthandCollection,
 } from '../../types'
-import { Popper } from '../../lib/positioner'
+import { Popper } from '../../utils/positioner'
 
 import Box, { BoxProps } from '../Box/Box'
 import Icon, { IconProps } from '../Icon/Icon'
@@ -155,8 +155,8 @@ class ToolbarMenuItem extends AutoControlledComponent<
   static defaultProps = {
     as: 'button',
     accessibility: toolbarMenuItemBehavior as Accessibility,
-    activeIndicator: 'stardust-checkmark',
-    submenuIndicator: 'stardust-menu-arrow-end',
+    activeIndicator: 'icon-checkmark',
+    submenuIndicator: 'icon-menu-arrow-end',
     wrapper: { as: 'li' },
   }
 
@@ -310,7 +310,7 @@ class ToolbarMenuItem extends AutoControlledComponent<
             {menu &&
               Icon.create(submenuIndicator, {
                 defaultProps: () => ({
-                  name: 'stardust-menu-arrow-end',
+                  name: 'icon-menu-arrow-end',
                   styles: styles.submenuIndicator,
                 }),
               })}

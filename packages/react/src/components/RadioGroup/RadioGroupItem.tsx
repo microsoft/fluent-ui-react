@@ -13,7 +13,7 @@ import {
   commonPropTypes,
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import Box, { BoxProps } from '../Box/Box'
 import { ComponentEventHandler, WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Icon, { IconProps } from '../Icon/Icon'
@@ -135,7 +135,7 @@ class RadioGroupItem extends AutoControlledComponent<
           {...unhandledProps}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
         >
-          {Icon.create(icon || 'stardust-circle', {
+          {Icon.create(icon || 'icon-circle', {
             defaultProps: () => ({
               size: 'small',
               styles: styles.icon,

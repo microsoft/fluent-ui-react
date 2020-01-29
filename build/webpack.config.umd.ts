@@ -1,4 +1,4 @@
-import config from '../config'
+import config from './config'
 import webpackConfig from './webpack.config'
 
 const { paths } = config
@@ -18,9 +18,9 @@ const webpackUMDConfig = (packageName: string) => {
       'react-dom': 'ReactDOM',
     },
     output: {
-      filename: `stardust-ui-${packageName}.min.js`,
+      filename: `fluent-ui-${packageName}.min.js`,
       libraryTarget: 'umd',
-      library: 'Stardust',
+      library: 'FluentUI',
       path: paths.packageDist(packageName, 'umd'),
       publicPath: '/',
       pathinfo: true,

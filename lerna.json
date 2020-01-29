@@ -1,6 +1,6 @@
 {
-  "packages": ["packages/*", "scripts"],
-  "version": "0.41.0",
+  "packages": ["packages/*", "scripts", "build", "docs", "e2e", "perf"],
+  "version": "0.43.0",
   "npmClient": "yarn",
   "useWorkspaces": true
 }

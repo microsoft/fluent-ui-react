@@ -5,7 +5,7 @@ import * as ReactDOM from 'react-dom'
 // @ts-ignore
 import { ThemeContext } from 'react-fela'
 
-import { isBrowser, ChildrenComponentProps, commonPropTypes } from '../../lib'
+import { isBrowser, ChildrenComponentProps, commonPropTypes } from '../../utils'
 
 export interface PortalInnerProps extends ChildrenComponentProps {
   /** Existing element the portal should be bound to. */
@@ -35,7 +35,6 @@ class PortalInner extends React.Component<PortalInnerProps> {
   static propTypes = {
     ...commonPropTypes.createCommon({
       accessibility: false,
-      animated: false,
       as: false,
       className: false,
       content: false,

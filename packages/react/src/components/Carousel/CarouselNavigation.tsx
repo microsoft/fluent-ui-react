@@ -1,3 +1,6 @@
+import { tabListBehavior } from '@fluentui/accessibility'
+import { ReactAccessibilityBehavior } from '@fluentui/react-bindings'
+import { ComponentVariablesObject, mergeComponentVariables } from '@fluentui/styles'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import * as customPropTypes from '@fluentui/react-proptypes'
@@ -12,8 +15,7 @@ import {
   rtlTextContainer,
   ShorthandFactory,
   UIComponent,
-} from '../../lib'
-import { tabListBehavior } from '@fluentui/accessibility'
+} from '../../utils'
 import {
   withSafeTypeForAs,
   WithAsProp,
@@ -21,9 +23,6 @@ import {
   ComponentEventHandler,
 } from '../../types'
 import CarouselNavigationItem, { CarouselNavigationItemProps } from './CarouselNavigationItem'
-import { ComponentVariablesObject } from '../../themes/types'
-import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
-import { mergeComponentVariables } from '../../lib/mergeThemes'
 
 export interface CarouselNavigationProps extends UIComponentProps, ChildrenComponentProps {
   /** Index of the currently active item. */

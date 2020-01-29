@@ -1,4 +1,4 @@
-import { ThemeInput, ThemeIconSpec, SvgIconSpec, ThemeIcons } from '../types'
+import { SvgIconSpec, ThemeIcons, ThemeIconSpec, ThemeInput } from '@fluentui/styles'
 
 import { default as svgIconsAndStyles } from './components/Icon/svg/ProcessedIcons'
 import { TeamsProcessedSvgIconSpec } from './components/Icon/svg/types'
@@ -29,14 +29,15 @@ const processedIcons: ThemeIcons = Object.keys(
 }, {})
 
 const theme: ThemeInput = {
+  // TODO add generics
   icons: {
     ...processedIcons,
-    'stardust-close': processedIcons['close'],
-    'stardust-arrow-up': processedIcons['triangle-up'],
-    'stardust-arrow-down': processedIcons['triangle-down'],
-    'stardust-arrow-end': processedIcons['triangle-right'],
-    'stardust-chevron-start': processedIcons['chevron-start'],
-    'stardust-chevron-end': processedIcons['chevron-end'],
+    'icon-close': processedIcons['close'],
+    'icon-arrow-up': processedIcons['triangle-up'],
+    'icon-arrow-down': processedIcons['triangle-down'],
+    'icon-arrow-end': processedIcons['triangle-right'],
+    'icon-chevron-start': processedIcons['chevron-start'],
+    'icon-chevron-end': processedIcons['chevron-end'],
   },
 }
 

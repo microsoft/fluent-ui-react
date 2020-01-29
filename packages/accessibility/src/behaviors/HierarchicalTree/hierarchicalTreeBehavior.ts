@@ -1,12 +1,11 @@
 import { Accessibility, AccessibilityAttributes } from '../../types'
-import { FocusZoneMode, FocusZoneDirection } from '../../focusZone/types'
+import { FocusZoneDirection } from '../../focusZone/types'
 import hierarchicalSubtreeBehavior from './hierarchicalSubtreeBehavior'
 
 /**
  * @specification
  * Adds role 'tree' to 'root' slot.
  * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'root' slot.
- * Embeds component into FocusZone.
  * Provides arrow key navigation in vertical direction.
  * Triggers 'expandSiblings' action with '*' on 'root'.
  */
@@ -26,7 +25,6 @@ const hierarchicalTreeBehavior: Accessibility<TreeBehaviorProps> = props => {
       },
     },
     focusZone: {
-      mode: FocusZoneMode.Embed,
       props: {
         direction: FocusZoneDirection.vertical,
       },

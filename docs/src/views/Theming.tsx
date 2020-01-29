@@ -10,7 +10,7 @@ export default () => (
   <DocPage title="Theming">
     <Header as="h2" content="Overview" />
     <p>
-      Stardust is a fully themable component library. Theming is opt-in, allowing you to theme as
+      Fluent UI is a fully themable component library. Theming is opt-in, allowing you to theme as
       much or as little as needed. Themes can be applied to your entire app, to specific subtrees,
       or to individual components. You can also infinitely nest and override themes.
     </p>
@@ -189,7 +189,7 @@ export default () => (
 
     <Header as="h2" content="Animations" />
     <p>
-      You define animations in Stardust in a very similar way to CSS, by providing keyframes and
+      You define animations in Fluent UI in a very similar way to CSS, by providing keyframes and
       animation properties.
     </p>
 
@@ -221,8 +221,7 @@ export default () => (
     <p>
       This is done with the Provider's <code>theme</code> prop. The animations are then applied
       based on their name by using the <NavLink to="components/Animation">Animation</NavLink>{' '}
-      component, or the <code>animation</code> property available on all Stardust component. Here's
-      how we can use them in our components.
+      component. Here's how we can use them in our components.
     </p>
     <ExampleSnippet
       render={() => (
@@ -244,7 +243,6 @@ export default () => (
             <Animation name="spinner">
               <Icon name="calendar" circular />
             </Animation>
-            <Icon name="emoji" animation="spinner" circular />
           </div>
         </Provider>
       )}
@@ -252,8 +250,7 @@ export default () => (
 
     <p>
       You can also override some of the defined <code>animation</code> properties, by providing
-      additional properties to the <code>Animation</code> component, or the <code>animation</code>{' '}
-      prop.
+      additional properties to the <code>Animation</code> component.
     </p>
 
     <blockquote>
@@ -283,26 +280,13 @@ export default () => (
             <Animation name="spinner" delay="2s" duration="1s">
               <Icon name="calendar" circular />
             </Animation>
-            <Icon
-              name="emoji"
-              animation={{ name: 'spinner', delay: '5s', duration: '2s' }}
-              circular
-            />
+            <Animation name="spinner" delay="5s" duration="2s">
+              <Icon name="emoji" circular />
+            </Animation>
           </div>
         </Provider>
       )}
     />
-
-    <p>
-      The difference between using the Animation component versus the animation property is that,
-      the Animation component can be safely used for applying animations on{' '}
-      <i>all components (Stardust, custom and third party components)</i>. For the Stardust
-      components, we recommend using the animation property as there will be no wrapper element
-      added just for the purpose of defining the animation. For more details, please see the
-      examples in the <NavLink to="components/Animation">Animation</NavLink> component, or the
-      structure of the <code>animation</code> property in any of the Stardust components.
-    </p>
-
     <GuidesNavigationFooter
       previous={{ name: 'Accessibility', url: 'accessibility' }}
       next={{ name: 'Theming Examples', url: 'theming-examples' }}

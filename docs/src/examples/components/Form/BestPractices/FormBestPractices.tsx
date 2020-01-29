@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import ComponentBestPractices from 'docs/src/components/ComponentBestPractices'
+import ComponentBestPractices from '../../../../components/ComponentBestPractices'
 import { link, code } from '../../../../utils/helpers'
 import { Text } from '@fluentui/react'
 

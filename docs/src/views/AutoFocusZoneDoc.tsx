@@ -4,7 +4,7 @@ import { Header } from '@fluentui/react'
 import { Link } from 'react-router-dom'
 import DocPage from '../components/DocPage'
 import { code, link } from '../utils/helpers'
-import ComponentPropsTable from 'docs/src/components/ComponentDoc/ComponentPropsTable'
+import ComponentPropsTable from '../components/ComponentDoc/ComponentPropsTable'
 
 export default () => (
   <DocPage title="Auto Focus Zone">
@@ -36,7 +36,7 @@ export default () => (
       {code('AutoFocusZone')}'s props which can be applied to {code('autoFocus')} prop (
       {link(
         'lookup for API on GitHub',
-        'https://github.com/stardust-ui/react/blob/master/packages/react/src/lib/accessibility/AutoFocusZone/AutoFocusZone.types.tsx',
+        'https://github.com/microsoft/fluent-ui-react/blob/master/packages/react/src/utils/accessibility/AutoFocusZone/AutoFocusZone.types.tsx',
       )}
       ):
     </p>
@@ -70,7 +70,7 @@ export default () => (
       {code('AutoFocusZone')} code on{' '}
       {link(
         'GitHub.',
-        'https://github.com/stardust-ui/react/blob/master/packages/react/src/lib/accessibility/FocusZone/AutoFocusZone.tsx',
+        'https://github.com/microsoft/fluent-ui-react/blob/master/packages/react/src/utils/accessibility/FocusZone/AutoFocusZone.tsx',
       )}
     </p>
   </DocPage>

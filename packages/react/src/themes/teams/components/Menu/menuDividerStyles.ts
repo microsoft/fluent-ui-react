@@ -1,4 +1,4 @@
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import { MenuDividerProps } from '../../../../components/Menu/MenuDivider'
 import { MenuVariables } from './menuVariables'
 import { getColorScheme } from '../../colors'

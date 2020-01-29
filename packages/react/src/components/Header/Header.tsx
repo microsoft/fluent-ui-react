@@ -15,7 +15,7 @@ import {
   rtlTextContainer,
   AlignValue,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import HeaderDescription, { HeaderDescriptionProps } from './HeaderDescription'
 
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'

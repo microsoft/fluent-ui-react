@@ -20,7 +20,7 @@ import {
   isFromKeyboard,
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import Icon, { IconProps } from '../Icon/Icon'
 import Menu, { MenuProps, MenuShorthandKinds } from './Menu'
 import Box, { BoxProps } from '../Box/Box'
@@ -31,7 +31,7 @@ import {
   ShorthandCollection,
   withSafeTypeForAs,
 } from '../../types'
-import { Popper } from '../../lib/positioner'
+import { Popper } from '../../utils/positioner'
 
 export interface MenuItemSlotClassNames {
   wrapper: string
@@ -213,7 +213,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
     } = this.props
     const { menuOpen } = this.state
 
-    const defaultIndicator = { name: vertical ? 'stardust-arrow-end' : 'stardust-arrow-down' }
+    const defaultIndicator = { name: vertical ? 'icon-arrow-end' : 'icon-arrow-down' }
     const indicatorWithDefaults = indicator === undefined ? defaultIndicator : indicator
     const targetRef = toRefObject(this.context.target)
 
@@ -244,7 +244,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
           {menu &&
             Icon.create(indicatorWithDefaults, {
               defaultProps: () => ({
-                name: vertical ? 'stardust-menu-arrow-end' : 'stardust-menu-arrow-down',
+                name: vertical ? 'icon-menu-arrow-end' : 'icon-menu-arrow-down',
                 styles: styles.indicator,
               }),
             })}

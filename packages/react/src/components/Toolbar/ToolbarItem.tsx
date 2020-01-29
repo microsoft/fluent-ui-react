@@ -18,7 +18,7 @@ import {
   childrenExist,
   applyAccessibilityKeyHandlers,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import {
   ComponentEventHandler,
   ShorthandValue,
@@ -27,13 +27,13 @@ import {
   Omit,
   ShorthandCollection,
 } from '../../types'
-import { Popper } from '../../lib/positioner'
+import { Popper } from '../../utils/positioner'
 
 import ToolbarMenu, { ToolbarMenuProps } from './ToolbarMenu'
 import Icon, { IconProps } from '../Icon/Icon'
 import Box, { BoxProps } from '../Box/Box'
 import Popup, { PopupProps } from '../Popup/Popup'
-import { mergeComponentVariables } from '../../lib/mergeThemes'
+import { mergeComponentVariables } from '@fluentui/styles'
 import { ToolbarMenuItemProps } from '../Toolbar/ToolbarMenuItem'
 import { GetRefs, NodeRef, Unstable_NestingAuto } from '@fluentui/react-component-nesting-registry'
 import { ToolbarItemShorthandKinds } from './Toolbar'

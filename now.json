@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "name": "stardust-react",
+  "name": "fluent-ui-react",
   "builds": [
     {
       "src": "package.json",

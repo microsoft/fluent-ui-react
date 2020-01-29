@@ -1,21 +1,21 @@
 import * as React from 'react'
 
-import ComponentPerfExample from 'docs/src/components/ComponentDoc/ComponentPerfExample'
-import NonPublicSection from 'docs/src/components/ComponentDoc/NonPublicSection'
+import ComponentPerfExample from '../../../../components/ComponentDoc/ComponentPerfExample'
+import ExampleSection from '../../../../components/ComponentDoc/ExampleSection'
 
 const Performance = () => (
-  <NonPublicSection title="Performance">
+  <ExampleSection title="Performance">
     <ComponentPerfExample
-      title="Default"
-      description="A default test."
-      examplePath="components/Chat/Performance/Chat.perf"
+      title="Duplicate Messages"
+      description="Chat with many duplicate messages."
+      examplePath="components/Chat/Performance/ChatDuplicateMessages.perf"
     />
     <ComponentPerfExample
       title="Chat with popover"
-      description="Chat with actions menu in a popover"
+      description="Chat with actions menu in a popover."
       examplePath="components/Chat/Performance/ChatWithPopover.perf"
     />
-  </NonPublicSection>
+  </ExampleSection>
 )
 
 export default Performance

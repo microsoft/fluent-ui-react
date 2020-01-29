@@ -4,5 +4,9 @@ import { Icon as IconFluent } from '@fluentui/react'
 
 initializeIcons()
 
+export default {
+  iterations: 5000,
+}
+
 export const Fabric = () => <IconFabric iconName="cancel" />
 export const Fluent = () => <IconFluent name="close" />

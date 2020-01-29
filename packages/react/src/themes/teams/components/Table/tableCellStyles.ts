@@ -1,4 +1,4 @@
-import { ComponentStyleFunctionParam, ICSSInJSStyle } from '../../../types'
+import { ComponentStyleFunctionParam, ICSSInJSStyle } from '@fluentui/styles'
 import { TeamsTableVariables } from './tableVariables'
 import { TableCellProps } from '../../../../components/Table/TableCell'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
@@ -24,6 +24,7 @@ export default {
       borderColor: 'transparent',
       ...borderFocusStyles,
       padding: v.cellPadding,
+      position: 'relative',
       height: '100%',
     }
   },

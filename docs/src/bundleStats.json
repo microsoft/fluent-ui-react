@@ -2,11 +2,11 @@
   "0.22.0": {
     "bundles": [
       {
-        "name": "bundle-stardust-ui-core.js",
+        "name": "bundle-utils.js",
         "size": 188354
       },
       {
-        "name": "bundle-stardust-ui-react.js",
+        "name": "bundle-react.js",
         "size": 603218
       },
       {
@@ -166,11 +166,11 @@
   "0.21.1": {
     "bundles": [
       {
-        "name": "bundle-stardust-ui-core.js",
+        "name": "bundle-utils.js",
         "size": 188099
       },
       {
-        "name": "bundle-stardust-ui-react.js",
+        "name": "bundle-react.js",
         "size": 583414
       },
       {
@@ -330,11 +330,11 @@
   "0.21.0": {
     "bundles": [
       {
-        "name": "bundle-stardust-ui-core.js",
+        "name": "bundle-utils.js",
         "size": 187303
       },
       {
-        "name": "bundle-stardust-ui-react.js",
+        "name": "bundle-react.js",
         "size": 580010
       },
       {
@@ -494,11 +494,11 @@
   "0.20.0": {
     "bundles": [
       {
-        "name": "bundle-stardust-ui-core.js",
+        "name": "bundle-utils.js",
         "size": 186102
       },
       {
-        "name": "bundle-stardust-ui-react.js",
+        "name": "bundle-react.js",
         "size": 570181
       },
       {
@@ -654,11 +654,11 @@
   "0.19.2": {
     "bundles": [
       {
-        "name": "bundle-stardust-ui-core.js",
+        "name": "bundle-utils.js",
         "size": 186033
       },
       {
-        "name": "bundle-stardust-ui-react.js",
+        "name": "bundle-react.js",
         "size": 563143
       },
       {
@@ -814,11 +814,11 @@
   "0.19.1": {
     "bundles": [
       {
-        "name": "bundle-stardust-ui-core.js",
+        "name": "bundle-utils.js",
         "size": 186053
       },
       {
-        "name": "bundle-stardust-ui-react.js",
+        "name": "bundle-react.js",
         "size": 556391
       },
       {
@@ -970,11 +970,11 @@
   "0.19.0": {
     "bundles": [
       {
-        "name": "bundle-stardust-ui-core.js",
+        "name": "bundle-utils.js",
         "size": 185981
       },
       {
-        "name": "bundle-stardust-ui-react.js",
+        "name": "bundle-react.js",
         "size": 556067
       },
       {
@@ -1126,11 +1126,11 @@
   "0.18.0": {
     "bundles": [
       {
-        "name": "bundle-stardust-ui-core.js",
+        "name": "bundle-utils.js",
         "size": 197089
       },
       {
-        "name": "bundle-stardust-ui-react.js",
+        "name": "bundle-react.js",
         "size": 564172
       },
       {
@@ -1282,11 +1282,11 @@
   "0.17.0": {
     "bundles": [
       {
-        "name": "bundle-stardust-ui-core.js",
+        "name": "bundle-utils.js",
         "size": 280734
       },
       {
-        "name": "bundle-stardust-ui-react.js",
+        "name": "bundle-react.js",
         "size": 640103
       },
       {
@@ -1434,11 +1434,11 @@
   "0.16.2": {
     "bundles": [
       {
-        "name": "bundle-stardust-ui-core.js",
+        "name": "bundle-utils.js",
         "size": 280822
       },
       {
-        "name": "bundle-stardust-ui-react.js",
+        "name": "bundle-react.js",
         "size": 634976
       },
       {
@@ -1586,11 +1586,11 @@
   "0.16.1": {
     "bundles": [
       {
-        "name": "bundle-stardust-ui-core.js",
+        "name": "bundle-utils.js",
         "size": 279745
       },
       {
-        "name": "bundle-stardust-ui-react.js",
+        "name": "bundle-react.js",
         "size": 629861
       },
       {
@@ -1734,11 +1734,11 @@
   "0.16.0": {
     "bundles": [
       {
-        "name": "bundle-stardust-ui-core.js",
+        "name": "bundle-utils.js",
         "size": 278770
       },
       {
-        "name": "bundle-stardust-ui-react.js",
+        "name": "bundle-react.js",
         "size": 668947
       },
       {

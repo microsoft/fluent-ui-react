@@ -3,7 +3,7 @@ import { webpack as lernaAliases } from 'lerna-alias'
 import { LicenseWebpackPlugin } from 'license-webpack-plugin'
 import webpack from 'webpack'
 
-import config from '../../../../config'
+import config from '../../../config'
 
 const { paths } = config
 

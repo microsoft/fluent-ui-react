@@ -1,7 +1,7 @@
 import * as React from 'react'
 
-import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
-import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
+import ComponentExample from '../../../../components/ComponentDoc/ComponentExample'
+import ExampleSection from '../../../../components/ComponentDoc/ExampleSection'
 
 const Usage = () => (
   <ExampleSection title="Usage">
@@ -29,6 +29,11 @@ const Usage = () => (
       title="Static no rows"
       description="Static table with no rows"
       examplePath="components/Table/Usage/TableExampleStaticRowless"
+    />
+    <ComponentExample
+      title="Nested navigation in table by row and cell"
+      description="Navigable table by row and cell"
+      examplePath="components/Table/Usage/TableExampleNavigable"
     />
   </ExampleSection>
 )

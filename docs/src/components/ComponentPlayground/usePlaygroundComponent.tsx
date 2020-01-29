@@ -1,16 +1,16 @@
-import * as Stardust from '@fluentui/react'
+import * as FluentUI from '@fluentui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 // @ts-ignore
 import { ThemeContext } from 'react-fela'
 
-import { ComponentInfo } from 'docs/src/types'
-import componentInfoContext from 'docs/src/utils/componentInfoContext'
+import { ComponentInfo } from '../../types'
+import componentInfoContext from '../../utils/componentInfoContext'
 
 import createHookGenerator from './createHookGenerator'
 
 const usePlaygroundComponent = (componentName: string): [React.ReactElement, string[]] => {
-  const context: Stardust.ProviderContextPrepared = React.useContext(ThemeContext)
+  const context: FluentUI.ProviderContextPrepared = React.useContext(ThemeContext)
   const componentInfo: ComponentInfo = componentInfoContext.byDisplayName[componentName]
 
   if (process.env.NODE_ENV !== 'production') {
@@ -20,7 +20,7 @@ const usePlaygroundComponent = (componentName: string): [React.ReactElement, str
       )
     }
 
-    if (!Stardust[componentName]) {
+    if (!FluentUI[componentName]) {
       throw new Error(
         `Cannot find an export for "${componentName}", please check that it is exported from "@fluentui/react"`,
       )
@@ -54,7 +54,7 @@ const usePlaygroundComponent = (componentName: string): [React.ReactElement, str
     unsupportedProps.push(propDef.name)
   })
 
-  const element = React.createElement(Stardust[componentName], propValues)
+  const element = React.createElement(FluentUI[componentName], propValues)
 
   return [element, unsupportedProps]
 }

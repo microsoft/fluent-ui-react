@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import ComponentBestPractices from 'docs/src/components/ComponentBestPractices'
+import ComponentBestPractices from '../../../../components/ComponentBestPractices'
 
 const doList = [
   'Use actionable components (for example `Button`) if the reactions need to be actionable.',

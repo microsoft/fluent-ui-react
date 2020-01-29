@@ -6,13 +6,13 @@ const actions = (
   <ButtonGroup
     buttons={[
       {
-        icon: 'stardust-checkmark',
+        icon: 'icon-checkmark',
         iconOnly: true,
         text: true,
         title: 'Check',
       },
       {
-        icon: 'stardust-close',
+        icon: 'icon-close',
         iconOnly: true,
         text: true,
         title: 'Close',

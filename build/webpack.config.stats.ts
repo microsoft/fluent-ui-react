@@ -2,7 +2,7 @@ import CleanWebpackPlugin from 'clean-webpack-plugin'
 import fs from 'fs'
 import path from 'path'
 import webpack from 'webpack'
-import config from '../config'
+import config from './config'
 
 const { paths } = config
 
@@ -73,10 +73,10 @@ const makeConfig = (srcPath, name) => ({
 
 export default [
   // entire package
-  makeConfig('index', 'bundle-stardust-ui-react'),
+  makeConfig('index', 'bundle-react'),
 
-  // lib (core)
-  makeConfig('lib/index', 'bundle-stardust-ui-core'),
+  // utils (core)
+  makeConfig('utils/index', 'bundle-utils'),
 
   // individual components
   ...fs

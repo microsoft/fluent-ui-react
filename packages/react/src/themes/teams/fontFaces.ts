@@ -1,4 +1,4 @@
-import { FontFaces } from '../types'
+import { FontFaces } from '@fluentui/styles'
 
 const fontFaces: FontFaces = [
   {

@@ -1,5 +1,5 @@
 import { Accessibility, AriaRole, IS_FOCUSABLE_ATTRIBUTE } from '@fluentui/accessibility'
-import { FocusZone, FOCUSZONE_WRAP_ATTRIBUTE } from '@fluentui/react-bindings'
+import { FocusZone } from '@fluentui/react-bindings'
 import { Ref, RefFindNode } from '@fluentui/react-component-ref'
 import * as faker from 'faker'
 import * as _ from 'lodash'
@@ -17,10 +17,11 @@ import {
 } from 'test/utils'
 import helpers from './commonHelpers'
 
-import * as stardust from 'src/index'
+import * as FluentUI from 'src/index'
 import { getEventTargetComponent, EVENT_TARGET_ATTRIBUTE } from './eventTarget'
 
 export interface Conformant {
+  constructorName?: string
   /** Map of events and the child component to target. */
   eventTargets?: object
   hasAccessibilityProp?: boolean
@@ -32,6 +33,7 @@ export interface Conformant {
   rendersPortal?: boolean
   /** This component uses wrapper slot to wrap the 'meaningful' element. */
   wrapperComponent?: React.ReactType
+  handlesAsProp?: boolean
 }
 
 /**
@@ -40,19 +42,21 @@ export interface Conformant {
  */
 export default function isConformant(
   Component: React.ComponentType<any> & {
-    handledProps: stardust.ObjectOf<any>
-    autoControlledProps: string[]
+    handledProps: FluentUI.ObjectOf<any>
+    autoControlledProps?: string[]
     className: string
   },
   options: Conformant = {},
 ) {
   const {
+    constructorName = Component.prototype.constructor.name,
     eventTargets = {},
     exportedAtTopLevel = true,
     hasAccessibilityProp = true,
     requiredProps = {},
     rendersPortal = false,
     wrapperComponent = null,
+    handlesAsProp = true,
   } = options
   const { throwError } = helpers('isConformant', Component)
 
@@ -78,11 +82,8 @@ export default function isConformant(
 
     // passing through Focus Zone wrappers
     if (componentElement.type() === FocusZone) {
-      // another HOC component is added: FocuZone
+      // another HOC component is added: FocusZone
       componentElement = componentElement.childAt(0) // skip through <FocusZone>
-      if (componentElement.prop(FOCUSZONE_WRAP_ATTRIBUTE)) {
-        componentElement = componentElement.childAt(0) // skip the additional wrap <div> of the FocusZone
-      }
     }
 
     // in that case 'topLevelChildElement' we've found so far is a wrapper's topmost child
@@ -96,7 +97,6 @@ export default function isConformant(
   }
 
   // tests depend on Component constructor names, enforce them
-  const constructorName = Component.prototype.constructor.name
   if (!constructorName) {
     throwError(
       [
@@ -161,8 +161,8 @@ export default function isConformant(
     expect(constructorName).toEqual(info.filenameWithoutExt)
   })
 
-  // find the apiPath in the stardust object
-  const foundAsSubcomponent = _.isFunction(_.get(stardust, info.apiPath))
+  // find the apiPath in the top level API
+  const foundAsSubcomponent = _.isFunction(_.get(FluentUI, info.apiPath))
 
   exportedAtTopLevel && isExportedAtTopLevel(constructorName, info.displayName)
   if (info.isChild) {
@@ -191,7 +191,7 @@ export default function isConformant(
     expect(component.find(props).length).toBeGreaterThan(1)
   })
 
-  if (!rendersPortal) {
+  if (!rendersPortal && handlesAsProp) {
     describe('"as" prop (common)', () => {
       test('renders the component as HTML tags or passes "as" to the next component', () => {
         // silence element nesting warnings
@@ -302,7 +302,7 @@ export default function isConformant(
 
       expect({
         message,
-        handledProps: Component.handledProps,
+        handledProps: Component.handledProps.sort(),
       }).toEqual({
         message,
         handledProps: expectedProps,
@@ -333,7 +333,7 @@ export default function isConformant(
       expect(element.prop('role')).toBe(role)
     })
 
-    test("client's attributes override the ones provided by Stardust", () => {
+    test("client's attributes override the ones provided by Fluent UI", () => {
       const wrapperProps = { ...requiredProps, [IS_FOCUSABLE_ATTRIBUTE]: false }
       const wrapper = mount(<Component {...wrapperProps} accessibility={noopBehavior} />)
       const element = getComponent(wrapper)
@@ -457,18 +457,19 @@ export default function isConformant(
   // Handles className
   // ----------------------------------------
   describe('static className (common)', () => {
+    const componentClassName =
+      info.componentClassName || `ui-${Component.displayName}`.toLowerCase()
     const getClassesOfRootElement = component => {
       const classes = component
         .find('[className]')
         .hostNodes()
-        .filterWhere(c => !c.prop(FOCUSZONE_WRAP_ATTRIBUTE)) // filter out FocusZone wrap <div>
         .at(wrapperComponent ? 1 : 0)
         .prop('className')
       return classes
     }
 
-    test(`is a static equal to "${info.componentClassName}"`, () => {
-      expect(Component.className).toEqual(info.componentClassName)
+    test(`is a static equal to "${componentClassName}"`, () => {
+      expect(Component.className).toEqual(componentClassName)
     })
 
     test(`is applied to the root element`, () => {
@@ -476,9 +477,7 @@ export default function isConformant(
 
       // only test components that implement className
       if (component.find('[className]').hostNodes().length > 0) {
-        expect(
-          _.includes(getClassesOfRootElement(component), `${info.componentClassName}`),
-        ).toEqual(true)
+        expect(_.includes(getClassesOfRootElement(component), componentClassName)).toEqual(true)
       }
     })
 
@@ -541,7 +540,7 @@ export default function isConformant(
   // ----------------------------------------
   describe('static displayName (common)', () => {
     test('matches constructor name', () => {
-      expect(Component.displayName).toEqual(info.constructorName)
+      expect(Component.displayName).toEqual(constructorName)
     })
   })
 

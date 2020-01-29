@@ -1,6 +1,6 @@
-import * as Stardust from '@fluentui/react'
+import * as FluentUI from '@fluentui/react'
 
-import { KnobDefinition, KnobGeneratorOptions, KnobGenerator } from 'docs/src/types'
+import { KnobDefinition, KnobGeneratorOptions, KnobGenerator } from '../../types'
 import * as componentGenerators from './componentGenerators'
 import * as propGenerators from './propGenerators'
 import * as typeGenerators from './typeGenerators'
@@ -36,7 +36,7 @@ const createHookGenerator = (options: KnobGeneratorOptions): null | KnobDefiniti
   const { componentInfo, propDef } = options
 
   // TODO: add support for AutoControlled props
-  const Component = Stardust[componentInfo.displayName]
+  const Component = FluentUI[componentInfo.displayName]
 
   if (process.env.NODE_ENV !== 'production') {
     if (!Component) {

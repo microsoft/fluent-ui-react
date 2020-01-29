@@ -67,7 +67,7 @@ describe('Popup', () => {
       expect(spy.mock.calls[0][1]).toMatchObject({ open: true })
     })
 
-    // https://github.com/stardust-ui/react/pull/619
+    // https://github.com/microsoft/fluent-ui-react/pull/619
     test('is called on click when controlled', () => {
       const spy = jest.fn()
 
@@ -90,7 +90,7 @@ describe('Popup', () => {
       expect(spy.mock.calls[0][1]).toMatchObject({ open: true })
     })
 
-    // https://github.com/stardust-ui/react/pull/619
+    // https://github.com/microsoft/fluent-ui-react/pull/619
     test('is called on contextmenu when controlled', () => {
       const spy = jest.fn()
 

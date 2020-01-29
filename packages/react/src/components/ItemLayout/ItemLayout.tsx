@@ -1,3 +1,4 @@
+import { ComponentSlotClasses } from '@fluentui/react-bindings'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
@@ -11,9 +12,8 @@ import {
   ContentComponentProps,
   rtlTextContainer,
   ShorthandFactory,
-} from '../../lib'
+} from '../../utils'
 import Layout from '../Layout/Layout'
-import { ComponentSlotClasses } from '../../themes/types'
 import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface ItemLayoutSlotClassNames {

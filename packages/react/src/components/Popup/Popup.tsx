@@ -1,5 +1,9 @@
 import { Accessibility, popupBehavior } from '@fluentui/accessibility'
-import { AutoFocusZoneProps, FocusTrapZoneProps } from '@fluentui/react-bindings'
+import {
+  ReactAccessibilityBehavior,
+  AutoFocusZoneProps,
+  FocusTrapZoneProps,
+} from '@fluentui/react-bindings'
 import { EventListener } from '@fluentui/react-component-event-listener'
 import { NodeRef, Unstable_NestingAuto } from '@fluentui/react-component-nesting-registry'
 import { handleRef, toRefObject, Ref } from '@fluentui/react-component-ref'
@@ -21,7 +25,7 @@ import {
   isFromKeyboard,
   doesNodeContainClick,
   setWhatInputSource,
-} from '../../lib'
+} from '../../utils'
 import { ComponentEventHandler, ShorthandValue } from '../../types'
 import {
   ALIGNMENTS,
@@ -29,13 +33,12 @@ import {
   Popper,
   PositioningProps,
   PopperChildrenProps,
-} from '../../lib/positioner'
+} from '../../utils/positioner'
 import PopupContent, { PopupContentProps } from './PopupContent'
 
-import { ReactAccessibilityBehavior } from '../../lib/accessibility/reactTypes'
-import { createShorthandFactory, ShorthandFactory } from '../../lib/factories'
+import { createShorthandFactory, ShorthandFactory } from '../../utils/factories'
 import createReferenceFromContextClick from './createReferenceFromContextClick'
-import isRightClick from '../../lib/isRightClick'
+import isRightClick from '../../utils/isRightClick'
 import PortalInner from '../Portal/PortalInner'
 
 export type PopupEvents = 'click' | 'hover' | 'focus' | 'context'
@@ -142,7 +145,6 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
 
   static propTypes = {
     ...commonPropTypes.createCommon({
-      animated: false,
       as: false,
       content: false,
     }),
@@ -296,11 +298,11 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
 
   isOutsidePopupElementAndOutsideTriggerElement(refs: NodeRef[], e) {
     const isOutsidePopupElement = this.isOutsidePopupElement(refs, e)
-    const isOutsideTriggerElement =
+    const isInsideTriggerElement =
       this.triggerRef.current &&
-      !doesNodeContainClick(this.triggerRef.current, e, this.context.target)
+      doesNodeContainClick(this.triggerRef.current, e, this.context.target)
 
-    return isOutsidePopupElement && isOutsideTriggerElement
+    return isOutsidePopupElement && !isInsideTriggerElement
   }
 
   isOutsidePopupElement(refs: NodeRef[], e) {
@@ -624,9 +626,10 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     const activeDocument = mountDocument || this.context.target
     const activeElement = activeDocument.activeElement
 
-    this.triggerFocusableDomElement = this.triggerRef.current.contains(activeElement)
-      ? activeElement
-      : this.triggerRef.current
+    this.triggerFocusableDomElement =
+      this.triggerRef.current && this.triggerRef.current.contains(activeElement)
+        ? activeElement
+        : this.triggerRef.current
   }
 
   updateContextPosition(nativeEvent: MouseEvent) {

@@ -7,6 +7,7 @@ import { FocusZone } from '@fluentui/react-bindings'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as ReactTestUtils from 'react-dom/test-utils'
+// @ts-ignore
 import * as keyboardKey from 'keyboard-key'
 
 describe('FocusZone', () => {
@@ -32,6 +33,7 @@ describe('FocusZone', () => {
       isVisible?: boolean
     },
   ): void {
+    // @ts-ignore
     element.getBoundingClientRect = () => ({
       top: clientRect.top,
       left: clientRect.left,
@@ -1169,7 +1171,7 @@ describe('FocusZone', () => {
           {...{
             handleTabKey: FocusZoneTabbableElements.all,
             isCircularNavigation: false,
-            shouldInputLoseFocusOnArrowKey: element => {
+            shouldInputLoseFocusOnArrowKey: () => {
               return true
             },
           }}

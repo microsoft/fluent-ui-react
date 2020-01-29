@@ -1,5 +1,5 @@
-import * as React from 'react'
 import { mergeThemes, callable, ComponentStyleFunctionParam, themes } from '@fluentui/react'
+import * as React from 'react'
 import * as _ from 'lodash'
 
 /**
@@ -36,10 +36,13 @@ const providerMergeThemesPerf = () => {
   return resolvedStyles
 }
 
-const MergeThemesPerf = () => {
+const ProviderMergeThemesPerf = () => {
   const resolvedStyles = providerMergeThemesPerf()
   delete resolvedStyles.Button.root._debug
   return <pre>{JSON.stringify(resolvedStyles.Button.root, null, 2)}</pre>
 }
 
-export default MergeThemesPerf
+ProviderMergeThemesPerf.iterations = 1
+ProviderMergeThemesPerf.filename = 'ProviderMergeThemes.perf.tsx'
+
+export default ProviderMergeThemesPerf

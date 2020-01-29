@@ -15,7 +15,7 @@ export default () => (
     </ul>
     <Header as="h2">Overview</Header>
     <p>
-      In Stardust, accessibility behaviors encapsulate the logic needed for keyboard navigation,
+      In Fluent UI, accessibility behaviors encapsulate the logic needed for keyboard navigation,
       focus handling and screen reading. They essentially add ARIA roles, ARIA attributes and event
       handlers to components' parts. The idea is to compose visual components and apply a behavior
       on top of them to achieve the desired keyboard navigation and screen reader support.
@@ -57,7 +57,7 @@ export default () => (
           these navigable components (navigate between Menu and List components by pressing TAB and
           use arrow keys to navigate between their items).{' '}
           <Link to="focus-zone">Read more about FocusZone.</Link>
-          <p>Type: {code('{ mode: FocusZoneMode, props?: FocusZoneProps }')}.</p>
+          <p>Type: {code('{ props?: FocusZoneProps }')}.</p>
         </li>
         <li>
           <b>childBehaviors</b> - {code('{ [childBehaviorSlot: string]: Accessibility }')} are used
@@ -217,11 +217,11 @@ export default () => (
       value={`
       const overridenMenuBehavior: Accessibility = (props: any) => {
         const behavior = menuBehavior(props)
-      
+
         behavior.focusZone.props.defaultTabbableElement = (root: HTMLElement): HTMLElement => {
           return root.querySelector(".ui-menu__item__wrapper:last-child")
         }
-      
+
         return behavior
       }
       `}
@@ -229,10 +229,10 @@ export default () => (
 
     <CodeSnippet label="App.jsx" value={`<Menu accessibility={overridenMenuBehavior} />`} />
     <p>
-      All Stardust behaviors implementations can be found on the{' '}
+      All Fluent UI behaviors implementations can be found on the{' '}
       {link(
         'GitHub',
-        'https://github.com/stardust-ui/react/tree/master/packages/react/src/lib/accessibility/Behaviors',
+        'https://github.com/microsoft/fluent-ui-react/tree/master/packages/react/src/utils/accessibility/Behaviors',
       )}
       .
     </p>

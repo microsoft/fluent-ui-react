@@ -5,7 +5,16 @@ import {
   KnobProvider,
   LogInspector,
 } from '@fluentui/docs-components'
-import { Flex, ICSSInJSStyle, Menu, Provider, Segment } from '@fluentui/react'
+import {
+  ComponentVariablesInput,
+  constants,
+  Flex,
+  ICSSInJSStyle,
+  Menu,
+  Provider,
+  Segment,
+  ThemeInput,
+} from '@fluentui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
@@ -13,19 +22,17 @@ import * as copyToClipboard from 'copy-to-clipboard'
 import qs from 'qs'
 import SourceRender from 'react-source-render'
 
-import { examplePathToHash, getFormattedHash, scrollToAnchor } from 'docs/src/utils'
-import { constants } from 'src/lib'
-import Editor, { EDITOR_BACKGROUND_COLOR, EDITOR_GUTTER_COLOR } from 'docs/src/components/Editor'
-import { babelConfig, importResolver } from 'docs/src/components/Playground/renderConfig'
-import ExampleContext, { ExampleContextValue } from 'docs/src/context/ExampleContext'
+import { examplePathToHash, getFormattedHash, scrollToAnchor } from '../../../utils'
+import Editor, { EDITOR_BACKGROUND_COLOR, EDITOR_GUTTER_COLOR } from '../../Editor'
+import { babelConfig, importResolver } from '../../Playground/renderConfig'
+import ExampleContext, { ExampleContextValue } from '../../../context/ExampleContext'
 import ComponentControls from '../ComponentControls'
 import ComponentExampleTitle from './ComponentExampleTitle'
 import ComponentSourceManager, {
   ComponentSourceManagerRenderProps,
 } from '../ComponentSourceManager'
-import { ThemeInput } from 'packages/react/src/themes/types'
-import VariableResolver from 'docs/src/components/VariableResolver/VariableResolver'
-import ComponentExampleVariables from 'docs/src/components/ComponentDoc/ComponentExample/ComponentExampleVariables'
+import VariableResolver from '../../VariableResolver/VariableResolver'
+import ComponentExampleVariables from './ComponentExampleVariables'
 
 const ERROR_COLOR = '#D34'
 
@@ -43,7 +50,7 @@ export interface ComponentExampleProps
 
 interface ComponentExampleState {
   anchorName: string
-  componentVariables: Object
+  componentVariables: ComponentVariablesInput
   isActive: boolean
   isActiveHash: boolean
   usedVariables: Record<string, string[]>
@@ -53,7 +60,7 @@ interface ComponentExampleState {
   showVariables: boolean
 }
 
-const childrenStyle: React.CSSProperties = {
+const childrenStyle: ICSSInJSStyle = {
   paddingTop: 0,
   paddingBottom: '10px',
 }
@@ -429,13 +436,13 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
 
   render() {
     const {
-      component,
       children,
       currentCode,
       currentCodeLanguage,
       currentCodePath,
       error,
       description,
+      defaultExport,
       onError,
       title,
       wasCodeChanged,
@@ -473,28 +480,26 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
             {/* Ensure anchor links don't occlude card shadow effect */}
             <div id={anchorName} style={{ position: 'relative', bottom: '1rem' }} />
 
-            <Segment styles={{ borderBottom: '1px solid #ddd' }}>
-              <Flex>
+            <Segment styles={{ padding: 0, borderBottom: '1px solid #ddd' }}>
+              <Flex space="between" style={{ padding: '10px 20px' }}>
                 <ComponentExampleTitle description={description} title={title} />
 
-                <Flex.Item push>
-                  <ComponentControls
-                    toolbarAriaLabel={toolbarAriaLabel}
-                    anchorName={anchorName}
-                    exampleCode={currentCode}
-                    exampleLanguage={currentCodeLanguage}
-                    examplePath={currentCodePath}
-                    onShowCode={this.handleShowCodeClick}
-                    onCopyLink={this.handleDirectLinkClick}
-                    onShowRtl={this.handleShowRtlClick}
-                    onShowVariables={this.handleShowVariablesClick}
-                    onShowTransparent={this.handleShowTransparentClick}
-                    showCode={showCode}
-                    showRtl={showRtl}
-                    showVariables={showVariables}
-                    showTransparent={showTransparent}
-                  />
-                </Flex.Item>
+                <ComponentControls
+                  toolbarAriaLabel={toolbarAriaLabel}
+                  anchorName={anchorName}
+                  exampleCode={currentCode}
+                  exampleLanguage={currentCodeLanguage}
+                  examplePath={currentCodePath}
+                  onShowCode={this.handleShowCodeClick}
+                  onCopyLink={this.handleDirectLinkClick}
+                  onShowRtl={this.handleShowRtlClick}
+                  onShowVariables={this.handleShowVariablesClick}
+                  onShowTransparent={this.handleShowTransparentClick}
+                  showCode={showCode}
+                  showRtl={showRtl}
+                  showVariables={showVariables}
+                  showTransparent={showTransparent}
+                />
               </Flex>
 
               <KnobInspector>
@@ -519,7 +524,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
                       resolver={importResolver}
                     />
                   ) : (
-                    React.createElement(component)
+                    React.createElement(defaultExport)
                   )}
                 </VariableResolver>
               </Provider>

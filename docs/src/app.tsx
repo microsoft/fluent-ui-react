@@ -3,7 +3,7 @@ import { hot } from 'react-hot-loader/root'
 import { themes, Debug, Provider } from '@fluentui/react'
 import { FabricToTeamsProvider, TeamsToFabricProvider } from '@fluentui/react-theming-adapters'
 
-import { mergeThemes } from 'src/lib'
+import { mergeThemes } from '@fluentui/styles'
 import { ThemeContext, ThemeContextData, themeContextDefaults } from './context/ThemeContext'
 import Routes from './routes'
 import { PerfDataProvider } from './components/ComponentDoc/PerfChart'

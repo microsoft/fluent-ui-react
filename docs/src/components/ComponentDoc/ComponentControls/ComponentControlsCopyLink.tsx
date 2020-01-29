@@ -1,6 +1,6 @@
 import * as React from 'react'
-import ComponentButton from './ComponentButton'
 import * as _ from 'lodash'
+import { Icon, Tooltip } from '@fluentui/react'
 
 export default class ComponentControlsCopyLink extends React.Component<any, any> {
   mounted: boolean
@@ -24,10 +24,9 @@ export default class ComponentControlsCopyLink extends React.Component<any, any>
     const { active } = this.state
 
     return (
-      <ComponentButton
-        iconName="linkify"
-        label={active ? 'Copied!' : this.btnLabel}
-        onClick={this.handleClick}
+      <Tooltip
+        trigger={<Icon name="linkify" onClick={this.handleClick} />}
+        content={active ? 'Copied!' : this.btnLabel}
       />
     )
   }

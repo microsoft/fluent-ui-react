@@ -1,5 +1,5 @@
 import { Accessibility } from '../../types'
-import { FocusZoneMode, FocusZoneDirection } from '../../focusZone/types'
+import { FocusZoneDirection } from '../../focusZone/types'
 import menuItemBehavior from './menuItemBehavior'
 import menuDividerBehavior from './menuDividerBehavior'
 
@@ -10,7 +10,6 @@ import menuDividerBehavior from './menuDividerBehavior'
  *
  * @specification
  * Adds role='menu'.
- * Embeds component into FocusZone.
  * Provides arrow key navigation in horizontal direction.
  * When 'vertical' prop is used, provides keyboard navigation in vertical direction.
  * Keyboard navigation is circular.
@@ -22,7 +21,6 @@ const menuBehavior: Accessibility<MenuBehaviorProps> = props => ({
     },
   },
   focusZone: {
-    mode: FocusZoneMode.Embed,
     props: {
       isCircularNavigation: true,
       shouldFocusInnerElementWhenReceivedFocus: true,

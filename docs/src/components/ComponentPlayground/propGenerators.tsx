@@ -4,7 +4,7 @@ import * as _ from 'lodash'
 import * as faker from 'faker'
 import * as React from 'react'
 
-import { KnobGenerator } from 'docs/src/types'
+import { KnobGenerator } from '../../types'
 
 export const content: KnobGenerator<string> = ({ propName }) => ({
   hook: useStringKnob,

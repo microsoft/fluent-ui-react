@@ -9,12 +9,12 @@ export default () => (
   <DocPage title="Quick Start">
     <Header as="h2">Install</Header>
     <p>
-      Stardust UI should be installed as a <code>dependency</code> of your app.
+      Fluent UI should be installed as a <code>dependency</code> of your app.
     </p>
     <CodeSnippet mode="bash" value="yarn add @fluentui/react" />
     <Header as="h2">Setup</Header>
     <p>
-      Stardust components are styled using CSS in JS. This technique requires a style renderer to
+      Fluent UI components are styled using CSS in JS. This technique requires a style renderer to
       render JavaScript objects to CSS.{' '}
       <a href="https://reactjs.org/docs/context.html" target="_blank" rel="noopener nofollow">
         React Context <Icon name="open-outside" size="small" />
@@ -42,7 +42,7 @@ export default () => (
       `}
     />
     <Header as="h2">Usage</Header>
-    <p>That's it. You can now use Stardust UI components in your app.</p>
+    <p>That's it. You can now use Fluent UI components in your app.</p>
     <CodeSnippet
       label="App.jsx"
       value={`

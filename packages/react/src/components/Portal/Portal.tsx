@@ -1,5 +1,9 @@
 import { AccessibilityAttributes } from '@fluentui/accessibility'
-import { FocusTrapZone, FocusTrapZoneProps } from '@fluentui/react-bindings'
+import {
+  AccessibilityHandlerProps,
+  FocusTrapZone,
+  FocusTrapZoneProps,
+} from '@fluentui/react-bindings'
 import { EventListener } from '@fluentui/react-component-event-listener'
 import { handleRef, Ref, toRefObject } from '@fluentui/react-component-ref'
 import * as customPropTypes from '@fluentui/react-proptypes'
@@ -15,9 +19,8 @@ import {
   commonPropTypes,
   ContentComponentProps,
   rtlTextContainer,
-} from '../../lib'
+} from '../../utils'
 import PortalInner from './PortalInner'
-import { AccessibilityHandlerProps } from '../../lib/accessibility/reactTypes'
 
 export type TriggerAccessibility = {
   attributes?: AccessibilityAttributes
@@ -88,7 +91,6 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
   static propTypes = {
     ...commonPropTypes.createCommon({
       accessibility: false,
-      animated: false,
       as: false,
       className: false,
       styled: false,

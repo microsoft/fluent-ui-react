@@ -1,9 +1,9 @@
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import { TooltipContentProps } from '../../../../components/Tooltip/TooltipContent'
 import { TooltipContentVariables } from './tooltipContentVariables'
 import getPointerStyles from '../../getPointerStyles'
 import pointerSvg from '../../pointerSvgUrl'
-import { PopperChildrenProps } from '../../../../lib/positioner'
+import { PopperChildrenProps } from '../../../../utils/positioner'
 
 const getPointerOffset = (
   placement: PopperChildrenProps['placement'],

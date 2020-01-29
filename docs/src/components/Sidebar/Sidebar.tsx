@@ -1,32 +1,32 @@
 import {
-  Icon,
+  Box,
+  constants,
+  Flex,
   HierarchicalTree,
-  Segment,
-  Text,
-  ICSSInJSStyle,
   HierarchicalTreeItemProps,
   HierarchicalTreeProps,
-  Input,
-  Flex,
-  Box,
   HierarchicalTreeTitleProps,
+  Icon,
+  ICSSInJSStyle,
+  Input,
+  Segment,
+  Text,
+  ShorthandValue,
 } from '@fluentui/react'
-import { ShorthandValue } from '../../../../packages/react/src/types'
-import Logo from 'docs/src/components/Logo/Logo'
-import { getComponentPathname } from 'docs/src/utils'
+import { CopyToClipboard } from '@fluentui/docs-components'
+import Logo from '../Logo/Logo'
+import { getComponentPathname } from '../../utils'
 import keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import { NavLink, NavLinkProps, withRouter } from 'react-router-dom'
 
-import { constants } from 'src/lib'
-
 type ComponentMenuItem = { displayName: string; type: string }
 
 const pkg = require('../../../../packages/react/package.json')
-const componentMenu: ComponentMenuItem[] = require('docs/src/componentMenu')
-const behaviorMenu: ComponentMenuItem[] = require('docs/src/behaviorMenu')
+const componentMenu: ComponentMenuItem[] = require('../../componentMenu')
+const behaviorMenu: ComponentMenuItem[] = require('../../behaviorMenu')
 
 const componentsBlackList = ['Debug', 'Design']
 
@@ -384,6 +384,15 @@ class Sidebar extends React.Component<any, any> {
         public: true,
       },
       {
+        key: 'table',
+        title: {
+          content: 'Table',
+          as: NavLink,
+          to: '/prototype-table',
+        },
+        public: true,
+      },
+      {
         key: 'teams-and-fabric-interop',
         title: {
           content: 'Teams and Fabric Interop',
@@ -419,9 +428,8 @@ class Sidebar extends React.Component<any, any> {
     }
 
     const logoStyles: ICSSInJSStyle = {
-      paddingRight: '5px',
-      color: 'white',
-      fontWeight: 700,
+      marginRight: '0.5rem',
+      width: '36px',
     }
 
     const changeLogUrl: string = `${constants.repoURL}/blob/master/CHANGELOG.md`
@@ -454,7 +462,7 @@ class Sidebar extends React.Component<any, any> {
     }
 
     // TODO: remove after the issue with TreeItem will be fixed
-    // https://github.com/stardust-ui/react/issues/1613
+    // https://github.com/microsoft/fluent-ui-react/issues/1613
     this.addItemKeyCallbacks(allSections)
 
     this.addItemOnClickCallbacks(allSections)
@@ -463,7 +471,7 @@ class Sidebar extends React.Component<any, any> {
       <Component open={open} hasSubtree={hasSubtree} {...restProps}>
         <span>{content}</span>
         {hasSubtree && this.state.query === '' && (
-          <Icon name={open ? 'stardust-arrow-up' : 'stardust-arrow-down'} />
+          <Icon name={open ? 'icon-arrow-up' : 'icon-arrow-down'} />
         )}
       </Component>
     )
@@ -475,20 +483,57 @@ class Sidebar extends React.Component<any, any> {
       width: `${0.9 * this.props.width}px`,
     }
 
+    const gradientTextStyles: React.CSSProperties = {
+      background: 'linear-gradient(45deg, rgb(138, 255, 124), rgb(123, 226, 251))',
+      color: 'transparent',
+
+      WebkitBackgroundClip: 'text',
+      WebkitTextFillColor: 'transparent',
+      fontWeight: 100,
+    }
+
     // TODO: bring back the active elements indicators
     return (
       <Segment styles={sidebarStyles}>
-        <Segment>
-          <Logo width="32px" styles={logoStyles} />
+        <Flex column hAlign="center" styles={{ padding: '1rem', background: 'black' }}>
+          <Logo flavor="white" styles={logoStyles} />
           <Text
             role="heading"
             aria-level={1}
-            color="white"
-            content="Stardust UI React &nbsp;"
-            styles={logoStyles}
-          />
-          <Text color="white" content={pkg.version} size="medium" styles={logoStyles} />
-        </Segment>
+            styles={{
+              fontSize: '1.25rem',
+              color: 'white',
+              fontWeight: 600,
+              textAlign: 'center',
+            }}
+          >
+            Fluent <span style={gradientTextStyles}>UI</span>
+          </Text>
+          <CopyToClipboard value={`yarn add ${pkg.name}@${pkg.version}`} timeout={3000}>
+            {(active, onClick) => (
+              <Box
+                as="code"
+                onClick={onClick}
+                styles={{
+                  display: 'block',
+                  fontWeight: 'normal',
+                  fontSize: '12px',
+                  opacity: active ? 1 : 0.6,
+                  color: active ? 'rgb(138, 255, 124)' : 'inherit',
+                  marginTop: '10px',
+                  cursor: 'pointer',
+                  ...(!active && {
+                    ':hover': {
+                      opacity: 0.75,
+                    },
+                  }),
+                }}
+              >
+                {active ? 'Copied! Happy coding :)' : `yarn add ${pkg.name}@${pkg.version}`}
+              </Box>
+            )}
+          </CopyToClipboard>
+        </Flex>
         <Flex column>
           <a
             href={constants.repoURL}

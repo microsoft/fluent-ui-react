@@ -1,4 +1,4 @@
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import { DropdownSearchInputProps } from '../../../../components/Dropdown/DropdownSearchInput'
 import { DropdownVariables } from './dropdownVariables'
 

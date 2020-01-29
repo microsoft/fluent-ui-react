@@ -1,16 +1,16 @@
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
-import { tabListBehavior, Flex, Header, Icon, Text, Grid, Menu, Box } from '@fluentui/react'
+import { tabListBehavior, Header, Icon, Text, Grid, Menu } from '@fluentui/react'
 
-import { getFormattedHash } from 'docs/src/utils'
-import ComponentDocLinks from './ComponentDocLinks'
-import ComponentDocSee from './ComponentDocSee'
+import { getFormattedHash } from '../../utils'
+// import ComponentDocLinks from './ComponentDocLinks'
+// import ComponentDocSee from './ComponentDocSee'
 import { ComponentExamples } from './ComponentExamples'
 import ComponentProps from './ComponentProps'
 import { ComponentDocAccessibility } from './ComponentDocAccessibility'
-import ExampleContext from 'docs/src/context/ExampleContext'
-import ComponentPlayground from 'docs/src/components/ComponentPlayground/ComponentPlayground'
-import { ComponentInfo } from 'docs/src/types'
+import ExampleContext from '../../context/ExampleContext'
+import ComponentPlayground from '../ComponentPlayground/ComponentPlayground'
+import { ComponentInfo } from '../../types'
 import ComponentBestPractices from './ComponentBestPractices'
 import * as _ from 'lodash'
 import ComponentDocThemeSwitcher from './ComponentDocThemeSwitcher'
@@ -109,81 +109,106 @@ class ComponentDoc extends React.Component<ComponentDocProps, ComponentDocState>
     const { info, tabs } = this.props
     const { activePath, currentTabIndex } = this.state
 
+    const PAGE_PADDING = '20px'
     return (
-      <div style={{ padding: '20px' }}>
-        <Flex column styles={{ paddingBottom: '1rem' }}>
-          <Flex.Item padding="padding.medium">
-            <ComponentDocThemeSwitcher excludeOptions={['teamsToFabric', 'fabricToTeams']} />
-          </Flex.Item>
-          <Flex.Item>
+      <div>
+        <div
+          id="docs-sticky-header"
+          style={{
+            position: 'sticky',
+            padding: `${PAGE_PADDING} ${PAGE_PADDING} 10px ${PAGE_PADDING}`,
+            top: 0,
+            background: '#DDDDDD88',
+            borderBottom: '1px solid #00000022',
+            backdropFilter: 'blur(10px)',
+            zIndex: 1000,
+          }}
+        >
+          {/* <ThemeContext.Consumer> */}
+          {/*  {({ changeTheme, themeOptions }) => ( */}
+          {/*    <Dropdown */}
+          {/*      style={{ float: 'right' }} */}
+          {/*      getA11yStatusMessage={getA11yStatusMessage} */}
+          {/*      getA11ySelectionMessage={getA11ySelectionMessage} */}
+          {/*      noResultsMessage="We couldn't find any matches." */}
+          {/*      placeholder="Theme" */}
+          {/*      onSelectedChange={changeTheme} */}
+          {/*      items={themeOptions.map(({ text, value }) => ({ header: text, value }))} */}
+          {/*    /> */}
+          {/*  )} */}
+          {/* </ThemeContext.Consumer> */}
+          <ComponentDocThemeSwitcher excludeOptions={['teamsToFabric', 'fabricToTeams']} />
+          <Header
+            as="h1"
+            aria-level={2}
+            content={info.displayName}
+            style={{ margin: 0 }}
+            variables={{ color: 'black' }}
+          />
+          <Menu
+            underlined
+            activeIndex={currentTabIndex}
+            items={tabs}
+            style={{ marginTop: '0.5rem', background: 'none', border: 'none' }}
+            onItemClick={this.handleTabClick}
+            accessibility={tabListBehavior}
+          />
+        </div>
+        {/* <ComponentDocSee displayName={info.displayName} /> */}
+
+        <div style={{ padding: PAGE_PADDING }}>
+          {/* <ComponentDocLinks */}
+          {/*  displayName={info.displayName} */}
+          {/*  parentDisplayName={info.parentDisplayName} */}
+          {/*  repoPath={info.repoPath} */}
+          {/*  type={info.type} */}
+          {/* /> */}
+
+          {this.getCurrentTabTitle() === 'Accessibility' && (
+            <ComponentDocAccessibility info={info} />
+          )}
+
+          {this.getCurrentTabTitle() === 'Props' && (
+            <ComponentProps displayName={info.displayName} props={info.props} />
+          )}
+
+          {this.getCurrentTabTitle() === 'Definition' && (
             <>
-              <Flex styles={{ justifyContent: 'space-between' }}>
-                <Flex.Item>
-                  <Header
-                    as="h1"
-                    aria-level={2}
-                    content={info.displayName}
-                    variables={{ color: 'black' }}
-                  />
-                </Flex.Item>
-                <Flex.Item>
-                  <ComponentDocLinks
-                    displayName={info.displayName}
-                    parentDisplayName={info.parentDisplayName}
-                    repoPath={info.repoPath}
-                    type={info.type}
-                  />
-                </Flex.Item>
-              </Flex>
-              <Menu
-                underlined
-                primary
-                activeIndex={currentTabIndex}
-                items={tabs}
-                onItemClick={this.handleTabClick}
-                accessibility={tabListBehavior}
+              <Text
+                size="large"
+                content={info.docblock.description}
+                style={{
+                  display: 'block',
+                  margin: '0 0 1rem 0',
+                }}
               />
-              <ComponentDocSee displayName={info.displayName} />
+              <ComponentPlayground
+                componentName={info.displayName}
+                key={info.displayName}
+                style={{ marginTop: '1rem' }}
+              />
+              <Grid
+                columns="auto 300px"
+                styles={{ justifyContent: 'normal', justifyItems: 'stretch' }}
+              >
+                <div>
+                  <ComponentBestPractices displayName={info.displayName} />
+                  <ExampleContext.Provider
+                    value={{
+                      activeAnchorName: activePath,
+                      onExamplePassed: this.handleExamplePassed,
+                    }}
+                  >
+                    <ComponentExamples displayName={info.displayName} />
+                  </ExampleContext.Provider>
+                </div>
+              </Grid>
             </>
-          </Flex.Item>
-        </Flex>
+          )}
 
-        {this.getCurrentTabTitle() === 'Accessibility' && <ComponentDocAccessibility info={info} />}
-
-        {this.getCurrentTabTitle() === 'Props' && (
-          <ComponentProps displayName={info.displayName} props={info.props} />
-        )}
-
-        {this.getCurrentTabTitle() === 'Definition' && (
-          <>
-            <Text
-              size="large"
-              styles={{ marginBottom: '1.4rem' }}
-              content={info.docblock.description}
-            />
-            <Box styles={{ height: '10px' }} />
-            <ComponentPlayground componentName={info.displayName} key={info.displayName} />
-            <Grid
-              columns="auto 300px"
-              styles={{ justifyContent: 'normal', justifyItems: 'stretch' }}
-            >
-              <div>
-                <ComponentBestPractices displayName={info.displayName} />
-                <ExampleContext.Provider
-                  value={{
-                    activeAnchorName: activePath,
-                    onExamplePassed: this.handleExamplePassed,
-                  }}
-                >
-                  <ComponentExamples displayName={info.displayName} />
-                </ExampleContext.Provider>
-              </div>
-            </Grid>
-          </>
-        )}
-
-        <div style={exampleEndStyle}>
-          This is the bottom <Icon name="pointing down" />
+          <div style={exampleEndStyle}>
+            This is the bottom <Icon name="pointing down" />
+          </div>
         </div>
       </div>
     )
