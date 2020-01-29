@@ -477,9 +477,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
         offset={offset}
         rtl={rtl}
         unstable_pinned={unstable_pinned}
-        targetRef={
-          this.rightClickReferenceObject || (target ? { current: target } : this.triggerRef)
-        }
+        targetRef={this.rightClickReferenceObject || target || this.triggerRef}
         children={this.renderPopperChildren.bind(this, popupPositionClasses, rtl, accessibility)}
       />
     )

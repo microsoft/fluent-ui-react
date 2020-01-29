@@ -281,8 +281,6 @@ class ToolbarMenuItem extends AutoControlledComponent<
     } = this.props
     const { menuOpen } = this.state
 
-    const targetRef = { current: this.context.target }
-
     const elementType = (
       <ElementType
         {...accessibility.attributes.root}
@@ -363,7 +361,7 @@ class ToolbarMenuItem extends AutoControlledComponent<
               </Ref>
               <EventListener
                 listener={this.outsideClickHandler(getRefs)}
-                targetRef={targetRef}
+                targetRef={this.context.targetRef}
                 type="click"
               />
             </>
