@@ -161,7 +161,7 @@ describe('Carousel', () => {
     })
 
     it('should not change at arrow left if event is invoked on child element', () => {
-      const wrapper = renderCarousel()
+      const wrapper = renderCarousel({ circular: true })
       const button = getButtonWrapper(wrapper)
       const pagination = getPaginationWrapper(wrapper)
 
