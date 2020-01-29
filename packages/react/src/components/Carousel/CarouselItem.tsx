@@ -22,8 +22,8 @@ export interface CarouselItemSlotClassNames {
 
 export interface CarouselItemProps
   extends UIComponentProps,
-  ChildrenComponentProps,
-  ContentComponentProps {
+    ChildrenComponentProps,
+    ContentComponentProps {
   /** Whether or not the item is in view or not. */
   active?: boolean
 
