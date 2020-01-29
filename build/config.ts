@@ -22,6 +22,7 @@ const envConfig = {
   // ----------------------------------
   path_base: path.resolve(__dirname, '..'),
   dir_build: 'build',
+  dir_docs: 'docs',
   dir_docs_dist: 'docs/dist',
   dir_docs_src: 'docs/src',
   dir_e2e: 'e2e',
@@ -43,6 +44,7 @@ const fromBase = (...paths: string[]) => (...subPaths: string[]) => base(...path
 
 const tempPaths = {
   build: fromBase(envConfig.dir_build),
+  docs: fromBase(envConfig.dir_docs),
   docsDist: fromBase(envConfig.dir_docs_dist),
   docsSrc: fromBase(envConfig.dir_docs_src),
   e2e: fromBase(envConfig.dir_e2e),
