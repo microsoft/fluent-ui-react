@@ -14,5 +14,18 @@ export type ListContextValue = {
   selectedIndex: number
 }
 
-export const ListContext = createContext<ListContextValue>(null)
+export const ListContext = createContext<ListContextValue>(
+  {
+    debug: false,
+    selectable: false,
+    navigable: false,
+    truncateContent: false,
+    truncateHeader: false,
+    variables: {},
+
+    onItemClick: () => {},
+    selectedIndex: -1,
+  },
+  { strict: false },
+)
 export const Provider = ListContext.Provider

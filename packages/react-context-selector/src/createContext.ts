@@ -35,14 +35,27 @@ const createProvider = <Value>(Original: React.Provider<ContextValue<Value>>) =>
   return Provider
 }
 
-export const createContext = <Value>(defaultValue: Value): Context<Value> => {
+type CreateContextOptions = {
+  strict?: boolean
+}
+
+export const createContext = <Value>(
+  defaultValue: Value,
+  options: CreateContextOptions = {},
+): Context<Value> => {
+  const { strict = true } = options
+
   const context = React.createContext<ContextValue<Value>>({
-    get subscribe(): any {
-      throw new Error(
-        process.env.NODE_ENV === 'production'
-          ? ''
-          : `Please use <Provider /> component from "@fluentui/react-context-selector"`,
-      )
+    get subscribe() {
+      if (strict) {
+        throw new Error(
+          process.env.NODE_ENV === 'production'
+            ? ''
+            : `Please use <Provider /> component from "@fluentui/react-context-selector"`,
+        )
+      }
+
+      return () => () => {}
     },
     value: defaultValue,
   })
