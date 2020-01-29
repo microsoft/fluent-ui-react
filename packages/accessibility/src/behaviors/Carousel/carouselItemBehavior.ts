@@ -18,7 +18,7 @@ const carouselItemBehavior: Accessibility<CarouselItemProps> = props => ({
 
   keyActions: {
     root: {
-      stopPropagation: {
+      arrowKeysNavigationStopPropagation: {
         keyCombinations: [{ keyCode: keyboardKey.ArrowRight }, { keyCode: keyboardKey.ArrowLeft }],
       },
     },

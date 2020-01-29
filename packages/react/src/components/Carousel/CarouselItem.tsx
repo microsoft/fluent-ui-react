@@ -60,7 +60,7 @@ class CarouselItem extends UIComponent<WithAsProp<CarouselItemProps>> {
   }
 
   actionHandlers = {
-    stopPropagation: e => {
+    arrowKeysNavigationStopPropagation: e => {
       // let event propagate, when it was invoke on the element where arrow keys should rotate carousel
       if (e.currentTarget !== e.target) {
         e.stopPropagation()
