@@ -144,7 +144,7 @@ class EmployeeCardPrototype extends React.Component<any> {
 
 
     return (
-      <div>
+      <main aria-label="cards prototype">
         {/* <Dropdown
           inline
           items={[
@@ -189,7 +189,7 @@ class EmployeeCardPrototype extends React.Component<any> {
           {this.state.a11yDescribedByInstructionMessage}
         </div>
         <button> button outside the card example</button>
-      </div>
+      </main>
     )
   }
 }
