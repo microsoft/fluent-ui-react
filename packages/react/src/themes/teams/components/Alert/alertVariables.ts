@@ -33,10 +33,18 @@ export interface AlertVariables {
   infoBackgroundColor: string
   infoBorderColor: string
 
+  successColor: string
+  successBackgroundColor: string
+  successBorderColor: string
+
   urgent: boolean
   urgentColor: string
   urgentBackgroundColor: string
   urgentBorderColor: string
+
+  warningColor: string
+  warningBackgroundColor: string
+  warningBorderColor: string
 
   headerFontWeight: FontWeightProperty
   headerMargin: string
@@ -77,10 +85,18 @@ export default (siteVars: SiteVariablesPrepared): AlertVariables => {
     infoBackgroundColor: siteVars.colors.grey[150],
     infoBorderColor: siteVars.colors.grey[200],
 
+    successColor: siteVars.colors.green[600],
+    successBackgroundColor: siteVars.colors.grey[50],
+    successBorderColor: siteVars.colors.green[200],
+
     urgent: false,
     urgentColor: siteVars.colors.white,
     urgentBackgroundColor: siteVars.colors.red[400],
     urgentBorderColor: siteVars.colors.red[400],
+
+    warningColor: siteVars.colors.grey[450],
+    warningBackgroundColor: siteVars.colors.grey[50],
+    warningBorderColor: siteVars.colors.yellow[400],
 
     headerFontWeight: siteVars.fontWeightBold,
     headerMargin: `0 ${pxToRem(10)} 0 0`,
