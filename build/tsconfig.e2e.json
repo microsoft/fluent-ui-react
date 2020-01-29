@@ -1,9 +1,0 @@
-{
-  "extends": "./tsconfig.common.json",
-  "compilerOptions": {
-    "module": "esnext",
-    "allowSyntheticDefaultImports": true,
-    "types": ["node", "webpack-env"]
-  },
-  "include": ["../e2e", "../types"]
-}

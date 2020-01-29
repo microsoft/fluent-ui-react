@@ -1,3 +1,9 @@
 {
-  "extends": "../build/tsconfig.e2e.json"
+  "extends": "../build/tsconfig.common.json",
+  "compilerOptions": {
+    "module": "esnext",
+    "allowSyntheticDefaultImports": true,
+    "types": ["node", "jest", "webpack-env"]
+  },
+  "include": ["../e2e"]
 }
