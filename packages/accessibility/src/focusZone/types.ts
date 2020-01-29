@@ -1,13 +1,6 @@
 import * as React from 'react'
 
-export enum FocusZoneMode {
-  Custom,
-  Wrap,
-  Embed,
-}
-
 export type FocusZoneDefinition = {
-  mode: FocusZoneMode
   props?: FocusZoneProperties
 }
 
