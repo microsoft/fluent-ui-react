@@ -4,7 +4,7 @@
   "version": "0.43.0",
   "dependencies": {
     "@fluentui/react": "^0.43.0",
-    "office-ui-fabric-react": "^7.86.0"
+    "office-ui-fabric-react": "^7.86.1"
   },
   "description": "Adapters for interop for the Teams and Fabric themes.",
   "devDependencies": {
