@@ -6,7 +6,7 @@ import {
 } from '@fluentui/react-bindings'
 import { EventListener } from '@fluentui/react-component-event-listener'
 import { NodeRef, Unstable_NestingAuto } from '@fluentui/react-component-nesting-registry'
-import { handleRef, toRefObject, Ref } from '@fluentui/react-component-ref'
+import { handleRef, Ref } from '@fluentui/react-component-ref'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
@@ -482,7 +482,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
         rtl={rtl}
         unstable_pinned={unstable_pinned}
         targetRef={
-          this.rightClickReferenceObject || (target ? toRefObject(target) : this.triggerRef)
+          this.rightClickReferenceObject || (target ? { current: target } : this.triggerRef)
         }
         children={this.renderPopperChildren.bind(this, popupPositionClasses, rtl, accessibility)}
       />
@@ -499,15 +499,12 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
       content: propsContent,
       renderContent,
       contentRef,
-      mountDocument,
       pointing,
       trapFocus,
       autoFocus,
     } = this.props
 
     const content = renderContent ? renderContent(scheduleUpdate) : propsContent
-    const targetRef = toRefObject(mountDocument || this.context.target)
-
     const popupContent = Popup.Content.create(content || {}, {
       defaultProps: () => ({
         ...(rtl && { dir: 'rtl' }),
@@ -540,19 +537,19 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
 
             <EventListener
               listener={this.handleDocumentClick(getRefs)}
-              targetRef={targetRef}
+              targetRef={this.context.targetRef}
               type="click"
               capture
             />
             <EventListener
               listener={this.handleDocumentClick(getRefs)}
-              targetRef={targetRef}
+              targetRef={this.context.targetRef}
               type="contextmenu"
               capture
             />
             <EventListener
               listener={this.handleDocumentKeyDown(getRefs)}
-              targetRef={targetRef}
+              targetRef={this.context.targetRef}
               type="keydown"
               capture
             />
@@ -561,13 +558,13 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
               <>
                 <EventListener
                   listener={this.dismissOnScroll}
-                  targetRef={targetRef}
+                  targetRef={this.context.targetRef}
                   type="wheel"
                   capture
                 />
                 <EventListener
                   listener={this.dismissOnScroll}
-                  targetRef={targetRef}
+                  targetRef={this.context.targetRef}
                   type="touchmove"
                   capture
                 />

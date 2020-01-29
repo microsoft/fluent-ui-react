@@ -1,7 +1,6 @@
 import keyboardKey from 'keyboard-key'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
-import { toRefObject } from '@fluentui/react-component-ref'
 import { EventListener } from '@fluentui/react-component-event-listener'
 
 import { isBrowser } from '../../utils'
@@ -147,20 +146,20 @@ class Debug extends React.Component<DebugProps, DebugState> {
       return (
         <>
           <EventListener
-            targetRef={toRefObject(mountDocument.body)}
+            targetRef={{ current: mountDocument.body }}
             listener={this.handleKeyDown}
             type="keydown"
           />
           {isSelecting && (
             <EventListener
-              targetRef={toRefObject(mountDocument.body)}
+              targetRef={{ current: mountDocument.body }}
               listener={this.handleMouseMove}
               type="mousemove"
             />
           )}
           {isSelecting && fiberNav && fiberNav.domNode && (
             <EventListener
-              targetRef={toRefObject(fiberNav.domNode)}
+              targetRef={{ current: fiberNav.domNode }}
               listener={this.handleDOMNodeClick}
               type="click"
             />
