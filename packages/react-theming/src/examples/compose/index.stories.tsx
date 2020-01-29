@@ -1,60 +1,13 @@
 import React from 'react';
 
-import { initalize } from './../..';
 import { ThemeProvider } from './../../components/ThemeProvider/ThemeProvider';
 import { compose } from './../../compose';
 import { Variant } from './../../variant';
-import { ITheme, IColorRamp } from '../../theme.types';
-
-initalize();
+import { theme } from './../theme';
 
 export default {
   component: 'compose',
   title: 'Compose Demos',
-};
-
-const emptyRamp: IColorRamp = { values: [], index: -1 };
-const theme: ITheme = {
-  components: {},
-  colors: {
-    background: 'white',
-    bodyText: 'black',
-    subText: 'black',
-    disabledText: 'green',
-    brand: emptyRamp,
-    accent: emptyRamp,
-    neutral: emptyRamp,
-    success: emptyRamp,
-    warning: emptyRamp,
-    danger: emptyRamp,
-  },
-  fonts: {
-    default: '',
-    userContent: '',
-    mono: '',
-  },
-  fontSizes: {
-    base: 1,
-    scale: 1,
-    unit: 'rem',
-  },
-  animations: {
-    fadeIn: {},
-    fadeOut: {},
-  },
-  direction: 'ltr',
-  spacing: {
-    base: 0,
-    scale: 0,
-    unit: 'rem',
-  },
-  radius: {
-    base: 0,
-    scale: 0,
-    unit: 'rem',
-  },
-  icons: {},
-  schemes: {},
 };
 
 const BaseDiv: React.FunctionComponent<{ classes: any }> = props => {

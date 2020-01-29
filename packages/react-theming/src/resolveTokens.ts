@@ -14,7 +14,7 @@ class LiteralToken implements IToken {
   public isResolvable = true;
   public isResolved = true;
 
-  constructor(public name: string, public value: string | number) {}
+  constructor(public name: string, public value: string | number | boolean) {}
   resolve(theme: any): void {}
 }
 
@@ -61,6 +61,7 @@ class TokenFactory {
     switch (typeof rawToken) {
       case 'string':
       case 'number':
+      case 'boolean':
         return new LiteralToken(name, rawToken);
       case 'function':
         return FunctionToken.fromFunction(tokens, name, rawToken);

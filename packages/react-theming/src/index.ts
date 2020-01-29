@@ -26,4 +26,4 @@ export { ThemeProvider } from './components/ThemeProvider/ThemeProvider';
 export { Box } from './components/Box/Box';
 export { createTheme } from './utilities/createTheme';
 
-export const initalize = () => jss.setup(preset());
+export const initializeStyling = () => jss.setup(preset());
