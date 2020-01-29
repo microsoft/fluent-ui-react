@@ -6,7 +6,7 @@ import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 
 const getIntentColorsFromProps = (
   p: AlertProps,
-  v: AlertVariables
+  v: AlertVariables,
 ): ICSSInJSStyle => {
 
   if (p.danger) {
@@ -45,7 +45,7 @@ const getIntentColorsFromProps = (
     return {
       color: v.successColor,
       backgroundColor: v.successBackgroundColor,
-      borderColor: v.successBorderColor
+      borderColor: v.successBorderColor,
     }
   }
 
