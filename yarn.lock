@@ -4540,6 +4540,11 @@
     "@types/express-serve-static-core" "*"
     "@types/mime" "*"
 
+"@types/simulant@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@types/simulant/-/simulant-0.2.0.tgz#a55e2a080f5409a6ea13e1adb9ce889c8cb413df"
+  integrity sha512-pQcnO5/JMR9KEnQGuYkDNQ9IDFAp0nrCfCjxqZ03WY2QDcuMPR6w0VpL6MO5VQEn93YkNCW9nTuRl/q0+iasVg==
+
 "@types/source-list-map@*":
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/@types/source-list-map/-/source-list-map-0.1.2.tgz#0078836063ffaf17412349bba364087e0ac02ec9"
@@ -4646,10 +4651,10 @@
     "@types/webpack" "*"
     loglevel "^1.6.2"
 
-"@types/webpack-env@*", "@types/webpack-env@^1.13.7":
-  version "1.14.1"
-  resolved "https://registry.npmjs.org/@types/webpack-env/-/webpack-env-1.14.1.tgz#0d8a53f308f017c53a5ddc3d07f4d6fa76b790d7"
-  integrity sha512-0Ki9jAAhKDSuLDXOIMADg54Hu60SuBTEsWaJGGy5cV+SSUQ63J2a+RrYYGrErzz39fXzTibhKrAQJAb8M7PNcA==
+"@types/webpack-env@*", "@types/webpack-env@^1.13.7", "@types/webpack-env@^1.14.1":
+  version "1.15.0"
+  resolved "https://registry.yarnpkg.com/@types/webpack-env/-/webpack-env-1.15.0.tgz#bd9956d5044b1fb43e869a9ba9148862ff98d9fd"
+  integrity sha512-TfcyNecCz8Z9/s90gBOBniyzZrTru8u2Vp0VZODq4KEBaQu8bfXvu7o/KUOecMpzjbFPUA7aqgSq628Iue5BQg==
 
 "@types/webpack-hot-middleware@^2.16.3":
   version "2.25.0"

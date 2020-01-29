@@ -81,7 +81,6 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "satisfied": "^1.1.1",
-    "simulant": "^0.2.2",
     "syncpack": "^4.5.4",
     "tsconfig-paths": "^3.7.0",
     "tslint": "^5.11.0",
