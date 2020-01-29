@@ -1,14 +1,7 @@
 import * as React from 'react'
 
 import { Context, ContextSelector, ContextValue } from './types'
-import {
-  HOOK_SELECTED_PROPERTY,
-  HOOK_SELECTOR_PROPERTY,
-  useIsomorphicLayoutEffect,
-  HOOK_VALUE_PROPERTY,
-  CONTEXT_SUBSCRIBE_PROPERTY,
-  CONTEXT_VALUE_PROPERTY,
-} from './utils'
+import { useIsomorphicLayoutEffect } from './utils'
 
 type ContextSelectors<Value, SelectedValue> = Record<string, ContextSelector<Value, SelectedValue>>
 type ContextSelected<
@@ -22,9 +15,9 @@ type UseSelectorRef<
   SelectedValue,
   Properties extends keyof ContextSelectors<Value, any> = any
 > = {
-  [HOOK_SELECTOR_PROPERTY]: ContextSelectors<Value, any>
-  [HOOK_VALUE_PROPERTY]: Value
-  [HOOK_SELECTED_PROPERTY]: ContextSelected<Value, SelectedValue, Properties>
+  selectors: ContextSelectors<Value, any>
+  value: Value
+  selected: ContextSelected<Value, SelectedValue, Properties>
 }
 
 /**
@@ -40,10 +33,9 @@ export const useContextSelectors = <
   context: Context<Value>,
   selectors: ContextSelectors<Value, SelectedValue>,
 ): ContextSelected<Value, SelectedValue, Properties> => {
-  const {
-    [CONTEXT_SUBSCRIBE_PROPERTY]: subscribe,
-    [CONTEXT_VALUE_PROPERTY]: value,
-  } = React.useContext((context as unknown) as Context<ContextValue<Value>>)
+  const { subscribe, value } = React.useContext(
+    (context as unknown) as Context<ContextValue<Value>>,
+  )
   const [, forceUpdate] = React.useReducer((c: number) => c + 1, 0) as [never, () => void]
 
   const ref = React.useRef<UseSelectorRef<Value, SelectedValue>>()
@@ -55,9 +47,9 @@ export const useContextSelectors = <
 
   useIsomorphicLayoutEffect(() => {
     ref.current = {
-      [HOOK_SELECTOR_PROPERTY]: selectors,
-      [HOOK_VALUE_PROPERTY]: value,
-      [HOOK_SELECTED_PROPERTY]: selected,
+      selectors,
+      value,
+      selected,
     }
   })
   useIsomorphicLayoutEffect(() => {
@@ -67,16 +59,13 @@ export const useContextSelectors = <
           UseSelectorRef<Value, SelectedValue>
         >
 
-        if (reference[HOOK_VALUE_PROPERTY] === nextState) {
+        if (reference.value === nextState) {
           return
         }
 
         if (
-          Object.keys(reference[HOOK_SELECTED_PROPERTY]).every(key =>
-            Object.is(
-              reference[HOOK_SELECTED_PROPERTY][key],
-              reference[HOOK_SELECTOR_PROPERTY][key](nextState),
-            ),
+          Object.keys(reference.selected).every(key =>
+            Object.is(reference.selected[key], reference.selectors[key](nextState)),
           )
         ) {
           // not changed

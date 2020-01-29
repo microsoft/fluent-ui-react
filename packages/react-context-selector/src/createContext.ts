@@ -1,12 +1,10 @@
 import * as React from 'react'
-
 import { Context, ContextListener, ContextValue } from './types'
-import { CONTEXT_SUBSCRIBE_PROPERTY, CONTEXT_VALUE_PROPERTY } from './utils'
 
 const createProvider = <Value>(Original: React.Provider<ContextValue<Value>>) => {
   const Provider: React.FC<React.ProviderProps<Value>> = props => {
     const listeners = React.useRef<ContextListener<Value>[]>([])
-    const value = React.useMemo<ContextValue<Value>>(() => ({} as any), [])
+    const contextValue = React.useMemo<ContextValue<Value>>(() => ({} as any), [])
 
     // We call listeners in render intentionally. Listeners are not technically pure, but
     // otherwise we can't get benefits from concurrent mode.
@@ -15,7 +13,7 @@ const createProvider = <Value>(Original: React.Provider<ContextValue<Value>>) =>
     listeners.current.forEach(listener => listener(props.value))
 
     // Disables updates propogation for React Context as `value` is always shallow equal
-    value[CONTEXT_SUBSCRIBE_PROPERTY] = React.useCallback((listener: ContextListener<Value>) => {
+    contextValue.subscribe = React.useCallback((listener: ContextListener<Value>) => {
       listeners.current.push(listener)
 
       const unsubscribe = () => {
@@ -25,9 +23,9 @@ const createProvider = <Value>(Original: React.Provider<ContextValue<Value>>) =>
 
       return unsubscribe
     }, [])
-    value[CONTEXT_VALUE_PROPERTY] = props.value
+    contextValue.value = props.value
 
-    return React.createElement(Original, { value }, props.children)
+    return React.createElement(Original, { value: contextValue }, props.children)
   }
 
   if (process.env.NODE_ENV !== 'production') {
@@ -39,14 +37,14 @@ const createProvider = <Value>(Original: React.Provider<ContextValue<Value>>) =>
 
 export const createContext = <Value>(defaultValue: Value): Context<Value> => {
   const context = React.createContext<ContextValue<Value>>({
-    get [CONTEXT_SUBSCRIBE_PROPERTY](): any {
+    get subscribe(): any {
       throw new Error(
         process.env.NODE_ENV === 'production'
           ? ''
           : `Please use <Provider /> component from "@fluentui/react-context-selector"`,
       )
     },
-    [CONTEXT_VALUE_PROPERTY]: defaultValue,
+    value: defaultValue,
   })
   context.Provider = createProvider<Value>(context.Provider) as any
 

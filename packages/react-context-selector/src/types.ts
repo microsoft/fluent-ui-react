@@ -10,6 +10,6 @@ export type ContextListener<Value> = (value: Value) => void
 export type ContextSelector<Value, SelectedValue> = (value: Value) => SelectedValue
 
 export type ContextValue<Value> = {
-  s: (listener: ContextListener<Value>) => any
-  v: Value
+  subscribe: (listener: ContextListener<Value>) => any
+  value: Value
 }
