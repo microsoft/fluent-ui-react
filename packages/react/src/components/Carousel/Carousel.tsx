@@ -52,6 +52,11 @@ export interface CarouselProps extends UIComponentProps, ChildrenComponentProps 
    */
   ariaRoleDescription?: string
 
+  /**
+   * Sets the aria-label attribute for carousel.
+   */
+  ariaLabel?: string
+
   /** Specifies if the process of switching slides is circular. */
   circular?: boolean
 
@@ -128,6 +133,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
     }),
     activeIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     ariaRoleDescription: PropTypes.string,
+    ariaLabel: PropTypes.string,
     circular: PropTypes.bool,
     defaultActiveIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     getItemPositionText: PropTypes.func,
@@ -235,7 +241,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
   }
 
   renderContent = (accessibility, styles, unhandledProps) => {
-    const { ariaRoleDescription, getItemPositionText, items } = this.props
+    const { ariaRoleDescription, ariaLabel, getItemPositionText, items } = this.props
     const { activeIndex, itemIds } = this.state
 
     this.itemRefs = []
@@ -245,7 +251,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
         <div
           className={Carousel.slotClassNames.itemsContainer}
           aria-roledescription={ariaRoleDescription}
-          aria-label="Portrait collection"
+          aria-label={ariaLabel}
           style={styles.itemsContainer}
           {...accessibility.attributes.itemsContainer}
           {...applyAccessibilityKeyHandlers(
