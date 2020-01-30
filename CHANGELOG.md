@@ -17,6 +17,15 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.43.1 ]------------------------------- -->
+## [v0.43.1](https://github.com/microsoft/fluent-ui-react/tree/v0.43.1) (2020-01-30)
+[Compare changes](https://github.com/microsoft/fluent-ui-react/compare/v0.43.0..v0.43.1)
+
+### Fixes
+- Fix event listener leak in `FocusZone` @miroslavstastny ([#2227](https://github.com/microsoft/fluent-ui-react/pull/2227))
+- Fix element reference memory leaks @jurokapsiar ([#2270](https://github.com/microsoft/fluent-ui-react/pull/2270))
+- Fix element leak in `refFindNode` @miroslavstastny ([#2288](https://github.com/microsoft/fluent-ui-react/pull/2288))
+
 <!--------------------------------[ v0.43.0 ]------------------------------- -->
 ## [v0.43.0](https://github.com/microsoft/fluent-ui-react/tree/v0.43.0) (2020-01-08)
 [Compare changes](https://github.com/microsoft/fluent-ui-react/compare/v0.42.0..v0.43.0)
