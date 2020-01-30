@@ -28,6 +28,7 @@ const createProvider = <Value>(Original: React.Provider<ContextValue<Value>>) =>
     return React.createElement(Original, { value: contextValue }, props.children)
   }
 
+  /* istanbul ignore else */
   if (process.env.NODE_ENV !== 'production') {
     Provider.displayName = 'ContextSelector.Provider'
   }
@@ -48,6 +49,7 @@ export const createContext = <Value>(
   const context = React.createContext<ContextValue<Value>>({
     get subscribe() {
       if (strict) {
+        /* istanbul ignore next */
         throw new Error(
           process.env.NODE_ENV === 'production'
             ? ''
@@ -55,6 +57,7 @@ export const createContext = <Value>(
         )
       }
 
+      /* istanbul ignore next */
       return () => () => {}
     },
     value: defaultValue,

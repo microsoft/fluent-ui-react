@@ -3,21 +3,15 @@ import * as React from 'react'
 import { Context, ContextSelector, ContextValue } from './types'
 import { useIsomorphicLayoutEffect } from './utils'
 
-type ContextSelectors<Value, SelectedValue> = Record<string, ContextSelector<Value, SelectedValue>>
-type ContextSelected<
-  Value,
-  SelectedValue,
-  Properties extends keyof ContextSelectors<Value, SelectedValue>
-> = Record<Properties, ReturnType<ContextSelectors<Value, SelectedValue>[Properties]>>
-
 type UseSelectorRef<
   Value,
-  SelectedValue,
-  Properties extends keyof ContextSelectors<Value, any> = any
+  Properties extends string,
+  Selectors extends Record<Properties, ContextSelector<Value, SelectedValue>>,
+  SelectedValue extends any
 > = {
-  selectors: ContextSelectors<Value, any>
+  selectors: Selectors
   value: Value
-  selected: ContextSelected<Value, SelectedValue, Properties>
+  selected: Record<Properties, SelectedValue>
 }
 
 /**
@@ -27,21 +21,22 @@ type UseSelectorRef<
  */
 export const useContextSelectors = <
   Value,
-  SelectedValue extends Record<string, any>,
-  Properties extends keyof ContextSelectors<Value, any> = any
+  Properties extends string,
+  Selectors extends Record<Properties, ContextSelector<Value, SelectedValue>>,
+  SelectedValue extends any
 >(
   context: Context<Value>,
-  selectors: ContextSelectors<Value, SelectedValue>,
-): ContextSelected<Value, SelectedValue, Properties> => {
+  selectors: Selectors,
+): Record<Properties, SelectedValue> => {
   const { subscribe, value } = React.useContext(
     (context as unknown) as Context<ContextValue<Value>>,
   )
   const [, forceUpdate] = React.useReducer((c: number) => c + 1, 0) as [never, () => void]
 
-  const ref = React.useRef<UseSelectorRef<Value, SelectedValue>>()
-  const selected = {} as ContextSelected<Value, SelectedValue, Properties>
+  const ref = React.useRef<UseSelectorRef<Value, Properties, Selectors, SelectedValue>>()
+  const selected = {} as Record<Properties, SelectedValue>
 
-  Object.keys(selectors).forEach(key => {
+  Object.keys(selectors).forEach((key: Properties) => {
     selected[key] = selectors[key](value)
   })
 
@@ -55,16 +50,16 @@ export const useContextSelectors = <
   useIsomorphicLayoutEffect(() => {
     const callback = (nextState: Value) => {
       try {
-        const reference: UseSelectorRef<Value, SelectedValue> = ref.current as NonNullable<
-          UseSelectorRef<Value, SelectedValue>
-        >
-
-        if (reference.value === nextState) {
-          return
-        }
+        const reference: UseSelectorRef<
+          Value,
+          Properties,
+          Selectors,
+          SelectedValue
+        > = ref.current as NonNullable<UseSelectorRef<Value, Properties, Selectors, SelectedValue>>
 
         if (
-          Object.keys(reference.selected).every(key =>
+          reference.value === nextState ||
+          Object.keys(reference.selected).every((key: Properties) =>
             Object.is(reference.selected[key], reference.selectors[key](nextState)),
           )
         ) {

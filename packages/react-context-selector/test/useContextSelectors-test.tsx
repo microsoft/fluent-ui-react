@@ -1,55 +1,71 @@
-import { createContext, useContextSelector } from '@fluentui/react-context-selector'
+import { createContext, useContextSelectors } from '@fluentui/react-context-selector'
 import { mount } from 'enzyme'
 import * as React from 'react'
 
-const TestContext = createContext<{ index: number }>({ index: -1 })
+const TestContext = createContext<{ index: number; value: string }>({
+  index: -1,
+  value: '',
+})
 
 const TestComponent: React.FC<{ index: number; onUpdate?: () => void }> = props => {
-  const active = useContextSelector(TestContext, v => v.index === props.index)
+  const context = useContextSelectors(TestContext, {
+    active: v => v.index === props.index,
+    value: v => v.value,
+  })
 
   React.useEffect(() => {
     props.onUpdate && props.onUpdate()
   })
 
-  return <div data-active={active} />
+  return <div data-active={context.active} data-value={context.value} />
 }
 
-describe('useContextSelector', () => {
+describe('useContextSelectors', () => {
   it('propogates values via Context', () => {
     const wrapper = mount(
-      <TestContext.Provider value={{ index: 1 }}>
+      <TestContext.Provider value={{ index: 1, value: 'foo' }}>
         <TestComponent index={1} />
       </TestContext.Provider>,
     )
 
     expect(wrapper.find('div').prop('data-active')).toBe(true)
+    expect(wrapper.find('div').prop('data-value')).toBe('foo')
   })
 
   it('updates only on selector match', () => {
     const onUpdate = jest.fn()
     const wrapper = mount(
-      <TestContext.Provider value={{ index: 0 }}>
+      <TestContext.Provider value={{ index: -1, value: 'foo' }}>
         <TestComponent index={1} onUpdate={onUpdate} />
       </TestContext.Provider>,
     )
 
     expect(wrapper.find('div').prop('data-active')).toBe(false)
+    expect(wrapper.find('div').prop('data-value')).toBe('foo')
     expect(onUpdate).toBeCalledTimes(1)
 
     // No match, (v.index: 2, p.index: 1)
-    wrapper.setProps({ value: { index: 2 } })
+    wrapper.setProps({ value: { index: 2, value: 'foo' } })
     expect(wrapper.find('div').prop('data-active')).toBe(false)
+    expect(wrapper.find('div').prop('data-value')).toBe('foo')
     expect(onUpdate).toBeCalledTimes(1)
 
     // Match => update, (v.index: 1, p.index: 1)
-    wrapper.setProps({ value: { index: 1 } })
+    wrapper.setProps({ value: { index: 1, value: 'foo' } })
     expect(wrapper.find('div').prop('data-active')).toBe(true)
+    expect(wrapper.find('div').prop('data-value')).toBe('foo')
     expect(onUpdate).toBeCalledTimes(2)
 
     // Match previous => no update, (v.index: 1, p.index: 1)
-    wrapper.setProps({ value: { index: 1 } })
+    wrapper.setProps({ value: { index: 1, value: 'foo' } })
     expect(wrapper.find('div').prop('data-active')).toBe(true)
+    expect(wrapper.find('div').prop('data-value')).toBe('foo')
     expect(onUpdate).toBeCalledTimes(2)
+
+    // Match => update, (v.value: 'bar')
+    wrapper.setProps({ value: { index: 1, value: 'bar' } })
+    expect(wrapper.find('div').prop('data-value')).toBe('bar')
+    expect(onUpdate).toBeCalledTimes(3)
   })
 
   it('updates are propogated inside React.memo()', () => {
@@ -59,30 +75,13 @@ describe('useContextSelector', () => {
 
     const onUpdate = jest.fn()
     const wrapper = mount(
-      <TestContext.Provider value={{ index: 0 }}>
+      <TestContext.Provider value={{ index: 0, value: 'foo' }}>
         <MemoComponent index={1} onUpdate={onUpdate} />
       </TestContext.Provider>,
     )
 
-    wrapper.setProps({ value: { index: 1 } })
+    wrapper.setProps({ value: { index: 1, value: 'foo' } })
     expect(wrapper.find('div').prop('data-active')).toBe(true)
     expect(onUpdate).toBeCalledTimes(2)
-  })
-
-  it('handles unsubscribe', () => {
-    const MemoComponent = React.memo(TestComponent)
-    const onUpdate = jest.fn()
-
-    const wrapper = mount(
-      <TestContext.Provider value={{ index: 0 }}>
-        <MemoComponent index={1} />
-        <MemoComponent index={2} key="2" onUpdate={onUpdate} />
-      </TestContext.Provider>,
-    )
-
-    wrapper.setProps({
-      children: [null, <MemoComponent index={2} key={2} onUpdate={onUpdate} />],
-    })
-    expect(onUpdate).toBeCalledTimes(1)
   })
 })
