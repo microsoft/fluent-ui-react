@@ -7,7 +7,9 @@ import {
 } from 'test/specs/commonTests'
 
 describe('Checkbox', () => {
-  isConformant(Checkbox)
+  isConformant(Checkbox, {
+    autocontrolledPropMappings: { checked: 'onChange' },
+  })
   handlesAccessibility(Checkbox, { defaultRootRole: 'checkbox' })
 
   describe('HTML accessibility rules validation', () => {
