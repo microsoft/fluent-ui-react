@@ -19,6 +19,7 @@ import CategoryColorSchemes from './views/CategoryColorSchemes'
 import FAQ from './views/FAQ'
 import Performance from './views/Performance'
 import * as ShorthandProps from './pages/ShorthandProps.mdx'
+import * as ThemingArchitecture from './pages/ThemingArchitecture.mdx'
 import Introduction from './views/Introduction'
 import PageNotFound from './views/PageNotFound'
 import QuickStart from './views/QuickStart'
@@ -102,6 +103,9 @@ const Routes = () => (
           </Route>
           <Route exact path="/shorthand-props">
             <MarkdownPage page={ShorthandProps} />
+          </Route>
+          <Route exact path="/theming-architecture">
+            <MarkdownPage page={ThemingArchitecture} />
           </Route>
           <Route exact path="/integrate-custom-components" component={IntegrateCustomComponents} />
           <Route exact path="/performance" component={Performance} />

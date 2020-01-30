@@ -164,6 +164,15 @@ class Sidebar extends React.Component<any, any> {
               to: '/shorthand-props',
             },
           },
+          {
+            key: 'theming-architecture',
+            title: {
+              as: NavLink,
+              content: 'Theming Architecture',
+              activeClassName: 'active',
+              to: '/theming-architecture',
+            },
+          },
         ],
       },
       {
