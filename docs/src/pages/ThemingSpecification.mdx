@@ -1,4 +1,6 @@
-# Theming specification
+export const meta = {
+  title: 'Theming specification',
+}
 
 ## Goals and requirements
 
@@ -54,7 +56,7 @@ This is inspired by the [React Semantic UI's className builders](https://github.
 
 Here is an example of how the mappings for a FluentButton component can look like:
 
-```javascript
+```
 const fluentButtonMappings = props => {
   const { size, circular, attached, corner } = props
   return cx(
@@ -102,7 +104,7 @@ As we mention before, parents component should be able to specify styles for the
 
 - define slots' styles inside the styles of the parent component
 
-```javascript
+```
 const buttonStyles = {
   root: ({ terms, tokens }) => ({
     // some css in js definition
@@ -115,7 +117,7 @@ const buttonStyles = {
 
 - create composed components for the slots if they require some additional styles
 
-```javascript
+```
 const buttonStyles = {
   root: ({ terms, tokens }) => ({
     // some css in js definition
@@ -147,7 +149,7 @@ Variants are just mechanism for allowing users do add or remove some design term
 
 In order to enable this, the compose mechanism should provide to the users adding/removing some of the design terms. This can be easily done, by allowing the user to define mapping from props to design terms when they define the composed components.
 
-```ts
+```
 export interface FluentButton extends ButtonProps {
   primary?: boolean
   circular?: boolean

@@ -168,9 +168,9 @@ class Sidebar extends React.Component<any, any> {
             key: 'theming-architecture',
             title: {
               as: NavLink,
-              content: 'Theming Architecture',
+              content: 'Theming Specification',
               activeClassName: 'active',
-              to: '/theming-architecture',
+              to: '/theming-specification',
             },
           },
         ],
