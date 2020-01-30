@@ -72,7 +72,7 @@ function currentToMasterComparison(perfCounts, danger, markdown, warn) {
         flamegraphFile: _.get(stats, 'processed.output.flamegraphFile'),
         baseline: {
           numTicks: baselineTicks,
-          flamegraphFile: _.get(stats, 'processed.output.flamegraphFile'),
+          flamegraphFile: _.get(stats, 'processed.baseline.output.flamegraphFile'),
         },
         isRegression: _.get(stats, 'analysis.regression.isRegression'),
         currentToBaseline: Math.round((currentTicks / baselineTicks) * 100) / 100,
@@ -111,7 +111,7 @@ function currentToMasterComparison(perfCounts, danger, markdown, warn) {
   )
   markdown(
     [
-      '<details><summary>Perf test with no regressions</summary>',
+      '<details><summary>Perf tests with no regressions</summary>',
       '',
       'Scenario | Current PR Ticks | Baseline Ticks | Ratio',
       ':--- | ---:| ---:| ---:',
