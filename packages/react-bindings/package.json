@@ -1,7 +1,7 @@
 {
   "name": "@fluentui/react-bindings",
   "description": "A set of components and hooks to build components libraries and UI kits.",
-  "version": "0.43.0",
+  "version": "0.43.1",
   "author": "Oleksandr Fediashov <a@fedyashov.com>",
   "bugs": "https://github.com/microsoft/fluent-ui-react/issues",
   "dependencies": {
