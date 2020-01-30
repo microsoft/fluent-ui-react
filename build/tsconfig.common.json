@@ -12,7 +12,6 @@
       "@fluentui/*": ["packages/*/src"]
     },
     "types": ["node", "jest"],
-    "typeRoots": ["../types", "../node_modules/@types"],
     "jsx": "react",
     "importHelpers": true,
     "isolatedModules": true,
