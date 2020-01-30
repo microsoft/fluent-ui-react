@@ -43,7 +43,13 @@ describe('Dropdown', () => {
   const items = ['item1', 'item2', 'item3', 'item4', 'item5']
   isConformant(Dropdown, {
     hasAccessibilityProp: false,
-    autocontrolledPropMappings: { value: 'onSelectedChange' },
+    autocontrolledPropMappings: {
+      value: 'onSelectedChange',
+      highlightedIndex: 'onHighlightedIndexChange',
+      open: 'onOpenChange',
+      searchQuery: 'onSearchQueryChange',
+      activeSelectedIndex: 'onActiveSelectedIndexChange',
+    },
   })
 
   describe('clearable', () => {

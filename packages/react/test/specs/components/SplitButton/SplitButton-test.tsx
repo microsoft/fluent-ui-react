@@ -21,7 +21,7 @@ const getMenu = (wrapper: ReactWrapper): CommonWrapper =>
   findIntrinsicElement(wrapper, `.${Menu.className}`)
 
 describe('SplitButton', () => {
-  isConformant(SplitButton)
+  isConformant(SplitButton, { autocontrolledPropMappings: { open: 'onOpenChange' } })
 
   describe('open', () => {
     test('is toggled between true and false on toggle button click', () => {

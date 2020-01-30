@@ -7,7 +7,7 @@ import { mountWithProvider } from '../../../utils'
 const mockMenu = { items: ['1', '2', '3'] }
 
 describe('MenuButton', () => {
-  isConformant(MenuButton)
+  isConformant(MenuButton, { autocontrolledPropMappings: { open: 'onOpenChange' } })
 
   describe('accessibility', () => {
     handlesAccessibility(MenuButton)

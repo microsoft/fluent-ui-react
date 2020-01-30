@@ -35,7 +35,7 @@ export interface Conformant {
   wrapperComponent?: React.ReactType
   handlesAsProp?: boolean
   /** In the case when a onChange prop name is custom in relation to the controlled prop. */
-  autocontrolledPropMappings?: object
+  autocontrolledPropMappings?: { [key: string]: string }
 }
 
 /**
@@ -312,30 +312,16 @@ export default function isConformant(
       })
     })
 
-    test('autoControlled props should have onChange props associated', () => {
-      if (Component.autoControlledProps && Component.autoControlledProps.length) {
-        Component.autoControlledProps.forEach(autoControlledProp => {
-          const expectedOnChangeProp =
-            autocontrolledPropMappings[autoControlledProp] ||
-            `on${autoControlledProp.slice(0, 1).toLocaleUpperCase()}${autoControlledProp.slice(
-              1,
-            )}Change`
+    test('autoControlled props should have prop, default prop and on change handler in handled props', () => {
+      Object.entries(autocontrolledPropMappings).forEach(([propName, onChangeHandlerName]) => {
+        const expectedDefaultProp = `default${propName
+          .slice(0, 1)
+          .toLocaleUpperCase()}${propName.slice(1)}`
 
-          expect(Component.handledProps).toContain(expectedOnChangeProp)
-        })
-      }
-    })
-
-    test('autoControlled props should have default props', () => {
-      if (Component.autoControlledProps && Component.autoControlledProps.length) {
-        Component.autoControlledProps.forEach(autoControlledProp => {
-          const expectedDefaultProp = `default${autoControlledProp
-            .slice(0, 1)
-            .toLocaleUpperCase()}${autoControlledProp.slice(1)}`
-
-          expect(Component.handledProps).toContain(expectedDefaultProp)
-        })
-      }
+        expect(Component.handledProps).toContain(propName)
+        expect(Component.handledProps).toContain(expectedDefaultProp)
+        expect(Component.handledProps).toContain(onChangeHandlerName)
+      })
     })
   })
 

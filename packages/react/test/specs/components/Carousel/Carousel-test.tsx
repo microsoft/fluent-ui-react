@@ -58,7 +58,7 @@ const getItemAtIndexWrapper = (wrapper: ReactWrapper, index: number): CommonWrap
 jest.useFakeTimers()
 
 describe('Carousel', () => {
-  isConformant(Carousel)
+  isConformant(Carousel, { autocontrolledPropMappings: { activeIndex: 'onActiveIndexChange' } })
 
   it('id for items is generated if not passed as prop', () => {
     const wrapper = renderCarousel()

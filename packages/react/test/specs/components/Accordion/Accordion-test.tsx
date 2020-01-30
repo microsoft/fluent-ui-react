@@ -33,7 +33,7 @@ const getTitleButtonAtIndex = (wrapper: ReactWrapper, index: number): CommonWrap
 }
 
 describe('Accordion', () => {
-  isConformant(Accordion)
+  isConformant(Accordion, { autocontrolledPropMappings: { activeIndex: 'onActiveIndexChange' } })
 
   describe('activeIndex', () => {
     it('is -1 by default in an exclusive accordion', () => {
