@@ -34,6 +34,8 @@ export interface Conformant {
   /** This component uses wrapper slot to wrap the 'meaningful' element. */
   wrapperComponent?: React.ReactType
   handlesAsProp?: boolean
+  /** In the case when a onChange prop name is custom in relation to the controlled prop. */
+  autocontrolledPropMappings?: { [key: string]: string }
 }
 
 /**
@@ -57,6 +59,7 @@ export default function isConformant(
     rendersPortal = false,
     wrapperComponent = null,
     handlesAsProp = true,
+    autocontrolledPropMappings = {},
   } = options
   const { throwError } = helpers('isConformant', Component)
 
@@ -306,6 +309,18 @@ export default function isConformant(
       }).toEqual({
         message,
         handledProps: expectedProps,
+      })
+    })
+
+    test('autoControlled props should have prop, default prop and on change handler in handled props', () => {
+      Object.entries(autocontrolledPropMappings).forEach(([propName, onChangeHandlerName]) => {
+        const expectedDefaultProp = `default${propName
+          .slice(0, 1)
+          .toLocaleUpperCase()}${propName.slice(1)}`
+
+        expect(Component.handledProps).toContain(propName)
+        expect(Component.handledProps).toContain(expectedDefaultProp)
+        expect(Component.handledProps).toContain(onChangeHandlerName)
       })
     })
   })
