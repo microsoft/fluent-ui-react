@@ -132,7 +132,7 @@ class DocsLayout extends React.Component<any, any> {
         >
           <Sidebar width={sidebarWidth} treeItemStyle={treeItemStyle} />
         </Provider>
-        <div role="main" style={{ marginLeft: `${sidebarWidth}px` }}>
+        <div style={{ marginLeft: `${sidebarWidth}px` }}>
           {render ? render() : children}
         </div>
       </>
