@@ -44,6 +44,13 @@ export interface AccordionProps extends UIComponentProps, ChildrenComponentProps
   expanded?: boolean
 
   /**
+   * Called when the active index of the Accordion changes.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props, with `activeIndex` reflecting the new state.
+   */
+  onActiveIndexChange?: ComponentEventHandler<AccordionProps>
+
+  /**
    * Called when a panel title is clicked.
    *
    * @param event - React's original SyntheticEvent.
@@ -109,6 +116,7 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
     exclusive: PropTypes.bool,
     expanded: PropTypes.bool,
     onTitleClick: customPropTypes.every([customPropTypes.disallow(['children']), PropTypes.func]),
+    onActiveIndexChange: PropTypes.func,
     panels: customPropTypes.every([
       customPropTypes.disallow(['children']),
       PropTypes.arrayOf(
@@ -203,6 +211,7 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
 
       this.setState({ activeIndex, focusedIndex: index })
 
+      _.invoke(this.props, 'onActiveIndexChange', e, this.props)
       _.invoke(predefinedProps, 'onClick', e, titleProps)
       _.invoke(this.props, 'onTitleClick', e, titleProps)
     },
