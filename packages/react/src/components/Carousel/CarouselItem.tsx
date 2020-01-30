@@ -59,6 +59,15 @@ class CarouselItem extends UIComponent<WithAsProp<CarouselItemProps>> {
     itemPositionText: `${CarouselItem.className}__itemPositionText`,
   }
 
+  actionHandlers = {
+    arrowKeysNavigationStopPropagation: e => {
+      // let event propagate, when it was invoke on the element where arrow keys should rotate carousel
+      if (e.currentTarget !== e.target) {
+        e.stopPropagation()
+      }
+    },
+  }
+
   renderComponent({ ElementType, classes, styles, accessibility, unhandledProps }) {
     const { children, content, itemPositionText } = this.props
     return (
