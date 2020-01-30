@@ -10,7 +10,9 @@
   },
   "devDependencies": {
     "@fluentui/internal-tooling": "^0.43.0",
-    "lerna-alias": "^3.0.3-0"
+    "@types/simulant": "^0.2.0",
+    "lerna-alias": "^3.0.3-0",
+    "simulant": "^0.2.2"
   },
   "files": [
     "dist"

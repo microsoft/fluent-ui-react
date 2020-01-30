@@ -8,6 +8,7 @@ import * as keyboardKey from 'keyboard-key'
  * @specification
  * Adds attribute 'role=tabpanel' to 'root' slot if 'navigation' property is true. Sets the attribute to 'group' otherwise.
  * Adds attribute 'aria-hidden=false' to 'root' slot if 'active' property is true. Sets the attribute to 'true' otherwise.
+ * Triggers 'arrowKeysNavigationStopPropagation' action with 'ArrowRight' or 'ArrowLeft' on 'root'.
  */
 const carouselItemBehavior: Accessibility<CarouselItemProps> = props => ({
   attributes: {
@@ -20,7 +21,7 @@ const carouselItemBehavior: Accessibility<CarouselItemProps> = props => ({
 
   keyActions: {
     root: {
-      stopPropagation: {
+      arrowKeysNavigationStopPropagation: {
         keyCombinations: [{ keyCode: keyboardKey.ArrowRight }, { keyCode: keyboardKey.ArrowLeft }],
       },
     },
