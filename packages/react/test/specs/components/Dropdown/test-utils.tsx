@@ -65,6 +65,9 @@ const renderDropdown = (props: DropdownProps = {}) => {
         ),
       )
     },
+    clickOnClearIndicator: () => {
+      findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.clearIndicator}`).simulate('click')
+    },
     clickOnSelectedItemAtIndex: (index: number, optional = {}) => {
       getSelectedItemWrapperAtIndex(index).simulate(
         'click',

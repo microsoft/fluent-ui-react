@@ -25,25 +25,25 @@ describe('Dropdown', () => {
 
   describe('clearable', () => {
     it('value is cleared at Icon click', () => {
-      const { triggerButton, wrapper } = renderDropdown({
+      const { triggerButton, clickOnClearIndicator } = renderDropdown({
         clearable: true,
         defaultValue: items[0],
       })
 
-      findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.clearIndicator}`).simulate('click')
+      clickOnClearIndicator()
 
       expect(triggerButton).toHaveTextContent('')
     })
 
     it('calls onChange on Icon click with an `empty` value', () => {
       const onChange = jest.fn()
-      const { wrapper } = renderDropdown({
+      const { clickOnClearIndicator } = renderDropdown({
         onChange,
         defaultValue: items[0],
         clearable: true,
       })
 
-      findIntrinsicElement(wrapper, `.${Dropdown.slotClassNames.clearIndicator}`).simulate('click')
+      clickOnClearIndicator()
 
       expect(onChange).toBeCalledTimes(1)
       expect(onChange).toHaveBeenCalledWith(
