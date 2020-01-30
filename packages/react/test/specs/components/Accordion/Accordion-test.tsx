@@ -203,6 +203,21 @@ describe('Accordion', () => {
 
       expect(onTitleClick).toBeCalledTimes(1)
     })
+
+    it('when clicked on disabled panel, do not call onClick and onTitleClick if provided by the user', () => {
+      const onTitleClick = jest.fn()
+      const panels = [
+        {
+          key: 'one',
+          title: { content: 'One', disabled: true },
+          content: '2 3 4',
+        },
+      ]
+      const wrapper = mountWithProvider(<Accordion panels={panels} onTitleClick={onTitleClick} />)
+      getTitleButtonAtIndex(wrapper, 0).simulate('click')
+
+      expect(onTitleClick).toBeCalledTimes(1)
+    })
   })
 
   describe('accessibility', () => {

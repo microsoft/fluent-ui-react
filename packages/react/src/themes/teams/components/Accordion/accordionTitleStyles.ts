@@ -2,11 +2,11 @@ import { ComponentSlotStylesPrepared } from '@fluentui/styles'
 import { AccordionTitleProps } from '../../../../components/Accordion/AccordionTitle'
 
 const accordionTitleStyles: ComponentSlotStylesPrepared<AccordionTitleProps> = {
-  root: () => ({
+  root: ({ props }) => ({
     display: 'inline-block',
     verticalAlign: 'middle',
     padding: '.5rem 0',
-    cursor: 'pointer',
+    cursor: props.disabled ? 'default' : 'pointer',
   }),
   indicator: () => ({
     userSelect: 'none',

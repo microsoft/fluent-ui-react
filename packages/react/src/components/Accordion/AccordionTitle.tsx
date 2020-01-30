@@ -38,6 +38,9 @@ export interface AccordionTitleProps
   /** If at least one panel needs to stay active and this title does not correspond to the last active one. */
   canBeCollapsed?: boolean
 
+  /** Disabled - does not react on click events */
+  disabled?: boolean
+
   /** AccordionTitle index inside Accordion. */
   index?: number
 
@@ -78,6 +81,7 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
     active: PropTypes.bool,
     contentRef: customPropTypes.ref,
     canBeCollapsed: PropTypes.bool,
+    disabled: PropTypes.bool,
     index: PropTypes.number,
     onClick: PropTypes.func,
     indicator: customPropTypes.itemShorthand,
@@ -87,6 +91,7 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
     accessibility: accordionTitleBehavior,
     as: 'dt',
     contentRef: _.noop,
+    disabled: false,
   }
 
   actionHandlers = {
@@ -97,7 +102,9 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
   }
 
   handleClick = (e: React.SyntheticEvent) => {
-    _.invoke(this.props, 'onClick', e, this.props)
+    if (!this.props.disabled) {
+      _.invoke(this.props, 'onClick', e, this.props)
+    }
   }
 
   handleFocus = (e: React.SyntheticEvent) => {
