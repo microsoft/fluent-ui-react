@@ -89,7 +89,7 @@ function currentToMasterComparison(perfCounts, danger, markdown, warn) {
     warn(`${regressions.length} perf regressions detected`)
     markdown(
       [
-        '## Regressions compared to master',
+        '## Potential regressions comparing to master',
         '',
         'Scenario | Current PR Ticks | Baseline Ticks | Ratio',
         ':--- | ---:| ---:| ---:',
@@ -111,7 +111,7 @@ function currentToMasterComparison(perfCounts, danger, markdown, warn) {
   )
   markdown(
     [
-      '## Perf test with no regressions',
+      '<details><summary>Perf test with no regressions</summary>',
       '',
       'Scenario | Current PR Ticks | Baseline Ticks | Ratio',
       ':--- | ---:| ---:| ---:',
@@ -123,6 +123,8 @@ function currentToMasterComparison(perfCounts, danger, markdown, warn) {
           `${value.currentToBaseline}:1`,
         ].join(' | '),
       ),
+      '',
+      '</details>',
     ].join('\n'),
   )
 }
