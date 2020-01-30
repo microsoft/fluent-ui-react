@@ -1,7 +1,9 @@
+import * as webpack from 'webpack'
+
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 
-const webpackConfig: any = {
+const webpackConfig: webpack.Configuration = {
   name: 'client',
   target: 'web',
   mode: 'development',
