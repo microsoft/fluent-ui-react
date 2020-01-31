@@ -1,7 +1,7 @@
 {
   "name": "@stardust-ui/react-bindings",
   "description": "A set of components and hooks to build components libraries and UI kits.",
-  "version": "0.40.5",
+  "version": "0.40.6",
   "author": "Oleksandr Fediashov <a@fedyashov.com>",
   "bugs": "https://github.com/stardust-ui/react/issues",
   "dependencies": {
