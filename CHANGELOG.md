@@ -34,6 +34,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Update iconOnly button hover, focus styles and add new `background5` and `backgroundHover2` design tokens in Teams theme @codepretty ([#2211](https://github.com/microsoft/fluent-ui-react/pull/2211))
 - Fix `forceUpdate` to get synced updates in React's Concurrent mode @layershifter ([#2268](https://github.com/microsoft/fluent-ui-react/pull/2268))
 - Adding actionable items into `Carousel` @kolaps33 ([#2271](https://github.com/microsoft/fluent-ui-react/pull/2271))
+- Fix positioning fixes for `actions` in `ChatMessage` @layershifter ([#2300](https://github.com/microsoft/fluent-ui-react/pull/2300))
 
 ### Features
 - Allow `useRef` hook used for storing debugging data to be defined in any order with other hooks in functional components @layershifter, @mnajdova ([#2236](https://github.com/microsoft/fluent-ui-react/pull/2236))
