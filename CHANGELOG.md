@@ -37,6 +37,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix element reference memory leaks @jurokapsiar ([#2270](https://github.com/microsoft/fluent-ui-react/pull/2270))
 - Adding actionable items into `Carousel` @kolaps33 ([#2271](https://github.com/microsoft/fluent-ui-react/pull/2271))
 - Fix element leak in `refFindNode` @miroslavstastny ([#2288](https://github.com/microsoft/fluent-ui-react/pull/2288))
+- Fix positioning fixes for `actions` in `ChatMessage` @layershifter ([#2300](https://github.com/microsoft/fluent-ui-react/pull/2300))
 
 ### Features
 - Allow `useRef` hook used for storing debugging data to be defined in any order with other hooks in functional components @layershifter, @mnajdova ([#2236](https://github.com/microsoft/fluent-ui-react/pull/2236))
