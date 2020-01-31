@@ -1,8 +1,8 @@
 import * as React from 'react'
 
-import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
-import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
-import NonPublicSection from 'docs/src/components/ComponentDoc/NonPublicSection'
+import ComponentExample from '../../../../components/ComponentDoc/ComponentExample'
+import ExampleSection from '../../../../components/ComponentDoc/ExampleSection'
+import NonPublicSection from '../../../../components/ComponentDoc/NonPublicSection'
 
 const Types = () => (
   <>

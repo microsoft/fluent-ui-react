@@ -4,9 +4,9 @@ import { Header } from '@fluentui/react'
 import * as React from 'react'
 import { RouteProps } from 'react-router-dom'
 
-import { link } from 'docs/src/utils/helpers'
-import DocPage from 'docs/src/components/DocPage'
-import GuidesNavigationFooter, { PageDescriptor } from 'docs/src/components/GuidesNavigationFooter'
+import { link } from '../utils/helpers'
+import DocPage from './DocPage'
+import GuidesNavigationFooter, { PageDescriptor } from './GuidesNavigationFooter'
 
 type MarkdownPageProps = {
   page: {

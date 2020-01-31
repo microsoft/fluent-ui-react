@@ -1,6 +1,6 @@
-import { getAllPackageInfo } from './getAllPackageInfo'
+import { getAllPackageInfo, PackageJson } from './getAllPackageInfo'
 
-function getDeps(packageJson: any, repoPackages: string[]) {
+function getDeps(packageJson: PackageJson, repoPackages: string[]) {
   if (!packageJson) {
     return []
   }
@@ -11,9 +11,10 @@ function getDeps(packageJson: any, repoPackages: string[]) {
 }
 
 /**
- * Find all the dependencies (and their dependencies) within the repo for a specific package (in the CWD when this was called)
+ * Find all the dependencies (and their dependencies) within the repo for a specific package
+ * (in the CWD when this was called)
  */
-function getAllPackageDeps() {
+export function getAllPackageDeps() {
   const allInfo = getAllPackageInfo()
   const repoPackages = Object.keys(allInfo)
   const allDeps = new Map<string, Set<string>>()
@@ -50,4 +51,3 @@ function getAllPackageDeps() {
 
   return allDeps
 }
-export { getAllPackageDeps }

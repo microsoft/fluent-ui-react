@@ -23,24 +23,36 @@ const AnimationExampleTimingFunction = () => (
       <Text content="Ease out" />
       <Text content="Ease in out" />
       <Text content="Cubic bezier" />
-      <Animation name="spinner" timingFunction="ease">
-        <Icon name="mention" circular bordered />
-      </Animation>
-      <Animation name="spinner" timingFunction="linear">
-        <Icon name="mention" circular bordered />
-      </Animation>
-      <Animation name="spinner" timingFunction="ease-in">
-        <Icon name="mention" circular bordered />
-      </Animation>
-      <Animation name="spinner" timingFunction="ease-out">
-        <Icon name="mention" circular bordered />
-      </Animation>
-      <Animation name="spinner" timingFunction="ease-in-out">
-        <Icon name="mention" circular bordered />
-      </Animation>
-      <Animation name="spinner" timingFunction="cubic-bezier(0.1, 0.5, 0.1, 0.5)">
-        <Icon name="mention" circular bordered />
-      </Animation>
+      <div>
+        <Animation name="spinner" timingFunction="ease">
+          <Icon name="mention" circular bordered />
+        </Animation>
+      </div>
+      <div>
+        <Animation name="spinner" timingFunction="linear">
+          <Icon name="mention" circular bordered />
+        </Animation>
+      </div>
+      <div>
+        <Animation name="spinner" timingFunction="ease-in">
+          <Icon name="mention" circular bordered />
+        </Animation>
+      </div>
+      <div>
+        <Animation name="spinner" timingFunction="ease-out">
+          <Icon name="mention" circular bordered />
+        </Animation>
+      </div>
+      <div>
+        <Animation name="spinner" timingFunction="ease-in-out">
+          <Icon name="mention" circular bordered />
+        </Animation>
+      </div>
+      <div>
+        <Animation name="spinner" timingFunction="cubic-bezier(0.1, 0.5, 0.1, 0.5)">
+          <Icon name="mention" circular bordered />
+        </Animation>
+      </div>
     </Grid>
   </Provider>
 )

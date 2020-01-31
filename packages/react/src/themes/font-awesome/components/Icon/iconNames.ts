@@ -1,4 +1,4 @@
-import { ThemeIcons, ThemeIconSpec } from '../../../types'
+import { ThemeIcons, ThemeIconSpec } from '@fluentui/styles'
 
 const fontIcon = (content: string, fontFamily: string): ThemeIconSpec => ({
   icon: { content: `'\\${content}'`, fontFamily },

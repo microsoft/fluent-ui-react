@@ -6,11 +6,11 @@ import {
   createComponent,
   ComponentSlotStyle,
   ComponentVariablesInput,
+  ReactChildren,
 } from '@fluentui/react'
 
 import DocPage from '../components/DocPage/DocPage'
 import ExampleSnippet from '../components/ExampleSnippet/ExampleSnippet'
-import { ReactChildren } from 'src/types'
 import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
 
 interface StyledButtonProps {

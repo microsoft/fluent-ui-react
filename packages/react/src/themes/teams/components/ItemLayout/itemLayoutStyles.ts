@@ -1,5 +1,5 @@
 import { debugRoot } from '../../../../styles/debugStyles'
-import { ICSSInJSStyle } from '../../../types'
+import { ICSSInJSStyle } from '@fluentui/styles'
 
 const itemLayoutStyles = {
   root: ({ props, variables }): ICSSInJSStyle => {

@@ -57,6 +57,7 @@ export const colorScheme: ColorSchemeMapping = {
     background2: colors.black,
     background3: colors.black,
     background4: colors.black,
+    background5: accessibleYellow,
 
     border: colors.white,
     border1: colors.white,
@@ -72,6 +73,7 @@ export const colorScheme: ColorSchemeMapping = {
 
     backgroundHover: accessibleYellow,
     backgroundHover1: accessibleYellow,
+    backgroundHover2: accessibleYellow,
 
     borderHover: accessibleYellow,
 

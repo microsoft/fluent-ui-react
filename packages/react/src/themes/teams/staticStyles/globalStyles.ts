@@ -1,4 +1,4 @@
-import { StaticStyleFunction } from '../../types'
+import { StaticStyleFunction } from '@fluentui/styles'
 
 const globalStyles: StaticStyleFunction = siteVars => ({
   body: {

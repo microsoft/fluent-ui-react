@@ -20,6 +20,7 @@ import {
   AutoControlledComponent,
   RenderResultConfig,
   ShorthandFactory,
+  SizeValue,
 } from '../../utils'
 import Button, { ButtonProps } from '../Button/Button'
 import MenuButton, { MenuButtonProps } from '../MenuButton/MenuButton'
@@ -29,6 +30,7 @@ import { PopupProps } from '../Popup/Popup'
 
 export interface SplitButtonSlotClassNames {
   toggleButton: string
+  size?: SizeValue
 }
 
 export interface SplitButtonProps
@@ -84,6 +86,9 @@ export interface SplitButtonProps
   /** A split button can be formatted to show different levels of emphasis. */
   secondary?: boolean
 
+  /** A split button can be sized */
+  size?: SizeValue
+
   /** Shorthand for the toggle button. */
   toggleButton?: ShorthandValue<ButtonProps>
 }
@@ -118,6 +123,7 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
     onMenuItemClick: PropTypes.func,
     onOpenChange: PropTypes.func,
     open: PropTypes.bool,
+    size: customPropTypes.size,
     primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
     secondary: customPropTypes.every([customPropTypes.disallow(['primary']), PropTypes.bool]),
     toggleButton: customPropTypes.itemShorthand,
@@ -125,7 +131,7 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
 
   static defaultProps = {
     accessibility: splitButtonBehavior,
-    as: 'span',
+    as: 'div',
     toggleButton: {},
   }
 
@@ -174,7 +180,7 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
     const { button, disabled, menu, primary, secondary, toggleButton } = this.props
     const trigger = Button.create(button, {
       defaultProps: () => ({
-        styles: styles.button,
+        styles: styles.menuButton,
         primary,
         secondary,
         disabled,
@@ -202,9 +208,10 @@ class SplitButton extends AutoControlledComponent<WithAsProp<SplitButtonProps>, 
         )}
         {Button.create(toggleButton, {
           defaultProps: () => ({
+            styles: styles.toggleButton,
             className: SplitButton.slotClassNames.toggleButton,
             disabled,
-            icon: 'icon-arrow-down',
+            icon: 'icon-menu-arrow-down',
             iconOnly: true,
             primary,
             secondary,

@@ -17,17 +17,15 @@ const reactions: ShorthandCollection<ReactionProps> = [
     content: '1K',
     key: 'likes',
     variables: { meReacting: true },
+    children: (Component, props) => <ReactionPopup {...props} />,
   },
   {
     icon: 'emoji',
     content: 2,
     key: 'smiles',
+    children: (Component, props) => <ReactionPopup {...props} />,
   },
 ]
-
-const reactionsWithPopup = reactions.map(reaction => render =>
-  render(reaction, (Component, props) => <ReactionPopup {...props} />),
-)
 
 const janeAvatar = {
   image: 'public/images/avatar/small/ade.jpg',
@@ -95,7 +93,7 @@ const ChatWithPopover = () => {
                   </div>
                 }
                 reactionGroup={{
-                  items: reactionsWithPopup,
+                  items: reactions,
                 }}
                 timestamp="Yesterday, 10:15 PM"
               />
@@ -113,7 +111,7 @@ const ChatWithPopover = () => {
                   </div>
                 }
                 reactionGroup={{
-                  items: reactionsWithPopup,
+                  items: reactions,
                 }}
                 timestamp="Yesterday, 10:15 PM"
               />

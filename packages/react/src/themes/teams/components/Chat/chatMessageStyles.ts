@@ -1,4 +1,4 @@
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import * as _ from 'lodash'
 import {
   default as ChatMessage,
@@ -8,6 +8,7 @@ import {
 import { ChatMessageVariables } from './chatMessageVariables'
 import { screenReaderContainerStyles } from '../../../../utils/accessibility/Styles/accessibilityStyles'
 import { pxToRem } from '../../../../utils'
+import initialPopperStyles from '../../../../utils/positioner/initialStyles'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 const chatMessageStyles: ComponentSlotStylesPrepared<
@@ -95,6 +96,8 @@ const chatMessageStyles: ComponentSlotStylesPrepared<
     // we need higher zIndex for the action menu in order to be displayed above the focus border of the chat message
     zIndex: 1000,
 
+    ...(initialPopperStyles as ICSSInJSStyle),
+
     ...(_.isNil(v.showActionMenu) && {
       overflow: p.focused ? 'visible' : 'hidden',
       // hide and squash actions menu to prevent accidental hovers over its invisible area
@@ -115,7 +118,8 @@ const chatMessageStyles: ComponentSlotStylesPrepared<
     },
   }),
   author: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    ...((p.mine || p.attached === 'bottom' || p.attached === true) && screenReaderContainerStyles),
+    ...((p.mine || p.attached === 'bottom' || p.attached === true) &&
+      (screenReaderContainerStyles as ICSSInJSStyle)),
     color: v.authorColor,
     marginRight: v.authorMarginRight,
     marginBottom: v.headerMarginBottom,
@@ -129,7 +133,7 @@ const chatMessageStyles: ComponentSlotStylesPrepared<
     }),
     ...((p.attached === 'bottom' || p.attached === true) &&
       !p.reactionGroup &&
-      screenReaderContainerStyles),
+      (screenReaderContainerStyles as ICSSInJSStyle)),
   }),
 
   content: ({ props: p, variables: v }): ICSSInJSStyle => ({

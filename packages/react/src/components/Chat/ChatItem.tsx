@@ -18,7 +18,7 @@ import {
 } from '../../utils'
 import Box, { BoxProps } from '../Box/Box'
 
-import { ComponentSlotStylesPrepared } from '../../themes/types'
+import { ComponentSlotStylesPrepared } from '@fluentui/styles'
 import ChatMessage from './ChatMessage'
 
 export interface ChatItemSlotClassNames {

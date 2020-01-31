@@ -7,12 +7,12 @@ import TerserPlugin from 'terser-webpack-plugin'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer'
 
-import config from '../config'
+import config from './config'
 
 const { paths } = config
 const { __DEV__, __PROD__ } = config.compiler_globals
 
-const webpackConfig: any = {
+const webpackConfig: webpack.Configuration = {
   name: 'client',
   target: 'web',
   mode: config.compiler_mode,
@@ -26,7 +26,7 @@ const webpackConfig: any = {
     pathinfo: true,
     publicPath: config.compiler_public_path,
   },
-  devtool: config.compiler_devtool,
+  devtool: config.compiler_devtool as webpack.Options.Devtool,
   externals: {
     '@babel/standalone': 'Babel',
     'anchor-js': 'AnchorJS',
@@ -68,7 +68,7 @@ const webpackConfig: any = {
   },
   plugins: [
     new ForkTsCheckerWebpackPlugin({
-      tsconfig: paths.base('build/tsconfig.docs.json'),
+      tsconfig: paths.docs('tsconfig.json'),
       watch: [paths.docsSrc(), paths.packages()],
     }),
     new webpack.DefinePlugin(config.compiler_globals),
@@ -112,7 +112,7 @@ const webpackConfig: any = {
         entries: true,
         modules: true,
         modulesCount: 500,
-      }),
+      } as any),
   ].filter(Boolean),
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json'],
@@ -141,7 +141,7 @@ const webpackConfig: any = {
 // Environment Configuration
 // ------------------------------------
 if (__DEV__) {
-  const webpackHotPath = `${config.compiler_public_path}__webpack_hmr`
+  const webpackHotPath = `${config.compiler_public_path}__compiler_hmr`
   const webpackHotMiddlewareEntry = `webpack-hot-middleware/client?${_.map(
     {
       path: webpackHotPath, // The path which the middleware is serving the event stream on
@@ -153,8 +153,9 @@ if (__DEV__) {
     },
     (val, key) => `&${key}=${val}`,
   ).join('')}`
+  const entry = webpackConfig.entry as webpack.Entry
+  entry.app = [webpackHotMiddlewareEntry].concat((entry as webpack.Entry).app)
 
-  webpackConfig.entry.app = [webpackHotMiddlewareEntry].concat(webpackConfig.entry.app)
   webpackConfig.plugins.push(
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),

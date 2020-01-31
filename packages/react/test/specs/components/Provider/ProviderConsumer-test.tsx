@@ -1,9 +1,18 @@
+import { ComponentStyleFunctionParam, emptyTheme, ThemeInput } from '@fluentui/styles'
 import * as React from 'react'
 import { mount } from 'enzyme'
 
 import Provider from 'src/components/Provider/Provider'
 import ProviderConsumer from 'src/components/Provider/ProviderConsumer'
-import { ThemeInput } from 'src/themes/types'
+
+const styleParam: ComponentStyleFunctionParam = {
+  disableAnimations: false,
+  displayName: 'Test',
+  props: {},
+  rtl: false,
+  theme: emptyTheme,
+  variables: {},
+}
 
 describe('ProviderConsumer', () => {
   test('is exported', () => {
@@ -22,7 +31,7 @@ describe('ProviderConsumer', () => {
         siteVariables: { a: 'b' },
         componentVariables: { Button: { color: 'red' } },
         componentStyles: { Button: { root: { color: 'red' } } },
-        fontFaces: [{ name: 'name', paths: ['path.woff2'], style: { fontWeight: 400 } }],
+        fontFaces: [{ name: 'name', paths: ['path.woff2'], props: { fontWeight: 400 } }],
         staticStyles: ['body{margin:0;}', { body: { margin: 0 } }],
         icons: {
           user: { icon: { content: '\\f1', fontFamily: 'i' } },
@@ -49,7 +58,7 @@ describe('ProviderConsumer', () => {
               // componentStyles
               expect(preparedTheme).toHaveProperty('componentStyles.Button.root')
               expect(preparedTheme.componentStyles.Button.root).toBeInstanceOf(Function)
-              expect(preparedTheme.componentStyles.Button.root()).toMatchObject(
+              expect(preparedTheme.componentStyles.Button.root(styleParam)).toMatchObject(
                 inputTheme.componentStyles.Button.root,
               )
 

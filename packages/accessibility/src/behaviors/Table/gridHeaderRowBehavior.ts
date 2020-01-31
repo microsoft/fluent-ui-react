@@ -1,6 +1,6 @@
 import { Accessibility } from '../../types'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../attributes'
-import { FocusZoneMode, FocusZoneDirection } from '../../focusZone/types'
+import { FocusZoneDirection } from '../../focusZone/types'
 import * as keyboardKey from 'keyboard-key'
 import gridHeaderCellBehavior from './gridHeaderCellBehavior'
 
@@ -8,7 +8,6 @@ import gridHeaderCellBehavior from './gridHeaderCellBehavior'
  * @specification
  * Adds role='row'.
  * Adds attribute 'data-is-focusable=true' to 'root' slot.
- * Embeds component into FocusZone.
  * Provides arrow key navigation in horizontal direction.
  * Focused active element of the component is reset when TAB from the component.
  * When component's container element receives focus, focus will be set to the default focusable child element of the component.
@@ -23,7 +22,6 @@ const gridHeaderRowBehavior: Accessibility = props => ({
     },
   },
   focusZone: {
-    mode: FocusZoneMode.Embed,
     props: {
       direction: FocusZoneDirection.horizontal,
       shouldFocusInnerElementWhenReceivedFocus: true,

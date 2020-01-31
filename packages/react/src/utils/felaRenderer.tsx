@@ -1,3 +1,4 @@
+import { Renderer } from '@fluentui/react-bindings'
 import { createRenderer as createFelaRenderer } from 'fela'
 import felaPluginEmbedded from 'fela-plugin-embedded'
 import felaPluginFallbackValue from 'fela-plugin-fallback-value'
@@ -5,7 +6,6 @@ import felaPluginPlaceholderPrefixer from 'fela-plugin-placeholder-prefixer'
 import felaPluginPrefixer from 'fela-plugin-prefixer'
 import felaPluginRtl from 'fela-plugin-rtl'
 
-import { Renderer } from '../themes/types'
 import felaDisableAnimationsPlugin from './felaDisableAnimationsPlugin'
 import felaExpandCssShorthandsPlugin from './felaExpandCssShorthandsPlugin'
 import felaFocusVisibleEnhancer from './felaFocusVisibleEnhancer'
@@ -77,6 +77,6 @@ const rendererConfig = {
   ],
 }
 
-export const createRenderer = (): Renderer => createFelaRenderer(rendererConfig)
+export const createRenderer = (): Renderer => createFelaRenderer(rendererConfig) as Renderer
 
 export const felaRenderer = createRenderer()

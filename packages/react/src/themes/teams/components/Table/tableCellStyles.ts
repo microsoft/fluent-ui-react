@@ -1,4 +1,4 @@
-import { ComponentStyleFunctionParam, ICSSInJSStyle } from '../../../types'
+import { ComponentStyleFunctionParam, ICSSInJSStyle } from '@fluentui/styles'
 import { TeamsTableVariables } from './tableVariables'
 import { TableCellProps } from '../../../../components/Table/TableCell'
 import getBorderFocusStyles from '../../getBorderFocusStyles'

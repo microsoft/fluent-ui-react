@@ -1,7 +1,7 @@
 import { Button, Dialog, Popup } from '@fluentui/react'
 import * as React from 'react'
 
-import { ComponentPrototype, PrototypeSection } from 'docs/src/prototypes/Prototypes'
+import { ComponentPrototype, PrototypeSection } from '../Prototypes'
 
 const PopupAndDialog: React.FC = () => (
   <Popup

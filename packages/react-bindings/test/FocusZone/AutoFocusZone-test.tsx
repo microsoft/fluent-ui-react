@@ -32,6 +32,7 @@ describe('AutoFocusZone', () => {
       isVisible?: boolean
     },
   ): void => {
+    // @ts-ignore
     element.getBoundingClientRect = () => ({
       top: clientRect.top,
       left: clientRect.left,
@@ -92,6 +93,7 @@ describe('AutoFocusZone', () => {
 
       // By calling `componentDidMount`, AFZ will behave as just initialized and focus needed element
       // Focus within should go to 1st focusable inner element.
+      // @ts-ignore
       autoFocusZone.componentDidMount()
       await animationFrame()
       expect(lastFocusedElement).toBe(buttonF)
@@ -103,6 +105,7 @@ describe('AutoFocusZone', () => {
 
       // By calling `componentDidMount`, AFZ will behave as just initialized and focus needed element
       // Focus within should go to the element containing the selector.
+      // @ts-ignore
       autoFocusZone.componentDidMount()
       await animationFrame()
       expect(lastFocusedElement).toBe(buttonB)
