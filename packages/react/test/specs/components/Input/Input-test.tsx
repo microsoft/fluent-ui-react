@@ -38,9 +38,7 @@ describe('Input', () => {
       onKeyPress: 'input',
       onKeyUp: 'input',
     },
-    autocontrolledPropMappings: {
-      value: 'onChange',
-    },
+    autoControlledProps: ['value'],
   })
 
   implementsShorthandProp(Input)('input', Box, { mapsValueToProp: 'type' })

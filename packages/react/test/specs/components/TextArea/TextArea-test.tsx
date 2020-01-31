@@ -6,9 +6,7 @@ import * as faker from 'faker'
 
 describe('TextArea', () => {
   isConformant(TextArea, {
-    autocontrolledPropMappings: {
-      value: 'onChange',
-    },
+    autoControlledProps: ['value'],
   })
 
   describe('defaultValue', () => {

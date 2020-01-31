@@ -35,7 +35,7 @@ export interface Conformant {
   wrapperComponent?: React.ReactType
   handlesAsProp?: boolean
   /** In the case when a onChange prop name is custom in relation to the controlled prop. */
-  autocontrolledPropMappings?: { [key: string]: string }
+  autoControlledProps?: string[]
 }
 
 /**
@@ -59,7 +59,7 @@ export default function isConformant(
     rendersPortal = false,
     wrapperComponent = null,
     handlesAsProp = true,
-    autocontrolledPropMappings = {},
+    autoControlledProps = [],
   } = options
   const { throwError } = helpers('isConformant', Component)
 
@@ -313,14 +313,17 @@ export default function isConformant(
     })
 
     test('autoControlled props should have prop, default prop and on change handler in handled props', () => {
-      Object.entries(autocontrolledPropMappings).forEach(([propName, onChangeHandlerName]) => {
-        const expectedDefaultProp = `default${propName
-          .slice(0, 1)
-          .toLocaleUpperCase()}${propName.slice(1)}`
+      autoControlledProps.forEach(propName => {
+        const capitalisedPropName = `${propName.slice(0, 1).toUpperCase()}${propName.slice(1)}`
+        const expectedDefaultProp = `default${capitalisedPropName}`
+        const expectedChangeHandler =
+          propName === 'value' || propName === 'checked'
+            ? 'onChange'
+            : `on${capitalisedPropName}Change`
 
         expect(Component.handledProps).toContain(propName)
         expect(Component.handledProps).toContain(expectedDefaultProp)
-        expect(Component.handledProps).toContain(onChangeHandlerName)
+        expect(Component.handledProps).toContain(expectedChangeHandler)
       })
     })
   })
@@ -402,6 +405,7 @@ export default function isConformant(
 
         const component = mount(<Component {...props} />)
         const eventTarget = getEventTargetComponent(component, listenerName, eventTargets)
+
         const customHandler: Function = eventTarget.prop(listenerName)
 
         if (customHandler) {
@@ -439,11 +443,16 @@ export default function isConformant(
           )
         }
 
-        let expectedArgs = [eventShape]
+        const eventShapeValue =
+          _.isObject(eventTargets[listenerName]) && eventTargets[listenerName]['allowNullEvent']
+            ? null
+            : eventShape
+
+        let expectedArgs = [eventShapeValue]
         let errorMessage = 'was not called with (event)'
 
         if (_.has(Component.propTypes, listenerName)) {
-          expectedArgs = [eventShape, expect.objectContaining(component.props())]
+          expectedArgs = [eventShapeValue, expect.objectContaining(component.props())]
           errorMessage = [
             'was not called with (event, data).\n',
             `Ensure that 'props' object is passed to '${listenerName}'\n`,

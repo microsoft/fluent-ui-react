@@ -71,7 +71,7 @@ const checkOpenTitles = (wrapper: ReactWrapper, expected: string[]): void => {
 
 describe('HierarchialTree', () => {
   isConformant(HierarchicalTree, {
-    autocontrolledPropMappings: { activeIndex: 'onActiveIndexChange' },
+    autoControlledProps: ['activeIndex'],
   })
 
   describe('activeIndex', () => {

@@ -44,7 +44,7 @@ export interface EmbedProps extends UIComponentProps {
    * @param event - React's original SyntheticEvent.
    * @param data - All props and proposed value.
    */
-  onActiveChanged?: ComponentEventHandler<EmbedProps>
+  onActiveChange?: ComponentEventHandler<EmbedProps>
 
   /**
    * Called when is clicked.
@@ -85,7 +85,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
       customPropTypes.disallow(['video']),
       customPropTypes.itemShorthand,
     ]),
-    onActiveChanged: PropTypes.func,
+    onActiveChange: PropTypes.func,
     onClick: PropTypes.func,
     placeholder: PropTypes.string,
     video: customPropTypes.every([
@@ -124,7 +124,7 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
 
     if (iframeNil || (!iframeNil && !this.state.active)) {
       this.setState({ active: !this.state.active })
-      _.invoke(this.props, 'onActiveChanged', e, { ...this.props, active: !this.state.active })
+      _.invoke(this.props, 'onActiveChange', e, { ...this.props, active: !this.state.active })
     }
 
     _.invoke(this.props, 'onClick', e, { ...this.props, active: !this.state.active })

@@ -42,7 +42,7 @@ const getShorthandItems = (props?: { disabledItem?: number }) => [
 ]
 
 describe('RadioGroup', () => {
-  isConformant(RadioGroup, { autocontrolledPropMappings: { checkedValue: 'checkedValueChanged' } })
+  isConformant(RadioGroup, { autoControlledProps: ['checkedValue'] })
 
   describe('accessibility', () => {
     handlesAccessibility(RadioGroup, {
@@ -104,9 +104,9 @@ describe('RadioGroup', () => {
     if (isShorthandApiTest) {
       describe('click event handler', () => {
         it('should set "checked" when item is clicked', () => {
-          const checkedValueChanged = jest.fn()
+          const onCheckedValueChange = jest.fn()
           const wrapper = mountWithProvider(
-            <RadioGroup items={getItems()} checkedValueChanged={checkedValueChanged} />,
+            <RadioGroup items={getItems()} onCheckedValueChange={onCheckedValueChange} />,
           )
           const radioGroupItems = wrapper.find('RadioGroupItem')
 
@@ -121,7 +121,7 @@ describe('RadioGroup', () => {
           expect(updatedItems.at(0).props().checked).toBe(false)
           expect(updatedItems.at(1).props().checked).toBe(true)
 
-          expect(checkedValueChanged).toHaveBeenCalledWith(
+          expect(onCheckedValueChange).toHaveBeenCalledWith(
             expect.anything(),
             expect.objectContaining({ value: 'test-value2' }),
           )
@@ -130,11 +130,11 @@ describe('RadioGroup', () => {
     }
 
     it('should not call checkedValueChanged when index did not change', () => {
-      const checkedValueChanged = jest.fn()
+      const onCheckedValueChange = jest.fn()
       const wrapper = mountWithProvider(
         <RadioGroup
           items={getItems()}
-          checkedValueChanged={checkedValueChanged}
+          onCheckedValueChange={onCheckedValueChange}
           checkedValue="test-value2"
         />,
       )
@@ -146,7 +146,7 @@ describe('RadioGroup', () => {
         .first()
         .simulate('click')
 
-      expect(checkedValueChanged).not.toHaveBeenCalled()
+      expect(onCheckedValueChange).not.toHaveBeenCalled()
     })
 
     if (isShorthandApiTest) {
@@ -170,12 +170,12 @@ describe('RadioGroup', () => {
     describe('keyDown event handler', () => {
       const testKeyDown = (testName, items, initialValue, keyCode, expectedValue) => {
         it(`keyDown test - ${testName}`, () => {
-          const checkedValueChanged = jest.fn()
+          const onCheckedValueChange = jest.fn()
           const wrapper = mountWithProvider(
             <RadioGroup
               items={items}
               checkedValue={initialValue}
-              checkedValueChanged={checkedValueChanged}
+              onCheckedValueChange={onCheckedValueChange}
             />,
           )
 
@@ -184,7 +184,7 @@ describe('RadioGroup', () => {
             .first()
             .simulate('keyDown', { preventDefault() {}, keyCode, which: keyCode })
 
-          expect(checkedValueChanged).toHaveBeenCalledWith(
+          expect(onCheckedValueChange).toHaveBeenCalledWith(
             expect.anything(),
             expect.objectContaining({ value: expectedValue }),
           )

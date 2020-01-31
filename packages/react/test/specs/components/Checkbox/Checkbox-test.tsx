@@ -8,7 +8,7 @@ import {
 
 describe('Checkbox', () => {
   isConformant(Checkbox, {
-    autocontrolledPropMappings: { checked: 'onChange' },
+    autoControlledProps: ['checked'],
   })
   handlesAccessibility(Checkbox, { defaultRootRole: 'checkbox' })
 

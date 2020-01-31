@@ -187,7 +187,7 @@ export interface DropdownProps
    * @param event - React's original SyntheticEvent.
    * @param data - All props and the new selected value(s).
    */
-  onSelectedChange?: ComponentEventHandler<DropdownProps>
+  onChange?: ComponentEventHandler<DropdownProps>
 
   /** A dropdown's open state can be controlled. */
   open?: boolean
@@ -306,7 +306,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     offset: PropTypes.string,
     onOpenChange: PropTypes.func,
     onSearchQueryChange: PropTypes.func,
-    onSelectedChange: PropTypes.func,
+    onChange: PropTypes.func,
     onActiveSelectedIndexChange: PropTypes.func,
     onHighlightedIndexChange: PropTypes.func,
     open: PropTypes.bool,
@@ -1078,7 +1078,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     } = this.getInitialAutoControlledState(this.props)
 
     this.setStateAndInvokeHandler(
-      ['onSelectedChange', 'onActiveSelectedIndexChange', 'onHighlightedIndexChange'],
+      ['onChange', 'onActiveSelectedIndexChange', 'onHighlightedIndexChange'],
       e,
       {
         activeSelectedIndex,
@@ -1145,12 +1145,12 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     const { items, multiple, getA11ySelectionMessage } = this.props
     const { value } = this.state
 
-    this.setStateAndInvokeHandler(['onSelectedChange'], null, {
+    this.setStateAndInvokeHandler(['onChange'], null, {
       searchQuery: this.getSelectedItemAsString(item),
       value: multiple ? [...value, item] : [item],
     })
 
-    if (!multiple) {
+    if (!multiple && items) {
       this.setStateAndInvokeHandler(['onHighlightedIndexChange'], null, {
         highlightedIndex: items.indexOf(item),
       })
@@ -1296,7 +1296,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
       this.setA11ySelectionMessage(getA11ySelectionMessage.onRemove(poppedItem))
     }
 
-    this.setStateAndInvokeHandler(['onSelectedChange'], null, { value })
+    this.setStateAndInvokeHandler(['onChange'], null, { value })
   }
 
   /**
