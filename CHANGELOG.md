@@ -33,6 +33,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add `useStyles()` hook to use theming capabilities in custom components @layershifter, @mnajdova ([#2217](https://github.com/microsoft/fluent-ui-react/pull/2217))
 - Add optional wrapper function to `List` which can be used to inject custom scrollbars to `Dropdown` @jurokapsiar ([#2092](https://github.com/microsoft/fluent-ui-react/pull/2092))
 - Add `useTelemetry()` hook for adding telemetry information for the Fluent components and improve return types for the `useStyles` and `useStateManager` hooks @mnajdova ([#2257](https://github.com/microsoft/fluent-ui-react/pull/2257))
+- Add `disabled` prop accordion title @jurokapsiar ([2290](https://github.com/microsoft/fluent-ui-react/pull/2290))
 
 ### Documentation
 - Add per-component performance charts @miroslavstastny ([#2240](https://github.com/microsoft/fluent-ui-react/pull/2240))
