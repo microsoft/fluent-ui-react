@@ -10,6 +10,7 @@ import {
   basicListItemBehavior,
   buttonBehavior,
   checkboxBehavior,
+  checkboxMultiselectBehavior,
   embedBehavior,
   iconBehavior,
   imageBehavior,
@@ -93,6 +94,7 @@ testHelper.addBehavior('basicListBehavior', basicListBehavior)
 testHelper.addBehavior('basicListItemBehavior', basicListItemBehavior)
 testHelper.addBehavior('buttonBehavior', buttonBehavior)
 testHelper.addBehavior('checkboxBehavior', checkboxBehavior)
+testHelper.addBehavior('checkboxMultiselectBehavior', checkboxMultiselectBehavior)
 testHelper.addBehavior('embedBehavior', embedBehavior)
 testHelper.addBehavior('iconBehavior', iconBehavior)
 testHelper.addBehavior('inputBehavior', inputBehavior)
