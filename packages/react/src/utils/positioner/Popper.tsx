@@ -89,6 +89,8 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
 
     return scrollParentElement !== scrollParentElement.ownerDocument.body
   }, [contentRef])
+  // Is a broken dependency and can cause potential bugs, we should rethink this as all other refs
+  // in this component.
 
   const computedModifiers: PopperJS.Modifiers = useDeepMemo(
     () =>
