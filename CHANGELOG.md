@@ -34,6 +34,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Update iconOnly button hover, focus styles and add new `background5` and `backgroundHover2` design tokens in Teams theme @codepretty ([#2211](https://github.com/microsoft/fluent-ui-react/pull/2211))
 - Fix `forceUpdate` to get synced updates in React's Concurrent mode @layershifter ([#2268](https://github.com/microsoft/fluent-ui-react/pull/2268))
 - Adding actionable items into `Carousel` @kolaps33 ([#2271](https://github.com/microsoft/fluent-ui-react/pull/2271))
+- Fix page crash when `Tooltip` content is null @delprzemo ([#2210](https://github.com/microsoft/fluent-ui-react/pull/2210))
 
 ### Features
 - Allow `useRef` hook used for storing debugging data to be defined in any order with other hooks in functional components @layershifter, @mnajdova ([#2236](https://github.com/microsoft/fluent-ui-react/pull/2236))
@@ -71,7 +72,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Update `SplitButton` styles in Teams theme [redlines] @notandrew ([#2108](https://github.com/microsoft/fluent-ui-react/pull/2108))
 - Fix `Popup` positioning in multiple cases @layershifter ([#2187](https://github.com/microsoft/fluent-ui-react/pull/2187))
 - Fix click outside in `Popup` when `trigger` is not defined @layershifter ([#2202](https://github.com/microsoft/fluent-ui-react/pull/2202))
-- Fix page crash when `Tooltip` content is null @delprzemo ([#2210](https://github.com/microsoft/fluent-ui-react/pull/2210))
 - Use `debounce` from `lodash` in `Dropdown` and `Carouel` @silviuavram ([#2203](https://github.com/microsoft/fluent-ui-react/pull/2203))
 
 <!--------------------------------[ v0.42.0 ]------------------------------- -->
