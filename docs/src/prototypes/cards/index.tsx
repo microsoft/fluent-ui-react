@@ -27,9 +27,9 @@ class EmployeeCardPrototype extends React.Component<any> {
           {...cardOrder}
           isLimitedNavigation={this.state.isLimitedNavigation}
           aria-labelledby={`user-name-${i} user-card-${i}`}
-          aria-describedby={shouldHaveDescribedByMessage ? 'instruction-messsage' : null}
+          aria-describedby={shouldHaveDescribedByMessage ? `instruction-messsage` : null}
           id={`user-card-${i}`}
-          aria-label=",card"
+          aria-label={`${i+1} of ${numberOfCards}`}         
           role={this.state.cardRole}
           aria-roledescription={this.state.ariaRoleDescription}
           // aria-label={`${employee.firstName} user card`}
@@ -145,7 +145,7 @@ class EmployeeCardPrototype extends React.Component<any> {
 
     return (
       <main aria-label="cards prototype">
-        {/* <Dropdown
+        <Dropdown
           inline
           items={[
             'card as group',
@@ -155,7 +155,7 @@ class EmployeeCardPrototype extends React.Component<any> {
           ]}
           defaultValue={'Select aria roles to be used'}
           onSelectedChange={this.handleSelectedChange}
-        /> */}
+        />
         <Dropdown
           inline
           items={['use Enter key go inside the card', 'use TAB key go inside the card']}
