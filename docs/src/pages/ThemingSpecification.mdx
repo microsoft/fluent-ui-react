@@ -162,7 +162,7 @@ export interface FluentButton extends ButtonProps {
 // based on the props
 const FluentButton = compose(Button, {
   displayName: 'FluentButton',
-  mapPropsToStyles: props => ({
+  mapPropsToTerms: props => ({
     primary: props.primary,
     circular: props.circular,
     hasIcon: !!props.icon,
@@ -184,4 +184,113 @@ Icons should be defined as part of the theme, but they should not loaded if not 
 
 ```
 // TBD
+```
+
+##### Files and packaging
+
+```
+// themes/fluent/globalTokens.ts
+
+const globalTokens = {
+  colors: {
+    brandForeground: 'white',
+    brandBackground: 'red',
+
+    defaultBackground: 'white',
+    defaultForeground: 'black',
+  }
+}
+
+export default globalTokens
+
+// themes/fluent/buttonTokens.ts
+
+const buttonTokens = globalTokens => ({
+  defaultBackgroundColor: globalTokens.defaultBackground,
+  defaultForegroundColor: globalTokens.defaultForeground,
+
+  primaryBackgroundColor: globalTokens.brandBackground,
+  primaryForegroundColor: globalTokens.brandForeground,
+})
+
+export default buttonTokens
+
+// themes/fluent/buttonStyles.ts
+
+// avoiding types for simplicity
+
+const buttonStyles = {
+  root: ({terms, tokens}) => ({
+    color: tokens.defaultForegroundColor,
+    backgroundColor: tokens.defaultBackgroundColor,
+
+    ...(terms.primary && {
+      color: tokens.brandForegroundColor,
+      backgroundColor: tokens.brandBackgroundColor,
+    }),
+  }),
+  icon: ({terms, tokens}) => ({
+    color: tokens.defaultForegroundColor,
+    backgroundColor: tokens.defaultBackgroundColor,
+
+    ...(terms.primary && {
+      color: tokens.brandForegroundColor,
+      backgroundColor: tokens.brandBackgroundColor,
+    }),
+  }),
+}
+
+// react/components/Button.tsx
+
+const Button = props => {
+  // Not a real implementation
+  // avoiding details as it is not the main point in this spec
+  return <button>{props.children}</button>
+}
+
+export default Button
+
+// fluent/components/Button.tsx
+
+import { Button as BaseButton } from 'react/components'
+
+const Button = compose(BaseButton, {
+  displayName: 'Button',
+  mapPropsToTerms: props => ({
+    primary: props.primary,
+  })
+})
+
+export default Button
+```
+
+Possible folder structure
+
+```
+themes
+├── fluent
+│   ├── index.ts
+│   ├── globalTokens.ts
+│   ├── components
+│   └── Button
+│       ├── buttonStyles.ts
+│       └── buttonTokens.ts
+├── teams
+│   ├── index.ts
+│   ├── globalTokens.ts
+│   ├── components
+│   └── Button
+│       ├── buttonStyles.ts
+│       └── buttonTokens.ts
+└── outlook
+    ├── index.ts
+    └── globalTokens.ts
+
+react
+└── components
+    └── Button.tsx
+
+fluent
+└── components
+    └── Button.tsx
 ```
