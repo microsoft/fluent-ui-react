@@ -24,7 +24,7 @@ const accordionTitleBehavior: Accessibility<AccordionTitleBehaviorProps> = props
       },
       content: {
         'aria-expanded': !!props.active,
-        'aria-disabled': !!(props.active && !props.canBeCollapsed) || props.disabled,
+        'aria-disabled': !!((props.active && !props.canBeCollapsed) || props.disabled),
         'aria-controls': props.accordionContentId,
         role: 'button',
         tabIndex: 0,
