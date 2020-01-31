@@ -209,7 +209,7 @@ describe('Accordion', () => {
       const panels = [
         {
           key: 'one',
-          title: { content: 'One', disabled: true },
+          title: { content: 'One', disabled: true, key: 'one-title' },
           content: '2 3 4',
         },
       ]
