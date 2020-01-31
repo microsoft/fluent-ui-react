@@ -428,6 +428,12 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     return modifiedState
   }
 
+  handleChange = (e: React.SyntheticEvent) => {
+    // Dropdown component doesn't present any `input` component in markup, however all of our
+    // components should handle events transparently.
+    _.invoke(this.props, 'onChange', e, { ...this.props, value: this.state.value })
+  }
+
   renderComponent({
     ElementType,
     classes,
@@ -448,7 +454,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     const { highlightedIndex, open, searchQuery, value } = this.state
 
     return (
-      <ElementType className={classes.root} {...unhandledProps}>
+      <ElementType className={classes.root} onChange={this.handleChange} {...unhandledProps}>
         <Downshift
           isOpen={open}
           onChange={this.handleSelectedChange}

@@ -34,7 +34,7 @@ export interface Conformant {
   /** This component uses wrapper slot to wrap the 'meaningful' element. */
   wrapperComponent?: React.ReactType
   handlesAsProp?: boolean
-  /** In the case when a onChange prop name is custom in relation to the controlled prop. */
+  /** List of autocontrolled props for this component. */
   autoControlledProps?: string[]
 }
 
@@ -443,16 +443,11 @@ export default function isConformant(
           )
         }
 
-        const eventShapeValue =
-          _.isObject(eventTargets[listenerName]) && eventTargets[listenerName]['allowNullEvent']
-            ? null
-            : eventShape
-
-        let expectedArgs = [eventShapeValue]
+        let expectedArgs = [eventShape]
         let errorMessage = 'was not called with (event)'
 
         if (_.has(Component.propTypes, listenerName)) {
-          expectedArgs = [eventShapeValue, expect.objectContaining(component.props())]
+          expectedArgs = [eventShape, expect.objectContaining(component.props())]
           errorMessage = [
             'was not called with (event, data).\n',
             `Ensure that 'props' object is passed to '${listenerName}'\n`,

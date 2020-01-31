@@ -10,7 +10,6 @@ import { findIntrinsicElement, mountWithProvider } from 'test/utils'
 import { ReactWrapper, CommonWrapper } from 'enzyme'
 import { DropdownItemProps } from 'src/components/Dropdown/DropdownItem'
 import { ShorthandValue } from 'src/types'
-import Downshift from 'downshift'
 
 jest.dontMock('keyboard-key')
 jest.useFakeTimers()
@@ -44,13 +43,6 @@ describe('Dropdown', () => {
   const items = ['item1', 'item2', 'item3', 'item4', 'item5']
   isConformant(Dropdown, {
     hasAccessibilityProp: false,
-    eventTargets: {
-      onChange: {
-        element: Downshift,
-        hostNodes: false,
-        allowNullEvent: true,
-      },
-    },
     autoControlledProps: [
       'highlightedIndex',
       'open',
