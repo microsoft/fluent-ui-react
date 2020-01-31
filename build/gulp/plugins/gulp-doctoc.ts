@@ -1,7 +1,7 @@
 import fs from 'fs'
 import through2 from 'through2'
 
-import config from '../../../config'
+import config from '../../config'
 import sh from '../sh'
 
 const insideGitRepo = fs.existsSync(config.paths.base('.git'))

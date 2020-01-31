@@ -168,11 +168,11 @@ These changes are required to setup internal tooling and package publishing.
 -    "test": "echo \"Error: run tests from root\" && exit 1"
 -  },
 +  "scripts": {
-+    "build": "gulp bundle:package:no-umd --package react-proptypes"
++    "build": "gulp bundle:package:no-umd"
 +  },
 ```
 
-Don't forget to provide a correct directory name, you can also use `gulp bundle:package` to bundle your package with UMD.
+You can also use `gulp bundle:package` to bundle your package with UMD.
 
 #### Create `tsconfig.json`
 
@@ -229,6 +229,6 @@ lerna add @fluentui/react-proptypes packages/react
 [11]: https://github.com/microsoft/fluent-ui-react/blob/master/src/themes/teams/components/Button/buttonStyles.ts
 [12]: https://github.com/microsoft/fluent-ui-react/blob/master/packages/react/src/utils/accessibility/Behaviors/Menu/MenuItemBehavior.ts
 [13]: https://github.com/microsoft/fluent-ui-react/blob/master/src/components/Menu/MenuItem.tsx
-[14]: https://lernajs.io/
+[14]: https://lerna.js.org
 [15]: https://yarnpkg.com/en/docs/workspaces
 [16]: https://github.com/lerna/lerna/tree/master/commands/add

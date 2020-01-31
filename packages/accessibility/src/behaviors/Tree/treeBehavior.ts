@@ -1,7 +1,7 @@
 import * as keyboardKey from 'keyboard-key'
 
 import { Accessibility, AccessibilityAttributes } from '../../types'
-import { FocusZoneMode, FocusZoneDirection } from '../../focusZone/types'
+import { FocusZoneDirection } from '../../focusZone/types'
 import treeItemBehavior from './treeItemBehavior'
 
 /**
@@ -9,7 +9,6 @@ import treeItemBehavior from './treeItemBehavior'
  * Adds role 'tree' to 'root' slot.
  * Adds attribute 'tabIndex=-1' to 'root' slot.
  * Adds attribute 'aria-labelledby' based on the property 'aria-labelledby' to 'root' slot.
- * Embeds component into FocusZone.
  * Provides arrow key navigation in vertical direction.
  * Triggers 'expandSiblings' action with '*' on 'root'.
  */
@@ -30,7 +29,6 @@ const treeBehavior: Accessibility<TreeBehaviorProps> = props => {
       },
     },
     focusZone: {
-      mode: FocusZoneMode.Embed,
       props: {
         direction: FocusZoneDirection.vertical,
       },

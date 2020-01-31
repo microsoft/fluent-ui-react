@@ -1,25 +1,25 @@
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 import cx from 'classnames'
+import * as _ from 'lodash'
+import { Transition } from 'react-transition-group'
 
 import {
   UIComponent,
   childrenExist,
   StyledComponentProps,
   commonPropTypes,
-  ChildrenComponentProps,
   ShorthandFactory,
 } from '../../utils'
-import { WithAsProp, withSafeTypeForAs } from '../../types'
+import { ComponentEventHandler } from '../../types'
 
-export interface AnimationProps
-  extends StyledComponentProps,
-    ChildrenComponentProps<React.ReactChild> {
-  /** An element type to render as (string or function). */
-  as?: any
+export type AnimationChildrenProp = (props: { classes: string }) => React.ReactNode
 
+export interface AnimationProps extends StyledComponentProps {
   /** Additional CSS class name(s) to apply.  */
   className?: string
+
+  children: AnimationChildrenProp | React.ReactChild
 
   /** The name for the animation that should be applied, defined in the theme. */
   name?: string
@@ -77,9 +77,69 @@ export interface AnimationProps
    * - cubic-bezier(n,n,n,n) - Lets you define your own values in a cubic-bezier function
    */
   timingFunction?: string
+
+  /** Show the component; triggers the enter or exit animation. */
+  visible?: boolean
+
+  /** Run the enter animation when the component mounts, if it is initially shown. */
+  appear?: boolean
+
+  /** Wait until the first "enter" transition to mount the component (add it to the DOM). */
+  mountOnEnter?: boolean
+
+  /** Unmount the component (remove it from the DOM) when it is not shown. */
+  unmountOnExit?: boolean
+
+  /** The duration of the transition, in milliseconds. */
+  timeout?: number | { enter?: number; exit?: number; appear?: number }
+
+  /**
+   * Callback fired before the "entering" status is applied.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
+   */
+  onEnter?: ComponentEventHandler<AnimationProps>
+
+  /**
+   * Callback fired after the "entering" status is applied.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
+   */
+  onEntering?: ComponentEventHandler<AnimationProps>
+
+  /**
+   * Callback fired after the "entered" status is applied.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
+   */
+  onEntered?: ComponentEventHandler<AnimationProps>
+
+  /**
+   * Callback fired before the "exiting" status is applied.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
+   */
+  onExit?: ComponentEventHandler<AnimationProps>
+
+  /**
+   * Callback fired after the "exiting" status is applied.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
+   */
+  onExiting?: ComponentEventHandler<AnimationProps>
+
+  /**
+   * Callback fired after the "exited" status is applied.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props.
+   */
+  onExited?: ComponentEventHandler<AnimationProps>
 }
 
-class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
+/**
+ * An Animation provides animation effects to rendered elements.
+ */
+class Animation extends UIComponent<AnimationProps, any> {
   static create: ShorthandFactory<AnimationProps>
 
   static className = 'ui-animation'
@@ -89,10 +149,11 @@ class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
   static propTypes = {
     ...commonPropTypes.createCommon({
       accessibility: false,
-      animated: false,
+      as: false,
       content: false,
-      children: 'element',
+      children: false,
     }),
+    children: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
     name: PropTypes.string,
     delay: PropTypes.string,
     direction: PropTypes.string,
@@ -102,28 +163,68 @@ class Animation extends UIComponent<WithAsProp<AnimationProps>, any> {
     keyframeParams: PropTypes.object,
     playState: PropTypes.string,
     timingFunction: PropTypes.string,
+    visible: PropTypes.bool,
+    appear: PropTypes.bool,
+    mountOnEnter: PropTypes.bool,
+    unmountOnExit: PropTypes.bool,
+    timeout: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.shape({
+        appear: PropTypes.number,
+        enter: PropTypes.number,
+        exit: PropTypes.number,
+      }),
+    ]),
+    onEnter: PropTypes.func,
+    onEntering: PropTypes.func,
+    onEntered: PropTypes.func,
+    onExit: PropTypes.func,
+    onExiting: PropTypes.func,
+    onExited: PropTypes.func,
+  }
+
+  static defaultProps = {
+    timeout: 0,
+  }
+
+  handleAnimationEvent = (
+    event: 'onEnter' | 'onEntering' | 'onEntered' | 'onExit' | 'onExiting' | 'onExited',
+  ) => () => {
+    _.invoke(this.props, event, null, this.props)
   }
 
   renderComponent({ ElementType, classes, unhandledProps }) {
-    const { children } = this.props
+    const { children, mountOnEnter, unmountOnExit, timeout, appear, visible } = this.props
+
+    const isChildrenFunction = typeof children === 'function'
 
     const child =
-      childrenExist(children) && (React.Children.only(children) as React.ReactElement<any>)
-    const result = child
-      ? React.cloneElement(child, {
-          className: cx(child.props.className, classes.children),
-        })
-      : ''
+      childrenExist(children) &&
+      !isChildrenFunction &&
+      (React.Children.only(children) as React.ReactElement<any>)
 
     return (
-      <ElementType className={classes.root} {...unhandledProps}>
-        {result}
-      </ElementType>
+      <Transition
+        in={visible}
+        appear={appear}
+        mountOnEnter={mountOnEnter}
+        unmountOnExit={unmountOnExit}
+        timeout={timeout}
+        onEnter={this.handleAnimationEvent('onEnter')}
+        onEntering={this.handleAnimationEvent('onEntering')}
+        onEntered={this.handleAnimationEvent('onEntered')}
+        onExit={this.handleAnimationEvent('onExit')}
+        onExiting={this.handleAnimationEvent('onExiting')}
+        onExited={this.handleAnimationEvent('onExited')}
+        {...unhandledProps}
+        className={!isChildrenFunction ? cx(classes.root, (child as any).props.className) : ''}
+      >
+        {isChildrenFunction
+          ? () => (children as AnimationChildrenProp)({ classes: classes.root })
+          : child}
+      </Transition>
     )
   }
 }
 
-/**
- * An Animation provides animation effects to rendered elements.
- */
-export default withSafeTypeForAs<typeof Animation, AnimationProps>(Animation)
+export default Animation

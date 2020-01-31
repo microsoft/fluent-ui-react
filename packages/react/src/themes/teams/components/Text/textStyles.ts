@@ -1,8 +1,9 @@
-import { ComponentStyleFunctionParam, ICSSInJSStyle } from '../../../types'
+import { ComponentStyleFunctionParam, ICSSInJSStyle } from '@fluentui/styles'
 import { TeamsTextVariables } from './textVariables'
 import { TextProps } from '../../../../components/Text/Text'
 import { getColorSchemeKey } from '../../colors'
 import translateAlignProp from '../../../../styles/translateAlignProp'
+import { WithAsProp } from '../../../../types'
 
 export default {
   root: ({
@@ -12,7 +13,6 @@ export default {
       color,
       important,
       timestamp,
-      animation,
       truncated,
       disabled,
       error,
@@ -23,12 +23,10 @@ export default {
       size,
     },
     variables: v,
-  }: ComponentStyleFunctionParam<TextProps, TeamsTextVariables>): ICSSInJSStyle => {
+  }: ComponentStyleFunctionParam<WithAsProp<TextProps>, TeamsTextVariables>): ICSSInJSStyle => {
     const colors = v.colorScheme[getColorSchemeKey(color)]
     return {
       ...(color && { color: colors.foreground }),
-      // animations are not working with span, unless display is set to 'inline-block'
-      ...(animation && as === 'span' && { display: 'inline-block' }),
       ...(atMention === true && { color: v.atMentionOtherColor }),
       ...(truncated && { overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }),
       ...(disabled && { color: v.disabledColor }),

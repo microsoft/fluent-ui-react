@@ -1,4 +1,4 @@
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import { AlertProps } from '../../../../components/Alert/Alert'
 import { AlertHighContrastVariables } from './alertVariables'
 import getBorderFocusStyles from '../../../teams/getBorderFocusStyles'

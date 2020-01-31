@@ -9,7 +9,7 @@ const refObjects = new WeakMap<Node | Window, React.RefObject<Node | Window>>()
 const toRefObject = <T extends Node | Window>(node: T): React.RefObject<T> => {
   // A "null" is not valid key for a WeakMap
   if (node === null) {
-    return nullRefObject
+    return nullRefObject as any
   }
 
   if (refObjects.has(node)) {

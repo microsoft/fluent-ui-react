@@ -2,16 +2,17 @@ import { dest, lastRun, parallel, series, src, task, watch } from 'gulp'
 import chalk from 'chalk'
 import cache from 'gulp-cache'
 import remember from 'gulp-remember'
+import { log } from 'gulp-util'
 import fs from 'fs'
 import path from 'path'
-import rimraf from 'rimraf'
+import del from 'del'
 import through2 from 'through2'
 import webpack from 'webpack'
 import WebpackDevMiddleware from 'webpack-dev-middleware'
 import WebpackHotMiddleware from 'webpack-hot-middleware'
 
 import sh from '../sh'
-import config from '../../../config'
+import config from '../../config'
 import gulpComponentMenu from '../plugins/gulp-component-menu'
 import gulpComponentMenuBehaviors from '../plugins/gulp-component-menu-behaviors'
 import gulpDoctoc from '../plugins/gulp-doctoc'
@@ -24,15 +25,12 @@ import { Server } from 'http'
 import serve, { forceClose } from '../serve'
 
 const { paths } = config
-const g = require('gulp-load-plugins')()
 
-const { log } = g.util
+const logWatchAdd = (filePath: string) => log('Created', chalk.blue(path.basename(filePath)))
+const logWatchChange = (filePath: string) => log('Changed', chalk.magenta(path.basename(filePath)))
+const logWatchUnlink = (filePath: string) => log('Deleted', chalk.red(path.basename(filePath)))
 
-const logWatchAdd = filePath => log('Created', chalk.blue(path.basename(filePath)))
-const logWatchChange = filePath => log('Changed', chalk.magenta(path.basename(filePath)))
-const logWatchUnlink = filePath => log('Deleted', chalk.red(path.basename(filePath)))
-
-const handleWatchUnlink = (group, filePath) => {
+const handleWatchUnlink = (group: any, filePath: string) => {
   logWatchUnlink(filePath)
   remember.forget(group, filePath)
 }
@@ -43,40 +41,15 @@ const handleWatchUnlink = (group, filePath) => {
 
 task('clean:cache', () => cache.clearAll())
 
-task('clean:docs:schema', cb => {
-  rimraf(paths.packages('ability-attributes', 'src/schema.ts'), cb)
-})
-
-task('clean:docs:component-menu', cb => {
-  rimraf(paths.docsSrc('componentMenu.json'), cb)
-})
-
-task('clean:docs:component-menu-behaviors', cb => {
-  rimraf(paths.docsSrc('behaviorMenu.json'), cb)
-})
-
-task('clean:docs:dist', cb => {
-  rimraf(paths.docsDist(), cb)
-})
-
-task('clean:docs:example-menus', cb => {
-  rimraf(paths.docsSrc('exampleMenus'), cb)
-})
-
-task('clean:docs:example-sources', cb => {
-  rimraf(paths.docsSrc('exampleSources'), cb)
-})
-
-task(
-  'clean:docs',
-  parallel(
-    'clean:docs:component-menu',
-    'clean:docs:component-menu-behaviors',
-    'clean:docs:dist',
-    'clean:docs:schema',
-    'clean:docs:example-menus',
-    'clean:docs:example-sources',
-  ),
+task('clean:docs', () =>
+  del([
+    paths.packages('ability-attributes/src/schema.ts'),
+    paths.docsSrc('componentMenu.json'),
+    paths.docsSrc('behaviorMenu.json'),
+    paths.docsDist(),
+    paths.docsSrc('exampleMenus'),
+    paths.docsSrc('exampleSources'),
+  ]),
 )
 
 // ----------------------------------------
@@ -164,7 +137,7 @@ task('build:docs:toc', () =>
 task('build:docs:schema', () =>
   src(schemaSrc, { since: lastRun('build:docs:schema') }).pipe(
     through2.obj((file, enc, done) => {
-      sh(`cd packages/ability-attributes && npm run schema`)
+      sh('npm run schema', paths.packages('ability-attributes'))
         .then(() => done(null, file))
         .catch(done)
     }),
@@ -220,7 +193,7 @@ task('serve:docs:hot', async () => {
           noInfo: true, // must be quite for hot middleware to show overlay
           lazy: false,
           stats: config.compiler_stats,
-        }),
+        } as WebpackDevMiddleware.Options),
       )
       .use(WebpackHotMiddleware(compiler)),
   )
@@ -232,13 +205,26 @@ task('serve:docs:stop', () => forceClose(server))
 // Watch
 // ----------------------------------------
 
-task('watch:docs', cb => {
+task('watch:docs:component-info', cb => {
   // rebuild component info
   watch(componentsSrc, series('build:docs:component-info'))
     .on('add', logWatchAdd)
     .on('change', logWatchChange)
     .on('unlink', logWatchUnlink)
 
+  cb()
+})
+
+task('watch:docs:component-menu-behaviors', cb => {
+  watch(behaviorSrc, series('build:docs:component-menu-behaviors'))
+    .on('add', logWatchAdd)
+    .on('change', logWatchChange)
+    .on('unlink', filePath => handleWatchUnlink('component-menu-behaviors', filePath))
+
+  cb()
+})
+
+task('watch:docs:other', cb => {
   watch(schemaSrc, series('build:docs:schema')).on('change', logWatchChange)
 
   // rebuild example menus
@@ -261,11 +247,6 @@ task('watch:docs', cb => {
       } catch (e) {}
     })
 
-  watch(behaviorSrc, series('build:docs:component-menu-behaviors'))
-    .on('add', logWatchAdd)
-    .on('change', logWatchChange)
-    .on('unlink', filePath => handleWatchUnlink('component-menu-behaviors', filePath))
-
   // rebuild images
   watch(`${config.paths.docsSrc()}/**/*.{png,jpg,gif}`, series('build:docs:images'))
     .on('add', logWatchAdd)
@@ -274,6 +255,11 @@ task('watch:docs', cb => {
 
   cb()
 })
+
+task(
+  'watch:docs',
+  series('watch:docs:component-info', 'watch:docs:component-menu-behaviors', 'watch:docs:other'),
+)
 
 // ----------------------------------------
 // Default

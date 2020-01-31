@@ -1,5 +1,5 @@
 import { Accessibility } from '../../types'
-import { FocusZoneMode, FocusZoneDirection } from '../../focusZone/types'
+import { FocusZoneDirection } from '../../focusZone/types'
 import toolbarMenuItemBehavior from './toolbarMenuItemBehavior'
 import * as keyboardKey from 'keyboard-key'
 
@@ -9,7 +9,6 @@ import * as keyboardKey from 'keyboard-key'
  *
  * @specification
  * Adds role='menu'.
- * Embeds component into FocusZone.
  * Provides arrow key navigation in vertical direction.
  * Keyboard navigation is circular.
  * Component will get focus when mounted.
@@ -29,7 +28,6 @@ const toolbarMenuBehavior: Accessibility = () => ({
     },
   },
   focusZone: {
-    mode: FocusZoneMode.Embed,
     props: {
       isCircularNavigation: true,
       shouldFocusOnMount: true,

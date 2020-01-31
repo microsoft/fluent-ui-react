@@ -2,10 +2,10 @@ import { Provider, ProviderConsumer, Grid, Header } from '@fluentui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 
-import ColorBox, { colorBoxStyles, colorBoxVariables } from 'docs/src/components/ColorBox'
-import ColorVariants, { colorVariantsStyles } from 'docs/src/components/ColorVariants'
-import DocPage from 'docs/src/components/DocPage/DocPage'
-import GuidesNavigationFooter from 'docs/src/components/GuidesNavigationFooter'
+import ColorBox, { colorBoxStyles, colorBoxVariables } from '../components/ColorBox'
+import ColorVariants, { colorVariantsStyles } from '../components/ColorVariants'
+import DocPage from '../components/DocPage/DocPage'
+import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
 
 const ColorPalette = () => (
   <Provider

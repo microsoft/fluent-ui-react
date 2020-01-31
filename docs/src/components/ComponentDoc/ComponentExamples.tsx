@@ -2,7 +2,7 @@ import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 
-import { exampleIndexContext, exampleSourcesContext } from 'docs/src/utils'
+import { exampleIndexContext, exampleSourcesContext } from '../../utils'
 import { List, Segment } from '@fluentui/react'
 import { componentAPIs } from './ComponentSourceManager'
 

@@ -1,8 +1,7 @@
-import mergeThemes from '../../utils/mergeThemes'
+import { createTheme, mergeThemes } from '@fluentui/styles'
 import * as siteVariables from './siteVariables'
 import * as componentVariables from './componentVariables'
 import teams from '../teams'
-import { createTheme } from '../createTheme'
 
 export default mergeThemes(
   teams,

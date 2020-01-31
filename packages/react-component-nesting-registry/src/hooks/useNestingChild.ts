@@ -9,12 +9,12 @@ const useNestingChild = <T extends Node>(): UseNestingHookResult<T> => {
   const childRef = React.useRef(null)
 
   const getRefs = React.useCallback(() => {
-    return nestingContext.getContextRefs(childRef)
+    return nestingContext.getContextRefs(childRef as any)
   }, [])
 
   React.useEffect(() => {
-    nestingContext.register(childRef)
-    return () => nestingContext.unregister(childRef)
+    nestingContext.register(childRef as any)
+    return () => nestingContext.unregister(childRef as any)
   }, [])
 
   return {

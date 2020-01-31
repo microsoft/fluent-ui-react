@@ -1,9 +1,8 @@
 import * as _ from 'lodash'
-import * as fs from 'fs-extra'
 import * as path from 'path'
 
 import { DangerJS } from './types'
-import config from '../../config'
+import config from '../config'
 
 function linkToFlamegraph(value, filename) {
   // This as well as the whole flamegrill URL is hardcoded to only work with CircleCI.
@@ -43,28 +42,27 @@ function fluentFabricComparision(danger, markdown, warn) {
     },
   )
 
-  fs.mkdirpSync(config.paths.ciArtifacts('perf'))
-
-  _.forEach(results, value => {
-    fs.copyFileSync(
-      value.fluentFlamegraphFile,
-      config.paths.ciArtifacts('perf', path.basename(value.fluentFlamegraphFile)),
-    )
-  })
+  const getStatus = fluentToFabric =>
+    fluentToFabric > 1 ? '🔧' : fluentToFabric >= 0.7 ? '🎯' : '🦄'
 
   markdown(
     [
-      '## Perf comparision',
+      '## Perf comparison',
       '',
-      'Scenario | Fluent TPI | Fabric TPI | Ratio | Iterations | Ticks',
-      '--- | ---:| ---:| ---:| ---:| ---:',
-      ..._.map(
-        results,
-        (value, key) =>
-          `${key} | ${linkToFlamegraph(value.fluentTpi, value.fluentFlamegraphFile)} | ${
-            value.fabricTpi
-          } | ${value.fluentToFabric}:1 | ${value.iterations} | ${value.numTicks}`,
+      'Status | Scenario | Fluent TPI | Fabric TPI | Ratio | Iterations | Ticks',
+      ':---: | :--- | ---:| ---:| ---:| ---:| ---:',
+      ..._.map(results, (value, key) =>
+        [
+          getStatus(value.fluentToFabric),
+          key,
+          linkToFlamegraph(value.fluentTpi, value.fluentFlamegraphFile),
+          value.fabricTpi,
+          `${value.fluentToFabric}:1`,
+          value.iterations,
+          value.numTicks,
+        ].join(' | '),
       ),
+      '>🔧 Needs work &nbsp; &nbsp; 🎯 On target &nbsp; &nbsp; 🦄 Amazing',
     ].join('\n'),
   )
 }

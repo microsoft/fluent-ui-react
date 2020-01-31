@@ -1,4 +1,4 @@
-import { ComponentSlotStylesPrepared } from '../../../types'
+import { ComponentSlotStylesPrepared } from '@fluentui/styles'
 import { FlexItemProps } from '../../../../components/Flex/FlexItem'
 
 import { toFlexAlignment, toFlexItemSizeValues } from './utils'
@@ -17,7 +17,6 @@ const flexItemStyles: ComponentSlotStylesPrepared<FlexItemProps, FlexItemVariabl
       ...(p.grow && { flexGrow: p.grow }),
       ...(p.grow === true && { flexGrow: 1 }),
 
-      ...p.itemStyles,
       ...(p.push &&
         (p.flexDirection === 'column' ? { marginTop: 'auto' } : { marginLeft: 'auto' })),
     }

@@ -2,9 +2,9 @@ import { task, parallel } from 'gulp'
 import * as path from 'path'
 import * as tsPaths from 'tsconfig-paths'
 
-import config from './config'
+import config from './build/config'
 
-const { compilerOptions } = require('./build/tsconfig.docs.json')
+const { compilerOptions } = require(config.paths.docs('tsconfig.json'))
 
 // add node_modules/.bin to the path so we can invoke .bin CLIs in tasks
 process.env.PATH =

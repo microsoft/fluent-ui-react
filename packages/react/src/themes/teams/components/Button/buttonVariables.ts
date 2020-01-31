@@ -20,6 +20,7 @@ export interface ButtonVariables {
   backgroundColor: string
   backgroundColorActive: string
   backgroundColorHover: string
+  backgroundColorIconOnlyHover: string
 
   backgroundColorDisabled: string
   borderColor: string
@@ -42,6 +43,7 @@ export interface ButtonVariables {
   textPrimaryColor: string
   textPrimaryColorHover: string
   textColorDisabled: string
+  textColorIconOnlyHover: string
 
   primaryBoxShadow: string
   boxShadow: string
@@ -86,6 +88,7 @@ export default (siteVars: any): ButtonVariables => ({
   borderColorHover: siteVars.colorScheme.default.borderHover,
   borderColorActive: siteVars.colorScheme.default.borderPressed,
   borderColorDisabled: 'transparent',
+  backgroundColorIconOnlyHover: siteVars.colorScheme.default.backgroundHover2,
 
   primaryColor: siteVars.colorScheme.brand.foreground4,
   primaryColorHover: siteVars.colorScheme.brand.foreground4,
@@ -102,6 +105,7 @@ export default (siteVars: any): ButtonVariables => ({
   textPrimaryColor: siteVars.colorScheme.brand.foreground,
   textPrimaryColorHover: siteVars.colorScheme.brand.foreground1,
   textColorDisabled: siteVars.colorScheme.brand.foregroundDisabled1,
+  textColorIconOnlyHover: siteVars.colorScheme.brand.foregroundHover,
 
   primaryBoxShadow: siteVars.shadowLevel1Dark,
   boxShadow: siteVars.shadowLevel1,

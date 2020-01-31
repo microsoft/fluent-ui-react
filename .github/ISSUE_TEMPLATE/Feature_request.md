@@ -14,4 +14,4 @@ A clear and concise description of what you want to happen. Add any considered d
 
 ### MVP
 [Fork, update, and replace this sandbox if you can show the proposed solution]:
-https://codesandbox.io/s/stardust-ui-example-8ismt
+https://codesandbox.io/s/fluent-ui-example-on8xf

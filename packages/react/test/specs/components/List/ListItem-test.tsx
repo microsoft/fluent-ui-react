@@ -7,7 +7,9 @@ import { mountWithProvider } from 'test/utils'
 import ListItem from 'src/components/List/ListItem'
 
 describe('ListItem', () => {
-  isConformant(ListItem)
+  isConformant(ListItem, {
+    constructorName: 'ListItem',
+  })
   handlesAccessibility(ListItem, { defaultRootRole: 'listitem' })
 
   test('handleClick is executed when Enter is pressed for selectable list', () => {
