@@ -42,7 +42,7 @@ The same is true for the disable animations mode. It is important to allow the u
 
 #### Parent components should be able to customize the styles for the child components
 
-The slots prop must be accessible in several means to ensure that a "recursive component" can be accurately styled.
+The parent component should be able to customize the styles for it's children/slots, usually for positioning scenarios, or contextual changes that should be applied when some design term is applied on the parent component. This is especially required for "recursive component"'s scenarios
 
 ## Technical proposal
 
