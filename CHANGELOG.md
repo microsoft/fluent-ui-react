@@ -29,14 +29,11 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Remove `mountDocument` prop in `Popup` & `MenuButton` components @layershifter ([#2286](https://github.com/microsoft/fluent-ui-react/pull/2286))
 
 ### Fixes
-- Fix event listener leak in `FocusZone` @miroslavstastny ([#2227](https://github.com/microsoft/fluent-ui-react/pull/2227))
 - Fix styleParam to always be required in the styles functions @layershifter, @mnajdova ([#2235](https://github.com/microsoft/fluent-ui-react/pull/2235))
 - Check input and button refs exist before focus in `Dropdown` @silviuavram ([#2248](https://github.com/microsoft/fluent-ui-react/pull/2248))
 - Update iconOnly button hover, focus styles and add new `background5` and `backgroundHover2` design tokens in Teams theme @codepretty ([#2211](https://github.com/microsoft/fluent-ui-react/pull/2211))
 - Fix `forceUpdate` to get synced updates in React's Concurrent mode @layershifter ([#2268](https://github.com/microsoft/fluent-ui-react/pull/2268))
-- Fix element reference memory leaks @jurokapsiar ([#2270](https://github.com/microsoft/fluent-ui-react/pull/2270))
 - Adding actionable items into `Carousel` @kolaps33 ([#2271](https://github.com/microsoft/fluent-ui-react/pull/2271))
-- Fix element leak in `refFindNode` @miroslavstastny ([#2288](https://github.com/microsoft/fluent-ui-react/pull/2288))
 - Fix positioning fixes for `actions` in `ChatMessage` @layershifter ([#2300](https://github.com/microsoft/fluent-ui-react/pull/2300))
 
 ### Features
@@ -47,6 +44,15 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Documentation
 - Add per-component performance charts @miroslavstastny ([#2240](https://github.com/microsoft/fluent-ui-react/pull/2240))
+
+<!--------------------------------[ v0.43.1 ]------------------------------- -->
+## [v0.43.1](https://github.com/microsoft/fluent-ui-react/tree/v0.43.1) (2020-01-30)
+[Compare changes](https://github.com/microsoft/fluent-ui-react/compare/v0.43.0..v0.43.1)
+
+### Fixes
+- Fix event listener leak in `FocusZone` @miroslavstastny ([#2227](https://github.com/microsoft/fluent-ui-react/pull/2227))
+- Fix element reference memory leaks @jurokapsiar ([#2270](https://github.com/microsoft/fluent-ui-react/pull/2270))
+- Fix element leak in `refFindNode` @miroslavstastny ([#2288](https://github.com/microsoft/fluent-ui-react/pull/2288))
 
 <!--------------------------------[ v0.43.0 ]------------------------------- -->
 ## [v0.43.0](https://github.com/microsoft/fluent-ui-react/tree/v0.43.0) (2020-01-08)
