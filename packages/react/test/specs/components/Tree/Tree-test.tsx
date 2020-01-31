@@ -70,7 +70,7 @@ const checkOpenTitles = (wrapper: ReactWrapper, expected: string[]): void => {
 }
 
 describe('Tree', () => {
-  isConformant(Tree, { autocontrolledPropMappings: { activeItemIds: 'onActiveItemIdsChange' } })
+  isConformant(Tree, { autoControlledProps: ['activeItemIds'] })
 
   describe('activeItemIds', () => {
     it('should contain index of item open at click', () => {
