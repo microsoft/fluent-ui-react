@@ -8,6 +8,7 @@ import {
 import { ChatMessageVariables } from './chatMessageVariables'
 import { screenReaderContainerStyles } from '../../../../utils/accessibility/Styles/accessibilityStyles'
 import { pxToRem } from '../../../../utils'
+import initialPopperStyles from '../../../../utils/positioner/initialStyles'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 const chatMessageStyles: ComponentSlotStylesPrepared<
@@ -94,6 +95,8 @@ const chatMessageStyles: ComponentSlotStylesPrepared<
     boxShadow: v.actionMenuBoxShadow,
     // we need higher zIndex for the action menu in order to be displayed above the focus border of the chat message
     zIndex: 1000,
+
+    ...(initialPopperStyles as ICSSInJSStyle),
 
     ...(_.isNil(v.showActionMenu) && {
       overflow: p.focused ? 'visible' : 'hidden',
