@@ -69,11 +69,20 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
     : resolvedComponentVariables[displayName]
 
   // Resolve styles using resolved variables, merge results, allow props.styles to override
-  const mergedStyles: ComponentSlotStylesPrepared = mergeComponentStyles(
-    theme.componentStyles[displayName],
-    props.design && withDebugId({ root: props.design }, 'props.design'),
-    props.styles && withDebugId({ root: props.styles } as ComponentSlotStylesInput, 'props.styles'),
-  )
+  let mergedStyles: ComponentSlotStylesPrepared = theme.componentStyles[displayName] || {
+    root: () => ({}),
+  }
+
+  const hasInlineOverrides = !_.isNil(props.design) || !_.isNil(props.styles)
+
+  if (hasInlineOverrides) {
+    mergedStyles = mergeComponentStyles(
+      mergedStyles,
+      props.design && withDebugId({ root: props.design }, 'props.design'),
+      props.styles &&
+        withDebugId({ root: props.styles } as ComponentSlotStylesInput, 'props.styles'),
+    )
+  }
 
   const styleParam: ComponentStyleFunctionParam = {
     displayName,
