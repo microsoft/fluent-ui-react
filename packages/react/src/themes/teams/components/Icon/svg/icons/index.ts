@@ -130,6 +130,9 @@ import presenter from './presenter'
 import qna from './qna'
 import questionCircle from './questionCircle'
 import quote from './quote'
+import raiseHand from './raiseHand'
+import raiseHandDismiss from './raiseHandDismiss'
+import raisedHandStatic from './raisedHandStatic'
 import readAloud from './read-aloud'
 import redbang from './redbang'
 import redo from './redo'
@@ -301,6 +304,9 @@ export default {
   'question-circle': questionCircle,
   quote,
   'read-aloud': readAloud,
+  'raise-hand': raiseHand,
+  'raise-hand-dismiss': raiseHandDismiss,
+  'raised-hand-static': raisedHandStatic,
   redbang,
   redo,
   'remove-format': removeFormat,
