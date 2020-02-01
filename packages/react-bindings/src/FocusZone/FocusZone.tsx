@@ -206,6 +206,9 @@ export default class FocusZone extends React.Component<FocusZoneProps> implement
     if (this._root.current) {
       this._root.current.removeEventListener('blur', this._onBlur, true)
     }
+
+    this._activeElement = null;
+    this._defaultFocusElement = null;
   }
 
   render() {
