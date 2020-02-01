@@ -17,6 +17,9 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### Fixes
+- `FocusZone`: Cleanup DOM element references ( _activeElement, _defaultFocusElement) when the component is unmounted @johannao76 ([2304](https://github.com/microsoft/fluent-ui-react/pull/2304))
+
 ### BREAKING CHANGES
 - Add `@fluentui/styles` package for all styles' related utilities and TS types @layershifter, @mnajdova ([#2222](https://github.com/microsoft/fluent-ui-react/pull/2222))
 - Remove `animation` prop from all components @joschect ([#2239](https://github.com/microsoft/fluent-ui-react/pull/2239))
