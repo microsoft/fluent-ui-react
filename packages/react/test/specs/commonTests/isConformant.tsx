@@ -394,10 +394,10 @@ export default function isConformant(
           if (customHandler) {
             customHandler(eventShape)
           } else if (Component.propTypes[listenerName]) {
-              throw new Error(
-                `Handler for '${listenerName}' is not passed to child event emitter element <${eventTarget.type()} />`,
-              )
-            }
+            throw new Error(
+              `Handler for '${listenerName}' is not passed to child event emitter element <${eventTarget.type()} />`,
+            )
+          }
         })
 
         // give event listeners opportunity to cleanup
