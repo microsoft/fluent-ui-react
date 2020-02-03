@@ -2,7 +2,7 @@ import { Accessibility, dialogBehavior } from '@stardust-ui/accessibility'
 import { FocusTrapZoneProps } from '@stardust-ui/react-bindings'
 import { Unstable_NestingAuto } from '@stardust-ui/react-component-nesting-registry'
 import { EventListener } from '@stardust-ui/react-component-event-listener'
-import { Ref, toRefObject } from '@stardust-ui/react-component-ref'
+import { Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -330,7 +330,6 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       </Ref>
     )
 
-    const targetRef = toRefObject(this.context.target)
     const triggerAccessibility: TriggerAccessibility = {
       attributes: accessibility.attributes.trigger,
       keyHandlers: accessibility.keyHandlers.trigger,
@@ -366,14 +365,14 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
               {closeOnOutsideClick && (
                 <EventListener
                   listener={this.handleOverlayClick}
-                  targetRef={targetRef}
+                  target={this.context.target}
                   type="click"
                   capture
                 />
               )}
               <EventListener
                 listener={this.handleDocumentKeydown(getRefs)}
-                targetRef={targetRef}
+                target={this.context.target}
                 type="keydown"
                 capture
               />

@@ -4,7 +4,7 @@ import * as PropTypes from 'prop-types'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import { Accessibility, toolbarItemBehavior } from '@stardust-ui/accessibility'
 import cx from 'classnames'
-import { Ref, toRefObject } from '@stardust-ui/react-component-ref'
+import { Ref } from '@stardust-ui/react-component-ref'
 import { EventListener } from '@stardust-ui/react-component-event-listener'
 
 import {
@@ -203,7 +203,6 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
 
   renderComponent({ ElementType, classes, unhandledProps, accessibility, variables }) {
     const { icon, children, disabled, popup, menu, menuOpen, wrapper } = this.props
-    const targetRef = toRefObject(this.context.target)
 
     const itemElement = (
       <ElementType
@@ -246,7 +245,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
             </Ref>
             <EventListener
               listener={this.handleOutsideClick(getRefs)}
-              targetRef={targetRef}
+              target={this.context.target}
               type="click"
               capture
             />

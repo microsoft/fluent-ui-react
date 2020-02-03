@@ -1,7 +1,7 @@
 import { Accessibility, menuItemBehavior, submenuBehavior } from '@stardust-ui/accessibility'
 import { focusAsync } from '@stardust-ui/react-bindings'
 import { EventListener } from '@stardust-ui/react-component-event-listener'
-import { Ref, toRefObject } from '@stardust-ui/react-component-ref'
+import { Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as _ from 'lodash'
 import cx from 'classnames'
@@ -215,7 +215,6 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
 
     const defaultIndicator = { name: vertical ? 'stardust-arrow-end' : 'stardust-arrow-down' }
     const indicatorWithDefaults = indicator === undefined ? defaultIndicator : indicator
-    const targetRef = toRefObject(this.context.target)
 
     const menuItemInner = childrenExist(children) ? (
       children
@@ -274,7 +273,11 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
               })}
             </Popper>
           </Ref>
-          <EventListener listener={this.outsideClickHandler} targetRef={targetRef} type="click" />
+          <EventListener
+            listener={this.outsideClickHandler}
+            target={this.context.target}
+            type="click"
+          />
         </>
       ) : null
 

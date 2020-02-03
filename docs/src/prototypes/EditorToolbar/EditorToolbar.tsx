@@ -16,7 +16,6 @@ import {
   ToolbarMenuItemShorthandKinds,
 } from '@stardust-ui/react'
 import { useEventListener } from '@stardust-ui/react-component-event-listener'
-import { toRefObject } from '@stardust-ui/react-component-ref'
 import * as keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -245,7 +244,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
       }
     },
     type: 'keydown',
-    targetRef: toRefObject(props.target),
+    target: props.target,
   })
   useEventListener({
     listener: () => {
@@ -260,7 +259,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
       }
     },
     type: 'resize',
-    targetRef: toRefObject(props.target.defaultView),
+    target: props.target.defaultView,
   })
 
   return (

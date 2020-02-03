@@ -1,7 +1,7 @@
 import { AccessibilityAttributes } from '@stardust-ui/accessibility'
 import { FocusTrapZone, FocusTrapZoneProps } from '@stardust-ui/react-bindings'
 import { EventListener } from '@stardust-ui/react-component-event-listener'
-import { handleRef, Ref, toRefObject } from '@stardust-ui/react-component-ref'
+import { handleRef, Ref } from '@stardust-ui/react-component-ref'
 import * as customPropTypes from '@stardust-ui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -124,7 +124,6 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
 
     const contentToRender = childrenExist(children) ? children : content
     const focusTrapZoneProps = (_.keys(trapFocus).length && trapFocus) || {}
-    const targetRef = toRefObject(this.context.target)
 
     return (
       open && (
@@ -139,7 +138,11 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
             ) : (
               contentToRender
             )}
-            <EventListener listener={this.handleDocumentClick} targetRef={targetRef} type="click" />
+            <EventListener
+              listener={this.handleDocumentClick}
+              target={this.context.target}
+              type="click"
+            />
           </PortalInner>
         </Ref>
       )
