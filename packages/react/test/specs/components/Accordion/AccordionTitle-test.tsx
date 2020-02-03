@@ -25,12 +25,14 @@ describe('AccordionTitle', () => {
     })
   })
 
+  const getContent = wrapper => wrapper.find(`div.${AccordionTitle.slotClassNames.content}`)
+
   describe('click handler', () => {
     it('is called on click', () => {
       const onClick = jest.fn()
       const wrapper = mountWithProvider(<AccordionTitle onClick={onClick} />)
 
-      wrapper.simulate('click')
+      getContent(wrapper).simulate('click')
       expect(onClick).toHaveBeenCalled()
     })
 
@@ -38,7 +40,7 @@ describe('AccordionTitle', () => {
       const onClick = jest.fn()
       const wrapper = mountWithProvider(<AccordionTitle onClick={onClick} disabled={true} />)
 
-      wrapper.simulate('click')
+      getContent(wrapper).simulate('click')
       expect(onClick).not.toHaveBeenCalled()
     })
   })
@@ -48,7 +50,7 @@ describe('AccordionTitle', () => {
       const onClick = jest.fn()
       const wrapper = mountWithProvider(<AccordionTitle onClick={onClick} />)
 
-      wrapper.simulate('keydown', {
+      getContent(wrapper).simulate('keydown', {
         keyCode: keyboardKey.Enter,
       })
       expect(onClick).toHaveBeenCalled()
@@ -58,7 +60,7 @@ describe('AccordionTitle', () => {
       const onClick = jest.fn()
       const wrapper = mountWithProvider(<AccordionTitle onClick={onClick} disabled={true} />)
 
-      wrapper.simulate('keydown', {
+      getContent(wrapper).simulate('keydown', {
         keyCode: keyboardKey.Enter,
       })
       expect(onClick).not.toHaveBeenCalled()
