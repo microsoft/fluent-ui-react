@@ -63,12 +63,15 @@ Here is an example of how the mappings for a FluentButton component can look lik
 ```
 const fluentButtonMappings = props => {
   const { size, circular, attached, corner } = props
-  return cx(
-    size, // the value (small, medium, big)
-    useKeyOnly(circular, 'circular'),
-    useKeyOrValueAndKey(attached, 'attached'), // true or the value of the attached prop
-    useValueAndKey(corner, 'corner'), // corner="left" will create the classNames `corner left`
-  )
+  return {
+    root: cx(
+      size, // the value (small, medium, big)
+      useKeyOnly(circular, 'circular'),
+      useKeyOrValueAndKey(attached, 'attached'), // true or the value of the attached prop
+      useValueAndKey(corner, 'corner'), // corner="left" will create the classNames `corner left`
+    ),
+    icon: cx(size),
+  }
 }
 
 const FluentButton = compose(Button, {
