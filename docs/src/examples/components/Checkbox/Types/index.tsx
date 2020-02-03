@@ -15,6 +15,11 @@ const Types = () => (
       description="A checkbox can be formatted to show an on or off choice."
       examplePath="components/Checkbox/Types/CheckboxExampleToggle"
     />
+    <ComponentExample
+      title="Multiselect Listbox"
+      description="A checkbox can be used in multiselect listbox (selectable List)"
+      examplePath="components/Checkbox/Types/CheckboxListboxExample"
+    />
   </ExampleSection>
 )
 
