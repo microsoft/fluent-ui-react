@@ -1,6 +1,14 @@
 import { pxToRem } from '../../../../utils'
 
-export default () => ({
+export type ImageVariables = {
+  width?: string
+  height?: string
+  avatarRadius: string
+  avatarSize: string
+  circularRadius: string
+}
+
+export default (): ImageVariables => ({
   width: undefined,
   height: undefined,
   avatarRadius: pxToRem(9999),

@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "@fluentui/internal-tooling": "^0.43.0",
+    "@types/classnames": "^2.2.9",
     "lerna-alias": "^3.0.3-0"
   },
   "files": [
