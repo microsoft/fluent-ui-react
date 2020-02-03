@@ -98,9 +98,7 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
   // STYLES
   //
 
-  let classes: ComponentSlotClasses
-  let resolvedStylesDebug: Record<string, { styles: Object }[]>
-  let resolvedStyles: Record<string, ICSSInJSStyle>
+  let resolveStylesResult: ResolveStylesResult
 
   if (cacheEnabled && noInlineOverrides) {
     const stylesKey = componentKey + JSON.stringify(restProps) + rtl + disableAnimations
@@ -112,13 +110,9 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
     }
 
     if (themeStylesCache[stylesKey]) {
-      const cachedStyles = themeStylesCache[stylesKey]
-
-      classes = cachedStyles.classes
-      resolvedStylesDebug = cachedStyles.resolvedStylesDebug
-      resolvedStyles = cachedStyles.resolvedStyles
+      resolveStylesResult = themeStylesCache[stylesKey]
     } else {
-      const result = getResolvedStyles({
+      resolveStylesResult = getResolvedStyles({
         theme,
         componentKey,
         disableAnimations,
@@ -128,15 +122,11 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
         resolvedVariables,
       })
 
-      classes = result.classes
-      resolvedStylesDebug = result.resolvedStylesDebug
-      resolvedStyles = result.resolvedStyles
-
-      themeStylesCache[stylesKey] = result
+      themeStylesCache[stylesKey] = resolveStylesResult
       stylesCache.set(theme, themeStylesCache)
     }
   } else {
-    const result = getResolvedStyles({
+    resolveStylesResult = getResolvedStyles({
       theme,
       componentKey,
       disableAnimations,
@@ -145,11 +135,13 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
       props,
       resolvedVariables,
     })
-
-    classes = result.classes
-    resolvedStylesDebug = result.resolvedStylesDebug
-    resolvedStyles = result.resolvedStyles
   }
+
+  const {
+    classes,
+    resolvedStylesDebug,
+    resolvedStyles,
+  } = resolveStylesResult
 
   // conditionally add sources for evaluating debug information to component
   if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
@@ -200,11 +192,7 @@ const getResolvedStyles = ({ theme, componentKey, props, resolvedVariables, rtl,
   renderer: {
     renderRule: RendererRenderRule
   }
-}): {
-  resolvedStyles: ICSSInJSStyle
-  resolvedStylesDebug: Record<string, { styles: Object }[]>
-  classes: ComponentSlotClasses
-} => {
+}): ResolveStylesResult => {
   // Resolve styles using resolved variables, merge results, allow props.styles to override
   let mergedStyles: ComponentSlotStylesPrepared = theme.componentStyles[componentKey] || {
     root: () => ({}),
