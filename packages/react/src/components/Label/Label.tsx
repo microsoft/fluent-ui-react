@@ -128,13 +128,11 @@ const Label: React.FC<WithAsProp<LabelProps>> & FluentComponentStaticProps = pro
   const imageElement = Image.create(image, {
     defaultProps: () => ({
       styles: resolvedStyles.image,
-      variables: variables.image,
     }),
   })
   const iconElement = Icon.create(icon, {
     defaultProps: () => ({
       styles: resolvedStyles.icon,
-      variables: variables.icon,
     }),
     overrideProps: handleIconOverrides,
   })

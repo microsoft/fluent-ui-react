@@ -6,6 +6,7 @@ import * as _ from 'lodash'
 import * as React from 'react'
 import { ReactWrapper } from 'enzyme'
 import * as ReactDOMServer from 'react-dom/server'
+import { act } from 'react-dom/test-utils'
 
 import isExportedAtTopLevel from './isExportedAtTopLevel'
 import {
@@ -389,16 +390,15 @@ export default function isConformant(
         const eventTarget = getEventTargetComponent(component, listenerName, eventTargets)
         const customHandler: Function = eventTarget.prop(listenerName)
 
-        if (customHandler) {
-          customHandler(eventShape)
-        } else {
-          if (Component.propTypes[listenerName]) {
-            throw new Error(
-              `Handler for '${listenerName}' is not passed to child event emitter element <${eventTarget.type()} />`,
-            )
-          }
-          return
-        }
+        act(() => {
+          if (customHandler) {
+            customHandler(eventShape)
+          } else if (Component.propTypes[listenerName]) {
+              throw new Error(
+                `Handler for '${listenerName}' is not passed to child event emitter element <${eventTarget.type()} />`,
+              )
+            }
+        })
 
         // give event listeners opportunity to cleanup
         if (component.instance() && component.instance().componentWillUnmount) {

@@ -124,7 +124,7 @@ exports[`felaRenderer marginLeft is rendered into marginLeft due to RTL with \`n
 
 
 <div className=ui-provider__box dir=rtl>
-  <span className=ui-text a dir=auto>
+  <span dir=auto className=ui-text a>
     Hello
   </span>
 </div>;
@@ -138,7 +138,7 @@ exports[`felaRenderer marginLeft is rendered into marginRight due to RTL 1`] = `
 
 
 <div className=ui-provider__box dir=rtl>
-  <span className=ui-text a dir=auto>
+  <span dir=auto className=ui-text a>
     Hello
   </span>
 </div>;
