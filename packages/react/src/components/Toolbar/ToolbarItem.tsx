@@ -4,7 +4,7 @@ import * as PropTypes from 'prop-types'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import { Accessibility, toolbarItemBehavior } from '@fluentui/accessibility'
 import cx from 'classnames'
-import { Ref, toRefObject } from '@fluentui/react-component-ref'
+import { Ref } from '@fluentui/react-component-ref'
 import { EventListener } from '@fluentui/react-component-event-listener'
 
 import {
@@ -199,7 +199,6 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
 
   renderComponent({ ElementType, classes, unhandledProps, accessibility, variables }) {
     const { icon, children, disabled, popup, menu, menuOpen, wrapper } = this.props
-    const targetRef = toRefObject(this.context.target)
 
     const itemElement = (
       <ElementType
@@ -242,7 +241,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
             </Ref>
             <EventListener
               listener={this.handleOutsideClick(getRefs)}
-              targetRef={targetRef}
+              target={this.context.target}
               type="click"
               capture
             />
