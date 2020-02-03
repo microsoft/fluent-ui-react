@@ -17,6 +17,6 @@
     "esModuleInterop": true,
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
-    "types": ["node", "jest", "react"]
+    "types": ["node", "jest"]
   }
 }

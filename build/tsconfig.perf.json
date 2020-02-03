@@ -1,7 +1,0 @@
-{
-  "extends": "./tsconfig.common.json",
-  "compilerOptions": {
-    "module": "esnext"
-  },
-  "include": ["../packages/react/src", "../perf", "../types"]
-}

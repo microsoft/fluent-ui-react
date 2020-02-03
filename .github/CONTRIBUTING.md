@@ -229,6 +229,6 @@ lerna add @fluentui/react-proptypes packages/react
 [11]: https://github.com/microsoft/fluent-ui-react/blob/master/src/themes/teams/components/Button/buttonStyles.ts
 [12]: https://github.com/microsoft/fluent-ui-react/blob/master/packages/react/src/utils/accessibility/Behaviors/Menu/MenuItemBehavior.ts
 [13]: https://github.com/microsoft/fluent-ui-react/blob/master/src/components/Menu/MenuItem.tsx
-[14]: https://lernajs.io/
+[14]: https://lerna.js.org
 [15]: https://yarnpkg.com/en/docs/workspaces
 [16]: https://github.com/lerna/lerna/tree/master/commands/add
