@@ -38,7 +38,7 @@ export interface AccordionTitleProps
   /** If at least one panel needs to stay active and this title does not correspond to the last active one. */
   canBeCollapsed?: boolean
 
-  /** Disabled - does not react on click events */
+  /** An accordion title can show it is currently unable to be interacted with. */
   disabled?: boolean
 
   /** AccordionTitle index inside Accordion. */
@@ -91,7 +91,6 @@ class AccordionTitle extends UIComponent<WithAsProp<AccordionTitleProps>, any> {
     accessibility: accordionTitleBehavior,
     as: 'dt',
     contentRef: _.noop,
-    disabled: false,
   }
 
   actionHandlers = {

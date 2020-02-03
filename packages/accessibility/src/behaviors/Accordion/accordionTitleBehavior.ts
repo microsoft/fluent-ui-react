@@ -16,6 +16,7 @@ import { Accessibility } from '../../types'
  */
 const accordionTitleBehavior: Accessibility<AccordionTitleBehaviorProps> = props => {
   const isHeading = /(h\d{1})$/.test(props.as)
+  const forcedOpen = props.active && !props.canBeCollapsed
   return {
     attributes: {
       root: {
@@ -24,7 +25,7 @@ const accordionTitleBehavior: Accessibility<AccordionTitleBehaviorProps> = props
       },
       content: {
         'aria-expanded': !!props.active,
-        'aria-disabled': !!((props.active && !props.canBeCollapsed) || props.disabled),
+        'aria-disabled': !!(forcedOpen || props.disabled),
         'aria-controls': props.accordionContentId,
         role: 'button',
         tabIndex: 0,
@@ -49,7 +50,7 @@ type AccordionTitleBehaviorProps = {
   active?: boolean
   /** If at least one panel needs to stay active and this title does not correspond to the last active one. */
   canBeCollapsed?: boolean
-  /** Disabled */
+  /** An accordion title can show it is currently unable to be interacted with. */
   disabled?: boolean
   /** Id of the content it owns. */
   accordionContentId?: string
