@@ -24,6 +24,12 @@ const useEventListener = <T extends EventTypes>(options: EventListenerOptions<T>
           '`target` and `targetRef` props are mutually exclusive, please use one of them.',
         )
       }
+
+      if (typeof target === 'undefined' && typeof targetRef === 'undefined') {
+        throw new Error(
+          "`target` and `targetRef` props are `undefined`, it' required to use one of them.",
+        )
+      }
     }, [target, targetRef])
   }
 
@@ -35,7 +41,7 @@ const useEventListener = <T extends EventTypes>(options: EventListenerOptions<T>
       element.addEventListener(type, eventHandler, capture)
     } else if (process.env.NODE_ENV !== 'production') {
       throw new Error(
-        '@fluentui/react-component-event-listener: Passed `targetRef` is not valid or does not support `addEventListener()` method.',
+        '@fluentui/react-component-event-listener: Passed `element` is not valid or does not support `addEventListener()` method.',
       )
     }
 
@@ -44,7 +50,7 @@ const useEventListener = <T extends EventTypes>(options: EventListenerOptions<T>
         element.removeEventListener(type, eventHandler, capture)
       } else if (process.env.NODE_ENV !== 'production') {
         throw new Error(
-          '@fluentui/react-component-event-listener: Passed `targetRef` is not valid or does not support `removeEventListener()` method.',
+          '@fluentui/react-component-event-listener: Passed `element` is not valid or does not support `removeEventListener()` method.',
         )
       }
     }

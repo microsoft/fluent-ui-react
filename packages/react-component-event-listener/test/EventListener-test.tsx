@@ -134,6 +134,27 @@ describe('EventListener', () => {
       // We need to clean up mocks to avoid errors reported by React
       ;(console.error as any).mockClear()
     })
+
+    it('throws an error when not defined', () => {
+      jest.spyOn(console, 'error').mockImplementation(() => {})
+      const onError = jest.fn()
+
+      mount(
+        <TestBoundary onError={onError}>
+          <EventListener listener={jest.fn()} type="click" />
+        </TestBoundary>,
+      )
+
+      expect(onError).toBeCalledWith(
+        expect.objectContaining({
+          message:
+            "`target` and `targetRef` props are `undefined`, it' required to use one of them.",
+        }),
+      )
+
+      // We need to clean up mocks to avoid errors reported by React
+      ;(console.error as any).mockClear()
+    })
   })
 
   describe('targetRef', () => {
