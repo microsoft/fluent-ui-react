@@ -164,7 +164,7 @@ class Sidebar extends React.Component<any, any> {
               to: '/shorthand-props',
             },
           },
-           {
+          {
             key: 'component-architecture',
             title: {
               as: NavLink,
