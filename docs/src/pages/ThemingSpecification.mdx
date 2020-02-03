@@ -4,7 +4,7 @@ export const meta = {
 
 ## Goals and requirements
 
-The theming mechanism as part of Fluent UI should be flexible and provide support for CSSinJS theme, and all existing customization scenarios. It must also allow users to opt-out if the theming approach does not meet their needs. This means that we need to have support for both CSS stylesheets and CSSinJS.
+Components should have support for both CSS stylesheets and CSSinJS approaches. The theming mechanism as part of Fluent UI should be flexible and provide support for CSSinJS theme and all existing customization scenarios. Users can opt-out if the theming approach does not meet their needs.
 
 ##### Support for CSS stylesheets
 
@@ -14,7 +14,7 @@ The theming mechanism as part of Fluent UI should be flexible and provide suppor
 
 ##### Support for CSSinJS
 
-CSSinJS support that will not tie the users to just one CSS in JS framework. The users should be able to define their styles and specify their engine that will be aligned to some defined interface.
+CSSinJS support that will not tie the users to just one CSS in JS framework. The users should be able to define their styles and specify the engine that they want to use, which will be aligned to some defined interface. The users are responsible for making sure that their styles are compatible with the CSSinJS engine that they use. Fluent will not support any compatibility between different engines.
 
 #### Application developers can get small bundles when only using a subset of components
 
@@ -81,7 +81,7 @@ const FluentButton = compose(Button, {
 
 If users decide to use CSSinJS we have to propose some structure of how they can define all things required for theming their components.
 
-I will describe one proposal of how the theme object can look like:
+Here is one proposal of how the theme object can look like:
 
 ##### Global tokens
 
