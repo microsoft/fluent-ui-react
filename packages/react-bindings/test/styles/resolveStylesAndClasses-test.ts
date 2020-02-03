@@ -53,7 +53,7 @@ xdescribe('resolveStylesAndClasses', () => {
     const renderStyles = jest.fn().mockReturnValue('a')
     const { classes } = resolveStylesAndClasses(componentStyles, styleParam, renderStyles)
 
-    expect(classes.root).toBeDefined()
+    expect(classes['root__return']).toBeDefined()
     expect(renderStyles).toHaveBeenCalledWith({ color: 'red' })
   })
 
@@ -61,9 +61,9 @@ xdescribe('resolveStylesAndClasses', () => {
     const renderStyles = jest.fn().mockReturnValue('a')
     const { classes } = resolveStylesAndClasses(componentStyles, styleParam, renderStyles)
 
-    expect(classes.root).toBeDefined()
+    expect(classes['root__return']).toBeDefined()
     expect(renderStyles).toHaveBeenCalledWith({ color: 'red' })
-    expect(classes.root).toBeDefined()
+    expect(classes['root__return']).toBeDefined()
     expect(renderStyles).toHaveBeenCalledTimes(1)
   })
 })
