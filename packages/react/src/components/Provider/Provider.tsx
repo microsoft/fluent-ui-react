@@ -190,7 +190,6 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
     // rehydration disabled to avoid leaking styles between renderers
     // https://github.com/rofrischmann/fela/blob/master/docs/api/fela-dom/rehydrate.md
     this.outgoingContext = mergeContexts(incomingContext, inputContext)
-    this.outgoingContext.targetRef = { current: this.outgoingContext.target }
 
     this.renderStaticStylesOnce(this.outgoingContext.theme)
 

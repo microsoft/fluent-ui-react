@@ -531,19 +531,19 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
 
             <EventListener
               listener={this.handleDocumentClick(getRefs)}
-              targetRef={this.context.targetRef}
+              target={this.context.target}
               type="click"
               capture
             />
             <EventListener
               listener={this.handleDocumentClick(getRefs)}
-              targetRef={this.context.targetRef}
+              target={this.context.target}
               type="contextmenu"
               capture
             />
             <EventListener
               listener={this.handleDocumentKeyDown(getRefs)}
-              targetRef={this.context.targetRef}
+              target={this.context.target}
               type="keydown"
               capture
             />
@@ -552,13 +552,13 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
               <>
                 <EventListener
                   listener={this.dismissOnScroll}
-                  targetRef={this.context.targetRef}
+                  target={this.context.target}
                   type="wheel"
                   capture
                 />
                 <EventListener
                   listener={this.dismissOnScroll}
-                  targetRef={this.context.targetRef}
+                  target={this.context.target}
                   type="touchmove"
                   capture
                 />

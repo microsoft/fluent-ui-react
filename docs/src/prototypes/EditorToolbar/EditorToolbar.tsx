@@ -242,7 +242,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
       }
     },
     type: 'keydown',
-    targetRef: { current: props.target },
+    target: props.target,
   })
   useEventListener({
     listener: () => {
@@ -257,7 +257,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
       }
     },
     type: 'resize',
-    targetRef: { current: props.target.defaultView },
+    target: props.target.defaultView,
   })
 
   return (

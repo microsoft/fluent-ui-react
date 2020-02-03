@@ -275,7 +275,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
           </Ref>
           <EventListener
             listener={this.outsideClickHandler}
-            targetRef={this.context.targetRef}
+            target={this.context.target}
             type="click"
           />
         </>

@@ -361,7 +361,7 @@ class ToolbarMenuItem extends AutoControlledComponent<
               </Ref>
               <EventListener
                 listener={this.outsideClickHandler(getRefs)}
-                targetRef={this.context.targetRef}
+                target={this.context.target}
                 type="click"
               />
             </>

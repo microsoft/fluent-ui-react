@@ -241,7 +241,7 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
             </Ref>
             <EventListener
               listener={this.handleOutsideClick(getRefs)}
-              targetRef={this.context.targetRef}
+              target={this.context.target}
               type="click"
               capture
             />

@@ -365,14 +365,14 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
               {closeOnOutsideClick && (
                 <EventListener
                   listener={this.handleOverlayClick}
-                  targetRef={this.context.targetRef}
+                  target={this.context.target}
                   type="click"
                   capture
                 />
               )}
               <EventListener
                 listener={this.handleDocumentKeydown(getRefs)}
-                targetRef={this.context.targetRef}
+                target={this.context.target}
                 type="keydown"
                 capture
               />

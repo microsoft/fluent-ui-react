@@ -498,8 +498,6 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
     unhandledProps,
     rtl,
   }): React.ReactNode {
-    const windowRef = { current: this.context.target.defaultView }
-
     this.rtl = rtl
     const { children, items, overflow, overflowItem } = this.props
 
@@ -530,7 +528,11 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
           </div>
           <div className={classes.offsetMeasure} ref={this.offsetMeasureRef} />
         </ElementType>
-        <EventListener listener={this.handleWindowResize} targetRef={windowRef} type="resize" />
+        <EventListener
+          listener={this.handleWindowResize}
+          target={this.context.target.defaultView}
+          type="resize"
+        />
       </>
     )
   }

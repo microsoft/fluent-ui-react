@@ -145,22 +145,18 @@ class Debug extends React.Component<DebugProps, DebugState> {
     if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
       return (
         <>
-          <EventListener
-            targetRef={{ current: mountDocument.body }}
-            listener={this.handleKeyDown}
-            type="keydown"
-          />
+          <EventListener listener={this.handleKeyDown} target={mountDocument.body} type="keydown" />
           {isSelecting && (
             <EventListener
-              targetRef={{ current: mountDocument.body }}
               listener={this.handleMouseMove}
+              target={mountDocument.body}
               type="mousemove"
             />
           )}
           {isSelecting && fiberNav && fiberNav.domNode && (
             <EventListener
-              targetRef={{ current: fiberNav.domNode }}
               listener={this.handleDOMNodeClick}
+              target={fiberNav.domNode}
               type="click"
             />
           )}
