@@ -1,9 +1,8 @@
 import {
   ComponentSlotStyle,
-  ComponentSlotStylesPrepared,
   ComponentVariablesInput,
   DebugData,
-  emptyTheme,
+  emptyTheme, ICSSInJSStyle,
 } from '@fluentui/styles'
 import * as React from 'react'
 // @ts-ignore We have this export in package, but it is not present in typings
@@ -27,7 +26,7 @@ type UseStylesOptions<StyleProps extends PrimitiveProps> = {
 
 type UseStylesResult = {
   classes: ComponentSlotClasses
-  styles: ComponentSlotStylesPrepared
+  styles: Record<string, ICSSInJSStyle>
 }
 
 type InlineStyleProps<StyleProps> = {
@@ -82,6 +81,7 @@ const useStyles = <StyleProps extends PrimitiveProps>(
     saveDebug: fluentUIDebug => (debug.current = { fluentUIDebug }),
     theme: context.theme,
     _internal_resolvedComponentVariables: context._internal_resolvedComponentVariables,
+    __experimental_cache: true,
   })
 
   return { classes, styles: resolvedStyles }

@@ -4,18 +4,20 @@ import {
   ComponentSlotStylesPrepared,
   ComponentStyleFunctionParam,
   ComponentVariablesObject,
+  ComponentVariablesPrepared,
   DebugData,
   ICSSInJSStyle,
   isDebugEnabled,
   mergeComponentStyles,
   mergeComponentVariables,
   PropsWithVarsAndStyles,
+  ThemePrepared,
   withDebugId,
 } from '@fluentui/styles'
 import cx from 'classnames'
 import * as _ from 'lodash'
 
-import resolveStylesAndClasses from './resolveStylesAndClasses'
+import resolveStylesAndClasses, { ResolveStylesResult } from './resolveStylesAndClasses'
 import {
   ComponentDesignProp,
   ComponentSlotClasses,
@@ -32,18 +34,22 @@ type GetStylesOptions = StylesContextValue<{
   props: PropsWithVarsAndStyles & { design?: ComponentDesignProp }
   rtl: boolean
   saveDebug: (debug: DebugData | null) => void
+
+  __experimental_cache?: boolean
 }
 
 export type GetStylesResult = {
   classes: ComponentSlotClasses
   variables: ComponentVariablesObject
-  styles: ComponentSlotStylesPrepared
+  styles: Record<string, ICSSInJSStyle>
   theme: StylesContextValue['theme']
 }
 
+const stylesCache = new WeakMap<ThemePrepared, Record<string, ResolveStylesResult>>()
+
 const getStyles = (options: GetStylesOptions): GetStylesResult => {
   const {
-    className,
+    className: componentClassName,
     disableAnimations,
     displayName,
     props,
@@ -52,70 +58,105 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
     saveDebug,
     theme,
     _internal_resolvedComponentVariables: resolvedComponentVariables,
+    __experimental_cache: cacheEnabled,
   } = options
 
+  const { className, design, styles, variables, ...restProps } = props
+
+  const componentKey = displayName
+  const noInlineOverrides = !(design || styles || variables)
+
+  //
+  // VARIABLES
+  //
+
+  let resolvedVariables: any // TODO: fix me
+
   // Resolve variables for this component, cache the result in provider
-  if (!resolvedComponentVariables[displayName]) {
-    resolvedComponentVariables[displayName] =
-      callable(theme.componentVariables[displayName])(theme.siteVariables) || {} // component variables must not be undefined/null (see mergeComponentVariables contract)
+  if (!resolvedComponentVariables[componentKey]) {
+    resolvedComponentVariables[componentKey] =
+      callable(theme.componentVariables[componentKey])(theme.siteVariables) || {} // component variables must not be undefined/null (see mergeComponentVariables contract)
   }
 
-  // Merge inline variables on top of cached variables
-  const resolvedVariables = props.variables
-    ? mergeComponentVariables(
-        resolvedComponentVariables[displayName],
+  if (cacheEnabled && noInlineOverrides) {
+    resolvedVariables = resolvedComponentVariables[componentKey]
+  } else {
+    //
+    // Old caching of variables
+    //
+
+    // Merge inline variables on top of cached variables
+    resolvedVariables = props.variables
+      ? mergeComponentVariables(
+        resolvedComponentVariables[componentKey],
         withDebugId(props.variables, 'props.variables'),
       )(theme.siteVariables)
-    : resolvedComponentVariables[displayName]
-
-  // Resolve styles using resolved variables, merge results, allow props.styles to override
-  let mergedStyles: ComponentSlotStylesPrepared = theme.componentStyles[displayName] || {
-    root: () => ({}),
+      : resolvedComponentVariables[componentKey]
   }
 
-  const hasInlineOverrides = !_.isNil(props.design) || !_.isNil(props.styles)
+  //
+  // STYLES
+  //
 
-  if (hasInlineOverrides) {
-    mergedStyles = mergeComponentStyles(
-      mergedStyles,
-      props.design && withDebugId({ root: props.design }, 'props.design'),
-      props.styles &&
-        withDebugId({ root: props.styles } as ComponentSlotStylesInput, 'props.styles'),
-    )
+  let classes: ComponentSlotClasses
+  let resolvedStylesDebug: Record<string, { styles: Object }[]>
+  let resolvedStyles: Record<string, ICSSInJSStyle>
+
+  if (cacheEnabled && noInlineOverrides) {
+    const stylesKey = componentKey + JSON.stringify(restProps) + rtl + disableAnimations
+    let themeStylesCache = stylesCache.get(theme)
+
+    if (!themeStylesCache) {
+      themeStylesCache = {}
+      stylesCache.set(theme, themeStylesCache)
+    }
+
+    if (themeStylesCache[stylesKey]) {
+      const cachedStyles = themeStylesCache[stylesKey]
+
+      classes = cachedStyles.classes
+      resolvedStylesDebug = cachedStyles.resolvedStylesDebug
+      resolvedStyles = cachedStyles.resolvedStyles
+    } else {
+      const result = getResolvedStyles({
+        theme,
+        componentKey,
+        disableAnimations,
+        rtl,
+        renderer,
+        props,
+        resolvedVariables,
+      })
+
+      classes = result.classes
+      resolvedStylesDebug = result.resolvedStylesDebug
+      resolvedStyles = result.resolvedStyles
+
+      themeStylesCache[stylesKey] = result
+      stylesCache.set(theme, themeStylesCache)
+    }
+  } else {
+    const result = getResolvedStyles({
+      theme,
+      componentKey,
+      disableAnimations,
+      rtl,
+      renderer,
+      props,
+      resolvedVariables,
+    })
+
+    classes = result.classes
+    resolvedStylesDebug = result.resolvedStylesDebug
+    resolvedStyles = result.resolvedStyles
   }
-
-  const styleParam: ComponentStyleFunctionParam = {
-    displayName,
-    props,
-    variables: resolvedVariables,
-    theme,
-    rtl,
-    disableAnimations,
-  }
-
-  // Fela plugins rely on `direction` param in `theme` prop instead of RTL
-  // Our API should be aligned with it
-  // Heads Up! Keep in sync with Design.tsx render logic
-  const direction = rtl ? 'rtl' : 'ltr'
-  const felaParam: RendererParam = {
-    theme: { direction },
-    disableAnimations,
-    displayName, // does not affect styles, only used by useEnhancedRenderer in docs
-  }
-
-  const { resolvedStyles, resolvedStylesDebug, classes } = resolveStylesAndClasses(
-    mergedStyles,
-    styleParam,
-    (style: ICSSInJSStyle) => renderer.renderRule(() => style, felaParam),
-  )
-
-  classes.root = cx(className, classes.root, props.className)
 
   // conditionally add sources for evaluating debug information to component
   if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
     saveDebug({
       componentName: displayName,
       componentVariables: _.filter(
+        // @ts-ignore
         resolvedVariables._debug,
         variables => !_.isEmpty(variables.resolved),
       ),
@@ -139,12 +180,71 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
     })
   }
 
+  classes.root = cx(componentClassName, classes.__root, className)
+
   return {
     classes,
     variables: resolvedVariables,
     styles: resolvedStyles,
     theme,
   }
+}
+
+const getResolvedStyles = ({ theme, componentKey, props, resolvedVariables, rtl, disableAnimations, renderer }: {
+  theme: ThemePrepared
+  componentKey: string
+  props: PropsWithVarsAndStyles & { design?: ComponentDesignProp }
+  resolvedVariables: ComponentVariablesPrepared
+  rtl: boolean
+  disableAnimations: boolean
+  renderer: {
+    renderRule: RendererRenderRule
+  }
+}): {
+  resolvedStyles: ICSSInJSStyle
+  resolvedStylesDebug: Record<string, { styles: Object }[]>
+  classes: ComponentSlotClasses
+} => {
+  // Resolve styles using resolved variables, merge results, allow props.styles to override
+  let mergedStyles: ComponentSlotStylesPrepared = theme.componentStyles[componentKey] || {
+    root: () => ({}),
+  }
+
+  const hasInlineOverrides = !_.isNil(props.design) || !_.isNil(props.styles)
+
+  if (hasInlineOverrides) {
+    mergedStyles = mergeComponentStyles(
+      mergedStyles,
+      props.design && withDebugId({ root: props.design }, 'props.design'),
+      props.styles &&
+      withDebugId({ root: props.styles } as ComponentSlotStylesInput, 'props.styles'),
+    )
+  }
+
+  const styleParam: ComponentStyleFunctionParam = {
+    displayName: componentKey,
+    props,
+    variables: resolvedVariables,
+    theme,
+    rtl,
+    disableAnimations,
+  }
+
+  // Fela plugins rely on `direction` param in `theme` prop instead of RTL
+  // Our API should be aligned with it
+  // Heads Up! Keep in sync with Design.tsx render logic
+  const direction = rtl ? 'rtl' : 'ltr'
+  const felaParam: RendererParam = {
+    theme: { direction },
+    disableAnimations,
+    displayName: componentKey, // does not affect styles, only used by useEnhancedRenderer in docs
+  }
+
+  const result = resolveStylesAndClasses(mergedStyles, styleParam, (style: ICSSInJSStyle) =>
+    renderer.renderRule(() => style, felaParam),
+  )
+
+  return result
 }
 
 export default getStyles
