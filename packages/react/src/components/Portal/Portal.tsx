@@ -142,7 +142,7 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
             )}
             <EventListener
               listener={this.handleDocumentClick}
-              targetRef={this.context.targetRef}
+              target={this.context.target}
               type="click"
             />
           </PortalInner>
