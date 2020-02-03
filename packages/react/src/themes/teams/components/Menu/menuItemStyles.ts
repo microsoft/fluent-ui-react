@@ -93,10 +93,12 @@ const pointingBeak = ({
   props,
   variables: v,
   colors,
+  zIndex,
 }: {
   props: MenuItemProps
   variables: MenuVariables
   colors: StrictColorScheme<ItemType<typeof menuColorAreas>>
+  zIndex: number
 }): ICSSInJSStyle => {
   const { pointing, primary } = props
 
@@ -134,14 +136,14 @@ const pointingBeak = ({
       height: pxToRem(10),
       border: 'none',
       ...borders,
-      zIndex: 2,
+      zIndex,
       transition: 'background .1s ease',
     },
   }
 }
 
 const menuItemStyles: ComponentSlotStylesPrepared<MenuItemPropsAndState, MenuVariables> = {
-  wrapper: ({ props, variables: v, theme }): ICSSInJSStyle => {
+  wrapper: ({ props, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
     const {
       active,
       disabled,
@@ -222,7 +224,12 @@ const menuItemStyles: ComponentSlotStylesPrepared<MenuItemPropsAndState, MenuVar
 
         ...(pointing &&
           !vertical && {
-            ...pointingBeak({ props, variables: v, colors }),
+            ...pointingBeak({
+              props,
+              variables: v,
+              colors,
+              zIndex: siteVariables.zIndexes.menuItem,
+            }),
           }),
       }),
 
@@ -425,7 +432,7 @@ const menuItemStyles: ComponentSlotStylesPrepared<MenuItemPropsAndState, MenuVar
     }),
   }),
 
-  menu: () => ({ zIndex: 1000 }),
+  menu: ({ theme: { siteVariables } }) => ({ zIndex: siteVariables.zIndexes.overlay }),
 
   indicator: ({ props: p }) => ({
     position: 'relative',

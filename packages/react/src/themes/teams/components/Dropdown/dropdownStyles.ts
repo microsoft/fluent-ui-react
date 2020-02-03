@@ -143,12 +143,12 @@ const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, Dropdow
     }
   },
 
-  list: ({ props: p, variables: v }): ICSSInJSStyle => ({
+  list: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
     outline: 0,
     borderStyle: 'solid',
     borderWidth: p.open ? v.listBorderWidth : '0px',
     borderColor: v.listBorderColor,
-    zIndex: 1000,
+    zIndex: siteVariables.zIndexes.overlay,
     maxHeight: v.listMaxHeight,
     overflowY: 'auto',
     width: getWidth(p, v),

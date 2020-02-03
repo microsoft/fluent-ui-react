@@ -29,7 +29,7 @@ export default {
       ':hover': {
         [`& .${Embed.slotClassNames.control}`]: {
           opacity: 1,
-          zIndex: 1,
+          zIndex: siteVariables.zIndexes.overlay,
         },
       },
     }

@@ -72,7 +72,7 @@ const listItemStyles: ComponentSlotStylesPrepared<ListItemStylesProps, ListItemV
         ':focus': borderFocusStyles[':focus'],
         ':focus-visible': {
           ...borderFocusStyles[':focus-visible'],
-          zIndex: 1,
+          zIndex: siteVariables.zIndexes.overlay,
         },
 
         ...(p.selected && selectedStyle(v)),

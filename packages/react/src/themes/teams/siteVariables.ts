@@ -62,6 +62,17 @@ export const lineHeightLarge = 1.3333
 export const lineHeightLarger = 1.3333
 
 //
+// Z-INDEX
+//
+export const zIndexes = {
+  background: 0,
+  foreground: 1,
+  menuItem: 2,
+  overlay: 1000,
+  debug: 999999999,
+}
+
+//
 // SEMANTIC ASSIGNMENTS
 //
 export const bodyPadding = 0
