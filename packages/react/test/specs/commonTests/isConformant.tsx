@@ -390,15 +390,20 @@ export default function isConformant(
         const eventTarget = getEventTargetComponent(component, listenerName, eventTargets)
         const customHandler: Function = eventTarget.prop(listenerName)
 
-        act(() => {
-          if (customHandler) {
+        if (customHandler) {
+          act(() => {
             customHandler(eventShape)
-          } else if (Component.propTypes[listenerName]) {
+          })
+        } else {
+          if (Component.propTypes[listenerName]) {
             throw new Error(
               `Handler for '${listenerName}' is not passed to child event emitter element <${eventTarget.type()} />`,
             )
           }
-        })
+
+          // We are cheking only props handled by component
+          return
+        }
 
         // give event listeners opportunity to cleanup
         if (component.instance() && component.instance().componentWillUnmount) {
