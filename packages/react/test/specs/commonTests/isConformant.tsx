@@ -405,7 +405,6 @@ export default function isConformant(
 
         const component = mount(<Component {...props} />)
         const eventTarget = getEventTargetComponent(component, listenerName, eventTargets)
-
         const customHandler: Function = eventTarget.prop(listenerName)
 
         if (customHandler) {
