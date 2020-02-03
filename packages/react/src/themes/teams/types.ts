@@ -36,8 +36,8 @@ import { InputProps } from '../../components/Input/Input'
 import { ItemLayoutProps } from '../../components/ItemLayout/ItemLayout'
 import { LabelProps } from '../../components/Label/Label'
 import { LayoutProps } from '../../components/Layout/Layout'
-import { ListItemProps } from '../../components/List/ListItem'
-import { ListProps } from '../../components/List/List'
+import { ListStylesProps } from './components/List/listStyles'
+import { ListItemStylesProps } from './components/List/listItemStyles'
 import { LoaderProps } from '../../components/Loader/Loader'
 import { MenuItemProps } from '../../components/Menu/MenuItem'
 import { MenuProps } from '../../components/Menu/Menu'
@@ -93,8 +93,8 @@ export type TeamsThemeStylesProps = {
   ItemLayout?: ItemLayoutProps
   Label?: LabelProps
   Layout?: LayoutProps
-  List?: ListProps
-  ListItem?: ListItemProps
+  List?: ListStylesProps
+  ListItem?: ListItemStylesProps
   Loader?: LoaderProps
   Menu?: MenuProps
   MenuItem?: MenuItemProps

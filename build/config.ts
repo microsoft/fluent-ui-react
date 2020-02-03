@@ -1,5 +1,6 @@
 import * as path from 'path'
 import * as _ from 'lodash'
+import * as webpack from 'webpack'
 
 // ------------------------------------
 // Environment vars
@@ -21,12 +22,14 @@ const envConfig = {
   // ----------------------------------
   path_base: path.resolve(__dirname, '..'),
   dir_build: 'build',
+  dir_docs: 'docs',
   dir_docs_dist: 'docs/dist',
   dir_docs_src: 'docs/src',
   dir_e2e: 'e2e',
   dir_e2e_src: 'e2e/server',
   dir_e2e_dist: 'e2e/dist',
   dir_packages: 'packages',
+  dir_perf: 'perf',
   dir_perf_dist: 'perf/dist',
   dir_perf_src: 'perf/src',
   dir_umd_dist: 'dist/umd',
@@ -41,6 +44,7 @@ const fromBase = (...paths: string[]) => (...subPaths: string[]) => base(...path
 
 const tempPaths = {
   build: fromBase(envConfig.dir_build),
+  docs: fromBase(envConfig.dir_docs),
   docsDist: fromBase(envConfig.dir_docs_dist),
   docsSrc: fromBase(envConfig.dir_docs_src),
   e2e: fromBase(envConfig.dir_e2e),
@@ -51,6 +55,7 @@ const tempPaths = {
   packageSrc: (packageName: string, ...paths: string[]) =>
     base(envConfig.dir_packages, packageName, 'src', ...paths),
   packages: fromBase(envConfig.dir_packages),
+  perf: fromBase(envConfig.dir_perf),
   perfDist: fromBase(envConfig.dir_perf_dist),
   perfSrc: fromBase(envConfig.dir_perf_src),
   umdDist: fromBase(envConfig.dir_umd_dist),
@@ -91,8 +96,8 @@ const config = {
   // ----------------------------------
   // Compiler Configuration
   // ----------------------------------
-  compiler_devtool: __DEV__ && 'eval-source-map',
-  compiler_mode: __DEV__ ? 'development' : 'production',
+  compiler_devtool: __DEV__ && ('eval-source-map' as webpack.Options.Devtool),
+  compiler_mode: (__DEV__ ? 'development' : 'production') as webpack.Configuration['mode'],
   compiler_globals: {
     __DEV__,
     __PERF__,

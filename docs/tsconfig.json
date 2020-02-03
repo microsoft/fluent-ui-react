@@ -1,3 +1,15 @@
 {
-  "extends": "../build/tsconfig.docs.json"
+  "extends": "../build/tsconfig.common.json",
+  "compilerOptions": {
+    "module": "esnext",
+    "paths": {
+      "@fluentui/*": ["packages/*/src"],
+      "docs/*": ["docs/*"],
+      "src/*": ["packages/react/src/*"],
+      "test/*": ["packages/react/test/*"]
+    },
+    "typeRoots": ["../types", "../node_modules/@types"],
+    "types": ["node", "webpack-env", "screener-runner"]
+  },
+  "include": ["./src"]
 }

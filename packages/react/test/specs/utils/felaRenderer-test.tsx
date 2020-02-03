@@ -15,10 +15,7 @@ import {
 // Issue: https://github.com/microsoft/fluent-ui-react/issues/2247
 // This adds required styles when needed.
 const AnimationComponentStyles = {
-  root: () => ({
-    display: 'inline-block',
-  }),
-  children: ({ props: p, theme }) => {
+  root: ({ props: p, theme }) => {
     const animation: ComponentAnimationProp = {
       name: p.name,
       keyframeParams: p.keyframeParams,
@@ -59,7 +56,7 @@ xdescribe('felaRenderer', () => {
   })
 
   test('keyframe colors are rendered', () => {
-    const spinner = {
+    const colorChanger = {
       keyframe: ({ fromColor, toColor }) => ({
         from: {
           color: fromColor,
@@ -79,10 +76,10 @@ xdescribe('felaRenderer', () => {
       <Provider
         theme={{
           componentStyles: { Animation: AnimationComponentStyles },
-          animations: { spinner },
+          animations: { colorChanger },
         }}
       >
-        <Animation name="spinner">
+        <Animation name="colorChanger">
           <Box />
         </Animation>
       </Provider>,
@@ -95,7 +92,7 @@ xdescribe('felaRenderer', () => {
   test('array returned by keyframe results in CSS fallback values', () => {
     const steps = ['0%', '100%']
 
-    const spinner = {
+    const colorChanger = {
       keyframe: ({ steps }) => {
         const obj = {}
         steps.forEach((step: string, index) => {
@@ -110,10 +107,10 @@ xdescribe('felaRenderer', () => {
       <Provider
         theme={{
           componentStyles: { Animation: AnimationComponentStyles },
-          animations: { spinner },
+          animations: { colorChanger },
         }}
       >
-        <Animation name="spinner">
+        <Animation name="colorChanger">
           <Box />
         </Animation>
       </Provider>,
