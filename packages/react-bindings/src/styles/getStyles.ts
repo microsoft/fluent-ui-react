@@ -88,9 +88,9 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
     // Merge inline variables on top of cached variables
     resolvedVariables = props.variables
       ? mergeComponentVariables(
-        resolvedComponentVariables[componentKey],
-        withDebugId(props.variables, 'props.variables'),
-      )(theme.siteVariables)
+          resolvedComponentVariables[componentKey],
+          withDebugId(props.variables, 'props.variables'),
+        )(theme.siteVariables)
       : resolvedComponentVariables[componentKey]
   }
 
@@ -137,11 +137,7 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
     })
   }
 
-  const {
-    classes,
-    resolvedStylesDebug,
-    resolvedStyles,
-  } = resolveStylesResult
+  const { classes, resolvedStylesDebug, resolvedStyles } = resolveStylesResult
 
   // conditionally add sources for evaluating debug information to component
   if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
@@ -182,7 +178,15 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
   }
 }
 
-const getResolvedStyles = ({ theme, componentKey, props, resolvedVariables, rtl, disableAnimations, renderer }: {
+const getResolvedStyles = ({
+  theme,
+  componentKey,
+  props,
+  resolvedVariables,
+  rtl,
+  disableAnimations,
+  renderer,
+}: {
   theme: ThemePrepared
   componentKey: string
   props: PropsWithVarsAndStyles & { design?: ComponentDesignProp }
@@ -205,7 +209,7 @@ const getResolvedStyles = ({ theme, componentKey, props, resolvedVariables, rtl,
       mergedStyles,
       props.design && withDebugId({ root: props.design }, 'props.design'),
       props.styles &&
-      withDebugId({ root: props.styles } as ComponentSlotStylesInput, 'props.styles'),
+        withDebugId({ root: props.styles } as ComponentSlotStylesInput, 'props.styles'),
     )
   }
 
