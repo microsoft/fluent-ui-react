@@ -16,6 +16,10 @@ The theming mechanism as part of Fluent UI should be flexible and provide suppor
 
 CSSinJS support that will not tie the users to just one CSS in JS framework. The users should be able to define their styles and specify their engine that will be aligned to some defined interface.
 
+#### Application developers can get small bundles when only using a subset of components
+
+If the client's application contains only a subset of the Fluent components, we should provide a mechanism for the application developers to register the theme only for the components used.
+
 #### A component should be able to render any theme (including tokens, styles, icons and animations)
 
 The client should be able to reuse the components between different themes. Supporting new theme in the application should not require building new components.
