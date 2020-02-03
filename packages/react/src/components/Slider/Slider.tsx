@@ -211,6 +211,7 @@ const Slider: React.FC<WithAsProp<SliderProps>> &
     defaultProps: () =>
       getA11Props('input', {
         ...htmlInputProps,
+        as: 'input',
         className: Slider.slotClassNames.input,
         fluid,
         min: numericMin,
