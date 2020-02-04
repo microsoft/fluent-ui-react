@@ -28,16 +28,16 @@ const resolveStylesAndClasses = (
   styleParam: ComponentStyleFunctionParam,
   renderStyles: (styles: ICSSInJSStyle) => string,
 
-  displayName: string,
-  cacheEnabled: boolean | undefined,
-  theme: ThemePrepared,
-  restProps: string,
+  cacheEnabled?: boolean | undefined,
+  displayName?: string,
+  theme?: ThemePrepared,
+  props?: string,
 ): ResolveStylesResult => {
   const resolvedStyles: Record<string, ICSSInJSStyle> = {}
   const resolvedStylesDebug: Record<string, { styles: Object }[]> = {}
   const classes: Record<string, string> = {}
 
-  if (cacheEnabled) {
+  if (cacheEnabled && theme) {
     if (!stylesCache.has(theme)) {
       stylesCache.set(theme, {})
     }
@@ -49,14 +49,8 @@ const resolveStylesAndClasses = (
   Object.keys(mergedStyles).forEach(slotName => {
     // resolve/render slot styles once and cache
     const lazyEvaluationKey = `${slotName}__return`
-    const stylesCacheKey = cacheEnabled
-      ? displayName +
-        ':' +
-        slotName +
-        ':' +
-        JSON.stringify(restProps) +
-        styleParam.rtl +
-        styleParam.disableAnimations
+    const stylesCacheKey = cacheEnabled && displayName && props
+      ? `${displayName}: ${slotName}: ${JSON.stringify(props)}${styleParam.rtl}${styleParam.disableAnimations}`
       : ''
 
     Object.defineProperty(resolvedStyles, slotName, {
@@ -64,7 +58,7 @@ const resolveStylesAndClasses = (
       configurable: false,
       set(val: ICSSInJSStyle) {
         // Add to the cache if it's enabled
-        if (cacheEnabled) {
+        if (cacheEnabled && theme) {
           stylesCache.set(theme, {
             ...stylesCache.get(theme),
             [stylesCacheKey]: val,
@@ -75,8 +69,7 @@ const resolveStylesAndClasses = (
       },
       get(): ICSSInJSStyle {
         // If caching enabled and entry exists, get from cache, avoid lazy evaluation
-
-        if (cacheEnabled) {
+        if (cacheEnabled && theme) {
           // @ts-ignore
           if (stylesCache.get(theme)[stylesCacheKey]) {
             // @ts-ignore
@@ -100,25 +93,21 @@ const resolveStylesAndClasses = (
       },
     })
 
-    // TODO: Fix this awesome thing!
-    const className = slotName === 'root' ? '__root' : slotName
-    const cacheClassKey = `${className}__return`
-
-    Object.defineProperty(classes, className, {
+    Object.defineProperty(classes, slotName, {
       enumerable: false,
       configurable: false,
       set(val: string) {
-        if (cacheEnabled) {
+        if (cacheEnabled && theme) {
           classesCache.set(theme, {
             ...classesCache.get(theme),
             [stylesCacheKey]: val,
           })
         }
 
-        classes[cacheClassKey] = val
+        classes[lazyEvaluationKey] = val
       },
       get(): string {
-        if (cacheEnabled) {
+        if (cacheEnabled && theme) {
           // @ts-ignore
           if (classesCache.get(theme)[stylesCacheKey]) {
             // @ts-ignore
@@ -126,18 +115,18 @@ const resolveStylesAndClasses = (
           }
         }
 
-        if (classes[cacheClassKey]) {
-          return classes[cacheClassKey]
+        if (classes[lazyEvaluationKey]) {
+          return classes[lazyEvaluationKey]
         }
 
         // this resolves the getter magic
         const styleObj = resolvedStyles[slotName]
 
         if (renderStyles && styleObj) {
-          classes[cacheClassKey] = renderStyles(styleObj)
+          classes[lazyEvaluationKey] = renderStyles(styleObj)
         }
 
-        return classes[cacheClassKey]
+        return classes[lazyEvaluationKey]
       },
     })
   })

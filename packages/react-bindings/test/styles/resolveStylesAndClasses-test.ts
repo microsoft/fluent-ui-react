@@ -23,6 +23,7 @@ const componentStyles: ComponentSlotStylesPrepared<{}, { color: string }> = {
   }),
 }
 
+// TODO: add tests for caching scenarios
 describe('resolveStylesAndClasses', () => {
   test('resolves styles', () => {
     const { resolvedStyles } = resolveStylesAndClasses(componentStyles, styleParam, () => '')

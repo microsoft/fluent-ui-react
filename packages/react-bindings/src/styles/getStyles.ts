@@ -36,7 +36,6 @@ type GetStylesOptions = StylesContextValue<{
   saveDebug: (debug: DebugData | null) => void
 
   __experimental_cache?: boolean
-  unstable_cache_variables_mode: 'classic' | 'enforced'
 }
 
 export type GetStylesResult = {
@@ -110,16 +109,16 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
   // STYLES
   //
 
-  const { classes, resolvedStyles, resolvedStylesDebug } = getResolvedStyles({
+  const { classes, resolvedStyles, resolvedStylesDebug } = resolveStyles({
     theme,
-    componentKey: displayName,
+    displayName,
     disableAnimations,
     rtl,
     renderer,
     props,
     resolvedVariables,
     cacheEnabled,
-    restProps,
+    styleProps: restProps,
   })
 
   // conditionally add sources for evaluating debug information to component
@@ -151,7 +150,7 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
     })
   }
 
-  classes.root = cx(componentClassName, classes.__root, className)
+  classes.root = cx(componentClassName, classes.root, className)
 
   return {
     classes,
@@ -161,19 +160,19 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
   }
 }
 
-const getResolvedStyles = ({
-  theme,
-  componentKey,
-  props,
-  resolvedVariables,
-  rtl,
-  disableAnimations,
-  renderer,
-  cacheEnabled,
-  restProps,
-}: {
+const resolveStyles = ({
+                         theme,
+                         displayName,
+                         props,
+                         resolvedVariables,
+                         rtl,
+                         disableAnimations,
+                         renderer,
+                         cacheEnabled,
+                         styleProps,
+                       }: {
   theme: ThemePrepared
-  componentKey: string
+  displayName: string
   props: PropsWithVarsAndStyles & { design?: ComponentDesignProp }
   resolvedVariables: object
   rtl: boolean
@@ -181,10 +180,11 @@ const getResolvedStyles = ({
   renderer: {
     renderRule: RendererRenderRule
   }
-  cacheEnabled: boolean
+  cacheEnabled: boolean | undefined
+  styleProps: any
 }): ResolveStylesResult => {
   // Resolve styles using resolved variables, merge results, allow props.styles to override
-  let mergedStyles: ComponentSlotStylesPrepared = theme.componentStyles[componentKey] || {
+  let mergedStyles: ComponentSlotStylesPrepared = theme.componentStyles[displayName] || {
     root: () => ({}),
   }
 
@@ -195,12 +195,12 @@ const getResolvedStyles = ({
       mergedStyles,
       props.design && withDebugId({ root: props.design }, 'props.design'),
       props.styles &&
-        withDebugId({ root: props.styles } as ComponentSlotStylesInput, 'props.styles'),
+      withDebugId({ root: props.styles } as ComponentSlotStylesInput, 'props.styles'),
     )
   }
 
   const styleParam: ComponentStyleFunctionParam = {
-    displayName: componentKey,
+    displayName,
     props,
     variables: resolvedVariables,
     theme,
@@ -215,18 +215,18 @@ const getResolvedStyles = ({
   const felaParam: RendererParam = {
     theme: { direction },
     disableAnimations,
-    displayName: componentKey, // does not affect styles, only used by useEnhancedRenderer in docs
+    displayName, // does not affect styles, only used by useEnhancedRenderer in docs
   }
 
   const result = resolveStylesAndClasses(
     mergedStyles,
     styleParam,
     (style: ICSSInJSStyle) => renderer.renderRule(() => style, felaParam),
-    componentKey,
     cacheEnabled,
+    displayName,
     theme,
-    restProps,
-  )
+    styleProps,
+)
 
   return result
 }
