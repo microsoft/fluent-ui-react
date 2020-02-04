@@ -38,6 +38,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Adding actionable items into `Carousel` @kolaps33 ([#2271](https://github.com/microsoft/fluent-ui-react/pull/2271))
 - Fix positioning fixes for `actions` in `ChatMessage` @layershifter ([#2300](https://github.com/microsoft/fluent-ui-react/pull/2300))
 - `FocusZone`: Cleanup DOM element references when the component is unmounted @johannao76 ([#2306](https://github.com/microsoft/fluent-ui-react/pull/2306))
+- Add responsive breakpoints to `Dialog` component in Teams theme @layershifter ([#2193](https://github.com/microsoft/fluent-ui-react/pull/2193))
 
 ### Features
 - Allow `useRef` hook used for storing debugging data to be defined in any order with other hooks in functional components @layershifter, @mnajdova ([#2236](https://github.com/microsoft/fluent-ui-react/pull/2236))
