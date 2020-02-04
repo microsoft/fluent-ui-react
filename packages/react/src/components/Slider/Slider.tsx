@@ -172,7 +172,7 @@ const Slider: React.FC<WithAsProp<SliderProps>> &
       vertical,
     }),
   })
-  const { classes } = useStyles(Slider.displayName, {
+  const { classes, styles: resolvedStyles } = useStyles(Slider.displayName, {
     className: Slider.className,
     mapPropsToStyles: () => ({
       fluid,
@@ -217,6 +217,7 @@ const Slider: React.FC<WithAsProp<SliderProps>> &
         min: numericMin,
         max: numericMax,
         step,
+        styles: resolvedStyles.input,
         type,
         value: numericValue,
         vertical,

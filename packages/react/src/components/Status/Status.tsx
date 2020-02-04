@@ -68,7 +68,6 @@ const Status: React.FC<WithAsProp<StatusProps>> & FluentComponentStaticProps = p
     defaultProps: () => ({
       size: 'smallest',
       styles: resolvedStyles.icon,
-      variables: variables.icon,
       xSpacing: 'none',
     }),
   })
