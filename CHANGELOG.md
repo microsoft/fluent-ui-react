@@ -50,6 +50,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Documentation
 - Add per-component performance charts @miroslavstastny ([#2240](https://github.com/microsoft/fluent-ui-react/pull/2240))
+- Fix dependencies in project exported to codesandbox @miroslavstastny ([#2314](https://github.com/microsoft/fluent-ui-react/pull/2314))
 
 <!--------------------------------[ v0.43.1 ]------------------------------- -->
 ## [v0.43.1](https://github.com/microsoft/fluent-ui-react/tree/v0.43.1) (2020-01-30)
