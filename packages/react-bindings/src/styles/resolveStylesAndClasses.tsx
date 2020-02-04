@@ -4,6 +4,7 @@ import {
   ICSSInJSStyle,
   ComponentStyleFunctionParam,
   ComponentSlotStylesResolved,
+  ThemePrepared,
 } from '@fluentui/styles'
 import { ComponentSlotClasses } from '../styles/types'
 
@@ -13,55 +14,118 @@ export type ResolveStylesResult = {
   classes: ComponentSlotClasses
 }
 
-// Both resolvedStyles and classes are objects of getters with lazy evaluation
+// TODO: Describe me
+
+const classesCache = new WeakMap<ThemePrepared, Record<string, string>>()
+const stylesCache = new WeakMap<ThemePrepared, Record<string, ICSSInJSStyle>>()
+
+/**
+ * // Both resolvedStyles and classes are objects of getters with lazy evaluation
+ * TODO: Describe me
+ */
 const resolveStylesAndClasses = (
   mergedStyles: ComponentSlotStylesPrepared,
   styleParam: ComponentStyleFunctionParam,
   renderStyles: (styles: ICSSInJSStyle) => string,
+
+  displayName: string,
+  cacheEnabled: boolean | undefined,
+  theme: ThemePrepared,
+  restProps: string,
 ): ResolveStylesResult => {
   const resolvedStyles: Record<string, ICSSInJSStyle> = {}
   const resolvedStylesDebug: Record<string, { styles: Object }[]> = {}
   const classes: Record<string, string> = {}
 
+  if (cacheEnabled) {
+    if (!stylesCache.has(theme)) {
+      stylesCache.set(theme, {})
+    }
+    if (!classesCache.has(theme)) {
+      classesCache.set(theme, {})
+    }
+  }
+
   Object.keys(mergedStyles).forEach(slotName => {
     // resolve/render slot styles once and cache
-    const cacheKey = `${slotName}__return`
+    const lazyEvaluationKey = `${slotName}__return`
+    const stylesCacheKey = cacheEnabled
+      ? displayName +
+        ':' +
+        slotName +
+        ':' +
+        JSON.stringify(restProps) +
+        styleParam.rtl +
+        styleParam.disableAnimations
+      : ''
 
     Object.defineProperty(resolvedStyles, slotName, {
       enumerable: false,
       configurable: false,
-      set(val) {
-        resolvedStyles[cacheKey] = val
-        return true
+      set(val: ICSSInJSStyle) {
+        // Add to the cache if it's enabled
+        if (cacheEnabled) {
+          stylesCache.set(theme, {
+            ...stylesCache.get(theme),
+            [stylesCacheKey]: val,
+          })
+        }
+
+        resolvedStyles[lazyEvaluationKey] = val
       },
-      get() {
-        if (resolvedStyles[cacheKey]) {
-          return resolvedStyles[cacheKey]
+      get(): ICSSInJSStyle {
+        // If caching enabled and entry exists, get from cache, avoid lazy evaluation
+
+        if (cacheEnabled) {
+          // @ts-ignore
+          if (stylesCache.get(theme)[stylesCacheKey]) {
+            // @ts-ignore
+            return stylesCache.get(theme)[stylesCacheKey]
+          }
+        }
+
+        if (resolvedStyles[lazyEvaluationKey]) {
+          return resolvedStyles[lazyEvaluationKey]
         }
 
         // resolve/render slot styles once and cache
-        resolvedStyles[cacheKey] = mergedStyles[slotName](styleParam)
+        resolvedStyles[lazyEvaluationKey] = mergedStyles[slotName](styleParam)
 
         if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
           resolvedStylesDebug[slotName] = resolvedStyles[slotName]['_debug']
           delete resolvedStyles[slotName]['_debug']
         }
 
-        return resolvedStyles[cacheKey]
+        return resolvedStyles[lazyEvaluationKey]
       },
     })
 
+    // TODO: Fix this awesome thing!
     const className = slotName === 'root' ? '__root' : slotName
     const cacheClassKey = `${className}__return`
 
     Object.defineProperty(classes, className, {
       enumerable: false,
       configurable: false,
-      set(val) {
+      set(val: string) {
+        if (cacheEnabled) {
+          classesCache.set(theme, {
+            ...classesCache.get(theme),
+            [stylesCacheKey]: val,
+          })
+        }
+
         classes[cacheClassKey] = val
-        return true
       },
-      get() {
+      get(): string {
+        if (cacheEnabled) {
+          // @ts-ignore
+          if (classesCache.get(theme)[stylesCacheKey]) {
+            // @ts-ignore
+            return classesCache.get(theme)[stylesCacheKey]
+          }
+        }
+
         if (classes[cacheClassKey]) {
           return classes[cacheClassKey]
         }

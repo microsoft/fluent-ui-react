@@ -36,6 +36,7 @@ type GetStylesOptions = StylesContextValue<{
   saveDebug: (debug: DebugData | null) => void
 
   __experimental_cache?: boolean
+  unstable_cache_variables_mode: 'classic' | 'enforced'
 }
 
 export type GetStylesResult = {
@@ -45,7 +46,42 @@ export type GetStylesResult = {
   theme: StylesContextValue['theme']
 }
 
-const stylesCache = new WeakMap<ThemePrepared, Record<string, ResolveStylesResult>>()
+const variablesCache = new WeakMap<ThemePrepared, Record<string, any>>()
+
+const resolveVariables = (
+  displayName: string,
+  theme: ThemePrepared,
+  variables: any | undefined,
+): any => {
+  //
+  // Simple caching model, works only if there is no `props.variables`
+  // Resolves variables for this component, cache the result in provider
+  //
+
+  if (!variablesCache.has(theme)) {
+    variablesCache.set(theme, {})
+  }
+
+  // @ts-ignore
+  if (!variablesCache.get(theme)[displayName]) {
+    // component variables must not be undefined/null (see mergeComponentVariables contract)
+    variablesCache.set(theme, {
+      ...variablesCache.get(theme),
+      [displayName]: callable(theme.componentVariables[displayName])(theme.siteVariables) || {},
+    })
+  }
+
+  if (variables === undefined) {
+    // @ts-ignore
+    return variablesCache.get(theme)[displayName]
+  }
+
+  return mergeComponentVariables(
+    // @ts-ignore
+    variablesCache.get(theme)[displayName],
+    withDebugId(variables, 'props.variables'),
+  )(theme.siteVariables)
+}
 
 const getStyles = (options: GetStylesOptions): GetStylesResult => {
   const {
@@ -57,87 +93,34 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
     rtl,
     saveDebug,
     theme,
-    _internal_resolvedComponentVariables: resolvedComponentVariables,
     __experimental_cache: cacheEnabled,
   } = options
-
   const { className, design, styles, variables, ...restProps } = props
 
-  const componentKey = displayName
-  const noInlineOverrides = !(design || styles || variables)
-
   //
-  // VARIABLES
+  // To compute styles are going through three stages:
+  // - resolve variables (siteVariables => componentVariables + props.variables)
+  // - resolve styles (with resolvedVariables & props.styles & props.design)
+  // - compute classes (with resolvedStyles)
   //
 
-  let resolvedVariables: object
-
-  // Resolve variables for this component, cache the result in provider
-  if (!resolvedComponentVariables[componentKey]) {
-    resolvedComponentVariables[componentKey] =
-      callable(theme.componentVariables[componentKey])(theme.siteVariables) || {} // component variables must not be undefined/null (see mergeComponentVariables contract)
-  }
-
-  if (cacheEnabled && noInlineOverrides) {
-    resolvedVariables = resolvedComponentVariables[componentKey]
-  } else {
-    //
-    // Old caching of variables
-    //
-
-    // Merge inline variables on top of cached variables
-    resolvedVariables = props.variables
-      ? mergeComponentVariables(
-          resolvedComponentVariables[componentKey],
-          withDebugId(props.variables, 'props.variables'),
-        )(theme.siteVariables)
-      : resolvedComponentVariables[componentKey]
-  }
+  const resolvedVariables: any = resolveVariables(displayName, theme, props.variables)
 
   //
   // STYLES
   //
 
-  let resolveStylesResult: ResolveStylesResult
-
-  if (cacheEnabled && noInlineOverrides) {
-    const stylesKey = componentKey + JSON.stringify(restProps) + rtl + disableAnimations
-    let themeStylesCache = stylesCache.get(theme)
-
-    if (!themeStylesCache) {
-      themeStylesCache = {}
-      stylesCache.set(theme, themeStylesCache)
-    }
-
-    if (themeStylesCache[stylesKey]) {
-      resolveStylesResult = themeStylesCache[stylesKey]
-    } else {
-      resolveStylesResult = getResolvedStyles({
-        theme,
-        componentKey,
-        disableAnimations,
-        rtl,
-        renderer,
-        props,
-        resolvedVariables,
-      })
-
-      themeStylesCache[stylesKey] = resolveStylesResult
-      stylesCache.set(theme, themeStylesCache)
-    }
-  } else {
-    resolveStylesResult = getResolvedStyles({
-      theme,
-      componentKey,
-      disableAnimations,
-      rtl,
-      renderer,
-      props,
-      resolvedVariables,
-    })
-  }
-
-  const { classes, resolvedStylesDebug, resolvedStyles } = resolveStylesResult
+  const { classes, resolvedStyles, resolvedStylesDebug } = getResolvedStyles({
+    theme,
+    componentKey: displayName,
+    disableAnimations,
+    rtl,
+    renderer,
+    props,
+    resolvedVariables,
+    cacheEnabled,
+    restProps,
+  })
 
   // conditionally add sources for evaluating debug information to component
   if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
@@ -186,6 +169,8 @@ const getResolvedStyles = ({
   rtl,
   disableAnimations,
   renderer,
+  cacheEnabled,
+  restProps,
 }: {
   theme: ThemePrepared
   componentKey: string
@@ -196,6 +181,7 @@ const getResolvedStyles = ({
   renderer: {
     renderRule: RendererRenderRule
   }
+  cacheEnabled: boolean
 }): ResolveStylesResult => {
   // Resolve styles using resolved variables, merge results, allow props.styles to override
   let mergedStyles: ComponentSlotStylesPrepared = theme.componentStyles[componentKey] || {
@@ -232,8 +218,14 @@ const getResolvedStyles = ({
     displayName: componentKey, // does not affect styles, only used by useEnhancedRenderer in docs
   }
 
-  const result = resolveStylesAndClasses(mergedStyles, styleParam, (style: ICSSInJSStyle) =>
-    renderer.renderRule(() => style, felaParam),
+  const result = resolveStylesAndClasses(
+    mergedStyles,
+    styleParam,
+    (style: ICSSInJSStyle) => renderer.renderRule(() => style, felaParam),
+    componentKey,
+    cacheEnabled,
+    theme,
+    restProps,
   )
 
   return result
