@@ -124,13 +124,14 @@ const Icon: React.FC<WithAsProp<IconProps>> & FluentComponentStaticProps = props
   const maybeIcon = icons[name]
   const isSvgIcon = maybeIcon && maybeIcon.isSvg
 
-  setEnd()
-
-  return (
+  const element = (
     <ElementType {...getA11Props('root', { className: classes.root, ...unhandledProps })}>
       {isSvgIcon && callable(maybeIcon.icon)({ classes, rtl: context.rtl, props })}
     </ElementType>
   )
+  setEnd()
+
+  return element
 }
 
 Icon.className = 'ui-icon'
