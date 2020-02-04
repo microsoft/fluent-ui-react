@@ -28,6 +28,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Restricted prop set in the `List` & `ListItem` @layershifter ([#2238](https://github.com/microsoft/fluent-ui-react/pull/2238))
 - Remove `mountDocument` prop in `Popup` & `MenuButton` components @layershifter ([#2286](https://github.com/microsoft/fluent-ui-react/pull/2286))
 - Remove `toRefObject` function @layershifter ([#2287](https://github.com/microsoft/fluent-ui-react/pull/2287))
+- Add typing `ComponentSlotStylesResolved`, that replaces the incorrect `ComponentSlotStylesPrepared` in the return value of `useStyles`, `renderComponent`, `createComponent` @mnajdova ([#2312](https://github.com/microsoft/fluent-ui-react/pull/2312))
 
 ### Fixes
 - Fix styleParam to always be required in the styles functions @layershifter, @mnajdova ([#2235](https://github.com/microsoft/fluent-ui-react/pull/2235))
