@@ -180,7 +180,7 @@ const Checkbox: React.FC<WithAsProp<CheckboxProps>> &
       {Icon.create(icon, {
         defaultProps: () =>
           getA11Props('icon', {
-            outline: toggle && !this.state.checked,
+            outline: toggle && !state.checked,
             size: toggle ? 'medium' : 'smaller',
             className: Checkbox.slotClassNames.indicator,
             name: toggle ? 'icon-circle' : 'icon-checkmark',
@@ -190,7 +190,6 @@ const Checkbox: React.FC<WithAsProp<CheckboxProps>> &
       {labelPosition === 'end' && labelElement}
     </ElementType>
   )
-
   setEnd()
 
   return element
