@@ -30,7 +30,7 @@ import { FormProps } from '../../components/Form/Form'
 import { GridProps } from '../../components/Grid/Grid'
 import { HeaderDescriptionProps } from '../../components/Header/HeaderDescription'
 import { HeaderProps } from '../../components/Header/Header'
-import { IconProps } from '../../components/Icon/Icon'
+import { IconStylesProps } from './components/Icon/iconStyles'
 import { ImageStylesProps } from './components/Image/imageStyles'
 import { InputProps } from '../../components/Input/Input'
 import { ItemLayoutProps } from '../../components/ItemLayout/ItemLayout'
@@ -87,7 +87,7 @@ export type TeamsThemeStylesProps = {
   Grid?: GridProps
   Header?: HeaderProps
   HeaderDescription?: HeaderDescriptionProps
-  Icon?: IconProps
+  Icon?: IconStylesProps
   Image?: ImageStylesProps
   Input?: InputProps
   ItemLayout?: ItemLayoutProps

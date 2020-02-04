@@ -92,6 +92,10 @@ const Icon: React.FC<WithAsProp<IconProps>> & FluentComponentStaticProps = props
     xSpacing,
   } = props
 
+  const { icons = {} } = context.theme
+  const maybeIcon = icons[name]
+  const isSvgIcon = maybeIcon && maybeIcon.isSvg
+
   const getA11Props = useAccessibility(accessibility, {
     debugName: Icon.displayName,
     mapPropsToBehavior: () => ({
@@ -112,6 +116,8 @@ const Icon: React.FC<WithAsProp<IconProps>> & FluentComponentStaticProps = props
       rotate,
       size,
       xSpacing,
+      isFontIcon: !isSvgIcon,
+      isSvgIcon,
     }),
     mapPropsToInlineStyles: () => ({ className, design, styles, variables }),
     rtl: context.rtl,
@@ -119,10 +125,6 @@ const Icon: React.FC<WithAsProp<IconProps>> & FluentComponentStaticProps = props
 
   const ElementType = getElementType(props)
   const unhandledProps = getUnhandledProps(Icon.handledProps, props)
-
-  const { icons = {} } = context.theme
-  const maybeIcon = icons[name]
-  const isSvgIcon = maybeIcon && maybeIcon.isSvg
 
   const element = (
     <ElementType {...getA11Props('root', { className: classes.root, ...unhandledProps })}>
