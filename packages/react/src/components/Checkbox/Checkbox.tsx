@@ -160,10 +160,11 @@ const Checkbox: React.FC<WithAsProp<CheckboxProps>> &
   }
 
   const labelElement = Text.create(label, {
-    defaultProps: () => ({
-      styles: resolvedStyles.label,
-      className: Checkbox.slotClassNames.label,
-    }),
+    defaultProps: () =>
+      getA11Props('label', {
+        styles: resolvedStyles.label,
+        className: Checkbox.slotClassNames.label,
+      }),
   })
 
   const element = (
@@ -177,13 +178,14 @@ const Checkbox: React.FC<WithAsProp<CheckboxProps>> &
     >
       {labelPosition === 'start' && labelElement}
       {Icon.create(icon, {
-        defaultProps: () => ({
-          outline: toggle && !this.state.checked,
-          size: toggle ? 'medium' : 'smaller',
-          className: Checkbox.slotClassNames.indicator,
-          name: toggle ? 'icon-circle' : 'icon-checkmark',
-          styles: toggle ? resolvedStyles.toggle : resolvedStyles.checkbox,
-        }),
+        defaultProps: () =>
+          getA11Props('icon', {
+            outline: toggle && !this.state.checked,
+            size: toggle ? 'medium' : 'smaller',
+            className: Checkbox.slotClassNames.indicator,
+            name: toggle ? 'icon-circle' : 'icon-checkmark',
+            styles: toggle ? resolvedStyles.toggle : resolvedStyles.checkbox,
+          }),
       })}
       {labelPosition === 'end' && labelElement}
     </ElementType>
