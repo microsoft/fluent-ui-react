@@ -28,6 +28,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Restricted prop set in the `List` & `ListItem` @layershifter ([#2238](https://github.com/microsoft/fluent-ui-react/pull/2238))
 - Remove `mountDocument` prop in `Popup` & `MenuButton` components @layershifter ([#2286](https://github.com/microsoft/fluent-ui-react/pull/2286))
 - Remove `toRefObject` function @layershifter ([#2287](https://github.com/microsoft/fluent-ui-react/pull/2287))
+- Add typing `ComponentSlotStylesResolved`, that replaces the incorrect `ComponentSlotStylesPrepared` in the return value of `useStyles`, `renderComponent`, `createComponent` @mnajdova ([#2312](https://github.com/microsoft/fluent-ui-react/pull/2312))
 - Restricted prop set in the `Checkbox`, `Icon`, `Label`, `Slider`, `Status`, `Text` @layershifter ([#2307](https://github.com/microsoft/fluent-ui-react/pull/2307))
 
 ### Fixes
@@ -45,6 +46,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Add optional wrapper function to `List` which can be used to inject custom scrollbars to `Dropdown` @jurokapsiar ([#2092](https://github.com/microsoft/fluent-ui-react/pull/2092))
 - Add `useTelemetry()` hook for adding telemetry information for the Fluent components and improve return types for the `useStyles` and `useStateManager` hooks @mnajdova ([#2257](https://github.com/microsoft/fluent-ui-react/pull/2257))
 - Add `target` prop to `EventListener` component and `useEventListener()` hook @layershifter ([#2287](https://github.com/microsoft/fluent-ui-react/pull/2287))
+- Add `disabled` prop accordion title @jurokapsiar ([#2290](https://github.com/microsoft/fluent-ui-react/pull/2290))
 
 ### Documentation
 - Add per-component performance charts @miroslavstastny ([#2240](https://github.com/microsoft/fluent-ui-react/pull/2240))
