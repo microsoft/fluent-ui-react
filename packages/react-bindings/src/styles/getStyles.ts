@@ -2,6 +2,7 @@ import {
   callable,
   ComponentSlotStylesInput,
   ComponentSlotStylesPrepared,
+  ComponentSlotStylesResolved,
   ComponentStyleFunctionParam,
   ComponentVariablesObject,
   DebugData,
@@ -37,7 +38,7 @@ type GetStylesOptions = StylesContextValue<{
 export type GetStylesResult = {
   classes: ComponentSlotClasses
   variables: ComponentVariablesObject
-  styles: ComponentSlotStylesPrepared
+  styles: ComponentSlotStylesResolved
   theme: StylesContextValue['theme']
 }
 

@@ -75,7 +75,7 @@ const attachmentStyles: ComponentSlotStylesPrepared<AttachmentProps, AttachmentV
       ...getIconFillOrOutlineStyles({ outline: true }),
 
       ':hover': {
-        iconFilledStyles,
+        ...iconFilledStyles,
         background: 'transparent',
       },
 

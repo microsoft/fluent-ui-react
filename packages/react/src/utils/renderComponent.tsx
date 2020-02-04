@@ -11,7 +11,7 @@ import {
 } from '@fluentui/react-bindings'
 import {
   emptyTheme,
-  ComponentSlotStylesPrepared,
+  ComponentSlotStylesResolved,
   ComponentVariablesObject,
   DebugData,
   PropsWithVarsAndStyles,
@@ -28,7 +28,7 @@ export interface RenderResultConfig<P> {
   classes: ComponentSlotClasses
   unhandledProps: Props
   variables: ComponentVariablesObject
-  styles: ComponentSlotStylesPrepared
+  styles: ComponentSlotStylesResolved
   accessibility: ReactAccessibilityBehavior
   rtl: boolean
   theme: ThemePrepared
