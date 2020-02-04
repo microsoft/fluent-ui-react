@@ -109,6 +109,8 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
   // STYLES
   //
 
+  const noInlineOverrides = !(design || styles || variables)
+
   const { classes, resolvedStyles, resolvedStylesDebug } = resolveStyles({
     theme,
     displayName,
@@ -117,7 +119,7 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
     renderer,
     props,
     resolvedVariables,
-    cacheEnabled,
+    cacheEnabled : cacheEnabled && noInlineOverrides,
     styleProps: restProps,
   })
 
@@ -150,7 +152,7 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
     })
   }
 
-  classes.root = cx(componentClassName, classes.root, className)
+  classes.root = cx(componentClassName, classes.__root, className)
 
   return {
     classes,
@@ -187,10 +189,9 @@ const resolveStyles = ({
   let mergedStyles: ComponentSlotStylesPrepared = theme.componentStyles[displayName] || {
     root: () => ({}),
   }
+  const hasInlineStylesOverrides = !_.isNil(props.design) || !_.isNil(props.styles)
 
-  const hasInlineOverrides = !_.isNil(props.design) || !_.isNil(props.styles)
-
-  if (hasInlineOverrides) {
+  if (hasInlineStylesOverrides) {
     mergedStyles = mergeComponentStyles(
       mergedStyles,
       props.design && withDebugId({ root: props.design }, 'props.design'),

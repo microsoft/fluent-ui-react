@@ -27,7 +27,6 @@ const resolveStylesAndClasses = (
   mergedStyles: ComponentSlotStylesPrepared,
   styleParam: ComponentStyleFunctionParam,
   renderStyles: (styles: ICSSInJSStyle) => string,
-
   cacheEnabled?: boolean | undefined,
   displayName?: string,
   theme?: ThemePrepared,
@@ -84,6 +83,13 @@ const resolveStylesAndClasses = (
         // resolve/render slot styles once and cache
         resolvedStyles[lazyEvaluationKey] = mergedStyles[slotName](styleParam)
 
+        if (cacheEnabled && theme) {
+          stylesCache.set(theme, {
+            ...stylesCache.get(theme),
+            [stylesCacheKey]: resolvedStyles[lazyEvaluationKey],
+          })
+        }
+
         if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {
           resolvedStylesDebug[slotName] = resolvedStyles[slotName]['_debug']
           delete resolvedStyles[slotName]['_debug']
@@ -93,7 +99,11 @@ const resolveStylesAndClasses = (
       },
     })
 
-    Object.defineProperty(classes, slotName, {
+    // TODO: Fix this awesome thing!
+    const className = slotName === 'root' ? '__root' : slotName
+    const cacheClassKey = `${className}__return`
+
+    Object.defineProperty(classes, className, {
       enumerable: false,
       configurable: false,
       set(val: string) {
@@ -104,7 +114,7 @@ const resolveStylesAndClasses = (
           })
         }
 
-        classes[lazyEvaluationKey] = val
+        classes[cacheClassKey] = val
       },
       get(): string {
         if (cacheEnabled && theme) {
@@ -115,18 +125,25 @@ const resolveStylesAndClasses = (
           }
         }
 
-        if (classes[lazyEvaluationKey]) {
-          return classes[lazyEvaluationKey]
+        if (classes[cacheClassKey]) {
+          return classes[cacheClassKey]
         }
 
         // this resolves the getter magic
         const styleObj = resolvedStyles[slotName]
 
         if (renderStyles && styleObj) {
-          classes[lazyEvaluationKey] = renderStyles(styleObj)
+          classes[cacheClassKey] = renderStyles(styleObj)
+
+          if (cacheEnabled && theme) {
+            classesCache.set(theme, {
+              ...classesCache.get(theme),
+              [stylesCacheKey]: classes[cacheClassKey],
+            })
+          }
         }
 
-        return classes[lazyEvaluationKey]
+        return classes[cacheClassKey]
       },
     })
   })
