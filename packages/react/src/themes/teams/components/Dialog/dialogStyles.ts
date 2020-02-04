@@ -16,6 +16,13 @@ export default {
     gridTemplateColumns: '1fr auto',
     boxShadow: v.boxShadow,
     color: v.foregroundColor,
+
+    [v.rootWidthBreakpointMedium]: {
+      width: v.rootWidthMedium,
+    },
+    [v.rootWidthLargeBreakpoint]: {
+      width: v.rootWidthLarge,
+    },
   }),
 
   footer: (): ICSSInJSStyle => ({

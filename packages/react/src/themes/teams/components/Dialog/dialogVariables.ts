@@ -4,7 +4,12 @@ export interface DialogVariables {
   rootBackground: string
   rootBorderRadius: string
   rootPadding: string
+
   rootWidth: string
+  rootWidthLarge: string
+  rootWidthLargeBreakpoint: string
+  rootWidthMedium: string
+  rootWidthBreakpointMedium: string
 
   contentMargin: string
 
@@ -25,7 +30,13 @@ export interface DialogVariables {
 export default (siteVariables): Partial<DialogVariables> => ({
   rootBackground: siteVariables.colors.white,
   rootBorderRadius: pxToRem(3),
-  rootWidth: '50vw',
+
+  rootWidth: '90vw',
+  rootWidthLarge: '50vw',
+  rootWidthLargeBreakpoint: '@media (min-width: 1280px)',
+  rootWidthMedium: '75vw',
+  rootWidthBreakpointMedium: '@media (min-width: 768px)',
+
   rootPadding: `${pxToRem(27)} ${pxToRem(32)} ${pxToRem(20)} ${pxToRem(32)}`,
 
   contentMargin: `0 0 ${pxToRem(20)} 0`,
