@@ -1,6 +1,6 @@
 import { IStyle } from 'fela'
 import * as _ from 'lodash'
-import { Renderer, Telemetry } from '@fluentui/react-bindings'
+import { getUnhandledProps, Renderer, Telemetry } from '@fluentui/react-bindings'
 import {
   mergeSiteVariables,
   StaticStyleObject,
@@ -9,6 +9,7 @@ import {
   FontFace,
   ComponentVariablesInput,
   ThemeInput,
+  SiteVariablesPrepared,
 } from '@fluentui/styles'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -26,8 +27,6 @@ import {
   withSafeTypeForAs,
 } from '../../types'
 import mergeContexts from '../../utils/mergeProviderContexts'
-import { getUnhandledProps } from '@fluentui/react-bindings/src'
-import { SiteVariablesPrepared } from '@fluentui/styles/src'
 
 export interface ProviderProps extends ChildrenComponentProps {
   renderer?: Renderer
