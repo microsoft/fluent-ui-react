@@ -11,17 +11,17 @@ export default {
     outline: 'none',
     padding: v.rootPadding,
     position: 'relative',
-    width: v.rootWidthSmall,
+    width: v.rootWidth,
     display: 'grid',
     gridTemplateColumns: '1fr auto',
     boxShadow: v.boxShadow,
     color: v.foregroundColor,
 
-    '@media (min-width: 768px)': {
+    [v.rootWidthBreakpointMedium]: {
       width: v.rootWidthMedium,
     },
-    '@media (min-width: 1280px)': {
-      width: v.rootWidth,
+    [v.rootWidthLargeBreakpoint]: {
+      width: v.rootWidthLarge,
     },
   }),
 
