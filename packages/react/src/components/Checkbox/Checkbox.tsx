@@ -139,20 +139,19 @@ const Checkbox: React.FC<WithAsProp<CheckboxProps>> &
   const unhandledProps = getUnhandledProps(Checkbox.handledProps, props)
 
   const handleChange = (e: React.ChangeEvent) => {
-    // Checkbox component doesn't present any `input` component in markup, however all of our
-    // components should handle events transparently.
-    const checked = !state.checked
-
     if (!disabled) {
+      // Checkbox component doesn't present any `input` component in markup, however all of our
+      // components should handle events transparently.
+      const checked = !state.checked
+
       actions.toggle(checked)
       _.invoke(props, 'onChange', e, { ...props, checked })
     }
   }
 
   const handleClick = (e: React.MouseEvent | React.KeyboardEvent) => {
-    const checked = !state.checked
-
     if (!disabled) {
+      const checked = !state.checked
       actions.toggle(checked)
 
       _.invoke(props, 'onClick', e, { ...props, checked })

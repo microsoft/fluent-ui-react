@@ -112,7 +112,7 @@ const Label: React.FC<WithAsProp<LabelProps>> & FluentComponentStaticProps = pro
   const unhandledProps = getUnhandledProps(Label.handledProps, props)
 
   if (childrenExist(children)) {
-    return (
+    const element = (
       <ElementType
         {...getA11Props('root', {
           className: classes.root,
@@ -123,6 +123,9 @@ const Label: React.FC<WithAsProp<LabelProps>> & FluentComponentStaticProps = pro
         {children}
       </ElementType>
     )
+    setEnd()
+
+    return element
   }
 
   const imageElement = Image.create(image, {

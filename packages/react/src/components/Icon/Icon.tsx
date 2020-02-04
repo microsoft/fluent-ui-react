@@ -68,6 +68,11 @@ export interface IconProps extends UIComponentProps, ColorComponentProps {
 }
 
 const Icon: React.FC<WithAsProp<IconProps>> & FluentComponentStaticProps = props => {
+  const context: ProviderContextPrepared = React.useContext(ThemeContext)
+
+  const { setStart, setEnd } = useTelemetry(Icon.displayName, context.telemetry)
+  setStart()
+
   const {
     accessibility,
     alt,
@@ -86,11 +91,6 @@ const Icon: React.FC<WithAsProp<IconProps>> & FluentComponentStaticProps = props
     variables,
     xSpacing,
   } = props
-
-  const context: ProviderContextPrepared = React.useContext(ThemeContext)
-  const { setStart, setEnd } = useTelemetry(Icon.displayName, context.telemetry)
-
-  setStart()
 
   const getA11Props = useAccessibility(accessibility, {
     debugName: Icon.displayName,
