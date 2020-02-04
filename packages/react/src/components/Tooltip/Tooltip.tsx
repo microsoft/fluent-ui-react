@@ -1,4 +1,6 @@
-import { toRefObject, Ref } from '@fluentui/react-component-ref'
+import { Accessibility, tooltipAsLabelBehavior } from '@fluentui/accessibility'
+import { ReactAccessibilityBehavior } from '@fluentui/react-bindings'
+import { Ref } from '@fluentui/react-component-ref'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
@@ -28,8 +30,6 @@ import {
   PopperChildrenProps,
 } from '../../utils/positioner'
 import TooltipContent, { TooltipContentProps } from './TooltipContent'
-import { Accessibility, tooltipBehavior } from '@fluentui/accessibility'
-import { ReactAccessibilityBehavior } from '../../utils/accessibility/reactTypes'
 import PortalInner from '../Portal/PortalInner'
 
 export interface TooltipSlotClassNames {
@@ -111,7 +111,6 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
 
   static propTypes = {
     ...commonPropTypes.createCommon({
-      animated: false,
       as: false,
       content: false,
     }),
@@ -135,16 +134,16 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     position: 'above',
     mouseLeaveDelay: 10,
     pointing: true,
-    accessibility: tooltipBehavior,
+    accessibility: tooltipAsLabelBehavior,
   }
 
   static autoControlledProps = ['open']
 
   static create: ShorthandFactory<TooltipProps>
 
+  contentRef = React.createRef<HTMLElement>()
   pointerTargetRef = React.createRef<HTMLDivElement>()
   triggerRef = React.createRef<HTMLElement>()
-  contentRef = React.createRef<HTMLElement>()
   closeTimeoutId
 
   actionHandlers = {
@@ -260,7 +259,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
         position={position}
         enabled={open}
         rtl={rtl}
-        targetRef={target ? toRefObject(target) : this.triggerRef}
+        targetRef={target || this.triggerRef}
         children={this.renderPopperChildren.bind(this, tooltipPositionClasses, rtl, accessibility)}
       />
     )
@@ -290,6 +289,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
         pointing,
         pointerRef: this.pointerTargetRef,
       }),
+      generateKey: false,
       overrideProps: this.getContentProps,
     })
 

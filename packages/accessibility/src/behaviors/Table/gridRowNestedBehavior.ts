@@ -1,6 +1,6 @@
 import { Accessibility } from '../../types'
 import { IS_FOCUSABLE_ATTRIBUTE } from '../../attributes'
-import { FocusZoneMode, FocusZoneDirection } from '../../focusZone/types'
+import { FocusZoneDirection } from '../../focusZone/types'
 import * as keyboardKey from 'keyboard-key'
 import gridCellBehavior from './gridCellBehavior'
 
@@ -8,7 +8,6 @@ import gridCellBehavior from './gridCellBehavior'
  * @specification
  * Adds role='row'.
  * Adds attribute 'data-is-focusable=true' to 'root' slot.
- * Embeds component into FocusZone.
  * Focus can be moved inside a child component with embeded inner FocusZone by pressing a specified key.
  * Provides arrow key navigation in horizontal direction.
  * Triggers 'performClick' action with 'Enter' or 'Spacebar' on 'root'.
@@ -23,7 +22,6 @@ const gridRowNestedBehavior: Accessibility = props => ({
     },
   },
   focusZone: {
-    mode: FocusZoneMode.Embed,
     props: {
       shouldEnterInnerZone: event => keyboardKey.getCode(event) === keyboardKey.Enter,
       direction: FocusZoneDirection.horizontal,

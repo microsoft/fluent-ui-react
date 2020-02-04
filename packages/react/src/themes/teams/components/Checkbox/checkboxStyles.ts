@@ -1,4 +1,4 @@
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import Checkbox, { CheckboxProps, CheckboxState } from '../../../../components/Checkbox/Checkbox'
 import { CheckboxVariables } from './checkboxVariables'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
@@ -101,6 +101,8 @@ const checkboxStyles: ComponentSlotStylesPrepared<
     padding: v.togglePadding,
     transition: 'padding .3s ease',
     userSelect: 'none',
+    width: v.toggleWidth,
+    height: v.toggleHeight,
 
     [`& svg`]: {
       width: v.toggleIndicatorSize,

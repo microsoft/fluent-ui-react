@@ -1,5 +1,5 @@
 import { DialogProps } from '../../../../components/Dialog/Dialog'
-import { ComponentStyleFunctionParam, ICSSInJSStyle } from '../../../types'
+import { ComponentStyleFunctionParam, ICSSInJSStyle } from '@fluentui/styles'
 import { DialogVariables } from './dialogVariables'
 
 type DialogStyleParams = ComponentStyleFunctionParam<DialogProps, DialogVariables>

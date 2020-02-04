@@ -1,4 +1,4 @@
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import { MenuVariables } from '../../../teams/components/Menu/menuVariables'
 import { MenuItemProps, MenuItemState } from '../../../../components/Menu/MenuItem'
 import { underlinedItem } from '../../../teams/components/Menu/menuItemStyles'
@@ -79,16 +79,13 @@ const menuItemStyles: ComponentSlotStylesPrepared<MenuItemPropsAndState, MenuVar
   },
 
   root: ({ props, variables: v }): ICSSInJSStyle => {
-    const { iconOnly, isFromKeyboard, underlined, primary, color, active } = props
+    const { iconOnly, isFromKeyboard, underlined, primary, active } = props
 
     return {
       ...(underlined && {
         ...(active && {
           color: v.color,
-          ...(!primary &&
-            !color && {
-              ...underlinedItem(v.color),
-            }),
+          ...(!primary && underlinedItem(v.color)),
         }),
         ':hover': {
           color: v.color,

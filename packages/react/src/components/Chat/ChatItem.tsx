@@ -18,7 +18,7 @@ import {
 } from '../../utils'
 import Box, { BoxProps } from '../Box/Box'
 
-import { ComponentSlotStylesPrepared } from '../../themes/types'
+import { ComponentSlotStylesResolved } from '@fluentui/styles'
 import ChatMessage from './ChatMessage'
 
 export interface ChatItemSlotClassNames {
@@ -86,7 +86,7 @@ class ChatItem extends UIComponent<WithAsProp<ChatItemProps>, any> {
     )
   }
 
-  renderChatItem(styles: ComponentSlotStylesPrepared) {
+  renderChatItem(styles: ComponentSlotStylesResolved) {
     const { gutter, contentPosition } = this.props
     const gutterElement =
       gutter &&

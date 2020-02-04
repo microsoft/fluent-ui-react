@@ -1,8 +1,4 @@
-import {
-  FocusZoneMode,
-  FocusZoneDirection,
-  FocusZoneTabbableElements,
-} from '@fluentui/accessibility'
+import { FocusZoneDirection, FocusZoneTabbableElements } from '@fluentui/accessibility'
 import * as keyboardKey from 'keyboard-key'
 
 import { TestDefinition, TestMethod, TestHelper } from './testHelper'
@@ -133,15 +129,23 @@ definitions.push({
       attributeToBeAdded,
       valueOfAttributeToBeAdded,
       component,
+      propertyBasedOn,
       overridingProperty,
     ] = parameters.props
+    const propertyWithOverride = { [overridingProperty]: valueOfAttributeToBeAdded }
+    const propertyWithoutOverride = { [propertyBasedOn]: valueOfAttributeToBeAdded }
 
-    const propertyWithOverride = {}
-    propertyWithOverride[overridingProperty] = valueOfAttributeToBeAdded
-    const expectedResultAttributeDefined = parameters.behavior(propertyWithOverride).attributes[
+    const expectedResultPropOveride = parameters.behavior(propertyWithOverride).attributes[
       component
     ][attributeToBeAdded]
-    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResultAttributeDefined)).toEqual(
+    const expectedResultPropBasedOn = parameters.behavior(propertyWithoutOverride).attributes[
+      component
+    ][attributeToBeAdded]
+
+    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResultPropOveride)).toEqual(
+      testHelper.convertToMatchingTypeIfApplicable(valueOfAttributeToBeAdded),
+    )
+    expect(testHelper.convertToMatchingTypeIfApplicable(expectedResultPropBasedOn)).toEqual(
       testHelper.convertToMatchingTypeIfApplicable(valueOfAttributeToBeAdded),
     )
   },
@@ -482,16 +486,6 @@ definitions.push({
 /*
  * ********************** FOCUS ZONE **********************
  */
-definitions.push({
-  regexp: /Embeds component into FocusZone\./g,
-  testMethod: (parameters: TestMethod) => {
-    const actualFocusZone = parameters.behavior({}).focusZone
-
-    const expectedFocusZoneMode = FocusZoneMode.Embed
-    expect(actualFocusZone.mode).toBe(expectedFocusZoneMode)
-  },
-})
-
 definitions.push({
   regexp: /arrow key navigation in horizontal direction/g,
   testMethod: (parameters: TestMethod) => {

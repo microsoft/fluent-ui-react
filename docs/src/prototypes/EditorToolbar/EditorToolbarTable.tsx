@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as _ from 'lodash'
-import { Grid } from 'src/index'
+import { Grid } from '@fluentui/react'
 
 type EditorToolbarTableProps = {
   onClick: () => void

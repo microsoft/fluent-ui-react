@@ -1,5 +1,5 @@
 import { pxToRem, SizeValue } from '../../../../utils'
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import { StatusProps } from '../../../../components/Status/Status'
 import { StatusVariables } from './statusVariables'
 

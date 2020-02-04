@@ -1,7 +1,7 @@
 import { Loader } from '@fluentui/react'
 import * as React from 'react'
 
-import useComponentProps from 'docs/src/components/ComponentDoc/useComponentProps'
+import useComponentProps from '../useComponentProps'
 import ComponentPropsRow from './ComponentPropsRow'
 
 const tableStyles: React.CSSProperties = {

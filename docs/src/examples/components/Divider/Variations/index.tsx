@@ -1,9 +1,14 @@
 import * as React from 'react'
-import ComponentExample from 'docs/src/components/ComponentDoc/ComponentExample'
-import ExampleSection from 'docs/src/components/ComponentDoc/ExampleSection'
+import ComponentExample from '../../../../components/ComponentDoc/ComponentExample'
+import ExampleSection from '../../../../components/ComponentDoc/ExampleSection'
 
 const Variations = () => (
   <ExampleSection title="Variations">
+    <ComponentExample
+      title="Vertical"
+      description="A divider can be displayed vertically."
+      examplePath="components/Divider/Variations/DividerExampleVertical"
+    />
     <ComponentExample
       title="Color"
       description="A divider can have different colors."

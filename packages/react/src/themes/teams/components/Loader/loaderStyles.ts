@@ -2,7 +2,7 @@ import {
   ComponentSlotStylesPrepared,
   ComponentStyleFunctionParam,
   ICSSInJSStyle,
-} from '../../../types'
+} from '@fluentui/styles'
 import { FlexDirectionProperty } from 'csstype'
 import { LoaderProps } from '../../../../components/Loader/Loader'
 import { LoaderVariables } from './loaderVariables'

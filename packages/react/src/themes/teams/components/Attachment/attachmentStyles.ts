@@ -1,4 +1,4 @@
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import { AttachmentProps } from '../../../../components/Attachment/Attachment'
 import { AttachmentVariables } from './attachmentVariables'
 import { pxToRem } from '../../../../utils'
@@ -74,7 +74,10 @@ const attachmentStyles: ComponentSlotStylesPrepared<AttachmentProps, AttachmentV
 
       ...getIconFillOrOutlineStyles({ outline: true }),
 
-      ':hover': iconFilledStyles,
+      ':hover': {
+        ...iconFilledStyles,
+        background: 'transparent',
+      },
 
       ':focus': borderFocusStyles[':focus'],
       ':focus-visible': {

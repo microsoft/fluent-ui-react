@@ -4,8 +4,8 @@ import * as React from 'react'
 // @ts-ignore
 import { ThemeContext } from 'react-fela'
 
-import { ComponentInfo } from 'docs/src/types'
-import componentInfoContext from 'docs/src/utils/componentInfoContext'
+import { ComponentInfo } from '../../types'
+import componentInfoContext from '../../utils/componentInfoContext'
 
 import createHookGenerator from './createHookGenerator'
 

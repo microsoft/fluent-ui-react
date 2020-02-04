@@ -8,7 +8,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
-import { Ref, toRefObject } from '@fluentui/react-component-ref'
+import { Ref } from '@fluentui/react-component-ref'
 import { EventListener } from '@fluentui/react-component-event-listener'
 
 import {
@@ -22,7 +22,7 @@ import {
   ColorComponentProps,
   ShorthandFactory,
 } from '../../utils'
-import { mergeComponentVariables } from '../../utils/mergeThemes'
+import { mergeComponentVariables } from '@fluentui/styles'
 
 import {
   ComponentEventHandler,
@@ -498,8 +498,6 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
     unhandledProps,
     rtl,
   }): React.ReactNode {
-    const windowRef = toRefObject(this.context.target.defaultView)
-
     this.rtl = rtl
     const { children, items, overflow, overflowItem } = this.props
 
@@ -530,7 +528,11 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
           </div>
           <div className={classes.offsetMeasure} ref={this.offsetMeasureRef} />
         </ElementType>
-        <EventListener listener={this.handleWindowResize} targetRef={windowRef} type="resize" />
+        <EventListener
+          listener={this.handleWindowResize}
+          target={this.context.target.defaultView}
+          type="resize"
+        />
       </>
     )
   }

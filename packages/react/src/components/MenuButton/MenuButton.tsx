@@ -39,9 +39,6 @@ export interface MenuButtonProps extends StyledComponentProps<MenuButtonProps>, 
   /** Initial value for 'open'. */
   defaultOpen?: boolean
 
-  /** Existing document the popup should add listeners. */
-  mountDocument?: Document
-
   /** Existing element the popup should be bound to. */
   mountNode?: HTMLElement
 
@@ -113,13 +110,11 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
 
   static propTypes = {
     ...commonPropTypes.createCommon({
-      animated: false,
       as: true,
       content: false,
     }),
     align: PropTypes.oneOf(ALIGNMENTS),
     defaultOpen: PropTypes.bool,
-    mountDocument: PropTypes.object,
     mountNode: customPropTypes.domNode,
     mouseLeaveDelay: PropTypes.number,
     offset: PropTypes.string,
@@ -215,7 +210,6 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
       align,
       className,
       defaultOpen,
-      mountDocument,
       mountNode,
       mouseLeaveDelay,
       offset,
@@ -237,7 +231,6 @@ export default class MenuButton extends AutoControlledComponent<MenuButtonProps,
       align,
       className,
       defaultOpen,
-      mountDocument,
       mountNode,
       mouseLeaveDelay,
       offset,

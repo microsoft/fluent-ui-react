@@ -1,12 +1,13 @@
 import CopyWebpackPlugin from 'copy-webpack-plugin'
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin'
 import { webpack as lernaAliases } from 'lerna-alias'
+import webpack from 'webpack'
 
-import config from '../config'
+import config from './config'
 
 const { paths } = config
 
-const webpackConfig: any = {
+const webpackConfig: webpack.Configuration = {
   name: 'client',
   target: 'web',
   mode: 'development',
@@ -18,7 +19,7 @@ const webpackConfig: any = {
     path: paths.e2eDist(),
     pathinfo: true,
   },
-  devtool: config.compiler_devtool,
+  devtool: config.compiler_devtool as webpack.Options.Devtool,
   node: {
     fs: 'empty',
     module: 'empty',
@@ -40,7 +41,7 @@ const webpackConfig: any = {
     ],
   },
   plugins: [
-    new ForkTsCheckerWebpackPlugin({ tsconfig: paths.build('tsconfig.e2e.json') }),
+    new ForkTsCheckerWebpackPlugin({ tsconfig: paths.e2e('tsconfig.json') }),
     new CopyWebpackPlugin([
       {
         from: paths.e2eSrc('index.html'),

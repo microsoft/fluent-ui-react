@@ -1,6 +1,17 @@
 import { IStyle } from 'fela'
 import * as _ from 'lodash'
+import { Renderer, Telemetry } from '@fluentui/react-bindings'
 import * as customPropTypes from '@fluentui/react-proptypes'
+import {
+  mergeSiteVariables,
+  ThemePrepared,
+  StaticStyleObject,
+  StaticStyle,
+  StaticStyleFunction,
+  FontFace,
+  ComponentVariablesInput,
+  ThemeInput,
+} from '@fluentui/styles'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
 // @ts-ignore
@@ -8,19 +19,7 @@ import { RendererProvider, ThemeProvider, ThemeContext } from 'react-fela'
 
 import { ChildrenComponentProps, setUpWhatInput, tryCleanupWhatInput } from '../../utils'
 
-import {
-  ThemePrepared,
-  StaticStyleObject,
-  StaticStyle,
-  StaticStyleFunction,
-  FontFace,
-  ComponentVariablesInput,
-  Renderer,
-  ThemeInput,
-} from '../../themes/types'
-
 import ProviderConsumer from './ProviderConsumer'
-import { mergeSiteVariables } from '../../utils/mergeThemes'
 import ProviderBox, { ProviderBoxProps } from './ProviderBox'
 import {
   WithAsProp,
@@ -29,7 +28,6 @@ import {
   withSafeTypeForAs,
 } from '../../types'
 import mergeContexts from '../../utils/mergeProviderContexts'
-import Telemetry from '../../utils/Telemetry'
 
 export interface ProviderProps extends ChildrenComponentProps {
   renderer?: Renderer
