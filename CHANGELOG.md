@@ -16,7 +16,7 @@
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-
+- Move zIndex values from default variables/styles to site4Variables object @pompomon ([#2311]https://github.com/microsoft/fluent-ui-react/pull/2311) 
 ### BREAKING CHANGES
 - Add `@fluentui/styles` package for all styles' related utilities and TS types @layershifter, @mnajdova ([#2222](https://github.com/microsoft/fluent-ui-react/pull/2222))
 - Remove `animation` prop from all components @joschect ([#2239](https://github.com/microsoft/fluent-ui-react/pull/2239))
