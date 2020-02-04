@@ -5,7 +5,7 @@
   "author": "Levi Thomason <me@levithomason.com>",
   "bugs": "https://github.com/microsoft/fluent-ui-react/issues",
   "dependencies": {
-    "@babel/runtime": "^7.1.2",
+    "@babel/runtime": "^7.7.6",
     "@fluentui/accessibility": "^0.43.0",
     "@fluentui/styles": "^0.43.0",
     "@fluentui/react-bindings": "^0.43.0",

@@ -31,7 +31,10 @@ module.exports = api => {
   ]
   const plugins = [
     '@babel/plugin-proposal-class-properties',
-    ['@babel/plugin-proposal-object-rest-spread', { loose: true, useBuiltIns: true }],
+    '@babel/plugin-proposal-nullish-coalescing-operator'[
+      ('@babel/plugin-proposal-object-rest-spread', { loose: true, useBuiltIns: true })
+    ],
+    '@babel/plugin-proposal-optional-chaining',
     '@babel/plugin-syntax-dynamic-import',
     ['@babel/plugin-transform-runtime', { useESModules }],
 
