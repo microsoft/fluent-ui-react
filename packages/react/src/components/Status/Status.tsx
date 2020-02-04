@@ -4,6 +4,7 @@ import {
   getUnhandledProps,
   useAccessibility,
   useStyles,
+  useTelemetry,
 } from '@fluentui/react-bindings'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
@@ -39,9 +40,11 @@ export interface StatusProps extends UIComponentProps {
 }
 
 const Status: React.FC<WithAsProp<StatusProps>> & FluentComponentStaticProps = props => {
-  const { className, color, icon, size, state, design, styles, variables } = props
+  const context: ProviderContextPrepared = React.useContext(ThemeContext)
+  const { setStart, setEnd } = useTelemetry(Icon.displayName, context.telemetry)
+  setStart()
 
-  const { rtl }: ProviderContextPrepared = React.useContext(ThemeContext)
+  const { className, color, icon, size, state, design, styles, variables } = props
   const { classes, styles: resolvedStyles } = useStyles(Status.displayName, {
     className: Status.className,
     mapPropsToStyles: () => ({
@@ -55,11 +58,11 @@ const Status: React.FC<WithAsProp<StatusProps>> & FluentComponentStaticProps = p
       styles,
       variables,
     }),
-    rtl,
+    rtl: context.rtl,
   })
   const getA11Props = useAccessibility(props.accessibility, {
     debugName: Status.displayName,
-    rtl,
+    rtl: context.rtl,
   })
   const ElementType = getElementType(props)
   const unhandledProps = getUnhandledProps(Status.handledProps, props)
@@ -72,11 +75,14 @@ const Status: React.FC<WithAsProp<StatusProps>> & FluentComponentStaticProps = p
     }),
   })
 
-  return (
+  const element = (
     <ElementType {...getA11Props('root', { className: classes.root, ...unhandledProps })}>
       {iconElement}
     </ElementType>
   )
+  setEnd()
+
+  return element
 }
 
 Status.className = 'ui-status'
