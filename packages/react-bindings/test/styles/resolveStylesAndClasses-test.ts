@@ -23,8 +23,7 @@ const componentStyles: ComponentSlotStylesPrepared<{}, { color: string }> = {
   }),
 }
 
-// TODO: fix me
-xdescribe('resolveStylesAndClasses', () => {
+describe('resolveStylesAndClasses', () => {
   test('resolves styles', () => {
     const { resolvedStyles } = resolveStylesAndClasses(componentStyles, styleParam, () => '')
 
@@ -53,7 +52,7 @@ xdescribe('resolveStylesAndClasses', () => {
     const renderStyles = jest.fn().mockReturnValue('a')
     const { classes } = resolveStylesAndClasses(componentStyles, styleParam, renderStyles)
 
-    expect(classes['root__return']).toBeDefined()
+    expect(classes['__root']).toBeDefined()
     expect(renderStyles).toHaveBeenCalledWith({ color: 'red' })
   })
 
@@ -61,9 +60,9 @@ xdescribe('resolveStylesAndClasses', () => {
     const renderStyles = jest.fn().mockReturnValue('a')
     const { classes } = resolveStylesAndClasses(componentStyles, styleParam, renderStyles)
 
-    expect(classes['root__return']).toBeDefined()
+    expect(classes['__root']).toBeDefined()
     expect(renderStyles).toHaveBeenCalledWith({ color: 'red' })
-    expect(classes['root__return']).toBeDefined()
+    expect(classes['__root']).toBeDefined()
     expect(renderStyles).toHaveBeenCalledTimes(1)
   })
 })

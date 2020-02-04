@@ -2,9 +2,9 @@ import {
   callable,
   ComponentSlotStylesInput,
   ComponentSlotStylesPrepared,
+  ComponentSlotStylesResolved,
   ComponentStyleFunctionParam,
   ComponentVariablesObject,
-  ComponentVariablesPrepared,
   DebugData,
   ICSSInJSStyle,
   isDebugEnabled,
@@ -41,7 +41,7 @@ type GetStylesOptions = StylesContextValue<{
 export type GetStylesResult = {
   classes: ComponentSlotClasses
   variables: ComponentVariablesObject
-  styles: Record<string, ICSSInJSStyle>
+  styles: ComponentSlotStylesResolved
   theme: StylesContextValue['theme']
 }
 
@@ -70,7 +70,7 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
   // VARIABLES
   //
 
-  let resolvedVariables: any // TODO: fix me
+  let resolvedVariables: object
 
   // Resolve variables for this component, cache the result in provider
   if (!resolvedComponentVariables[componentKey]) {
@@ -190,7 +190,7 @@ const getResolvedStyles = ({
   theme: ThemePrepared
   componentKey: string
   props: PropsWithVarsAndStyles & { design?: ComponentDesignProp }
-  resolvedVariables: ComponentVariablesPrepared
+  resolvedVariables: object
   rtl: boolean
   disableAnimations: boolean
   renderer: {

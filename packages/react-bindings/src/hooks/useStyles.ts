@@ -1,9 +1,9 @@
 import {
   ComponentSlotStyle,
+  ComponentSlotStylesResolved,
   ComponentVariablesInput,
   DebugData,
   emptyTheme,
-  ICSSInJSStyle,
 } from '@fluentui/styles'
 import * as React from 'react'
 // @ts-ignore We have this export in package, but it is not present in typings
@@ -27,7 +27,7 @@ type UseStylesOptions<StyleProps extends PrimitiveProps> = {
 
 type UseStylesResult = {
   classes: ComponentSlotClasses
-  styles: Record<string, ICSSInJSStyle>
+  styles: ComponentSlotStylesResolved
 }
 
 type InlineStyleProps<StyleProps> = {
