@@ -137,9 +137,9 @@ const Text: React.FC<WithAsProp<TextProps>> & FluentComponentStaticProps<TextPro
 
   const element = (
     <ElementType
-      {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
       {...getA11Props('root', {
         className: classes.root,
+        ...rtlTextContainer.getAttributes({ forElements: [children, content] }),
         ...unhandledProps,
       })}
     >
