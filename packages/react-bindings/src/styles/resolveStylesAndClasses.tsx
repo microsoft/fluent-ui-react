@@ -48,9 +48,12 @@ const resolveStylesAndClasses = (
   Object.keys(mergedStyles).forEach(slotName => {
     // resolve/render slot styles once and cache
     const lazyEvaluationKey = `${slotName}__return`
-    const stylesCacheKey = cacheEnabled && displayName && props
-      ? `${displayName}: ${slotName}: ${JSON.stringify(props)}${styleParam.rtl}${styleParam.disableAnimations}`
-      : ''
+    const stylesCacheKey =
+      cacheEnabled && displayName && props
+        ? `${displayName}: ${slotName}: ${JSON.stringify(props)}${styleParam.rtl}${
+            styleParam.disableAnimations
+          }`
+        : ''
 
     Object.defineProperty(resolvedStyles, slotName, {
       enumerable: false,

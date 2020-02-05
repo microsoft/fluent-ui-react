@@ -119,7 +119,7 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
     renderer,
     props,
     resolvedVariables,
-    cacheEnabled : cacheEnabled && noInlineOverrides,
+    cacheEnabled: cacheEnabled && noInlineOverrides,
     styleProps: restProps,
   })
 
@@ -163,16 +163,16 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
 }
 
 const resolveStyles = ({
-                         theme,
-                         displayName,
-                         props,
-                         resolvedVariables,
-                         rtl,
-                         disableAnimations,
-                         renderer,
-                         cacheEnabled,
-                         styleProps,
-                       }: {
+  theme,
+  displayName,
+  props,
+  resolvedVariables,
+  rtl,
+  disableAnimations,
+  renderer,
+  cacheEnabled,
+  styleProps,
+}: {
   theme: ThemePrepared
   displayName: string
   props: PropsWithVarsAndStyles & { design?: ComponentDesignProp }
@@ -196,7 +196,7 @@ const resolveStyles = ({
       mergedStyles,
       props.design && withDebugId({ root: props.design }, 'props.design'),
       props.styles &&
-      withDebugId({ root: props.styles } as ComponentSlotStylesInput, 'props.styles'),
+        withDebugId({ root: props.styles } as ComponentSlotStylesInput, 'props.styles'),
     )
   }
 
@@ -227,7 +227,7 @@ const resolveStyles = ({
     displayName,
     theme,
     styleProps,
-)
+  )
 
   return result
 }
