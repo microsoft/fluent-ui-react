@@ -16,6 +16,12 @@ import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 
+export type IconDefinition = {
+  className?: string
+  type: 'font' | 'svg'
+  icon?: () => React.ReactSVGElement
+}
+
 export interface IconProps extends UIComponentProps, ColorComponentProps {
   /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility
@@ -29,7 +35,10 @@ export interface IconProps extends UIComponentProps, ColorComponentProps {
   /** An icon can show it is currently unable to be interacted with. */
   disabled?: boolean
 
+  definition?: IconDefinition
+
   /** Name of the icon. */
+  // TODO: REMOVE ME
   name: string
 
   /** An icon can provide an outline variant. */
@@ -76,15 +85,25 @@ class Icon extends UIComponent<WithAsProp<IconProps>, any> {
   }
 
   renderComponent({ ElementType, classes, unhandledProps, accessibility, theme, rtl, styles }) {
-    const { name } = this.props
-    const { icons = {} } = theme || {}
+    const { definition, name } = this.props
 
-    const maybeIcon = icons[name]
-    const isSvgIcon = maybeIcon && maybeIcon.isSvg
+    let isSvgIcon: boolean
+    let iconComponent: React.ElementType
+
+    if (definition) {
+      iconComponent = definition.icon
+      isSvgIcon = definition.type === 'svg'
+    } else {
+      const { icons = {} } = theme || {}
+      const maybeIcon = icons[name]
+
+      iconComponent = maybeIcon.icon
+      isSvgIcon = maybeIcon && maybeIcon.isSvg
+    }
 
     return (
       <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
-        {isSvgIcon && callable(maybeIcon.icon)({ classes, rtl, props: this.props })}
+        {isSvgIcon && callable(iconComponent)({ classes, rtl, props: this.props })}
       </ElementType>
     )
   }
