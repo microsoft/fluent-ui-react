@@ -20,6 +20,7 @@
     "perf": "cross-env PERF=true gulp perf --times=100",
     "perf:debug": "cross-env PERF=true gulp perf:debug --debug",
     "perf:test": "yarn lerna run --stream --scope @fluentui/perf-test perf:test",
+    "perf:test:base": "yarn lerna run --stream --scope @fluentui/perf-test perf:test:base",
     "prettier": "prettier --list-different \"**/*.{ts,tsx}\"",
     "prettier:fix": "prettier --write \"**/*.{ts,tsx}\"",
     "precommit": "lint-staged",
