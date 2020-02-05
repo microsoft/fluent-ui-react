@@ -7,7 +7,7 @@
     "build": "gulp build",
     "build:bundle": "gulp bundle:all-packages",
     "build:docs": "gulp build:docs",
-    "ci": "yarn lint && yarn prettier && yarn test --strict",
+    "ci": "yarn lint && yarn prettier && yarn test -- -- --strict",
     "clean": "yarn clean:cache && yarn clean:docs && lerna run --stream clean",
     "clean:cache": "gulp clean:cache",
     "clean:docs": "gulp clean:docs",
