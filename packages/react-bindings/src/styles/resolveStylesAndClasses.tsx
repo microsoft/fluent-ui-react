@@ -20,8 +20,16 @@ const classesCache = new WeakMap<ThemePrepared, Record<string, string>>()
 const stylesCache = new WeakMap<ThemePrepared, Record<string, ICSSInJSStyle>>()
 
 /**
- * // Both resolvedStyles and classes are objects of getters with lazy evaluation
- * TODO: Describe me
+ * Both resolvedStyles and classes are objects of getters with lazy evaluation
+ *
+ * Additionally if the cacheEnabled option is provided, than the resolved styles
+ * and classes are caching the results in WeakMaps. The key of the maps contains the following:
+ * - theme
+ * - displayName
+ * - slot name
+ * - styling props
+ * - rtl mode
+ * - disable animations mode
  */
 const resolveStylesAndClasses = (
   mergedStyles: ComponentSlotStylesPrepared,
@@ -30,7 +38,7 @@ const resolveStylesAndClasses = (
   cacheEnabled?: boolean | undefined,
   displayName?: string,
   theme?: ThemePrepared,
-  props?: string,
+  props?: object,
 ): ResolveStylesResult => {
   const resolvedStyles: Record<string, ICSSInJSStyle> = {}
   const resolvedStylesDebug: Record<string, { styles: Object }[]> = {}
@@ -102,7 +110,7 @@ const resolveStylesAndClasses = (
       },
     })
 
-    // TODO: Fix this awesome thing!
+    // TODO: Fix this if possible
     const className = slotName === 'root' ? '__root' : slotName
     const cacheClassKey = `${className}__return`
 
