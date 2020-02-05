@@ -87,14 +87,14 @@ const chatMessageStyles: ComponentSlotStylesPrepared<
     }),
   }),
 
-  actionMenu: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
+  actionMenu: ({ props: p, variables: v }): ICSSInJSStyle => ({
     backgroundColor: v.backgroundColor,
     border: '1px solid',
     borderColor: v.reactionGroupBorderColor,
     borderRadius: v.borderRadius,
     boxShadow: v.actionMenuBoxShadow,
     // we need higher zIndex for the action menu in order to be displayed above the focus border of the chat message
-    zIndex: siteVariables.zIndexes.overlay,
+    zIndex: v.zIndexOverlay,
 
     ...(initialPopperStyles as ICSSInJSStyle),
 
@@ -151,7 +151,7 @@ const chatMessageStyles: ComponentSlotStylesPrepared<
         marginRight: pxToRem(4),
       }),
   }),
-  badge: ({ props: p, variables: v, theme: { siteVariables } }) => {
+  badge: ({ props: p, variables: v }) => {
     const sidePosition = p.badgePosition === 'start' ? 'left' : 'right'
     return {
       backgroundColor: v.hasMention ? v.hasMentionNubbinColor : v.isImportantColor,
@@ -163,7 +163,7 @@ const chatMessageStyles: ComponentSlotStylesPrepared<
       width: 'auto',
       borderRadius: '50%',
       top: pxToRem(4),
-      zIndex: siteVariables.zIndexes.foreground,
+      zIndex: v.zIndex,
       [sidePosition]: 0,
       transform: p.badgePosition === 'start' ? 'translateX(-50%)' : 'translateX(50%)',
     }

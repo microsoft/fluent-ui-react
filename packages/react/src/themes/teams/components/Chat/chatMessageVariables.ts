@@ -29,6 +29,8 @@ export interface ChatMessageVariables {
   reactionGroupBorderColor: string
   showActionMenu?: boolean
   timestampColorMine: string
+  zIndex: number
+  zIndexOverlay: number
 }
 
 export default (siteVars): ChatMessageVariables => ({
@@ -60,4 +62,6 @@ export default (siteVars): ChatMessageVariables => ({
   reactionGroupBorderColor: 'transparent',
   showActionMenu: undefined,
   timestampColorMine: siteVars.colors.grey[500],
+  zIndex: siteVars.zIndexes.foreground,
+  zIndexOverlay: siteVars.zIndexes.overlay,
 })

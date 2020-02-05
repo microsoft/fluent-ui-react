@@ -2,12 +2,12 @@ import { ICSSInJSStyle } from '@fluentui/styles'
 import { getColorScheme } from '../../colors'
 
 const toolbarMenuStyles = {
-  root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
+  root: ({ props: p, variables: v }): ICSSInJSStyle => {
     const colors = getColorScheme(v.colorScheme)
 
     return {
       display: 'flex',
-      zIndex: siteVariables.zIndexes.overlay,
+      zIndex: v.zIndexOverlay,
       flexDirection: 'column',
       listStyleType: 'none',
       margin: 0,

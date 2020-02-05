@@ -41,6 +41,7 @@ export interface DropdownVariables {
   toggleIndicatorSize: string
   triggerButtonColorHover: string
   width: string
+  zIndexOverlay: number
 }
 
 const [cornerRadius, _12px_asRem] = [3, 12].map(v => pxToRem(v))
@@ -82,6 +83,7 @@ export default (siteVars): DropdownVariables => ({
   toggleIndicatorSize: pxToRem(32),
   triggerButtonColorHover: siteVars.bodyColor,
   width: pxToRem(356),
+  zIndexOverlay: siteVars.zIndexes.overlay,
 
   // these should only apply when there is content in the image/media slot:
   listItemHeaderFontSize: siteVars.fontSizes.medium,
