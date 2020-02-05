@@ -1,9 +1,10 @@
 import * as webpack from 'webpack'
 
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 
-const webpackConfig: webpack.Configuration = {
+const webpackConfig: webpack.ConfigurationFactory = (env, argv) => ({
   name: 'client',
   target: 'web',
   mode: 'development',
@@ -33,6 +34,10 @@ const webpackConfig: webpack.Configuration = {
         from: 'public/index.html',
       },
     ]),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      openAnalyzer: false,
+    }),
   ],
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json'],
@@ -40,9 +45,11 @@ const webpackConfig: webpack.Configuration = {
   performance: {
     hints: false, // to (temporarily) disable "WARNING in entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit")
   },
-  optimization: {
-    minimize: false,
-  },
-}
+  ...(argv.mode === 'development' && {
+    optimization: {
+      minimize: false,
+    },
+  }),
+})
 
 module.exports = webpackConfig
