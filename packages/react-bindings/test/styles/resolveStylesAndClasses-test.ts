@@ -2,7 +2,8 @@ import {
   ComponentSlotStylesPrepared,
   ComponentStyleFunctionParam,
   emptyTheme,
-  ICSSInJSStyle, ThemePrepared,
+  ICSSInJSStyle,
+  ThemePrepared,
 } from '@fluentui/styles'
 import resolveStylesAndClasses from '../../src/styles/resolveStylesAndClasses'
 
@@ -70,8 +71,24 @@ describe('resolveStylesAndClasses', () => {
 
   test('caches resolved styles for no props', () => {
     spyOn(componentStyles, 'root').and.callThrough()
-    const { resolvedStyles } = resolveStylesAndClasses(componentStyles, styleParam, () => '', true, 'Test', theme, {})
-    const { resolvedStyles: secondResolvedStyles } = resolveStylesAndClasses(componentStyles, styleParam, () => '', true, 'Test', theme, {})
+    const { resolvedStyles } = resolveStylesAndClasses(
+      componentStyles,
+      styleParam,
+      () => '',
+      true,
+      'Test',
+      theme,
+      {},
+    )
+    const { resolvedStyles: secondResolvedStyles } = resolveStylesAndClasses(
+      componentStyles,
+      styleParam,
+      () => '',
+      true,
+      'Test',
+      theme,
+      {},
+    )
 
     expect(resolvedStyles.root).toMatchObject({ color: 'red' })
     expect(componentStyles.root).toHaveBeenCalledTimes(1)
@@ -81,8 +98,24 @@ describe('resolveStylesAndClasses', () => {
 
   test('caches classes for no props', () => {
     const renderStyles = jest.fn().mockReturnValue('a')
-    const { classes } = resolveStylesAndClasses(componentStyles, styleParam, renderStyles, true, 'Test1', theme, {})
-    const { classes: secondClasses } = resolveStylesAndClasses(componentStyles, styleParam, renderStyles, true, 'Test1', theme, {})
+    const { classes } = resolveStylesAndClasses(
+      componentStyles,
+      styleParam,
+      renderStyles,
+      true,
+      'Test1',
+      theme,
+      {},
+    )
+    const { classes: secondClasses } = resolveStylesAndClasses(
+      componentStyles,
+      styleParam,
+      renderStyles,
+      true,
+      'Test1',
+      theme,
+      {},
+    )
 
     expect(classes['__root']).toBeDefined()
     expect(renderStyles).toHaveBeenCalledWith({ color: 'red' })
@@ -92,8 +125,24 @@ describe('resolveStylesAndClasses', () => {
 
   test('caches resolved styles for the same props', () => {
     spyOn(componentStyles, 'root').and.callThrough()
-    const { resolvedStyles } = resolveStylesAndClasses(componentStyles, styleParam, () => '', true, 'Test2', theme, {primary: true})
-    const { resolvedStyles: secondResolvedStyles } = resolveStylesAndClasses(componentStyles, styleParam, () => '', true, 'Test2', theme, {primary: true})
+    const { resolvedStyles } = resolveStylesAndClasses(
+      componentStyles,
+      styleParam,
+      () => '',
+      true,
+      'Test2',
+      theme,
+      { primary: true },
+    )
+    const { resolvedStyles: secondResolvedStyles } = resolveStylesAndClasses(
+      componentStyles,
+      styleParam,
+      () => '',
+      true,
+      'Test2',
+      theme,
+      { primary: true },
+    )
 
     expect(resolvedStyles.root).toMatchObject({ color: 'red' })
     expect(componentStyles.root).toHaveBeenCalledTimes(1)
@@ -103,8 +152,24 @@ describe('resolveStylesAndClasses', () => {
 
   test('caches classes for the same props', () => {
     const renderStyles = jest.fn().mockReturnValue('a')
-    const { classes } = resolveStylesAndClasses(componentStyles, styleParam, renderStyles, true, 'Test3', theme, {primary: true})
-    const { classes: secondClasses } = resolveStylesAndClasses(componentStyles, styleParam, renderStyles, true, 'Test3', theme, {primary: true})
+    const { classes } = resolveStylesAndClasses(
+      componentStyles,
+      styleParam,
+      renderStyles,
+      true,
+      'Test3',
+      theme,
+      { primary: true },
+    )
+    const { classes: secondClasses } = resolveStylesAndClasses(
+      componentStyles,
+      styleParam,
+      renderStyles,
+      true,
+      'Test3',
+      theme,
+      { primary: true },
+    )
 
     expect(classes['__root']).toBeDefined()
     expect(renderStyles).toHaveBeenCalledWith({ color: 'red' })
@@ -114,8 +179,24 @@ describe('resolveStylesAndClasses', () => {
 
   test('does not caches resolved styles for different props', () => {
     spyOn(componentStyles, 'root').and.callThrough()
-    const { resolvedStyles } = resolveStylesAndClasses(componentStyles, styleParam, () => '', true, 'Test4', theme, {primary: true})
-    const { resolvedStyles: secondResolvedStyles } = resolveStylesAndClasses(componentStyles, styleParam, () => '', true, 'Test4', theme, {})
+    const { resolvedStyles } = resolveStylesAndClasses(
+      componentStyles,
+      styleParam,
+      () => '',
+      true,
+      'Test4',
+      theme,
+      { primary: true },
+    )
+    const { resolvedStyles: secondResolvedStyles } = resolveStylesAndClasses(
+      componentStyles,
+      styleParam,
+      () => '',
+      true,
+      'Test4',
+      theme,
+      {},
+    )
 
     expect(resolvedStyles.root).toMatchObject({ color: 'red' })
     expect(componentStyles.root).toHaveBeenCalledTimes(1)
@@ -125,8 +206,24 @@ describe('resolveStylesAndClasses', () => {
 
   test('does not cache classes for different props', () => {
     const renderStyles = jest.fn().mockReturnValue('a')
-    const { classes } = resolveStylesAndClasses(componentStyles, styleParam, renderStyles, true, 'Test5', theme, {primary: true})
-    const { classes: secondClasses } = resolveStylesAndClasses(componentStyles, styleParam, renderStyles, true, 'Test5', theme, {})
+    const { classes } = resolveStylesAndClasses(
+      componentStyles,
+      styleParam,
+      renderStyles,
+      true,
+      'Test5',
+      theme,
+      { primary: true },
+    )
+    const { classes: secondClasses } = resolveStylesAndClasses(
+      componentStyles,
+      styleParam,
+      renderStyles,
+      true,
+      'Test5',
+      theme,
+      {},
+    )
 
     expect(classes['__root']).toBeDefined()
     expect(renderStyles).toHaveBeenCalledWith({ color: 'red' })
