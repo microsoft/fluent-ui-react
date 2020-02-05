@@ -27,7 +27,7 @@ class IgnoreNotFoundExportPlugin {
   }
 }
 
-const makeConfig = (srcPath, name) => ({
+const makeConfig = (srcPath: string, name: string): webpack.Configuration => ({
   mode: 'production',
   name: 'client',
   target: 'web',

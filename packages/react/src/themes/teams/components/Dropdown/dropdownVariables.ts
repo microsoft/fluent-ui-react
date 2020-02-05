@@ -43,6 +43,7 @@ export interface DropdownVariables {
   selectedItemsMaxHeight: string
   toggleIndicatorSize: string
   width: string
+  overlayZIndex: number
 }
 
 const [cornerRadius, _12px_asRem] = [3, 12].map(v => pxToRem(v))
@@ -87,6 +88,7 @@ export default (siteVars): DropdownVariables => ({
   selectedItemsMaxHeight: pxToRem(82),
   toggleIndicatorSize: pxToRem(32),
   width: pxToRem(356),
+  overlayZIndex: siteVars.zIndexes.overlay,
 
   // these should only apply when there is content in the image/media slot:
   listItemHeaderFontSize: siteVars.fontSizes.medium,

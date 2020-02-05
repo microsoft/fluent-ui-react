@@ -16,6 +16,7 @@ export const colorScheme: ColorSchemeMapping = {
     background2: colors.grey[800],
     background3: colors.grey[550],
     background4: colors.grey[600],
+    background5: colors.grey[250],
 
     border: colors.grey[450], // buttons
     border1: colors.grey[850],
@@ -31,6 +32,7 @@ export const colorScheme: ColorSchemeMapping = {
 
     backgroundHover: colors.grey[550],
     backgroundHover1: colors.grey[550],
+    backgroundHover2: 'transparent',
 
     borderHover: colors.grey[400],
 
@@ -233,6 +235,7 @@ export const colorScheme: ColorSchemeMapping = {
 
     foregroundHover: colors.white,
     backgroundHover: colors.ruby[600],
+    backgroundHover1: colors.red[400],
 
     foregroundPressed: colors.white,
     backgroundPressed: colors.ruby[700],

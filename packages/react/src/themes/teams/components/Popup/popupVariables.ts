@@ -5,7 +5,7 @@ export interface PopupVariables {
 }
 
 export default (siteVars: any): PopupVariables => ({
-  zIndex: 1000,
+  zIndex: siteVars.zIndexes.overlay,
   contentColor: siteVars.colorScheme.default.foreground,
   contentBackgroundColor: siteVars.colorScheme.default.background,
 })

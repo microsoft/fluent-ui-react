@@ -9,6 +9,7 @@ import MarkdownPage from './components/MarkdownPage'
 
 import * as Composition from './pages/Composition.mdx'
 import * as Layout from './pages/Layout.mdx'
+import * as ComponentArchitecture from './pages/ComponentArchitecture.mdx'
 import Accessibility from './views/Accessibility'
 import Colors from './views/Colors'
 import ColorPalette from './views/ColorPalette'
@@ -102,6 +103,9 @@ const Routes = () => (
           </Route>
           <Route exact path="/shorthand-props">
             <MarkdownPage page={ShorthandProps} />
+          </Route>
+          <Route exact path="/component-architecture">
+            <MarkdownPage page={ComponentArchitecture} />
           </Route>
           <Route exact path="/integrate-custom-components" component={IntegrateCustomComponents} />
           <Route exact path="/performance" component={Performance} />
