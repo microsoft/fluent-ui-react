@@ -62,6 +62,18 @@ export const lineHeightLarge = 1.3333
 export const lineHeightLarger = 1.3333
 
 //
+// Z-INDEX
+// Used to maintain proper stack order of components
+//
+export const zIndexes: Record<string, number> = {
+  background: 0, // Default value
+  foreground: 1, // Put a component in front
+  menuItem: 2, // Currently used only for menu item beak element
+  overlay: 1000, // Dialog/popup/menu overlays
+  debug: 999999999, // for debug purposes
+}
+
+//
 // SEMANTIC ASSIGNMENTS
 //
 export const bodyPadding = 0
