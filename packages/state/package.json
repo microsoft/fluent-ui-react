@@ -5,7 +5,7 @@
   "author": "Oleksandr Fediashov <a@fedyashov.com>",
   "bugs": "https://github.com/microsoft/fluent-ui-react/issues",
   "dependencies": {
-    "@babel/runtime": "^7.1.2"
+    "@babel/runtime": "^7.7.6"
   },
   "devDependencies": {
     "@fluentui/internal-tooling": "^0.44.0",
