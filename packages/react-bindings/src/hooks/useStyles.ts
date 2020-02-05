@@ -47,7 +47,6 @@ const defaultContext: StylesContextValue<{ renderRule: RendererRenderRule }> = {
   disableAnimations: false,
   renderer: { renderRule: () => '' },
   theme: emptyTheme,
-  _internal_resolvedComponentVariables: {},
 }
 
 const useStyles = <StyleProps extends PrimitiveProps>(
@@ -81,7 +80,6 @@ const useStyles = <StyleProps extends PrimitiveProps>(
     rtl,
     saveDebug: fluentUIDebug => (debug.current = { fluentUIDebug }),
     theme: context.theme,
-    _internal_resolvedComponentVariables: context._internal_resolvedComponentVariables,
     __experimental_cache: true,
   })
 

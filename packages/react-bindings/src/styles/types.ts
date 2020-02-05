@@ -69,5 +69,4 @@ export type StylesContextInputValue<R = Renderer> = {
 
 export type StylesContextValue<R = Renderer> = Required<StylesContextInputValue<R>> & {
   theme: ThemePrepared
-  _internal_resolvedComponentVariables: Record<string, object>
 }
