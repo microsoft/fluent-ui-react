@@ -17,6 +17,20 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.43.2 ]------------------------------- -->
+## [v0.43.2](https://github.com/microsoft/fluent-ui-react/tree/v0.43.2) (2020-02-05)
+[Compare changes](https://github.com/microsoft/fluent-ui-react/compare/v0.43.1..v0.43.2)
+
+### BREAKING CHANGES
+- Remove `toRefObject` function @layershifter ([#2287](https://github.com/microsoft/fluent-ui-react/pull/2287))
+
+### Fixes
+- Fix positioning fixes for `actions` in `ChatMessage` @layershifter ([#2300](https://github.com/microsoft/fluent-ui-react/pull/2300))
+- `FocusZone`: Cleanup DOM element references when the component is unmounted @johannao76 ([#2306](https://github.com/microsoft/fluent-ui-react/pull/2306))
+
+### Documentation
+- Fix dependencies in project exported to codesandbox @miroslavstastny ([#2314](https://github.com/microsoft/fluent-ui-react/pull/2314))
+
 <!--------------------------------[ v0.43.1 ]------------------------------- -->
 ## [v0.43.1](https://github.com/microsoft/fluent-ui-react/tree/v0.43.1) (2020-01-30)
 [Compare changes](https://github.com/microsoft/fluent-ui-react/compare/v0.43.0..v0.43.1)
