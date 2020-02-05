@@ -222,11 +222,7 @@ const menuItemStyles: ComponentSlotStylesPrepared<MenuItemPropsAndState, MenuVar
 
         ...(pointing &&
           !vertical && {
-            ...pointingBeak({
-              props,
-              variables: v,
-              colors,
-            }),
+            ...pointingBeak({ props, variables: v, colors }),
           }),
       }),
 
