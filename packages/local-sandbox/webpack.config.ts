@@ -3,8 +3,9 @@ import * as webpack from 'webpack'
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 
-const webpackConfig: webpack.ConfigurationFactory = (env, argv) => ({
+const webpackConfig: webpack.Configuration = {
   name: 'client',
   target: 'web',
   mode: 'development',
@@ -14,7 +15,7 @@ const webpackConfig: webpack.ConfigurationFactory = (env, argv) => ({
   output: {
     filename: `[name].js`,
   },
-  devtool: 'eval-source-map',
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -45,11 +46,23 @@ const webpackConfig: webpack.ConfigurationFactory = (env, argv) => ({
   performance: {
     hints: false, // to (temporarily) disable "WARNING in entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit")
   },
-  ...(argv.mode === 'development' && {
-    optimization: {
-      minimize: false,
-    },
-  }),
-})
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: true,
+        terserOptions: {
+          // https://github.com/terser/terser
+          mangle: false,
+          output: {
+            beautify: true,
+            comments: true,
+          },
+        },
+      }),
+    ],
+  },
+}
 
 module.exports = webpackConfig
