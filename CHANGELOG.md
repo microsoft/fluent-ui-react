@@ -17,6 +17,10 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+<!--------------------------------[ v0.44.0 ]------------------------------- -->
+## [v0.44.0](https://github.com/microsoft/fluent-ui-react/tree/v0.44.0) (2020-02-05)
+[Compare changes](https://github.com/microsoft/fluent-ui-react/compare/v0.43.2..v0.44.0)
+
 ### BREAKING CHANGES
 - Add `@fluentui/styles` package for all styles' related utilities and TS types @layershifter, @mnajdova ([#2222](https://github.com/microsoft/fluent-ui-react/pull/2222))
 - Remove `animation` prop from all components @joschect ([#2239](https://github.com/microsoft/fluent-ui-react/pull/2239))
@@ -27,7 +31,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Restricted prop set in the `Button`, `Avatar`, `Box` and `Image` styles; changed `avatarBorderWidth` and `statusBorderWidth` avatar variables types from number to string and updated styles in Teams theme @mnajdova ([#2238](https://github.com/microsoft/fluent-ui-react/pull/2238))
 - Restricted prop set in the `List` & `ListItem` @layershifter ([#2238](https://github.com/microsoft/fluent-ui-react/pull/2238))
 - Remove `mountDocument` prop in `Popup` & `MenuButton` components @layershifter ([#2286](https://github.com/microsoft/fluent-ui-react/pull/2286))
-- Remove `toRefObject` function @layershifter ([#2287](https://github.com/microsoft/fluent-ui-react/pull/2287))
 - Add typing `ComponentSlotStylesResolved`, that replaces the incorrect `ComponentSlotStylesPrepared` in the return value of `useStyles`, `renderComponent`, `createComponent` @mnajdova ([#2312](https://github.com/microsoft/fluent-ui-react/pull/2312))
 
 ### Fixes
@@ -36,8 +39,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Update iconOnly button hover, focus styles and add new `background5` and `backgroundHover2` design tokens in Teams theme @codepretty ([#2211](https://github.com/microsoft/fluent-ui-react/pull/2211))
 - Fix `forceUpdate` to get synced updates in React's Concurrent mode @layershifter ([#2268](https://github.com/microsoft/fluent-ui-react/pull/2268))
 - Adding actionable items into `Carousel` @kolaps33 ([#2271](https://github.com/microsoft/fluent-ui-react/pull/2271))
-- Fix positioning fixes for `actions` in `ChatMessage` @layershifter ([#2300](https://github.com/microsoft/fluent-ui-react/pull/2300))
-- `FocusZone`: Cleanup DOM element references when the component is unmounted @johannao76 ([#2306](https://github.com/microsoft/fluent-ui-react/pull/2306))
 
 ### Features
 - Allow `useRef` hook used for storing debugging data to be defined in any order with other hooks in functional components @layershifter, @mnajdova ([#2236](https://github.com/microsoft/fluent-ui-react/pull/2236))
@@ -51,6 +52,19 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Documentation
 - Add per-component performance charts @miroslavstastny ([#2240](https://github.com/microsoft/fluent-ui-react/pull/2240))
+
+<!--------------------------------[ v0.43.2 ]------------------------------- -->
+## [v0.43.2](https://github.com/microsoft/fluent-ui-react/tree/v0.43.2) (2020-02-05)
+[Compare changes](https://github.com/microsoft/fluent-ui-react/compare/v0.43.1..v0.43.2)
+
+### BREAKING CHANGES
+- Remove `toRefObject` function @layershifter ([#2287](https://github.com/microsoft/fluent-ui-react/pull/2287))
+
+### Fixes
+- Fix positioning fixes for `actions` in `ChatMessage` @layershifter ([#2300](https://github.com/microsoft/fluent-ui-react/pull/2300))
+- `FocusZone`: Cleanup DOM element references when the component is unmounted @johannao76 ([#2306](https://github.com/microsoft/fluent-ui-react/pull/2306))
+
+### Documentation
 - Fix dependencies in project exported to codesandbox @miroslavstastny ([#2314](https://github.com/microsoft/fluent-ui-react/pull/2314))
 
 <!--------------------------------[ v0.43.1 ]------------------------------- -->
