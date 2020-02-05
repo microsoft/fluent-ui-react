@@ -93,12 +93,10 @@ const pointingBeak = ({
   props,
   variables: v,
   colors,
-  zIndex,
 }: {
   props: MenuItemProps
   variables: MenuVariables
   colors: StrictColorScheme<ItemType<typeof menuColorAreas>>
-  zIndex: number
 }): ICSSInJSStyle => {
   const { pointing, primary } = props
 
@@ -136,7 +134,7 @@ const pointingBeak = ({
       height: pxToRem(10),
       border: 'none',
       ...borders,
-      zIndex,
+      zIndex: v.zIndexItem,
       transition: 'background .1s ease',
     },
   }
@@ -228,7 +226,6 @@ const menuItemStyles: ComponentSlotStylesPrepared<MenuItemPropsAndState, MenuVar
               props,
               variables: v,
               colors,
-              zIndex: v.zIndexItem,
             }),
           }),
       }),
