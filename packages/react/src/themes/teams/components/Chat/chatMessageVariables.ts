@@ -30,7 +30,7 @@ export interface ChatMessageVariables {
   showActionMenu?: boolean
   timestampColorMine: string
   zIndex: number
-  zIndexOverlay: number
+  overlayZIndex: number
 }
 
 export default (siteVars): ChatMessageVariables => ({
@@ -63,5 +63,5 @@ export default (siteVars): ChatMessageVariables => ({
   showActionMenu: undefined,
   timestampColorMine: siteVars.colors.grey[500],
   zIndex: siteVars.zIndexes.foreground,
-  zIndexOverlay: siteVars.zIndexes.overlay,
+  overlayZIndex: siteVars.zIndexes.overlay,
 })

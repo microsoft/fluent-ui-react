@@ -7,7 +7,6 @@ const toolbarMenuStyles = {
 
     return {
       display: 'flex',
-      zIndex: v.zIndexOverlay,
       flexDirection: 'column',
       listStyleType: 'none',
       margin: 0,
@@ -19,6 +18,7 @@ const toolbarMenuStyles = {
       borderWidth: v.menuBorderWidth,
       borderRadius: v.menuBorderRadius,
       width: v.menuWidth,
+      zIndex: v.overlayZIndex,
     }
   },
 }

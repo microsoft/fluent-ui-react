@@ -134,7 +134,7 @@ const pointingBeak = ({
       height: pxToRem(10),
       border: 'none',
       ...borders,
-      zIndex: v.zIndexItem,
+      zIndex: v.beakZIndex,
       transition: 'background .1s ease',
     },
   }
@@ -425,7 +425,7 @@ const menuItemStyles: ComponentSlotStylesPrepared<MenuItemPropsAndState, MenuVar
     }),
   }),
 
-  menu: ({ variables: v }) => ({ zIndex: v.zIndexMenuOverlay }),
+  menu: ({ variables: v }) => ({ zIndex: v.menuZIndex }),
 
   indicator: ({ props: p }) => ({
     position: 'relative',
