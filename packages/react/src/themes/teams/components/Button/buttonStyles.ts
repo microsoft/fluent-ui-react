@@ -117,12 +117,10 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonStylesProps, ButtonVariabl
         borderColor: 'transparent',
         padding: `0 ${pxToRem(8)}`,
 
-        // by default icons should always be outline, but filled on hover/focus
         ...getIconFillOrOutlineStyles({ outline: true }),
 
         ':hover': {
           color: v.textColorHover,
-          ...getIconFillOrOutlineStyles({ outline: false }),
         },
 
         ':focus': {
