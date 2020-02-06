@@ -8,7 +8,7 @@ const Performance = () => (
     <ComponentPerfExample
       title="Default"
       description="A test with list items as titles."
-      examplePath="components/Tree/Performance/TreeWithListItems.perf"
+      examplePath="components/Tree/Performance/TreeWith60ListItems.perf"
     />
   </ExampleSection>
 )

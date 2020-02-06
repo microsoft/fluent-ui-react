@@ -60,11 +60,11 @@ const titleRenderer = (Component, { content, header, headerMedia, media, ...rest
   )
 }
 
-const TreeWithListItemsPerf = () => (
+const Tree60WithListItems = () => (
   <Tree items={items} defaultActiveItemIds={['1', '2', '3']} renderItemTitle={titleRenderer} />
 )
 
-TreeWithListItemsPerf.iterations = 5000
-TreeWithListItemsPerf.filename = 'TreeWithListItems.perf.tsx'
+Tree60WithListItems.iterations = 5000
+Tree60WithListItems.filename = 'Tree60WithListItems.perf.tsx'
 
-export default TreeWithListItemsPerf
+export default Tree60WithListItems
