@@ -94,7 +94,7 @@ const chatMessageStyles: ComponentSlotStylesPrepared<
     borderRadius: v.borderRadius,
     boxShadow: v.actionMenuBoxShadow,
     // we need higher zIndex for the action menu in order to be displayed above the focus border of the chat message
-    zIndex: 1000,
+    zIndex: v.overlayZIndex,
 
     ...(initialPopperStyles as ICSSInJSStyle),
 
@@ -163,7 +163,7 @@ const chatMessageStyles: ComponentSlotStylesPrepared<
       width: 'auto',
       borderRadius: '50%',
       top: pxToRem(4),
-      zIndex: 1,
+      zIndex: v.zIndex,
       [sidePosition]: 0,
       transform: p.badgePosition === 'start' ? 'translateX(-50%)' : 'translateX(50%)',
     }
