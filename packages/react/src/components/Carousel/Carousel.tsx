@@ -241,7 +241,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
   }
 
   renderContent = (accessibility, styles, unhandledProps) => {
-    const { ariaRoleDescription, ariaLabel, getItemPositionText, items } = this.props
+    const {getItemPositionText, items} = this.props
     const { activeIndex, itemIds } = this.state
 
     this.itemRefs = []
@@ -250,8 +250,6 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
       <div style={styles.itemsContainerWrapper} {...accessibility.attributes.itemsContainerWrapper}>
         <div
           className={Carousel.slotClassNames.itemsContainer}
-          aria-roledescription={ariaRoleDescription}
-          aria-label={ariaLabel}
           style={styles.itemsContainer}
           {...accessibility.attributes.itemsContainer}
           {...applyAccessibilityKeyHandlers(
