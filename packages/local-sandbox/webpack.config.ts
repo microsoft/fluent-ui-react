@@ -1,7 +1,9 @@
 import * as webpack from 'webpack'
 
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 
 const webpackConfig: webpack.Configuration = {
   name: 'client',
@@ -13,7 +15,7 @@ const webpackConfig: webpack.Configuration = {
   output: {
     filename: `[name].js`,
   },
-  devtool: 'eval-source-map',
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -33,6 +35,10 @@ const webpackConfig: webpack.Configuration = {
         from: 'public/index.html',
       },
     ]),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      openAnalyzer: false,
+    }),
   ],
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json'],
@@ -41,7 +47,21 @@ const webpackConfig: webpack.Configuration = {
     hints: false, // to (temporarily) disable "WARNING in entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit")
   },
   optimization: {
-    minimize: false,
+    minimizer: [
+      new TerserPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: true,
+        terserOptions: {
+          // https://github.com/terser/terser
+          mangle: false,
+          output: {
+            beautify: true,
+            comments: true,
+          },
+        },
+      }),
+    ],
   },
 }
 

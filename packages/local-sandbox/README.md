@@ -11,3 +11,6 @@ yarn build:production
 yarn serve
 ```  
 
+## Measuring bundle size
+
+This package can be also used to analyze bundle size. After running `yarn build:production`, bundle size report is stored to **dist/report.html**. 
