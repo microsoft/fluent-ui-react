@@ -10,7 +10,7 @@ class EmployeeCardPrototype extends React.Component<any> {
   state = {
     parentRole: null,
     cardRole: 'group',
-    ariaRoleDescription: null,
+    ariaRoleDescription: 'contact card',
     ariaExpanded: null,
     isLimitedNavigation: true,    
     a11yDescribedByInstructionMessage: null,
@@ -55,13 +55,13 @@ class EmployeeCardPrototype extends React.Component<any> {
         return
       case 'card as group with aria-roledescription as card':
         this.setState({ cardRole: 'group' })
-        this.setState({ ariaRoleDescription: 'card' })
+        this.setState({ ariaRoleDescription: 'contact card' })
         this.setState({ ariaExpanded: null })
         return
       case 'menu and menuitem with aria-roledescription as card':
         this.setState({ cardRole: 'menuitem' })
         this.setState({ parentRole: 'menu' })
-        this.setState({ ariaRoleDescription: 'card' })
+        this.setState({ ariaRoleDescription: 'contact card' })
         this.setState({ ariaExpanded: null })
         return
     }
@@ -153,7 +153,7 @@ class EmployeeCardPrototype extends React.Component<any> {
             'card as group with aria-roledescription as card',
             'menu and menuitem with aria-roledescription as card',
           ]}
-          defaultValue={'Select aria roles to be used'}
+          defaultValue={'card as group with aria-roledescription as card'}
           onSelectedChange={this.handleSelectedChange}
         />
         <Dropdown
@@ -162,6 +162,8 @@ class EmployeeCardPrototype extends React.Component<any> {
           defaultValue={'Select type of navigation'}
           onSelectedChange={this.handleSelectedNavigation}
         />
+                <button> button outside the card example</button>
+
         {/* <div
           role={this.state.parentRole}          
           style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}
