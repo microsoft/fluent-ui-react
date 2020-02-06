@@ -56,29 +56,7 @@ In the rest of the specification, there will be some proposals of how the themes
 
 Users should be able to define mapping from props to classNames per component level.
 
-This is inspired by the [React Semantic UI's className builders](https://github.com/Semantic-Org/Semantic-UI-React/blob/master/src/lib/classNameBuilders.js)
-
-Here is an example of how the mappings for a FluentButton component can look like:
-
-```
-const fluentButtonMappings = props => {
-  const { size, circular, attached, corner } = props
-  return {
-    root: cx(
-      size, // the value (small, medium, big)
-      useKeyOnly(circular, 'circular'),
-      useKeyOrValueAndKey(attached, 'attached'), // true or the value of the attached prop
-      useValueAndKey(corner, 'corner'), // corner="left" will create the classNames `corner left`
-    ),
-    icon: cx(size),
-  }
-}
-
-const FluentButton = compose(Button, {
-  displayName: 'FluentButton',
-  mapPropsToClasses: fluentButtonMappings,
-})
-```
+For inspiration we can get some ideas from [React Semantic UI's className builders](https://github.com/Semantic-Org/Semantic-UI-React/blob/master/src/lib/classNameBuilders.js)
 
 #### CSSinJS usage
 
