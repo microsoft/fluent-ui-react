@@ -1,12 +1,11 @@
+import { Button, Dropdown, Provider, themes } from '@fluentui/react'
 import React from 'react'
-import { Button, Provider, themes } from '@fluentui/react'
 
-function Page() {
-  return (
-    <Provider theme={themes.teams}>
-      <Button>Welcome to Next.js!</Button>
-    </Provider>
-  )
-}
+const Page = () => (
+  <Provider theme={themes.teams}>
+    <Dropdown items={['Foo', 'Bar', 'Baz', 'Qux']} />
+    <Button>Welcome to Next.js!</Button>
+  </Provider>
+)
 
 export default Page

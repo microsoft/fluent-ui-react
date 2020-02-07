@@ -3,6 +3,7 @@ import { mergeThemes } from '@fluentui/styles'
 
 import { ProviderContextPrepared, ProviderContextInput } from '../types'
 import { createRenderer, felaRenderer } from './felaRenderer'
+import isBrowser from './isBrowser'
 
 const registeredRenderers = new WeakMap<Document, Renderer>()
 
@@ -12,7 +13,7 @@ export const mergeRenderers = (current: Renderer, next?: Renderer, target?: Docu
   }
 
   // A valid comparisons, default renderer will be used
-  if (typeof document === 'undefined' || typeof target === 'undefined') {
+  if (!isBrowser() || typeof target === 'undefined') {
     return felaRenderer
   }
 
@@ -55,7 +56,7 @@ const mergeProviderContexts = (
     },
     rtl: false,
     disableAnimations: false,
-    target: undefined,
+    target: isBrowser() ? document : undefined, // eslint-disable-line no-undef
     telemetry: undefined,
     _internal_resolvedComponentVariables: {},
     renderer: undefined,

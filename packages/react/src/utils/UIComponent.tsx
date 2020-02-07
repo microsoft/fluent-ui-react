@@ -5,6 +5,7 @@ import * as _ from 'lodash'
 import { ThemeContext } from 'react-fela'
 
 import renderComponent, { RenderResultConfig } from './renderComponent'
+import { ProviderContextPrepared } from 'src/types'
 
 // TODO @Bugaa92: deprecated by createComponent.tsx
 class UIComponent<P, S = {}> extends React.Component<P, S> {
@@ -29,6 +30,7 @@ class UIComponent<P, S = {}> extends React.Component<P, S> {
   }
 
   actionHandlers: AccessibilityActionHandlers
+  context: ProviderContextPrepared
 
   // stores debug information
   fluentUIDebug: any = null
