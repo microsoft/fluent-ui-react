@@ -32,7 +32,7 @@ export const mergeRenderers = (
 }
 
 export const mergePerformanceOptions = (target, ...sources) => {
-  return  Object.assign(target, ...sources)
+  return Object.assign(target, ...sources)
 }
 
 export const mergeBooleanValues = (target, ...sources) => {

@@ -1,6 +1,11 @@
 import { IStyle } from 'fela'
 import * as _ from 'lodash'
-import { getUnhandledProps, Renderer, StylesContextPerformance, Telemetry } from '@fluentui/react-bindings'
+import {
+  getUnhandledProps,
+  Renderer,
+  StylesContextPerformance,
+  Telemetry,
+} from '@fluentui/react-bindings'
 import {
   mergeSiteVariables,
   StaticStyleObject,

@@ -93,7 +93,8 @@ const renderComponent = <P extends {}>(
     saveDebug,
     theme: context.theme || emptyTheme,
     performance: {
-      enableVariablesCaching: typeof enableVariablesCaching === 'boolean' ? enableVariablesCaching : true,
+      enableVariablesCaching:
+        typeof enableVariablesCaching === 'boolean' ? enableVariablesCaching : true,
       enableStylesCaching: false, // we cannot enable caching for class components
     },
   })

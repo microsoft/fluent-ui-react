@@ -60,10 +60,7 @@ const useStyles = <StyleProps extends PrimitiveProps>(
   const context: StylesContextValue<{ renderRule: RendererRenderRule }> =
     React.useContext(ThemeContext) || defaultContext
 
-  const {
-    enableStylesCaching = true,
-    enableVariablesCaching = true,
-  } = context.performance || {}
+  const { enableStylesCaching = true, enableVariablesCaching = true } = context.performance || {}
 
   const {
     className = process.env.NODE_ENV === 'production' ? '' : 'no-classname-🙉',

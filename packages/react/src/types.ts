@@ -1,4 +1,9 @@
-import { StylesContextInputValue, StylesContextValue, StylesContextPerformance, Telemetry } from '@fluentui/react-bindings'
+import {
+  StylesContextInputValue,
+  StylesContextValue,
+  StylesContextPerformance,
+  Telemetry,
+} from '@fluentui/react-bindings'
 import * as React from 'react'
 
 import { ShorthandFactory } from './utils/factories'

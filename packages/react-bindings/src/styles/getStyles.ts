@@ -60,7 +60,7 @@ const resolveVariables = (
 
   let componentThemeVariables = {}
 
-  if(enabledVariablesCaching) {
+  if (enabledVariablesCaching) {
     if (!variablesCache.has(theme)) {
       variablesCache.set(theme, {})
     }
@@ -75,7 +75,8 @@ const resolveVariables = (
 
     componentThemeVariables = variablesThemeCache[displayName]
   } else {
-    componentThemeVariables = callable(theme.componentVariables[displayName])(theme.siteVariables) || {}
+    componentThemeVariables =
+      callable(theme.componentVariables[displayName])(theme.siteVariables) || {}
   }
 
   if (variables === undefined) {
@@ -111,7 +112,12 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
   // - compute classes (with resolvedStyles)
   //
 
-  const resolvedVariables = resolveVariables(displayName, theme, props.variables, enableVariablesCaching)
+  const resolvedVariables = resolveVariables(
+    displayName,
+    theme,
+    props.variables,
+    enableVariablesCaching,
+  )
 
   //
   // STYLES
