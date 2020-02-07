@@ -4,8 +4,8 @@ import * as _ from 'lodash'
 // @ts-ignore We have this export in package, but it is not present in typings
 import { ThemeContext } from 'react-fela'
 
+import { ProviderContextPrepared } from '../types'
 import renderComponent, { RenderResultConfig } from './renderComponent'
-import { ProviderContextPrepared } from 'src/types'
 
 // TODO @Bugaa92: deprecated by createComponent.tsx
 class UIComponent<P, S = {}> extends React.Component<P, S> {
