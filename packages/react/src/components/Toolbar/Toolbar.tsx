@@ -10,6 +10,7 @@ import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import { Ref } from '@fluentui/react-component-ref'
 import { EventListener } from '@fluentui/react-component-event-listener'
+import { getFirstFocusable } from '@fluentui/react-bindings'
 
 import {
   childrenExist,
@@ -190,7 +191,14 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
       el.contains(this.context.target.activeElement)
     ) {
       if (this.containerRef.current) {
-        this.containerRef.current.querySelector('[tabindex]')
+        const firstFocusableItem = getFirstFocusable(
+          this.containerRef.current,
+          this.containerRef.current.firstElementChild,
+        )
+
+        if (firstFocusableItem) {
+          firstFocusableItem.focus()
+        }
       }
     }
 
