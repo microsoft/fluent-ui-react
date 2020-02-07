@@ -3,6 +3,13 @@ import * as React from 'react'
 
 import { ShorthandFactory } from './utils/factories'
 
+// Temporary workaround for @lodash dependency
+
+export type DebounceResultFn<T> = T & {
+  cancel: () => void
+  flush: () => void
+}
+
 // ========================================================
 // Utilities
 // ========================================================

@@ -3,5 +3,5 @@ export interface TooltipVariables {
 }
 
 export default (siteVars: any): TooltipVariables => ({
-  zIndex: 1000,
+  zIndex: siteVars.zIndexes.overlay,
 })

@@ -235,6 +235,7 @@ export const colorScheme: ColorSchemeMapping = {
 
     foregroundHover: colors.white,
     backgroundHover: colors.ruby[600],
+    backgroundHover1: colors.red[400],
 
     foregroundPressed: colors.white,
     backgroundPressed: colors.ruby[700],
