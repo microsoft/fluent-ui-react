@@ -1,12 +1,7 @@
-import {
-  Accessibility,
-  AriaRole,
-  FocusZoneMode,
-  FocusZoneDefinition,
-} from '@fluentui/accessibility'
-import { FocusZone, FOCUSZONE_WRAP_ATTRIBUTE } from '@fluentui/react-bindings'
+import { Accessibility, AriaRole } from '@fluentui/accessibility'
 import * as React from 'react'
 import * as keyboardKey from 'keyboard-key'
+import { act } from 'react-dom/test-utils'
 
 import { mountWithProviderAndGetComponent, mountWithProvider } from 'test/utils'
 import { UIComponent } from 'src/utils'
@@ -17,11 +12,7 @@ export const getRenderedAttribute = (renderedComponent, propName, partSelector) 
     ? renderedComponent.render().find(partSelector)
     : renderedComponent.render()
 
-  let node = target.first()
-  if (node.attr(FOCUSZONE_WRAP_ATTRIBUTE)) {
-    node = node.children().first() // traverse through FocusZone wrap <div>
-  }
-  return node.prop(propName)
+  return target.first().prop(propName)
 }
 
 const overriddenRootRole = 'test-mock-role' as AriaRole
@@ -47,7 +38,6 @@ export default (
     defaultRootRole?: string
     /** Selector to scope the test to a part */
     partSelector?: string
-    focusZoneDefinition?: FocusZoneDefinition
     usesWrapperSlot?: boolean
   } = {},
 ) => {
@@ -55,7 +45,6 @@ export default (
     requiredProps = {},
     defaultRootRole,
     partSelector = '',
-    focusZoneDefinition = {} as FocusZoneDefinition,
     usesWrapperSlot = false,
   } = options
 
@@ -136,48 +125,26 @@ export default (
       const wrapper = mountWithProvider(<Component {...wrapperProps} />)
       const component = wrapper.find(Component)
       const instance = component.instance() as UIComponent<any, any>
-      if (instance.actionHandlers) {
-        instance.actionHandlers.mockAction = actionHandler
-      }
-      // Force render component to apply updated key handlers
-      wrapper.setProps({})
 
-      getEventTargetComponent(component, 'onKeyDown').simulate('keydown', {
-        keyCode: keyboardKey.Enter,
+      if (instance) {
+        if (instance.actionHandlers) {
+          instance.actionHandlers.mockAction = actionHandler
+        }
+        // Force render component to apply updated key handlers
+        wrapper.setProps({})
+      }
+
+      act(() => {
+        getEventTargetComponent(component, 'onKeyDown').simulate('keydown', {
+          keyCode: keyboardKey.Enter,
+        })
       })
 
-      if (instance.actionHandlers) {
+      if (instance && instance.actionHandlers) {
         expect(actionHandler).toBeCalledTimes(1)
       }
+
       expect(eventHandler).toBeCalledTimes(1)
     })
-  }
-
-  if (focusZoneDefinition) {
-    if (focusZoneDefinition.mode === FocusZoneMode.Wrap) {
-      test('gets wrapped in FocusZone', () => {
-        const rendered = mountWithProviderAndGetComponent(
-          Component,
-          <Component {...requiredProps} />,
-        )
-
-        const focusZone = rendered.childAt(0).childAt(0) // skip thru FelaTheme
-        expect(focusZone.type()).toEqual(FocusZone)
-
-        const focusZoneDiv = focusZone.childAt(0)
-        expect(focusZoneDiv.type()).toBe('div')
-        expect(focusZoneDiv.children().length).toBeGreaterThan(0)
-      })
-    } else if (focusZoneDefinition.mode === FocusZoneMode.Embed) {
-      test('gets embedded with FocusZone', () => {
-        const rendered = mountWithProviderAndGetComponent(
-          Component,
-          <Component {...requiredProps} />,
-        )
-
-        const focusZone = rendered.childAt(0).childAt(0) // skip thru FelaTheme
-        expect(focusZone.type()).toEqual(FocusZone)
-      })
-    }
   }
 }

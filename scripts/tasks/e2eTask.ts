@@ -2,10 +2,17 @@ import { jestTask, resolveCwd } from 'just-scripts'
 import path from 'path'
 import os from 'os'
 
+const noOp = (done: () => void) => done()
+
 export function e2eTask() {
+  const config = resolveCwd('jest.puppeteer.js')
+  if (!config) {
+    return noOp
+  }
+
   return jestTask({
     runInBand: true,
-    config: resolveCwd('jest.puppeteer.js'),
+    config,
     env: {
       ...process.env,
       JEST_E2E_HEADLESS: 'true',
@@ -16,9 +23,14 @@ export function e2eTask() {
 }
 
 export function e2eWatchTask() {
+  const config = resolveCwd('jest.puppeteer.js')
+  if (!config) {
+    return noOp
+  }
+
   return jestTask({
     runInBand: true,
-    config: resolveCwd('jest.puppeteer.js'),
+    config,
     _: ['--watchAll'],
     env: {
       ...process.env,
@@ -28,12 +40,17 @@ export function e2eWatchTask() {
 }
 
 export function e2ePerfTask() {
+  const config = resolveCwd('jest.puppeteer.js')
+  if (!config) {
+    return noOp
+  }
+
   const tmpDir = os.tmpdir()
   const logFile = path.join(tmpDir, 'puppeteer.log')
 
   return jestTask({
     runInBand: true,
-    config: resolveCwd('jest.puppeteer.js'),
+    config,
     env: {
       ...process.env,
       JEST_E2E_PROFILE: logFile,

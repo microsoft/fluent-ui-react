@@ -40,7 +40,7 @@ import { MenuItemProps } from '../Menu/MenuItem'
 import Text, { TextProps } from '../Text/Text'
 import Reaction, { ReactionProps } from '../Reaction/Reaction'
 import { ReactionGroupProps } from '../Reaction/ReactionGroup'
-import { ComponentSlotStylesPrepared } from '../../themes/types'
+import { ComponentSlotStylesResolved } from '@fluentui/styles'
 
 export interface ChatMessageSlotClassNames {
   actionMenu: string
@@ -212,7 +212,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
 
   renderActionMenu(
     actionMenu: ChatMessageProps['actionMenu'],
-    styles: ComponentSlotStylesPrepared,
+    styles: ComponentSlotStylesResolved,
   ) {
     const { unstable_overflow: overflow, positionActionMenu } = this.props
     const { messageNode } = this.state

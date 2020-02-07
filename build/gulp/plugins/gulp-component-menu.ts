@@ -5,7 +5,7 @@ import path from 'path'
 import through2 from 'through2'
 import Vinyl from 'vinyl'
 
-import config from '../../../config'
+import config from '../../config'
 import getComponentInfo from './util/getComponentInfo'
 
 const pluginName = 'gulp-component-menu'

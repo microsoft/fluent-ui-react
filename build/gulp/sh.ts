@@ -1,11 +1,11 @@
 import * as childProcess from 'child_process'
 
-const sh = (command: string, pipeOutputToResult: boolean = false): Promise<string> =>
+const sh = (command: string, cwd?: string, pipeOutputToResult: boolean = false): Promise<string> =>
   new Promise((resolve, reject) => {
     const [cmd, ...args] = command.split(' ')
 
     const options: childProcess.SpawnOptions = {
-      cwd: process.cwd(),
+      cwd: cwd || process.cwd(),
       env: process.env,
       stdio: pipeOutputToResult ? 'pipe' : [0, 1, 2],
       shell: true,

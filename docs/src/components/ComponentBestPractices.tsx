@@ -1,6 +1,7 @@
 import * as React from 'react'
 import * as _ from 'lodash'
 import {
+  Extendable,
   Box,
   Flex,
   Header,
@@ -10,7 +11,6 @@ import {
   Segment,
   ShorthandCollection,
 } from '@fluentui/react'
-import { Extendable } from 'src/types'
 
 export type ComponentBestPracticesProps = Extendable<{
   doList?: ShorthandCollection<ListItemProps>

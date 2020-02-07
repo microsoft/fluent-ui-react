@@ -1,22 +1,34 @@
+import { StylesContextInputValue, StylesContextValue, Telemetry } from '@fluentui/react-bindings'
+import * as React from 'react'
+
+import { ShorthandFactory } from './utils/factories'
+
+// Temporary workaround for @lodash dependency
+
+export type DebounceResultFn<T> = T & {
+  cancel: () => void
+  flush: () => void
+}
+
 // ========================================================
 // Utilities
 // ========================================================
-
-import * as React from 'react'
-import { ThemeInput, Renderer, ThemePrepared } from './themes/types'
-import Telemetry from './utils/Telemetry'
-
-export type Extendable<T, V = any> = T & {
-  [key: string]: V
-}
 
 export type ResultOf<T> = T extends (...arg: any[]) => infer TResult ? TResult : never
 
 export type ObjectOf<T> = { [key: string]: T }
 
-export type ObjectOrFunc<TResult, TArg = {}> = ((arg: TArg) => TResult) | TResult
-
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
+
+// ========================================================
+// Components
+// ========================================================
+
+export type FluentComponentStaticProps<P = {}> = {
+  className: string
+  handledProps: (keyof P)[]
+  create: ShorthandFactory<P>
+}
 
 // ========================================================
 // Props
@@ -158,21 +170,14 @@ export const UNSAFE_typed = <TComponentType>(componentType: TComponentType) => {
 // Provider's context
 // ========================================================
 
-export interface ProviderContextInput {
-  renderer?: Renderer
+export interface ProviderContextInput extends StylesContextInputValue {
   rtl?: boolean
-  disableAnimations?: boolean
   target?: Document
-  theme?: ThemeInput
   telemetry?: Telemetry
 }
 
-export interface ProviderContextPrepared {
-  renderer: Renderer
+export interface ProviderContextPrepared extends StylesContextValue {
   rtl: boolean
-  disableAnimations: boolean
   target: Document
-  theme: ThemePrepared
   telemetry: Telemetry | undefined
-  _internal_resolvedComponentVariables: Record<string, object>
 }

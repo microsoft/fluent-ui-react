@@ -1,4 +1,5 @@
-import { StaticStyles } from '../../types'
+import { StaticStyles } from '@fluentui/styles'
+
 import globalStyles from './globalStyles'
 import normalizeCSS from './normalizeCSS'
 

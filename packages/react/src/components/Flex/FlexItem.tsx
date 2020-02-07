@@ -9,8 +9,7 @@ import {
   ChildrenComponentProps,
   ShorthandFactory,
 } from '../../utils'
-import { mergeStyles } from '../../utils/mergeThemes'
-import { ComponentSlotStylesPrepared } from '../../themes/types'
+import { ComponentSlotStylesPrepared, mergeStyles } from '@fluentui/styles'
 
 type ChildrenFunction = (params: {
   styles: ComponentSlotStylesPrepared
@@ -24,7 +23,7 @@ export interface FlexItemProps extends UIComponentProps, ChildrenComponentProps<
   align?: 'auto' | 'start' | 'end' | 'center' | 'baseline' | 'stretch'
 
   /** Defines size of the item. */
-  size?: 'size.half' | 'size.quarter' | 'size.small' | 'size.medium' | 'size.large'
+  size?: 'size.half' | 'size.quarter' | 'size.small' | 'size.medium' | 'size.large' | string
 
   /**
    * Item can fill remaining space of the container.
@@ -66,7 +65,14 @@ class FlexItem extends UIComponent<FlexItemProps> {
     children: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
 
     align: PropTypes.oneOf(['auto', 'start', 'end', 'center', 'baseline', 'stretch']),
-    size: PropTypes.oneOf(['size.half', 'size.quarter', 'size.small', 'size.medium', 'size.large']),
+    size: PropTypes.oneOf([
+      'size.half',
+      'size.quarter',
+      'size.small',
+      'size.medium',
+      'size.large',
+      PropTypes.string,
+    ]),
 
     stretch: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
     shrink: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),

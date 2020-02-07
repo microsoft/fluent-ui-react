@@ -1,4 +1,4 @@
-import { ICSSInJSStyle } from '../themes/types'
+import { ICSSInJSStyle } from '@fluentui/styles'
 
 const debugStyle = ({ name, color, style }): ICSSInJSStyle => ({
   position: 'relative',

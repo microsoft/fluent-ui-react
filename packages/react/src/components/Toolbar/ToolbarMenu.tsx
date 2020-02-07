@@ -15,7 +15,7 @@ import {
   ShorthandFactory,
   applyAccessibilityKeyHandlers,
 } from '../../utils'
-import { mergeComponentVariables } from '../../utils/mergeThemes'
+import { mergeComponentVariables } from '@fluentui/styles'
 
 import {
   ComponentEventHandler,

@@ -1,10 +1,15 @@
 import { pxToRem } from '../../../../utils'
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import { LabelProps } from '../../../../components/Label/Label'
 import { LabelVariables } from './labelVariables'
 import { getColorScheme } from '../../colors'
 
-const labelStyles: ComponentSlotStylesPrepared<LabelProps, LabelVariables> = {
+export type LabelStylesProps = Pick<LabelProps, 'circular' | 'color' | 'imagePosition'> & {
+  hasImage: boolean
+  hasActionableIcon: boolean
+}
+
+const labelStyles: ComponentSlotStylesPrepared<LabelStylesProps, LabelVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
     const colors = getColorScheme(v.colorScheme, p.color)
 
@@ -19,7 +24,7 @@ const labelStyles: ComponentSlotStylesPrepared<LabelProps, LabelVariables> = {
       fontSize: pxToRem(14),
       borderRadius: pxToRem(3),
       padding: v.padding,
-      ...(p.image &&
+      ...(p.hasImage &&
         (p.imagePosition === 'start'
           ? { paddingLeft: v.startPaddingLeft }
           : { paddingRight: v.endPaddingRight })),
@@ -35,9 +40,7 @@ const labelStyles: ComponentSlotStylesPrepared<LabelProps, LabelVariables> = {
   }),
 
   icon: ({ props: p }): ICSSInJSStyle =>
-    p.icon &&
-    typeof p.icon === 'object' &&
-    (p.icon as any).onClick && {
+    p.hasActionableIcon && {
       cursor: 'pointer',
     },
 }

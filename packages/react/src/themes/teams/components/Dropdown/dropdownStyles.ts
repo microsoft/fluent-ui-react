@@ -2,7 +2,7 @@ import {
   ComponentSlotStylesPrepared,
   ICSSInJSStyle,
   ComponentSlotStyleFunction,
-} from '../../../types'
+} from '@fluentui/styles'
 import {
   default as Dropdown,
   DropdownProps,
@@ -148,7 +148,7 @@ const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, Dropdow
     borderStyle: 'solid',
     borderWidth: p.open ? v.listBorderWidth : '0px',
     borderColor: v.listBorderColor,
-    zIndex: 1000,
+    zIndex: v.overlayZIndex,
     maxHeight: v.listMaxHeight,
     overflowY: 'auto',
     width: getWidth(p, v),

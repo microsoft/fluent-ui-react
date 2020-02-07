@@ -2,7 +2,7 @@ import { task, series } from 'gulp'
 import { argv } from 'yargs'
 
 import sh from '../sh'
-import config from '../../../config'
+import config from '../../config'
 
 const { paths } = config
 

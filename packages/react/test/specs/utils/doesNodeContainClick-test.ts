@@ -56,27 +56,27 @@ describe('doesNodeContainClick', () => {
 
   describe('nil event properties', () => {
     test('returns false if the e.clientX is nil', () => {
-      expect(doesNodeContainClick(makeNode(), { clientX: null })).toBe(false)
-      expect(doesNodeContainClick(makeNode(), { clientX: undefined })).toBe(false)
+      expect(doesNodeContainClick(makeNode(), { clientX: null } as any)).toBe(false)
+      expect(doesNodeContainClick(makeNode(), { clientX: undefined } as any)).toBe(false)
     })
 
     test('returns false if the e.clientY is nil', () => {
-      expect(doesNodeContainClick(makeNode(), { clientY: null })).toBe(false)
-      expect(doesNodeContainClick(makeNode(), { clientY: undefined })).toBe(false)
+      expect(doesNodeContainClick(makeNode(), { clientY: null } as any)).toBe(false)
+      expect(doesNodeContainClick(makeNode(), { clientY: undefined } as any)).toBe(false)
     })
 
     test('does not call node.getClientRects if e.clientX is nil', () => {
       const node = makeNode()
-      doesNodeContainClick(node, { clientX: null })
-      doesNodeContainClick(node, { clientX: undefined })
+      doesNodeContainClick(node, { clientX: null } as any)
+      doesNodeContainClick(node, { clientX: undefined } as any)
 
       expect(node.getClientRects).not.toHaveBeenCalled()
     })
 
     test('does not call node.getClientRects if e.clientY is nil', () => {
       const node = makeNode()
-      doesNodeContainClick(node, { clientY: null })
-      doesNodeContainClick(node, { clientY: undefined })
+      doesNodeContainClick(node, { clientY: null } as any)
+      doesNodeContainClick(node, { clientY: undefined } as any)
 
       expect(node.getClientRects).not.toHaveBeenCalled()
     })

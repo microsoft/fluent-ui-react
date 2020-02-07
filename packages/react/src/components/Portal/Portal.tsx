@@ -1,7 +1,11 @@
 import { AccessibilityAttributes } from '@fluentui/accessibility'
-import { FocusTrapZone, FocusTrapZoneProps } from '@fluentui/react-bindings'
+import {
+  AccessibilityHandlerProps,
+  FocusTrapZone,
+  FocusTrapZoneProps,
+} from '@fluentui/react-bindings'
 import { EventListener } from '@fluentui/react-component-event-listener'
-import { handleRef, Ref, toRefObject } from '@fluentui/react-component-ref'
+import { handleRef, Ref } from '@fluentui/react-component-ref'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -17,7 +21,6 @@ import {
   rtlTextContainer,
 } from '../../utils'
 import PortalInner from './PortalInner'
-import { AccessibilityHandlerProps } from '../../utils/accessibility/reactTypes'
 
 export type TriggerAccessibility = {
   attributes?: AccessibilityAttributes
@@ -88,7 +91,6 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
   static propTypes = {
     ...commonPropTypes.createCommon({
       accessibility: false,
-      animated: false,
       as: false,
       className: false,
       styled: false,
@@ -124,7 +126,6 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
 
     const contentToRender = childrenExist(children) ? children : content
     const focusTrapZoneProps = (_.keys(trapFocus).length && trapFocus) || {}
-    const targetRef = toRefObject(this.context.target)
 
     return (
       open && (
@@ -139,7 +140,11 @@ class Portal extends AutoControlledComponent<PortalProps, PortalState> {
             ) : (
               contentToRender
             )}
-            <EventListener listener={this.handleDocumentClick} targetRef={targetRef} type="click" />
+            <EventListener
+              listener={this.handleDocumentClick}
+              target={this.context.target}
+              type="click"
+            />
           </PortalInner>
         </Ref>
       )

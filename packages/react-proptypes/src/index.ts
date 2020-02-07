@@ -476,19 +476,18 @@ export const deprecate = (help: string, validator?: Function) => (
   return error
 }
 
-export const accessibility = PropTypes.oneOfType([PropTypes.func, PropTypes.object])
+export const accessibility = PropTypes.func
 
-export const size = PropTypes.oneOf([
-  'smallest',
-  'smaller',
-  'small',
-  'medium',
-  'large',
-  'larger',
-  'largest',
+export const size = PropTypes.oneOf<
+  'smallest' | 'smaller' | 'small' | 'medium' | 'large' | 'larger' | 'largest'
+>(['smallest', 'smaller', 'small', 'medium', 'large', 'larger', 'largest'])
+
+export const align = PropTypes.oneOf<'start' | 'end' | 'center' | 'justify'>([
+  'start',
+  'end',
+  'center',
+  'justify',
 ])
-
-export const align = PropTypes.oneOf(['start', 'end', 'center', 'justify'])
 
 export const animation = PropTypes.oneOfType([
   // Validator is broken in the latest @react/types
@@ -537,4 +536,7 @@ export const design = PropTypes.shape({
 })
 
 /** A checker that matches the React.Ref type. */
-export const ref = PropTypes.oneOfType([PropTypes.func, PropTypes.object])
+export const ref = PropTypes.oneOfType([
+  PropTypes.func,
+  PropTypes.object as PropTypes.Validator<{ current: any }>,
+])

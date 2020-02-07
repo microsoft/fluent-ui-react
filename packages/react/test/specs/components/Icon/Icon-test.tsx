@@ -1,12 +1,12 @@
+import { ThemeInput } from '@fluentui/styles'
 import * as React from 'react'
 import { isConformant, handlesAccessibility, getRenderedAttribute } from '../../commonTests'
 
 import Icon from '../../../../src/components/Icon/Icon'
 import { mountWithProviderAndGetComponent } from 'test/utils'
-import { ThemeInput } from 'src/themes/types'
 
 describe('Icon', () => {
-  isConformant(Icon, { requiredProps: { name: 'at' } })
+  isConformant(Icon, { constructorName: 'Icon', requiredProps: { name: 'at' } })
 
   describe('accessibility', () => {
     handlesAccessibility(Icon, {

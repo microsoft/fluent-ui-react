@@ -1,3 +1,5 @@
+import { Accessibility, tableBehavior } from '@fluentui/accessibility'
+import { ReactAccessibilityBehavior } from '@fluentui/react-bindings'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as _ from 'lodash'
@@ -11,13 +13,10 @@ import {
   applyAccessibilityKeyHandlers,
   childrenExist,
 } from '../../utils'
-import { ComponentVariablesObject } from '../../themes/types'
-import { mergeComponentVariables } from '../../utils/mergeThemes'
+import { ComponentVariablesObject, mergeComponentVariables } from '@fluentui/styles'
 import TableRow, { TableRowProps } from './TableRow'
 import TableCell from './TableCell'
 import { WithAsProp, ShorthandCollection, ShorthandValue } from '../../types'
-import { Accessibility, tableBehavior } from '@fluentui/accessibility'
-import { ReactAccessibilityBehavior } from '../../utils/accessibility/reactTypes'
 
 export interface TableSlotClassNames {
   header: string
@@ -52,7 +51,11 @@ const handleVariablesOverrides = variables => predefinedProps => ({
  * * @accessibility
  * Implements ARIA [Data Grid](https://www.w3.org/TR/wai-aria-practices/#dataGrid) design pattern for presenting tabular information.
  * When gridcell contains actionable element, use [gridCellWithFocusableElementBehavior](/components/table/accessibility#grid-cell-with-focusable-element-behavior-ts). [More information available in aria documentation.](https://www.w3.org/TR/wai-aria-practices/#gridNav_focus)
- * When gridcell contains more actionable elements, use [gridCellWithFocusableElementBehavior](/components/table/accessibility#gridCellMultipleFocusableBehavior). [More information available in aria documentation.](https://www.w3.org/TR/wai-aria-practices/#gridNav_inside)
+ * Use [gridCellMultipleFocusableBehavior](/components/table/accessibility#gridCellMultipleFocusableBehavior), when gridcell contains:
+ * \- editable content
+ * \- multiple actionable elements
+ * \- component that utilizes arrow keys in its navigation, like menu button, dropdown, radio group, slider, etc.
+ * [More information available in aria documentation.](https://www.w3.org/TR/wai-aria-practices/#gridNav_inside)
  * @accessibilityIssues
  * [NVDA narrate table title(aria-label) twice](https://github.com/nvaccess/nvda/issues/10548)
  * [Accessibility DOM > Table > gridcell > when gridcell is focused, then selected state is send to reader](https://bugs.chromium.org/p/chromium/issues/detail?id=1030378)

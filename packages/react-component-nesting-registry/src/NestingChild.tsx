@@ -9,17 +9,17 @@ class NestingChildInner<T extends Node> extends React.Component<NestingChildInne
   childRef = React.createRef<T>()
 
   componentDidMount() {
-    this.props.register(this.childRef)
+    this.props.register(this.childRef as any)
   }
 
   componentWillUnmount() {
-    this.props.unregister(this.childRef)
+    this.props.unregister(this.childRef as any)
   }
 
-  getRefs = (): NodeRef[] => this.props.getContextRefs(this.childRef)
+  getRefs = (): NodeRef[] => this.props.getContextRefs(this.childRef as any)
 
   render() {
-    return this.props.children(this.getRefs, this.childRef)
+    return this.props.children(this.getRefs, this.childRef as any)
   }
 }
 

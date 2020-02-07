@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Loader } from '@fluentui/react/src'
+import { Loader } from '@fluentui/react'
 
 const AccessibilityDescription = React.lazy(() => import('./InlineMarkdown'))
 
