@@ -12,12 +12,12 @@ import { ThemeContext } from 'react-fela'
 import {
   ComponentDesignProp,
   ComponentSlotClasses,
+  PrimitiveProps,
   RendererRenderRule,
   StylesContextValue,
 } from '../styles/types'
 import getStyles from '../styles/getStyles'
 
-export type PrimitiveProps = Record<string, boolean | number | string | undefined>
 type UseStylesOptions<StyleProps extends PrimitiveProps> = {
   className?: string
   mapPropsToStyles?: () => StyleProps

@@ -22,11 +22,11 @@ import resolveStylesAndClasses, { ResolveStylesResult } from './resolveStylesAnd
 import {
   ComponentDesignProp,
   ComponentSlotClasses,
+  PrimitiveProps,
   RendererParam,
   RendererRenderRule,
   StylesContextValue,
 } from '../styles/types'
-import { PrimitiveProps } from '../hooks/useStyles'
 
 type GetStylesOptions = StylesContextValue<{
   renderRule: RendererRenderRule

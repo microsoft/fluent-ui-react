@@ -76,3 +76,5 @@ export type StylesContextInputValue<R = Renderer> = {
 export type StylesContextValue<R = Renderer> = Required<StylesContextInputValue<R>> & {
   theme: ThemePrepared
 }
+
+export type PrimitiveProps = Record<string, boolean | number | string | undefined>

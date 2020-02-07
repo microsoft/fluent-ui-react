@@ -6,7 +6,7 @@ import {
   ComponentSlotStylesResolved,
   ThemePrepared,
 } from '@fluentui/styles'
-import { ComponentSlotClasses } from '../styles/types'
+import { ComponentSlotClasses, PrimitiveProps } from '../styles/types'
 
 export type ResolveStylesResult = {
   resolvedStyles: ComponentSlotStylesResolved
@@ -39,7 +39,7 @@ const resolveStylesAndClasses = (
   cacheEnabled?: boolean | undefined,
   displayName?: string,
   theme?: ThemePrepared,
-  props?: object,
+  props?: PrimitiveProps,
 ): ResolveStylesResult => {
   const resolvedStyles: Record<string, ICSSInJSStyle> = {}
   const resolvedStylesDebug: Record<string, { styles: Object }[]> = {}
