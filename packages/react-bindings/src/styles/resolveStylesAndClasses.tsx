@@ -14,9 +14,10 @@ export type ResolveStylesResult = {
   classes: ComponentSlotClasses
 }
 
-// TODO: Describe me
-
+// this weak map is used as cache for the classes
 const classesCache = new WeakMap<ThemePrepared, Record<string, string>>()
+
+// this weak map is used as cache for the styles
 const stylesCache = new WeakMap<ThemePrepared, Record<string, ICSSInJSStyle>>()
 
 /**
@@ -109,7 +110,6 @@ const resolveStylesAndClasses = (
       },
     })
 
-    // TODO: Fix this if possible
     const className = slotName === 'root' ? '__root' : slotName
     const cacheClassKey = `${className}__return`
 
