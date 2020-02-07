@@ -190,6 +190,7 @@ const Provider: React.FC<WithAsProp<ProviderProps>> & {
       <ThemeProvider theme={outgoingContext} overwrite>
         <DocumentBoxContext.Provider value={element}>
           <ElementType
+            {...rtlProps}
             {...rtlTextContainer.getAttributes({ forElements: [children] })}
             {...unhandledProps}
             className={classes.root}
