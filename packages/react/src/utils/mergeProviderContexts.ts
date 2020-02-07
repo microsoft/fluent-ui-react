@@ -31,6 +31,10 @@ export const mergeRenderers = (
   return createdRenderer
 }
 
+export const mergePerformanceOptions = (target, ...sources) => {
+  return  Object.assign(target, ...sources)
+}
+
 export const mergeBooleanValues = (target, ...sources) => {
   return sources.reduce((acc, next) => {
     return typeof next === 'boolean' ? next : acc
@@ -54,7 +58,10 @@ const mergeProviderContexts = (
     },
     rtl: false,
     disableAnimations: false,
-    enableCaching: false,
+    performance: {
+      enableStylesCaching: true,
+      enableVariablesCaching: true,
+    },
     target: document, // eslint-disable-line no-undef
     telemetry: undefined,
     renderer: undefined,
@@ -85,11 +92,7 @@ const mergeProviderContexts = (
         acc.disableAnimations = mergedDisableAnimations
       }
 
-      // Latest enableCaching value wins
-      const mergedEnableCaching = mergeBooleanValues(acc.enableCaching, next.enableCaching)
-      if (typeof mergedEnableCaching === 'boolean') {
-        acc.enableCaching = mergedEnableCaching
-      }
+      acc.performance = mergePerformanceOptions(acc.performance, next.performance || {})
 
       acc.telemetry = next.telemetry || acc.telemetry
 

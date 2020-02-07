@@ -61,9 +61,14 @@ export type Renderer = Omit<FelaRenderer, 'renderRule'> & {
   renderRule: RendererRenderRule
 }
 
+export interface StylesContextPerformance {
+  enableStylesCaching?: boolean
+  enableVariablesCaching?: boolean
+}
+
 export type StylesContextInputValue<R = Renderer> = {
   disableAnimations?: boolean
-  enableCaching?: boolean
+  performance?: StylesContextPerformance
   renderer?: R
   theme?: ThemeInput
 }

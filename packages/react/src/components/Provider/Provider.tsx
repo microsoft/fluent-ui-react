@@ -1,6 +1,6 @@
 import { IStyle } from 'fela'
 import * as _ from 'lodash'
-import { getUnhandledProps, Renderer, Telemetry } from '@fluentui/react-bindings'
+import { getUnhandledProps, Renderer, StylesContextPerformance, Telemetry } from '@fluentui/react-bindings'
 import {
   mergeSiteVariables,
   StaticStyleObject,
@@ -32,7 +32,7 @@ export interface ProviderProps extends ChildrenComponentProps {
   renderer?: Renderer
   rtl?: boolean
   disableAnimations?: boolean
-  enableCaching?: boolean
+  performance?: StylesContextPerformance
   overwrite?: boolean
   target?: Document
   theme?: ThemeInput
@@ -115,7 +115,7 @@ const Provider: React.FC<WithAsProp<ProviderProps>> & {
     theme: props.theme,
     rtl: props.rtl,
     disableAnimations: props.disableAnimations,
-    enableCaching: props.enableCaching,
+    performance: props.performance,
     renderer: props.renderer,
     target: props.target,
     telemetry,
@@ -200,7 +200,12 @@ Provider.propTypes = {
   renderer: PropTypes.object as PropTypes.Validator<Renderer>,
   rtl: PropTypes.bool,
   disableAnimations: PropTypes.bool,
-  enableCaching: PropTypes.bool,
+  // Heads Up!
+  // Keep in sync with packages/react-bindings/src/styles/types.ts
+  performance: PropTypes.shape({
+    enableStylesCaching: PropTypes.bool,
+    enableVariablesCaching: PropTypes.bool,
+  }),
   children: PropTypes.node.isRequired,
   overwrite: PropTypes.bool,
   target: PropTypes.object as PropTypes.Validator<Document>,

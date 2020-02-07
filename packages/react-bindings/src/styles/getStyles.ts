@@ -51,30 +51,39 @@ const resolveVariables = (
   displayName: string,
   theme: ThemePrepared,
   variables: ComponentVariablesInput | undefined,
+  enabledVariablesCaching: boolean | undefined,
 ): ComponentVariablesObject => {
   //
   // Simple caching model, works only if there is no `props.variables`
   // Resolves variables for this component, cache the result in provider
   //
 
-  if (!variablesCache.has(theme)) {
-    variablesCache.set(theme, {})
-  }
+  let componentThemeVariables = {}
 
-  const variablesThemeCache = variablesCache.get(theme) || {}
+  if(enabledVariablesCaching) {
+    if (!variablesCache.has(theme)) {
+      variablesCache.set(theme, {})
+    }
 
-  if (!variablesThemeCache[displayName]) {
-    variablesThemeCache[displayName] =
-      callable(theme.componentVariables[displayName])(theme.siteVariables) || {}
-    variablesCache.set(theme, variablesThemeCache)
+    const variablesThemeCache = variablesCache.get(theme) || {}
+
+    if (!variablesThemeCache[displayName]) {
+      variablesThemeCache[displayName] =
+        callable(theme.componentVariables[displayName])(theme.siteVariables) || {}
+      variablesCache.set(theme, variablesThemeCache)
+    }
+
+    componentThemeVariables = variablesThemeCache[displayName]
+  } else {
+    componentThemeVariables = callable(theme.componentVariables[displayName])(theme.siteVariables) || {}
   }
 
   if (variables === undefined) {
-    return variablesThemeCache[displayName]
+    return componentThemeVariables
   }
 
   return mergeComponentVariables(
-    variablesThemeCache[displayName],
+    componentThemeVariables,
     withDebugId(variables, 'props.variables'),
   )(theme.siteVariables)
 }
@@ -89,8 +98,10 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
     rtl,
     saveDebug,
     theme,
-    enableCaching,
+    performance,
   } = options
+
+  const { enableStylesCaching, enableVariablesCaching } = performance
   const { className, design, styles, variables, ...restProps } = props
 
   //
@@ -100,7 +111,7 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
   // - compute classes (with resolvedStyles)
   //
 
-  const resolvedVariables = resolveVariables(displayName, theme, props.variables)
+  const resolvedVariables = resolveVariables(displayName, theme, props.variables, enableVariablesCaching)
 
   //
   // STYLES
@@ -116,7 +127,7 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
     renderer,
     props,
     resolvedVariables,
-    cacheEnabled: enableCaching && noInlineOverrides,
+    cacheEnabled: enableStylesCaching && noInlineOverrides,
     styleProps: restProps,
   })
 

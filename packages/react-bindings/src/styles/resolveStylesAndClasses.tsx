@@ -56,7 +56,7 @@ const resolveStylesAndClasses = (
 
   const componentCacheKey =
     cacheEnabled && displayName && props
-      ? `${displayName}: ${JSON.stringify(props)}${styleParam.rtl}${styleParam.disableAnimations}`
+      ? `${displayName}:${JSON.stringify(props)}${styleParam.rtl}${styleParam.disableAnimations}`
       : ''
 
   Object.keys(mergedStyles).forEach(slotName => {

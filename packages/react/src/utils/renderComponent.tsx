@@ -68,6 +68,7 @@ const renderComponent = <P extends {}>(
 
   const { setStart, setEnd } = useTelemetry(displayName, context.telemetry)
   const rtl = context.rtl || false
+  const enableVariablesCaching = context.performance?.enableVariablesCaching
 
   setStart()
 
@@ -91,7 +92,10 @@ const renderComponent = <P extends {}>(
     rtl,
     saveDebug,
     theme: context.theme || emptyTheme,
-    enableCaching: false, // we cannot enable caching for class components
+    performance: {
+      enableVariablesCaching: typeof enableVariablesCaching === 'boolean' ? enableVariablesCaching : true,
+      enableStylesCaching: false, // we cannot enable caching for class components
+    },
   })
 
   const resolvedConfig: RenderResultConfig<P> = {

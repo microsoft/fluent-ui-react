@@ -1,4 +1,4 @@
-import { StylesContextInputValue, StylesContextValue, Telemetry } from '@fluentui/react-bindings'
+import { StylesContextInputValue, StylesContextValue, StylesContextPerformance, Telemetry } from '@fluentui/react-bindings'
 import * as React from 'react'
 
 import { ShorthandFactory } from './utils/factories'
@@ -174,10 +174,12 @@ export interface ProviderContextInput extends StylesContextInputValue {
   rtl?: boolean
   target?: Document
   telemetry?: Telemetry
+  performance?: StylesContextPerformance
 }
 
 export interface ProviderContextPrepared extends StylesContextValue {
   rtl: boolean
   target: Document
   telemetry: Telemetry | undefined
+  performance: StylesContextPerformance | undefined
 }
