@@ -4,6 +4,7 @@ import {
   ComponentSlotStylesPrepared,
   ComponentSlotStylesResolved,
   ComponentStyleFunctionParam,
+  ComponentVariablesInput,
   ComponentVariablesObject,
   DebugData,
   ICSSInJSStyle,
@@ -25,6 +26,7 @@ import {
   RendererRenderRule,
   StylesContextValue,
 } from '../styles/types'
+import { PrimitiveProps } from '../hooks/useStyles'
 
 type GetStylesOptions = StylesContextValue<{
   renderRule: RendererRenderRule
@@ -43,13 +45,13 @@ export type GetStylesResult = {
   theme: StylesContextValue['theme']
 }
 
-const variablesCache = new WeakMap<ThemePrepared, Record<string, any>>()
+const variablesCache = new WeakMap<ThemePrepared, Record<string, ComponentVariablesObject>>()
 
 const resolveVariables = (
   displayName: string,
   theme: ThemePrepared,
-  variables: any | undefined,
-): any => {
+  variables: ComponentVariablesInput | undefined,
+): ComponentVariablesObject => {
   //
   // Simple caching model, works only if there is no `props.variables`
   // Resolves variables for this component, cache the result in provider
@@ -97,7 +99,7 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
   // - compute classes (with resolvedStyles)
   //
 
-  const resolvedVariables: any = resolveVariables(displayName, theme, props.variables)
+  const resolvedVariables = resolveVariables(displayName, theme, props.variables)
 
   //
   // STYLES
@@ -122,7 +124,6 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
     saveDebug({
       componentName: displayName,
       componentVariables: _.filter(
-        // @ts-ignore
         resolvedVariables._debug,
         variables => !_.isEmpty(variables.resolved),
       ),
@@ -177,7 +178,7 @@ const resolveStyles = ({
     renderRule: RendererRenderRule
   }
   cacheEnabled: boolean | undefined
-  styleProps: any
+  styleProps: PrimitiveProps
 }): ResolveStylesResult => {
   // Resolve styles using resolved variables, merge results, allow props.styles to override
   let mergedStyles: ComponentSlotStylesPrepared = theme.componentStyles[displayName] || {
