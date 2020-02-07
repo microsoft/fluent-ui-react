@@ -80,10 +80,9 @@ const resolveStylesAndClasses = (
       get(): ICSSInJSStyle {
         // If caching enabled and entry exists, get from cache, avoid lazy evaluation
         if (cacheEnabled && theme) {
-          // @ts-ignore
-          if (stylesCache.get(theme)[stylesCacheKey]) {
-            // @ts-ignore
-            return stylesCache.get(theme)[stylesCacheKey]
+          const stylesThemeCache = stylesCache.get(theme) || {}
+          if (stylesThemeCache[stylesCacheKey]) {
+            return stylesThemeCache[stylesCacheKey]
           }
         }
 
@@ -129,10 +128,9 @@ const resolveStylesAndClasses = (
       },
       get(): string {
         if (cacheEnabled && theme) {
-          // @ts-ignore
-          if (classesCache.get(theme)[stylesCacheKey]) {
-            // @ts-ignore
-            return classesCache.get(theme)[stylesCacheKey]
+          const classesThemeCache = classesCache.get(theme) || {}
+          if (classesThemeCache[stylesCacheKey]) {
+            return classesThemeCache[stylesCacheKey]
           }
         }
 

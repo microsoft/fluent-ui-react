@@ -59,23 +59,19 @@ const resolveVariables = (
     variablesCache.set(theme, {})
   }
 
-  // @ts-ignore
-  if (!variablesCache.get(theme)[displayName]) {
-    // component variables must not be undefined/null (see mergeComponentVariables contract)
-    variablesCache.set(theme, {
-      ...variablesCache.get(theme),
-      [displayName]: callable(theme.componentVariables[displayName])(theme.siteVariables) || {},
-    })
+  const variablesThemeCache = variablesCache.get(theme) || {}
+
+  if (!variablesThemeCache[displayName]) {
+    variablesThemeCache[displayName] = callable(theme.componentVariables[displayName])(theme.siteVariables) || {}
+    variablesCache.set(theme, variablesThemeCache)
   }
 
   if (variables === undefined) {
-    // @ts-ignore
-    return variablesCache.get(theme)[displayName]
+    return variablesThemeCache[displayName]
   }
 
   return mergeComponentVariables(
-    // @ts-ignore
-    variablesCache.get(theme)[displayName],
+    variablesThemeCache[displayName],
     withDebugId(variables, 'props.variables'),
   )(theme.siteVariables)
 }
