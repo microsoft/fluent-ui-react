@@ -50,7 +50,7 @@ import { ReactionGroupProps } from '../../components/Reaction/ReactionGroup'
 import { ReactionProps } from '../../components/Reaction/Reaction'
 import { SegmentProps } from '../../components/Segment/Segment'
 import { SliderStylesProps } from './components/Slider/sliderStyles'
-import { StatusProps } from '../../components/Status/Status'
+import { StatusStylesProps } from './components/Status/statusStyles'
 import { TextStylesProps } from './components/Text/textStyles'
 import { ToolbarDividerProps } from '../../components/Toolbar/ToolbarDivider'
 import { ToolbarItemProps } from '../../components/Toolbar/ToolbarItem'
@@ -107,7 +107,7 @@ export type TeamsThemeStylesProps = {
   ReactionGroup?: ReactionGroupProps
   Segment?: SegmentProps
   Slider?: SliderStylesProps
-  Status?: StatusProps
+  Status?: StatusStylesProps
   Toolbar?: ToolbarProps
   ToolbarItem?: ToolbarItemProps
   ToolbarDivider?: ToolbarDividerProps

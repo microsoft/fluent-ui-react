@@ -68,11 +68,12 @@ const Status: React.FC<WithAsProp<StatusProps>> & FluentComponentStaticProps = p
   const unhandledProps = getUnhandledProps(Status.handledProps, props)
 
   const iconElement = Icon.create(icon, {
-    defaultProps: () => ({
-      size: 'smallest',
-      styles: resolvedStyles.icon,
-      xSpacing: 'none',
-    }),
+    defaultProps: () =>
+      getA11Props('icon', {
+        size: 'smallest',
+        styles: resolvedStyles.icon,
+        xSpacing: 'none',
+      }),
   })
 
   const element = (
