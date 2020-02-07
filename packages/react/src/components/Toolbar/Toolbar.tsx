@@ -193,7 +193,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
       if (this.containerRef.current) {
         const firstFocusableItem = getFirstFocusable(
           this.containerRef.current,
-          this.containerRef.current.firstElementChild,
+          this.containerRef.current.firstElementChild as HTMLElement,
         )
 
         if (firstFocusableItem) {
