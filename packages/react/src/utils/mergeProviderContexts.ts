@@ -86,10 +86,7 @@ const mergeProviderContexts = (
       }
 
       // Latest enableCaching value wins
-      const mergedEnableCaching = mergeBooleanValues(
-        acc.enableCaching,
-        next.enableCaching,
-      )
+      const mergedEnableCaching = mergeBooleanValues(acc.enableCaching, next.enableCaching)
       if (typeof mergedEnableCaching === 'boolean') {
         acc.enableCaching = mergedEnableCaching
       }
