@@ -54,6 +54,7 @@ const mergeProviderContexts = (
     },
     rtl: false,
     disableAnimations: false,
+    enableCaching: false,
     target: document, // eslint-disable-line no-undef
     telemetry: undefined,
     renderer: undefined,
@@ -82,6 +83,15 @@ const mergeProviderContexts = (
       )
       if (typeof mergedDisableAnimations === 'boolean') {
         acc.disableAnimations = mergedDisableAnimations
+      }
+
+      // Latest enableCaching value wins
+      const mergedEnableCaching = mergeBooleanValues(
+        acc.enableCaching,
+        next.enableCaching,
+      )
+      if (typeof mergedEnableCaching === 'boolean') {
+        acc.enableCaching = mergedEnableCaching
       }
 
       acc.telemetry = next.telemetry || acc.telemetry

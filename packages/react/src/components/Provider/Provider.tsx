@@ -33,6 +33,7 @@ export interface ProviderProps extends ChildrenComponentProps {
   renderer?: Renderer
   rtl?: boolean
   disableAnimations?: boolean
+  enableCaching?: boolean
   overwrite?: boolean
   target?: Document
   theme?: ThemeInput
@@ -75,6 +76,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
     renderer: PropTypes.object,
     rtl: PropTypes.bool,
     disableAnimations: PropTypes.bool,
+    enableCaching: PropTypes.bool,
     children: PropTypes.node.isRequired,
     target: PropTypes.object,
     telemetryRef: customPropTypes.ref,
@@ -160,6 +162,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
       overwrite,
       renderer,
       rtl,
+      enableCaching,
       target,
       theme,
       variables,
@@ -181,6 +184,7 @@ class Provider extends React.Component<WithAsProp<ProviderProps>> {
       theme,
       rtl,
       disableAnimations,
+      enableCaching,
       renderer,
       target,
       telemetry: this.telemetry,

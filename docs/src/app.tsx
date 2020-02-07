@@ -28,6 +28,7 @@ class App extends React.Component<any, ThemeContextData> {
     return (
       <ThemeContext.Provider value={this.state}>
         <Provider
+          enableCaching={true}
           as={React.Fragment}
           theme={mergeThemes(themes.fontAwesome, themes[themeName], {
             staticStyles: [

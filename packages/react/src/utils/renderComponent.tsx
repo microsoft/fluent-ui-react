@@ -91,6 +91,7 @@ const renderComponent = <P extends {}>(
     rtl,
     saveDebug,
     theme: context.theme || emptyTheme,
+    enableCaching: false, // we cannot enable caching for class components
   })
 
   const resolvedConfig: RenderResultConfig<P> = {

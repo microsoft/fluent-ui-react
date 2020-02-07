@@ -34,8 +34,6 @@ type GetStylesOptions = StylesContextValue<{
   props: PropsWithVarsAndStyles & { design?: ComponentDesignProp }
   rtl: boolean
   saveDebug: (debug: DebugData | null) => void
-
-  __experimental_cache?: boolean
 }
 
 export type GetStylesResult = {
@@ -92,7 +90,7 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
     rtl,
     saveDebug,
     theme,
-    __experimental_cache: cacheEnabled,
+    enableCaching,
   } = options
   const { className, design, styles, variables, ...restProps } = props
 
@@ -119,7 +117,7 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
     renderer,
     props,
     resolvedVariables,
-    cacheEnabled: cacheEnabled && noInlineOverrides,
+    cacheEnabled: enableCaching && noInlineOverrides,
     styleProps: restProps,
   })
 

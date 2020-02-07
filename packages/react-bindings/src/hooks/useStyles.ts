@@ -45,6 +45,7 @@ type InlineStyleProps<StyleProps> = {
 
 const defaultContext: StylesContextValue<{ renderRule: RendererRenderRule }> = {
   disableAnimations: false,
+  enableCaching: false, // TODO: check id this is correct defualt
   renderer: { renderRule: () => '' },
   theme: emptyTheme,
 }
@@ -80,7 +81,7 @@ const useStyles = <StyleProps extends PrimitiveProps>(
     rtl,
     saveDebug: fluentUIDebug => (debug.current = { fluentUIDebug }),
     theme: context.theme,
-    __experimental_cache: true,
+    enableCaching: context.enableCaching,
   })
 
   return { classes, styles: resolvedStyles }
