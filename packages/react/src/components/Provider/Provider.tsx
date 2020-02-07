@@ -1,13 +1,18 @@
 import { IStyle } from 'fela'
 import * as _ from 'lodash'
-import { getUnhandledProps, Renderer, Telemetry } from '@fluentui/react-bindings'
+import {
+  getElementType,
+  getUnhandledProps,
+  Renderer,
+  Telemetry,
+  unstable_getStyles,
+} from '@fluentui/react-bindings'
 import {
   mergeSiteVariables,
   StaticStyleObject,
   StaticStyle,
   StaticStyleFunction,
   FontFace,
-  ComponentVariablesInput,
   ThemeInput,
   SiteVariablesPrepared,
 } from '@fluentui/styles'
@@ -16,10 +21,14 @@ import * as React from 'react'
 // @ts-ignore
 import { RendererProvider, ThemeProvider, ThemeContext } from 'react-fela'
 
-import { ChildrenComponentProps, setUpWhatInput, tryCleanupWhatInput } from '../../utils'
+import {
+  ChildrenComponentProps,
+  rtlTextContainer,
+  setUpWhatInput,
+  StyledComponentProps,
+  tryCleanupWhatInput,
+} from '../../utils'
 
-import ProviderConsumer from './ProviderConsumer'
-import ProviderBox, { ProviderBoxProps } from './ProviderBox'
 import {
   WithAsProp,
   ProviderContextInput,
@@ -27,15 +36,16 @@ import {
   withSafeTypeForAs,
 } from '../../types'
 import mergeContexts from '../../utils/mergeProviderContexts'
+import ProviderConsumer from './ProviderConsumer'
+import useDocumentBox, { DocumentBoxContext } from './useDocumentBox'
 
-export interface ProviderProps extends ChildrenComponentProps {
+export interface ProviderProps extends ChildrenComponentProps, StyledComponentProps {
   renderer?: Renderer
   rtl?: boolean
   disableAnimations?: boolean
   overwrite?: boolean
   target?: Document
   theme?: ThemeInput
-  variables?: ComponentVariablesInput
   telemetryRef?: React.MutableRefObject<Telemetry>
 }
 
@@ -92,11 +102,13 @@ const renderStaticStyles = (
  * The Provider passes the CSS-in-JS renderer, theme styles and other settings to Fluent UI components.
  */
 const Provider: React.FC<WithAsProp<ProviderProps>> & {
-  Box: typeof ProviderBox
+  className: string
   Consumer: typeof ProviderConsumer
   handledProps: (keyof ProviderProps)[]
 } = props => {
-  const { as, children, overwrite, variables, telemetryRef } = props
+  const { children, overwrite, variables, telemetryRef } = props
+
+  const ElementType = getElementType(props)
   const unhandledProps = getUnhandledProps(Provider.handledProps, props)
 
   const telemetry = React.useMemo<Telemetry | undefined>(() => {
@@ -135,6 +147,26 @@ const Provider: React.FC<WithAsProp<ProviderProps>> & {
     rtlProps.dir = outgoingContext.rtl ? 'rtl' : 'ltr'
   }
 
+  const { classes } = unstable_getStyles({
+    className: Provider.className,
+    displayName: Provider.displayName,
+    props: {
+      variables,
+    },
+
+    disableAnimations: outgoingContext.disableAnimations,
+    renderer: outgoingContext.renderer,
+    rtl: outgoingContext.rtl,
+    theme: outgoingContext.theme,
+    saveDebug: _.noop,
+    _internal_resolvedComponentVariables: outgoingContext._internal_resolvedComponentVariables,
+  })
+
+  const element = useDocumentBox({
+    className: classes.root,
+    target: outgoingContext.target,
+    rtl: outgoingContext.rtl,
+  })
   React.useLayoutEffect(() => {
     renderFontFaces(outgoingContext.renderer, props.theme)
     renderStaticStyles(outgoingContext.renderer, props.theme, outgoingContext.theme.siteVariables)
@@ -156,14 +188,21 @@ const Provider: React.FC<WithAsProp<ProviderProps>> & {
       {...{ rehydrate: false, targetDocument: outgoingContext.target }}
     >
       <ThemeProvider theme={outgoingContext} overwrite>
-        <ProviderBox as={as} variables={variables} {...unhandledProps} {...rtlProps}>
-          {children}
-        </ProviderBox>
+        <DocumentBoxContext.Provider value={element}>
+          <ElementType
+            {...rtlTextContainer.getAttributes({ forElements: [children] })}
+            {...unhandledProps}
+            className={classes.root}
+          >
+            {children}
+          </ElementType>
+        </DocumentBoxContext.Provider>
       </ThemeProvider>
     </RendererProvider>
   )
 }
 
+Provider.className = 'ui-provider'
 Provider.displayName = 'Provider'
 
 Provider.defaultProps = {
@@ -206,6 +245,5 @@ Provider.propTypes = {
 Provider.handledProps = Object.keys(Provider.propTypes) as any
 
 Provider.Consumer = ProviderConsumer
-Provider.Box = ProviderBox
 
-export default withSafeTypeForAs<typeof Provider, ProviderProps & ProviderBoxProps>(Provider)
+export default withSafeTypeForAs<typeof Provider, ProviderProps>(Provider)

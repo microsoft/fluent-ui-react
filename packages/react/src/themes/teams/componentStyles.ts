@@ -70,7 +70,7 @@ export { default as MenuButton } from './components/MenuButton/menuButtonStyles'
 export { default as Popup } from './components/Popup/popupStyles'
 export { default as PopupContent } from './components/Popup/popupContentStyles'
 
-export { default as ProviderBox } from './components/Provider/providerBoxStyles'
+export { default as Provider } from './components/Provider/providerStyles'
 
 export { default as RadioGroupItem } from './components/RadioGroup/radioGroupItemStyles'
 

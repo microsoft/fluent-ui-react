@@ -26,7 +26,6 @@ import Header, { HeaderProps } from '../Header/Header'
 import Portal, { TriggerAccessibility } from '../Portal/Portal'
 import Flex from '../Flex/Flex'
 import DialogFooter, { DialogFooterProps } from './DialogFooter'
-import ProviderBox from '../Provider/ProviderBox'
 
 export interface DialogSlotClassNames {
   header: string
@@ -286,11 +285,8 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
 
     const dialogContent = (
       <Ref innerRef={this.contentRef}>
-        <ProviderBox
-          as={ElementType}
+        <ElementType
           className={classes.root}
-          // it's required to have an `rtl` attribute there as Dialog is rendered outside the main DOM tree
-          dir={rtl ? 'rtl' : undefined}
           {...accessibility.attributes.popup}
           {...unhandledProps}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.popup, unhandledProps)}
@@ -328,7 +324,7 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
               styles: styles.footer,
             },
           })}
-        </ProviderBox>
+        </ElementType>
       </Ref>
     )
 
