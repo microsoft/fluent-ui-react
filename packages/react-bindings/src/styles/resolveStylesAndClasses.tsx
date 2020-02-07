@@ -54,15 +54,16 @@ const resolveStylesAndClasses = (
     }
   }
 
+  const componentCacheKey = cacheEnabled && displayName && props
+    ? `${displayName}: ${JSON.stringify(props)}${styleParam.rtl}${
+      styleParam.disableAnimations
+    }`
+    : ''
+
   Object.keys(mergedStyles).forEach(slotName => {
     // resolve/render slot styles once and cache
     const lazyEvaluationKey = `${slotName}__return`
-    const stylesCacheKey =
-      cacheEnabled && displayName && props
-        ? `${displayName}: ${slotName}: ${JSON.stringify(props)}${styleParam.rtl}${
-            styleParam.disableAnimations
-          }`
-        : ''
+    const slotCacheKey = componentCacheKey + slotName
 
     Object.defineProperty(resolvedStyles, slotName, {
       enumerable: false,
@@ -72,7 +73,7 @@ const resolveStylesAndClasses = (
         if (cacheEnabled && theme) {
           stylesCache.set(theme, {
             ...stylesCache.get(theme),
-            [stylesCacheKey]: val,
+            [slotCacheKey]: val,
           })
         }
 
@@ -82,8 +83,8 @@ const resolveStylesAndClasses = (
         // If caching enabled and entry exists, get from cache, avoid lazy evaluation
         if (cacheEnabled && theme) {
           const stylesThemeCache = stylesCache.get(theme) || {}
-          if (stylesThemeCache[stylesCacheKey]) {
-            return stylesThemeCache[stylesCacheKey]
+          if (stylesThemeCache[slotCacheKey]) {
+            return stylesThemeCache[slotCacheKey]
           }
         }
 
@@ -97,7 +98,7 @@ const resolveStylesAndClasses = (
         if (cacheEnabled && theme) {
           stylesCache.set(theme, {
             ...stylesCache.get(theme),
-            [stylesCacheKey]: resolvedStyles[lazyEvaluationKey],
+            [slotCacheKey]: resolvedStyles[lazyEvaluationKey],
           })
         }
 
@@ -120,7 +121,7 @@ const resolveStylesAndClasses = (
         if (cacheEnabled && theme) {
           classesCache.set(theme, {
             ...classesCache.get(theme),
-            [stylesCacheKey]: val,
+            [slotCacheKey]: val,
           })
         }
 
@@ -129,8 +130,8 @@ const resolveStylesAndClasses = (
       get(): string {
         if (cacheEnabled && theme) {
           const classesThemeCache = classesCache.get(theme) || {}
-          if (classesThemeCache[stylesCacheKey]) {
-            return classesThemeCache[stylesCacheKey]
+          if (classesThemeCache[slotCacheKey]) {
+            return classesThemeCache[slotCacheKey]
           }
         }
 
@@ -147,7 +148,7 @@ const resolveStylesAndClasses = (
           if (cacheEnabled && theme) {
             classesCache.set(theme, {
               ...classesCache.get(theme),
-              [stylesCacheKey]: classes[cacheClassKey],
+              [slotCacheKey]: classes[cacheClassKey],
             })
           }
         }
