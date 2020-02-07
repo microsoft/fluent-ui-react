@@ -17,6 +17,12 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ## [Unreleased]
 
+### BREAKING CHANGES
+- Restricted prop set in the `Checkbox`, `Icon`, `Label`, `Slider`, `Status`, `Text` @layershifter ([#2307](https://github.com/microsoft/fluent-ui-react/pull/2307))
+
+### Fixes
+- Remove dependency on Lodash in TypeScript typings @layershifter ([#2323](https://github.com/microsoft/fluent-ui-react/pull/2323))
+
 <!--------------------------------[ v0.44.0 ]------------------------------- -->
 ## [v0.44.0](https://github.com/microsoft/fluent-ui-react/tree/v0.44.0) (2020-02-05)
 [Compare changes](https://github.com/microsoft/fluent-ui-react/compare/v0.43.2..v0.44.0)
