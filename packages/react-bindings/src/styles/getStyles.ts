@@ -64,7 +64,8 @@ const resolveVariables = (
   const variablesThemeCache = variablesCache.get(theme) || {}
 
   if (!variablesThemeCache[displayName]) {
-    variablesThemeCache[displayName] = callable(theme.componentVariables[displayName])(theme.siteVariables) || {}
+    variablesThemeCache[displayName] =
+      callable(theme.componentVariables[displayName])(theme.siteVariables) || {}
     variablesCache.set(theme, variablesThemeCache)
   }
 
