@@ -132,7 +132,6 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonStylesProps, ButtonVariabl
 
         ':focus-visible': {
           ...borderFocusStyles[':focus-visible'],
-          ...getIconFillOrOutlineStyles({ outline: false }),
         },
 
         ...(p.primary && {
@@ -228,6 +227,12 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonStylesProps, ButtonVariabl
       ...(p.iconOnly && {
         minWidth: v.height,
         padding: 0,
+
+        ':hover': {
+          ...getIconFillOrOutlineStyles({ outline: false }),
+          color: v.textColorIconOnlyHover,
+          background: v.backgroundColorIconOnlyHover,
+        },
 
         ...(p.size === 'small' && {
           minWidth: v.sizeSmallHeight,

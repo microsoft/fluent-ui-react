@@ -188,6 +188,8 @@ export interface ComponentSlotStylesInput<TProps = {}, TVars = {}>
 export interface ComponentSlotStylesPrepared<TProps = {}, TVars = {}>
   extends Record<string, ComponentSlotStyleFunction<TProps, TVars>> {}
 
+export interface ComponentSlotStylesResolved extends Record<string, ICSSInJSStyle> {}
+
 export interface ComponentStyleFunctionParam<
   TProps extends PropsWithVarsAndStyles = PropsWithVarsAndStyles,
   TVars extends ComponentVariablesObject = ComponentVariablesObject

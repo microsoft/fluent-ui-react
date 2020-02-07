@@ -1,4 +1,5 @@
 import { Provider, themes, pxToRem, createTheme } from '@fluentui/react'
+// @ts-ignore
 import AnchorJS from 'anchor-js'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'

@@ -19,7 +19,7 @@ import { ButtonStylesProps } from './components/Button/buttonStyles'
 import { ChatItemProps } from '../../components/Chat/ChatItem'
 import { ChatMessageProps } from '../../components/Chat/ChatMessage'
 import { ChatProps } from '../../components/Chat/Chat'
-import { CheckboxProps } from '../../components/Checkbox/Checkbox'
+import { CheckboxStylesProps } from './components/Checkbox/checkboxStyles'
 import { DividerProps } from '../../components/Divider/Divider'
 import { DropdownProps } from '../../components/Dropdown/Dropdown'
 import { EmbedProps } from '../../components/Embed/Embed'
@@ -30,14 +30,14 @@ import { FormProps } from '../../components/Form/Form'
 import { GridProps } from '../../components/Grid/Grid'
 import { HeaderDescriptionProps } from '../../components/Header/HeaderDescription'
 import { HeaderProps } from '../../components/Header/Header'
-import { IconProps } from '../../components/Icon/Icon'
+import { IconStylesProps } from './components/Icon/iconStyles'
 import { ImageStylesProps } from './components/Image/imageStyles'
 import { InputProps } from '../../components/Input/Input'
 import { ItemLayoutProps } from '../../components/ItemLayout/ItemLayout'
-import { LabelProps } from '../../components/Label/Label'
+import { LabelStylesProps } from './components/Label/labelStyles'
 import { LayoutProps } from '../../components/Layout/Layout'
-import { ListItemProps } from '../../components/List/ListItem'
-import { ListProps } from '../../components/List/List'
+import { ListStylesProps } from './components/List/listStyles'
+import { ListItemStylesProps } from './components/List/listItemStyles'
 import { LoaderProps } from '../../components/Loader/Loader'
 import { MenuItemProps } from '../../components/Menu/MenuItem'
 import { MenuProps } from '../../components/Menu/Menu'
@@ -49,9 +49,9 @@ import { RadioGroupProps } from '../../components/RadioGroup/RadioGroup'
 import { ReactionGroupProps } from '../../components/Reaction/ReactionGroup'
 import { ReactionProps } from '../../components/Reaction/Reaction'
 import { SegmentProps } from '../../components/Segment/Segment'
-import { SliderProps } from '../../components/Slider/Slider'
-import { StatusProps } from '../../components/Status/Status'
-import { TextProps } from '../../components/Text/Text'
+import { SliderStylesProps } from './components/Slider/sliderStyles'
+import { StatusStylesProps } from './components/Status/statusStyles'
+import { TextStylesProps } from './components/Text/textStyles'
 import { ToolbarDividerProps } from '../../components/Toolbar/ToolbarDivider'
 import { ToolbarItemProps } from '../../components/Toolbar/ToolbarItem'
 import { ToolbarProps } from '../../components/Toolbar/Toolbar'
@@ -76,7 +76,7 @@ export type TeamsThemeStylesProps = {
   Chat?: ChatProps
   ChatItem?: ChatItemProps
   ChatMessage?: ChatMessageProps
-  Checkbox?: CheckboxProps
+  Checkbox?: CheckboxStylesProps
   Divider?: DividerProps
   Dropdown?: DropdownProps
   Embed?: EmbedProps
@@ -87,14 +87,14 @@ export type TeamsThemeStylesProps = {
   Grid?: GridProps
   Header?: HeaderProps
   HeaderDescription?: HeaderDescriptionProps
-  Icon?: IconProps
+  Icon?: IconStylesProps
   Image?: ImageStylesProps
   Input?: InputProps
   ItemLayout?: ItemLayoutProps
-  Label?: LabelProps
+  Label?: LabelStylesProps
   Layout?: LayoutProps
-  List?: ListProps
-  ListItem?: ListItemProps
+  List?: ListStylesProps
+  ListItem?: ListItemStylesProps
   Loader?: LoaderProps
   Menu?: MenuProps
   MenuItem?: MenuItemProps
@@ -106,15 +106,15 @@ export type TeamsThemeStylesProps = {
   Reaction?: ReactionProps
   ReactionGroup?: ReactionGroupProps
   Segment?: SegmentProps
-  Slider?: SliderProps
-  Status?: StatusProps
+  Slider?: SliderStylesProps
+  Status?: StatusStylesProps
   Toolbar?: ToolbarProps
   ToolbarItem?: ToolbarItemProps
   ToolbarDivider?: ToolbarDividerProps
   ToolbarRadioGroup?: ToolbarRadioGroupProps
   Tooltip?: TooltipProps
   TooltipContent?: TooltipContentProps
-  Text?: TextProps
+  Text?: TextStylesProps
   HierarchicalTree?: HierarchicalTreeProps
   HierarchicalTreeItem?: HierarchicalTreeItemProps
   HierarchicalTreeTitle?: HierarchicalTreeTitleProps
