@@ -134,14 +134,14 @@ const pointingBeak = ({
       height: pxToRem(10),
       border: 'none',
       ...borders,
-      zIndex: 2,
+      zIndex: v.beakZIndex,
       transition: 'background .1s ease',
     },
   }
 }
 
 const menuItemStyles: ComponentSlotStylesPrepared<MenuItemPropsAndState, MenuVariables> = {
-  wrapper: ({ props, variables: v, theme }): ICSSInJSStyle => {
+  wrapper: ({ props, variables: v }): ICSSInJSStyle => {
     const {
       active,
       disabled,
@@ -425,7 +425,7 @@ const menuItemStyles: ComponentSlotStylesPrepared<MenuItemPropsAndState, MenuVar
     }),
   }),
 
-  menu: () => ({ zIndex: 1000 }),
+  menu: ({ variables: v }) => ({ zIndex: v.menuZIndex }),
 
   indicator: ({ props: p }) => ({
     position: 'relative',

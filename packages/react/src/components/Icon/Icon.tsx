@@ -1,24 +1,46 @@
-import { Accessibility, iconBehavior } from '@fluentui/accessibility'
-import { callable } from '@fluentui/styles'
+import {
+  Accessibility,
+  AccessibilityAttributes,
+  IconBehaviorProps,
+  iconBehavior,
+} from '@fluentui/accessibility'
 import * as customPropTypes from '@fluentui/react-proptypes'
+import {
+  getElementType,
+  getUnhandledProps,
+  useAccessibility,
+  useStyles,
+  useTelemetry,
+} from '@fluentui/react-bindings'
+import { callable } from '@fluentui/styles'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+// @ts-ignore
+import { ThemeContext } from 'react-fela'
+
 import {
-  UIComponent,
   createShorthandFactory,
   UIComponentProps,
   commonPropTypes,
   ColorComponentProps,
   SizeValue,
-  ShorthandFactory,
 } from '../../utils'
-import { WithAsProp, withSafeTypeForAs } from '../../types'
+import {
+  FluentComponentStaticProps,
+  ProviderContextPrepared,
+  WithAsProp,
+  withSafeTypeForAs,
+} from '../../types'
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 
 export interface IconProps extends UIComponentProps, ColorComponentProps {
+  /** Alternative text. */
+  alt?: string
+  'aria-label'?: AccessibilityAttributes['aria-label']
+
   /** Accessibility behavior if overridden by the user. */
-  accessibility?: Accessibility
+  accessibility?: Accessibility<IconBehaviorProps>
 
   /** Icon can appear with rectangular border. */
   bordered?: boolean
@@ -45,50 +67,100 @@ export interface IconProps extends UIComponentProps, ColorComponentProps {
   xSpacing?: IconXSpacing
 }
 
-class Icon extends UIComponent<WithAsProp<IconProps>, any> {
-  static create: ShorthandFactory<IconProps>
+const Icon: React.FC<WithAsProp<IconProps>> & FluentComponentStaticProps = props => {
+  const context: ProviderContextPrepared = React.useContext(ThemeContext)
 
-  static className = 'ui-icon'
+  const { setStart, setEnd } = useTelemetry(Icon.displayName, context.telemetry)
+  setStart()
 
-  static displayName = 'Icon'
+  const {
+    accessibility,
+    alt,
+    'aria-label': ariaLabel,
+    bordered,
+    circular,
+    className,
+    color,
+    disabled,
+    design,
+    name,
+    outline,
+    rotate,
+    size,
+    styles,
+    variables,
+    xSpacing,
+  } = props
 
-  static propTypes = {
-    ...commonPropTypes.createCommon({
-      children: false,
-      content: false,
-      color: true,
+  const { icons = {} } = context.theme
+  const maybeIcon = icons[name]
+  const isSvgIcon = maybeIcon && maybeIcon.isSvg
+
+  const getA11Props = useAccessibility(accessibility, {
+    debugName: Icon.displayName,
+    mapPropsToBehavior: () => ({
+      alt,
+      'aria-label': ariaLabel,
     }),
-    bordered: PropTypes.bool,
-    circular: PropTypes.bool,
-    disabled: PropTypes.bool,
-    name: PropTypes.string.isRequired,
-    outline: PropTypes.bool,
-    rotate: PropTypes.number,
-    size: customPropTypes.size,
-    xSpacing: PropTypes.oneOf(['none', 'before', 'after', 'both']),
-  }
+    rtl: context.rtl,
+  })
+  const { classes } = useStyles(Icon.displayName, {
+    className: Icon.className,
+    mapPropsToStyles: () => ({
+      bordered,
+      circular,
+      color,
+      disabled,
+      name,
+      outline,
+      rotate,
+      size,
+      xSpacing,
+      isFontIcon: !isSvgIcon,
+      isSvgIcon,
+    }),
+    mapPropsToInlineStyles: () => ({ className, design, styles, variables }),
+    rtl: context.rtl,
+  })
 
-  static defaultProps = {
-    as: 'span',
-    size: 'medium',
-    accessibility: iconBehavior,
-    rotate: 0,
-  }
+  const ElementType = getElementType(props)
+  const unhandledProps = getUnhandledProps(Icon.handledProps, props)
 
-  renderComponent({ ElementType, classes, unhandledProps, accessibility, theme, rtl, styles }) {
-    const { name } = this.props
-    const { icons = {} } = theme || {}
+  const element = (
+    <ElementType {...getA11Props('root', { className: classes.root, ...unhandledProps })}>
+      {isSvgIcon && callable(maybeIcon.icon)({ classes, rtl: context.rtl, props })}
+    </ElementType>
+  )
+  setEnd()
 
-    const maybeIcon = icons[name]
-    const isSvgIcon = maybeIcon && maybeIcon.isSvg
-
-    return (
-      <ElementType className={classes.root} {...accessibility.attributes.root} {...unhandledProps}>
-        {isSvgIcon && callable(maybeIcon.icon)({ classes, rtl, props: this.props })}
-      </ElementType>
-    )
-  }
+  return element
 }
+
+Icon.className = 'ui-icon'
+Icon.displayName = 'Icon'
+Icon.defaultProps = {
+  as: 'span',
+  accessibility: iconBehavior,
+  size: 'medium',
+  rotate: 0,
+}
+
+Icon.propTypes = {
+  ...commonPropTypes.createCommon({
+    children: false,
+    content: false,
+    color: true,
+  }),
+  bordered: PropTypes.bool,
+  circular: PropTypes.bool,
+  disabled: PropTypes.bool,
+  name: PropTypes.string.isRequired,
+  outline: PropTypes.bool,
+  rotate: PropTypes.number,
+  size: customPropTypes.size,
+  xSpacing: PropTypes.oneOf(['none', 'before', 'after', 'both']),
+}
+Icon.handledProps = Object.keys(Icon.propTypes) as any
 
 Icon.create = createShorthandFactory({ Component: Icon, mappedProp: 'name', allowsJSX: false })
 

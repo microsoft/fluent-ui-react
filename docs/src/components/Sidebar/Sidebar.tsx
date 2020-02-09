@@ -173,6 +173,19 @@ class Sidebar extends React.Component<any, any> {
               to: '/component-architecture',
             },
           },
+          ...(process.env.NODE_ENV !== 'production'
+            ? [
+                {
+                  key: 'theming-specification',
+                  title: {
+                    as: NavLink,
+                    content: 'Theming Specification',
+                    activeClassName: 'active',
+                    to: '/theming-specification',
+                  },
+                },
+              ]
+            : []),
         ],
       },
       {
