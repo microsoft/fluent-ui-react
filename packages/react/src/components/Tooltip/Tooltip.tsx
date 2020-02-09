@@ -293,6 +293,8 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
       overrideProps: this.getContentProps,
     })
 
+    if (!tooltipContent) return null
+
     return <Ref innerRef={this.contentRef}>{tooltipContent}</Ref>
   }
 
