@@ -187,5 +187,4 @@ export interface ProviderContextPrepared extends StylesContextValue {
   // `target` can be undefined for SSR
   target: Document | undefined
   telemetry: Telemetry | undefined
-  performance: StylesContextPerformance | undefined
 }

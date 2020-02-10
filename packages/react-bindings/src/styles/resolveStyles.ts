@@ -167,8 +167,6 @@ const resolveStyles = (
       },
     })
 
-    const cacheClassKey = `${slotName}__return`
-
     Object.defineProperty(classes, slotName, {
       enumerable: false,
       configurable: false,
@@ -180,7 +178,7 @@ const resolveStyles = (
           })
         }
 
-        classes[cacheClassKey] = val
+        classes[lazyEvaluationKey] = val
       },
       get(): string {
         if (cacheEnabled && theme) {
@@ -192,29 +190,29 @@ const resolveStyles = (
           }
         }
 
-        if (classes[cacheClassKey]) {
+        if (classes[lazyEvaluationKey]) {
           return slotName === 'root'
-            ? cx(componentClassName, classes[cacheClassKey], className)
-            : classes[cacheClassKey]
+            ? cx(componentClassName, classes[lazyEvaluationKey], className)
+            : classes[lazyEvaluationKey]
         }
 
         // this resolves the getter magic
         const styleObj = resolvedStyles[slotName]
 
         if (renderStyles && styleObj) {
-          classes[cacheClassKey] = renderStyles(styleObj)
+          classes[lazyEvaluationKey] = renderStyles(styleObj)
 
           if (cacheEnabled && theme) {
             classesCache.set(theme, {
               ...classesCache.get(theme),
-              [slotCacheKey]: classes[cacheClassKey],
+              [slotCacheKey]: classes[lazyEvaluationKey],
             })
           }
         }
 
         return slotName === 'root'
-          ? cx(componentClassName, classes[cacheClassKey], className)
-          : classes[cacheClassKey]
+          ? cx(componentClassName, classes[lazyEvaluationKey], className)
+          : classes[lazyEvaluationKey]
       },
     })
   })
