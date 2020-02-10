@@ -12,6 +12,8 @@ export default {
     padding: v.rootPadding,
     position: 'relative',
     width: v.rootWidth,
+    maxWidth: v.rootMaxWidth,
+    minWidth: v.rootMinWidth,
     display: 'grid',
     gridTemplateColumns: '1fr auto',
     boxShadow: v.boxShadow,
