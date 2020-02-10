@@ -1,9 +1,14 @@
 import {
   ComponentSlotStylesInput,
-  ComponentSlotStylesPrepared, ComponentSlotStylesResolved, ComponentStyleFunctionParam, ICSSInJSStyle, isDebugEnabled,
+  ComponentSlotStylesPrepared,
+  ComponentSlotStylesResolved,
+  ComponentStyleFunctionParam,
+  ICSSInJSStyle,
+  isDebugEnabled,
   mergeComponentStyles,
   PropsWithVarsAndStyles,
-  ThemePrepared, withDebugId,
+  ThemePrepared,
+  withDebugId,
 } from '@fluentui/styles'
 import {
   ComponentDesignProp,
@@ -54,17 +59,17 @@ const stylesCache = new WeakMap<ThemePrepared, Record<string, ICSSInJSStyle>>()
  * - disable animations mode
  */
 const resolveStyles = ({
-                         theme,
-                         displayName,
-                         props,
-                         resolvedVariables,
-                         rtl,
-                         disableAnimations,
-                         renderer,
-                         cacheEnabled,
-                         stylesProps,
-                         renderStyles: renderStylesInput,
-                       }: ResolveStylesInput): ResolveStylesResult => {
+  theme,
+  displayName,
+  props,
+  resolvedVariables,
+  rtl,
+  disableAnimations,
+  renderer,
+  cacheEnabled,
+  stylesProps,
+  renderStyles: renderStylesInput,
+}: ResolveStylesInput): ResolveStylesResult => {
   // Merge theme styles with inline overrides if any
   let mergedStyles: ComponentSlotStylesPrepared = theme.componentStyles[displayName] || {
     root: () => ({}),
@@ -76,7 +81,7 @@ const resolveStyles = ({
       mergedStyles,
       props.design && withDebugId({ root: props.design }, 'props.design'),
       props.styles &&
-      withDebugId({ root: props.styles } as ComponentSlotStylesInput, 'props.styles'),
+        withDebugId({ root: props.styles } as ComponentSlotStylesInput, 'props.styles'),
     )
   }
 
@@ -99,7 +104,8 @@ const resolveStyles = ({
     displayName, // does not affect styles, only used by useEnhancedRenderer in docs
   }
 
-  const renderStyles = renderStylesInput || ((style: ICSSInJSStyle) => renderer.renderRule(() => style, felaParam))
+  const renderStyles =
+    renderStylesInput || ((style: ICSSInJSStyle) => renderer.renderRule(() => style, felaParam))
 
   const resolvedStyles: Record<string, ICSSInJSStyle> = {}
   const resolvedStylesDebug: Record<string, { styles: Object }[]> = {}
@@ -116,7 +122,9 @@ const resolveStyles = ({
 
   const componentCacheKey =
     cacheEnabled && displayName && stylesProps
-      ? `${displayName}:${JSON.stringify(stylesProps)}${styleParam.rtl}${styleParam.disableAnimations}`
+      ? `${displayName}:${JSON.stringify(stylesProps)}${styleParam.rtl}${
+          styleParam.disableAnimations
+        }`
       : ''
 
   Object.keys(mergedStyles).forEach(slotName => {

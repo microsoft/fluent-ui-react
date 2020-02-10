@@ -1,11 +1,6 @@
-import {
-  ComponentSlotStylesPrepared,
-  emptyTheme,
-  ICSSInJSStyle,
-} from '@fluentui/styles'
+import { ComponentSlotStylesPrepared, emptyTheme, ICSSInJSStyle } from '@fluentui/styles'
 import { PrimitiveProps } from '@fluentui/react-bindings'
 import resolveStyles, { ResolveStylesInput } from '../../src/styles/resolveStyles'
-
 
 const componentStyles: ComponentSlotStylesPrepared<{}, { color: string }> = {
   root: ({ variables: v }): ICSSInJSStyle => ({
@@ -19,12 +14,8 @@ const resolveStylesParam = (options?: {
   cacheEnabled?: boolean
   stylesProps?: PrimitiveProps
 }): ResolveStylesInput => {
-  const {
-    displayName = 'Test',
-    cacheEnabled = false,
-    stylesProps = {},
-    renderStyles = undefined,
-  } = options || {}
+  const { displayName = 'Test', cacheEnabled = false, stylesProps = {}, renderStyles = undefined } =
+    options || {}
 
   return {
     theme: {
@@ -94,7 +85,7 @@ describe('resolveStylesAndClasses', () => {
 
   test('caches resolved styles for no props', () => {
     spyOn(componentStyles, 'root').and.callThrough()
-    const options = resolveStylesParam({ cacheEnabled: true})
+    const options = resolveStylesParam({ cacheEnabled: true })
     const { resolvedStyles } = resolveStyles(options)
     const { resolvedStyles: secondResolvedStyles } = resolveStyles(options)
 
