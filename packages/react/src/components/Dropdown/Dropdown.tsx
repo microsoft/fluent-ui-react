@@ -452,7 +452,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
           highlightedIndex={highlightedIndex}
           onStateChange={this.handleStateChange}
           labelId={this.props['aria-labelledby']}
-          environment={this.context.target.defaultView}
+          environment={this.context.target?.defaultView}
           inputId={
             this.props.searchInput && this.props.searchInput['id']
               ? this.props.searchInput['id']
