@@ -211,7 +211,7 @@ class Accordion extends AutoControlledComponent<WithAsProp<AccordionProps>, Acco
 
       this.setState({ activeIndex, focusedIndex: index })
 
-      _.invoke(this.props, 'onActiveIndexChange', e, this.props)
+      _.invoke(this.props, 'onActiveIndexChange', e, { ...this.props, activeIndex })
       _.invoke(predefinedProps, 'onClick', e, titleProps)
       _.invoke(this.props, 'onTitleClick', e, titleProps)
     },
