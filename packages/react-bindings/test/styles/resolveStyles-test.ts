@@ -1,3 +1,4 @@
+import * as _ from 'lodash'
 import {
   ComponentSlotStylesPrepared,
   ComponentVariablesObject,
@@ -224,19 +225,19 @@ describe('resolveStyles', () => {
 
     const propsInlineOverridesSize = propsInlineOverrides.length
 
-    for (let i = 0; i < propsInlineOverrides.length; i++) {
+    _.forEach(propsInlineOverrides, (props, idx) => {
       const options = resolveStylesOptions({
+        props,
         performance: { enableStylesCaching: false },
-        props: propsInlineOverrides[i],
       })
 
       const { resolvedStyles } = resolveStyles(options, resolvedVariables)
       const { resolvedStyles: secondResolvedStyles } = resolveStyles(options, resolvedVariables)
 
-      expect(resolvedStyles.root).toMatchObject(propsInlineOverridesResolvedStyles[i])
-      expect(secondResolvedStyles.root).toMatchObject(propsInlineOverridesResolvedStyles[i])
+      expect(resolvedStyles.root).toMatchObject(propsInlineOverridesResolvedStyles[idx])
+      expect(secondResolvedStyles.root).toMatchObject(propsInlineOverridesResolvedStyles[idx])
       resolveStyles(options, resolvedVariables)
-    }
+    })
 
     expect(componentStyles.root).toHaveBeenCalledTimes(propsInlineOverridesSize * 2)
   })
@@ -251,17 +252,17 @@ describe('resolveStyles', () => {
 
     const propsInlineOverridesSize = propsInlineOverrides.length
 
-    for (let i = 0; i < propsInlineOverridesSize; i++) {
+    _.forEach(propsInlineOverrides, props => {
       const options = resolveStylesOptions({
+        props,
         performance: { enableStylesCaching: false },
-        props: propsInlineOverrides[i],
       })
       const { classes } = resolveStyles(options, resolvedVariables, renderStyles)
       const { classes: secondClasses } = resolveStyles(options, resolvedVariables, renderStyles)
 
       expect(classes['root']).toBeDefined()
       expect(secondClasses['root']).toBeDefined()
-    }
+    })
 
     expect(renderStyles).toHaveBeenCalledTimes(propsInlineOverridesSize * 2)
   })
