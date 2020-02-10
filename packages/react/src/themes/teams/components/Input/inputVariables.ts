@@ -24,10 +24,10 @@ export default (siteVars): InputVariables => ({
   iconPosition: 'absolute',
   iconRight: pxToRem(10),
   iconLeft: pxToRem(6),
-  inputPaddingWithIconAtStart: `${pxToRem(7)} ${pxToRem(12)} ${pxToRem(7)} ${pxToRem(24)}`,
-  inputPaddingWithIconAtEnd: `${pxToRem(7)} ${pxToRem(24)} ${pxToRem(7)} ${pxToRem(12)}`,
+  inputPaddingWithIconAtStart: `${pxToRem(5)} ${pxToRem(12)} ${pxToRem(5)} ${pxToRem(24)}`,
+  inputPaddingWithIconAtEnd: `${pxToRem(5)} ${pxToRem(24)} ${pxToRem(5)} ${pxToRem(12)}`,
 
-  inputPadding: `${pxToRem(7)} ${pxToRem(12)}`,
+  inputPadding: `${pxToRem(5)} ${pxToRem(12)}`,
 
   borderColor: 'transparent',
   borderRadius: `${pxToRem(3)} ${pxToRem(3)} ${pxToRem(2)} ${pxToRem(2)}`,
