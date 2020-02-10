@@ -6,6 +6,7 @@ import {
   Renderer,
   Telemetry,
   unstable_getStyles,
+  useIsomorphicLayoutEffect,
 } from '@fluentui/react-bindings'
 import {
   mergeSiteVariables,
@@ -167,7 +168,8 @@ const Provider: React.FC<WithAsProp<ProviderProps>> & {
     target: outgoingContext.target,
     rtl: outgoingContext.rtl,
   })
-  React.useLayoutEffect(() => {
+
+  useIsomorphicLayoutEffect(() => {
     renderFontFaces(outgoingContext.renderer, props.theme)
     renderStaticStyles(outgoingContext.renderer, props.theme, outgoingContext.theme.siteVariables)
 
