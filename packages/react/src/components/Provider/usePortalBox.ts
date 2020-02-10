@@ -1,6 +1,8 @@
 import { useIsomorphicLayoutEffect } from '@fluentui/react-bindings'
 import * as React from 'react'
 
+import isBrowser from '../../utils/isBrowser'
+
 type UsePortalBoxOptions = {
   className: string
   rtl: boolean
@@ -12,19 +14,31 @@ export const PortalBoxContext = React.createContext<HTMLDivElement>(null)
 const usePortalBox = (options: UsePortalBoxOptions): HTMLDivElement => {
   const { className, rtl, target } = options
 
-  const element: HTMLDivElement = React.useMemo(() => target.createElement('div'), [target])
+  const element: HTMLDivElement | null = React.useMemo(
+    () => (isBrowser() ? target.createElement('div') : null),
+    [target],
+  )
 
   useIsomorphicLayoutEffect(() => {
-    target.body.appendChild(element)
-    return () => target.body.removeChild(element)
+    if (element) {
+      target.body.appendChild(element)
+    }
+
+    return () => {
+      if (element) {
+        target.body.removeChild(element)
+      }
+    }
   }, [])
   useIsomorphicLayoutEffect(() => {
-    element.setAttribute('className', className)
+    if (element) {
+      element.setAttribute('className', className)
 
-    if (rtl) {
-      element.setAttribute('dir', 'rtl')
-    } else {
-      element.removeAttribute('dir')
+      if (rtl) {
+        element.setAttribute('dir', 'rtl')
+      } else {
+        element.removeAttribute('dir')
+      }
     }
   }, [className, rtl])
 
