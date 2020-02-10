@@ -1,17 +1,38 @@
 import {
-  ComponentSlotStylesPrepared,
-  isDebugEnabled,
-  ICSSInJSStyle,
-  ComponentStyleFunctionParam,
-  ComponentSlotStylesResolved,
-  ThemePrepared,
+  ComponentSlotStylesInput,
+  ComponentSlotStylesPrepared, ComponentSlotStylesResolved, ComponentStyleFunctionParam, ICSSInJSStyle, isDebugEnabled,
+  mergeComponentStyles,
+  PropsWithVarsAndStyles,
+  ThemePrepared, withDebugId,
 } from '@fluentui/styles'
-import { ComponentSlotClasses, PrimitiveProps } from '../styles/types'
+import {
+  ComponentDesignProp,
+  ComponentSlotClasses,
+  PrimitiveProps,
+  RendererParam,
+  RendererRenderRule,
+} from '@fluentui/react-bindings'
+import * as _ from 'lodash'
 
 export type ResolveStylesResult = {
   resolvedStyles: ComponentSlotStylesResolved
   resolvedStylesDebug: Record<string, { styles: Object }[]>
   classes: ComponentSlotClasses
+}
+
+export type ResolveStylesInput = {
+  theme: ThemePrepared
+  displayName: string
+  props: PropsWithVarsAndStyles & { design?: ComponentDesignProp }
+  resolvedVariables: object
+  rtl: boolean
+  disableAnimations: boolean
+  renderer: {
+    renderRule: RendererRenderRule
+  }
+  cacheEnabled: boolean | undefined
+  stylesProps: PrimitiveProps
+  renderStyles?: (styles: ICSSInJSStyle) => string
 }
 
 // this weak map is used as cache for the classes
@@ -32,15 +53,54 @@ const stylesCache = new WeakMap<ThemePrepared, Record<string, ICSSInJSStyle>>()
  * - rtl mode
  * - disable animations mode
  */
-const resolveStylesAndClasses = (
-  mergedStyles: ComponentSlotStylesPrepared,
-  styleParam: ComponentStyleFunctionParam,
-  renderStyles: (styles: ICSSInJSStyle) => string,
-  cacheEnabled?: boolean | undefined,
-  displayName?: string,
-  theme?: ThemePrepared,
-  props?: PrimitiveProps,
-): ResolveStylesResult => {
+const resolveStyles = ({
+                         theme,
+                         displayName,
+                         props,
+                         resolvedVariables,
+                         rtl,
+                         disableAnimations,
+                         renderer,
+                         cacheEnabled,
+                         stylesProps,
+                         renderStyles: renderStylesInput,
+                       }: ResolveStylesInput): ResolveStylesResult => {
+  // Merge theme styles with inline overrides if any
+  let mergedStyles: ComponentSlotStylesPrepared = theme.componentStyles[displayName] || {
+    root: () => ({}),
+  }
+  const hasInlineStylesOverrides = !_.isNil(props.design) || !_.isNil(props.styles)
+
+  if (hasInlineStylesOverrides) {
+    mergedStyles = mergeComponentStyles(
+      mergedStyles,
+      props.design && withDebugId({ root: props.design }, 'props.design'),
+      props.styles &&
+      withDebugId({ root: props.styles } as ComponentSlotStylesInput, 'props.styles'),
+    )
+  }
+
+  const styleParam: ComponentStyleFunctionParam = {
+    displayName,
+    props,
+    variables: resolvedVariables,
+    theme,
+    rtl,
+    disableAnimations,
+  }
+
+  // Fela plugins rely on `direction` param in `theme` prop instead of RTL
+  // Our API should be aligned with it
+  // Heads Up! Keep in sync with Design.tsx render logic
+  const direction = rtl ? 'rtl' : 'ltr'
+  const felaParam: RendererParam = {
+    theme: { direction },
+    disableAnimations,
+    displayName, // does not affect styles, only used by useEnhancedRenderer in docs
+  }
+
+  const renderStyles = renderStylesInput || ((style: ICSSInJSStyle) => renderer.renderRule(() => style, felaParam))
+
   const resolvedStyles: Record<string, ICSSInJSStyle> = {}
   const resolvedStylesDebug: Record<string, { styles: Object }[]> = {}
   const classes: Record<string, string> = {}
@@ -55,8 +115,8 @@ const resolveStylesAndClasses = (
   }
 
   const componentCacheKey =
-    cacheEnabled && displayName && props
-      ? `${displayName}:${JSON.stringify(props)}${styleParam.rtl}${styleParam.disableAnimations}`
+    cacheEnabled && displayName && stylesProps
+      ? `${displayName}:${JSON.stringify(stylesProps)}${styleParam.rtl}${styleParam.disableAnimations}`
       : ''
 
   Object.keys(mergedStyles).forEach(slotName => {
@@ -164,4 +224,4 @@ const resolveStylesAndClasses = (
   }
 }
 
-export default resolveStylesAndClasses
+export default resolveStyles
