@@ -1311,7 +1311,7 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
    * because we want to keep the event handling interface
    */
   setStateAndInvokeHandler = (
-    handlerNames: string[],
+    handlerNames: (keyof DropdownProps)[],
     event: React.SyntheticEvent<HTMLElement>,
     newState: Partial<DropdownState>,
   ) => {

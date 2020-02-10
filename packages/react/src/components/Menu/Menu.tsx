@@ -153,7 +153,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
   static Divider = MenuDivider
 
   setActiveIndex = (e: React.SyntheticEvent, activeIndex: number) => {
-    _.invoke(this.props, 'onActiveIndexChange', e, this.props)
+    _.invoke(this.props, 'onActiveIndexChange', e, { ...this.props, activeIndex })
     this.setState({ activeIndex })
   }
 
