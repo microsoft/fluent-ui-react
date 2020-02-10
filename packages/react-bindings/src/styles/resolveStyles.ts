@@ -11,12 +11,8 @@ import {
   ThemePrepared,
   withDebugId,
 } from '@fluentui/styles'
-import {
-  ComponentSlotClasses,
-  RendererParam,
-} from '@fluentui/react-bindings'
+import { ComponentSlotClasses, RendererParam, ResolveStylesOptions } from '@fluentui/react-bindings'
 import * as _ from 'lodash'
-import { GetStylesOptions } from './getStyles'
 
 export type ResolveStylesResult = {
   resolvedStyles: ComponentSlotStylesResolved
@@ -42,7 +38,11 @@ const stylesCache = new WeakMap<ThemePrepared, Record<string, ICSSInJSStyle>>()
  * - rtl mode
  * - disable animations mode
  */
-const resolveStyles = (options: GetStylesOptions, resolvedVariables: ComponentVariablesObject, renderStylesInput?: (styles: ICSSInJSStyle) => string): ResolveStylesResult => {
+const resolveStyles = (
+  options: ResolveStylesOptions,
+  resolvedVariables: ComponentVariablesObject,
+  renderStylesInput?: (styles: ICSSInJSStyle) => string,
+): ResolveStylesResult => {
   const {
     className: componentClassName,
     theme,
@@ -70,7 +70,7 @@ const resolveStyles = (options: GetStylesOptions, resolvedVariables: ComponentVa
       mergedStyles,
       props.design && withDebugId({ root: props.design }, 'props.design'),
       props.styles &&
-      withDebugId({ root: props.styles } as ComponentSlotStylesInput, 'props.styles'),
+        withDebugId({ root: props.styles } as ComponentSlotStylesInput, 'props.styles'),
     )
   }
 
@@ -112,8 +112,8 @@ const resolveStyles = (options: GetStylesOptions, resolvedVariables: ComponentVa
   const componentCacheKey =
     cacheEnabled && displayName && stylesProps
       ? `${displayName}:${JSON.stringify(stylesProps)}${styleParam.rtl}${
-        styleParam.disableAnimations
-      }`
+          styleParam.disableAnimations
+        }`
       : ''
 
   Object.keys(mergedStyles).forEach(slotName => {
@@ -167,7 +167,6 @@ const resolveStyles = (options: GetStylesOptions, resolvedVariables: ComponentVa
       },
     })
 
-    // const className = slotName === 'root' ? '__root' : slotName
     const cacheClassKey = `${slotName}__return`
 
     Object.defineProperty(classes, slotName, {
@@ -187,12 +186,16 @@ const resolveStyles = (options: GetStylesOptions, resolvedVariables: ComponentVa
         if (cacheEnabled && theme) {
           const classesThemeCache = classesCache.get(theme) || {}
           if (classesThemeCache[slotCacheKey]) {
-            return slotName === 'root' ? cx(componentClassName, classesThemeCache[slotCacheKey], className) : classesThemeCache[slotCacheKey]
+            return slotName === 'root'
+              ? cx(componentClassName, classesThemeCache[slotCacheKey], className)
+              : classesThemeCache[slotCacheKey]
           }
         }
 
         if (classes[cacheClassKey]) {
-          return slotName === 'root' ? cx(componentClassName, classes[cacheClassKey], className) : classes[cacheClassKey]
+          return slotName === 'root'
+            ? cx(componentClassName, classes[cacheClassKey], className)
+            : classes[cacheClassKey]
         }
 
         // this resolves the getter magic
@@ -209,7 +212,9 @@ const resolveStyles = (options: GetStylesOptions, resolvedVariables: ComponentVa
           }
         }
 
-        return slotName === 'root' ? cx(componentClassName, classes[cacheClassKey], className) : classes[cacheClassKey]
+        return slotName === 'root'
+          ? cx(componentClassName, classes[cacheClassKey], className)
+          : classes[cacheClassKey]
       },
     })
   })

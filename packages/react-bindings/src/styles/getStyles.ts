@@ -1,31 +1,14 @@
 import {
   ComponentSlotStylesResolved,
   ComponentVariablesObject,
-  DebugData,
   isDebugEnabled,
-  PropsWithVarsAndStyles,
 } from '@fluentui/styles'
 
 import * as _ from 'lodash'
 
-import {
-  ComponentDesignProp,
-  ComponentSlotClasses,
-  RendererRenderRule,
-  StylesContextValue,
-} from '../styles/types'
+import { ComponentSlotClasses, ResolveStylesOptions, StylesContextValue } from '../styles/types'
 import resolveVariables from './resolveVariables'
 import resolveStyles from './resolveStyles'
-
-export type GetStylesOptions = StylesContextValue<{
-  renderRule: RendererRenderRule
-}> & {
-  className?: string
-  displayName: string
-  props: PropsWithVarsAndStyles & { design?: ComponentDesignProp }
-  rtl: boolean
-  saveDebug: (debug: DebugData | null) => void
-}
 
 export type GetStylesResult = {
   classes: ComponentSlotClasses
@@ -34,7 +17,7 @@ export type GetStylesResult = {
   theme: StylesContextValue['theme']
 }
 
-const getStyles = (options: GetStylesOptions): GetStylesResult => {
+const getStyles = (options: ResolveStylesOptions): GetStylesResult => {
   //
   // To compute styles we are going through three stages:
   // - resolve variables (siteVariables => componentVariables + props.variables)
@@ -49,8 +32,7 @@ const getStyles = (options: GetStylesOptions): GetStylesResult => {
     options.performance.enableVariablesCaching,
   )
 
-  const { classes, resolvedStyles, resolvedStylesDebug } = resolveStyles(
-    options, resolvedVariables)
+  const { classes, resolvedStyles, resolvedStylesDebug } = resolveStyles(options, resolvedVariables)
 
   // conditionally add sources for evaluating debug information to component
   if (process.env.NODE_ENV !== 'production' && isDebugEnabled) {

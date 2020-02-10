@@ -1,4 +1,10 @@
-import { ICSSInJSStyle, ThemeInput, ThemePrepared } from '@fluentui/styles'
+import {
+  DebugData,
+  ICSSInJSStyle,
+  PropsWithVarsAndStyles,
+  ThemeInput,
+  ThemePrepared,
+} from '@fluentui/styles'
 import { IRenderer as FelaRenderer } from 'fela'
 
 // Notice:
@@ -78,3 +84,13 @@ export type StylesContextValue<R = Renderer> = Required<StylesContextInputValue<
 }
 
 export type PrimitiveProps = Record<string, boolean | number | string | undefined>
+
+export type ResolveStylesOptions = StylesContextValue<{
+  renderRule: RendererRenderRule
+}> & {
+  className?: string
+  displayName: string
+  props: PropsWithVarsAndStyles & { design?: ComponentDesignProp }
+  rtl: boolean
+  saveDebug: (debug: DebugData | null) => void
+}

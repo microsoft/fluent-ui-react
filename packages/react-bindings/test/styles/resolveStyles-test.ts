@@ -5,7 +5,7 @@ import {
   ICSSInJSStyle,
 } from '@fluentui/styles'
 import resolveStyles from '../../src/styles/resolveStyles'
-import { GetStylesOptions } from '../../src/styles/getStyles'
+import { ResolveStylesOptions } from '../../src/styles/types'
 
 const componentStyles: ComponentSlotStylesPrepared<{}, { color: string }> = {
   root: ({ variables: v }): ICSSInJSStyle => ({
@@ -18,10 +18,10 @@ const resolvedVariables: ComponentVariablesObject = {
 }
 
 const resolveStylesOptions = (options?: {
-  displayName?: GetStylesOptions['displayName']
-  performance?: GetStylesOptions['performance']
-  props?: GetStylesOptions['props']
-}): GetStylesOptions => {
+  displayName?: ResolveStylesOptions['displayName']
+  performance?: ResolveStylesOptions['performance']
+  props?: ResolveStylesOptions['props']
+}): ResolveStylesOptions => {
   const {
     displayName = 'Test',
     performance = {
@@ -46,8 +46,7 @@ const resolveStylesOptions = (options?: {
       renderRule: () => '',
     },
     performance,
-    saveDebug: () => {
-    },
+    saveDebug: () => {},
   }
 }
 
@@ -70,7 +69,11 @@ describe('resolveStyles', () => {
 
   test('does not render classes if not fetched', () => {
     const renderStyles = jest.fn()
-    const { resolvedStyles } = resolveStyles(resolveStylesOptions(), resolvedVariables, renderStyles)
+    const { resolvedStyles } = resolveStyles(
+      resolveStylesOptions(),
+      resolvedVariables,
+      renderStyles,
+    )
 
     expect(resolvedStyles.root).toMatchObject({ color: 'red' })
     expect(renderStyles).not.toBeCalled()
@@ -207,13 +210,13 @@ describe('resolveStyles', () => {
 
   test('does not cache styles if there are inline overrides', () => {
     spyOn(componentStyles, 'root').and.callThrough()
-    const propsInlineOverrides: GetStylesOptions['props'][] = [
+    const propsInlineOverrides: ResolveStylesOptions['props'][] = [
       { styles: { fontSize: '10px' } },
       { design: { left: '10px' } },
       { variables: { backgroundColor: 'yellow' } },
     ]
 
-    const propsInlineOverridesResolvedStyles: GetStylesOptions['props'][] = [
+    const propsInlineOverridesResolvedStyles: ICSSInJSStyle[] = [
       { color: 'red', fontSize: '10px' },
       { color: 'red', left: '10px' },
       { color: 'red' },
@@ -235,12 +238,12 @@ describe('resolveStyles', () => {
       resolveStyles(options, resolvedVariables)
     }
 
-    expect(componentStyles.root).toHaveBeenCalledTimes(propsInlineOverridesSize*2)
+    expect(componentStyles.root).toHaveBeenCalledTimes(propsInlineOverridesSize * 2)
   })
 
   test('does not cache classes if there are inline overrides', () => {
     const renderStyles = jest.fn().mockReturnValue('a')
-    const propsInlineOverrides: GetStylesOptions['props'][] = [
+    const propsInlineOverrides: ResolveStylesOptions['props'][] = [
       { styles: { fontSize: '10px' } },
       { design: { left: '10px' } },
       { variables: { backgroundColor: 'yellow' } },
@@ -260,6 +263,6 @@ describe('resolveStyles', () => {
       expect(secondClasses['root']).toBeDefined()
     }
 
-    expect(renderStyles).toHaveBeenCalledTimes(propsInlineOverridesSize*2)
+    expect(renderStyles).toHaveBeenCalledTimes(propsInlineOverridesSize * 2)
   })
 })
