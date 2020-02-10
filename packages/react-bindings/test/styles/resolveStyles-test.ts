@@ -40,7 +40,7 @@ const resolveStylesParam = (options?: {
   }
 }
 
-describe('resolveStylesAndClasses', () => {
+describe('resolveStyles', () => {
   test('resolves styles', () => {
     const { resolvedStyles } = resolveStyles(resolveStylesParam())
 
