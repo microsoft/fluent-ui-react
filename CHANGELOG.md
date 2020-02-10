@@ -30,7 +30,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Added sourcemaps to the dist output to simplify debugging @miroslavstastny ([#2329](https://github.com/microsoft/fluent-ui-react/pull/2329))
 
 ### Performance
-- Add styles caching when there aren't inline overrides defined @mnajdova ([2309](https://github.com/microsoft/fluent-ui-react/pull/2309))
+- Add styles caching when there aren't inline overrides defined @mnajdova ([#2309](https://github.com/microsoft/fluent-ui-react/pull/2309))
 
 <!--------------------------------[ v0.44.0 ]------------------------------- -->
 ## [v0.44.0](https://github.com/microsoft/fluent-ui-react/tree/v0.44.0) (2020-02-05)
