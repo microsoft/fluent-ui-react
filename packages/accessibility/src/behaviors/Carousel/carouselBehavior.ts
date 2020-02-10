@@ -28,7 +28,7 @@ const carouselBehavior: Accessibility<CarouselBehaviorProps> = props => ({
     root: {
       role: props.navigation ? undefined :  'region',
       'aria-roledescription': props.navigation ? undefined : props.ariaRoleDescription,
-      'aria-label': props.navigation ? undefined : props.ariaLabel
+      'aria-label': props.navigation ? undefined : props.ariaLabel,
     },
     itemsContainerWrapper: {
       'aria-live': props.ariaLiveOn ? 'polite' : 'off',
@@ -36,7 +36,7 @@ const carouselBehavior: Accessibility<CarouselBehaviorProps> = props => ({
     itemsContainer: {
       role: props.navigation ? 'group' : undefined,
       'aria-roledescription': props.navigation ? props.ariaRoleDescription : undefined,
-      'aria-label': props.navigation ? props.ariaLabel : undefined
+      'aria-label': props.navigation ? props.ariaLabel : undefined,
     },
 
     paddleNext: {
