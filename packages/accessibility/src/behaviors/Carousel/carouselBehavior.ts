@@ -1,7 +1,6 @@
 import { Accessibility } from '../../types'
 import * as keyboardKey from 'keyboard-key'
 
-
 /**
  * @description
  * Adds attribute 'role=region' to 'root' slot if 'navigation' property is false. Does not set the attribute otherwise.
@@ -9,7 +8,7 @@ import * as keyboardKey from 'keyboard-key'
  * Adds attribute 'aria-label' to 'root' slot if 'navigation' property is false. Does not set the attribute otherwise.
  * Adds attribute 'aria-roledescription' to 'itemsContainer' slot if 'navigation' property is true. Does not set the attribute otherwise.
  * Adds attribute 'aria-label' to 'itemsContainer' slot if 'navigation' property is true. Does not set the attribute otherwise.
- * 
+ *
  * @specification
  * Adds attribute 'role=region' to 'root' slot.
  * Adds attribute 'aria-live=polite' to 'itemsContainerWrapper' slot if 'ariaLiveOn' property is true. Sets the attribute to 'off' otherwise.
@@ -26,7 +25,7 @@ import * as keyboardKey from 'keyboard-key'
 const carouselBehavior: Accessibility<CarouselBehaviorProps> = props => ({
   attributes: {
     root: {
-      role: props.navigation ? undefined :  'region',
+      role: props.navigation ? undefined : 'region',
       'aria-roledescription': props.navigation ? undefined : props.ariaRoleDescription,
       'aria-label': props.navigation ? undefined : props.ariaLabel,
     },
@@ -78,10 +77,9 @@ const carouselBehavior: Accessibility<CarouselBehaviorProps> = props => ({
 export type CarouselBehaviorProps = {
   /** Element type. */
   navigation: Object | Object[]
-  ariaLiveOn: boolean    
+  ariaLiveOn: boolean
   ariaRoleDescription?: string
   ariaLabel?: string
-
 }
 
 export default carouselBehavior

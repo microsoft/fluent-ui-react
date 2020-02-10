@@ -241,7 +241,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
   }
 
   renderContent = (accessibility, styles, unhandledProps) => {
-    const {getItemPositionText, items} = this.props
+    const { getItemPositionText, items } = this.props
     const { activeIndex, itemIds } = this.state
 
     this.itemRefs = []
