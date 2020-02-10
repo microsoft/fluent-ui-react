@@ -3,6 +3,13 @@ import * as React from 'react'
 
 import { ShorthandFactory } from './utils/factories'
 
+// Temporary workaround for @lodash dependency
+
+export type DebounceResultFn<T> = T & {
+  cancel: () => void
+  flush: () => void
+}
+
 // ========================================================
 // Utilities
 // ========================================================
@@ -171,6 +178,7 @@ export interface ProviderContextInput extends StylesContextInputValue {
 
 export interface ProviderContextPrepared extends StylesContextValue {
   rtl: boolean
-  target: Document
+  // `target` can be undefined for SSR
+  target: Document | undefined
   telemetry: Telemetry | undefined
 }
