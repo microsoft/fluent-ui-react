@@ -25,16 +25,20 @@ export default () => {
       (acc: ICSSInJSStyle, cssPropertyName: keyof CSS.Properties) => {
         const cssPropertyValue = styles[cssPropertyName]
 
-        if (typeof cssPropertyValue === 'object') {
-          return { ...acc, [cssPropertyName]: expandCssShorthands(cssPropertyValue) }
-        }
-
         if (handledCssProps.indexOf(cssPropertyName) !== -1) {
-          const expandedProps = expandProperty(cssPropertyName, `${cssPropertyValue}`)
+          const expandedProps = expandProperty(cssPropertyName, cssPropertyValue)
 
           if (expandedProps) {
             return { ...acc, ...expandedProps }
           }
+        }
+
+        if (typeof cssPropertyValue === 'object') {
+          if (Array.isArray(cssPropertyValue)) {
+            return { ...acc, [cssPropertyName]: cssPropertyValue }
+          }
+
+          return { ...acc, [cssPropertyName]: expandCssShorthands(cssPropertyValue) }
         }
 
         return { ...acc, [cssPropertyName]: cssPropertyValue }
