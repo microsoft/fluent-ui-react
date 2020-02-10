@@ -19,10 +19,14 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### BREAKING CHANGES
 - Restricted prop set in the `Checkbox`, `Icon`, `Label`, `Slider`, `Status`, `Text` @layershifter ([#2307](https://github.com/microsoft/fluent-ui-react/pull/2307))
+- Styles for the `Animation` component are removed from Teams theme @layershifter ([#2258](https://github.com/microsoft/fluent-ui-react/pull/2258))
 
 ### Fixes
 - Remove dependency on Lodash in TypeScript typings @layershifter ([#2323](https://github.com/microsoft/fluent-ui-react/pull/2323))
 - Fix missing aria-describedby in AlertBehavior @delprzemo ([#2208](https://github.com/microsoft/fluent-ui-react/pull/2208))
+
+### Performance
+- Styles for `Animation` component are computed again only on prop changes @layershifter ([#2258](https://github.com/microsoft/fluent-ui-react/pull/2258))
 
 <!--------------------------------[ v0.44.0 ]------------------------------- -->
 ## [v0.44.0](https://github.com/microsoft/fluent-ui-react/tree/v0.44.0) (2020-02-05)
