@@ -37,7 +37,16 @@ const tooltipContentStyles: ComponentSlotStylesPrepared<
       maxWidth: v.maxWidth,
       color: v.color,
       background: v.backgroundColor,
+
+      zIndex: v.zIndex,
+      position: 'absolute',
+      textAlign: 'left',
+
       ...(p.pointing && svgPointerStyles.root),
+
+      ...(!p.open && {
+        opacity: 0,
+      }),
     }
   },
   pointer: ({ props: p, variables: v, rtl }): ICSSInJSStyle => {
@@ -59,7 +68,7 @@ const tooltipContentStyles: ComponentSlotStylesPrepared<
       ...svgPointerStyles.pointer,
     }
   },
-  content: ({ props: p, variables: v }): ICSSInJSStyle => ({
+  content: ({ variables: v }): ICSSInJSStyle => ({
     display: 'block',
     padding: v.padding,
 

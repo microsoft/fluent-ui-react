@@ -54,7 +54,6 @@ export { default as Menu } from './components/Menu/menuVariables'
 export { default as MenuItem } from './components/Menu/menuItemVariables'
 export { default as MenuDivider } from './components/Menu/menuDividerVariables'
 
-export { default as Popup } from './components/Popup/popupVariables'
 export { default as PopupContent } from './components/Popup/popupContentVariables'
 
 export { default as ProviderBox } from './components/Provider/providerBoxVariables'
@@ -89,7 +88,6 @@ export { default as Animation } from './components/Animation/animationVariables'
 
 export { default as Video } from './components/Video/videoVariables'
 
-export { default as Tooltip } from './components/Tooltip/tooltipVariables'
 export { default as TooltipContent } from './components/Tooltip/tooltipContentVariables'
 
 export { default as SplitButton } from './components/SplitButton/splitButtonVariables'
