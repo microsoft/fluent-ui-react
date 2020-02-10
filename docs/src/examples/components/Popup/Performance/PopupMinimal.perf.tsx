@@ -1,14 +1,7 @@
 import { Popup } from '@fluentui/react'
-import * as _ from 'lodash'
 import * as React from 'react'
 
-const PopupMinimalPerf = () => (
-  <>
-    {_.times(200, i => (
-      <Popup key={i} />
-    ))}
-  </>
-)
+const PopupMinimalPerf = () => <Popup />
 
 PopupMinimalPerf.iterations = 5000
 PopupMinimalPerf.filename = 'PopupMinimal.perf.tsx'
