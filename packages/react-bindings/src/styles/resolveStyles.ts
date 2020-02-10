@@ -1,43 +1,27 @@
+import cx from 'classnames'
 import {
   ComponentSlotStylesInput,
   ComponentSlotStylesPrepared,
   ComponentSlotStylesResolved,
   ComponentStyleFunctionParam,
+  ComponentVariablesObject,
   ICSSInJSStyle,
   isDebugEnabled,
   mergeComponentStyles,
-  PropsWithVarsAndStyles,
   ThemePrepared,
   withDebugId,
 } from '@fluentui/styles'
 import {
-  ComponentDesignProp,
   ComponentSlotClasses,
-  PrimitiveProps,
   RendererParam,
-  RendererRenderRule,
 } from '@fluentui/react-bindings'
 import * as _ from 'lodash'
+import { GetStylesOptions } from './getStyles'
 
 export type ResolveStylesResult = {
   resolvedStyles: ComponentSlotStylesResolved
   resolvedStylesDebug: Record<string, { styles: Object }[]>
   classes: ComponentSlotClasses
-}
-
-export type ResolveStylesInput = {
-  theme: ThemePrepared
-  displayName: string
-  props: PropsWithVarsAndStyles & { design?: ComponentDesignProp }
-  resolvedVariables: object
-  rtl: boolean
-  disableAnimations: boolean
-  renderer: {
-    renderRule: RendererRenderRule
-  }
-  cacheEnabled: boolean | undefined
-  stylesProps: PrimitiveProps
-  renderStyles?: (styles: ICSSInJSStyle) => string
 }
 
 // this weak map is used as cache for the classes
@@ -58,18 +42,23 @@ const stylesCache = new WeakMap<ThemePrepared, Record<string, ICSSInJSStyle>>()
  * - rtl mode
  * - disable animations mode
  */
-const resolveStyles = ({
-  theme,
-  displayName,
-  props,
-  resolvedVariables,
-  rtl,
-  disableAnimations,
-  renderer,
-  cacheEnabled,
-  stylesProps,
-  renderStyles: renderStylesInput,
-}: ResolveStylesInput): ResolveStylesResult => {
+const resolveStyles = (options: GetStylesOptions, resolvedVariables: ComponentVariablesObject, renderStylesInput?: (styles: ICSSInJSStyle) => string): ResolveStylesResult => {
+  const {
+    className: componentClassName,
+    theme,
+    displayName,
+    props,
+    rtl,
+    disableAnimations,
+    renderer,
+    performance = {},
+  } = options || {}
+
+  const { className, design, styles, variables, ...stylesProps } = props
+  const noInlineOverrides = !(design || styles || variables)
+
+  const cacheEnabled = performance.enableStylesCaching && noInlineOverrides
+
   // Merge theme styles with inline overrides if any
   let mergedStyles: ComponentSlotStylesPrepared = theme.componentStyles[displayName] || {
     root: () => ({}),
@@ -81,7 +70,7 @@ const resolveStyles = ({
       mergedStyles,
       props.design && withDebugId({ root: props.design }, 'props.design'),
       props.styles &&
-        withDebugId({ root: props.styles } as ComponentSlotStylesInput, 'props.styles'),
+      withDebugId({ root: props.styles } as ComponentSlotStylesInput, 'props.styles'),
     )
   }
 
@@ -123,8 +112,8 @@ const resolveStyles = ({
   const componentCacheKey =
     cacheEnabled && displayName && stylesProps
       ? `${displayName}:${JSON.stringify(stylesProps)}${styleParam.rtl}${
-          styleParam.disableAnimations
-        }`
+        styleParam.disableAnimations
+      }`
       : ''
 
   Object.keys(mergedStyles).forEach(slotName => {
@@ -178,10 +167,10 @@ const resolveStyles = ({
       },
     })
 
-    const className = slotName === 'root' ? '__root' : slotName
-    const cacheClassKey = `${className}__return`
+    // const className = slotName === 'root' ? '__root' : slotName
+    const cacheClassKey = `${slotName}__return`
 
-    Object.defineProperty(classes, className, {
+    Object.defineProperty(classes, slotName, {
       enumerable: false,
       configurable: false,
       set(val: string) {
@@ -198,12 +187,12 @@ const resolveStyles = ({
         if (cacheEnabled && theme) {
           const classesThemeCache = classesCache.get(theme) || {}
           if (classesThemeCache[slotCacheKey]) {
-            return classesThemeCache[slotCacheKey]
+            return slotName === 'root' ? cx(componentClassName, classesThemeCache[slotCacheKey], className) : classesThemeCache[slotCacheKey]
           }
         }
 
         if (classes[cacheClassKey]) {
-          return classes[cacheClassKey]
+          return slotName === 'root' ? cx(componentClassName, classes[cacheClassKey], className) : classes[cacheClassKey]
         }
 
         // this resolves the getter magic
@@ -220,7 +209,7 @@ const resolveStyles = ({
           }
         }
 
-        return classes[cacheClassKey]
+        return slotName === 'root' ? cx(componentClassName, classes[cacheClassKey], className) : classes[cacheClassKey]
       },
     })
   })
