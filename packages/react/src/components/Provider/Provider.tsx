@@ -24,7 +24,6 @@ import { RendererProvider, ThemeProvider, ThemeContext } from 'react-fela'
 
 import {
   ChildrenComponentProps,
-  rtlTextContainer,
   setUpWhatInput,
   StyledComponentProps,
   tryCleanupWhatInput,
@@ -191,12 +190,7 @@ const Provider: React.FC<WithAsProp<ProviderProps>> & {
     >
       <ThemeProvider theme={outgoingContext} overwrite>
         <PortalBoxContext.Provider value={element}>
-          <ElementType
-            {...rtlProps}
-            {...rtlTextContainer.getAttributes({ forElements: [children] })}
-            {...unhandledProps}
-            className={classes.root}
-          >
+          <ElementType className={classes.root} {...rtlProps} {...unhandledProps}>
             {children}
           </ElementType>
         </PortalBoxContext.Provider>
