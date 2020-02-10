@@ -1,6 +1,6 @@
 import {
   ComponentSlotStyle,
-  ComponentSlotStylesPrepared,
+  ComponentSlotStylesResolved,
   ComponentVariablesInput,
   DebugData,
   emptyTheme,
@@ -27,7 +27,7 @@ type UseStylesOptions<StyleProps extends PrimitiveProps> = {
 
 type UseStylesResult = {
   classes: ComponentSlotClasses
-  styles: ComponentSlotStylesPrepared
+  styles: ComponentSlotStylesResolved
 }
 
 type InlineStyleProps<StyleProps> = {

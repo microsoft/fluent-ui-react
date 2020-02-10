@@ -6,6 +6,7 @@ import * as _ from 'lodash'
 import * as React from 'react'
 import { ReactWrapper } from 'enzyme'
 import * as ReactDOMServer from 'react-dom/server'
+import { act } from 'react-dom/test-utils'
 
 import isExportedAtTopLevel from './isExportedAtTopLevel'
 import {
@@ -390,13 +391,17 @@ export default function isConformant(
         const customHandler: Function = eventTarget.prop(listenerName)
 
         if (customHandler) {
-          customHandler(eventShape)
+          act(() => {
+            customHandler(eventShape)
+          })
         } else {
           if (Component.propTypes[listenerName]) {
             throw new Error(
               `Handler for '${listenerName}' is not passed to child event emitter element <${eventTarget.type()} />`,
             )
           }
+
+          // We are cheking only props handled by component
           return
         }
 
