@@ -3,6 +3,7 @@ import * as _ from 'lodash'
 import {
   getUnhandledProps,
   Renderer,
+  StylesContextPerformance,
   Telemetry,
   useIsomorphicLayoutEffect,
 } from '@fluentui/react-bindings'
@@ -37,6 +38,7 @@ export interface ProviderProps extends ChildrenComponentProps {
   renderer?: Renderer
   rtl?: boolean
   disableAnimations?: boolean
+  performance?: StylesContextPerformance
   overwrite?: boolean
   target?: Document
   theme?: ThemeInput
@@ -119,6 +121,7 @@ const Provider: React.FC<WithAsProp<ProviderProps>> & {
     theme: props.theme,
     rtl: props.rtl,
     disableAnimations: props.disableAnimations,
+    performance: props.performance,
     renderer: props.renderer,
     target: props.target,
     telemetry,
@@ -203,6 +206,12 @@ Provider.propTypes = {
   renderer: PropTypes.object as PropTypes.Validator<Renderer>,
   rtl: PropTypes.bool,
   disableAnimations: PropTypes.bool,
+  // Heads Up!
+  // Keep in sync with packages/react-bindings/src/styles/types.ts
+  performance: PropTypes.shape({
+    enableStylesCaching: PropTypes.bool,
+    enableVariablesCaching: PropTypes.bool,
+  }),
   children: PropTypes.node.isRequired,
   overwrite: PropTypes.bool,
   target: PropTypes.object as PropTypes.Validator<Document>,
