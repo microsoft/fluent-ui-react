@@ -1,4 +1,4 @@
-import { carouselBehavior as carouselBehavior } from '@fluentui/accessibility'
+import { carouselBehavior } from '@fluentui/accessibility'
 
 const roleDescription = "carousel"
 const label = "portrait collection"

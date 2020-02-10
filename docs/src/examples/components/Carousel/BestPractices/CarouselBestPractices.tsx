@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { Text } from '@fluentui/react'
-import { Box } from '@fluentui/react'
+import { Text, Box } from '@fluentui/react'
 import { link } from '../../../../utils/helpers'
 
 import ComponentBestPractices from 'docs/src/components/ComponentBestPractices'
