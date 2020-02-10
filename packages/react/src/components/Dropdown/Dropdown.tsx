@@ -7,6 +7,7 @@ import cx from 'classnames'
 import * as keyboardKey from 'keyboard-key'
 
 import {
+  DebounceResultFn,
   ShorthandRenderFunction,
   ShorthandValue,
   ComponentEventHandler,
@@ -1371,11 +1372,11 @@ class Dropdown extends AutoControlledComponent<WithAsProp<DropdownProps>, Dropdo
     this.clearStartingString()
   }
 
-  clearA11ySelectionMessage = _.debounce(() => {
+  clearA11ySelectionMessage: DebounceResultFn<() => void> = _.debounce(() => {
     this.setState({ a11ySelectionStatus: '' })
   }, Dropdown.a11yStatusCleanupTime)
 
-  clearStartingString = _.debounce(() => {
+  clearStartingString: DebounceResultFn<() => void> = _.debounce(() => {
     this.setState({ startingString: '' })
   }, Dropdown.charKeyPressedCleanupTime)
 }

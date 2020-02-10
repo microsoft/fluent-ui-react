@@ -57,6 +57,9 @@ export interface MenuVariables {
 
   dividerHeight: string
   borderWidth: string
+
+  menuZIndex: number
+  beakZIndex: number
 }
 
 export default (siteVars: any): MenuVariables => {
@@ -122,5 +125,7 @@ export default (siteVars: any): MenuVariables => {
 
     dividerHeight: pxToRem(1),
     borderWidth: pxToRem(1),
+    menuZIndex: siteVars.zIndexes.overlay,
+    beakZIndex: siteVars.zIndexes.menuItem,
   }
 }
