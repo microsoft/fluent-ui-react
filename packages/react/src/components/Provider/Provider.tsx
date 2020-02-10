@@ -1,6 +1,11 @@
 import { IStyle } from 'fela'
 import * as _ from 'lodash'
-import { getUnhandledProps, Renderer, Telemetry } from '@fluentui/react-bindings'
+import {
+  getUnhandledProps,
+  Renderer,
+  Telemetry,
+  useIsomorphicLayoutEffect,
+} from '@fluentui/react-bindings'
 import {
   mergeSiteVariables,
   StaticStyleObject,
@@ -135,7 +140,7 @@ const Provider: React.FC<WithAsProp<ProviderProps>> & {
     rtlProps.dir = outgoingContext.rtl ? 'rtl' : 'ltr'
   }
 
-  React.useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     renderFontFaces(outgoingContext.renderer, props.theme)
     renderStaticStyles(outgoingContext.renderer, props.theme, outgoingContext.theme.siteVariables)
 

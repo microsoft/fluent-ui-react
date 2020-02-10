@@ -178,6 +178,7 @@ export interface ProviderContextInput extends StylesContextInputValue {
 
 export interface ProviderContextPrepared extends StylesContextValue {
   rtl: boolean
-  target: Document
+  // `target` can be undefined for SSR
+  target: Document | undefined
   telemetry: Telemetry | undefined
 }
