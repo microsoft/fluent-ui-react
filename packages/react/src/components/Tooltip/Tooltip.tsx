@@ -260,21 +260,19 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
         enabled={open}
         rtl={rtl}
         targetRef={target || this.triggerRef}
-        children={this.renderPopperChildren.bind(this, tooltipPositionClasses, rtl, accessibility)}
+        children={this.renderPopperChildren.bind(this, tooltipPositionClasses, accessibility)}
       />
     )
   }
 
   renderPopperChildren = (
     tooltipPositionClasses: string,
-    rtl: boolean,
     accessibility: ReactAccessibilityBehavior,
     { placement }: PopperChildrenProps,
   ) => {
     const { content, pointing } = this.props
 
     const tooltipContentAttributes = {
-      ...(rtl && { dir: 'rtl' }),
       ...accessibility.attributes.tooltip,
       ...accessibility.keyHandlers.tooltip,
       className: tooltipPositionClasses,

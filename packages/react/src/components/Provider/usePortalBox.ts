@@ -1,15 +1,15 @@
 import { useIsomorphicLayoutEffect } from '@fluentui/react-bindings'
 import * as React from 'react'
 
-type UseDocumentBoxOptions = {
+type UsePortalBoxOptions = {
   className: string
   rtl: boolean
   target: Document
 }
 
-export const DocumentBoxContext = React.createContext<HTMLDivElement>(null)
+export const PortalBoxContext = React.createContext<HTMLDivElement>(null)
 
-const useDocumentBox = (options: UseDocumentBoxOptions): HTMLDivElement => {
+const usePortalBox = (options: UsePortalBoxOptions): HTMLDivElement => {
   const { className, rtl, target } = options
 
   const element: HTMLDivElement = React.useMemo(() => target.createElement('div'), [target])
@@ -31,4 +31,4 @@ const useDocumentBox = (options: UseDocumentBoxOptions): HTMLDivElement => {
   return element
 }
 
-export default useDocumentBox
+export default usePortalBox

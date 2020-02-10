@@ -38,7 +38,7 @@ import {
 } from '../../types'
 import mergeContexts from '../../utils/mergeProviderContexts'
 import ProviderConsumer from './ProviderConsumer'
-import useDocumentBox, { DocumentBoxContext } from './useDocumentBox'
+import usePortalBox, { PortalBoxContext } from './usePortalBox'
 
 export interface ProviderProps extends ChildrenComponentProps, StyledComponentProps {
   renderer?: Renderer
@@ -163,7 +163,7 @@ const Provider: React.FC<WithAsProp<ProviderProps>> & {
     _internal_resolvedComponentVariables: outgoingContext._internal_resolvedComponentVariables,
   })
 
-  const element = useDocumentBox({
+  const element = usePortalBox({
     className: classes.root,
     target: outgoingContext.target,
     rtl: outgoingContext.rtl,
@@ -190,7 +190,7 @@ const Provider: React.FC<WithAsProp<ProviderProps>> & {
       {...{ rehydrate: false, targetDocument: outgoingContext.target }}
     >
       <ThemeProvider theme={outgoingContext} overwrite>
-        <DocumentBoxContext.Provider value={element}>
+        <PortalBoxContext.Provider value={element}>
           <ElementType
             {...rtlProps}
             {...rtlTextContainer.getAttributes({ forElements: [children] })}
@@ -199,7 +199,7 @@ const Provider: React.FC<WithAsProp<ProviderProps>> & {
           >
             {children}
           </ElementType>
-        </DocumentBoxContext.Provider>
+        </PortalBoxContext.Provider>
       </ThemeProvider>
     </RendererProvider>
   )

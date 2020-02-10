@@ -4,7 +4,7 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 
 import { isBrowser, ChildrenComponentProps, commonPropTypes } from '../../utils'
-import { DocumentBoxContext } from '../Provider/useDocumentBox'
+import { PortalBoxContext } from '../Provider/usePortalBox'
 
 export interface PortalInnerProps extends ChildrenComponentProps {
   /** Existing element the portal should be bound to. */
@@ -29,7 +29,7 @@ export interface PortalInnerProps extends ChildrenComponentProps {
  * A PortalInner is a container for Portal's content.
  */
 class PortalInner extends React.Component<PortalInnerProps> {
-  static contextType = DocumentBoxContext
+  static contextType = PortalBoxContext
 
   static propTypes = {
     ...commonPropTypes.createCommon({
@@ -55,7 +55,9 @@ class PortalInner extends React.Component<PortalInnerProps> {
   render() {
     const { children, mountNode } = this.props
 
-    const target: HTMLDivElement | null = isBrowser() ? this.context : null
+    // PortalInner should render elements even without a context
+    // eslint-disable-next-line
+    const target: HTMLDivElement | null = isBrowser() ? this.context || document.body : null
     const container: HTMLElement | null = mountNode || target
 
     return container && ReactDOM.createPortal(children, container)

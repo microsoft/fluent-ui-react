@@ -478,14 +478,13 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
         rtl={rtl}
         unstable_pinned={unstable_pinned}
         targetRef={this.rightClickReferenceObject || target || this.triggerRef}
-        children={this.renderPopperChildren.bind(this, popupPositionClasses, rtl, accessibility)}
+        children={this.renderPopperChildren.bind(this, popupPositionClasses, accessibility)}
       />
     )
   }
 
   renderPopperChildren = (
     popupPositionClasses: string,
-    rtl: boolean,
     accessibility: ReactAccessibilityBehavior,
     { placement, scheduleUpdate }: PopperChildrenProps,
   ) => {
@@ -501,7 +500,6 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     const content = renderContent ? renderContent(scheduleUpdate) : propsContent
     const popupContent = Popup.Content.create(content || {}, {
       defaultProps: () => ({
-        ...(rtl && { dir: 'rtl' }),
         ...accessibility.attributes.popup,
         ...accessibility.keyHandlers.popup,
         className: popupPositionClasses,
