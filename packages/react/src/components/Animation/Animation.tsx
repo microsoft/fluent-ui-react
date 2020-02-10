@@ -153,6 +153,7 @@ const Animation: React.FC<AnimationProps> & {
   const {
     appear,
     children,
+    className,
     delay,
     direction,
     duration,
@@ -191,6 +192,7 @@ const Animation: React.FC<AnimationProps> & {
       className: Animation.className,
       displayName: Animation.displayName,
       props: {
+        className,
         styles: createAnimationStyles(animation, context.theme),
       },
 
@@ -202,6 +204,7 @@ const Animation: React.FC<AnimationProps> & {
       _internal_resolvedComponentVariables: context._internal_resolvedComponentVariables,
     })
   }, [
+    className,
     context,
     name,
     delay,
