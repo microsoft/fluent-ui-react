@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import fetch from 'node-fetch'
 import _ from 'lodash'
 import flamegrill, { CookResult, CookResults, ScenarioConfig, Scenarios } from 'flamegrill'
 
@@ -44,7 +45,24 @@ const tempDir = path.join(__dirname, '../logfiles')
 
 console.log(`__dirname: ${__dirname}`)
 
-export default async function getPerfRegressions() {
+const GITHUB_REPO_ID = '141743704'
+async function getMasterBuild(): Promise<number> {
+  const url = 'https://fluent-ui-react-stats.azurewebsites.net/api/GetLatestBuild'
+
+  const response = await fetch(url)
+  const data = await response.json()
+  return data[0].build
+}
+
+export default async function getPerfRegressions(baselineOnly: boolean = false) {
+  let urlForMaster
+
+  if (!baselineOnly) {
+    const masterBuild = await getMasterBuild()
+    urlForMaster = `https://${masterBuild}-${GITHUB_REPO_ID}-gh.circle-artifacts.com/0/artifacts/perf/index.html`
+    console.log('Master URL', urlForMaster)
+  }
+
   // TODO: support iteration/kind/story via commandline as in other perf-test script
   // TODO: can do this now that we have story information
   // TODO: align flamegrill terminology with CSF (story vs. scenario)
@@ -65,13 +83,22 @@ export default async function getPerfRegressions() {
         const scenarioName = `${kindKey}.${storyKey}`
         scenarioList.push(scenarioName)
         scenarios[scenarioName] = {
-          // TODO: We can't do CI, measure baseline or do regression analysis until master & PR files are deployed and publicly accessible.
           scenario: generateUrl(
             urlForDeploy,
             kindKey,
             storyKey,
             getIterations(stories, kindKey, storyKey),
           ),
+          ...(!baselineOnly &&
+            storyKey !== 'Fabric' && {
+              // Optimization: skip baseline comparision for Fabric
+              baseline: generateUrl(
+                urlForMaster,
+                kindKey,
+                storyKey,
+                getIterations(stories, kindKey, storyKey),
+              ),
+            }),
         }
       })
   })

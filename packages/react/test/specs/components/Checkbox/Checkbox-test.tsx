@@ -8,8 +8,10 @@ import {
 
 describe('Checkbox', () => {
   isConformant(Checkbox, {
+    constructorName: 'Checkbox',
     autoControlledProps: ['checked'],
   })
+
   handlesAccessibility(Checkbox, { defaultRootRole: 'checkbox' })
 
   describe('HTML accessibility rules validation', () => {

@@ -1,12 +1,12 @@
 {
   "name": "@fluentui/perf",
-  "version": "0.43.0",
+  "version": "0.44.0",
   "private": true,
   "license": "MIT",
   "devDependencies": {
     "@babel/polyfill": "^7.7.0",
-    "@fluentui/internal-tooling": "^0.43.0",
-    "@fluentui/react": "^0.43.0",
+    "@fluentui/internal-tooling": "^0.44.0",
+    "@fluentui/react": "^0.44.0",
     "@types/webpack-env": "^1.14.1",
     "minimatch": "^3.0.4"
   },

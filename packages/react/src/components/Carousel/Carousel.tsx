@@ -19,6 +19,7 @@ import {
 import {
   WithAsProp,
   withSafeTypeForAs,
+  DebounceResultFn,
   ShorthandCollection,
   ShorthandValue,
   ComponentEventHandler,
@@ -216,7 +217,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
   itemRefs = [] as React.RefObject<HTMLElement>[]
   paddleNextRef = React.createRef<HTMLElement>()
   paddlePreviousRef = React.createRef<HTMLElement>()
-  focusItemAtIndex = _.debounce((index: number) => {
+  focusItemAtIndex: DebounceResultFn<(index: number) => void> = _.debounce((index: number) => {
     this.itemRefs[index].current.focus()
   }, 400)
 

@@ -77,7 +77,12 @@ jobs:
           command: yarn test:circulars
       - run:
           name: Flamegrill
-          command: yarn perf:test
+          command: |
+            if [ $CIRCLE_BRANCH == 'master' ]; then
+              yarn perf:test:base
+            else
+              yarn perf:test
+            fi
       - run:
           name: Bundle Statistics (master only)
           command: |
