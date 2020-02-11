@@ -58,10 +58,9 @@ const rendererConfig = {
 
     // is necessary to prevent accidental style typos
     // from breaking ALL the styles on the page
-    process.env.NODE_ENV !== 'production' &&
-      felaSanitizeCss({
-        skip: ['content', 'keyframe'],
-      }),
+    felaSanitizeCss({
+      skip: ['content', 'keyframe'],
+    }),
 
     felaPluginPlaceholderPrefixer(),
     felaInvokeKeyframesPlugin(),
@@ -75,7 +74,7 @@ const rendererConfig = {
     felaPluginFallbackValue(),
 
     felaPluginRtl(),
-  ].filter(Boolean),
+  ],
 }
 
 export const createRenderer = (): Renderer => createFelaRenderer(rendererConfig) as Renderer

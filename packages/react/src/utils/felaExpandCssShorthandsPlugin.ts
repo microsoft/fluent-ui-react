@@ -2,22 +2,23 @@ import { ICSSInJSStyle } from '@fluentui/styles'
 import * as CSS from 'csstype'
 import { expandProperty } from 'inline-style-expand-shorthand'
 
-const handledCssProps: (keyof CSS.Properties)[] = [
+// https://jsperf.com/array-indexof-vs-object-key-lookup2/12
+const handledCssProps: Partial<Record<keyof CSS.Properties, true>> = {
   // 'font', Oops, is not supported by inline-style-expand-shorthand
-  'padding',
-  'margin',
-  'border',
-  'borderWidth',
-  'borderStyle',
-  'borderColor',
-  'borderTop',
-  'borderRight',
-  'borderBottom',
-  'borderLeft',
-  'borderRadius',
-  'background',
-  'outline',
-]
+  padding: true,
+  margin: true,
+  border: true,
+  borderWidth: true,
+  borderStyle: true,
+  borderColor: true,
+  borderTop: true,
+  borderRight: true,
+  borderBottom: true,
+  borderLeft: true,
+  borderRadius: true,
+  background: true,
+  outline: true,
+}
 
 export default () => {
   const expandCssShorthands = (styles: ICSSInJSStyle) => {
@@ -25,7 +26,11 @@ export default () => {
       (acc: ICSSInJSStyle, cssPropertyName: keyof CSS.Properties) => {
         const cssPropertyValue = styles[cssPropertyName]
 
-        if (handledCssProps.indexOf(cssPropertyName) !== -1) {
+        if (cssPropertyValue === null || typeof cssPropertyValue === 'undefined') {
+          return { ...acc, [cssPropertyName]: cssPropertyValue }
+        }
+
+        if (handledCssProps[cssPropertyName]) {
           const expandedProps = expandProperty(cssPropertyName, cssPropertyValue)
 
           if (expandedProps) {
@@ -33,11 +38,11 @@ export default () => {
           }
         }
 
-        if (typeof cssPropertyValue === 'object') {
-          if (Array.isArray(cssPropertyValue)) {
-            return { ...acc, [cssPropertyName]: cssPropertyValue }
-          }
+        if (Array.isArray(cssPropertyValue)) {
+          return { ...acc, [cssPropertyName]: cssPropertyValue }
+        }
 
+        if (typeof cssPropertyValue === 'object') {
           return { ...acc, [cssPropertyName]: expandCssShorthands(cssPropertyValue) }
         }
 

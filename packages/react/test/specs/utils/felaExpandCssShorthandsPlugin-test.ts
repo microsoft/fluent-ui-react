@@ -18,6 +18,21 @@ describe('felaExpandCssShorthandsPlugin', () => {
     })
   })
 
+  test('should expand handle "undefined" and "null"', () => {
+    const style = {
+      margin: '10px',
+      marginLeft: null,
+      marginRight: undefined,
+    }
+
+    expect(expandCssShorthands(style)).toMatchObject({
+      marginTop: '10px',
+      marginRight: undefined,
+      marginBottom: '10px',
+      marginLeft: null,
+    })
+  })
+
   test('should expand pseudo object', () => {
     const style = {
       display: 'block',
