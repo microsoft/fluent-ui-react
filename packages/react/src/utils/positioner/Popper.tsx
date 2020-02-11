@@ -1,8 +1,10 @@
+import { useIsomorphicLayoutEffect } from '@fluentui/react-bindings'
 import { Ref, isRefObject } from '@fluentui/react-component-ref'
 import * as _ from 'lodash'
 import PopperJS, * as _PopperJS from 'popper.js'
 import * as React from 'react'
 
+import isBrowser from '../isBrowser'
 import getScrollParent from './getScrollParent'
 import { getPlacement, applyRtlToOffset } from './positioningHelper'
 import { PopperProps } from './types'
@@ -84,11 +86,16 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
     proposedPlacement,
   )
 
+  const hasDocument = isBrowser()
   const hasScrollableElement = React.useMemo(() => {
-    const scrollParentElement = getScrollParent(contentRef.current)
+    if (hasDocument) {
+      const scrollParentElement = getScrollParent(contentRef.current)
 
-    return scrollParentElement !== scrollParentElement.ownerDocument.body
-  }, [contentRef])
+      return scrollParentElement !== scrollParentElement.ownerDocument.body
+    }
+
+    return false
+  }, [contentRef, hasDocument])
   // Is a broken dependency and can cause potential bugs, we should rethink this as all other refs
   // in this component.
 
@@ -205,7 +212,7 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
     unstable_pinned,
   ])
 
-  React.useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     createInstance()
     return destroyInstance
   }, [createInstance])

@@ -19,6 +19,11 @@ const webpackConfig: webpack.Configuration = {
   module: {
     rules: [
       {
+        test: /\.js$/,
+        use: ['source-map-loader'],
+        enforce: 'pre',
+      },
+      {
         test: /\.(ts|tsx)$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
