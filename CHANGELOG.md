@@ -26,6 +26,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix missing aria-describedby in AlertBehavior @delprzemo ([#2208](https://github.com/microsoft/fluent-ui-react/pull/2208))
 - Fix page crash when `Tooltip` content is null @delprzemo ([#2332](https://github.com/microsoft/fluent-ui-react/pull/2332))
 - Fix `document` usage in `mergeProviderContexts` to get SSR working @layershifter ([#2330](https://github.com/microsoft/fluent-ui-react/pull/2330))
+- Fix `input` descenders being cropped in the Teams theme @bcalvery ([#2335](https://github.com/microsoft/fluent-ui-react/pull/2335))
 
 ### Features
 - Added sourcemaps to the dist output to simplify debugging @miroslavstastny ([#2329](https://github.com/microsoft/fluent-ui-react/pull/2329))
