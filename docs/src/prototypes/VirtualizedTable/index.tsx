@@ -1,0 +1,38 @@
+import * as React from 'react'
+import VirtualizedTable from './VirtualizedTable'
+import VirtualizedTables from './VirtualizedTables'
+import { PrototypeSection, ComponentPrototype } from '../Prototypes'
+
+export default () => (
+  <PrototypeSection title="VirtualizedTable">
+    <ComponentPrototype
+      title="Virtualized Table"
+      description="Single table with its content virtualized using `react-virtualized`."
+    >
+      <VirtualizedTable />
+    </ComponentPrototype>
+    <ComponentPrototype
+      title="Two virtualized tables in an accordion"
+      description={
+        <div>
+          <h3>Known issues:</h3>
+          <b>Integration with React-custom-scrollbars. </b>
+          <span>
+            React-virtualized has{' '}
+            <a href="https://github.com/techniq/mui-downshift/issues/34">
+              an opened feature request
+            </a>{' '}
+            to support React-custom-scrollbars and there are a couple of ways to add custom
+            scrollbars to List component (see{' '}
+            <a href="https://github.com/bvaughn/react-virtualized/issues/143">issue one</a> and{' '}
+            <a href="https://github.com/bvaughn/react-virtualized/issues/692">issue two</a>).
+            Unfortunately, suggested solutions do not seem to work with two tables wrapped with
+            WindowScroller element.
+          </span>
+        </div>
+      }
+    >
+      <VirtualizedTables />
+    </ComponentPrototype>
+  </PrototypeSection>
+)
