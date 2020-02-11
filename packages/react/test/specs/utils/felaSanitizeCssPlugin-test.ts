@@ -1,3 +1,5 @@
+import { ICSSInJSStyle } from '@fluentui/styles'
+
 import sanitizeCss from 'src/utils/felaSanitizeCssPlugin'
 
 const assertCssPropertyValue = (value: string, isValid: boolean) => {
@@ -14,6 +16,19 @@ const assertCssPropertyValue = (value: string, isValid: boolean) => {
 const sanitize = sanitizeCss()
 
 describe('felaSanitizeCssPlugin', () => {
+  const OLD_ENV = process.env
+
+  beforeEach(() => {
+    jest.resetModules() // this is important - it clears the cache
+
+    process.env = { ...OLD_ENV }
+    process.env.NODE_ENV = 'production'
+  })
+
+  afterEach(() => {
+    process.env = OLD_ENV
+  })
+
   test('should ensure there are no non-closed brackets in CSS property value', () => {
     const style = {
       display: 'block',
@@ -65,8 +80,8 @@ describe('felaSanitizeCssPlugin', () => {
 
   describe('if array is passed', () => {
     test('should process the array without conversion to an object', () => {
-      const style = {
-        color: ['red', 'blue'],
+      const style: ICSSInJSStyle = {
+        color: ['red', 'blue'] as any,
         ':hover': { color: 'red' },
         display: 'block',
       }
@@ -75,14 +90,35 @@ describe('felaSanitizeCssPlugin', () => {
     })
 
     test('should sanitize its items and remove invalid ones', () => {
-      const style = {
-        color: ['red', 'blue', 'rgba('],
+      const style: ICSSInJSStyle = {
+        color: ['red', 'blue', 'rgba('] as any,
         display: 'block',
       }
       expect(sanitize(style)).toEqual({
         color: ['red', 'blue'],
         display: 'block',
       })
+    })
+  })
+
+  describe('env', () => {
+    test('throws in "test" environment', () => {
+      process.env.NODE_ENV = 'test'
+
+      expect(() => sanitize({ backgroundImage: 'url(../../' })).toThrowError(
+        /was passed to property/,
+      )
+    })
+
+    test('warns in "development" environment', () => {
+      const onWarn = jest.spyOn(console, 'warn').mockImplementation(() => {})
+      process.env.NODE_ENV = 'development'
+
+      sanitize({ backgroundImage: 'url(../../' })
+      expect(onWarn).toBeCalledWith(expect.stringMatching(/was passed to property/))
+
+      // We need to clean up mocks to avoid errors reported by React
+      ;(console.warn as any).mockClear()
     })
   })
 })

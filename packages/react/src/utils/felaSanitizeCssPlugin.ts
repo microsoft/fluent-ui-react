@@ -1,3 +1,5 @@
+import { ICSSInJSStyle } from '@fluentui/styles'
+
 /**
  * Checks whether provided CSS property value is safe for being rendered by Fela engine.
  */
@@ -38,7 +40,7 @@ const isValidCssValue = (value: any) => {
 export default (config?: { skip?: string[] }) => {
   const cssPropertiesToSkip = [...((config && config.skip) || [])]
 
-  const sanitizeCssStyleObject = styles => {
+  const sanitizeCssStyleObject = (styles: ICSSInJSStyle) => {
     const processedStyles = Array.isArray(styles) ? [] : {}
 
     Object.keys(styles).forEach(cssPropertyNameOrIndex => {
@@ -52,8 +54,22 @@ export default (config?: { skip?: string[] }) => {
       const isPropertyToSkip = cssPropertiesToSkip.some(
         propToExclude => propToExclude === cssPropertyNameOrIndex,
       )
-      if (isPropertyToSkip || isValidCssValue(cssPropertyValue)) {
+
+      if (isPropertyToSkip) {
         processedStyles[cssPropertyNameOrIndex] = cssPropertyValue
+        return
+      }
+
+      if (isValidCssValue(cssPropertyValue)) {
+        processedStyles[cssPropertyNameOrIndex] = cssPropertyValue
+      } else if (process.env.NODE_ENV === 'test') {
+        throw new Error(
+          `fela-sanitize-css: An invalid value "${cssPropertyValue}" was passed to property "${cssPropertyNameOrIndex}"`,
+        )
+      } else if (process.env.NODE_ENV !== 'production') {
+        console.warn(
+          `fela-sanitize-css: An invalid value "${cssPropertyValue}" was passed to property "${cssPropertyNameOrIndex}"`,
+        )
       }
     })
 
