@@ -6,7 +6,7 @@ import {
   ICSSInJSStyle,
 } from '@fluentui/styles'
 import resolveStyles from '../../src/styles/resolveStyles'
-import { ResolveStylesOptions } from '../../src/styles/types'
+import { ResolveStylesOptions, StylesContextPerformance } from '../../src/styles/types'
 
 const componentStyles: ComponentSlotStylesPrepared<{}, { color: string }> = {
   root: ({ variables: v }): ICSSInJSStyle => ({
@@ -18,19 +18,18 @@ const resolvedVariables: ComponentVariablesObject = {
   color: 'red',
 }
 
+const defaultPerformanceOptions: StylesContextPerformance = {
+  enableStylesCaching: true,
+  enableVariablesCaching: true,
+}
+
 const resolveStylesOptions = (options?: {
   displayName?: ResolveStylesOptions['displayName']
   performance?: ResolveStylesOptions['performance']
   props?: ResolveStylesOptions['props']
 }): ResolveStylesOptions => {
-  const {
-    displayName = 'Test',
-    performance = {
-      enableVariablesCaching: true,
-      enableStylesCaching: true,
-    },
-    props = {},
-  } = options || {}
+  const { displayName = 'Test', performance = defaultPerformanceOptions, props = {} } =
+    options || {}
 
   return {
     theme: {
@@ -188,7 +187,9 @@ describe('resolveStyles', () => {
 
   test('does not cache styles if caching is disabled', () => {
     spyOn(componentStyles, 'root').and.callThrough()
-    const options = resolveStylesOptions({ performance: { enableStylesCaching: false } })
+    const options = resolveStylesOptions({
+      performance: { ...defaultPerformanceOptions, enableStylesCaching: false },
+    })
     const { resolvedStyles } = resolveStyles(options, resolvedVariables)
     const { resolvedStyles: secondResolvedStyles } = resolveStyles(options, resolvedVariables)
 
@@ -199,7 +200,9 @@ describe('resolveStyles', () => {
 
   test('does not cache classes if caching is disabled', () => {
     const renderStyles = jest.fn().mockReturnValue('a')
-    const options = resolveStylesOptions({ performance: { enableStylesCaching: false } })
+    const options = resolveStylesOptions({
+      performance: { ...defaultPerformanceOptions, enableStylesCaching: false },
+    })
     const { classes } = resolveStyles(options, resolvedVariables, renderStyles)
     const { classes: secondClasses } = resolveStyles(options, resolvedVariables, renderStyles)
 
@@ -228,7 +231,7 @@ describe('resolveStyles', () => {
     _.forEach(propsInlineOverrides, (props, idx) => {
       const options = resolveStylesOptions({
         props,
-        performance: { enableStylesCaching: false },
+        performance: { ...defaultPerformanceOptions, enableStylesCaching: false },
       })
 
       const { resolvedStyles } = resolveStyles(options, resolvedVariables)
@@ -255,7 +258,7 @@ describe('resolveStyles', () => {
     _.forEach(propsInlineOverrides, props => {
       const options = resolveStylesOptions({
         props,
-        performance: { enableStylesCaching: false },
+        performance: { ...defaultPerformanceOptions, enableStylesCaching: false },
       })
       const { classes } = resolveStyles(options, resolvedVariables, renderStyles)
       const { classes: secondClasses } = resolveStyles(options, resolvedVariables, renderStyles)

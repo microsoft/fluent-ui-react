@@ -204,7 +204,10 @@ const Animation: React.FC<AnimationProps> & {
       disableAnimations: context.disableAnimations,
       renderer: context.renderer,
       rtl: context.rtl,
-      performance: {},
+      performance: {
+        enableStylesCaching: false,
+        enableVariablesCaching: false,
+      },
       saveDebug: _.noop,
       theme: context.theme,
     })
