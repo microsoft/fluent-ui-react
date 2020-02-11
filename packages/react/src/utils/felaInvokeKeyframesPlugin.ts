@@ -1,5 +1,7 @@
-import { callable } from '@fluentui/styles'
-import * as _ from 'lodash'
+import { callable, ICSSInJSStyle } from '@fluentui/styles'
+
+const isPlainObject = (object: any): object is Object =>
+  Object.prototype.toString.call(object) === '[object Object]'
 
 /**
  * Fela plugin for invoking keyframes with params. The keyframes, defined in the animationName prop,
@@ -9,32 +11,24 @@ import * as _ from 'lodash'
  * tree.
  */
 export default () => {
-  const invokeKeyframes = (styles: Object) => {
-    return Object.keys(styles).reduce((acc, cssPropertyName) => {
+  const invokeKeyframes = (styles: ICSSInJSStyle) => {
+    Object.keys(styles).forEach((cssPropertyName: keyof ICSSInJSStyle) => {
       const cssPropertyValue = styles[cssPropertyName]
 
-      if (_.isPlainObject(cssPropertyValue)) {
+      if (isPlainObject(cssPropertyValue)) {
         if (cssPropertyName === 'animationName') {
           if (cssPropertyValue.keyframe) {
             styles[cssPropertyName] = callable(cssPropertyValue.keyframe)(
               cssPropertyValue.params || {},
             )
           }
-
-          return {
-            ...acc,
-            [cssPropertyName]: styles[cssPropertyName],
-          }
         }
 
-        return {
-          ...acc,
-          [cssPropertyName]: invokeKeyframes(cssPropertyValue),
-        }
+        invokeKeyframes(cssPropertyValue)
       }
+    })
 
-      return { ...acc, [cssPropertyName]: styles[cssPropertyName] }
-    }, {})
+    return styles
   }
 
   return invokeKeyframes
