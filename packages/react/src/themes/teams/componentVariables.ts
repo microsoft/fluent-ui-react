@@ -84,8 +84,6 @@ export { default as ToolbarMenuRadioGroup } from './components/Toolbar/toolbarMe
 
 export { default as TreeTitle } from './components/Tree/treeTitleVariables'
 
-export { default as Animation } from './components/Animation/animationVariables'
-
 export { default as Video } from './components/Video/videoVariables'
 
 export { default as TooltipContent } from './components/Tooltip/tooltipContentVariables'

@@ -102,8 +102,6 @@ export { default as Tree } from './components/Tree/treeStyles'
 export { default as TreeItem } from './components/Tree/treeItemStyles'
 export { default as TreeTitle } from './components/Tree/treeTitleStyles'
 
-export { default as Animation } from './components/Animation/animationStyles'
-
 export { default as Video } from './components/Video/videoStyles'
 
 export { default as TooltipContent } from './components/Tooltip/tooltipContentStyles'
