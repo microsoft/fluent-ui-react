@@ -32,8 +32,8 @@ import {
   rtlTextContainer,
   createShorthandFactory,
 } from '../../utils'
+import { ListContextProvider, ListContextValue } from './listContext'
 import ListItem, { ListItemProps } from './ListItem'
-import { Provider, ListContextValue } from './context'
 
 export interface ListProps extends UIComponentProps, ChildrenComponentProps {
   /** Accessibility behavior if overridden by the user. */
@@ -160,9 +160,9 @@ const List: React.FC<WithAsProp<ListProps>> &
         ...unhandledProps,
       })}
     >
-      <Provider value={childProps}>
+      <ListContextProvider value={childProps}>
         {hasContent && wrap(childrenExist(children) ? children : renderItems())}
-      </Provider>
+      </ListContextProvider>
     </ElementType>,
   )
   setEnd()

@@ -14,6 +14,17 @@ export type ListContextValue = {
   selectedIndex: number
 }
 
+export type ListContextSubscribedValue = Pick<
+  ListContextValue,
+  | 'debug'
+  | 'selectable'
+  | 'navigable'
+  | 'truncateContent'
+  | 'truncateHeader'
+  | 'variables'
+  | 'onItemClick'
+> & { selected: boolean }
+
 export const ListContext = createContext<ListContextValue>(
   {
     debug: false,
@@ -28,4 +39,5 @@ export const ListContext = createContext<ListContextValue>(
   },
   { strict: false },
 )
-export const Provider = ListContext.Provider
+
+export const ListContextProvider = ListContext.Provider

@@ -29,7 +29,7 @@ import {
   commonPropTypes,
   ContentComponentProps,
 } from '../../utils'
-import { ListContext } from './context'
+import { ListContext, ListContextSubscribedValue } from './listContext'
 
 export interface ListItemSlotClassNames {
   header: string
@@ -102,7 +102,7 @@ const ListItem: React.FC<WithAsProp<ListItemProps> & { index: number }> &
     styles,
   } = props
 
-  const parentProps = useContextSelectors(ListContext, {
+  const parentProps: ListContextSubscribedValue = useContextSelectors(ListContext, {
     debug: v => v.debug,
     navigable: v => v.navigable,
     selectable: v => v.selectable,
