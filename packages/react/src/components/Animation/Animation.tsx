@@ -196,7 +196,7 @@ class Animation extends UIComponent<AnimationProps, any> {
   renderComponent({ ElementType, classes, unhandledProps }) {
     const { children, mountOnEnter, unmountOnExit, timeout, appear, visible } = this.props
 
-    if(_.isNil(children)) {
+    if (_.isNil(children)) {
       return null
     }
 
