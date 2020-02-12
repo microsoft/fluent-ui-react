@@ -1,5 +1,5 @@
 import config from '@fluentui/internal-tooling/config'
-import { Page } from 'puppeteer'
+import { Page, Viewport } from 'puppeteer'
 import * as path from 'path'
 import * as _ from 'lodash'
 
@@ -73,5 +73,10 @@ export class E2EApi {
     if (modifier) {
       await this.page.keyboard.up(modifier)
     }
+  }
+
+  public resizeViewport = async (size: Partial<Viewport>) => {
+    const { height, width } = this.page.viewport()
+    await this.page.setViewport({ height, width, ...size })
   }
 }
