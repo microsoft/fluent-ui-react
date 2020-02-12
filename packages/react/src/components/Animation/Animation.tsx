@@ -201,7 +201,6 @@ const Animation: React.FC<AnimationProps> & {
       rtl: context.rtl,
       saveDebug: _.noop,
       theme: context.theme,
-      _internal_resolvedComponentVariables: context._internal_resolvedComponentVariables,
     })
   }, [
     className,
@@ -225,27 +224,25 @@ const Animation: React.FC<AnimationProps> & {
     (React.Children.only(children) as React.ReactElement)
 
   const element = (
-    <>
-      <Transition
-        in={visible}
-        appear={appear}
-        mountOnEnter={mountOnEnter}
-        unmountOnExit={unmountOnExit}
-        timeout={timeout}
-        onEnter={handleAnimationEvent('onEnter')}
-        onEntering={handleAnimationEvent('onEntering')}
-        onEntered={handleAnimationEvent('onEntered')}
-        onExit={handleAnimationEvent('onExit')}
-        onExiting={handleAnimationEvent('onExiting')}
-        onExited={handleAnimationEvent('onExited')}
-        {...unhandledProps}
-        className={!isChildrenFunction ? cx(classes.root, (child as any).props.className) : ''}
-      >
-        {isChildrenFunction
-          ? () => (children as AnimationChildrenProp)({ classes: classes.root })
-          : child}
-      </Transition>
-    </>
+    <Transition
+      in={visible}
+      appear={appear}
+      mountOnEnter={mountOnEnter}
+      unmountOnExit={unmountOnExit}
+      timeout={timeout}
+      onEnter={handleAnimationEvent('onEnter')}
+      onEntering={handleAnimationEvent('onEntering')}
+      onEntered={handleAnimationEvent('onEntered')}
+      onExit={handleAnimationEvent('onExit')}
+      onExiting={handleAnimationEvent('onExiting')}
+      onExited={handleAnimationEvent('onExited')}
+      {...unhandledProps}
+      className={!isChildrenFunction ? cx(classes.root, (child as any).props.className) : ''}
+    >
+      {isChildrenFunction
+        ? () => (children as AnimationChildrenProp)({ classes: classes.root })
+        : child}
+    </Transition>
   )
   setEnd()
 
