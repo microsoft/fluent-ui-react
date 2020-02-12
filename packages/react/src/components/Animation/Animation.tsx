@@ -153,7 +153,7 @@ class Animation extends UIComponent<AnimationProps, any> {
       content: false,
       children: false,
     }),
-    children: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
+    children: PropTypes.oneOfType([PropTypes.func, PropTypes.element]).isRequired,
     name: PropTypes.string,
     delay: PropTypes.string,
     direction: PropTypes.string,
@@ -195,6 +195,10 @@ class Animation extends UIComponent<AnimationProps, any> {
 
   renderComponent({ ElementType, classes, unhandledProps }) {
     const { children, mountOnEnter, unmountOnExit, timeout, appear, visible } = this.props
+
+    if(_.isNil(children)) {
+      return null
+    }
 
     const isChildrenFunction = typeof children === 'function'
 
