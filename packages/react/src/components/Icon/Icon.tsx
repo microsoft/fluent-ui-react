@@ -113,7 +113,7 @@ const Icon: React.FC<WithAsProp<IconProps>> & FluentComponentStaticProps = props
       disabled,
       // name is required only for font icons
       // one can compose the Icon component with FontIcon to handle this if necessary
-      name : isSvgIcon ? undefined : name,
+      name: isSvgIcon ? undefined : name,
       outline,
       rotate,
       size,
