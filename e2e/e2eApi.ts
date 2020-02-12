@@ -79,4 +79,6 @@ export class E2EApi {
     const { height, width } = this.page.viewport()
     await this.page.setViewport({ height, width, ...size })
   }
+
+  public wait = async (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 }

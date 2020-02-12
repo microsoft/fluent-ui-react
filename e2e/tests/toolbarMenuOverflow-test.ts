@@ -23,6 +23,7 @@ describe('Toolbar menu on', () => {
 
     // resizes the viewport to hide that item.
     await e2e.resizeViewport({ width: itemWidth * 5 })
+    await e2e.wait(500)
 
     // check that the focus was applied to first item as fall-back.
     expect(await e2e.isFocused(toolbarItem(itemToReceiveFocusIndex))).toBe(true)
