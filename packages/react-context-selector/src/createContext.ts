@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Context, ContextListener, ContextValue } from './types'
+import { Context, ContextListener, ContextValue, CreateContextOptions } from './types'
 
 // Stops React Context propagation
 // https://github.com/facebook/react/blob/95bd7aad7daa80c381faa3215c80b0906ab5ead5/packages/react-reconciler/src/ReactFiberBeginWork.js#L2656
@@ -42,11 +42,7 @@ const createProvider = <Value>(Original: React.Provider<ContextValue<Value>>) =>
   return Provider
 }
 
-type CreateContextOptions = {
-  strict?: boolean
-}
-
-export const createContext = <Value>(
+const createContext = <Value>(
   defaultValue: Value,
   options: CreateContextOptions = {},
 ): Context<Value> => {
@@ -76,5 +72,7 @@ export const createContext = <Value>(
   // We don't support Consumer API
   delete context.Consumer
 
-  return context as any
+  return (context as unknown) as Context<Value>
 }
+
+export default createContext
