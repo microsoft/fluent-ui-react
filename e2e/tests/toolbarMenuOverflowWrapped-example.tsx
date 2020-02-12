@@ -5,10 +5,9 @@ import { Toolbar, ToolbarItem } from '@fluentui/react'
 export const selectors = {
   toolbarItem: ToolbarItem.className,
   toolbar: Toolbar.className,
-  toolbarItemWrapper: ToolbarItem.slotClassNames.wrapper,
 }
 
-const ToolbarExampleOverflow = () => {
+const ToolbarExampleOverflowWrapped = () => {
   const icons = ['bold', 'italic', 'underline']
 
   const itemData = _.times(40, i => ({
@@ -16,7 +15,7 @@ const ToolbarExampleOverflow = () => {
     content: `${icons[i % icons.length]} #${i}`,
     icon: icons[i % icons.length],
     title: `${icons[i % icons.length]} #${i}`,
-    ...(i >= 20 && { menu: [] }),
+    ...((i >= 20 || i === 0) && { menu: [] }),
   }))
 
   const toolbarItems = itemData.map(item => {
@@ -40,4 +39,4 @@ const ToolbarExampleOverflow = () => {
   )
 }
 
-export default ToolbarExampleOverflow
+export default ToolbarExampleOverflowWrapped

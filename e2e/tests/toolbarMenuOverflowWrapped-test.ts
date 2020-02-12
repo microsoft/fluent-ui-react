@@ -22,9 +22,9 @@ describe('Toolbar menu on', () => {
     await e2e.wait(500)
   })
 
-  it('hiding focused item will set focus to first focusable element', async () => {
+  it("hiding focused item will set focus to first focusable element, even if it's wrapped", async () => {
     const itemToBeHiddenIndex = 10 // in example component, first half of items are not wrapped.
-    const itemToReceiveFocusIndex = 0 // in example component, first element is not wrapped.
+    const itemToReceiveFocusIndex = 0 // in example component, first element is wrapped.
 
     // clicks to set focus on an item to be hidden.
     await e2e.clickOn(toolbarItem(itemToBeHiddenIndex))
@@ -36,12 +36,12 @@ describe('Toolbar menu on', () => {
     await e2e.wait(500)
 
     // check that the focus was applied to first item as fall-back.
-    expect(await e2e.isFocused(toolbarItem(itemToReceiveFocusIndex))).toBe(true)
+    expect(await e2e.isFocused(toolbarItemWrapped(itemToReceiveFocusIndex))).toBe(true)
   })
 
-  it('hiding focused wrapped item will set focus to first focusable element', async () => {
+  it("hiding focused wrapped item will set focus to first focusable element, even if it's wrapped", async () => {
     const itemToBeHiddenIndex = 30 // in example component, second half of items are wrapped.
-    const itemToReceiveFocusIndex = 0 // in example component, first element is not wrapped.
+    const itemToReceiveFocusIndex = 0 // in example component, first element is wrapped.
 
     // clicks to set focus on an item to be hidden.
     await e2e.clickOn(toolbarItemWrapped(itemToBeHiddenIndex))
@@ -53,6 +53,6 @@ describe('Toolbar menu on', () => {
     await e2e.wait(500)
 
     // check that the focus was applied to first item as fall-back.
-    expect(await e2e.isFocused(toolbarItem(itemToReceiveFocusIndex))).toBe(true)
+    expect(await e2e.isFocused(toolbarItemWrapped(itemToReceiveFocusIndex))).toBe(true)
   })
 })
