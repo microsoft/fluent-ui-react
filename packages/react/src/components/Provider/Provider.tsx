@@ -8,7 +8,9 @@ import {
   useIsomorphicLayoutEffect,
 } from '@fluentui/react-bindings'
 import {
+  emptyTheme,
   mergeSiteVariables,
+  mergeThemes,
   StaticStyleObject,
   StaticStyle,
   StaticStyleFunction,
@@ -130,9 +132,14 @@ const Provider: React.FC<WithAsProp<ProviderProps>> & {
   const consumedContext: ProviderContextPrepared = React.useContext(ThemeContext)
   const incomingContext: ProviderContextPrepared = overwrite ? ({} as any) : consumedContext
 
+  const theme  = React.useMemo(() => {
+    return mergeThemes(!overwrite && consumedContext ? consumedContext.theme : emptyTheme, props.theme)
+  }, [overwrite, consumedContext?.theme, props.theme])
+
   // rehydration disabled to avoid leaking styles between renderers
   // https://github.com/rofrischmann/fela/blob/master/docs/api/fela-dom/rehydrate.md
   const outgoingContext = mergeContexts(incomingContext, inputContext)
+  outgoingContext.theme = theme
 
   const rtlProps: { dir?: 'rtl' | 'ltr' } = {}
   // only add dir attribute for top level provider or when direction changes from parent to child

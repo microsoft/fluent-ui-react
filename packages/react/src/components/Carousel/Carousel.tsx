@@ -4,6 +4,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import { Ref } from '@fluentui/react-component-ref'
+import Animation from '../Animation/Animation'
 
 import {
   UIComponentProps,
@@ -270,10 +271,11 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
           )}
         >
           {items &&
-            items.map((item, index) => {
-              const itemRef = React.createRef<HTMLElement>()
-              this.itemRefs.push(itemRef)
-              return (
+          items.map((item, index) => {
+            const itemRef = React.createRef<HTMLElement>()
+            this.itemRefs.push(itemRef)
+            return (
+              <Animation mountOnEnter timeout={100} unmountOnExit visible={activeIndex === index} name={activeIndex === index ? 'slideLeftEnterMedium' : 'slideRightExitMedium'}>
                 <Ref key={item['key'] || index} innerRef={itemRef}>
                   {CarouselItem.create(item, {
                     defaultProps: () => ({
@@ -286,8 +288,9 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
                     }),
                   })}
                 </Ref>
-              )
-            })}
+              </Animation>
+            )
+          })}
         </div>
       </div>
     )
