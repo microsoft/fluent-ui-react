@@ -63,10 +63,10 @@ const useStateManager = <
   // a dependency in useCallback() hook
   Object.assign(latestActions, latestManager.current.actions)
 
+  // For development environments we disallow ability to extend object with other properties to
+  // avoid misusage
   if (process.env.NODE_ENV !== 'production') {
-    if (Object.isExtensible(latestActions)) {
-      Object.preventExtensions(latestActions)
-    }
+    if (Object.isExtensible(latestActions)) Object.preventExtensions(latestActions)
   }
 
   // We need to pass exactly `manager.state` to provide the same state object during the same render
