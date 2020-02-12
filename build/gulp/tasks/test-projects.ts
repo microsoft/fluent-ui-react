@@ -18,7 +18,7 @@ type PackedPackages = Record<string, string>
 const { paths } = config
 
 const log = (context: string) => (message: string) => {
-  console.log()
+  console.log('meaningless change')
   console.log('='.repeat(80))
   console.log(`${context} : ${message}`)
   console.log('='.repeat(80))
