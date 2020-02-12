@@ -28,7 +28,7 @@ describe('createContext', () => {
 
   describe('options', () => {
     it('throws on usage outside Provider by default', () => {
-      jest.spyOn(global.console, 'error').mockImplementation(() => {})
+      jest.spyOn(console, 'error').mockImplementation(() => {})
 
       const TestContext = createContext<string>('')
       const TestComponent: React.FC = () => {
@@ -48,6 +48,9 @@ describe('createContext', () => {
           message: 'Please use <Provider /> component from "@fluentui/react-context-selector"',
         }),
       )
+
+      // We need to clean up mocks to avoid errors reported by React
+      ;(console.error as any).mockClear()
     })
 
     it('do not throw usage outside Provider when `strict` is `false`', () => {

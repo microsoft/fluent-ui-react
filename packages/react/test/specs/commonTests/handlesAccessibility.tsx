@@ -1,6 +1,7 @@
 import { Accessibility, AriaRole } from '@fluentui/accessibility'
 import * as React from 'react'
 import * as keyboardKey from 'keyboard-key'
+import { act } from 'react-dom/test-utils'
 
 import { mountWithProviderAndGetComponent, mountWithProvider } from 'test/utils'
 import { UIComponent } from 'src/utils'
@@ -133,8 +134,10 @@ export default (
         wrapper.setProps({})
       }
 
-      getEventTargetComponent(component, 'onKeyDown').simulate('keydown', {
-        keyCode: keyboardKey.Enter,
+      act(() => {
+        getEventTargetComponent(component, 'onKeyDown').simulate('keydown', {
+          keyCode: keyboardKey.Enter,
+        })
       })
 
       if (instance && instance.actionHandlers) {

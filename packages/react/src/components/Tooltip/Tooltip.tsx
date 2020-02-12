@@ -1,6 +1,6 @@
 import { Accessibility, tooltipAsLabelBehavior } from '@fluentui/accessibility'
 import { ReactAccessibilityBehavior } from '@fluentui/react-bindings'
-import { toRefObject, Ref } from '@fluentui/react-component-ref'
+import { Ref } from '@fluentui/react-component-ref'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
@@ -141,9 +141,9 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
 
   static create: ShorthandFactory<TooltipProps>
 
+  contentRef = React.createRef<HTMLElement>()
   pointerTargetRef = React.createRef<HTMLDivElement>()
   triggerRef = React.createRef<HTMLElement>()
-  contentRef = React.createRef<HTMLElement>()
   closeTimeoutId
 
   actionHandlers = {
@@ -259,7 +259,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
         position={position}
         enabled={open}
         rtl={rtl}
-        targetRef={target ? toRefObject(target) : this.triggerRef}
+        targetRef={target || this.triggerRef}
         children={this.renderPopperChildren.bind(this, tooltipPositionClasses, rtl, accessibility)}
       />
     )
@@ -292,6 +292,8 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
       generateKey: false,
       overrideProps: this.getContentProps,
     })
+
+    if (!tooltipContent) return null
 
     return <Ref innerRef={this.contentRef}>{tooltipContent}</Ref>
   }

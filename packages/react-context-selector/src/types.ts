@@ -5,6 +5,10 @@ export type Context<Value> = React.Context<Value> & {
   Consumer: never
 }
 
+export type CreateContextOptions = {
+  strict?: boolean
+}
+
 export type ContextListener<Value> = (value: Value) => void
 
 export type ContextSelector<Value, SelectedValue> = (value: Value) => SelectedValue

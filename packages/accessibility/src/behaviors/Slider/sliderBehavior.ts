@@ -26,7 +26,7 @@ const sliderBehavior: Accessibility<SliderBehaviorProps> = props => ({
 
 export default sliderBehavior
 
-type SliderBehaviorProps = {
+export type SliderBehaviorProps = {
   disabled?: boolean
   min?: number
   max?: number

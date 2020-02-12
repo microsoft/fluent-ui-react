@@ -1,10 +1,13 @@
 import * as React from 'react'
-import { Context, ContextListener, ContextValue } from './types'
+import { Context, ContextListener, ContextValue, CreateContextOptions } from './types'
+
+// Stops React Context propagation
+// https://github.com/facebook/react/blob/95bd7aad7daa80c381faa3215c80b0906ab5ead5/packages/react-reconciler/src/ReactFiberBeginWork.js#L2656
+const calculateChangedBits = () => 0
 
 const createProvider = <Value>(Original: React.Provider<ContextValue<Value>>) => {
   const Provider: React.FC<React.ProviderProps<Value>> = props => {
     const listeners = React.useRef<ContextListener<Value>[]>([])
-    const contextValue = React.useMemo<ContextValue<Value>>(() => ({} as any), [])
 
     // We call listeners in render intentionally. Listeners are not technically pure, but
     // otherwise we can't get benefits from concurrent mode.
@@ -13,7 +16,7 @@ const createProvider = <Value>(Original: React.Provider<ContextValue<Value>>) =>
     listeners.current.forEach(listener => listener(props.value))
 
     // Disables updates propogation for React Context as `value` is always shallow equal
-    contextValue.subscribe = React.useCallback((listener: ContextListener<Value>) => {
+    const subscribe = React.useCallback((listener: ContextListener<Value>) => {
       listeners.current.push(listener)
 
       const unsubscribe = () => {
@@ -23,9 +26,12 @@ const createProvider = <Value>(Original: React.Provider<ContextValue<Value>>) =>
 
       return unsubscribe
     }, [])
-    contextValue.value = props.value
 
-    return React.createElement(Original, { value: contextValue }, props.children)
+    return React.createElement(
+      Original,
+      { value: { subscribe, value: props.value } },
+      props.children,
+    )
   }
 
   /* istanbul ignore else */
@@ -36,36 +42,37 @@ const createProvider = <Value>(Original: React.Provider<ContextValue<Value>>) =>
   return Provider
 }
 
-type CreateContextOptions = {
-  strict?: boolean
-}
-
-export const createContext = <Value>(
+const createContext = <Value>(
   defaultValue: Value,
   options: CreateContextOptions = {},
 ): Context<Value> => {
   const { strict = true } = options
 
-  const context = React.createContext<ContextValue<Value>>({
-    get subscribe() {
-      if (strict) {
-        /* istanbul ignore next */
-        throw new Error(
-          process.env.NODE_ENV === 'production'
-            ? ''
-            : `Please use <Provider /> component from "@fluentui/react-context-selector"`,
-        )
-      }
+  const context = React.createContext<ContextValue<Value>>(
+    {
+      get subscribe() {
+        if (strict) {
+          /* istanbul ignore next */
+          throw new Error(
+            process.env.NODE_ENV === 'production'
+              ? ''
+              : `Please use <Provider /> component from "@fluentui/react-context-selector"`,
+          )
+        }
 
-      /* istanbul ignore next */
-      return () => () => {}
+        /* istanbul ignore next */
+        return () => () => {}
+      },
+      value: defaultValue,
     },
-    value: defaultValue,
-  })
+    calculateChangedBits,
+  )
   context.Provider = createProvider<Value>(context.Provider) as any
 
   // We don't support Consumer API
   delete context.Consumer
 
-  return context as any
+  return (context as unknown) as Context<Value>
 }
+
+export default createContext

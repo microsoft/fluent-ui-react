@@ -23,13 +23,9 @@ npm install --save @fluentui/react-context-selector
 yarn add @fluentui/react-context-selector
 ```
 
-## Usage
-
-TODO
-
 ## Technical memo
 
-React context by nature triggers propagation of component re-rendering if a value is changed. To avoid this, this package uses shallow equal `value` for `Context`. It then uses a subscription model to force update when a component needs to re-render.
+React context by nature triggers propagation of component re-rendering if a value is changed. To avoid this, this library uses undocumented feature of `calculateChangedBits`. It then uses a subscription model to force update when a component needs to re-render.
 
 ## Limitations
 
