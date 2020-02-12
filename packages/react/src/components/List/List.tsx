@@ -3,11 +3,10 @@ import {
   getElementType,
   getUnhandledProps,
   useAccessibility,
-  useStateManager,
+  useAutoControlled,
   useStyles,
   useTelemetry,
 } from '@fluentui/react-bindings'
-import { createListManager } from '@fluentui/state'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -91,13 +90,11 @@ const List: React.FC<WithAsProp<ListProps>> &
     children,
     className,
     debug,
-    defaultSelectedIndex,
     design,
     horizontal,
     items,
     navigable,
     selectable,
-    selectedIndex,
     styles,
     truncateContent,
     truncateHeader,
@@ -105,9 +102,10 @@ const List: React.FC<WithAsProp<ListProps>> &
     wrap,
   } = props
 
-  const { state, actions } = useStateManager(createListManager, {
-    mapPropsToInitialState: () => ({ selectedIndex: defaultSelectedIndex }),
-    mapPropsToState: () => ({ selectedIndex }),
+  const [selectedIndex, setSelectedIndex] = useAutoControlled({
+    defaultValue: props.defaultSelectedIndex,
+    value: props.selectedIndex,
+    initialValue: -1,
   })
   const getA11Props = useAccessibility(accessibility, {
     debugName: List.displayName,
@@ -132,11 +130,11 @@ const List: React.FC<WithAsProp<ListProps>> &
   const onItemClick = React.useCallback(
     (e, itemIndex) => {
       if (selectable) {
-        actions.select(itemIndex)
+        setSelectedIndex(itemIndex)
         _.invoke(props, 'onSelectedIndexChange', e, { ...props, selectedIndex: itemIndex })
       }
     },
-    [actions],
+    [setSelectedIndex],
   )
 
   const childProps: ListContextValue = {
@@ -144,7 +142,7 @@ const List: React.FC<WithAsProp<ListProps>> &
     navigable,
     onItemClick,
     selectable,
-    selectedIndex: state.selectedIndex,
+    selectedIndex,
     truncateContent,
     truncateHeader,
     variables,
