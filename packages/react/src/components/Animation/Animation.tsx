@@ -199,6 +199,8 @@ const Animation: React.FC<AnimationProps> & {
       disableAnimations: context.disableAnimations,
       renderer: context.renderer,
       rtl: context.rtl,
+      // Animation component doesn't have any styles, no perf optimizations can be applied
+      performance: {},
       saveDebug: _.noop,
       theme: context.theme,
     })
