@@ -10,6 +10,11 @@ const Performance = () => (
       description="A typical list with common slots filled."
       examplePath="components/List/Performance/ListCommon.perf"
     />
+    <ComponentPerfExample
+      title="With 60 items"
+      description="A list to be benchmarked against a Tree with List Items."
+      examplePath="components/List/Performance/ListWith60ListItems.perf"
+    />
   </ExampleSection>
 )
 

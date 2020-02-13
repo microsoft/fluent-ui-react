@@ -42,7 +42,6 @@ import { LoaderProps } from '../../components/Loader/Loader'
 import { MenuItemProps } from '../../components/Menu/MenuItem'
 import { MenuProps } from '../../components/Menu/Menu'
 import { PopupContentProps } from '../../components/Popup/PopupContent'
-import { PopupProps } from '../../components/Popup/Popup'
 import { PortalProps } from '../../components/Portal/Portal'
 import { RadioGroupItemProps } from '../../components/RadioGroup/RadioGroupItem'
 import { RadioGroupProps } from '../../components/RadioGroup/RadioGroup'
@@ -57,7 +56,6 @@ import { ToolbarItemProps } from '../../components/Toolbar/ToolbarItem'
 import { ToolbarProps } from '../../components/Toolbar/Toolbar'
 import { ToolbarRadioGroupProps } from '../../components/Toolbar/ToolbarRadioGroup'
 import { TooltipContentProps } from '../../components/Tooltip/TooltipContent'
-import { TooltipProps } from '../../components/Tooltip/Tooltip'
 import { HierarchicalTreeItemProps } from '../../components/HierarchicalTree/HierarchicalTreeItem'
 import { HierarchicalTreeProps } from '../../components/HierarchicalTree/HierarchicalTree'
 import { HierarchicalTreeTitleProps } from '../../components/HierarchicalTree/HierarchicalTreeTitle'
@@ -99,7 +97,6 @@ export type TeamsThemeStylesProps = {
   Menu?: MenuProps
   MenuItem?: MenuItemProps
   Portal?: PortalProps
-  Popup?: PopupProps
   PopupContent?: PopupContentProps
   RadioGroup?: RadioGroupProps
   RadioGroupItem?: RadioGroupItemProps
@@ -112,7 +109,6 @@ export type TeamsThemeStylesProps = {
   ToolbarItem?: ToolbarItemProps
   ToolbarDivider?: ToolbarDividerProps
   ToolbarRadioGroup?: ToolbarRadioGroupProps
-  Tooltip?: TooltipProps
   TooltipContent?: TooltipContentProps
   Text?: TextStylesProps
   HierarchicalTree?: HierarchicalTreeProps
