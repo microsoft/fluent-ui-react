@@ -6,8 +6,8 @@ import Performance from './Performance'
 const TreeExamples = () => (
   <>
     <Types />
-    <Performance />
     <Usage />
+    <Performance />
   </>
 )
 
