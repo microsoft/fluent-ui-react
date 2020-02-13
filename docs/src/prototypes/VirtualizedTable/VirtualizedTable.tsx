@@ -1,4 +1,10 @@
-import { gridCellBehavior, gridRowBehavior, Table, tableHeaderCellBehavior } from '@fluentui/react'
+import {
+  gridCellBehavior,
+  gridHeaderCellBehavior,
+  gridNestedBehavior,
+  gridRowBehavior,
+  Table,
+} from '@fluentui/react'
 import * as React from 'react'
 import { AutoSizer, List as ReactVirtualizedList } from 'react-virtualized'
 import getItems from './itemsGenerator'
@@ -44,12 +50,12 @@ const VirtualizedTablePrototype = () => {
   }
 
   return (
-    <Table>
+    <Table accessibility={gridNestedBehavior}>
       <Table.Row header>
-        <Table.Cell content="id" key="id" accessibility={tableHeaderCellBehavior} />
-        <Table.Cell content="Name" key="name" accessibility={tableHeaderCellBehavior} />
-        <Table.Cell content="Picture" key="pic" accessibility={tableHeaderCellBehavior} />
-        <Table.Cell content="Age" key="age" accessibility={tableHeaderCellBehavior} />
+        <Table.Cell content="id" key="id" accessibility={gridHeaderCellBehavior} />
+        <Table.Cell content="Name" key="name" accessibility={gridHeaderCellBehavior} />
+        <Table.Cell content="Picture" key="pic" accessibility={gridHeaderCellBehavior} />
+        <Table.Cell content="Age" key="age" accessibility={gridHeaderCellBehavior} />
       </Table.Row>
       <AutoSizer disableHeight>
         {({ width }) => (

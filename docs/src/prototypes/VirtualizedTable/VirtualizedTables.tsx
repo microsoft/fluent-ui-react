@@ -1,4 +1,11 @@
-import { Accordion, gridCellBehavior, gridRowBehavior, Table } from '@fluentui/react'
+import {
+  Accordion,
+  gridCellBehavior,
+  gridHeaderCellBehavior,
+  gridNestedBehavior,
+  gridRowBehavior,
+  Table,
+} from '@fluentui/react'
 import * as React from 'react'
 import { AutoSizer, List as ReactVirtualizedList, WindowScroller } from 'react-virtualized'
 import getItems from './itemsGenerator'
@@ -52,6 +59,7 @@ function VirtualizedTable(props: VirtualizedTableProps) {
     const topOffset = `${style.top}px`
     const leftOffset = `${style.left}px`
     const height = `${style.height}px`
+    const header = row.key === 'header'
     return (
       <Table.Row
         design={{
@@ -63,17 +71,30 @@ function VirtualizedTable(props: VirtualizedTableProps) {
         }}
         key={row.key}
         accessibility={gridRowBehavior}
+        header
       >
-        <Table.Cell {...row.items[0]} accessibility={gridCellBehavior} />
-        <Table.Cell {...row.items[1]} accessibility={gridCellBehavior} />
-        <Table.Cell {...row.items[2]} accessibility={gridCellBehavior} />
-        <Table.Cell {...row.items[3]} accessibility={gridCellBehavior} />
+        <Table.Cell
+          {...row.items[0]}
+          accessibility={header ? gridHeaderCellBehavior : gridCellBehavior}
+        />
+        <Table.Cell
+          {...row.items[1]}
+          accessibility={header ? gridHeaderCellBehavior : gridCellBehavior}
+        />
+        <Table.Cell
+          {...row.items[2]}
+          accessibility={header ? gridHeaderCellBehavior : gridCellBehavior}
+        />
+        <Table.Cell
+          {...row.items[3]}
+          accessibility={header ? gridHeaderCellBehavior : gridCellBehavior}
+        />
       </Table.Row>
     )
   }
 
   return (
-    <Table>
+    <Table accessibility={gridNestedBehavior}>
       <WindowScroller scrollElement={props.scrollElementRef} key={props.scrollElementRef}>
         {({ height, isScrolling, registerChild, onChildScroll, scrollTop }) => (
           <AutoSizer disableHeight>
