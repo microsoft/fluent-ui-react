@@ -36,7 +36,7 @@ export default () => (
             scrollbars to List component (see{' '}
             <a href="https://github.com/bvaughn/react-virtualized/issues/143">issue one</a> and{' '}
             <a href="https://github.com/bvaughn/react-virtualized/issues/692">issue two</a>).
-            Unfortunately, suggested solutions do not seem to work with two tables wrapped with
+            Unfortunately, suggested solutions do not seem to work with two lists wrapped with
             WindowScroller elements.
           </span>
         </>
