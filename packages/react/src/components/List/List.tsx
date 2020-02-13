@@ -123,6 +123,9 @@ const List: React.FC<WithAsProp<ListProps>> &
     rtl: context.rtl,
   })
 
+  const latestProps = React.useRef<ListProps>(props)
+  latestProps.current = props
+
   const ElementType = getElementType(props)
   const unhandledProps = getUnhandledProps(List.handledProps, props)
 
@@ -131,10 +134,13 @@ const List: React.FC<WithAsProp<ListProps>> &
     (e, itemIndex) => {
       if (selectable) {
         setSelectedIndex(itemIndex)
-        _.invoke(props, 'onSelectedIndexChange', e, { ...props, selectedIndex: itemIndex })
+        _.invoke(latestProps.current, 'onSelectedIndexChange', e, {
+          ...latestProps.current,
+          selectedIndex: itemIndex,
+        })
       }
     },
-    [setSelectedIndex],
+    [latestProps, setSelectedIndex],
   )
 
   const childProps: ListContextValue = {
