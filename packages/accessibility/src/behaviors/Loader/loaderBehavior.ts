@@ -9,13 +9,12 @@ import { Accessibility } from '../../types'
  * Adds role 'progressbar' to 'root' slot.
  */
 
-
 const loaderBehavior: Accessibility<LoaderBehaviorProps> = props => {
   return {
     attributes: {
       root: {
         role: 'progressbar',
-        "aria-labelledby": getDefaultAriaLabelledBy(props),
+        'aria-labelledby': getDefaultAriaLabelledBy(props),
       },
     },
   }
