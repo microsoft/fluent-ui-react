@@ -7,15 +7,16 @@ export default () => (
   <PrototypeSection title="VirtualizedTable">
     <ComponentPrototype
       title="Virtualized Table"
-      description="Single table with its content virtualized using `react-virtualized`."
+      description="Single table with fixed header and its content virtualized using `react-virtualized`."
     >
       <VirtualizedTable />
     </ComponentPrototype>
     <ComponentPrototype
       title="Two virtualized tables in an accordion"
       description={
-        <div>
-          <h3>Known issues:</h3>
+        <>
+          <b>Known issues:</b>
+          <br />
           <b>Integration with React-custom-scrollbars. </b>
           <span>
             React-virtualized has{' '}
@@ -27,9 +28,9 @@ export default () => (
             <a href="https://github.com/bvaughn/react-virtualized/issues/143">issue one</a> and{' '}
             <a href="https://github.com/bvaughn/react-virtualized/issues/692">issue two</a>).
             Unfortunately, suggested solutions do not seem to work with two tables wrapped with
-            WindowScroller element.
+            WindowScroller elements.
           </span>
-        </div>
+        </>
       }
     >
       <VirtualizedTables />

@@ -40,14 +40,6 @@ export interface TableProps extends UIComponentProps, ChildrenComponentProps {
    * Render table in compact mode
    */
   compact?: boolean
-  /**
-   * Callback that provides rendered header and rows items to be used by react-virtualized for instance.
-   * Acts as a render prop, with the rendered items being the re-used logic.
-   *
-   * @param {React.ReactElement[]} renderedItem The array of rendered items.
-   * @return {React.ReactNode} The render prop result.
-   */
-  renderedItems?: (renderedItems: React.ReactElement[]) => React.ReactNode
 }
 
 const handleVariablesOverrides = variables => predefinedProps => ({
@@ -96,7 +88,6 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
     header: customPropTypes.itemShorthand,
     rows: customPropTypes.collectionShorthand,
     compact: PropTypes.bool,
-    renderedItems: PropTypes.func,
   }
 
   static defaultProps = {
@@ -150,25 +141,6 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
     })
   }
 
-  renderHeaderAndRows(
-    accessibility: ReactAccessibilityBehavior,
-    variables: ComponentVariablesObject,
-  ) {
-    const headerRow = this.renderHeader(accessibility, variables)
-    const tableRows = this.renderRows(accessibility, variables)
-    const allRows = []
-
-    if (headerRow) {
-      allRows.push(headerRow)
-    }
-
-    if (tableRows) {
-      allRows.push(...tableRows)
-    }
-
-    return allRows
-  }
-
   renderComponent({
     accessibility,
     ElementType,
@@ -176,7 +148,7 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
     variables,
     unhandledProps,
   }: RenderResultConfig<any>): React.ReactNode {
-    const { children, renderedItems } = this.props
+    const { children } = this.props
     const hasChildren = childrenExist(children)
 
     return (
@@ -187,10 +159,12 @@ class Table extends UIComponent<WithAsProp<TableProps>> {
         {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
       >
         {hasChildren && children}
-        {!hasChildren &&
-          renderedItems &&
-          renderedItems(this.renderHeaderAndRows(accessibility, variables))}
-        {!hasChildren && !renderedItems && this.renderHeaderAndRows(accessibility, variables)}
+        {/* <thead> */}
+        {!hasChildren && this.renderHeader(accessibility, variables)}
+        {/* </thead> */}
+        {/* <tbody> */}
+        {!hasChildren && this.renderRows(accessibility, variables)}
+        {/* </tbody> */}
       </ElementType>
     )
   }
