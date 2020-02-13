@@ -101,7 +101,7 @@ class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
     }
   }
 
-  getIdFromShorthand = <P extends Record<string, any>>(value: ShorthandValue<P>): string | undefined => {
+  static getIdFromShorthand = <P extends Record<string, any>>(value: ShorthandValue<P>): string | undefined => {
     if (_.isNil(value)) {
       return undefined
     }
@@ -111,14 +111,18 @@ class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
     } else if (_.isPlainObject(value)) {
       result = (value as Record<string, any>).id
     }
-    
+
     return result
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.getIdFromShorthand(this.props.label) !== this.getIdFromShorthand(prevProps.label)) {
-      this.setState(prevState => ({ labelLoaderId: getOrGenerateIdFromShorthand('loader-label-', this.props.label, prevState.labelLoaderId) }))
+  static getDerivedStateFromProps(props, state) {
+    if (Loader.getIdFromShorthand(props.label) !== Loader.getIdFromShorthand(state.labelLoaderId)) {
+      const nextLabelLoaderId = getOrGenerateIdFromShorthand('loader-label-', props.label, state.labelLoaderId)
+      return {
+        labelLoaderId: nextLabelLoaderId,
+      }
     }
+    return null
   }
 
   componentDidMount() {
