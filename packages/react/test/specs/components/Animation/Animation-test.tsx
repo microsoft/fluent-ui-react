@@ -5,6 +5,7 @@ import Animation from 'src/components/Animation/Animation'
 
 describe('Animation', () => {
   isConformant(Animation, {
+    constructorName: 'Animation',
     hasAccessibilityProp: false,
     requiredProps: { children: <div /> },
     handlesAsProp: false,

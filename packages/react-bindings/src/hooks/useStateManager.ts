@@ -73,14 +73,13 @@ const useStateManager = <
   // frame.
   // It keeps behavior consistency between React state tools and our managers
   // https://github.com/facebook/react/issues/11527#issuecomment-360199710
-
-  if (process.env.NODE_ENV === 'production') {
-    return { state: latestManager.current.state, actions: latestActions }
-  }
-
   // Object.freeze() is used only in dev-mode to avoid usage mistakes
+
   return {
-    state: Object.freeze(latestManager.current.state),
+    state:
+      process.env.NODE_ENV === 'production'
+        ? latestManager.current.state
+        : Object.freeze(latestManager.current.state),
     actions: latestActions,
   }
 }

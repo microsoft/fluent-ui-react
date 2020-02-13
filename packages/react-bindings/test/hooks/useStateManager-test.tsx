@@ -69,14 +69,15 @@ type ActionsComponentProps = {
 }
 
 const ActionsComponent: React.FunctionComponent<ActionsComponentProps> = props => {
-  const { actions } = useStateManager(createTestManager)
+  const { actions, state } = useStateManager(createTestManager)
+  const handleClick = React.useCallback(() => actions.toggle(), [actions])
 
   props.onRender()
   React.useEffect(() => {
     props.onUpdate()
   }, [actions])
 
-  return <div onClick={() => actions.toggle()} />
+  return <div data-open={state.open} onClick={handleClick} />
 }
 
 describe('useStateManager', () => {
@@ -170,11 +171,24 @@ describe('useStateManager', () => {
     const onUpdate = jest.fn()
     const wrapper = mount(<ActionsComponent onRender={onRender} onUpdate={onUpdate} />)
 
+    expect(wrapper.find('div').prop('data-open')).toBe(false)
+
     ReactTestUtils.act(() => {
       wrapper.find('div').simulate('click')
     })
+    wrapper.update()
 
+    expect(wrapper.find('div').prop('data-open')).toBe(true)
     expect(onRender).toHaveBeenCalledTimes(2)
+    expect(onUpdate).toHaveBeenCalledTimes(1)
+
+    ReactTestUtils.act(() => {
+      wrapper.find('div').simulate('click')
+    })
+    wrapper.update()
+
+    expect(wrapper.find('div').prop('data-open')).toBe(false)
+    expect(onRender).toHaveBeenCalledTimes(3)
     expect(onUpdate).toHaveBeenCalledTimes(1)
   })
 })
