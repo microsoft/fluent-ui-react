@@ -31,6 +31,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix `document` usage in `mergeProviderContexts` to get SSR working @layershifter ([#2330](https://github.com/microsoft/fluent-ui-react/pull/2330))
 - Fix `input` descenders being cropped in the Teams theme @bcalvery ([#2335](https://github.com/microsoft/fluent-ui-react/pull/2335))
 - Use referentially equal objects for `actions` in `useStateManager` @layershifter ([#2347](https://github.com/microsoft/fluent-ui-react/pull/2347))
+- Fix `loader` - adding labeling when loader get focus @kolaps33 ([#2352](https://github.com/microsoft/fluent-ui-react/pull/2352))
 
 ### Features
 - Added sourcemaps to the dist output to simplify debugging @miroslavstastny ([#2329](https://github.com/microsoft/fluent-ui-react/pull/2329))
