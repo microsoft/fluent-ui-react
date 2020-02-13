@@ -24,4 +24,4 @@ export default {
   ),
   styles: {},
   isSvg: true
-} as TeamsSvgIconSpec;
+} as TeamsSvgIconSpec
