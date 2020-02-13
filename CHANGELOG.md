@@ -35,6 +35,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 ### Features
 - Added sourcemaps to the dist output to simplify debugging @miroslavstastny ([#2329](https://github.com/microsoft/fluent-ui-react/pull/2329))
+- Export `activity` SVG icon @yiq ([#2351](https://github.com/microsoft/fluent-ui-react/pull/2351))
 
 ### Performance
 - Add styles caching when there aren't inline overrides defined @mnajdova ([#2309](https://github.com/microsoft/fluent-ui-react/pull/2309))

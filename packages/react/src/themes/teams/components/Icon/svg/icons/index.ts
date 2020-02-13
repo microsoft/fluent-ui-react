@@ -1,6 +1,7 @@
 import { TeamsSvgIconSpec } from '../types'
 
 import accept from './accept'
+import activity from './activity'
 import add from './add'
 import addParticipant from './addParticipant'
 import arrowUp from './arrowUp'
@@ -181,6 +182,7 @@ import windowRestore from './windowRestore'
 export default {
   'icon-circle': iconCircle,
   accept,
+  activity,
   add,
   'arrow-up': arrowUp,
   'arrow-down': arrowDown,
