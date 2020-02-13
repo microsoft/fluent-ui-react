@@ -2,6 +2,7 @@ import { Accessibility, loaderBehavior } from '@fluentui/accessibility'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
+import * as _ from 'lodash'
 
 import {
   UIComponent,
@@ -10,6 +11,7 @@ import {
   commonPropTypes,
   SizeValue,
   ShorthandFactory,
+  getOrGenerateIdFromShorthand,
 } from '../../utils'
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Box, { BoxProps } from '../Box/Box'
@@ -49,6 +51,7 @@ export interface LoaderProps extends UIComponentProps {
 
 export interface LoaderState {
   visible: boolean
+  labelLoaderId: string
 }
 
 /**
@@ -94,6 +97,27 @@ class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
 
     this.state = {
       visible: this.props.delay === 0,
+      labelLoaderId: getOrGenerateIdFromShorthand('loader-label-', props.label, ''),
+    }
+  }
+
+  getIdFromShorthand = <P extends Record<string, any>>(value: ShorthandValue<P>): string | undefined => {
+    if (_.isNil(value)) {
+      return undefined
+    }
+    let result: string = ''
+    if (React.isValidElement(value)) {
+      result = (value as React.ReactElement<{ id?: string }>).props.id
+    } else if (_.isPlainObject(value)) {
+      result = (value as Record<string, any>).id
+    }
+    
+    return result
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.getIdFromShorthand(this.props.label) !== this.getIdFromShorthand(prevProps.label)) {
+      this.setState(prevState => ({ labelLoaderId: getOrGenerateIdFromShorthand('loader-label-', this.props.label, prevState.labelLoaderId) }))
     }
   }
 
@@ -114,7 +138,7 @@ class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
 
   renderComponent({ ElementType, classes, accessibility, variables, styles, unhandledProps }) {
     const { indicator, label, svg } = this.props
-    const { visible } = this.state
+    const { visible, labelLoaderId } = this.state
 
     const svgElement = Box.create(svg, {
       defaultProps: () => ({ className: Loader.slotClassNames.svg, styles: styles.svg }),
@@ -135,7 +159,7 @@ class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
             }),
           })}
           {Text.create(label, {
-            defaultProps: () => ({ className: Loader.slotClassNames.label, styles: styles.label }),
+            defaultProps: () => ({ className: Loader.slotClassNames.label, styles: styles.label, id: labelLoaderId }),
           })}
         </ElementType>
       )
