@@ -1,6 +1,6 @@
+import { gridCellBehavior, gridRowBehavior, Table, tableHeaderCellBehavior } from '@fluentui/react'
 import * as React from 'react'
-import { Table, tableHeaderCellBehavior } from '@fluentui/react'
-import { AutoSizer, Table as ReactVirtualizedTable } from 'react-virtualized'
+import { AutoSizer, List as ReactVirtualizedList } from 'react-virtualized'
 import getItems from './itemsGenerator'
 
 const { rows } = getItems()
@@ -10,21 +10,35 @@ const VirtualizedTablePrototype = () => {
     return rows[index]
   }
 
+  const accessibilityListProperties = {
+    'aria-label': '',
+    'aria-readonly': undefined,
+    containerRole: 'presentation',
+    role: 'presentation',
+    tabIndex: null,
+  }
+
   const rowRenderer = ({ index, style }) => {
     const row = rows[index]
     const topOffset = `${style.top}px`
     const leftOffset = `${style.left}px`
     const height = `${style.height}px`
-    const width = `${style.width}px`
     return (
       <Table.Row
-        design={{ top: topOffset, left: leftOffset, width, height, position: style.position }}
+        design={{
+          top: topOffset,
+          left: leftOffset,
+          width: style.width,
+          height,
+          position: style.position,
+        }}
         key={row.key}
+        accessibility={gridRowBehavior}
       >
-        <Table.Cell {...row.items[0]} />
-        <Table.Cell {...row.items[1]} />
-        <Table.Cell {...row.items[2]} />
-        <Table.Cell {...row.items[3]} />
+        <Table.Cell {...row.items[0]} accessibility={gridCellBehavior} />
+        <Table.Cell {...row.items[1]} accessibility={gridCellBehavior} />
+        <Table.Cell {...row.items[2]} accessibility={gridCellBehavior} />
+        <Table.Cell {...row.items[3]} accessibility={gridCellBehavior} />
       </Table.Row>
     )
   }
@@ -39,7 +53,7 @@ const VirtualizedTablePrototype = () => {
       </Table.Row>
       <AutoSizer disableHeight>
         {({ width }) => (
-          <ReactVirtualizedTable
+          <ReactVirtualizedList
             disableHeader={true}
             height={400}
             rowCount={rows.length}
@@ -48,6 +62,7 @@ const VirtualizedTablePrototype = () => {
             rowGetter={rowGetter}
             rowRenderer={rowRenderer}
             overscanRowCount={5}
+            {...accessibilityListProperties}
           />
         )}
       </AutoSizer>
