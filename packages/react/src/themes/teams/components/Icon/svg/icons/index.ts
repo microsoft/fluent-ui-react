@@ -44,6 +44,7 @@ import clipboardCopiedTo from './clipboardCopiedTo'
 import close from './close'
 import closedCaptions from './closedCaptions'
 import codeSnippet from './codeSnippet'
+import collapse from './collapse'
 import companion from './companion'
 import download from './download'
 import edit from './edit'
@@ -52,6 +53,7 @@ import emoji from './emoji'
 import error from './error'
 import exclamationCircle from './exclamationCircle'
 import exclamationTriangle from './exclamationTriangle'
+import expand from './expand'
 import eye from './eye'
 import eyeFriendlier from './eyeFriendlier'
 import eyeSlash from './eyeSlash'
@@ -227,6 +229,7 @@ export default {
   close,
   'closed-captions': closedCaptions,
   'code-snippet': codeSnippet,
+  collapse,
   companion,
   'files-aftereffects': filesAftereffects,
   'files-code': filesCode,
@@ -252,6 +255,7 @@ export default {
   error,
   'exclamation-circle': exclamationCircle,
   'exclamation-triangle': exclamationTriangle,
+  expand,
   eye,
   'eye-friendlier': eyeFriendlier,
   'eye-slash': eyeSlash,
