@@ -15,6 +15,15 @@ export default () => (
       title="Two virtualized tables in an accordion"
       description={
         <>
+          <b>Notes:</b>
+          <br />
+          <span>
+            Prototype is using fixed row height, for dynamic height please check{' '}
+            <a href="https://github.com/bvaughn/react-virtualized/tree/master/source/CellMeasurer">
+              CellMeasurer component.
+            </a>
+          </span>
+          <br />
           <b>Known issues:</b>
           <br />
           <b>Integration with React-custom-scrollbars. </b>
