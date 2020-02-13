@@ -20,7 +20,7 @@ const ChatExampleInScrollableShorthand = () => {
   const [overflow] = useBooleanKnob({ name: 'overflow', initialValue: true })
   const [height] = useRangeKnob({
     name: 'height',
-    initialValue: '400px',
+    initialValue: '200px',
     min: '200px',
     max: '800px',
     step: 10,
@@ -49,6 +49,7 @@ const ChatExampleInScrollableShorthand = () => {
           mine
           timestamp="Yesterday, 10:15 PM"
           unstable_overflow={overflow}
+          // variables={{ showActionMenu: true }}
         />
       ),
       key: 'message-1',
@@ -82,25 +83,85 @@ const ChatExampleInScrollableShorthand = () => {
       key: 'message-3',
     },
     {
+      attached: true,
       message: (
-        <Chat.Message actionMenu={actionMenu} content="How are you?" unstable_overflow={overflow} />
+        <Chat.Message
+          actionMenu={actionMenu}
+          author="Jane Doe"
+          content="How are you?"
+          timestamp="Yesterday, 10:15 PM"
+          unstable_overflow={overflow}
+        />
       ),
       key: 'message-4',
     },
     {
+      attached: 'bottom',
       message: (
         <Chat.Message
           actionMenu={actionMenu}
+          author="Jane Doe"
           content="Do you want something?"
+          timestamp="Yesterday, 10:15 PM"
           unstable_overflow={overflow}
         />
       ),
       key: 'message-5',
     },
+    {
+      attached: 'top',
+      contentPosition: 'end',
+      message: (
+        <Chat.Message
+          actionMenu={actionMenu}
+          author="Jane Doe"
+          content="Yes"
+          mine
+          timestamp="Yesterday, 10:16 PM"
+          unstable_overflow={overflow}
+        />
+      ),
+      key: 'message-6',
+    },
+    {
+      attached: 'bottom',
+      contentPosition: 'end',
+      key: 'message-7',
+      message: (
+        <Chat.Message
+          actionMenu={actionMenu}
+          author="John Doe"
+          content={
+            <>
+              Please order a{' '}
+              <span aria-label="pizza" role="img">
+                🍕
+              </span>{' '}
+              for me
+            </>
+          }
+          mine
+          timestamp="Yesterday, 10:16 PM"
+          unstable_overflow={overflow}
+        />
+      ),
+    },
+    {
+      message: (
+        <Chat.Message
+          actionMenu={actionMenu}
+          author="Jane Doe"
+          content="Pepperoni?"
+          timestamp="Yesterday, 10:17 PM"
+          unstable_overflow={overflow}
+        />
+      ),
+      key: 'message-8',
+    },
   ]
 
   return (
-    <div style={{ height, width, overflow: 'scroll', margin: 50 }}>
+    <div style={{ height, width, overflow: 'scroll', margin: 75, marginLeft: 0 }}>
       <Chat items={items} styles={{ minHeight: '100%' }} />
     </div>
   )

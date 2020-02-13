@@ -6,6 +6,8 @@ import {
 } from '@fluentui/accessibility'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import { Ref } from '@fluentui/react-component-ref'
+import { ComponentSlotStylesResolved } from '@fluentui/styles'
+import PopperJs from 'popper.js'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
@@ -40,7 +42,6 @@ import { MenuItemProps } from '../Menu/MenuItem'
 import Text, { TextProps } from '../Text/Text'
 import Reaction, { ReactionProps } from '../Reaction/Reaction'
 import { ReactionGroupProps } from '../Reaction/ReactionGroup'
-import { ComponentSlotStylesResolved } from '@fluentui/styles'
 
 export interface ChatMessageSlotClassNames {
   actionMenu: string
@@ -115,7 +116,7 @@ export interface ChatMessageProps
 
 export interface ChatMessageState {
   focused: boolean
-  messageNode: HTMLElement
+  messageNode: HTMLElement | null
 }
 
 class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageState> {
@@ -230,12 +231,9 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
       return actionMenuElement
     }
 
-    const menuRect: DOMRect = (positionActionMenu &&
-      _.invoke(this.menuRef.current, 'getBoundingClientRect')) || {
-      height: 0,
-    }
-    const messageRect: DOMRect = (positionActionMenu &&
-      _.invoke(messageNode, 'getBoundingClientRect')) || { height: 0 }
+    const messageRect: DOMRect | undefined =
+      positionActionMenu && messageNode?.getBoundingClientRect()
+    const overflowPadding: PopperJs.Padding = { top: Math.round(messageRect?.height || 0) }
 
     return (
       <Popper
@@ -255,8 +253,7 @@ class ChatMessage extends UIComponent<WithAsProp<ChatMessageProps>, ChatMessageS
               // Is required to properly position action items
               ...(overflow && {
                 boundariesElement: 'scrollParent',
-                escapeWithReference: true,
-                padding: { top: messageRect.height - menuRect.height },
+                padding: overflowPadding,
               }),
             },
           }
