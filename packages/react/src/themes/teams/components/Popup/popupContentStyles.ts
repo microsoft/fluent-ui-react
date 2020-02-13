@@ -2,14 +2,23 @@ import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import { PopupContentProps } from '../../../../components/Popup/PopupContent'
 import { PopupContentVariables } from './popupContentVariables'
 import getPointerStyles from '../../getPointerStyles'
+import initialPopperStyles from '../../../../utils/positioner/initialStyles'
 
 const popupContentStyles: ComponentSlotStylesPrepared<PopupContentProps, PopupContentVariables> = {
   root: ({ props: p, variables: v, rtl }): ICSSInJSStyle => ({
     border: `${v.borderSize} solid ${v.borderColor}`,
     borderRadius: v.borderRadius,
+
+    background: v.backgroundColor,
+    color: v.color,
     boxShadow: v.boxShadow,
 
     display: 'block',
+    textAlign: 'left',
+    zIndex: v.zIndex,
+
+    ...(initialPopperStyles as ICSSInJSStyle),
+
     ...(p.pointing && getPointerStyles(v.pointerOffset, v.pointerMargin, rtl, p.placement).root),
   }),
 
@@ -27,7 +36,7 @@ const popupContentStyles: ComponentSlotStylesPrepared<PopupContentProps, PopupCo
     ...getPointerStyles(v.pointerOffset, v.pointerMargin, rtl, p.placement).pointer,
   }),
 
-  content: ({ props: p, variables: v }): ICSSInJSStyle => ({
+  content: ({ variables: v }): ICSSInJSStyle => ({
     display: 'block',
     padding: v.padding,
   }),

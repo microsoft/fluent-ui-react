@@ -20,18 +20,24 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ### BREAKING CHANGES
 - Restricted prop set in the `Checkbox`, `Icon`, `Label`, `Slider`, `Status`, `Text` @layershifter ([#2307](https://github.com/microsoft/fluent-ui-react/pull/2307))
 - Styles caching when no inline overrides are defined is enabled by default; use the `performance` prop on the `Provider` to opt out of this if needed @mnajdova ([#2309](https://github.com/microsoft/fluent-ui-react/pull/2309))
+- Styles for the `Animation` component are removed from Teams theme @layershifter ([#2258](https://github.com/microsoft/fluent-ui-react/pull/2258))
+- Styles from `Popup` were moved `PopupContent` component @layershifter ([#2333](https://github.com/microsoft/fluent-ui-react/pull/2333))
+- Styles from `Tooltip` were moved `TooltipContent` component @layershifter ([#2333](https://github.com/microsoft/fluent-ui-react/pull/2333))
 
 ### Fixes
 - Remove dependency on Lodash in TypeScript typings @layershifter ([#2323](https://github.com/microsoft/fluent-ui-react/pull/2323))
 - Fix missing aria-describedby in AlertBehavior @delprzemo ([#2208](https://github.com/microsoft/fluent-ui-react/pull/2208))
 - Fix page crash when `Tooltip` content is null @delprzemo ([#2332](https://github.com/microsoft/fluent-ui-react/pull/2332))
 - Fix `document` usage in `mergeProviderContexts` to get SSR working @layershifter ([#2330](https://github.com/microsoft/fluent-ui-react/pull/2330))
+- Fix `input` descenders being cropped in the Teams theme @bcalvery ([#2335](https://github.com/microsoft/fluent-ui-react/pull/2335))
+- Use referentially equal objects for `actions` in `useStateManager` @layershifter ([#2347](https://github.com/microsoft/fluent-ui-react/pull/2347))
 
 ### Features
 - Added sourcemaps to the dist output to simplify debugging @miroslavstastny ([#2329](https://github.com/microsoft/fluent-ui-react/pull/2329))
 
 ### Performance
 - Add styles caching when there aren't inline overrides defined @mnajdova ([#2309](https://github.com/microsoft/fluent-ui-react/pull/2309))
+- Styles for `Animation` component are computed again only on prop changes @layershifter ([#2258](https://github.com/microsoft/fluent-ui-react/pull/2258))
 
 <!--------------------------------[ v0.44.0 ]------------------------------- -->
 ## [v0.44.0](https://github.com/microsoft/fluent-ui-react/tree/v0.44.0) (2020-02-05)
