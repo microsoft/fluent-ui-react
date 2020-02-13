@@ -22,7 +22,7 @@ export interface AnimationProps extends StyledComponentProps {
   /** Additional CSS class name(s) to apply.  */
   className?: string
 
-  children: AnimationChildrenProp | React.ReactChild
+  children?: AnimationChildrenProp | React.ReactChild
 
   /** The name for the animation that should be applied, defined in the theme. */
   name?: string
@@ -169,11 +169,6 @@ const Animation: React.FC<AnimationProps> & {
     unmountOnExit,
   } = props
 
-  if(_.isNil(children)) {
-    setEnd()
-    return null
-  }
-
   const handleAnimationEvent = (
     event: 'onEnter' | 'onEntering' | 'onEntered' | 'onExit' | 'onExiting' | 'onExited',
   ) => () => {
@@ -221,6 +216,12 @@ const Animation: React.FC<AnimationProps> & {
     playState,
     timingFunction,
   ])
+
+  if (_.isNil(children)) {
+    setEnd()
+    return null
+  }
+
   const unhandledProps = getUnhandledProps(Animation.handledProps, props)
 
   const isChildrenFunction = typeof children === 'function'
@@ -268,7 +269,7 @@ Animation.propTypes = {
     content: false,
     children: false,
   }),
-  children: PropTypes.oneOfType([PropTypes.func, PropTypes.element]).isRequired,
+  children: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
   name: PropTypes.string,
   delay: PropTypes.string,
   direction: PropTypes.string,
