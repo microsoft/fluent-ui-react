@@ -105,7 +105,7 @@ class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
     if (_.isNil(value)) {
       return undefined
     }
-    let result: string = ''
+    let result = ''
     if (React.isValidElement(value)) {
       result = (value as React.ReactElement<{ id?: string }>).props.id
     } else if (_.isPlainObject(value)) {
