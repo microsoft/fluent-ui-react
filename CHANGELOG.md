@@ -23,8 +23,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Styles for the `Animation` component are removed from Teams theme @layershifter ([#2258](https://github.com/microsoft/fluent-ui-react/pull/2258))
 - Styles from `Popup` were moved `PopupContent` component @layershifter ([#2333](https://github.com/microsoft/fluent-ui-react/pull/2333))
 - Styles from `Tooltip` were moved `TooltipContent` component @layershifter ([#2333](https://github.com/microsoft/fluent-ui-react/pull/2333))
-- Restricted prop set in the `PopupContent` component is passed styles  @layershifter ([#2357
-](https://github.com/microsoft/fluent-ui-react/pull/2307))
+- Restricted prop set in the `PopupContent` component is passed styles @layershifter ([#2357](https://github.com/microsoft/fluent-ui-react/pull/2307))
 
 ### Fixes
 - Remove dependency on Lodash in TypeScript typings @layershifter ([#2323](https://github.com/microsoft/fluent-ui-react/pull/2323))
