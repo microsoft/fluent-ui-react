@@ -26,8 +26,8 @@ import { RendererProvider, ThemeProvider, ThemeContext } from 'react-fela'
 import {
   ChildrenComponentProps,
   setUpWhatInput,
-  StyledComponentProps,
   tryCleanupWhatInput,
+  UIComponentProps,
 } from '../../utils'
 
 import {
@@ -40,7 +40,7 @@ import mergeContexts from '../../utils/mergeProviderContexts'
 import ProviderConsumer from './ProviderConsumer'
 import usePortalBox, { PortalBoxContext } from './usePortalBox'
 
-export interface ProviderProps extends ChildrenComponentProps, StyledComponentProps {
+export interface ProviderProps extends ChildrenComponentProps, UIComponentProps {
   renderer?: Renderer
   rtl?: boolean
   disableAnimations?: boolean
@@ -108,7 +108,7 @@ const Provider: React.FC<WithAsProp<ProviderProps>> & {
   Consumer: typeof ProviderConsumer
   handledProps: (keyof ProviderProps)[]
 } = props => {
-  const { children, overwrite, variables, telemetryRef } = props
+  const { children, className, design, overwrite, styles, variables, telemetryRef } = props
 
   const ElementType = getElementType(props)
   const unhandledProps = getUnhandledProps(Provider.handledProps, props)
@@ -154,6 +154,9 @@ const Provider: React.FC<WithAsProp<ProviderProps>> & {
     className: Provider.className,
     displayName: Provider.displayName,
     props: {
+      className,
+      design,
+      styles,
       variables,
     },
 
@@ -210,7 +213,9 @@ Provider.defaultProps = {
 }
 Provider.propTypes = {
   as: PropTypes.elementType,
+  design: PropTypes.object,
   variables: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
+  styles: PropTypes.oneOfType([PropTypes.object, PropTypes.func]),
   theme: PropTypes.shape({
     siteVariables: PropTypes.object,
     componentVariables: PropTypes.object,
