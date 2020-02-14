@@ -284,7 +284,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
                 unmountOnExit
                 visible={active}
                 // TODO figure out which animations should be used and add required names in the theme
-                name={active ? slideToNext ? 'slideLeftEnterMedium' : 'slideRightEnterMedium' : slideToNext ? 'slideLeftExitMedium' : 'slideRightExitMedium'}
+                name={active ? slideToNext ? 'carousel-slide-to-next-enter' : 'carousel-slide-to-previous-enter' : slideToNext ? 'carousel-slide-to-next-exit' : 'carousel-slide-to-previous-exit'}
               >
                 <Ref key={item['key'] || index} innerRef={itemRef}>
                   {CarouselItem.create(item, {

@@ -2,6 +2,7 @@ import {
   ComponentAnimationProp,
   getUnhandledProps,
   unstable_createAnimationStyles as createAnimationStyles,
+  unstable_calculateAnimationTimeout as calculateAnimationTimeout,
   unstable_getStyles as getStyles,
   useTelemetry,
 } from '@fluentui/react-bindings'
@@ -180,21 +181,6 @@ const Animation: React.FC<AnimationProps> & {
     _.invoke(props, event, null, props)
   }
 
-  const convertCssTimeToNumber = (time) => {
-    if(_.isNil(time) || time === 'initial' || time === 'inherit') {
-      return 0
-    }
-
-    const multiplier = _.endsWith(time, 'ms') ? 1 : 1000
-    const stringNumber = _.endsWith(time, 'ms') ? time.substring(0, time.length - 2) : time.substring(0, time.length - 1)
-    return multiplier * stringNumber
-  }
-
-  const calculateTimeout = (duration, delay) => {
-    return convertCssTimeToNumber(duration) + convertCssTimeToNumber(delay)
-  }
-
-
   const { classes, styles: animationStyles } = React.useMemo(() => {
     const animation: ComponentAnimationProp = {
       name,
@@ -243,7 +229,7 @@ const Animation: React.FC<AnimationProps> & {
   }
 
   const { animationDuration, animationDelay } = animationStyles.root
-  const timeoutResult = timeout || calculateTimeout(animationDuration, animationDelay) || 0
+  const timeoutResult = timeout || calculateAnimationTimeout(animationDuration, animationDelay) || 0
 
   const unhandledProps = getUnhandledProps(Animation.handledProps, props)
 
