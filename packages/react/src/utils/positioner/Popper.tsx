@@ -224,7 +224,7 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
       ? children({ placement: computedPlacement, scheduleUpdate })
       : (children as React.ReactElement)
 
-  return <Ref innerRef={contentRef}>{React.Children.only(child)}</Ref>
+  return child ? <Ref innerRef={contentRef}>{React.Children.only(child)}</Ref> : null
 }
 
 Popper.defaultProps = {
