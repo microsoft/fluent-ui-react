@@ -42,10 +42,6 @@ const AnimationExampleVisible = () => {
       {/* Children as function */}
       <Animation
         visible={visible}
-        // timeout={{
-        //   enter: 1000,
-        //   exit: 2000,
-        // }}
         onEnter={onEnter}
         onEntering={onEntering}
         onEntered={onEntered}
@@ -61,10 +57,6 @@ const AnimationExampleVisible = () => {
       {/* Children as element */}
       <Animation
         visible={visible}
-        // timeout={{
-        //   enter: 1000,
-        //   exit: 2000,
-        // }}
         onEnter={onEnter}
         onEntering={onEntering}
         onEntered={onEntered}
