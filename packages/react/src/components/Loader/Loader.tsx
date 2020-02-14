@@ -51,7 +51,7 @@ export interface LoaderProps extends UIComponentProps {
 
 export interface LoaderState {
   visible: boolean
-  labelLoaderId: string
+  labelId: string
 }
 
 /**
@@ -97,38 +97,14 @@ class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
 
     this.state = {
       visible: this.props.delay === 0,
-      labelLoaderId: getOrGenerateIdFromShorthand('loader-label-', props.label, ''),
+      labelId: '',
     }
-  }
-
-  static getIdFromShorthand = <P extends Record<string, any>>(
-    value: ShorthandValue<P>,
-  ): string | undefined => {
-    if (_.isNil(value)) {
-      return undefined
-    }
-    let result = ''
-    if (React.isValidElement(value)) {
-      result = (value as React.ReactElement<{ id?: string }>).props.id
-    } else if (_.isPlainObject(value)) {
-      result = (value as Record<string, any>).id
-    }
-
-    return result
   }
 
   static getDerivedStateFromProps(props, state) {
-    if (Loader.getIdFromShorthand(props.label) !== Loader.getIdFromShorthand(state.labelLoaderId)) {
-      const nextLabelLoaderId = getOrGenerateIdFromShorthand(
-        'loader-label-',
-        props.label,
-        state.labelLoaderId,
-      )
-      return {
-        labelLoaderId: nextLabelLoaderId,
-      }
+    return {
+      labelId: getOrGenerateIdFromShorthand('loader-label-', props.label, state.labelId),
     }
-    return null
   }
 
   componentDidMount() {
@@ -148,7 +124,7 @@ class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
 
   renderComponent({ ElementType, classes, accessibility, variables, styles, unhandledProps }) {
     const { indicator, label, svg } = this.props
-    const { visible, labelLoaderId } = this.state
+    const { visible, labelId } = this.state
 
     const svgElement = Box.create(svg, {
       defaultProps: () => ({ className: Loader.slotClassNames.svg, styles: styles.svg }),
@@ -172,7 +148,7 @@ class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
             defaultProps: () => ({
               className: Loader.slotClassNames.label,
               styles: styles.label,
-              id: labelLoaderId,
+              id: labelId,
             }),
           })}
         </ElementType>

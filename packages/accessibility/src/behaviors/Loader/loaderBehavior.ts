@@ -22,7 +22,7 @@ const loaderBehavior: Accessibility<LoaderBehaviorProps> = props => {
 
 type LoaderBehaviorProps = {
   /** id of the loader label element. */
-  labelLoaderId?: string
+  labelId?: string
 }
 
 export default loaderBehavior
@@ -35,5 +35,5 @@ const getDefaultAriaLabelledBy = (props: LoaderBehaviorProps) => {
   if (props['aria-label'] || props['aria-labelledby']) {
     return undefined
   }
-  return props['tabIndex'] !== undefined ? props.labelLoaderId : undefined
+  return props['tabIndex'] == undefined ? undefined : props.labelId
 }
