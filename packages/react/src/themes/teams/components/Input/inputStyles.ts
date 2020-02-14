@@ -19,6 +19,8 @@ const inputStyles: ComponentSlotStylesPrepared<InputProps, InputVariables> = {
       backgroundColor: v.backgroundColorInverted,
     }),
 
+    lineHeight: 'unset',
+
     color: v.fontColor,
 
     borderColor: v.borderColor,
