@@ -35,5 +35,5 @@ const getDefaultAriaLabelledBy = (props: LoaderBehaviorProps) => {
   if (props['aria-label'] || props['aria-labelledby']) {
     return undefined
   }
-  return props['tabIndex'] == undefined ? undefined : props.labelId
+  return props['tabIndex'] === undefined ? undefined : props.labelId
 }
