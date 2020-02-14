@@ -21,13 +21,14 @@ const dropdownSelectedItemStyles: ComponentSlotStylesPrepared<
     },
     ':hover': {
       color: v.selectedItemColorHover,
-      backgroundColor: v.selectedItemBackgroundColorFocus,
+      backgroundColor: v.selectedItemBackgroundColorHover,
     },
   }),
   icon: ({ variables: v }) => ({
     ...getIconFillOrOutlineStyles({ outline: true }),
+    color: v.selectedItemIconColor,
     ':hover': {
-      color: v.selectedItemColorFocus,
+      color: v.selectedItemIconColorHover,
       ...getIconFillOrOutlineStyles({ outline: false }),
     },
   }),

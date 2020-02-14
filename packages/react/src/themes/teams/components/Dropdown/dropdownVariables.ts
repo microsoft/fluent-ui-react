@@ -36,10 +36,11 @@ export interface DropdownVariables {
   listItemSelectedFontWeight: number
   listItemSelectedColor: string
   selectedItemColor: string
-  selectedItemBackgroundColor: string
-  selectedItemColorFocus: string
   selectedItemColorHover: string
-  selectedItemBackgroundColorFocus: string
+  selectedItemBackgroundColor: string
+  selectedItemBackgroundColorHover: string
+  selectedItemIconColor: string
+  selectedItemIconColorHover: string
   selectedItemsMaxHeight: string
   toggleIndicatorSize: string
   width: string
@@ -81,11 +82,15 @@ export default (siteVars): DropdownVariables => ({
   listItemColorHover: siteVars.colorScheme.default.foregroundHover,
   listItemSelectedColor: siteVars.colorScheme.default.foreground,
   listItemSelectedFontWeight: siteVars.fontWeightSemibold,
-  selectedItemBackgroundColor: 'undefined',
-  selectedItemColorHover: siteVars.colors.black,
-  selectedItemColorFocus: siteVars.colors.black,
-  selectedItemBackgroundColorFocus: siteVars.colors.brand[200],
+
+  selectedItemBackgroundColor: siteVars.colorScheme.default.background,
+  selectedItemBackgroundColorHover: siteVars.colorScheme.brand.background1,
+  selectedItemColorHover: siteVars.colorScheme.default.foreground,
+  selectedItemIconColor: siteVars.colorScheme.default.foreground1,
+  selectedItemIconColorHover: siteVars.colorScheme.brand.foregroundHover,
+
   selectedItemsMaxHeight: pxToRem(82),
+
   toggleIndicatorSize: pxToRem(32),
   width: pxToRem(356),
   overlayZIndex: siteVars.zIndexes.overlay,
