@@ -138,14 +138,9 @@ const Tooltip: React.FC<TooltipProps> &
   const triggerRef = React.useRef<HTMLElement>()
 
   const closeTimeoutId = React.useRef<number>()
-  // TODO: Consider this thing as hook and make it SSR safe
+  // TODO: Consider `getOrGenerateIdFromShorthand()` as hook and make it SSR safe
   const contentId = React.useRef<string>()
-
-  contentId.current = getOrGenerateIdFromShorthand(
-    'tooltip-content-',
-    props.content,
-    contentId.current,
-  )
+  contentId.current = getOrGenerateIdFromShorthand('tooltip-content-', content, contentId.current)
 
   const getA11Props = useAccessibility(accessibility, {
     actionHandlers: {
@@ -181,7 +176,7 @@ const Tooltip: React.FC<TooltipProps> &
   const renderPopperChildren = (popperProps: PopperChildrenProps) => {
     const tooltipContent = TooltipContent.create(content, {
       defaultProps: () =>
-        getA11Props('content', {
+        getA11Props('tooltip', {
           ...(context.rtl && { dir: 'rtl' }),
           open,
           placement: popperProps.placement,
