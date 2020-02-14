@@ -190,7 +190,9 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
         /**
          * This modifier is necessary in order to render the pointer. Refs are resolved in effects, so it can't be
          * placed under computed modifiers. Deep merge is not required as this modifier has only these properties.
+         * `arrow` modifier also requires `keepTogether`.
          */
+        keepTogether: { enabled: true },
         arrow: {
           enabled: !!(pointerTargetRef && pointerTargetRef.current),
           element: pointerTargetRef && pointerTargetRef.current,
