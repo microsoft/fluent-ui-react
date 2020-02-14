@@ -255,7 +255,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
   }
 
   renderContent = (accessibility, styles, unhandledProps) => {
-    const { ariaRoleDescription, getItemPositionText, items } = this.props
+    const { ariaRoleDescription, getItemPositionText, items, circular } = this.props
     const { activeIndex, itemIds, prevActiveIndex } = this.state
 
     this.itemRefs = []
@@ -277,14 +277,23 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
             const itemRef = React.createRef<HTMLElement>()
             this.itemRefs.push(itemRef)
             const active = activeIndex === index
-            const slideToNext = prevActiveIndex < activeIndex
+            let slideToNext = prevActiveIndex < activeIndex
+
+            if(circular && prevActiveIndex === items.length - 1 && activeIndex === 0) {
+              slideToNext = true
+            } else if(circular && prevActiveIndex === 0 && activeIndex === items.length - 1) {
+              slideToNext = false
+            }
+
             return (
               <Animation
                 mountOnEnter
                 unmountOnExit
                 visible={active}
-                // TODO figure out which animations should be used and add required names in the theme
-                name={active ? slideToNext ? 'carousel-slide-to-next-enter' : 'carousel-slide-to-previous-enter' : slideToNext ? 'carousel-slide-to-next-exit' : 'carousel-slide-to-previous-exit'}
+                name={active
+                  ? slideToNext ? 'carousel-slide-to-next-enter' : 'carousel-slide-to-previous-enter'
+                  : slideToNext ? 'carousel-slide-to-next-exit' : 'carousel-slide-to-previous-exit'
+                }
               >
                 <Ref key={item['key'] || index} innerRef={itemRef}>
                   {CarouselItem.create(item, {
