@@ -32,6 +32,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix `input` descenders being cropped in the Teams theme @bcalvery ([#2335](https://github.com/microsoft/fluent-ui-react/pull/2335))
 - Use referentially equal objects for `actions` in `useStateManager` @layershifter ([#2347](https://github.com/microsoft/fluent-ui-react/pull/2347))
 - Fix `Animation` component not to throw when `children` is not provided @mnajdova ([#2345](https://github.com/microsoft/fluent-ui-react/pull/2345))
+- `setWhatInputSource()` changes DOM attribute in `whatInput` @layershifter ([#2359](https://github.com/microsoft/fluent-ui-react/pull/2359))
 
 ### Features
 - Added sourcemaps to the dist output to simplify debugging @miroslavstastny ([#2329](https://github.com/microsoft/fluent-ui-react/pull/2329))
