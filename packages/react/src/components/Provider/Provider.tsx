@@ -158,11 +158,11 @@ const Provider: React.FC<WithAsProp<ProviderProps>> & {
     },
 
     disableAnimations: outgoingContext.disableAnimations,
+    performance: outgoingContext.performance,
     renderer: outgoingContext.renderer,
     rtl: outgoingContext.rtl,
     theme: outgoingContext.theme,
     saveDebug: _.noop,
-    _internal_resolvedComponentVariables: outgoingContext._internal_resolvedComponentVariables,
   })
 
   const element = usePortalBox({
