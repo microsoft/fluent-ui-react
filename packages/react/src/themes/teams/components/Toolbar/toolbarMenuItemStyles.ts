@@ -19,6 +19,7 @@ const toolbarMenuItemStyles = {
       borderColor: 'transparent',
       display: 'flex',
       alignItems: 'center',
+      textAlign: 'left',
       width: '100%',
       maxWidth: '100%',
       padding: v.menuItemPadding,
