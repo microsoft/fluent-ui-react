@@ -859,7 +859,7 @@ const ListNestedPerf = () => (
   />
 )
 
-ListNestedPerf.iterations = 100
+ListNestedPerf.iterations = 1
 ListNestedPerf.filename = 'ListNested.perf.tsx'
 
 export default ListNestedPerf

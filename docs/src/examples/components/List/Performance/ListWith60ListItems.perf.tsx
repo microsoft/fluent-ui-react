@@ -27,9 +27,9 @@ const items = _.times(60, i => ({
   header: `${headers[i % headers.length]}`,
 }))
 
-const ListCommonPerf = () => <List items={items} />
+const ListWith60ListItems = () => <List items={items} />
 
-ListCommonPerf.iterations = 1
-ListCommonPerf.filename = 'ListCommon.perf.tsx'
+ListWith60ListItems.iterations = 1
+ListWith60ListItems.filename = 'ListWith60ListItems.perf.tsx'
 
-export default ListCommonPerf
+export default ListWith60ListItems
