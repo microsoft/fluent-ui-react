@@ -180,7 +180,22 @@ const Animation: React.FC<AnimationProps> & {
     _.invoke(props, event, null, props)
   }
 
-  const { classes } = React.useMemo(() => {
+  const convertCssTimeToNumber = (time) => {
+    if(_.isNil(time) || time === 'initial' || time === 'inherit') {
+      return 0
+    }
+
+    const multiplier = _.endsWith(time, 'ms') ? 1 : 1000
+    const stringNumber = _.endsWith(time, 'ms') ? time.substring(0, time.length - 2) : time.substring(0, time.length - 1)
+    return multiplier * stringNumber
+  }
+
+  const calculateTimeout = (duration, delay) => {
+    return convertCssTimeToNumber(duration) + convertCssTimeToNumber(delay)
+  }
+
+
+  const { classes, styles: animationStyles } = React.useMemo(() => {
     const animation: ComponentAnimationProp = {
       name,
       keyframeParams,
@@ -227,6 +242,9 @@ const Animation: React.FC<AnimationProps> & {
     return null
   }
 
+  const { animationDuration, animationDelay } = animationStyles.root
+  const timeoutResult = timeout || calculateTimeout(animationDuration, animationDelay) || 0
+
   const unhandledProps = getUnhandledProps(Animation.handledProps, props)
 
   const isChildrenFunction = typeof children === 'function'
@@ -241,7 +259,7 @@ const Animation: React.FC<AnimationProps> & {
       appear={appear}
       mountOnEnter={mountOnEnter}
       unmountOnExit={unmountOnExit}
-      timeout={timeout}
+      timeout={timeoutResult}
       onEnter={handleAnimationEvent('onEnter')}
       onEntering={handleAnimationEvent('onEntering')}
       onEntered={handleAnimationEvent('onEntered')}
@@ -264,9 +282,6 @@ const Animation: React.FC<AnimationProps> & {
 Animation.className = 'ui-animation'
 Animation.displayName = 'Animation'
 
-Animation.defaultProps = {
-  timeout: 0,
-}
 Animation.propTypes = {
   ...commonPropTypes.createCommon({
     accessibility: false,

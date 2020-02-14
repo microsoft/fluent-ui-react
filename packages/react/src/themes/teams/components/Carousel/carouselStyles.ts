@@ -20,8 +20,6 @@ const carouselStyles: ComponentSlotStylesPrepared<
     margin: 0,
     display: 'flex',
     listStyle: 'none',
-    transform: `translateX(${pxToRem(-v.width * p.activeIndex)})`,
-    transitionDuration: '.4s',
     willChange: 'transform',
   }),
   paddleNext: ({ props: p, variables: v }): ICSSInJSStyle => ({

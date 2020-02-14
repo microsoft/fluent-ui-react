@@ -4,6 +4,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import { Ref } from '@fluentui/react-component-ref'
+import Animation from '../Animation/Animation'
 
 import {
   UIComponentProps,
@@ -104,6 +105,7 @@ export interface CarouselProps extends UIComponentProps, ChildrenComponentProps 
 
 export interface CarouselState {
   activeIndex: number
+  prevActiveIndex: number
   ariaLiveOn: boolean
   itemIds: string[]
 }
@@ -211,7 +213,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
   }
 
   getInitialAutoControlledState(): CarouselState {
-    return { activeIndex: 0, ariaLiveOn: false, itemIds: [] as string[] }
+    return { activeIndex: 0, prevActiveIndex: -1, ariaLiveOn: false, itemIds: [] as string[] }
   }
 
   itemRefs = [] as React.RefObject<HTMLElement>[]
@@ -241,6 +243,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
     }
 
     this.setState({
+      prevActiveIndex: this.state.activeIndex,
       activeIndex,
     })
 
@@ -253,7 +256,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
 
   renderContent = (accessibility, styles, unhandledProps) => {
     const { ariaRoleDescription, getItemPositionText, items } = this.props
-    const { activeIndex, itemIds } = this.state
+    const { activeIndex, itemIds, prevActiveIndex } = this.state
 
     this.itemRefs = []
 
@@ -270,14 +273,23 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
           )}
         >
           {items &&
-            items.map((item, index) => {
-              const itemRef = React.createRef<HTMLElement>()
-              this.itemRefs.push(itemRef)
-              return (
+          items.map((item, index) => {
+            const itemRef = React.createRef<HTMLElement>()
+            this.itemRefs.push(itemRef)
+            const active = activeIndex === index
+            const slideToNext = prevActiveIndex < activeIndex
+            return (
+              <Animation
+                mountOnEnter
+                unmountOnExit
+                visible={active}
+                // TODO figure out which animations should be used and add required names in the theme
+                name={active ? slideToNext ? 'slideLeftEnterMedium' : 'slideRightEnterMedium' : slideToNext ? 'slideLeftExitMedium' : 'slideRightExitMedium'}
+              >
                 <Ref key={item['key'] || index} innerRef={itemRef}>
                   {CarouselItem.create(item, {
                     defaultProps: () => ({
-                      active: activeIndex === index,
+                      active,
                       id: itemIds[index],
                       navigation: !!this.props.navigation,
                       ...(getItemPositionText && {
@@ -286,8 +298,9 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
                     }),
                   })}
                 </Ref>
-              )
-            })}
+              </Animation>
+            )
+          })}
         </div>
       </div>
     )
