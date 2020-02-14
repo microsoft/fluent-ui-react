@@ -32,7 +32,7 @@ const usePortalBox = (options: UsePortalBoxOptions): HTMLDivElement => {
   }, [])
   useIsomorphicLayoutEffect(() => {
     if (element) {
-      element.setAttribute('className', className)
+      element.setAttribute('class', className)
 
       if (rtl) {
         element.setAttribute('dir', 'rtl')

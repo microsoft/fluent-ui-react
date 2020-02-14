@@ -189,6 +189,16 @@ const Provider: React.FC<WithAsProp<ProviderProps>> & {
     }
   }, [])
 
+  // do not spread anything - React.Fragment can only have `key` and `children` props
+  const elementProps =
+    ElementType === React.Fragment
+      ? {}
+      : {
+          className: classes.root,
+          ...rtlProps,
+          ...unhandledProps,
+        }
+
   return (
     <RendererProvider
       renderer={outgoingContext.renderer}
@@ -196,9 +206,7 @@ const Provider: React.FC<WithAsProp<ProviderProps>> & {
     >
       <ThemeProvider theme={outgoingContext} overwrite>
         <PortalBoxContext.Provider value={element}>
-          <ElementType className={classes.root} {...rtlProps} {...unhandledProps}>
-            {children}
-          </ElementType>
+          <ElementType {...elementProps}>{children}</ElementType>
         </PortalBoxContext.Provider>
       </ThemeProvider>
     </RendererProvider>
