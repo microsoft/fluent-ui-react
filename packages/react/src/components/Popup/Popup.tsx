@@ -365,7 +365,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     if (_.includes(normalizedOn, 'hover')) {
       triggerProps.onMouseEnter = (e, ...args) => {
         this.setPopupOpen(true, e)
-        setWhatInputSource('mouse')
+        setWhatInputSource(this.context.target, 'mouse')
         _.invoke(triggerElement, 'props.onMouseEnter', e, ...args)
       }
       triggerProps.onMouseLeave = (e, ...args) => {

@@ -209,7 +209,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
 
     triggerProps.onMouseEnter = (e, ...args) => {
       this.setTooltipOpen(true, e)
-      setWhatInputSource('mouse')
+      setWhatInputSource(this.context.target, 'mouse')
       _.invoke(triggerElement, 'props.onMouseEnter', e, ...args)
     }
     triggerProps.onMouseLeave = (e, ...args) => {
