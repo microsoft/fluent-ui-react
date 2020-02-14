@@ -138,6 +138,7 @@ const Tooltip: React.FC<TooltipProps> &
   const triggerRef = React.useRef<HTMLElement>()
 
   const closeTimeoutId = React.useRef<number>()
+  // TODO: Consider this thing as hook and make it SSR safe
   const contentId = React.useRef<string>()
 
   contentId.current = getOrGenerateIdFromShorthand(
