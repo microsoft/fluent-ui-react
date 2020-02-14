@@ -67,7 +67,6 @@ export { default as MenuDivider } from './components/Menu/menuDividerStyles'
 
 export { default as MenuButton } from './components/MenuButton/menuButtonStyles'
 
-export { default as Popup } from './components/Popup/popupStyles'
 export { default as PopupContent } from './components/Popup/popupContentStyles'
 
 export { default as Provider } from './components/Provider/providerStyles'
@@ -103,11 +102,8 @@ export { default as Tree } from './components/Tree/treeStyles'
 export { default as TreeItem } from './components/Tree/treeItemStyles'
 export { default as TreeTitle } from './components/Tree/treeTitleStyles'
 
-export { default as Animation } from './components/Animation/animationStyles'
-
 export { default as Video } from './components/Video/videoStyles'
 
-export { default as Tooltip } from './components/Tooltip/tooltipStyles'
 export { default as TooltipContent } from './components/Tooltip/tooltipContentStyles'
 
 export { default as Carousel } from './components/Carousel/carouselStyles'
