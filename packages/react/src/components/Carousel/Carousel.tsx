@@ -279,6 +279,8 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
             const active = activeIndex === index
             let slideToNext = prevActiveIndex < activeIndex
 
+            const initialMounting = prevActiveIndex === -1
+
             if(circular && prevActiveIndex === items.length - 1 && activeIndex === 0) {
               slideToNext = true
             } else if(circular && prevActiveIndex === 0 && activeIndex === items.length - 1) {
@@ -290,7 +292,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
                 mountOnEnter
                 unmountOnExit
                 visible={active}
-                name={active
+                name={initialMounting ? '' : active
                   ? slideToNext ? 'carousel-slide-to-next-enter' : 'carousel-slide-to-previous-enter'
                   : slideToNext ? 'carousel-slide-to-next-exit' : 'carousel-slide-to-previous-exit'
                 }
