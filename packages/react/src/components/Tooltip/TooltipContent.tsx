@@ -106,7 +106,7 @@ const TooltipContent: React.FC<WithAsProp<TooltipContentProps>> &
     >
       {open && pointing && <div className={classes.pointer} ref={pointerRef} />}
 
-      <div {...getA11Props('root', { className: classes.content })}>
+      <div {...getA11Props('content', { className: classes.content })}>
         {childrenExist(children) ? children : content}
       </div>
     </ElementType>
