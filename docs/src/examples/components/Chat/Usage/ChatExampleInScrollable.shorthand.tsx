@@ -20,7 +20,7 @@ const ChatExampleInScrollableShorthand = () => {
   const [overflow] = useBooleanKnob({ name: 'overflow', initialValue: true })
   const [height] = useRangeKnob({
     name: 'height',
-    initialValue: '200px',
+    initialValue: '300px',
     min: '200px',
     max: '800px',
     step: 10,
