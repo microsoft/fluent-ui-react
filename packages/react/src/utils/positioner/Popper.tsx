@@ -173,6 +173,7 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
     }
 
     const handleUpdate = (data: PopperJS.Data) => {
+      console.log('Popper:data', data)
       // PopperJS performs computations that might update the computed placement: auto positioning, flipping the
       // placement in case the popper box should be rendered at the edge of the viewport and does not fit
       if (data.placement !== latestPlacement.current) {
@@ -191,6 +192,7 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
          * This modifier is necessary in order to render the pointer. Refs are resolved in effects, so it can't be
          * placed under computed modifiers. Deep merge is not required as this modifier has only these properties.
          */
+        keepTogether: { enabled: true },
         arrow: {
           enabled: !!(pointerTargetRef && pointerTargetRef.current),
           element: pointerTargetRef && pointerTargetRef.current,
