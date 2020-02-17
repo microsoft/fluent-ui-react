@@ -56,7 +56,7 @@ export { default as MenuDivider } from './components/Menu/menuDividerVariables'
 
 export { default as PopupContent } from './components/Popup/popupContentVariables'
 
-export { default as ProviderBox } from './components/Provider/providerBoxVariables'
+export { default as Provider } from './components/Provider/providerVariables'
 
 export { default as RadioGroupItem } from './components/RadioGroup/radioGroupItemVariables'
 

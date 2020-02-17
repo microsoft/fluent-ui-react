@@ -235,7 +235,7 @@ const Tooltip: React.FC<TooltipProps> &
     },
     onMouseEnter: (e, ...args) => {
       setTooltipOpen(true, e)
-      setWhatInputSource('mouse')
+      setWhatInputSource(context.target, 'mouse')
       _.invoke(triggerElement, 'props.onMouseEnter', e, ...args)
     },
     onMouseLeave: (e, ...args) => {

@@ -11,10 +11,10 @@ export * from './FocusZone/focusUtilities'
 
 export { default as useAccessibility } from './hooks/useAccessibility'
 export { default as useAutoControlled } from './hooks/useAutoControlled'
-export { default as useStyles } from './hooks/useStyles'
 export { default as unstable_useDispatchEffect } from './hooks/useDispatchEffect'
 export { default as useIsomorphicLayoutEffect } from './hooks/useIsomorphicLayoutEffect'
 export { default as useStateManager } from './hooks/useStateManager'
+export { default as useStyles } from './hooks/useStyles'
 
 export { default as unstable_createAnimationStyles } from './styles/createAnimationStyles'
 export { default as unstable_getStyles } from './styles/getStyles'
