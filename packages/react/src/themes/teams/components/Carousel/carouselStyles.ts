@@ -10,20 +10,23 @@ const carouselStyles: ComponentSlotStylesPrepared<
   root: (): ICSSInJSStyle => ({
     display: 'inline-block',
   }),
-  itemsContainerWrapper: ({ variables: v }): ICSSInJSStyle => ({
+  itemsContainerWrapper: ({ variables: v, props: p  }): ICSSInJSStyle => ({
     display: 'flex',
     width: pxToRem(v.width),
     overflowX: 'hidden',
+    border: '1px solid transparent',
+
+    ...(p.shouldFocusContainer && {
+      border: `1px solid ${v.focusOuterBorderColor}`,
+      borderRadius: v.focusOuterBorderRadius,
+    }),
   }),
-  itemsContainer: ({ props: p, variables: v }): ICSSInJSStyle => ({
+  itemsContainer: (): ICSSInJSStyle => ({
     padding: 0,
     margin: 0,
     display: 'flex',
     listStyle: 'none',
     willChange: 'transform',
-    ...(p.shouldFocusContainer && {
-        border: '1px solid black',
-    }),
   }),
   paddleNext: ({ props: p, variables: v }): ICSSInJSStyle => ({
     height: pxToRem(v.paddleNextSize),

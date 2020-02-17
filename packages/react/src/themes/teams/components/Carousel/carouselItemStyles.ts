@@ -9,9 +9,9 @@ const carouselItemStyles: ComponentSlotStylesPrepared<
 > = {
   root: ({ variables: v }): ICSSInJSStyle => ({
     width: pxToRem(v.width),
-    ":focus": {
+    ':focus': {
       outline: 'none',
-    }
+    },
   }),
 }
 

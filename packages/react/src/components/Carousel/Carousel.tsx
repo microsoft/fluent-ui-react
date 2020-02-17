@@ -3,6 +3,7 @@ import { Accessibility, carouselBehavior } from '@fluentui/accessibility'
 import * as React from 'react'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
+import cx from 'classnames'
 import { Ref } from '@fluentui/react-component-ref'
 import Animation from '../Animation/Animation'
 
@@ -255,18 +256,29 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
     }
   }
 
-  renderContent = (accessibility, styles, unhandledProps) => {
+  overrideItemProps = predefinedProps => ({
+    onFocus: (e, itemProps) => {
+      this.setState({ shouldFocusContainer: e.currentTarget === e.target})
+      _.invoke(predefinedProps, 'onFocus', e, itemProps)
+    },
+    onBlur: (e, itemProps) => {
+      this.setState({
+        shouldFocusContainer: e.currentTarget.contains(e.relatedTarget)})
+      _.invoke(predefinedProps, 'onBlur', e, itemProps)
+    },
+  })
+
+  renderContent = (accessibility, classes, unhandledProps) => {
     const { ariaRoleDescription, getItemPositionText, items, circular } = this.props
     const { activeIndex, itemIds, prevActiveIndex } = this.state
 
     this.itemRefs = []
 
     return (
-      <div style={styles.itemsContainerWrapper} {...accessibility.attributes.itemsContainerWrapper}>
+      <div className={classes.itemsContainerWrapper} {...accessibility.attributes.itemsContainerWrapper}>
         <div
-          className={Carousel.slotClassNames.itemsContainer}
+          className={cx(Carousel.slotClassNames.itemsContainer, classes.itemsContainer)}
           aria-roledescription={ariaRoleDescription}
-          style={styles.itemsContainer}
           {...accessibility.attributes.itemsContainer}
           {...applyAccessibilityKeyHandlers(
             accessibility.keyHandlers.itemsContainer,
@@ -307,33 +319,8 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
                       ...(getItemPositionText && {
                         itemPositionText: getItemPositionText(index, items.length),
                       }),
-                        onFocus: (e) => { 
-                          if(e)
-                          console.log("Milan focus called")
-                          console.log("e.currentTarget")
-                          console.log(e.currentTarget)
-                          console.log('e.target')
-                          console.log(e.target)
-                          if (e.currentTarget === e.target) {
-                            this.setState({
-                              shouldFocusContainer: true})
-                          } else {
-                            this.setState({
-                              shouldFocusContainer: false})
-                            }
-                        },
-                          onBlur: (e) => { 
-                            console.log("Milan blur called")
-                            console.log("e.currentTarget")
-                            console.log(e.currentTarget)
-                            console.log('e.target')
-                            console.log(e.target)
-      
-                              this.setState({
-                                shouldFocusContainer: e.currentTarget.contains(e.relatedTarget)})
-                            
-                          }
                     }),
+                    overrideProps: this.overrideItemProps,
                   })}
                 </Ref>
               </Animation>
@@ -461,7 +448,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
           children
         ) : (
           <>
-            {this.renderContent(accessibility, styles, unhandledProps)}
+            {this.renderContent(accessibility, classes, unhandledProps)}
             {this.renderPaddles(accessibility, styles)}
             {this.renderNavigation()}
           </>
