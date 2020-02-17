@@ -6,7 +6,6 @@ import {
 } from '@fluentui/accessibility'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import { Ref } from '@fluentui/react-component-ref'
-import { ComponentSlotStylesResolved } from '@fluentui/styles'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
 import cx from 'classnames'
@@ -41,6 +40,7 @@ import { MenuItemProps } from '../Menu/MenuItem'
 import Text, { TextProps } from '../Text/Text'
 import Reaction, { ReactionProps } from '../Reaction/Reaction'
 import { ReactionGroupProps } from '../Reaction/ReactionGroup'
+import { ComponentSlotStylesResolved } from '@fluentui/styles'
 
 export interface ChatMessageSlotClassNames {
   actionMenu: string

@@ -1,9 +1,8 @@
 import { Accessibility } from '@fluentui/accessibility'
 import * as customPropTypes from '@fluentui/react-proptypes'
-import { ComponentSlotStylesResolved } from '@fluentui/styles'
 import * as React from 'react'
-
 import * as PropTypes from 'prop-types'
+
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import {
   childrenExist,
@@ -17,8 +16,9 @@ import {
   getElementProp,
   ShorthandFactory,
 } from '../../utils'
-
 import Box, { BoxProps } from '../Box/Box'
+
+import { ComponentSlotStylesResolved } from '@fluentui/styles'
 import ChatMessage from './ChatMessage'
 
 export interface ChatItemSlotClassNames {
@@ -45,7 +45,7 @@ export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps 
   message?: ShorthandValue<BoxProps>
 }
 
-class ChatItem extends UIComponent<WithAsProp<ChatItemProps>> {
+class ChatItem extends UIComponent<WithAsProp<ChatItemProps>, any> {
   static className = 'ui-chat__item'
   static create: ShorthandFactory<ChatItemProps>
   static displayName = 'ChatItem'

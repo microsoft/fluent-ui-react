@@ -1,11 +1,10 @@
 import { Accessibility } from '@fluentui/accessibility'
 import {
-  ComposableProps,
-  useComposedConfig,
   getElementType,
   getUnhandledProps,
   useAccessibility,
   useStyles,
+  useTelemetry,
 } from '@fluentui/react-bindings'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import * as _ from 'lodash'
@@ -42,8 +41,7 @@ export interface LabelProps
   extends UIComponentProps,
     ChildrenComponentProps,
     ContentComponentProps,
-    ColorComponentProps,
-    ComposableProps {
+    ColorComponentProps {
   /**
    * Accessibility behavior if overridden by the user.
    */
@@ -69,11 +67,16 @@ export interface LabelProps
 }
 
 const Label: React.FC<WithAsProp<LabelProps>> & FluentComponentStaticProps = props => {
+  const context: ProviderContextPrepared = React.useContext(ThemeContext)
+  const { setStart, setEnd } = useTelemetry(Label.displayName, context.telemetry)
+  setStart()
+
   const {
     accessibility,
     children,
     className,
     circular,
+    color,
     content,
     icon,
     iconPosition,
@@ -84,13 +87,9 @@ const Label: React.FC<WithAsProp<LabelProps>> & FluentComponentStaticProps = pro
     imagePosition,
   } = props
 
-  const compose = useComposedConfig(props)
-  const context: ProviderContextPrepared = React.useContext(ThemeContext)
-
   const getA11Props = useAccessibility(accessibility, {
     debugName: Label.displayName,
     rtl: context.rtl,
-    mapPropsToBehavior: () => compose.behaviorProps,
   })
   const { classes, styles: resolvedStyles } = useStyles(Label.displayName, {
     className: Label.className,
@@ -98,32 +97,24 @@ const Label: React.FC<WithAsProp<LabelProps>> & FluentComponentStaticProps = pro
       hasActionableIcon: _.has(icon, 'onClick'),
       hasImage: !!image,
       circular,
+      color,
       imagePosition,
-      ...compose.styleProps,
     }),
     mapPropsToInlineStyles: () => ({ className, design, styles, variables }),
     rtl: context.rtl,
-
-    __experimental_composeName: compose.displayName,
-    __experimental_overrideStyles: compose.overrideStyles,
   })
 
-  const handleIconOverrides = iconProps => {
-    return {
-      ...(!iconProps.xSpacing && {
-        xSpacing: 'none',
-      }),
-    }
-  }
+  const handleIconOverrides = (predefinedProps: IconProps) => ({
+    ...(!predefinedProps.xSpacing && {
+      xSpacing: 'none',
+    }),
+  })
 
   const ElementType = getElementType(props)
-  const unhandledProps = getUnhandledProps(
-    [...Label.handledProps, ...compose.handledProps] as any,
-    props,
-  )
+  const unhandledProps = getUnhandledProps(Label.handledProps, props)
 
   if (childrenExist(children)) {
-    return (
+    const element = (
       <ElementType
         {...getA11Props('root', {
           className: classes.root,
@@ -134,6 +125,9 @@ const Label: React.FC<WithAsProp<LabelProps>> & FluentComponentStaticProps = pro
         {children}
       </ElementType>
     )
+    setEnd()
+
+    return element
   }
 
   const imageElement = Image.create(image, {
@@ -156,7 +150,7 @@ const Label: React.FC<WithAsProp<LabelProps>> & FluentComponentStaticProps = pro
   const hasStartElement = startImage || startIcon
   const hasEndElement = endIcon || endImage
 
-  return (
+  const element = (
     <ElementType
       {...getA11Props('root', {
         className: classes.root,
@@ -185,6 +179,9 @@ const Label: React.FC<WithAsProp<LabelProps>> & FluentComponentStaticProps = pro
       />
     </ElementType>
   )
+  setEnd()
+
+  return element
 }
 
 Label.displayName = 'Label'

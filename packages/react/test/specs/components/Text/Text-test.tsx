@@ -5,8 +5,8 @@ import { mountWithProvider } from 'test/utils'
 
 import Text from 'src/components/Text/Text'
 
-xdescribe('Text', () => {
-  isConformant(Text)
+describe('Text', () => {
+  isConformant(Text, { constructorName: 'Text' })
 
   test('renders children', () => {
     expect(mountWithProvider(<Text>children</Text>).text()).toEqual('children')

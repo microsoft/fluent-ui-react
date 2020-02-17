@@ -1,8 +1,12 @@
+import * as React from 'react'
 import { SliderVariables } from './sliderVariables'
 import Slider, { SliderProps } from '../../../../components/Slider/Slider'
 import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
+import getBorderFocusStyles from '../../getBorderFocusStyles'
 
-export const selectors = {
+export type SliderStylesProps = Pick<SliderProps, 'fluid' | 'disabled' | 'vertical'>
+
+const selectors = {
   WEBKIT_THUMB: '::-webkit-slider-thumb',
   MOZ_THUMB: '::-moz-range-thumb',
   MS_FILL_LOWER: '::-ms-fill-lower',
@@ -20,11 +24,11 @@ const getCommonSlotStyles = (p: SliderProps, v: SliderVariables): ICSSInJSStyle 
 })
 
 // this selector is used to identify the thumb slot from a previous sibling
-export const thumbFromPreviousSiblingSelector = `&+ .${Slider.slotClassNames.thumb}`
+const thumbFromPreviousSiblingSelector = `&+ .${Slider.slotClassNames.thumb}`
 
 const getFluidStyles = (p: SliderProps) => p.fluid && !p.vertical && { width: '100%' }
 
-const sliderStyles: ComponentSlotStylesPrepared<SliderProps, SliderVariables> = {
+const sliderStyles: ComponentSlotStylesPrepared<SliderStylesProps, SliderVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     height: v.height,
 
@@ -32,6 +36,53 @@ const sliderStyles: ComponentSlotStylesPrepared<SliderProps, SliderVariables> = 
     ...(p.vertical && { height: v.length, width: v.height }),
     ...getFluidStyles(p),
   }),
+
+  input: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => {
+    const activeThumbStyles: React.CSSProperties = {
+      height: v.activeThumbHeight,
+      width: v.activeThumbWidth,
+      background: v.activeThumbColor,
+      marginTop: `calc(${v.height} / 2  - ${v.activeThumbHeight} / 2)`,
+      marginLeft: `calc(-${v.activeThumbWidth} / 2)`,
+    }
+    const borderFocusStyles = getBorderFocusStyles({
+      siteVariables,
+      borderPadding: v.thumbBorderPadding,
+    })
+    const thumbStyles = { border: 0, width: '1px' }
+
+    return {
+      '-webkit-appearance': 'none',
+      cursor: 'pointer',
+      height: '100%',
+      width: '100%',
+      margin: 0,
+      padding: 0,
+      opacity: 0,
+
+      [selectors.WEBKIT_THUMB]: { ...thumbStyles, '-webkit-appearance': 'none' },
+      [selectors.MOZ_THUMB]: thumbStyles,
+      [selectors.MS_THUMB]: { ...thumbStyles, marginTop: `calc(-${v.thumbHeight} / 2)` },
+
+      [selectors.MS_FILL_LOWER]: { display: 'none' },
+      [selectors.MS_FILL_UPPER]: { display: 'none' },
+
+      ...getFluidStyles(p),
+
+      ':active': { [thumbFromPreviousSiblingSelector]: activeThumbStyles },
+
+      ':focus': {
+        outline: 0, // TODO: check if this is correct
+        [thumbFromPreviousSiblingSelector]: borderFocusStyles[':focus'],
+      },
+      ':focus-visible': {
+        [thumbFromPreviousSiblingSelector]: {
+          ...borderFocusStyles[':focus-visible'],
+          ...activeThumbStyles,
+        },
+      },
+    }
+  },
 
   inputWrapper: ({ props: p, variables: v }) => {
     const transformOriginValue = `calc(${v.length} / 2)`

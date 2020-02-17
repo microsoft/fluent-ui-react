@@ -5,6 +5,7 @@ import {
   useAccessibility,
   useStateManager,
   useStyles,
+  useTelemetry,
 } from '@fluentui/react-bindings'
 import { handleRef, Ref } from '@fluentui/react-component-ref'
 import * as customPropTypes from '@fluentui/react-proptypes'
@@ -34,7 +35,7 @@ import {
   ProviderContextPrepared,
 } from '../../types'
 import { SupportedIntrinsicInputProps } from '../../utils/htmlPropsUtils'
-import SliderInput, { SliderInputProps } from './SliderInput'
+import Box, { BoxProps } from '../Box/Box'
 
 const processInputValues = (
   p: Pick<SliderProps, 'min' | 'max'> & { value: string },
@@ -82,7 +83,7 @@ export interface SliderProps
   getA11yValueMessageOnChange?: (props: SliderProps) => string
 
   /** Shorthand for the input component. */
-  input?: ShorthandValue<SliderInputProps>
+  input?: ShorthandValue<BoxProps>
 
   /** Ref for input DOM node. */
   inputRef?: React.Ref<HTMLElement>
@@ -117,7 +118,9 @@ export interface SliderProps
 const Slider: React.FC<WithAsProp<SliderProps>> &
   FluentComponentStaticProps & { slotClassNames: SliderSlotClassNames } = props => {
   const context: ProviderContextPrepared = React.useContext(ThemeContext)
-  const inputRef = React.createRef<HTMLElement>()
+  const { setStart, setEnd } = useTelemetry(Slider.displayName, context.telemetry)
+  setStart()
+
   const {
     accessibility,
     min,
@@ -136,6 +139,7 @@ const Slider: React.FC<WithAsProp<SliderProps>> &
     vertical,
     disabled,
   } = props
+  const inputRef = React.createRef<HTMLElement>()
 
   const { state, actions } = useStateManager(createSliderManager, {
     mapPropsToInitialState: () => ({
@@ -145,8 +149,30 @@ const Slider: React.FC<WithAsProp<SliderProps>> &
       value: value as string,
     }),
   })
+  const {
+    min: numericMin,
+    max: numericMax,
+    value: numericValue,
+    valueAsPercentage,
+  } = processInputValues({
+    min,
+    max,
+    value: state.value || '',
+  })
 
-  const { classes } = useStyles(Slider.displayName, {
+  const getA11Props = useAccessibility(accessibility, {
+    debugName: Slider.displayName,
+    rtl: context.rtl,
+    mapPropsToBehavior: () => ({
+      disabled,
+      getA11yValueMessageOnChange,
+      max: numericMax,
+      min: numericMax,
+      value: numericValue,
+      vertical,
+    }),
+  })
+  const { classes, styles: resolvedStyles } = useStyles(Slider.displayName, {
     className: Slider.className,
     mapPropsToStyles: () => ({
       fluid,
@@ -162,22 +188,6 @@ const Slider: React.FC<WithAsProp<SliderProps>> &
     rtl: context.rtl,
   })
 
-  const getA11Props = useAccessibility(accessibility, {
-    debugName: Slider.displayName,
-    rtl: context.rtl,
-    mapPropsToBehavior: () => ({
-      disabled,
-      getA11yValueMessageOnChange,
-      // @ts-ignore fix string to number
-      max,
-      // @ts-ignore
-      min,
-      // @ts-ignore
-      value: state.value,
-      vertical,
-    }),
-  })
-
   const handleInputOverrides = () => ({
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = _.get(e, 'target.value')
@@ -185,7 +195,7 @@ const Slider: React.FC<WithAsProp<SliderProps>> &
       actions.change(value)
     },
     onMouseDown: (e: React.MouseEvent<HTMLInputElement>) => {
-      setWhatInputSource('mouse')
+      setWhatInputSource(context.target, 'mouse')
       _.invoke(props, 'onMouseDown', e, props)
     },
   })
@@ -194,32 +204,28 @@ const Slider: React.FC<WithAsProp<SliderProps>> &
   const unhandledProps = getUnhandledProps(Slider.handledProps, props)
   const [htmlInputProps, restProps] = partitionHTMLProps(unhandledProps)
   const type = 'range'
-  const { min: htmlMin, max: htmlMax, value: htmlValue, valueAsPercentage } = processInputValues({
-    min,
-    max,
-    value: state.value || '',
-  })
 
   // we need 2 wrappers around the slider rail, track, input and thumb slots to achieve correct component sizes
 
-  // @ts-ignore
-  const inputElement = SliderInput.create(input || type, {
+  const inputElement = Box.create(input || type, {
     defaultProps: () =>
       getA11Props('input', {
         ...htmlInputProps,
+        as: 'input',
         className: Slider.slotClassNames.input,
         fluid,
-        min: htmlMin,
-        max: htmlMax,
+        min: numericMin,
+        max: numericMax,
         step,
+        styles: resolvedStyles.input,
         type,
-        value: htmlValue,
+        value: numericValue,
         vertical,
       }),
     overrideProps: handleInputOverrides,
   })
 
-  return (
+  const element = (
     <ElementType {...getA11Props('root', { className: classes.root, ...restProps })}>
       <div
         {...getA11Props('inputWrapper', {
@@ -249,6 +255,9 @@ const Slider: React.FC<WithAsProp<SliderProps>> &
       </div>
     </ElementType>
   )
+  setEnd()
+
+  return element
 }
 
 Slider.className = 'ui-slider'
@@ -262,13 +271,19 @@ Slider.slotClassNames = {
   track: `${Slider.className}__track`,
 }
 
+Slider.defaultProps = {
+  accessibility: sliderBehavior,
+  getA11yValueMessageOnChange: ({ value }) => String(value),
+  max: 100,
+  min: 0,
+  step: 1,
+}
 Slider.propTypes = {
   ...commonPropTypes.createCommon({ content: false }),
   defaultValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   fluid: PropTypes.bool,
   getA11yValueMessageOnChange: PropTypes.func,
   input: customPropTypes.itemShorthand,
-  // @ts-ignore TODO: fix this
   inputRef: customPropTypes.ref,
   max: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   min: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
@@ -277,15 +292,6 @@ Slider.propTypes = {
   value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   vertical: PropTypes.bool,
 }
-
-Slider.defaultProps = {
-  accessibility: sliderBehavior,
-  getA11yValueMessageOnChange: ({ value }) => String(value),
-  max: 100,
-  min: 0,
-  step: 1,
-}
-
 Slider.handledProps = Object.keys(Slider.propTypes) as any
 
 Slider.create = createShorthandFactory({ Component: Slider, mappedProp: 'value' })

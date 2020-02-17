@@ -6,11 +6,9 @@ import {
 } from '@fluentui/accessibility'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import {
-  ComposableProps,
   getElementType,
   getUnhandledProps,
   useAccessibility,
-  useComposedConfig,
   useStyles,
   useTelemetry,
 } from '@fluentui/react-bindings'
@@ -36,7 +34,7 @@ import {
 
 export type IconXSpacing = 'none' | 'before' | 'after' | 'both'
 
-export interface IconProps extends UIComponentProps, ColorComponentProps, ComposableProps {
+export interface IconProps extends UIComponentProps, ColorComponentProps {
   /** Alternative text. */
   alt?: string
   'aria-label'?: AccessibilityAttributes['aria-label']
@@ -70,6 +68,11 @@ export interface IconProps extends UIComponentProps, ColorComponentProps, Compos
 }
 
 const Icon: React.FC<WithAsProp<IconProps>> & FluentComponentStaticProps = props => {
+  const context: ProviderContextPrepared = React.useContext(ThemeContext)
+
+  const { setStart, setEnd } = useTelemetry(Icon.displayName, context.telemetry)
+  setStart()
+
   const {
     accessibility,
     alt,
@@ -89,18 +92,15 @@ const Icon: React.FC<WithAsProp<IconProps>> & FluentComponentStaticProps = props
     xSpacing,
   } = props
 
-  const context: ProviderContextPrepared = React.useContext(ThemeContext)
-  const { setStart, setEnd } = useTelemetry(Icon.displayName, context.telemetry)
+  const { icons = {} } = context.theme
+  const maybeIcon = icons[name]
+  const isSvgIcon = maybeIcon && maybeIcon.isSvg
 
-  setStart()
-
-  const compose = useComposedConfig(props)
   const getA11Props = useAccessibility(accessibility, {
     debugName: Icon.displayName,
     mapPropsToBehavior: () => ({
       alt,
       'aria-label': ariaLabel,
-      ...compose.behaviorProps,
     }),
     rtl: context.rtl,
   })
@@ -111,37 +111,31 @@ const Icon: React.FC<WithAsProp<IconProps>> & FluentComponentStaticProps = props
       circular,
       color,
       disabled,
-      // name,
+      // name is required only for font icons
+      // one can compose the Icon component with FontIcon to handle this if necessary
+      name: isSvgIcon ? undefined : name,
       outline,
       rotate,
       size,
       xSpacing,
-      ...compose.styleProps,
+      isFontIcon: !isSvgIcon,
+      isSvgIcon,
     }),
     mapPropsToInlineStyles: () => ({ className, design, styles, variables }),
     rtl: context.rtl,
-
-    __experimental_composeName: compose.displayName,
-    __experimental_overrideStyles: compose.overrideStyles,
   })
 
   const ElementType = getElementType(props)
-  const unhandledProps = getUnhandledProps(
-    [...Icon.handledProps, ...compose.handledProps] as any,
-    props,
-  )
+  const unhandledProps = getUnhandledProps(Icon.handledProps, props)
 
-  const { icons = {} } = context.theme
-  const maybeIcon = icons[name]
-  const isSvgIcon = maybeIcon && maybeIcon.isSvg
-
-  setEnd()
-
-  return (
+  const element = (
     <ElementType {...getA11Props('root', { className: classes.root, ...unhandledProps })}>
       {isSvgIcon && callable(maybeIcon.icon)({ classes, rtl: context.rtl, props })}
     </ElementType>
   )
+  setEnd()
+
+  return element
 }
 
 Icon.className = 'ui-icon'

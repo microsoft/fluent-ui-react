@@ -1,11 +1,10 @@
 import { Accessibility, statusBehavior } from '@fluentui/accessibility'
 import {
-  ComposableProps,
   getElementType,
   getUnhandledProps,
   useAccessibility,
   useStyles,
-  useComposedConfig,
+  useTelemetry,
 } from '@fluentui/react-bindings'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
@@ -21,9 +20,9 @@ import {
   ProviderContextPrepared,
   FluentComponentStaticProps,
 } from '../../types'
-import StatusIcon, { StatusIconProps } from './StatusIcon'
+import Icon, { IconProps } from '../Icon/Icon'
 
-export interface StatusProps extends UIComponentProps, ComposableProps {
+export interface StatusProps extends UIComponentProps {
   /** Accessibility behavior if overridden by the user. */
   accessibility?: Accessibility<never>
 
@@ -31,7 +30,7 @@ export interface StatusProps extends UIComponentProps, ComposableProps {
   color?: string
 
   /** Shorthand for the icon, to provide customizing status */
-  icon?: ShorthandValue<StatusIconProps>
+  icon?: ShorthandValue<IconProps>
 
   /** Size multiplier */
   size?: SizeValue
@@ -40,21 +39,18 @@ export interface StatusProps extends UIComponentProps, ComposableProps {
   state?: 'success' | 'info' | 'warning' | 'error' | 'unknown'
 }
 
-const Status: React.FC<WithAsProp<StatusProps>> &
-  FluentComponentStaticProps &
-  ComposableProps = props => {
+const Status: React.FC<WithAsProp<StatusProps>> & FluentComponentStaticProps = props => {
+  const context: ProviderContextPrepared = React.useContext(ThemeContext)
+  const { setStart, setEnd } = useTelemetry(Icon.displayName, context.telemetry)
+  setStart()
+
   const { className, color, icon, size, state, design, styles, variables } = props
-
-  const compose = useComposedConfig(props)
-  const { rtl }: ProviderContextPrepared = React.useContext(ThemeContext)
-
-  const { classes } = useStyles(Status.displayName, {
+  const { classes, styles: resolvedStyles } = useStyles(Status.displayName, {
     className: Status.className,
     mapPropsToStyles: () => ({
       color,
       size,
       state,
-      ...compose.styleProps,
     }),
     mapPropsToInlineStyles: () => ({
       className,
@@ -62,32 +58,32 @@ const Status: React.FC<WithAsProp<StatusProps>> &
       styles,
       variables,
     }),
-    rtl,
-
-    __experimental_composeName: compose.displayName,
-    __experimental_overrideStyles: compose.overrideStyles,
+    rtl: context.rtl,
   })
   const getA11Props = useAccessibility(props.accessibility, {
-    debugName: compose.displayName || Status.displayName,
-    mapPropsToBehavior: () => compose.behaviorProps,
-    rtl,
+    debugName: Status.displayName,
+    rtl: context.rtl,
   })
   const ElementType = getElementType(props)
-  const unhandledProps = getUnhandledProps(
-    [...Status.handledProps, ...compose.handledProps] as any,
-    props,
-  )
+  const unhandledProps = getUnhandledProps(Status.handledProps, props)
 
-  // @ts-ignore
-  const iconElement = StatusIcon.create(icon, {
-    defaultProps: () => getA11Props('icon', { state }),
+  const iconElement = Icon.create(icon, {
+    defaultProps: () =>
+      getA11Props('icon', {
+        size: 'smallest',
+        styles: resolvedStyles.icon,
+        xSpacing: 'none',
+      }),
   })
 
-  return (
+  const element = (
     <ElementType {...getA11Props('root', { className: classes.root, ...unhandledProps })}>
       {iconElement}
     </ElementType>
   )
+  setEnd()
+
+  return element
 }
 
 Status.className = 'ui-status'

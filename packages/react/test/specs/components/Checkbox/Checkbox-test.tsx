@@ -6,8 +6,8 @@ import {
   htmlIsAccessibilityCompliant,
 } from 'test/specs/commonTests'
 
-xdescribe('Checkbox', () => {
-  isConformant(Checkbox)
+describe('Checkbox', () => {
+  isConformant(Checkbox, { constructorName: 'Checkbox' })
   handlesAccessibility(Checkbox, { defaultRootRole: 'checkbox' })
 
   describe('HTML accessibility rules validation', () => {

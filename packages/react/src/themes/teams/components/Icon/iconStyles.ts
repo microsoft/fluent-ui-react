@@ -2,6 +2,7 @@ import * as _ from 'lodash'
 import {
   callable,
   ComponentSlotStylesPrepared,
+  FontIconSpec,
   ICSSInJSStyle,
   ThemeIconSpec,
 } from '@fluentui/styles'
@@ -11,6 +12,11 @@ import { StrictColorScheme, ItemType } from '../../../types'
 import { IconXSpacing, IconProps } from '../../../../components/Icon/Icon'
 import { getStyle as getSvgStyle } from './svg'
 import { IconVariables, iconColorAreas } from './iconVariables'
+
+export type IconStylesProps = Pick<
+  IconProps,
+  'bordered' | 'circular' | 'color' | 'disabled' | 'outline' | 'rotate' | 'size' | 'xSpacing'
+> & { isFontIcon: boolean; isSvgIcon: boolean; name?: IconProps['name'] }
 
 export const emptyIcon: ThemeIconSpec = { icon: { content: '?' } }
 
@@ -56,8 +62,9 @@ const getXSpacingStyles = (xSpacing: IconXSpacing, horizontalSpace: string): ICS
   }
 }
 
-const iconStyles: ComponentSlotStylesPrepared<IconProps, IconVariables> = {
-  root: ({ props: p, variables: v }): ICSSInJSStyle => {
+const iconStyles: ComponentSlotStylesPrepared<IconStylesProps, IconVariables> = {
+  root: ({ props: p, variables: v, theme: t, rtl }): ICSSInJSStyle => {
+    const iconSpec: ThemeIconSpec = (p.name && t.icons[p.name]) || emptyIcon
     const colors = v.colorScheme[p.color]
 
     return {
@@ -75,7 +82,27 @@ const iconStyles: ComponentSlotStylesPrepared<IconProps, IconVariables> = {
       // overriding base theme border handling
       ...((p.bordered || v.borderColor) &&
         getBorderedStyles(v.borderColor || getIconColor(v, colors))),
-      backgroundColor: v.backgroundColor,
+
+      ...(p.isFontIcon && {
+        fontWeight: 900, // required for the fontAwesome to render
+        alignItems: 'center',
+        boxSizing: 'content-box',
+        display: 'inline-flex',
+        justifyContent: 'center',
+
+        fontFamily: (iconSpec.icon as FontIconSpec).fontFamily,
+        fontSize: v[`${p.size}Size`],
+        lineHeight: 1,
+        width: v[`${p.size}Size`],
+        height: v[`${p.size}Size`],
+
+        '::before': {
+          content: (iconSpec.icon as FontIconSpec).content,
+        },
+
+        transform: rtl ? `scaleX(-1) rotate(${-1 * p.rotate}deg)` : `rotate(${p.rotate}deg)`,
+      }),
+      ...(p.isSvgIcon && { backgroundColor: v.backgroundColor }),
     }
   },
 

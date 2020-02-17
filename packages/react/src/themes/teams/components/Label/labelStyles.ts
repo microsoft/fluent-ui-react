@@ -4,10 +4,12 @@ import { LabelProps } from '../../../../components/Label/Label'
 import { LabelVariables } from './labelVariables'
 import { getColorScheme } from '../../colors'
 
-const labelStyles: ComponentSlotStylesPrepared<
-  LabelProps & { hasImage: boolean; hasActionableIcon: boolean },
-  LabelVariables
-> = {
+export type LabelStylesProps = Pick<LabelProps, 'circular' | 'color' | 'imagePosition'> & {
+  hasImage: boolean
+  hasActionableIcon: boolean
+}
+
+const labelStyles: ComponentSlotStylesPrepared<LabelStylesProps, LabelVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
     const colors = getColorScheme(v.colorScheme, p.color)
 

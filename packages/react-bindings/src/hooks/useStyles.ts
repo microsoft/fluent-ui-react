@@ -12,12 +12,12 @@ import { ThemeContext } from 'react-fela'
 import {
   ComponentDesignProp,
   ComponentSlotClasses,
+  PrimitiveProps,
   RendererRenderRule,
   StylesContextValue,
 } from '../styles/types'
 import getStyles from '../styles/getStyles'
 
-type PrimitiveProps = Record<string, boolean | number | string | undefined>
 type UseStylesOptions<StyleProps extends PrimitiveProps> = {
   className?: string
   mapPropsToStyles?: () => StyleProps
@@ -48,9 +48,12 @@ type InlineStyleProps<StyleProps> = {
 
 const defaultContext: StylesContextValue<{ renderRule: RendererRenderRule }> = {
   disableAnimations: false,
+  performance: {
+    enableStylesCaching: true,
+    enableVariablesCaching: true,
+  },
   renderer: { renderRule: () => '' },
   theme: emptyTheme,
-  _internal_resolvedComponentVariables: {},
 }
 
 const useStyles = <StyleProps extends PrimitiveProps>(
@@ -59,6 +62,8 @@ const useStyles = <StyleProps extends PrimitiveProps>(
 ): UseStylesResult => {
   const context: StylesContextValue<{ renderRule: RendererRenderRule }> =
     React.useContext(ThemeContext) || defaultContext
+
+  const { enableStylesCaching = true, enableVariablesCaching = true } = context.performance || {}
 
   const {
     className = process.env.NODE_ENV === 'production' ? '' : 'no-classname-🙉',
@@ -86,9 +91,11 @@ const useStyles = <StyleProps extends PrimitiveProps>(
     rtl,
     saveDebug: fluentUIDebug => (debug.current = { fluentUIDebug }),
     theme: context.theme,
-    _internal_resolvedComponentVariables: context._internal_resolvedComponentVariables,
+    performance: {
+      enableStylesCaching,
+      enableVariablesCaching,
+    },
 
-    __experimental_cache: true,
     __experimental_composeName,
     __experimental_overrideStyles,
   })

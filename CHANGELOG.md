@@ -18,6 +18,42 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 ## [Unreleased]
 
 ### BREAKING CHANGES
+- Restricted prop sets in the `Checkbox`, `Icon`, `Label`, `Slider`, `Status`, `Text` components which are passed to styles functions @layershifter ([#2307](https://github.com/microsoft/fluent-ui-react/pull/2307))
+- Styles caching when no inline overrides are defined is enabled by default; use the `performance` prop on the `Provider` to opt out of this if needed @mnajdova ([#2309](https://github.com/microsoft/fluent-ui-react/pull/2309))
+- Styles for the `Animation` component are removed from Teams theme @layershifter ([#2258](https://github.com/microsoft/fluent-ui-react/pull/2258))
+- Styles from `Popup` were moved `PopupContent` component @layershifter ([#2333](https://github.com/microsoft/fluent-ui-react/pull/2333))
+- Styles from `Tooltip` were moved `TooltipContent` component @layershifter ([#2333](https://github.com/microsoft/fluent-ui-react/pull/2333))
+- `ProviderBox` component was removed @layershifter ([#2192](https://github.com/microsoft/fluent-ui-react/pull/2192))
+- Styles and variables from `ProviderBox` are moved to `Provider` @layershifter ([#2192](https://github.com/microsoft/fluent-ui-react/pull/2192))
+- Fix an issue with `offset` and `pointing` in `Popup` @layershifter ([#2361](https://github.com/microsoft/fluent-ui-react/pull/2361))
+- Restricted prop set in the `TooltipContent` component which is passed to styles functions @layershifter ([#2357](https://github.com/microsoft/fluent-ui-react/pull/2357))
+
+### Fixes
+- Remove dependency on Lodash in TypeScript typings @layershifter ([#2323](https://github.com/microsoft/fluent-ui-react/pull/2323))
+- Fix missing aria-describedby in AlertBehavior @delprzemo ([#2208](https://github.com/microsoft/fluent-ui-react/pull/2208))
+- Fix page crash when `Tooltip` content is null @delprzemo ([#2332](https://github.com/microsoft/fluent-ui-react/pull/2332))
+- Fix `document` usage in `mergeProviderContexts` to get SSR working @layershifter ([#2330](https://github.com/microsoft/fluent-ui-react/pull/2330))
+- Fix `input` descenders being cropped in the Teams theme @bcalvery ([#2335](https://github.com/microsoft/fluent-ui-react/pull/2335))
+- Use referentially equal objects for `actions` in `useStateManager` @layershifter ([#2347](https://github.com/microsoft/fluent-ui-react/pull/2347))
+- Fix `Animation` component not to throw when `children` is not provided @mnajdova ([#2345](https://github.com/microsoft/fluent-ui-react/pull/2345))
+- Fix `loader` - adding labeling when loader get focus @kolaps33 ([#2352](https://github.com/microsoft/fluent-ui-react/pull/2352))
+- `setWhatInputSource()` changes DOM attribute in `whatInput` @layershifter ([#2359](https://github.com/microsoft/fluent-ui-react/pull/2359))
+- Styles from `Provider` are applied to components that rendered out of it in DOM @layershifter ([#2192](https://github.com/microsoft/fluent-ui-react/pull/2192))
+
+### Features
+- Added sourcemaps to the dist output to simplify debugging @miroslavstastny ([#2329](https://github.com/microsoft/fluent-ui-react/pull/2329))
+- Adding 'expand', 'collapse', 'companion', 'share-to' and 'settings-audio' icons @TanelVari ([#2343](https://github.com/microsoft/fluent-ui-react/pull/2343))
+- Add support for Children API in `List` component @layershifter ([#2207](https://github.com/microsoft/fluent-ui-react/pull/2207))
+
+### Performance
+- Add styles caching when there aren't inline overrides defined @mnajdova ([#2309](https://github.com/microsoft/fluent-ui-react/pull/2309))
+- Styles for `Animation` component are computed again only on prop changes @layershifter ([#2258](https://github.com/microsoft/fluent-ui-react/pull/2258))
+
+<!--------------------------------[ v0.44.0 ]------------------------------- -->
+## [v0.44.0](https://github.com/microsoft/fluent-ui-react/tree/v0.44.0) (2020-02-05)
+[Compare changes](https://github.com/microsoft/fluent-ui-react/compare/v0.43.2..v0.44.0)
+
+### BREAKING CHANGES
 - Add `@fluentui/styles` package for all styles' related utilities and TS types @layershifter, @mnajdova ([#2222](https://github.com/microsoft/fluent-ui-react/pull/2222))
 - Remove `animation` prop from all components @joschect ([#2239](https://github.com/microsoft/fluent-ui-react/pull/2239))
 - `mode` property from `focusZone` configuration in accessibility behaviors is no longer supported - the focus zone will always be in embed mode @layershifter ([#2265](https://github.com/microsoft/fluent-ui-react/pull/2265))
@@ -27,7 +63,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Restricted prop set in the `Button`, `Avatar`, `Box` and `Image` styles; changed `avatarBorderWidth` and `statusBorderWidth` avatar variables types from number to string and updated styles in Teams theme @mnajdova ([#2238](https://github.com/microsoft/fluent-ui-react/pull/2238))
 - Restricted prop set in the `List` & `ListItem` @layershifter ([#2238](https://github.com/microsoft/fluent-ui-react/pull/2238))
 - Remove `mountDocument` prop in `Popup` & `MenuButton` components @layershifter ([#2286](https://github.com/microsoft/fluent-ui-react/pull/2286))
-- Remove `toRefObject` function @layershifter ([#2287](https://github.com/microsoft/fluent-ui-react/pull/2287))
+- Add typing `ComponentSlotStylesResolved`, that replaces the incorrect `ComponentSlotStylesPrepared` in the return value of `useStyles`, `renderComponent`, `createComponent` @mnajdova ([#2312](https://github.com/microsoft/fluent-ui-react/pull/2312))
 
 ### Fixes
 - Fix styleParam to always be required in the styles functions @layershifter, @mnajdova ([#2235](https://github.com/microsoft/fluent-ui-react/pull/2235))
@@ -35,18 +71,34 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Update iconOnly button hover, focus styles and add new `background5` and `backgroundHover2` design tokens in Teams theme @codepretty ([#2211](https://github.com/microsoft/fluent-ui-react/pull/2211))
 - Fix `forceUpdate` to get synced updates in React's Concurrent mode @layershifter ([#2268](https://github.com/microsoft/fluent-ui-react/pull/2268))
 - Adding actionable items into `Carousel` @kolaps33 ([#2271](https://github.com/microsoft/fluent-ui-react/pull/2271))
-- Fix positioning fixes for `actions` in `ChatMessage` @layershifter ([#2300](https://github.com/microsoft/fluent-ui-react/pull/2300))
-- `FocusZone`: Cleanup DOM element references when the component is unmounted @johannao76 ([#2306](https://github.com/microsoft/fluent-ui-react/pull/2306))
 
 ### Features
 - Allow `useRef` hook used for storing debugging data to be defined in any order with other hooks in functional components @layershifter, @mnajdova ([#2236](https://github.com/microsoft/fluent-ui-react/pull/2236))
 - Add `useStyles()` hook to use theming capabilities in custom components @layershifter, @mnajdova ([#2217](https://github.com/microsoft/fluent-ui-react/pull/2217))
 - Add optional wrapper function to `List` which can be used to inject custom scrollbars to `Dropdown` @jurokapsiar ([#2092](https://github.com/microsoft/fluent-ui-react/pull/2092))
 - Add `useTelemetry()` hook for adding telemetry information for the Fluent components and improve return types for the `useStyles` and `useStateManager` hooks @mnajdova ([#2257](https://github.com/microsoft/fluent-ui-react/pull/2257))
+- Add new `backgroundHover1` Red design tokens in Teams theme @codepretty ([#2297](https://github.com/microsoft/fluent-ui-react/pull/2297))
 - Add `target` prop to `EventListener` component and `useEventListener()` hook @layershifter ([#2287](https://github.com/microsoft/fluent-ui-react/pull/2287))
+- Add `disabled` prop accordion title @jurokapsiar ([#2290](https://github.com/microsoft/fluent-ui-react/pull/2290))
+- Allow custom values for `size` in `FlexItem` @silviuavram ([#2313](https://github.com/microsoft/fluent-ui-react/pull/2313))
+- Move `zIndex` values from default variable values and styles to siteVariables object in Teams theme @pompomon ([#2311](https://github.com/microsoft/fluent-ui-react/pull/2311)) 
 
 ### Documentation
 - Add per-component performance charts @miroslavstastny ([#2240](https://github.com/microsoft/fluent-ui-react/pull/2240))
+
+<!--------------------------------[ v0.43.2 ]------------------------------- -->
+## [v0.43.2](https://github.com/microsoft/fluent-ui-react/tree/v0.43.2) (2020-02-05)
+[Compare changes](https://github.com/microsoft/fluent-ui-react/compare/v0.43.1..v0.43.2)
+
+### BREAKING CHANGES
+- Remove `toRefObject` function @layershifter ([#2287](https://github.com/microsoft/fluent-ui-react/pull/2287))
+
+### Fixes
+- Fix positioning fixes for `actions` in `ChatMessage` @layershifter ([#2300](https://github.com/microsoft/fluent-ui-react/pull/2300))
+- `FocusZone`: Cleanup DOM element references when the component is unmounted @johannao76 ([#2306](https://github.com/microsoft/fluent-ui-react/pull/2306))
+
+### Documentation
+- Fix dependencies in project exported to codesandbox @miroslavstastny ([#2314](https://github.com/microsoft/fluent-ui-react/pull/2314))
 
 <!--------------------------------[ v0.43.1 ]------------------------------- -->
 ## [v0.43.1](https://github.com/microsoft/fluent-ui-react/tree/v0.43.1) (2020-01-30)
