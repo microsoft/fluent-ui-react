@@ -1,7 +1,7 @@
 import { chatMessageBehavior, Accessibility, FocusZoneTabbableElements } from '@fluentui/react'
 import * as keyboardKey from 'keyboard-key'
 
-const threadedMessageBehavior: Accessibility = props => {
+const threadedMessageBehavior: Accessibility<never> = props => {
   const behaviorData = chatMessageBehavior(props)
 
   behaviorData.focusZone.props = {
