@@ -209,7 +209,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
 
     triggerProps.onMouseEnter = (e, ...args) => {
       this.setTooltipOpen(true, e)
-      setWhatInputSource('mouse')
+      setWhatInputSource(this.context.target, 'mouse')
       _.invoke(triggerElement, 'props.onMouseEnter', e, ...args)
     }
     triggerProps.onMouseLeave = (e, ...args) => {
@@ -252,18 +252,17 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
         enabled={open}
         rtl={rtl}
         targetRef={target || this.triggerRef}
-        children={this.renderPopperChildren(rtl, accessibility)}
+        children={this.renderPopperChildren(accessibility)}
       />
     )
   }
 
-  renderPopperChildren = (rtl: boolean, accessibility: ReactAccessibilityBehavior) => ({
+  renderPopperChildren = (accessibility: ReactAccessibilityBehavior) => ({
     placement,
   }: PopperChildrenProps) => {
     const { content, pointing } = this.props
 
     const tooltipContentAttributes = {
-      ...(rtl && { dir: 'rtl' }),
       ...accessibility.attributes.tooltip,
       ...accessibility.keyHandlers.tooltip,
       ...this.getContentProps(),
