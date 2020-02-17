@@ -67,7 +67,11 @@ export interface TooltipProps
   /** Defines whether tooltip is displayed. */
   open?: boolean
 
-  // TODO
+  /**
+   * Event for request to change 'open' value.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props and proposed value.
+   */
   onOpenChange?: (
     e: React.MouseEvent | React.FocusEvent | React.KeyboardEvent,
     data: TooltipProps,
