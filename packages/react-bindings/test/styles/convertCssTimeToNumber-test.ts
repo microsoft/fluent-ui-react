@@ -22,5 +22,4 @@ describe('convertCssTimeToNumber', () => {
     expect(calculateAnimationTimeout('400ms', undefined)).toEqual(400)
     expect(calculateAnimationTimeout('2s', undefined)).toEqual(2000)
   })
-
 })

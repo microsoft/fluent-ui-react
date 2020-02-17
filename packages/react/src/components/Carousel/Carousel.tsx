@@ -215,7 +215,13 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
   }
 
   getInitialAutoControlledState(): CarouselState {
-    return { activeIndex: 0, prevActiveIndex: -1, ariaLiveOn: false, itemIds: [] as string[], shouldFocusContainer: false }
+    return {
+      activeIndex: 0,
+      prevActiveIndex: -1,
+      ariaLiveOn: false,
+      itemIds: [] as string[],
+      shouldFocusContainer: false,
+    }
   }
 
   itemRefs = [] as React.RefObject<HTMLElement>[]
@@ -258,12 +264,13 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
 
   overrideItemProps = predefinedProps => ({
     onFocus: (e, itemProps) => {
-      this.setState({ shouldFocusContainer: e.currentTarget === e.target})
+      this.setState({ shouldFocusContainer: e.currentTarget === e.target })
       _.invoke(predefinedProps, 'onFocus', e, itemProps)
     },
     onBlur: (e, itemProps) => {
       this.setState({
-        shouldFocusContainer: e.currentTarget.contains(e.relatedTarget)})
+        shouldFocusContainer: e.currentTarget.contains(e.relatedTarget),
+      })
       _.invoke(predefinedProps, 'onBlur', e, itemProps)
     },
   })
@@ -275,7 +282,10 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
     this.itemRefs = []
 
     return (
-      <div className={classes.itemsContainerWrapper} {...accessibility.attributes.itemsContainerWrapper}>
+      <div
+        className={classes.itemsContainerWrapper}
+        {...accessibility.attributes.itemsContainerWrapper}
+      >
         <div
           className={cx(Carousel.slotClassNames.itemsContainer, classes.itemsContainer)}
           aria-roledescription={ariaRoleDescription}
@@ -286,46 +296,53 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
           )}
         >
           {items &&
-          items.map((item, index) => {
-            const itemRef = React.createRef<HTMLElement>()
-            this.itemRefs.push(itemRef)
-            const active = activeIndex === index
-            let slideToNext = prevActiveIndex < activeIndex
+            items.map((item, index) => {
+              const itemRef = React.createRef<HTMLElement>()
+              this.itemRefs.push(itemRef)
+              const active = activeIndex === index
+              let slideToNext = prevActiveIndex < activeIndex
 
-            const initialMounting = prevActiveIndex === -1
+              const initialMounting = prevActiveIndex === -1
 
-            if(circular && prevActiveIndex === items.length - 1 && activeIndex === 0) {
-              slideToNext = true
-            } else if(circular && prevActiveIndex === 0 && activeIndex === items.length - 1) {
-              slideToNext = false
-            }
+              if (circular && prevActiveIndex === items.length - 1 && activeIndex === 0) {
+                slideToNext = true
+              } else if (circular && prevActiveIndex === 0 && activeIndex === items.length - 1) {
+                slideToNext = false
+              }
 
-            return (
-              <Animation
-                mountOnEnter
-                unmountOnExit
-                visible={active}
-                name={initialMounting ? '' : active
-                  ? slideToNext ? 'carousel-slide-to-next-enter' : 'carousel-slide-to-previous-enter'
-                  : slideToNext ? 'carousel-slide-to-next-exit' : 'carousel-slide-to-previous-exit'
-                }
-              >
-                <Ref key={item['key'] || index} innerRef={itemRef}>
-                  {CarouselItem.create(item, {
-                    defaultProps: () => ({
-                      active,
-                      id: itemIds[index],
-                      navigation: !!this.props.navigation,
-                      ...(getItemPositionText && {
-                        itemPositionText: getItemPositionText(index, items.length),
+              return (
+                <Animation
+                  mountOnEnter
+                  unmountOnExit
+                  visible={active}
+                  name={
+                    initialMounting
+                      ? ''
+                      : active
+                      ? slideToNext
+                        ? 'carousel-slide-to-next-enter'
+                        : 'carousel-slide-to-previous-enter'
+                      : slideToNext
+                      ? 'carousel-slide-to-next-exit'
+                      : 'carousel-slide-to-previous-exit'
+                  }
+                >
+                  <Ref key={item['key'] || index} innerRef={itemRef}>
+                    {CarouselItem.create(item, {
+                      defaultProps: () => ({
+                        active,
+                        id: itemIds[index],
+                        navigation: !!this.props.navigation,
+                        ...(getItemPositionText && {
+                          itemPositionText: getItemPositionText(index, items.length),
+                        }),
                       }),
-                    }),
-                    overrideProps: this.overrideItemProps,
-                  })}
-                </Ref>
-              </Animation>
-            )
-          })}
+                      overrideProps: this.overrideItemProps,
+                    })}
+                  </Ref>
+                </Animation>
+              )
+            })}
         </div>
       </div>
     )
