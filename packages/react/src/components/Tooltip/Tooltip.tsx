@@ -78,7 +78,6 @@ export interface TooltipProps
   ) => void
 
   /**
-   * TODO: should this be centralized?
    * Offset value to apply to rendered component. Accepts the following units:
    * - px or unit-less, interpreted as pixels
    * - %, percentage relative to the length of the trigger element
