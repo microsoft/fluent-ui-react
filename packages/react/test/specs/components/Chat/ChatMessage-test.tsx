@@ -10,7 +10,9 @@ import Box from 'src/components/Box/Box'
 const chatMessageImplementsShorthandProp = implementsShorthandProp(ChatMessage)
 
 describe('ChatMessage', () => {
-  isConformant(ChatMessage)
+  isConformant(ChatMessage, {
+    constructorName: 'ChatMessage',
+  })
 
   chatMessageImplementsShorthandProp('author', Text)
   chatMessageImplementsShorthandProp('timestamp', Text)

@@ -328,7 +328,7 @@ const ChatMessage: React.FC<WithAsProp<ChatMessageProps>> &
     }),
   })
 
-  const element = (
+  const element = getA11Props.unstable_wrapWithFocusZone(
     <Ref innerRef={setMessageNode}>
       <ElementType
         {...getA11Props('root', {
@@ -355,7 +355,7 @@ const ChatMessage: React.FC<WithAsProp<ChatMessageProps>> &
           </>
         )}
       </ElementType>
-    </Ref>
+    </Ref>,
   )
   setEnd()
 
