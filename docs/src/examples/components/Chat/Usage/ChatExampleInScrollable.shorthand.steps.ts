@@ -18,10 +18,10 @@ const config: ScreenerTestsConfig = {
         .snapshot('Hovers third message'),
     builder =>
       builder
-        .executeScript(`document.querySelector(${selectors.chat}).parentNode.scrollTop = 10`)
+        .executeScript(`document.querySelector("${selectors.chat}").parentNode.scrollTop = 10`)
         .hover(selectors.item(1))
         .snapshot('Hovers first message in scrolled view: actions are visible')
-        .executeScript(`document.querySelector(${selectors.chat}).parentNode.scrollTop = 20`)
+        .executeScript(`document.querySelector("${selectors.chat}").parentNode.scrollTop = 20`)
         .hover(selectors.item(1))
         .snapshot('Hovers first message in scrolled view: actions are hidden'),
   ],
