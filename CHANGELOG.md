@@ -25,7 +25,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Styles from `Tooltip` were moved `TooltipContent` component @layershifter ([#2333](https://github.com/microsoft/fluent-ui-react/pull/2333))
 - `ProviderBox` component was removed @layershifter ([#2192](https://github.com/microsoft/fluent-ui-react/pull/2192))
 - Styles and variables from `ProviderBox` are moved to `Provider` @layershifter ([#2192](https://github.com/microsoft/fluent-ui-react/pull/2192))
-- Restricted prop set in the `PopupContent` component is passed styles @layershifter ([#2357](https://github.com/microsoft/fluent-ui-react/pull/2307))
+- Fix an issue with `offset` and `pointing` in `Popup` @layershifter ([#2361](https://github.com/microsoft/fluent-ui-react/pull/2361))
 
 ### Fixes
 - Remove dependency on Lodash in TypeScript typings @layershifter ([#2323](https://github.com/microsoft/fluent-ui-react/pull/2323))
