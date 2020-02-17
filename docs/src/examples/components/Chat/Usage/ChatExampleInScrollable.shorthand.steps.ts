@@ -1,7 +1,7 @@
 import { Chat, ChatItem, ChatMessage } from '@fluentui/react'
 
 const selectors = {
-  chat: `.${Chat}`,
+  chat: `.${Chat.className}`,
   item: (itemIndex: number) =>
     `.${ChatItem.className}:nth-child(${itemIndex}) .${ChatMessage.className}`,
 }
