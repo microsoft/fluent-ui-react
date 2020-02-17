@@ -108,6 +108,7 @@ export interface CarouselState {
   prevActiveIndex: number
   ariaLiveOn: boolean
   itemIds: string[]
+  shouldFocusContainer: boolean
 }
 
 class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, CarouselState> {
@@ -213,7 +214,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
   }
 
   getInitialAutoControlledState(): CarouselState {
-    return { activeIndex: 0, prevActiveIndex: -1, ariaLiveOn: false, itemIds: [] as string[] }
+    return { activeIndex: 0, prevActiveIndex: -1, ariaLiveOn: false, itemIds: [] as string[], shouldFocusContainer: false }
   }
 
   itemRefs = [] as React.RefObject<HTMLElement>[]
@@ -248,8 +249,6 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
     })
 
     _.invoke(this.props, 'onActiveIndexChange', e, this.props)
-
-    this.itemRefs[this.state.activeIndex].current.blur()
 
     if (focusItem) {
       this.focusItemAtIndex(activeIndex)
@@ -308,6 +307,32 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
                       ...(getItemPositionText && {
                         itemPositionText: getItemPositionText(index, items.length),
                       }),
+                        onFocus: (e) => { 
+                          if(e)
+                          console.log("Milan focus called")
+                          console.log("e.currentTarget")
+                          console.log(e.currentTarget)
+                          console.log('e.target')
+                          console.log(e.target)
+                          if (e.currentTarget === e.target) {
+                            this.setState({
+                              shouldFocusContainer: true})
+                          } else {
+                            this.setState({
+                              shouldFocusContainer: false})
+                            }
+                        },
+                          onBlur: (e) => { 
+                            console.log("Milan blur called")
+                            console.log("e.currentTarget")
+                            console.log(e.currentTarget)
+                            console.log('e.target')
+                            console.log(e.target)
+      
+                              this.setState({
+                                shouldFocusContainer: e.currentTarget.contains(e.relatedTarget)})
+                            
+                          }
                     }),
                   })}
                 </Ref>

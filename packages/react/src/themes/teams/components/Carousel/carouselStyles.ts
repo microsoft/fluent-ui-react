@@ -21,6 +21,9 @@ const carouselStyles: ComponentSlotStylesPrepared<
     display: 'flex',
     listStyle: 'none',
     willChange: 'transform',
+    ...(p.shouldFocusContainer && {
+        border: '1px solid black',
+    }),
   }),
   paddleNext: ({ props: p, variables: v }): ICSSInJSStyle => ({
     height: pxToRem(v.paddleNextSize),
