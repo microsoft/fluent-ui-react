@@ -1,7 +1,7 @@
 import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
 import Slider from 'src/components/Slider/Slider'
 
-describe('Slider', () => {
+xdescribe('Slider', () => {
   isConformant(Slider, {
     constructorName: 'Slider',
     eventTargets: {

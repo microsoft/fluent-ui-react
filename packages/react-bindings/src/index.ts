@@ -25,3 +25,5 @@ export * from './telemetry/types'
 
 export { default as getElementType } from './utils/getElementType'
 export { default as getUnhandledProps } from './utils/getUnhandledProps'
+
+export * from './compose'

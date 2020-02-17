@@ -2,11 +2,14 @@ import { useSelectKnob, useStringKnob } from '@fluentui/docs-components'
 import {
   AvatarProps,
   BoxProps,
+  ButtonProps,
   DialogProps,
   DividerProps,
   EmbedProps,
   IconProps,
   ImageProps,
+  SliderProps,
+  StatusProps,
   VideoProps,
 } from '@fluentui/react'
 import * as _ from 'lodash'
@@ -21,11 +24,20 @@ export const Avatar: KnobComponentGenerators<AvatarProps> = {
     name: propName,
     initialValue: _.capitalize(`${faker.name.firstName()} ${faker.name.lastName()}`),
   }),
+  // TODO: fix support for composed components
+  image: () => null,
+  label: () => null,
+  status: () => null,
 }
 
 export const Box: KnobComponentGenerators<BoxProps> = {
   // TODO: fix support for boxes
   children: () => null,
+}
+
+export const Button: KnobComponentGenerators<ButtonProps> = {
+  // TODO: fix support for composed components
+  icon: () => null,
 }
 
 export const Dialog: KnobComponentGenerators<DialogProps> = {
@@ -77,6 +89,16 @@ export const Image: KnobComponentGenerators<ImageProps> = {
     name: propName,
     initialValue: faker.image.avatar(),
   }),
+}
+
+export const Slider: KnobComponentGenerators<SliderProps> = {
+  // TODO: fix support for composed components
+  input: () => null,
+}
+
+export const Status: KnobComponentGenerators<StatusProps> = {
+  // TODO: fix support for composed components
+  icon: () => null,
 }
 
 export const Video: KnobComponentGenerators<VideoProps> = {

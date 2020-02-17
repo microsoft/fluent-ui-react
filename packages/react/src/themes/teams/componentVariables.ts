@@ -3,8 +3,12 @@ export { default as Attachment } from './components/Attachment/attachmentVariabl
 export { default as Alert } from './components/Alert/alertVariables'
 
 export { default as Avatar } from './components/Avatar/avatarVariables'
+export { default as AvatarImage } from './components/Avatar/avatarImageVariables'
+export { default as AvatarLabel } from './components/Avatar/avatarLabelVariables'
+export { default as AvatarStatus } from './components/Avatar/avatarStatusVariables'
 
 export { default as Button } from './components/Button/buttonVariables'
+export { default as ButtonContent } from './components/Button/buttonContentVariables'
 export { default as ButtonGroup } from './components/Button/buttonVariables'
 
 export { default as Chat } from './components/Chat/chatVariables'
@@ -12,6 +16,9 @@ export { default as ChatItem } from './components/Chat/chatItemVariables'
 export { default as ChatMessage } from './components/Chat/chatMessageVariables'
 
 export { default as Checkbox } from './components/Checkbox/checkboxVariables'
+export { default as CheckboxIcon } from './components/Checkbox/checkboxVariables'
+export { default as CheckboxToggleIcon } from './components/Checkbox/checkboxVariables'
+export { default as CheckboxLabel } from './components/Checkbox/checkboxVariables'
 
 export { default as Dialog } from './components/Dialog/dialogVariables'
 
@@ -66,8 +73,10 @@ export { default as ReactionGroup } from './components/Reaction/reactionGroupVar
 export { default as Segment } from './components/Segment/segmentVariables'
 
 export { default as Slider } from './components/Slider/sliderVariables'
+export { default as SliderInput } from './components/Slider/sliderInputVariables'
 
 export { default as Status } from './components/Status/statusVariables'
+export { default as StatusIcon } from './components/Status/statusIconVariables'
 
 export { default as Text } from './components/Text/textVariables'
 

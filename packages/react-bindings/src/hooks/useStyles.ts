@@ -23,6 +23,9 @@ type UseStylesOptions<StyleProps extends PrimitiveProps> = {
   mapPropsToStyles?: () => StyleProps
   mapPropsToInlineStyles?: () => InlineStyleProps<StyleProps>
   rtl?: boolean
+
+  __experimental_composeName?: string
+  __experimental_overrideStyles?: boolean
 }
 
 type UseStylesResult = {
@@ -67,6 +70,8 @@ const useStyles = <StyleProps extends PrimitiveProps>(
     mapPropsToStyles = () => ({} as StyleProps),
     mapPropsToInlineStyles = () => ({} as InlineStyleProps<StyleProps>),
     rtl = false,
+    __experimental_composeName,
+    __experimental_overrideStyles,
   } = options
 
   // Stores debug information for component.
@@ -90,6 +95,9 @@ const useStyles = <StyleProps extends PrimitiveProps>(
       enableStylesCaching,
       enableVariablesCaching,
     },
+
+    __experimental_composeName,
+    __experimental_overrideStyles,
   })
 
   return { classes, styles: resolvedStyles }

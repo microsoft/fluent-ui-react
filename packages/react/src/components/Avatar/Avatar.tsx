@@ -12,9 +12,8 @@ import * as React from 'react'
 // @ts-ignore
 import { ThemeContext } from 'react-fela'
 
-import Image, { ImageProps } from '../Image/Image'
-import Label, { LabelProps } from '../Label/Label'
-import Status, { StatusProps } from '../Status/Status'
+import AvatarImage, { AvatarImageProps } from './AvatarImage'
+import AvatarLabel, { AvatarLabelProps } from './AvatarLabel'
 import {
   WithAsProp,
   ShorthandValue,
@@ -23,6 +22,7 @@ import {
   ProviderContextPrepared,
 } from '../../types'
 import { createShorthandFactory, UIComponentProps, commonPropTypes, SizeValue } from '../../utils'
+import AvatarStatus, { AvatarStatusProps } from './AvatarStatus'
 
 export interface AvatarProps extends UIComponentProps {
   /**
@@ -31,10 +31,10 @@ export interface AvatarProps extends UIComponentProps {
   accessibility?: Accessibility<never>
 
   /** Shorthand for the image. */
-  image?: ShorthandValue<ImageProps>
+  image?: ShorthandValue<AvatarImageProps>
 
   /** Shorthand for the label. */
-  label?: ShorthandValue<LabelProps>
+  label?: ShorthandValue<AvatarLabelProps>
 
   /** The name used for displaying the initials of the avatar if the image is not provided. */
   name?: string
@@ -43,7 +43,7 @@ export interface AvatarProps extends UIComponentProps {
   size?: SizeValue
 
   /** Shorthand for the status of the user. */
-  status?: ShorthandValue<StatusProps>
+  status?: ShorthandValue<AvatarStatusProps>
 
   /** Custom method for generating the initials from the name property, which is shown if no image is provided. */
   getInitials?: (name: string) => string
@@ -73,7 +73,7 @@ const Avatar: React.FC<WithAsProp<AvatarProps>> &
     debugName: Avatar.displayName,
     rtl: context.rtl,
   })
-  const { classes, styles: resolvedStyles } = useStyles(Avatar.displayName, {
+  const { classes } = useStyles(Avatar.displayName, {
     className: Avatar.className,
     mapPropsToStyles: () => ({ size }),
     mapPropsToInlineStyles: () => ({
@@ -87,34 +87,37 @@ const Avatar: React.FC<WithAsProp<AvatarProps>> &
   const ElementType = getElementType(props)
   const unhandledProps = getUnhandledProps(Avatar.handledProps, props)
 
+  // @ts-ignore
+  const imageElement = AvatarImage.create(image, {
+    defaultProps: () =>
+      getA11Props('image', {
+        fluid: true,
+        avatar: true,
+        title: name,
+      }),
+  })
+  // @ts-ignore
+  const statusElement = AvatarStatus.create(status, {
+    defaultProps: () =>
+      getA11Props('status', {
+        size,
+      }),
+  })
+  // @ts-ignore
+  const labelElement = AvatarLabel.create(label || {}, {
+    defaultProps: () =>
+      getA11Props('label', {
+        content: getInitials(name),
+        title: name,
+        size,
+      }),
+  })
+
   const result = (
     <ElementType {...getA11Props('root', { className: classes.root, ...unhandledProps })}>
-      {Image.create(image, {
-        defaultProps: () =>
-          getA11Props('image', {
-            fluid: true,
-            avatar: true,
-            title: name,
-            styles: resolvedStyles.image,
-          }),
-      })}
-      {!image &&
-        Label.create(label || {}, {
-          defaultProps: () =>
-            getA11Props('label', {
-              content: getInitials(name),
-              circular: true,
-              title: name,
-              styles: resolvedStyles.label,
-            }),
-        })}
-      {Status.create(status, {
-        defaultProps: () =>
-          getA11Props('status', {
-            size,
-            styles: resolvedStyles.status,
-          }),
-      })}
+      {imageElement}
+      {!image && labelElement}
+      {statusElement}
     </ElementType>
   )
 

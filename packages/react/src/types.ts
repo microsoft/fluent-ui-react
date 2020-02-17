@@ -93,6 +93,7 @@ export type ShorthandRenderProp<P> = (Component: React.ElementType, props: P) =>
 
 export type ShorthandValue<P extends Props> =
   | ReactNode
+  | Props<P>
   | (Props<P> & { children?: P['children'] | ShorthandRenderProp<P> })
 export type ShorthandCollection<P, K = never> = ShorthandValue<P & { kind?: K }>[]
 

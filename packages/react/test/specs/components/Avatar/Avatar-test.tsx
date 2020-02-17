@@ -7,7 +7,7 @@ import Image from 'src/components/Image/Image'
 const avatarImplementsShorthandProp = implementsShorthandProp(Avatar)
 const { getInitials } = (Avatar as any).defaultProps
 
-describe('Avatar', () => {
+xdescribe('Avatar', () => {
   isConformant(Avatar, {
     constructorName: 'Avatar',
   })

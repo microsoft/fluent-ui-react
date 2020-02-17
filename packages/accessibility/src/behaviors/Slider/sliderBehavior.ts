@@ -28,6 +28,7 @@ export default sliderBehavior
 
 export type SliderBehaviorProps = {
   disabled?: boolean
+  // TODO: fix these SupportedIntrinsicInputProps['min']
   min?: number
   max?: number
   value?: number
