@@ -13,6 +13,11 @@ import { IconXSpacing, IconProps } from '../../../../components/Icon/Icon'
 import { getStyle as getSvgStyle } from './svg'
 import { IconVariables, iconColorAreas } from './iconVariables'
 
+export type IconStylesProps = Pick<
+  IconProps,
+  'bordered' | 'circular' | 'color' | 'disabled' | 'outline' | 'rotate' | 'size' | 'xSpacing'
+> & { isFontIcon: boolean; isSvgIcon: boolean; name?: IconProps['name'] }
+
 export const emptyIcon: ThemeIconSpec = { icon: { content: '?' } }
 
 const getPaddedStyle = (): ICSSInJSStyle => ({
@@ -57,15 +62,10 @@ const getXSpacingStyles = (xSpacing: IconXSpacing, horizontalSpace: string): ICS
   }
 }
 
-const iconStyles: ComponentSlotStylesPrepared<IconProps, IconVariables> = {
+const iconStyles: ComponentSlotStylesPrepared<IconStylesProps, IconVariables> = {
   root: ({ props: p, variables: v, theme: t, rtl }): ICSSInJSStyle => {
-    const iconSpec: ThemeIconSpec = t.icons[p.name] || emptyIcon
-    const isFontIcon = !iconSpec.isSvg
-
+    const iconSpec: ThemeIconSpec = (p.name && t.icons[p.name]) || emptyIcon
     const colors = v.colorScheme[p.color]
-
-    const maybeIcon = t.icons[p.name]
-    const isSvgIcon = maybeIcon && maybeIcon.isSvg
 
     return {
       speak: 'none',
@@ -83,7 +83,7 @@ const iconStyles: ComponentSlotStylesPrepared<IconProps, IconVariables> = {
       ...((p.bordered || v.borderColor) &&
         getBorderedStyles(v.borderColor || getIconColor(v, colors))),
 
-      ...(isFontIcon && {
+      ...(p.isFontIcon && {
         fontWeight: 900, // required for the fontAwesome to render
         alignItems: 'center',
         boxSizing: 'content-box',
@@ -102,7 +102,7 @@ const iconStyles: ComponentSlotStylesPrepared<IconProps, IconVariables> = {
 
         transform: rtl ? `scaleX(-1) rotate(${-1 * p.rotate}deg)` : `rotate(${p.rotate}deg)`,
       }),
-      ...(isSvgIcon && { backgroundColor: v.backgroundColor }),
+      ...(p.isSvgIcon && { backgroundColor: v.backgroundColor }),
     }
   },
 

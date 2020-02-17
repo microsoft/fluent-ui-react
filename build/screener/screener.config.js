@@ -1,7 +1,10 @@
+// @ts-check
+
 require('@fluentui/internal-tooling/babel/register')
 
 const config = require('../config').default
-const { compilerOptions } = require('../tsconfig.docs.json')
+
+const { compilerOptions } = require(config.paths.docs('tsconfig.json'))
 
 require('tsconfig-paths').register({
   baseUrl: config.path_base,

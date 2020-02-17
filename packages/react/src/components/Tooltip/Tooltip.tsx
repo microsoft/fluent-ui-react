@@ -1,6 +1,6 @@
 import { Accessibility, tooltipAsLabelBehavior } from '@fluentui/accessibility'
 import { ReactAccessibilityBehavior } from '@fluentui/react-bindings'
-import { toRefObject, Ref } from '@fluentui/react-component-ref'
+import { Ref } from '@fluentui/react-component-ref'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
@@ -141,9 +141,9 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
 
   static create: ShorthandFactory<TooltipProps>
 
+  contentRef = React.createRef<HTMLElement>()
   pointerTargetRef = React.createRef<HTMLDivElement>()
   triggerRef = React.createRef<HTMLElement>()
-  contentRef = React.createRef<HTMLElement>()
   closeTimeoutId
 
   actionHandlers = {
@@ -167,13 +167,9 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     }
   }
 
-  renderComponent({
-    classes,
-    rtl,
-    accessibility,
-  }: RenderResultConfig<TooltipProps>): React.ReactNode {
+  renderComponent({ rtl, accessibility }: RenderResultConfig<TooltipProps>): React.ReactNode {
     const { mountNode, children, trigger } = this.props
-    const tooltipContent = this.renderTooltipContent(classes.content, rtl, accessibility)
+    const tooltipContent = this.renderTooltipContent(rtl, accessibility)
 
     const triggerNode = childrenExist(children) ? children : trigger
     const triggerElement = triggerNode && (React.Children.only(triggerNode) as React.ReactElement)
@@ -213,7 +209,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
 
     triggerProps.onMouseEnter = (e, ...args) => {
       this.setTooltipOpen(true, e)
-      setWhatInputSource('mouse')
+      setWhatInputSource(this.context.target, 'mouse')
       _.invoke(triggerElement, 'props.onMouseEnter', e, ...args)
     }
     triggerProps.onMouseLeave = (e, ...args) => {
@@ -243,11 +239,7 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
     _.invoke(e, 'currentTarget.contains', e.relatedTarget) ||
     _.invoke(this.contentRef.current, 'contains', e.relatedTarget)
 
-  renderTooltipContent(
-    tooltipPositionClasses: string,
-    rtl: boolean,
-    accessibility: ReactAccessibilityBehavior,
-  ): JSX.Element {
+  renderTooltipContent(rtl: boolean, accessibility: ReactAccessibilityBehavior): JSX.Element {
     const { align, position, target, offset } = this.props
     const { open } = this.state
 
@@ -259,25 +251,20 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
         position={position}
         enabled={open}
         rtl={rtl}
-        targetRef={target ? toRefObject(target) : this.triggerRef}
-        children={this.renderPopperChildren.bind(this, tooltipPositionClasses, rtl, accessibility)}
+        targetRef={target || this.triggerRef}
+        children={this.renderPopperChildren(accessibility)}
       />
     )
   }
 
-  renderPopperChildren = (
-    tooltipPositionClasses: string,
-    rtl: boolean,
-    accessibility: ReactAccessibilityBehavior,
-    { placement }: PopperChildrenProps,
-  ) => {
+  renderPopperChildren = (accessibility: ReactAccessibilityBehavior) => ({
+    placement,
+  }: PopperChildrenProps) => {
     const { content, pointing } = this.props
 
     const tooltipContentAttributes = {
-      ...(rtl && { dir: 'rtl' }),
       ...accessibility.attributes.tooltip,
       ...accessibility.keyHandlers.tooltip,
-      className: tooltipPositionClasses,
       ...this.getContentProps(),
     }
 
@@ -292,6 +279,8 @@ export default class Tooltip extends AutoControlledComponent<TooltipProps, Toolt
       generateKey: false,
       overrideProps: this.getContentProps,
     })
+
+    if (!tooltipContent) return null
 
     return <Ref innerRef={this.contentRef}>{tooltipContent}</Ref>
   }
