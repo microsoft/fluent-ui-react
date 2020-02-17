@@ -249,6 +249,8 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
 
     _.invoke(this.props, 'onActiveIndexChange', e, this.props)
 
+    this.itemRefs[this.state.activeIndex].current.blur()
+
     if (focusItem) {
       this.focusItemAtIndex(activeIndex)
     }
