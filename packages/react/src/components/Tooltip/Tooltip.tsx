@@ -180,7 +180,6 @@ const Tooltip: React.FC<TooltipProps> &
     const tooltipContent = TooltipContent.create(content, {
       defaultProps: () =>
         getA11Props('tooltip', {
-          ...(context.rtl && { dir: 'rtl' }),
           open,
           placement: popperProps.placement,
           pointing,
