@@ -13,16 +13,21 @@ import * as React from 'react'
 import { ThemeContext } from 'react-fela'
 import { Transition } from 'react-transition-group'
 
-import { childrenExist, StyledComponentProps, commonPropTypes } from '../../utils'
+import {
+  childrenExist,
+  StyledComponentProps,
+  commonPropTypes,
+  ChildrenComponentProps,
+} from '../../utils'
 import { ComponentEventHandler, ProviderContextPrepared } from '../../types'
 
 export type AnimationChildrenProp = (props: { classes: string }) => React.ReactNode
 
-export interface AnimationProps extends StyledComponentProps {
+export interface AnimationProps
+  extends StyledComponentProps,
+    ChildrenComponentProps<AnimationChildrenProp | React.ReactChild> {
   /** Additional CSS class name(s) to apply.  */
   className?: string
-
-  children: AnimationChildrenProp | React.ReactChild
 
   /** The name for the animation that should be applied, defined in the theme. */
   name?: string
@@ -216,6 +221,12 @@ const Animation: React.FC<AnimationProps> & {
     playState,
     timingFunction,
   ])
+
+  if (_.isNil(children)) {
+    setEnd()
+    return null
+  }
+
   const unhandledProps = getUnhandledProps(Animation.handledProps, props)
 
   const isChildrenFunction = typeof children === 'function'
@@ -238,7 +249,7 @@ const Animation: React.FC<AnimationProps> & {
       onExiting={handleAnimationEvent('onExiting')}
       onExited={handleAnimationEvent('onExited')}
       {...unhandledProps}
-      className={!isChildrenFunction ? cx(classes.root, (child as any).props.className) : ''}
+      className={!isChildrenFunction ? cx(classes.root, (child as any)?.props?.className) : ''}
     >
       {isChildrenFunction
         ? () => (children as AnimationChildrenProp)({ classes: classes.root })

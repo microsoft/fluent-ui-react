@@ -1,6 +1,6 @@
 import { pxToRem } from '../../../../utils'
 
-export interface ProviderBoxVariables {
+export interface ProviderVariables {
   background: string
   color: string
 
@@ -15,7 +15,7 @@ export interface ProviderBoxVariables {
   scrollbarThumbHoverBorderSize: string
 }
 
-export default (siteVariables): Partial<ProviderBoxVariables> => ({
+export default (siteVariables): Partial<ProviderVariables> => ({
   background: siteVariables.bodyBackground,
   color: siteVariables.bodyColor,
 
