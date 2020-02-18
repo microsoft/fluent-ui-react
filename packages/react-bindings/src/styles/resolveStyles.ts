@@ -52,12 +52,33 @@ const resolveStyles = (
     disableAnimations,
     renderer,
     performance = {},
-  } = options || {}
-
+  } = options
   const { className, design, styles, variables, ...stylesProps } = props
-  const noInlineOverrides = !(design || styles || variables)
 
-  const cacheEnabled = performance.enableStylesCaching && noInlineOverrides
+  if (process.env.NODE_ENV !== 'production') {
+    if (!performance.enableStylesCaching && performance.enabledHardVariablesCaching) {
+      throw new Error('111')
+    }
+
+    if (performance.enabledHardVariablesCaching) {
+      if (!_.isPlainObject(variables)) {
+        throw new Error()
+      }
+
+      if (
+        !Object.keys(variables).every(variableName => {
+          return variables[variableName] // TODO
+        })
+      ) {
+      }
+    }
+  }
+
+  const noInlineStylesOverrides = !(design || styles || variables)
+  const noVariableOverrides = performance.enabledHardVariablesCaching || !variables
+
+  const cacheEnabled =
+    performance.enableStylesCaching && noInlineStylesOverrides && noVariableOverrides
 
   // Merge theme styles with inline overrides if any
   let mergedStyles: ComponentSlotStylesPrepared = theme.componentStyles[displayName] || {
@@ -109,12 +130,12 @@ const resolveStyles = (
     }
   }
 
-  const componentCacheKey =
-    cacheEnabled && displayName && stylesProps
-      ? `${displayName}:${JSON.stringify(stylesProps)}${styleParam.rtl}${
-          styleParam.disableAnimations
-        }`
-      : ''
+  const propsCacheKey = cacheEnabled
+    ? `${JSON.stringify(stylesProps)}:${JSON.stringify(variables)}`
+    : ''
+  const componentCacheKey = cacheEnabled
+    ? `${displayName}:${propsCacheKey}${styleParam.rtl}${styleParam.disableAnimations}`
+    : ''
 
   Object.keys(mergedStyles).forEach(slotName => {
     // resolve/render slot styles once and cache
