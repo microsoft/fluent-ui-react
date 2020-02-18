@@ -1,11 +1,11 @@
 import { unstable_calculateAnimationTimeout as calculateAnimationTimeout } from '@fluentui/react-bindings'
 
 describe('convertCssTimeToNumber', () => {
-  test('converts ms values to number', () => {
+  test('converts "ms" values to number', () => {
     expect(calculateAnimationTimeout('200ms', '300ms')).toEqual(500)
   })
 
-  test('converts s values to number', () => {
+  test('converts "s" values to number', () => {
     expect(calculateAnimationTimeout('20s', '2s')).toEqual(22000)
   })
 
