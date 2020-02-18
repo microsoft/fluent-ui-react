@@ -414,6 +414,15 @@ class Sidebar extends React.Component<any, any> {
         },
         public: true,
       },
+      {
+        key: 'teams-and-fabric-interop',
+        title: {
+          content: 'Teams and Fabric Interop',
+          as: NavLink,
+          to: '/teams-and-fabric-interop',
+        },
+        public: false,
+      },
     ]
 
     const componentTreeSection = {

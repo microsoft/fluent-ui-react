@@ -2,7 +2,9 @@ import * as Accessibility from '@fluentui/accessibility'
 import * as CodeSandbox from '@fluentui/code-sandbox'
 import * as DocsComponent from '@fluentui/docs-components'
 import * as FluentUI from '@fluentui/react'
+// @ts-ignore
 import * as ReactFela from 'react-fela'
+import * as ReactThemingAdapters from '@fluentui/react-theming-adapters'
 import * as _ from 'lodash'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
@@ -39,6 +41,10 @@ export const imports: Record<string, { version: string; module: any }> = {
   '@fluentui/react': {
     version: projectPackageJson.version,
     module: FluentUI,
+  },
+  '@fluentui/react-theming-adapters': {
+    version: projectPackageJson.version,
+    module: ReactThemingAdapters,
   },
   classnames: {
     version: projectPackageJson.dependencies['classnames'],

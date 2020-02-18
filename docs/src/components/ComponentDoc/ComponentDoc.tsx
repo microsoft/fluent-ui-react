@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
-import { tabListBehavior, Header, Icon, Dropdown, Text, Grid, Menu } from '@fluentui/react'
+import { tabListBehavior, Header, Icon, Text, Grid, Menu } from '@fluentui/react'
 
 import { getFormattedHash } from '../../utils'
 // import ComponentDocLinks from './ComponentDocLinks'
@@ -8,12 +8,12 @@ import { getFormattedHash } from '../../utils'
 import { ComponentExamples } from './ComponentExamples'
 import ComponentProps from './ComponentProps'
 import { ComponentDocAccessibility } from './ComponentDocAccessibility'
-import { ThemeContext } from '../../context/ThemeContext'
 import ExampleContext from '../../context/ExampleContext'
 import ComponentPlayground from '../ComponentPlayground/ComponentPlayground'
 import { ComponentInfo } from '../../types'
 import ComponentBestPractices from './ComponentBestPractices'
 import * as _ from 'lodash'
+import ComponentDocThemeSwitcher from './ComponentDocThemeSwitcher'
 
 const exampleEndStyle: React.CSSProperties = {
   textAlign: 'center',
@@ -106,32 +106,6 @@ class ComponentDoc extends React.Component<ComponentDocProps, ComponentDocState>
   }
 
   render() {
-    const getA11ySelectionMessage = {
-      onAdd: item => `${item} has been selected.`,
-      onRemove: item => `${item} has been removed.`,
-    }
-
-    const getA11yStatusMessage = ({
-      isOpen,
-      itemToString,
-      previousResultCount,
-      resultCount,
-      selectedItem,
-    }) => {
-      if (!isOpen) {
-        return selectedItem ? itemToString(selectedItem) : ''
-      }
-      if (!resultCount) {
-        return 'No results are available.'
-      }
-      if (resultCount !== previousResultCount) {
-        return `${resultCount} result${
-          resultCount === 1 ? ' is' : 's are'
-        } available, use up and down arrow keys to navigate. Press Enter key to select.`
-      }
-      return ''
-    }
-
     const { info, tabs } = this.props
     const { activePath, currentTabIndex } = this.state
 
@@ -150,19 +124,20 @@ class ComponentDoc extends React.Component<ComponentDocProps, ComponentDocState>
             zIndex: 1000,
           }}
         >
-          <ThemeContext.Consumer>
-            {({ changeTheme, themeOptions }) => (
-              <Dropdown
-                style={{ float: 'right' }}
-                getA11yStatusMessage={getA11yStatusMessage}
-                getA11ySelectionMessage={getA11ySelectionMessage}
-                noResultsMessage="We couldn't find any matches."
-                placeholder="Theme"
-                onSelectedChange={changeTheme}
-                items={themeOptions.map(({ text, value }) => ({ header: text, value }))}
-              />
-            )}
-          </ThemeContext.Consumer>
+          {/* <ThemeContext.Consumer> */}
+          {/*  {({ changeTheme, themeOptions }) => ( */}
+          {/*    <Dropdown */}
+          {/*      style={{ float: 'right' }} */}
+          {/*      getA11yStatusMessage={getA11yStatusMessage} */}
+          {/*      getA11ySelectionMessage={getA11ySelectionMessage} */}
+          {/*      noResultsMessage="We couldn't find any matches." */}
+          {/*      placeholder="Theme" */}
+          {/*      onSelectedChange={changeTheme} */}
+          {/*      items={themeOptions.map(({ text, value }) => ({ header: text, value }))} */}
+          {/*    /> */}
+          {/*  )} */}
+          {/* </ThemeContext.Consumer> */}
+          <ComponentDocThemeSwitcher excludeOptions={['teamsToFabric', 'fabricToTeams']} />
           <Header
             as="h1"
             aria-level={2}

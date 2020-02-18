@@ -1,0 +1,36 @@
+{
+  "author": "Marija Najdova <mnajdova@gmail.com>",
+  "bugs": "https://github.com/microsoft/fluent-ui-react/issues",
+  "version": "0.43.0",
+  "dependencies": {
+    "@fluentui/react": "^0.43.0",
+    "office-ui-fabric-react": "^7.86.1"
+  },
+  "description": "Adapters for interop for the Teams and Fabric themes.",
+  "devDependencies": {
+    "@fluentui/internal-tooling": "^0.43.0",
+    "lerna-alias": "^3.0.3-0"
+  },
+  "files": [
+    "dist"
+  ],
+  "homepage": "https://github.com/microsoft/fluent-ui-react#readme",
+  "jsnext:main": "dist/es/index.js",
+  "license": "MIT",
+  "main": "dist/commonjs/index.js",
+  "module": "dist/es/index.js",
+  "name": "@fluentui/react-theming-adapters",
+  "peerDependencies": {
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": "stardust-ui/react.git",
+  "scripts": {
+    "build": "gulp bundle:package --package react"
+  },
+  "sideEffects": false,
+  "types": "dist/es/index.d.ts"
+}

@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { hot } from 'react-hot-loader/root'
-import { Provider, Debug, themes } from '@fluentui/react'
+import { themes, Debug, Provider } from '@fluentui/react'
+import { FabricToTeamsProvider, TeamsToFabricProvider } from '@fluentui/react-theming-adapters'
 
 import { mergeThemes } from '@fluentui/styles'
 import { ThemeContext, ThemeContextData, themeContextDefaults } from './context/ThemeContext'
@@ -9,6 +10,7 @@ import { PerfDataProvider } from './components/ComponentDoc/PerfChart'
 
 // Experimental dev-time accessibility attributes integrity validation.
 import { setup } from '@fluentui/ability-attributes'
+import { Fabric } from 'office-ui-fabric-react'
 
 // Temporarily disabling the validation for Screener.
 if (process.env.NODE_ENV !== 'production' && !process.env.SCREENER) {
@@ -20,32 +22,46 @@ class App extends React.Component<any, ThemeContextData> {
   // be passed down into the context provider
   state: ThemeContextData = {
     ...themeContextDefaults,
-    changeTheme: (e, { value: item }) => this.setState({ themeName: item.value }),
+    changeTheme: (e, { value: item }) => this.setState({ selectedTheme: item }),
   }
 
   render() {
-    const { themeName } = this.state
+    const { selectedTheme } = this.state
+    const content = (
+      <PerfDataProvider>
+        <div>
+          <Debug />
+          <Routes />
+        </div>
+      </PerfDataProvider>
+    )
     return (
       <ThemeContext.Provider value={this.state}>
-        <Provider
-          as={React.Fragment}
-          theme={mergeThemes(themes.fontAwesome, themes[themeName], {
-            staticStyles: [
-              {
-                a: {
-                  textDecoration: 'none',
+        {selectedTheme.value === 'fabricToTeams' ? (
+          <Fabric applyTheme>
+            <FabricToTeamsProvider fluentOverridesTheme={themes['teams']}>
+              {content}
+            </FabricToTeamsProvider>
+          </Fabric>
+        ) : selectedTheme.value === 'teamsToFabric' ? (
+          <Provider theme={themes['teams']}>
+            <TeamsToFabricProvider>{content}</TeamsToFabricProvider>
+          </Provider>
+        ) : (
+          <Provider
+            theme={mergeThemes(themes.fontAwesome, themes[selectedTheme.value], {
+              staticStyles: [
+                {
+                  a: {
+                    textDecoration: 'none',
+                  },
                 },
-              },
-            ],
-          })}
-        >
-          <PerfDataProvider>
-            <div>
-              <Debug />
-              <Routes />
-            </div>
-          </PerfDataProvider>
-        </Provider>
+              ],
+            })}
+          >
+            {content}
+          </Provider>
+        )}
       </ThemeContext.Provider>
     )
   }

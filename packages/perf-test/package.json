@@ -4,7 +4,7 @@
   "version": "0.44.0",
   "private": true,
   "dependencies": {
-    "office-ui-fabric-react": "^7.44.0",
+    "office-ui-fabric-react": "^7.86.1",
     "react": "^16.8.0",
     "react-dom": "^16.8.0"
   },
