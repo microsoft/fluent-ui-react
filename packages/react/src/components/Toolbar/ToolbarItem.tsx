@@ -190,9 +190,6 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
       }
       // TODO: should we pass toolbarMenuItem to the user callback so he can decide if he wants to close the menu?
       this.trySetMenuOpen(menuOpen, e)
-      if (!menuOpen) {
-        _.invoke(this.itemRef.current, 'focus')
-      }
     },
     variables: mergeComponentVariables(variables, predefinedProps.variables),
   })
@@ -322,7 +319,6 @@ class ToolbarItem extends UIComponent<WithAsProp<ToolbarItemProps>> {
     if (menu) {
       if (doesNodeContainClick(this.menuRef.current, e, this.context.target)) {
         this.trySetMenuOpen(false, e)
-        _.invoke(this.itemRef.current, 'focus')
       }
     }
   }
