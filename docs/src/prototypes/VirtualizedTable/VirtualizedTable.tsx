@@ -40,6 +40,7 @@ const VirtualizedTablePrototype = () => {
         }}
         key={row.key}
         accessibility={gridRowBehavior}
+        aria-rowindex={index + 1}
       >
         <Table.Cell {...row.items[0]} accessibility={gridCellBehavior} />
         <Table.Cell {...row.items[1]} accessibility={gridCellBehavior} />
@@ -50,7 +51,7 @@ const VirtualizedTablePrototype = () => {
   }
 
   return (
-    <Table accessibility={gridNestedBehavior}>
+    <Table accessibility={gridNestedBehavior} aria-rowcount={rows.length}>
       <Table.Row header>
         <Table.Cell content="id" key="id" accessibility={gridHeaderCellBehavior} />
         <Table.Cell content="Name" key="name" accessibility={gridHeaderCellBehavior} />

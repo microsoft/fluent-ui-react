@@ -41,6 +41,7 @@ interface VirtualizedTableProps {
 function VirtualizedTable(props: VirtualizedTableProps) {
   const { header, rows } = getItems(20, 50)
   const renderedItems = [header, ...rows]
+  const itemsCount = renderedItems.length
 
   const accessibilityListProperties = {
     'aria-label': '',
@@ -71,6 +72,7 @@ function VirtualizedTable(props: VirtualizedTableProps) {
         }}
         key={row.key}
         accessibility={gridRowBehavior}
+        aria-rowindex={index + 1}
         header
       >
         <Table.Cell
@@ -94,18 +96,18 @@ function VirtualizedTable(props: VirtualizedTableProps) {
   }
 
   return (
-    <Table accessibility={gridNestedBehavior}>
+    <Table accessibility={gridNestedBehavior} aria-rowcount={itemsCount}>
       <WindowScroller scrollElement={props.scrollElementRef} key={props.scrollElementRef}>
         {({ height, isScrolling, registerChild, onChildScroll, scrollTop }) => (
           <AutoSizer disableHeight>
             {({ width }) => {
               return height ? (
-                <div ref={el => registerChild(el)}>
+                <div ref={el => registerChild(el)} {...accessibilityListProperties}>
                   <ReactVirtualizedList
                     autoHeight
                     disableHeader={true}
                     height={height}
-                    rowCount={renderedItems.length}
+                    rowCount={itemsCount}
                     width={width - scrollbarOffset}
                     onScroll={onChildScroll}
                     scrollTop={scrollTop}
