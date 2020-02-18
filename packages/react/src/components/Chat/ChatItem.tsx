@@ -163,7 +163,7 @@ const ChatItem: React.FC<WithAsProp<ChatItemProps>> &
         ...unhandledProps,
       })}
     >
-      {childrenExist(children) ? children : renderChatItem()}
+      {childrenExist(children) ? children : renderContent()}
     </ElementType>
   )
   setEnd()
