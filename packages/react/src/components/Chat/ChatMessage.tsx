@@ -205,7 +205,7 @@ const ChatMessage: React.FC<WithAsProp<ChatMessageProps>> &
   )
 
   const handleFocus = (e: React.SyntheticEvent) => {
-    if (updateActionsMenuPosition.current) updateActionsMenuPosition.current()
+    _.invoke(updateActionsMenuPosition, 'current')
 
     setFocused(true)
     _.invoke(props, 'onFocus', e, props)
@@ -221,8 +221,7 @@ const ChatMessage: React.FC<WithAsProp<ChatMessageProps>> &
   }
 
   const handleMouseEnter = (e: React.SyntheticEvent) => {
-    if (updateActionsMenuPosition.current) updateActionsMenuPosition.current()
-
+    _.invoke(updateActionsMenuPosition, 'current')
     _.invoke(props, 'onMouseEnter', e, props)
   }
 
