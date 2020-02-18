@@ -18,8 +18,8 @@ describe('convertCssTimeToNumber', () => {
     expect(calculateAnimationTimeout('intial', undefined)).toEqual(0)
   })
 
-  test('returns the duration if delay is not set other valid css values to 0', () => {
-    expect(calculateAnimationTimeout('400ms', undefined)).toEqual(400)
-    expect(calculateAnimationTimeout('2s', undefined)).toEqual(2000)
+  test('returns the duration if delay is not set', () => {
+    expect(calculateAnimationTimeout('400ms')).toEqual(400)
+    expect(calculateAnimationTimeout('2s')).toEqual(2000)
   })
 })
