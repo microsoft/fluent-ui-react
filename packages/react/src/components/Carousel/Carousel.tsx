@@ -17,6 +17,7 @@ import {
   ChildrenComponentProps,
   getOrGenerateIdFromShorthand,
   AutoControlledComponent,
+  isFromKeyboard,
 } from '../../utils'
 import {
   WithAsProp,
@@ -110,6 +111,7 @@ export interface CarouselState {
   ariaLiveOn: boolean
   itemIds: string[]
   shouldFocusContainer: boolean
+  isFromKeyboard: boolean
 }
 
 class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, CarouselState> {
@@ -221,6 +223,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
       ariaLiveOn: false,
       itemIds: [] as string[],
       shouldFocusContainer: false,
+      isFromKeyboard: false,
     }
   }
 
@@ -264,12 +267,16 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
 
   overrideItemProps = predefinedProps => ({
     onFocus: (e, itemProps) => {
-      this.setState({ shouldFocusContainer: e.currentTarget === e.target })
+      this.setState({
+        shouldFocusContainer: e.currentTarget === e.target,
+        isFromKeyboard: isFromKeyboard(),
+      })
       _.invoke(predefinedProps, 'onFocus', e, itemProps)
     },
     onBlur: (e, itemProps) => {
       this.setState({
         shouldFocusContainer: e.currentTarget.contains(e.relatedTarget),
+        isFromKeyboard: false,
       })
       _.invoke(predefinedProps, 'onBlur', e, itemProps)
     },
