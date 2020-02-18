@@ -1,6 +1,6 @@
 import path from 'path'
 import '@fluentui/scripts/tasks/preset'
-import { series, task, argv } from '@fluentui/scripts'
+import { series, task } from '@fluentui/scripts'
 
 // TODO: FUR integration issues
 // - FUR build fails when it comes across these new packages inside of packages/
@@ -26,8 +26,7 @@ task('perf-test:bundle', bundleStories())
 task('perf-test:run', () => {
   // delay require in case digest isn't built yet
   const runPerfTest = require('./tasks/perf-test').default
-
-  return runPerfTest(argv().base)
+  return runPerfTest()
 })
 
 // TOOD: is build doing anything meaningful? only if there's source that's not a just script?

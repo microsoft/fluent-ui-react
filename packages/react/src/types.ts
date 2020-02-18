@@ -1,19 +1,7 @@
-import {
-  StylesContextInputValue,
-  StylesContextValue,
-  StylesContextPerformance,
-  Telemetry,
-} from '@fluentui/react-bindings'
+import { StylesContextInputValue, StylesContextValue, Telemetry } from '@fluentui/react-bindings'
 import * as React from 'react'
 
 import { ShorthandFactory } from './utils/factories'
-
-// Temporary workaround for @lodash dependency
-
-export type DebounceResultFn<T> = T & {
-  cancel: () => void
-  flush: () => void
-}
 
 // ========================================================
 // Utilities
@@ -179,12 +167,10 @@ export interface ProviderContextInput extends StylesContextInputValue {
   rtl?: boolean
   target?: Document
   telemetry?: Telemetry
-  performance?: StylesContextPerformance
 }
 
 export interface ProviderContextPrepared extends StylesContextValue {
   rtl: boolean
-  // `target` can be undefined for SSR
-  target: Document | undefined
+  target: Document
   telemetry: Telemetry | undefined
 }

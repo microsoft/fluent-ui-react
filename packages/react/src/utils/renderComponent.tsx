@@ -11,7 +11,7 @@ import {
 } from '@fluentui/react-bindings'
 import {
   emptyTheme,
-  ComponentSlotStylesResolved,
+  ComponentSlotStylesPrepared,
   ComponentVariablesObject,
   DebugData,
   PropsWithVarsAndStyles,
@@ -28,7 +28,7 @@ export interface RenderResultConfig<P> {
   classes: ComponentSlotClasses
   unhandledProps: Props
   variables: ComponentVariablesObject
-  styles: ComponentSlotStylesResolved
+  styles: ComponentSlotStylesPrepared
   accessibility: ReactAccessibilityBehavior
   rtl: boolean
   theme: ThemePrepared
@@ -68,7 +68,6 @@ const renderComponent = <P extends {}>(
 
   const { setStart, setEnd } = useTelemetry(displayName, context.telemetry)
   const rtl = context.rtl || false
-  const enableVariablesCaching = context.performance?.enableVariablesCaching
 
   setStart()
 
@@ -92,11 +91,7 @@ const renderComponent = <P extends {}>(
     rtl,
     saveDebug,
     theme: context.theme || emptyTheme,
-    performance: {
-      enableVariablesCaching:
-        typeof enableVariablesCaching === 'boolean' ? enableVariablesCaching : true,
-      enableStylesCaching: false, // we cannot enable caching for class components
-    },
+    _internal_resolvedComponentVariables: context._internal_resolvedComponentVariables || {},
   })
 
   const resolvedConfig: RenderResultConfig<P> = {

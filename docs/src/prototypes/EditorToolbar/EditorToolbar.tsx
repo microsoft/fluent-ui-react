@@ -16,6 +16,7 @@ import {
   ToolbarMenuItemShorthandKinds,
 } from '@fluentui/react'
 import { useEventListener } from '@fluentui/react-component-event-listener'
+import { toRefObject } from '@fluentui/react-component-ref'
 import * as keyboardKey from 'keyboard-key'
 import * as _ from 'lodash'
 import * as React from 'react'
@@ -242,7 +243,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
       }
     },
     type: 'keydown',
-    target: props.target,
+    targetRef: toRefObject(props.target),
   })
   useEventListener({
     listener: () => {
@@ -257,7 +258,7 @@ const EditorToolbar: React.FC<EditorToolbarProps> = props => {
       }
     },
     type: 'resize',
-    target: props.target.defaultView,
+    targetRef: toRefObject(props.target.defaultView),
   })
 
   return (

@@ -6,7 +6,6 @@ export interface ListItemVariables {
 
   headerLineHeight: string
   headerFontSize: string
-  zIndex: number
 
   // Header Media
   headerMediaFontSize: string
@@ -32,7 +31,6 @@ export default (siteVariables: any): ListItemVariables => {
   return {
     minHeight: pxToRem(48),
     rootPadding: `0 ${pxToRem(18)} 0 ${pxToRem(20)}`,
-    zIndex: siteVariables.zIndexes.foreground,
 
     // Header
     // TODO: prod app uses 17.5px here, it should be 16px per the design guide!

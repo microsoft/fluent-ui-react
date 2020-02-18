@@ -263,12 +263,8 @@ export const tryCleanupWhatInput = (target: Document) => {
   }
 }
 
-export const setWhatInputSource = (
-  target: Document,
-  newInput: 'mouse' | 'keyboard' | 'initial',
-) => {
+export const setWhatInputSource = (newInput: 'mouse' | 'keyboard' | 'initial') => {
   currentInput = newInput
-  doUpdate(target)
 }
 
 // returns string: the current input type

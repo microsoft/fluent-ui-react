@@ -6,7 +6,7 @@ import {
 } from '@fluentui/react-bindings'
 import { EventListener } from '@fluentui/react-component-event-listener'
 import { NodeRef, Unstable_NestingAuto } from '@fluentui/react-component-nesting-registry'
-import { handleRef, Ref } from '@fluentui/react-component-ref'
+import { handleRef, toRefObject, Ref } from '@fluentui/react-component-ref'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import * as React from 'react'
 import * as PropTypes from 'prop-types'
@@ -241,10 +241,14 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     }
   }
 
-  renderComponent({ rtl, accessibility }: RenderResultConfig<PopupProps>): React.ReactNode {
+  renderComponent({
+    classes,
+    rtl,
+    accessibility,
+  }: RenderResultConfig<PopupProps>): React.ReactNode {
     const { inline, mountNode } = this.props
     const { open } = this.state
-    const popupContent = open && this.renderPopupContent(rtl, accessibility)
+    const popupContent = open && this.renderPopupContent(classes.popup, rtl, accessibility)
 
     return (
       <>
@@ -365,7 +369,7 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     if (_.includes(normalizedOn, 'hover')) {
       triggerProps.onMouseEnter = (e, ...args) => {
         this.setPopupOpen(true, e)
-        setWhatInputSource(this.context.target, 'mouse')
+        setWhatInputSource('mouse')
         _.invoke(triggerElement, 'props.onMouseEnter', e, ...args)
       }
       triggerProps.onMouseLeave = (e, ...args) => {
@@ -458,7 +462,11 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     )
   }
 
-  renderPopupContent(rtl: boolean, accessibility: ReactAccessibilityBehavior): JSX.Element {
+  renderPopupContent(
+    popupPositionClasses: string,
+    rtl: boolean,
+    accessibility: ReactAccessibilityBehavior,
+  ): JSX.Element {
     const { align, position, offset, target, unstable_pinned } = this.props
 
     return (
@@ -469,16 +477,20 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
         offset={offset}
         rtl={rtl}
         unstable_pinned={unstable_pinned}
-        targetRef={this.rightClickReferenceObject || target || this.triggerRef}
-        children={this.renderPopperChildren(accessibility)}
+        targetRef={
+          this.rightClickReferenceObject || (target ? toRefObject(target) : this.triggerRef)
+        }
+        children={this.renderPopperChildren.bind(this, popupPositionClasses, rtl, accessibility)}
       />
     )
   }
 
-  renderPopperChildren = (accessibility: ReactAccessibilityBehavior) => ({
-    placement,
-    scheduleUpdate,
-  }: PopperChildrenProps) => {
+  renderPopperChildren = (
+    popupPositionClasses: string,
+    rtl: boolean,
+    accessibility: ReactAccessibilityBehavior,
+    { placement, scheduleUpdate }: PopperChildrenProps,
+  ) => {
     const {
       content: propsContent,
       renderContent,
@@ -489,10 +501,14 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
     } = this.props
 
     const content = renderContent ? renderContent(scheduleUpdate) : propsContent
+    const targetRef = toRefObject(this.context.target)
+
     const popupContent = Popup.Content.create(content || {}, {
       defaultProps: () => ({
+        ...(rtl && { dir: 'rtl' }),
         ...accessibility.attributes.popup,
         ...accessibility.keyHandlers.popup,
+        className: popupPositionClasses,
         ...this.getContentProps(),
         placement,
         pointing,
@@ -519,19 +535,19 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
 
             <EventListener
               listener={this.handleDocumentClick(getRefs)}
-              target={this.context.target}
+              targetRef={targetRef}
               type="click"
               capture
             />
             <EventListener
               listener={this.handleDocumentClick(getRefs)}
-              target={this.context.target}
+              targetRef={targetRef}
               type="contextmenu"
               capture
             />
             <EventListener
               listener={this.handleDocumentKeyDown(getRefs)}
-              target={this.context.target}
+              targetRef={targetRef}
               type="keydown"
               capture
             />
@@ -540,13 +556,13 @@ export default class Popup extends AutoControlledComponent<PopupProps, PopupStat
               <>
                 <EventListener
                   listener={this.dismissOnScroll}
-                  target={this.context.target}
+                  targetRef={targetRef}
                   type="wheel"
                   capture
                 />
                 <EventListener
                   listener={this.dismissOnScroll}
-                  target={this.context.target}
+                  targetRef={targetRef}
                   type="touchmove"
                   capture
                 />

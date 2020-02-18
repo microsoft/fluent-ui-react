@@ -25,7 +25,8 @@ const Types = () => (
     </ExampleSection>
     <NonPublicSection title="Types for visual tests">
       <ComponentExample examplePath="components/Provider/Types/ProviderExampleScrollbar" />
-      <ComponentExample examplePath="components/Provider/Types/ProviderExampleStyles" />
+    </NonPublicSection>
+    <NonPublicSection title="Types for visual tests">
       <ComponentExample examplePath="components/Provider/Types/ProviderExampleRendererFelaPluginFallbackValue" />
     </NonPublicSection>
   </>

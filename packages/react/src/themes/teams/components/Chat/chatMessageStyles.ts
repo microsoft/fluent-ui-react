@@ -2,16 +2,16 @@ import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import * as _ from 'lodash'
 import {
   default as ChatMessage,
-  ChatMessageStylesProps,
+  ChatMessageProps,
+  ChatMessageState,
 } from '../../../../components/Chat/ChatMessage'
 import { ChatMessageVariables } from './chatMessageVariables'
 import { screenReaderContainerStyles } from '../../../../utils/accessibility/Styles/accessibilityStyles'
 import { pxToRem } from '../../../../utils'
-import initialPopperStyles from '../../../../utils/positioner/initialStyles'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 const chatMessageStyles: ComponentSlotStylesPrepared<
-  ChatMessageStylesProps,
+  ChatMessageProps & ChatMessageState,
   ChatMessageVariables
 > = {
   root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
@@ -93,9 +93,7 @@ const chatMessageStyles: ComponentSlotStylesPrepared<
     borderRadius: v.borderRadius,
     boxShadow: v.actionMenuBoxShadow,
     // we need higher zIndex for the action menu in order to be displayed above the focus border of the chat message
-    zIndex: v.overlayZIndex,
-
-    ...(initialPopperStyles as ICSSInJSStyle),
+    zIndex: 1000,
 
     ...(_.isNil(v.showActionMenu) && {
       overflow: p.focused ? 'visible' : 'hidden',
@@ -131,7 +129,7 @@ const chatMessageStyles: ComponentSlotStylesPrepared<
       color: v.timestampColorMine,
     }),
     ...((p.attached === 'bottom' || p.attached === true) &&
-      !p.hasReactionGroup &&
+      !p.reactionGroup &&
       (screenReaderContainerStyles as ICSSInJSStyle)),
   }),
 
@@ -145,7 +143,7 @@ const chatMessageStyles: ComponentSlotStylesPrepared<
         textDecoration: 'underline',
       },
     },
-    ...(p.hasBadge &&
+    ...(p.badge &&
       p.badgePosition === 'end' && {
         marginRight: pxToRem(4),
       }),
@@ -162,14 +160,14 @@ const chatMessageStyles: ComponentSlotStylesPrepared<
       width: 'auto',
       borderRadius: '50%',
       top: pxToRem(4),
-      zIndex: v.zIndex,
+      zIndex: 1,
       [sidePosition]: 0,
       transform: p.badgePosition === 'start' ? 'translateX(-50%)' : 'translateX(50%)',
     }
   },
   reactionGroup: ({ props: p, variables: v }) => ({
     marginLeft: v.reactionGroupMarginLeft,
-    ...(p.hasBadge &&
+    ...(p.badge &&
       p.badgePosition === 'end' && {
         marginRight: pxToRem(2),
       }),

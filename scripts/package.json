@@ -1,6 +1,6 @@
 {
   "name": "@fluentui/scripts",
-  "version": "0.44.0",
+  "version": "0.43.0",
   "license": "MIT",
   "main": "index.ts",
   "bin": {
@@ -10,7 +10,7 @@
     "projrefs": "just-scripts projrefs"
   },
   "dependencies": {
-    "@babel/core": "^7.7.7",
+    "@babel/core": "^7.6.4",
     "@storybook/addon-a11y": "^5.2.5",
     "@storybook/addon-actions": "^5.2.5",
     "@storybook/addon-info": "^5.2.5",

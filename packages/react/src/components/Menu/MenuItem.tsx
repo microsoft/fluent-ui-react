@@ -1,7 +1,7 @@
 import { Accessibility, menuItemBehavior, submenuBehavior } from '@fluentui/accessibility'
 import { focusAsync } from '@fluentui/react-bindings'
 import { EventListener } from '@fluentui/react-component-event-listener'
-import { Ref } from '@fluentui/react-component-ref'
+import { Ref, toRefObject } from '@fluentui/react-component-ref'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import * as _ from 'lodash'
 import cx from 'classnames'
@@ -215,6 +215,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
 
     const defaultIndicator = { name: vertical ? 'icon-arrow-end' : 'icon-arrow-down' }
     const indicatorWithDefaults = indicator === undefined ? defaultIndicator : indicator
+    const targetRef = toRefObject(this.context.target)
 
     const menuItemInner = childrenExist(children) ? (
       children
@@ -273,11 +274,7 @@ class MenuItem extends AutoControlledComponent<WithAsProp<MenuItemProps>, MenuIt
               })}
             </Popper>
           </Ref>
-          <EventListener
-            listener={this.outsideClickHandler}
-            target={this.context.target}
-            type="click"
-          />
+          <EventListener listener={this.outsideClickHandler} targetRef={targetRef} type="click" />
         </>
       ) : null
 

@@ -141,7 +141,7 @@ const webpackConfig: webpack.Configuration = {
 // Environment Configuration
 // ------------------------------------
 if (__DEV__) {
-  const webpackHotPath = `${config.compiler_public_path}__webpack_hmr`
+  const webpackHotPath = `${config.compiler_public_path}__compiler_hmr`
   const webpackHotMiddlewareEntry = `webpack-hot-middleware/client?${_.map(
     {
       path: webpackHotPath, // The path which the middleware is serving the event stream on

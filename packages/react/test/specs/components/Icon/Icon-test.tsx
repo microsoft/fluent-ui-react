@@ -6,7 +6,7 @@ import Icon from '../../../../src/components/Icon/Icon'
 import { mountWithProviderAndGetComponent } from 'test/utils'
 
 describe('Icon', () => {
-  isConformant(Icon, { constructorName: 'Icon', requiredProps: { name: 'at' } })
+  isConformant(Icon, { requiredProps: { name: 'at' } })
 
   describe('accessibility', () => {
     handlesAccessibility(Icon, {

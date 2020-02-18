@@ -10,7 +10,6 @@ import {
   commonPropTypes,
   SizeValue,
   ShorthandFactory,
-  getOrGenerateIdFromShorthand,
 } from '../../utils'
 import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 import Box, { BoxProps } from '../Box/Box'
@@ -50,7 +49,6 @@ export interface LoaderProps extends UIComponentProps {
 
 export interface LoaderState {
   visible: boolean
-  labelId: string
 }
 
 /**
@@ -96,13 +94,6 @@ class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
 
     this.state = {
       visible: this.props.delay === 0,
-      labelId: '',
-    }
-  }
-
-  static getDerivedStateFromProps(props, state) {
-    return {
-      labelId: getOrGenerateIdFromShorthand('loader-label-', props.label, state.labelId),
     }
   }
 
@@ -123,7 +114,7 @@ class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
 
   renderComponent({ ElementType, classes, accessibility, variables, styles, unhandledProps }) {
     const { indicator, label, svg } = this.props
-    const { visible, labelId } = this.state
+    const { visible } = this.state
 
     const svgElement = Box.create(svg, {
       defaultProps: () => ({ className: Loader.slotClassNames.svg, styles: styles.svg }),
@@ -144,11 +135,7 @@ class Loader extends UIComponent<WithAsProp<LoaderProps>, LoaderState> {
             }),
           })}
           {Text.create(label, {
-            defaultProps: () => ({
-              className: Loader.slotClassNames.label,
-              styles: styles.label,
-              id: labelId,
-            }),
+            defaultProps: () => ({ className: Loader.slotClassNames.label, styles: styles.label }),
           })}
         </ElementType>
       )

@@ -44,8 +44,23 @@ import clipboardCopiedTo from './clipboardCopiedTo'
 import close from './close'
 import closedCaptions from './closedCaptions'
 import codeSnippet from './codeSnippet'
-import collapse from './collapse'
-import companion from './companion'
+import filesAftereffects from './filesAftereffects'
+import filesCode from './filesCode'
+import filesEmpty from './filesEmpty'
+import filesFlash from './filesFlash'
+import filesGif from './filesGif'
+import filesIllustrator from './filesIllustrator'
+import filesImage from './filesImage'
+import filesIndesign from './filesIndesign'
+import filesPdf from './filesPdf'
+import filesPhotoshop from './filesPhotoshop'
+import filesSketch from './filesSketch'
+import filesSound from './filesSound'
+import filesTxt from './filesTxt'
+import filesUpload from './filesUpload'
+import filesVideo from './filesVideo'
+import filesZip from './filesZip'
+import flag from './flag'
 import download from './download'
 import edit from './edit'
 import email from './email'
@@ -53,37 +68,19 @@ import emoji from './emoji'
 import error from './error'
 import exclamationCircle from './exclamationCircle'
 import exclamationTriangle from './exclamationTriangle'
-import expand from './expand'
 import eye from './eye'
 import eyeFriendlier from './eyeFriendlier'
 import eyeSlash from './eyeSlash'
-import filesAftereffects from './filesAftereffects'
-import filesCode from './filesCode'
-import filesEmpty from './filesEmpty'
 import filesExcel from './filesExcel'
 import filesExcelBrand from './filesExcelBrand'
-import filesFlash from './filesFlash'
-import filesGif from './filesGif'
-import filesIllustrator from './filesIllustrator'
-import filesImage from './filesImage'
-import filesIndesign from './filesIndesign'
 import filesOneNote from './filesOneNote'
 import filesOneNoteBrand from './filesOneNoteBrand'
-import filesPdf from './filesPdf'
-import filesPhotoshop from './filesPhotoshop'
 import filesPowerPoint from './filesPowerPoint'
 import filesPowerPointBrand from './filesPowerPointBrand'
-import filesSketch from './filesSketch'
-import filesSound from './filesSound'
-import filesTxt from './filesTxt'
-import filesUpload from './filesUpload'
-import filesVideo from './filesVideo'
-import filesVisio from './filesVisio'
-import filesVisioBrand from './filesVisioBrand'
 import filesWord from './filesWord'
 import filesWordBrand from './filesWordBrand'
-import filesZip from './filesZip'
-import flag from './flag'
+import filesVisio from './filesVisio'
+import filesVisioBrand from './filesVisioBrand'
 import fontColor from './fontColor'
 import fontSize from './fontSize'
 import format from './format'
@@ -92,7 +89,6 @@ import giphy from './giphy'
 import hand from './hand'
 import highlight from './highlight'
 import horizontalRule from './horizontalRule'
-import iconCircle from './iconCircle'
 import imageUnavailable from './image-unavailable'
 import indent from './indent'
 import info from './info'
@@ -116,6 +112,7 @@ import notes from './notes'
 import notificationsMuted from './notificationsMuted'
 import numberList from './numberList'
 import oneDrive from './oneDrive'
+import userPhone from './userPhone'
 import outdent from './outdent'
 import openOutside from './openOutside'
 import pause from './pause'
@@ -140,16 +137,15 @@ import removeFormat from './removeFormat'
 import reply from './reply'
 import retry from './retry'
 import robot from './robot'
+import shareAlt from './shareAlt'
+import skypeLogo from './skypeLogo'
+import snooze from './snooze'
 import search from './search'
 import send from './send'
 import settings from './settings'
-import settingsAudio from './settingsAudio'
-import shareAlt from './shareAlt'
-import shareTo from './shareTo'
-import skypeLogo from './skypeLogo'
-import snooze from './snooze'
 import speakerMute from './speakerMute'
 import star from './star'
+import iconCircle from './iconCircle'
 import sticker from './sticker'
 import strike from './strike'
 import sync from './sync'
@@ -173,7 +169,6 @@ import undo from './undo'
 import urgent from './urgent'
 import userBlur from './userBlur'
 import userFriends from './userFriends'
-import userPhone from './userPhone'
 import videoCameraEmphasis from './videoCameraEmphasis'
 import volume from './volume'
 import volumeDown from './volumeDown'
@@ -229,8 +224,6 @@ export default {
   close,
   'closed-captions': closedCaptions,
   'code-snippet': codeSnippet,
-  collapse,
-  companion,
   'files-aftereffects': filesAftereffects,
   'files-code': filesCode,
   'files-empty': filesEmpty,
@@ -255,7 +248,6 @@ export default {
   error,
   'exclamation-circle': exclamationCircle,
   'exclamation-triangle': exclamationTriangle,
-  expand,
   eye,
   'eye-friendlier': eyeFriendlier,
   'eye-slash': eyeSlash,
@@ -318,9 +310,7 @@ export default {
   search,
   send,
   settings,
-  'settings-audio': settingsAudio,
   'share-alt': shareAlt,
-  'share-to': shareTo,
   star,
   sticker,
   strike,

@@ -3,21 +3,19 @@ import { mergeThemes } from '@fluentui/styles'
 
 import { ProviderContextPrepared, ProviderContextInput } from '../types'
 import { createRenderer, felaRenderer } from './felaRenderer'
-import isBrowser from './isBrowser'
 
 const registeredRenderers = new WeakMap<Document, Renderer>()
 
-export const mergeRenderers = (current: Renderer, next?: Renderer, target?: Document): Renderer => {
+export const mergeRenderers = (
+  current: Renderer,
+  next?: Renderer,
+  target: Document = document, // eslint-disable-line no-undef
+): Renderer => {
   if (next) {
     return next
   }
 
-  // A valid comparisons, default renderer will be used
-  if (!isBrowser() || typeof target === 'undefined') {
-    return felaRenderer
-  }
-
-  // SSR logic will be handled by condition above
+  // A valid comparison, default renderer will be used
   // eslint-disable-next-line no-undef
   if (target === document) {
     return felaRenderer
@@ -31,10 +29,6 @@ export const mergeRenderers = (current: Renderer, next?: Renderer, target?: Docu
   registeredRenderers.set(target, createdRenderer)
 
   return createdRenderer
-}
-
-export const mergePerformanceOptions = (target, ...sources) => {
-  return Object.assign(target, ...sources)
 }
 
 export const mergeBooleanValues = (target, ...sources) => {
@@ -60,12 +54,9 @@ const mergeProviderContexts = (
     },
     rtl: false,
     disableAnimations: false,
-    target: isBrowser() ? document : undefined, // eslint-disable-line no-undef
-    performance: {
-      enableStylesCaching: true,
-      enableVariablesCaching: true,
-    },
+    target: document, // eslint-disable-line no-undef
     telemetry: undefined,
+    _internal_resolvedComponentVariables: {},
     renderer: undefined,
   }
 
@@ -93,8 +84,6 @@ const mergeProviderContexts = (
       if (typeof mergedDisableAnimations === 'boolean') {
         acc.disableAnimations = mergedDisableAnimations
       }
-
-      acc.performance = mergePerformanceOptions(acc.performance, next.performance || {})
 
       acc.telemetry = next.telemetry || acc.telemetry
 

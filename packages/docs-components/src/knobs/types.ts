@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { LogContextFunctionsValue, LogContextItemsValue } from './KnobContexts'
+import { LogContextValue } from './KnobContexts'
 
 export type KnobDefinition = {
   content?: React.ReactNode
@@ -40,9 +40,7 @@ export type KnobRangeKnobComponentProps = KnobComponentProps & {
   unit: string
 }
 
-export type LogInspectorProps = Pick<LogContextFunctionsValue, 'clearLog'> & {
-  items: LogContextItemsValue
-}
+export type LogInspectorProps = Pick<LogContextValue, 'clearLog' | 'items'>
 
 export type LogFormatter<T extends any[] = any[]> = (name: string, ...args: T) => string
 

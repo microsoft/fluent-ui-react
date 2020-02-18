@@ -1,10 +1,11 @@
-import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
+import * as _ from 'lodash'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
+// @ts-ignore
+import { ThemeContext } from 'react-fela'
 
 import { isBrowser, ChildrenComponentProps, commonPropTypes } from '../../utils'
-import { PortalBoxContext } from '../Provider/usePortalBox'
 
 export interface PortalInnerProps extends ChildrenComponentProps {
   /** Existing element the portal should be bound to. */
@@ -29,7 +30,7 @@ export interface PortalInnerProps extends ChildrenComponentProps {
  * A PortalInner is a container for Portal's content.
  */
 class PortalInner extends React.Component<PortalInnerProps> {
-  static contextType = PortalBoxContext
+  static contextType = ThemeContext
 
   static propTypes = {
     ...commonPropTypes.createCommon({
@@ -55,9 +56,7 @@ class PortalInner extends React.Component<PortalInnerProps> {
   render() {
     const { children, mountNode } = this.props
 
-    // PortalInner should render elements even without a context
-    // eslint-disable-next-line
-    const target: HTMLDivElement | null = isBrowser() ? this.context || document.body : null
+    const target: HTMLElement | null = isBrowser() ? this.context.target.body : null
     const container: HTMLElement | null = mountNode || target
 
     return container && ReactDOM.createPortal(children, container)

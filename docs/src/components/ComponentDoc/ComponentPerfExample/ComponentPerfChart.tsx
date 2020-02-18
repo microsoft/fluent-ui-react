@@ -27,7 +27,7 @@ export const ComponentPerfChart = ({ perfTestName }) => {
     case FILTER_BY.RELEASE:
       filteredData = data.filter(entry => entry.tag)
 
-      if (!data[0]?.tag) {
+      if (!data[0].tag) {
         const unreleased = { ...data[0], tag: 'UNRELEASED' }
         filteredData.unshift(unreleased)
       }

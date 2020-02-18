@@ -441,11 +441,8 @@ export const colorScheme: ColorSchemeMapping<ColorScheme, TeamsColorNames> = {
     background2: colors.ruby[500],
     background3: colors.red[400],
     border: colors.red[100],
-
     foregroundHover: colors.white,
     backgroundHover: colors.ruby[600],
-    backgroundHover1: colors.red[400],
-
     foregroundPressed: colors.white,
     backgroundPressed: colors.ruby[700],
   }),

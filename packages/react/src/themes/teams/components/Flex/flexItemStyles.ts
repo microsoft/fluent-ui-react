@@ -9,7 +9,7 @@ const flexItemStyles: ComponentSlotStylesPrepared<FlexItemProps, FlexItemVariabl
     return {
       ...(p.align && { alignSelf: toFlexAlignment(p.align) }),
 
-      ...(p.size && toFlexItemSizeValues(v.hasOwnProperty(p.size) ? v[p.size] : p.size)),
+      ...(p.size && toFlexItemSizeValues(v[p.size])),
 
       ...(typeof p.shrink === 'number' && { flexShrink: p.shrink }),
       ...(p.shrink === false && { flexShrink: 0 }),

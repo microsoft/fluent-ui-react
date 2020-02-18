@@ -1,9 +1,9 @@
 import { ICSSInJSStyle, ComponentSlotStylesPrepared } from '@fluentui/styles'
 import { ChatItemVariables } from './chatItemVariables'
-import { ChatItemStylesProps } from '../../../../components/Chat/ChatItem'
+import { ChatItemProps } from '../../../../components/Chat/ChatItem'
 import { pxToRem } from '../../../../utils'
 
-const chatItemStyles: ComponentSlotStylesPrepared<ChatItemStylesProps, ChatItemVariables> = {
+const chatItemStyles: ComponentSlotStylesPrepared<ChatItemProps, ChatItemVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     position: 'relative',
     ...((!p.attached || p.attached === 'top') && { paddingTop: pxToRem(16) }),

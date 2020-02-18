@@ -4,7 +4,7 @@ import PopperJS from 'popper.js'
 export type Position = 'above' | 'below' | 'before' | 'after'
 export type Alignment = 'top' | 'bottom' | 'start' | 'end' | 'center'
 
-export type PopperChildrenFn = (props: PopperChildrenProps) => React.ReactElement
+export type PopperChildrenFn = (props: PopperChildrenProps) => React.ReactNode
 
 export interface BasicPositioningProps {
   /**
@@ -47,7 +47,7 @@ export interface PopperProps extends PositioningProps {
   /**
    * The content of the Popper box (the element that is going to be repositioned).
    */
-  children: PopperChildrenFn | React.ReactElement
+  children: PopperChildrenFn | React.ReactNode
 
   /**
    * Enables events (resize, scroll).

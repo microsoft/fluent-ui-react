@@ -16,7 +16,7 @@ import { FocusZoneTabbableElements, FocusZoneDirection } from '../../focusZone/t
  * Keyboard navigation is circular.
  * Focus is moved within the focusable children of the component using TAB key.
  */
-const chatMessageBehavior: Accessibility<ChatMessageBehaviorProps> = () => ({
+const chatMessageBehavior: Accessibility = () => ({
   attributes: {
     root: {
       [IS_FOCUSABLE_ATTRIBUTE]: true,
@@ -42,7 +42,5 @@ const chatMessageBehavior: Accessibility<ChatMessageBehaviorProps> = () => ({
     },
   },
 })
-
-export type ChatMessageBehaviorProps = never
 
 export default chatMessageBehavior

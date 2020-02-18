@@ -1,10 +1,4 @@
-import {
-  DebugData,
-  ICSSInJSStyle,
-  PropsWithVarsAndStyles,
-  ThemeInput,
-  ThemePrepared,
-} from '@fluentui/styles'
+import { ICSSInJSStyle, ThemeInput, ThemePrepared } from '@fluentui/styles'
 import { IRenderer as FelaRenderer } from 'fela'
 
 // Notice:
@@ -67,30 +61,13 @@ export type Renderer = Omit<FelaRenderer, 'renderRule'> & {
   renderRule: RendererRenderRule
 }
 
-export interface StylesContextPerformance {
-  enableStylesCaching?: boolean
-  enableVariablesCaching?: boolean
-}
-
 export type StylesContextInputValue<R = Renderer> = {
   disableAnimations?: boolean
-  performance?: StylesContextPerformance
   renderer?: R
   theme?: ThemeInput
 }
 
 export type StylesContextValue<R = Renderer> = Required<StylesContextInputValue<R>> & {
   theme: ThemePrepared
-}
-
-export type PrimitiveProps = Record<string, boolean | number | string | undefined>
-
-export type ResolveStylesOptions = StylesContextValue<{
-  renderRule: RendererRenderRule
-}> & {
-  className?: string
-  displayName: string
-  props: PropsWithVarsAndStyles & { design?: ComponentDesignProp }
-  rtl: boolean
-  saveDebug: (debug: DebugData | null) => void
+  _internal_resolvedComponentVariables: Record<string, object>
 }

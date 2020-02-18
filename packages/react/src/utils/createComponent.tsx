@@ -3,7 +3,7 @@ import {
   ReactAccessibilityBehavior,
   AccessibilityActionHandlers,
 } from '@fluentui/react-bindings'
-import { ComponentSlotStylesResolved } from '@fluentui/styles'
+import { ComponentSlotStylesPrepared } from '@fluentui/styles'
 import * as _ from 'lodash'
 import * as React from 'react'
 
@@ -14,7 +14,7 @@ export interface CreateComponentRenderConfig {
   accessibility: ReactAccessibilityBehavior
   classes: ComponentSlotClasses
   rtl: boolean
-  styles: ComponentSlotStylesResolved
+  styles: ComponentSlotStylesPrepared
 }
 
 export interface CreateComponentConfig<P> {

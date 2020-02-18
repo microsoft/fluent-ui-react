@@ -8,7 +8,6 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import * as Classnames from 'classnames'
 
-const accessibilityPackageJson = require('@fluentui/accessibility/package.json')
 const docsComponentsPackageJson = require('@fluentui/docs-components/package.json')
 const projectPackageJson = require('@fluentui/react/package.json')
 
@@ -24,7 +23,7 @@ export const babelConfig = {
 
 export const imports: Record<string, { version: string; module: any }> = {
   '@fluentui/accessibility': {
-    version: accessibilityPackageJson.version,
+    version: projectPackageJson.version,
     module: Accessibility,
   },
 

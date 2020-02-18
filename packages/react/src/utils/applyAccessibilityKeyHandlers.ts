@@ -9,10 +9,7 @@ import { Props, ShorthandValue } from '../types'
 const applyAccessibilityKeyHandlers = (
   keyHandlers: AccessibilityHandlerProps,
   value: Props | ShorthandValue<Props>,
-): Partial<Record<
-  keyof AccessibilityHandlerProps,
-  (e: React.KeyboardEvent, ...args: any[]) => void
->> => {
+) => {
   const valIsPropsObject = _.isPlainObject(value)
   const valIsReactElement = React.isValidElement(value)
 

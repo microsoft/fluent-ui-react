@@ -16,7 +16,7 @@ const CHAT_FOCUSZONE_ATTRIBUTE = 'chat-focuszone'
  * Focused active element of the component is reset when TAB from the component.
  * Focus can be moved inside a child component with embeded inner FocusZone by pressing a specified key.
  */
-const ChatBehavior: Accessibility<ChatBehaviorProps> = () => ({
+const ChatBehavior: Accessibility = () => ({
   attributes: {
     root: {},
   },
@@ -42,7 +42,5 @@ const getLastTabbableElement = (root: HTMLElement): HTMLElement => {
     ? (chatItemsElements[chatItemsElements.length - 1] as HTMLElement)
     : null
 }
-
-export type ChatBehaviorProps = never
 
 export default ChatBehavior

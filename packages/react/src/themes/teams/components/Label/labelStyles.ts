@@ -4,12 +4,7 @@ import { LabelProps } from '../../../../components/Label/Label'
 import { LabelVariables } from './labelVariables'
 import { getColorScheme } from '../../colors'
 
-export type LabelStylesProps = Pick<LabelProps, 'circular' | 'color' | 'imagePosition'> & {
-  hasImage: boolean
-  hasActionableIcon: boolean
-}
-
-const labelStyles: ComponentSlotStylesPrepared<LabelStylesProps, LabelVariables> = {
+const labelStyles: ComponentSlotStylesPrepared<LabelProps, LabelVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => {
     const colors = getColorScheme(v.colorScheme, p.color)
 
@@ -24,7 +19,7 @@ const labelStyles: ComponentSlotStylesPrepared<LabelStylesProps, LabelVariables>
       fontSize: pxToRem(14),
       borderRadius: pxToRem(3),
       padding: v.padding,
-      ...(p.hasImage &&
+      ...(p.image &&
         (p.imagePosition === 'start'
           ? { paddingLeft: v.startPaddingLeft }
           : { paddingRight: v.endPaddingRight })),
@@ -40,7 +35,9 @@ const labelStyles: ComponentSlotStylesPrepared<LabelStylesProps, LabelVariables>
   }),
 
   icon: ({ props: p }): ICSSInJSStyle =>
-    p.hasActionableIcon && {
+    p.icon &&
+    typeof p.icon === 'object' &&
+    (p.icon as any).onClick && {
       cursor: 'pointer',
     },
 }

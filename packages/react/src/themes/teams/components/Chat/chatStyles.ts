@@ -1,9 +1,9 @@
 import { ICSSInJSStyle, ComponentSlotStylesPrepared } from '@fluentui/styles'
 import { ChatVariables } from './chatVariables'
-import { ChatStylesProps } from '../../../../components/Chat/Chat'
+import { ChatProps } from '../../../../components/Chat/Chat'
 import { pxToRem } from '../../../../utils'
 
-const chatStyles: ComponentSlotStylesPrepared<ChatStylesProps, ChatVariables> = {
+const chatStyles: ComponentSlotStylesPrepared<ChatProps, ChatVariables> = {
   root: ({ variables: v }): ICSSInJSStyle => ({
     backgroundColor: v.backgroundColor,
     border: `1px solid ${v.backgroundColor}`,

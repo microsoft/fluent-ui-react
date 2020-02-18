@@ -6,27 +6,6 @@ import * as React from 'react'
 import Provider from 'src/components/Provider/Provider'
 import ProviderConsumer from 'src/components/Provider/ProviderConsumer'
 
-const createDocumentMock = (): Document => {
-  const externalDocument = document.implementation.createDocument(
-    'http://www.w3.org/1999/xhtml',
-    'html',
-    null,
-  )
-  const externalWindow: Partial<Window> = {
-    ontouchstart: () => {}, // whatInput asserts for this method
-
-    addEventListener: () => {},
-    removeEventListener: () => {},
-  }
-
-  externalDocument.documentElement.appendChild(externalDocument.createElement('body'))
-  // `defaultView` is read-only by spec, getter is used as workaround
-  // https://github.com/facebook/jest/issues/2227#issuecomment-430435133
-  jest.spyOn(externalDocument, 'defaultView', 'get').mockReturnValue(externalWindow as any)
-
-  return externalDocument
-}
-
 describe('Provider', () => {
   test('is exported', () => {
     expect(require('src/index.ts').Provider).toEqual(Provider)
@@ -256,10 +235,18 @@ describe('Provider', () => {
 
   describe('target', () => {
     test('performs whatinput init on first Provider mount', () => {
-      const externalDocument = createDocumentMock()
-
-      const addEventListener = jest.spyOn(externalDocument.defaultView, 'addEventListener')
-      const setAttribute = jest.spyOn(externalDocument.documentElement, 'setAttribute')
+      const addEventListener = jest.fn()
+      const setAttribute = jest.fn()
+      const externalDocument: any = {
+        defaultView: {
+          addEventListener,
+          removeEventListener: jest.fn(),
+          ontouchstart: jest.fn(),
+        },
+        documentElement: {
+          setAttribute,
+        },
+      }
 
       mount(
         <Provider id="first-provider" target={externalDocument}>
@@ -275,8 +262,18 @@ describe('Provider', () => {
     })
 
     test('performs whatinput cleanup on last Provider unmount', () => {
-      const externalDocument = createDocumentMock()
-      const removeEventListener = jest.spyOn(externalDocument.defaultView, 'removeEventListener')
+      const removeEventListener = jest.fn()
+      const setAttribute = jest.fn()
+      const externalDocument: any = {
+        defaultView: {
+          addEventListener: jest.fn(),
+          removeEventListener,
+          ontouchstart: jest.fn(),
+        },
+        documentElement: {
+          setAttribute,
+        },
+      }
 
       const wrapper = mount(
         <Provider id="first-provider" target={externalDocument}>

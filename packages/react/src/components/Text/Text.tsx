@@ -5,6 +5,7 @@ import * as React from 'react'
 import {
   childrenExist,
   createShorthandFactory,
+  UIComponent,
   UIComponentProps,
   ContentComponentProps,
   ChildrenComponentProps,
@@ -13,24 +14,11 @@ import {
   rtlTextContainer,
   SizeValue,
   AlignValue,
+  ShorthandFactory,
 } from '../../utils'
 import { Accessibility } from '@fluentui/accessibility'
 
-import {
-  FluentComponentStaticProps,
-  ProviderContextPrepared,
-  WithAsProp,
-  withSafeTypeForAs,
-} from '../../types'
-import {
-  getElementType,
-  getUnhandledProps,
-  useAccessibility,
-  useStyles,
-  useTelemetry,
-} from '@fluentui/react-bindings'
-// @ts-ignore
-import { ThemeContext } from 'react-fela'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface TextProps
   extends UIComponentProps,
@@ -40,7 +28,7 @@ export interface TextProps
   /**
    * Accessibility behavior if overridden by the user.
    */
-  accessibility?: Accessibility<never>
+  accessibility?: Accessibility
 
   /** At mentions can be formatted to draw users' attention. Mentions for "me" can be formatted to appear differently. */
   atMention?: boolean | 'me'
@@ -76,103 +64,47 @@ export interface TextProps
   truncated?: boolean
 }
 
-const Text: React.FC<WithAsProp<TextProps>> & FluentComponentStaticProps<TextProps> = props => {
-  const context: ProviderContextPrepared = React.useContext(ThemeContext)
-  const { setStart, setEnd } = useTelemetry(Text.displayName, context.telemetry)
-  setStart()
+class Text extends UIComponent<WithAsProp<TextProps>, any> {
+  static create: ShorthandFactory<TextProps>
 
-  const {
-    accessibility,
-    align,
-    atMention,
-    children,
-    className,
-    color,
-    content,
-    design,
-    disabled,
-    error,
-    important,
-    size,
-    styles,
-    success,
-    timestamp,
-    truncated,
-    temporary,
-    variables,
-    weight,
-  } = props
+  static className = 'ui-text'
 
-  const getA11Props = useAccessibility(accessibility, {
-    debugName: Text.displayName,
-    rtl: context.rtl,
-  })
-  const { classes } = useStyles(Text.displayName, {
-    className: Text.className,
-    mapPropsToStyles: () => ({
-      atMention,
-      color,
-      important,
-      timestamp,
-      truncated,
-      disabled,
-      error,
-      success,
-      temporary,
-      align,
-      weight,
-      size,
-    }),
-    mapPropsToInlineStyles: () => ({
-      className,
-      design,
-      styles,
-      variables,
-    }),
-    rtl: context.rtl,
-  })
+  static displayName = 'Text'
 
-  const unhandledProps = getUnhandledProps(Text.handledProps, props)
-  const ElementType = getElementType(props)
+  static propTypes = {
+    ...commonPropTypes.createCommon({ color: true }),
+    atMention: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['me'])]),
+    disabled: PropTypes.bool,
+    error: PropTypes.bool,
+    important: PropTypes.bool,
+    size: customPropTypes.size,
+    weight: PropTypes.oneOf(['light', 'semilight', 'regular', 'semibold', 'bold']),
+    success: PropTypes.bool,
+    temporary: PropTypes.bool,
+    align: customPropTypes.align,
+    timestamp: PropTypes.bool,
+    truncated: PropTypes.bool,
+  }
 
-  const element = (
-    <ElementType
-      {...getA11Props('root', {
-        className: classes.root,
-        ...rtlTextContainer.getAttributes({ forElements: [children, content] }),
-        ...unhandledProps,
-      })}
-    >
-      {childrenExist(children) ? children : content}
-    </ElementType>
-  )
+  static defaultProps = {
+    as: 'span',
+  }
 
-  setEnd()
+  renderComponent({ accessibility, ElementType, classes, unhandledProps }): React.ReactNode {
+    const { children, content } = this.props
 
-  return element
+    return (
+      <ElementType
+        className={classes.root}
+        {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
+        {...accessibility.attributes.root}
+        {...unhandledProps}
+      >
+        {childrenExist(children) ? children : content}
+      </ElementType>
+    )
+  }
 }
-
-Text.className = 'ui-text'
-Text.displayName = 'Text'
-
-Text.defaultProps = {
-  as: 'span',
-}
-Text.propTypes = {
-  ...commonPropTypes.createCommon({ color: true }),
-  atMention: PropTypes.oneOfType<any>([PropTypes.bool, PropTypes.oneOf(['me'])]),
-  disabled: PropTypes.bool,
-  error: PropTypes.bool,
-  important: PropTypes.bool,
-  size: customPropTypes.size,
-  weight: PropTypes.oneOf(['light', 'semilight', 'regular', 'semibold', 'bold']),
-  success: PropTypes.bool,
-  temporary: PropTypes.bool,
-  align: customPropTypes.align,
-  timestamp: PropTypes.bool,
-  truncated: PropTypes.bool,
-}
-Text.handledProps = Object.keys(Text.propTypes) as any
 
 Text.create = createShorthandFactory({ Component: Text, mappedProp: 'content' })
 

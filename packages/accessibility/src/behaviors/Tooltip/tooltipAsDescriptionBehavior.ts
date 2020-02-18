@@ -1,5 +1,5 @@
 import * as keyboardKey from 'keyboard-key'
-import { Accessibility, AccessibilityAttributes } from '../../types'
+import { Accessibility } from '../../types'
 
 /**
  * @description
@@ -52,4 +52,4 @@ export type TooltipBehaviorProps = {
   open: boolean
   /** Tooltip's container id. */
   contentId: string
-} & Pick<AccessibilityAttributes, 'aria-label' | 'aria-labelledby' | 'aria-describedby'>
+}

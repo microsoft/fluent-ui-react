@@ -27,7 +27,7 @@ const ChatExampleInScrollableShorthand = () => {
   })
   const [width] = useRangeKnob({
     name: 'width',
-    initialValue: '500px',
+    initialValue: '400px',
     min: '100px',
     max: '500px',
     step: 10,
@@ -80,22 +80,6 @@ const ChatExampleInScrollableShorthand = () => {
         />
       ),
       key: 'message-3',
-    },
-    {
-      message: (
-        <Chat.Message actionMenu={actionMenu} content="How are you?" unstable_overflow={overflow} />
-      ),
-      key: 'message-4',
-    },
-    {
-      message: (
-        <Chat.Message
-          actionMenu={actionMenu}
-          content="Do you want something?"
-          unstable_overflow={overflow}
-        />
-      ),
-      key: 'message-5',
     },
   ]
 

@@ -17,8 +17,6 @@ export interface TooltipContentVariables {
 
   color: string
   backgroundColor: string
-
-  zIndex: number
 }
 
 export default (siteVars: any): TooltipContentVariables => ({
@@ -37,6 +35,4 @@ export default (siteVars: any): TooltipContentVariables => ({
   pointerHeight: pxToRem(16),
   color: siteVars.colorScheme.default.foreground3,
   backgroundColor: siteVars.colors.grey[500],
-
-  zIndex: siteVars.zIndexes.overlay,
 })

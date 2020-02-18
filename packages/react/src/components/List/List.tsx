@@ -3,10 +3,11 @@ import {
   getElementType,
   getUnhandledProps,
   useAccessibility,
-  useAutoControlled,
+  useStateManager,
   useStyles,
   useTelemetry,
 } from '@fluentui/react-bindings'
+import { createListManager } from '@fluentui/state'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -31,7 +32,6 @@ import {
   rtlTextContainer,
   createShorthandFactory,
 } from '../../utils'
-import { ListContextProvider, ListContextValue } from './listContext'
 import ListItem, { ListItemProps } from './ListItem'
 
 export interface ListProps extends UIComponentProps, ChildrenComponentProps {
@@ -76,6 +76,16 @@ export interface ListProps extends UIComponentProps, ChildrenComponentProps {
   wrap?: (children: ReactChildren) => React.ReactNode
 }
 
+// List props that are passed to each individual Item props
+const itemProps = [
+  'debug',
+  'selectable',
+  'navigable',
+  'truncateContent',
+  'truncateHeader',
+  'variables',
+]
+
 const List: React.FC<WithAsProp<ListProps>> &
   FluentComponentStaticProps<ListProps> & {
     Item: typeof ListItem
@@ -90,22 +100,21 @@ const List: React.FC<WithAsProp<ListProps>> &
     children,
     className,
     debug,
+    defaultSelectedIndex,
     design,
     horizontal,
-    items,
     navigable,
+    items,
     selectable,
+    selectedIndex,
     styles,
-    truncateContent,
-    truncateHeader,
     variables,
     wrap,
   } = props
 
-  const [selectedIndex, setSelectedIndex] = useAutoControlled({
-    defaultValue: props.defaultSelectedIndex,
-    value: props.selectedIndex,
-    initialValue: -1,
+  const { state, actions } = useStateManager(createListManager, {
+    mapPropsToInitialState: () => ({ selectedIndex: defaultSelectedIndex }),
+    mapPropsToState: () => ({ selectedIndex }),
   })
   const getA11Props = useAccessibility(accessibility, {
     debugName: List.displayName,
@@ -123,38 +132,42 @@ const List: React.FC<WithAsProp<ListProps>> &
     rtl: context.rtl,
   })
 
-  const latestProps = React.useRef<ListProps>(props)
-  latestProps.current = props
-
   const ElementType = getElementType(props)
   const unhandledProps = getUnhandledProps(List.handledProps, props)
 
   const hasContent = childrenExist(children) || (items && items.length > 0)
-  const onItemClick = React.useCallback(
-    (e, itemIndex) => {
+
+  const handleItemOverrides = (predefinedProps: ListItemProps) => ({
+    onClick: (e: React.SyntheticEvent, itemProps: ListItemProps) => {
+      _.invoke(predefinedProps, 'onClick', e, itemProps)
+
       if (selectable) {
-        setSelectedIndex(itemIndex)
-        _.invoke(latestProps.current, 'onSelectedIndexChange', e, {
-          ...latestProps.current,
-          selectedIndex: itemIndex,
+        actions.select(itemProps.index)
+        _.invoke(props, 'onSelectedIndexChange', e, {
+          ...props,
+          ...{ selectedIndex: itemProps.index },
         })
       }
     },
-    [latestProps, setSelectedIndex],
-  )
+  })
 
-  const childProps: ListContextValue = {
-    debug,
-    navigable,
-    onItemClick,
-    selectable,
-    selectedIndex,
-    truncateContent,
-    truncateHeader,
-    variables,
-  }
   const renderItems = () =>
-    _.map(items, (item, index) => ListItem.create(item, { defaultProps: () => ({ index }) }))
+    _.map(items, (item, index) => {
+      const maybeSelectableItemProps = {} as any
+
+      if (selectable) {
+        maybeSelectableItemProps.selected = index === state.selectedIndex
+      }
+
+      return ListItem.create(item, {
+        defaultProps: () => ({
+          ..._.pick(props, itemProps),
+          ...maybeSelectableItemProps,
+          index,
+        }),
+        overrideProps: handleItemOverrides,
+      })
+    })
 
   const element = getA11Props.unstable_wrapWithFocusZone(
     <ElementType
@@ -164,9 +177,7 @@ const List: React.FC<WithAsProp<ListProps>> &
         ...unhandledProps,
       })}
     >
-      <ListContextProvider value={childProps}>
-        {hasContent && wrap(childrenExist(children) ? children : renderItems())}
-      </ListContextProvider>
+      {hasContent && wrap(childrenExist(children) ? children : renderItems())}
     </ElementType>,
   )
   setEnd()

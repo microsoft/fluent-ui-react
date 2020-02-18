@@ -1,13 +1,7 @@
 import * as React from 'react'
 
 import defaultComponents from './defaultComponents'
-import {
-  KnobContext,
-  KnobContextValue,
-  LogContextFunctions,
-  LogContextFunctionsValue,
-  LogContextItems,
-} from './KnobContexts'
+import { KnobContext, KnobContextValue, LogContext, LogContextValue } from './KnobContexts'
 import { KnobComponents, KnobDefinition, KnobName, KnobSet } from './types'
 
 type KnobProviderProps = {
@@ -61,16 +55,11 @@ const KnobProvider: React.FunctionComponent<KnobProviderProps> = props => {
     }),
     [knobs, components],
   )
-  const logValue: LogContextFunctionsValue = React.useMemo(() => ({ appendLog, clearLog }), [
-    appendLog,
-    clearLog,
-  ])
+  const logValue: LogContextValue = React.useMemo(() => ({ appendLog, clearLog, items }), [items])
 
   return (
     <KnobContext.Provider value={knobValue}>
-      <LogContextFunctions.Provider value={logValue}>
-        <LogContextItems.Provider value={items}>{children}</LogContextItems.Provider>
-      </LogContextFunctions.Provider>
+      <LogContext.Provider value={logValue}>{children}</LogContext.Provider>
     </KnobContext.Provider>
   )
 }

@@ -148,7 +148,7 @@ const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, Dropdow
     borderStyle: 'solid',
     borderWidth: p.open ? v.listBorderWidth : '0px',
     borderColor: v.listBorderColor,
-    zIndex: v.overlayZIndex,
+    zIndex: 1000,
     maxHeight: v.listMaxHeight,
     overflowY: 'auto',
     width: getWidth(p, v),

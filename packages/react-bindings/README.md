@@ -9,13 +9,11 @@ A set of reusable components and hooks to build component libraries and UI kits.
 - [Hooks](#hooks)
   - [`useAccesibility()`](#useaccesibility)
     - [Usage](#usage)
-  - [`useAutoControlled()`](#useautocontrolled)
-    - [Usage](#usage-1)
   - [`useStateManager()`](#usestatemanager)
-    - [Usage](#usage-2)
+    - [Usage](#usage-1)
     - [Reference](#reference)
   - [`useStyles()`](#usestyles)
-    - [Usage](#usage-3)
+    - [Usage](#usage-2)
     - [Reference](#reference-1)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -87,39 +85,6 @@ const Image: React.FC<ImageProps> = props => {
     <div {...getA11Props('root', { onClick, ...rest })}>
       <img {...getA11Props('img', { src })} />
     </div>
-  )
-}
-```
-
-## `useAutoControlled()`
-
-A React hook that allows to manage state like in `React.useState()`, but implements the [autocontrolled pattern](https://reactjs.org/docs/uncontrolled-components.html).
-
-### Usage
-
-The example below assumes a component called `<Input>` will be used this way:
-
-```tsx
-type InputProps = {
-  defaultValue?: string
-  value?: string
-  onChange?: (value: string) => void
-}
-
-const Input: React.FC<InputProps> = props => {
-  const [value, setValue] = useAutoControlled({
-    defaultValue: props.defaultValue,
-    value: props.value,
-  })
-
-  return (
-    <input
-      onChange={e => {
-        setValue(e.target.value)
-        if (props.onChange) props.onChange(e.target.value)
-      }}
-      value={value}
-    />
   )
 }
 ```

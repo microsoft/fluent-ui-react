@@ -1,35 +1,23 @@
-import { Accessibility } from '@fluentui/accessibility'
-import {
-  getElementType,
-  getUnhandledProps,
-  useAccessibility,
-  useStyles,
-  useTelemetry,
-} from '@fluentui/react-bindings'
-import * as customPropTypes from '@fluentui/react-proptypes'
-import Popper from 'popper.js'
-import * as PropTypes from 'prop-types'
 import * as React from 'react'
-// @ts-ignore
-import { ThemeContext } from 'react-fela'
+import * as PropTypes from 'prop-types'
+import * as customPropTypes from '@fluentui/react-proptypes'
 
 import {
   childrenExist,
   createShorthandFactory,
+  UIComponent,
+  RenderResultConfig,
   UIComponentProps,
   ChildrenComponentProps,
   ContentComponentProps,
   commonPropTypes,
   rtlTextContainer,
+  ShorthandFactory,
 } from '../../utils'
+import { Accessibility } from '@fluentui/accessibility'
 
 import { PopperChildrenProps } from '../../utils/positioner'
-import {
-  FluentComponentStaticProps,
-  ProviderContextPrepared,
-  WithAsProp,
-  withSafeTypeForAs,
-} from '../../types'
+import { WithAsProp, withSafeTypeForAs } from '../../types'
 
 export interface TooltipContentProps
   extends UIComponentProps,
@@ -38,7 +26,7 @@ export interface TooltipContentProps
   /**
    * Accessibility behavior if overridden by the user.
    */
-  accessibility?: Accessibility<never>
+  accessibility?: Accessibility
 
   /** An actual placement value from Popper. */
   placement?: PopperChildrenProps['placement']
@@ -53,95 +41,42 @@ export interface TooltipContentProps
   pointerRef?: React.Ref<HTMLDivElement>
 }
 
-const TooltipContent: React.FC<WithAsProp<TooltipContentProps>> &
-  FluentComponentStaticProps<TooltipContentProps> = props => {
-  const context: ProviderContextPrepared = React.useContext(ThemeContext)
-  const { setStart, setEnd } = useTelemetry(TooltipContent.displayName, context.telemetry)
-  setStart()
+class TooltipContent extends UIComponent<WithAsProp<TooltipContentProps>> {
+  static create: ShorthandFactory<TooltipContentProps>
 
-  const {
+  static displayName = 'TooltipContent'
+  static className = 'ui-tooltip__content'
+
+  static propTypes = {
+    ...commonPropTypes.createCommon(),
+    placement: PropTypes.string,
+    pointing: PropTypes.bool,
+    pointerRef: customPropTypes.ref,
+  }
+
+  renderComponent({
     accessibility,
-    children,
-    className,
-    content,
-    design,
-    open,
-    placement,
-    pointing,
-    pointerRef,
+    ElementType,
+    classes,
+    unhandledProps,
     styles,
-    variables,
-  } = props
+  }: RenderResultConfig<TooltipContentProps>): React.ReactNode {
+    const { children, content, open, pointing, pointerRef } = this.props
 
-  const getA11Props = useAccessibility(accessibility, {
-    debugName: TooltipContent.displayName,
-    rtl: context.rtl,
-  })
-  const { classes } = useStyles(TooltipContent.displayName, {
-    className: TooltipContent.className,
-    mapPropsToStyles: () => ({
-      open,
-      placement,
-      pointing,
-    }),
-    mapPropsToInlineStyles: () => ({
-      className,
-      design,
-      styles,
-      variables,
-    }),
-    rtl: context.rtl,
-  })
+    return (
+      <ElementType
+        className={classes.root}
+        {...rtlTextContainer.getAttributes({ forElements: [children, content] })}
+        {...accessibility.attributes.root}
+        {...unhandledProps}
+      >
+        {open && pointing && <div className={classes.pointer} ref={pointerRef} />}
 
-  const ElementType = getElementType(props)
-  const unhandledProps = getUnhandledProps(TooltipContent.handledProps, props)
-
-  const element = (
-    <ElementType
-      {...getA11Props('root', {
-        className: classes.root,
-        ...rtlTextContainer.getAttributes({ forElements: [children, content] }),
-        ...unhandledProps,
-      })}
-    >
-      {open && pointing && <div className={classes.pointer} ref={pointerRef} />}
-
-      <div {...getA11Props('content', { className: classes.content })}>
-        {childrenExist(children) ? children : content}
-      </div>
-    </ElementType>
-  )
-  setEnd()
-
-  return element
+        <div className={classes.content}>{childrenExist(children) ? children : content}</div>
+      </ElementType>
+    )
+  }
 }
-
-TooltipContent.displayName = 'TooltipContent'
-TooltipContent.className = 'ui-tooltip__content'
-
-TooltipContent.propTypes = {
-  ...commonPropTypes.createCommon(),
-  placement: PropTypes.oneOf<Popper.Placement>([
-    'auto-start',
-    'auto',
-    'auto-end',
-    'top-start',
-    'top',
-    'top-end',
-    'right-start',
-    'right',
-    'right-end',
-    'bottom-end',
-    'bottom',
-    'bottom-start',
-    'left-end',
-    'left',
-    'left-start',
-  ]),
-  pointing: PropTypes.bool,
-  pointerRef: customPropTypes.ref,
-}
-TooltipContent.handledProps = Object.keys(TooltipContent.propTypes) as any
 
 TooltipContent.create = createShorthandFactory({ Component: TooltipContent, mappedProp: 'content' })
 

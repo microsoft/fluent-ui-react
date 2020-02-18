@@ -17,7 +17,6 @@ const ListExample = () => {
           headerMedia="7:26:56 AM"
           content="Program the sensor to the SAS alarm through the haptic SQL card!"
           contentMedia="!!"
-          index={0}
         />
         <List.Item
           media={<Image src="public/images/avatar/small/steve.jpg" avatar />}
@@ -25,7 +24,6 @@ const ListExample = () => {
           headerMedia="11:30:17 PM"
           content="Use the online FTP application to input the multi-byte application!"
           contentMedia="!!"
-          index={1}
         />
         <List.Item
           media={<Image src="public/images/avatar/small/nom.jpg" avatar />}
@@ -33,7 +31,6 @@ const ListExample = () => {
           headerMedia="5:22:40 PM"
           content="The GB pixel is down, navigate the virtual interface!"
           contentMedia="!!"
-          index={2}
         />
       </List>
     </div>

@@ -20,7 +20,8 @@ const iconBehavior: Accessibility<IconBehaviorProps> = props => ({
 
 export default iconBehavior
 
-export type IconBehaviorProps = {
+type IconBehaviorProps = {
   /** Alternative text. */
   alt?: string
+  'aria-label'?: string
 } & Pick<AccessibilityAttributes, 'aria-label'>

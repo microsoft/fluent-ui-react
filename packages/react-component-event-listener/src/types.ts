@@ -7,11 +7,8 @@ export interface EventListenerOptions<T extends EventTypes = 'click'> {
   /** A function which receives a notification when an event of the specified type occurs. */
   listener: EventHandler<T>
 
-  /** A target node. Use `target` or `targetRef` prop. */
-  target?: Target
-
   /** A ref object with a target node. */
-  targetRef?: TargetRef
+  targetRef: TargetRef
 
   /** A case-sensitive string representing the event type to listen for. */
   type: T
@@ -20,5 +17,4 @@ export interface EventListenerOptions<T extends EventTypes = 'click'> {
 export type EventHandler<T extends EventTypes> = (e: DocumentEventMap[T]) => void
 export type EventTypes = keyof DocumentEventMap
 
-export type Target = Node | Window
-export type TargetRef = React.RefObject<Target>
+export type TargetRef = React.RefObject<Node | Window>

@@ -39,6 +39,7 @@ const TestProvider: React.FC<{ theme: ThemeInput }> = props => {
     <ThemeContext.Provider
       value={{
         theme,
+        _internal_resolvedComponentVariables: {},
       }}
     >
       {children}

@@ -10,11 +10,11 @@ export const EmptyThemeProvider: React.FunctionComponent = ({ children }) => {
   const theme: ProviderContextPrepared = {
     renderer: felaRenderer,
     target: document,
+    _internal_resolvedComponentVariables: {},
     disableAnimations: false,
     rtl: false,
     theme: emptyTheme,
     telemetry: undefined,
-    performance: {},
   }
 
   return <ThemeProvider theme={theme}>{children}</ThemeProvider>

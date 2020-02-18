@@ -18,7 +18,14 @@ function linkToFlamegraph(value, filename) {
   )})`
 }
 
-function fluentFabricComparison(perfCounts, danger, markdown, warn) {
+function fluentFabricComparision(danger, markdown, warn) {
+  let perfCounts
+  try {
+    perfCounts = require(config.paths.packageDist('perf-test', 'perfCounts.json'))
+  } catch {
+    warn('No perf measurements available')
+    return
+  }
   const results = _.mapValues(
     _.pickBy(perfCounts, (value, key) => key.endsWith('.Fluent')),
     stats => {
@@ -59,85 +66,7 @@ function fluentFabricComparison(perfCounts, danger, markdown, warn) {
     ].join('\n'),
   )
 }
-function currentToMasterComparison(perfCounts, danger, markdown, warn) {
-  const results = _.map(
-    _.pickBy(perfCounts, value => _.has(value, 'analysis.regression')),
-    (stats, name) => {
-      const currentTicks = _.get(stats, 'analysis.numTicks')
-      const baselineTicks = _.get(stats, 'analysis.baseline.numTicks')
-
-      return {
-        name,
-        numTicks: currentTicks,
-        flamegraphFile: _.get(stats, 'processed.output.flamegraphFile'),
-        baseline: {
-          numTicks: baselineTicks,
-          flamegraphFile: _.get(stats, 'processed.baseline.output.flamegraphFile'),
-        },
-        isRegression: _.get(stats, 'analysis.regression.isRegression'),
-        currentToBaseline: Math.round((currentTicks / baselineTicks) * 100) / 100,
-      }
-    },
-  )
-
-  const regressions = _.sortBy(
-    _.filter(results, 'isRegression'),
-    stats => stats.currentToBaseline * -1,
-  )
-
-  if (regressions.length > 0) {
-    warn(`${regressions.length} perf regressions detected`)
-    markdown(
-      [
-        '## Potential regressions comparing to master',
-        '',
-        'Scenario | Current PR Ticks | Baseline Ticks | Ratio',
-        ':--- | ---:| ---:| ---:',
-        ..._.map(regressions, (value, key) =>
-          [
-            value.name,
-            linkToFlamegraph(value.numTicks, value.flamegraphFile),
-            linkToFlamegraph(value.baseline.numTicks, value.baseline.flamegraphFile),
-            `${value.currentToBaseline}:1`,
-          ].join(' | '),
-        ),
-      ].join('\n'),
-    )
-  }
-
-  const noRegressions = _.sortBy(
-    _.filter(results, stats => !stats.isRegression),
-    stats => stats.currentToBaseline * -1,
-  )
-  markdown(
-    [
-      '<details><summary>Perf tests with no regressions</summary>',
-      '',
-      'Scenario | Current PR Ticks | Baseline Ticks | Ratio',
-      ':--- | ---:| ---:| ---:',
-      ..._.map(noRegressions, (value, key) =>
-        [
-          value.name,
-          linkToFlamegraph(value.numTicks, value.flamegraphFile),
-          linkToFlamegraph(value.baseline.numTicks, value.baseline.flamegraphFile),
-          `${value.currentToBaseline}:1`,
-        ].join(' | '),
-      ),
-      '',
-      '</details>',
-    ].join('\n'),
-  )
-}
 
 export default ({ danger, markdown, warn }: DangerJS) => {
-  let perfCounts
-  try {
-    perfCounts = require(config.paths.packageDist('perf-test', 'perfCounts.json'))
-  } catch {
-    warn('No perf measurements available')
-    return
-  }
-
-  fluentFabricComparison(perfCounts, danger, markdown, warn)
-  currentToMasterComparison(perfCounts, danger, markdown, warn)
+  fluentFabricComparision(danger, markdown, warn)
 }

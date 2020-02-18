@@ -65,8 +65,6 @@ export interface ToolbarVariables {
 
   customItemHorizontalPadding: string
   customItemVerticalPadding: string
-
-  overlayZIndex: number
 }
 
 export default (siteVars: any): ToolbarVariables => ({
@@ -122,6 +120,4 @@ export default (siteVars: any): ToolbarVariables => ({
 
   customItemHorizontalPadding: pxToRem(16),
   customItemVerticalPadding: pxToRem(4),
-
-  overlayZIndex: siteVars.zIndexes.overlay,
 })

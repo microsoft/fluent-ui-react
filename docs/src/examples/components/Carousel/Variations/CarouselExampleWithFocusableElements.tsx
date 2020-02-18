@@ -23,7 +23,7 @@ const carouselTextContent = (
   </Text>
 )
 
-const buttonStyles = { margin: '40px 0px 0px 10px' }
+const buttonStyles = { margin: '40px 0px 10px 10px' }
 const imageStyles = { maxWidth: '70px', maxHeight: '70px', margin: '15px 0px 0px 5px' }
 
 const carouselToolbarContent = (

@@ -5,7 +5,7 @@ import cx from 'classnames'
 import * as PropTypes from 'prop-types'
 
 import { EventListener } from '@fluentui/react-component-event-listener'
-import { Ref } from '@fluentui/react-component-ref'
+import { Ref, toRefObject } from '@fluentui/react-component-ref'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import { focusAsync } from '@fluentui/react-bindings'
 import { GetRefs, NodeRef, Unstable_NestingAuto } from '@fluentui/react-component-nesting-registry'
@@ -281,6 +281,8 @@ class ToolbarMenuItem extends AutoControlledComponent<
     } = this.props
     const { menuOpen } = this.state
 
+    const targetRef = toRefObject(this.context.target)
+
     const elementType = (
       <ElementType
         {...accessibility.attributes.root}
@@ -361,7 +363,7 @@ class ToolbarMenuItem extends AutoControlledComponent<
               </Ref>
               <EventListener
                 listener={this.outsideClickHandler(getRefs)}
-                target={this.context.target}
+                targetRef={targetRef}
                 type="click"
               />
             </>

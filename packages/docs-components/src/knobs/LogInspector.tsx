@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { KnobContext, LogContextFunctions, LogContextItems } from './KnobContexts'
+import { KnobContext, LogContext } from './KnobContexts'
 
 type LogInspectorProps = {
   /** Will be hidden if is empty. */
@@ -8,9 +8,7 @@ type LogInspectorProps = {
 
 const LogInspector: React.FunctionComponent<LogInspectorProps> = props => {
   const { components } = React.useContext(KnobContext)
-
-  const { clearLog } = React.useContext(LogContextFunctions)
-  const items = React.useContext(LogContextItems)
+  const { clearLog, items } = React.useContext(LogContext)
 
   const visible = props.silent ? items.length > 0 : true
 
