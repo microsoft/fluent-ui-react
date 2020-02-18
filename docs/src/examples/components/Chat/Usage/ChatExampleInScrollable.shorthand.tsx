@@ -49,7 +49,6 @@ const ChatExampleInScrollableShorthand = () => {
           mine
           timestamp="Yesterday, 10:15 PM"
           unstable_overflow={overflow}
-          // variables={{ showActionMenu: true }}
         />
       ),
       key: 'message-1',
