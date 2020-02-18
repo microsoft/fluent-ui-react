@@ -33,6 +33,10 @@ export const mergeRenderers = (current: Renderer, next?: Renderer, target?: Docu
   return createdRenderer
 }
 
+export const mergePerformanceOptions = (target, ...sources) => {
+  return Object.assign(target, ...sources)
+}
+
 export const mergeBooleanValues = (target, ...sources) => {
   return sources.reduce((acc, next) => {
     return typeof next === 'boolean' ? next : acc
@@ -57,8 +61,11 @@ const mergeProviderContexts = (
     rtl: false,
     disableAnimations: false,
     target: isBrowser() ? document : undefined, // eslint-disable-line no-undef
+    performance: {
+      enableStylesCaching: true,
+      enableVariablesCaching: true,
+    },
     telemetry: undefined,
-    _internal_resolvedComponentVariables: {},
     renderer: undefined,
   }
 
@@ -86,6 +93,8 @@ const mergeProviderContexts = (
       if (typeof mergedDisableAnimations === 'boolean') {
         acc.disableAnimations = mergedDisableAnimations
       }
+
+      acc.performance = mergePerformanceOptions(acc.performance, next.performance || {})
 
       acc.telemetry = next.telemetry || acc.telemetry
 
