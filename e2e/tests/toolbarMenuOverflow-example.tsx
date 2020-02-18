@@ -18,6 +18,7 @@ const ToolbarExampleOverflow = () => {
     content: `${icons[i % icons.length]} #${i}`,
     icon: icons[i % icons.length],
     title: `${icons[i % icons.length]} #${i}`,
+    // first hald of items are unwrapped, rest are wrapped.
     ...(i >= itemsCount / 2 && { menu: [] }),
   }))
 

@@ -18,6 +18,7 @@ const ToolbarExampleOverflowWrapped = () => {
     content: `${icons[i % icons.length]} #${i}`,
     icon: icons[i % icons.length],
     title: `${icons[i % icons.length]} #${i}`,
+    // first item and second half of items are wrapped, rest un-wrapped.
     ...((i >= itemsCount / 2 || i === 0) && { menu: [] }),
   }))
 
