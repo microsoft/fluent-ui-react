@@ -195,7 +195,7 @@ const Slider: React.FC<WithAsProp<SliderProps>> &
       actions.change(value)
     },
     onMouseDown: (e: React.MouseEvent<HTMLInputElement>) => {
-      setWhatInputSource('mouse')
+      setWhatInputSource(context.target, 'mouse')
       _.invoke(props, 'onMouseDown', e, props)
     },
   })
