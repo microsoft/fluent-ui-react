@@ -8,15 +8,17 @@ export const selectors = {
   toolbarItemWrapper: ToolbarItem.slotClassNames.wrapper,
 }
 
+export const itemsCount = 20
+
 const ToolbarExampleOverflow = () => {
   const icons = ['bold', 'italic', 'underline']
 
-  const itemData = _.times(40, i => ({
+  const itemData = _.times(itemsCount, i => ({
     key: `b${i}`,
     content: `${icons[i % icons.length]} #${i}`,
     icon: icons[i % icons.length],
     title: `${icons[i % icons.length]} #${i}`,
-    ...(i >= 20 && { menu: [] }),
+    ...(i >= itemsCount / 2 && { menu: [] }),
   }))
 
   const toolbarItems = itemData.map(item => {
