@@ -1,23 +1,33 @@
 import { Accessibility } from '@fluentui/accessibility'
+import {
+  getElementType,
+  getUnhandledProps,
+  useAccessibility,
+  useStyles,
+  useTelemetry,
+} from '@fluentui/react-bindings'
 import * as customPropTypes from '@fluentui/react-proptypes'
-import * as React from 'react'
 import * as PropTypes from 'prop-types'
+import * as React from 'react'
+// @ts-ignore
+import { ThemeContext } from 'react-fela'
 
-import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
+import {
+  WithAsProp,
+  ShorthandValue,
+  withSafeTypeForAs,
+  FluentComponentStaticProps,
+  ProviderContextPrepared,
+} from '../../types'
 import {
   childrenExist,
   createShorthandFactory,
-  RenderResultConfig,
-  UIComponent,
   UIComponentProps,
   ChildrenComponentProps,
   commonPropTypes,
   rtlTextContainer,
-  ShorthandFactory,
 } from '../../utils'
 import Box, { BoxProps } from '../Box/Box'
-
-import { ComponentSlotStylesResolved } from '@fluentui/styles'
 
 export interface ChatItemSlotClassNames {
   message: string
@@ -28,7 +38,7 @@ export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps 
   /**
    * Accessibility behavior if overridden by the user.
    */
-  accessibility?: Accessibility
+  accessibility?: Accessibility<never>
 
   /** Controls item's relation to other chat items. */
   attached?: boolean | 'top' | 'bottom'
@@ -43,60 +53,62 @@ export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps 
   message?: ShorthandValue<BoxProps>
 }
 
-class ChatItem extends UIComponent<WithAsProp<ChatItemProps>, any> {
-  static className = 'ui-chat__item'
-  static create: ShorthandFactory<ChatItemProps>
-  static displayName = 'ChatItem'
-  static slotClassNames: ChatItemSlotClassNames
+export type ChatItemStylesProps = Pick<ChatItemProps, 'attached' | 'contentPosition'>
 
-  static propTypes = {
-    ...commonPropTypes.createCommon({ content: false }),
-    attached: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['top', 'bottom'])]),
-    gutter: customPropTypes.itemShorthand,
-    contentPosition: PropTypes.oneOf(['start', 'end']),
-    message: customPropTypes.itemShorthand,
-  }
+const ChatItem: React.FC<WithAsProp<ChatItemProps>> &
+  FluentComponentStaticProps<ChatItemProps> & {
+    slotClassNames: ChatItemSlotClassNames
+  } = props => {
+  const context: ProviderContextPrepared = React.useContext(ThemeContext)
+  const { setStart, setEnd } = useTelemetry(ChatItem.displayName, context.telemetry)
+  setStart()
 
-  static defaultProps = {
-    as: 'li',
-    contentPosition: 'start',
-    attached: false,
-  }
-
-  renderComponent({
+  const {
     accessibility,
-    ElementType,
-    classes,
-    unhandledProps,
+    attached,
+    children,
+    className,
+    contentPosition,
+    design,
+    gutter,
+    message,
     styles,
-  }: RenderResultConfig<ChatItemProps>) {
-    const { children } = this.props
+    variables,
+  } = props
 
-    return (
-      <ElementType
-        {...rtlTextContainer.getAttributes({ forElements: [children] })}
-        {...accessibility.attributes.root}
-        {...unhandledProps}
-        className={classes.root}
-      >
-        {childrenExist(children) ? children : this.renderChatItem(styles)}
-      </ElementType>
-    )
-  }
+  const getA11Props = useAccessibility(accessibility, {
+    debugName: ChatItem.displayName,
+    rtl: context.rtl,
+  })
+  const { classes, styles: resolvedStyles } = useStyles<ChatItemStylesProps>(ChatItem.displayName, {
+    className: ChatItem.className,
+    mapPropsToStyles: () => ({
+      attached,
+      contentPosition,
+    }),
+    mapPropsToInlineStyles: () => ({
+      className,
+      design,
+      styles,
+      variables,
+    }),
+    rtl: context.rtl,
+  })
 
-  renderChatItem(styles: ComponentSlotStylesResolved) {
-    const { gutter, contentPosition, message } = this.props
-    const gutterElement =
-      gutter &&
-      Box.create(gutter, {
-        defaultProps: () => ({ className: ChatItem.slotClassNames.gutter, styles: styles.gutter }),
-      })
-
+  const renderContent = () => {
+    const gutterElement = Box.create(gutter, {
+      defaultProps: () =>
+        getA11Props('gutter', {
+          className: ChatItem.slotClassNames.gutter,
+          styles: resolvedStyles.gutter,
+        }),
+    })
     const messageElement = Box.create(message, {
-      defaultProps: () => ({
-        className: ChatItem.slotClassNames.message,
-        styles: styles.message,
-      }),
+      defaultProps: () =>
+        getA11Props('message', {
+          className: ChatItem.slotClassNames.message,
+          styles: resolvedStyles.message,
+        }),
     })
 
     return (
@@ -107,13 +119,52 @@ class ChatItem extends UIComponent<WithAsProp<ChatItemProps>, any> {
       </>
     )
   }
+
+  const ElementType = getElementType(props)
+  const unhandledProps = getUnhandledProps(ChatItem.handledProps, props)
+
+  const element = (
+    <ElementType
+      {...getA11Props('root', {
+        className: classes.root,
+        ...rtlTextContainer.getAttributes({ forElements: [children] }),
+        ...unhandledProps,
+      })}
+    >
+      {childrenExist(children) ? children : renderContent()}
+    </ElementType>
+  )
+  setEnd()
+
+  return element
 }
 
-ChatItem.create = createShorthandFactory({ Component: ChatItem, mappedProp: 'message' })
+ChatItem.className = 'ui-chat__item'
+ChatItem.displayName = 'ChatItem'
+
 ChatItem.slotClassNames = {
   message: `${ChatItem.className}__message`,
   gutter: `${ChatItem.className}__gutter`,
 }
+
+ChatItem.defaultProps = {
+  as: 'li',
+  contentPosition: 'start',
+  attached: false,
+}
+ChatItem.propTypes = {
+  ...commonPropTypes.createCommon({ content: false }),
+  attached: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.oneOf<'top' | 'bottom'>(['top', 'bottom']),
+  ]),
+  gutter: customPropTypes.itemShorthand,
+  contentPosition: PropTypes.oneOf(['start', 'end']),
+  message: customPropTypes.itemShorthand,
+}
+ChatItem.handledProps = Object.keys(ChatItem.propTypes) as any
+
+ChatItem.create = createShorthandFactory({ Component: ChatItem, mappedProp: 'message' })
 
 /**
  * A ChatItem is container for single entity in Chat (e.g. message, notification, etc).

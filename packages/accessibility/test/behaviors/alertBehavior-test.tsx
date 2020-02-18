@@ -10,4 +10,14 @@ describe('AlertBehavior.ts', () => {
     const expectedResult = alertBehavior({ danger: true })
     expect(expectedResult.attributes.body.role).toEqual('alert')
   })
+
+  test('use aria-describedby if dismiss action is defined for non-warning alert', () => {
+    const expectedResult = alertBehavior({ bodyId: 'alertId' })
+    expect(expectedResult.attributes.dismissAction['aria-describedby']).toEqual('alertId')
+  })
+
+  test('use aria-describedby if dismiss action is defined for warning alert', () => {
+    const expectedResult = alertBehavior({ warning: true, bodyId: 'alertId' })
+    expect(expectedResult.attributes.dismissAction['aria-describedby']).toEqual('alertId')
+  })
 })

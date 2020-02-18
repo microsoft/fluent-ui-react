@@ -1,8 +1,10 @@
+import { useIsomorphicLayoutEffect } from '@fluentui/react-bindings'
 import { Ref, isRefObject } from '@fluentui/react-component-ref'
 import * as _ from 'lodash'
 import PopperJS, * as _PopperJS from 'popper.js'
 import * as React from 'react'
 
+import isBrowser from '../isBrowser'
 import getScrollParent from './getScrollParent'
 import { getPlacement, applyRtlToOffset } from './positioningHelper'
 import { PopperProps } from './types'
@@ -84,11 +86,16 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
     proposedPlacement,
   )
 
+  const hasDocument = isBrowser()
   const hasScrollableElement = React.useMemo(() => {
-    const scrollParentElement = getScrollParent(contentRef.current)
+    if (hasDocument) {
+      const scrollParentElement = getScrollParent(contentRef.current)
 
-    return scrollParentElement !== scrollParentElement.ownerDocument.body
-  }, [contentRef])
+      return scrollParentElement !== scrollParentElement.ownerDocument.body
+    }
+
+    return false
+  }, [contentRef, hasDocument])
   // Is a broken dependency and can cause potential bugs, we should rethink this as all other refs
   // in this component.
 
@@ -165,6 +172,7 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
       return
     }
 
+    const hasPointer = !!(pointerTargetRef && pointerTargetRef.current)
     const handleUpdate = (data: PopperJS.Data) => {
       // PopperJS performs computations that might update the computed placement: auto positioning, flipping the
       // placement in case the popper box should be rendered at the edge of the viewport and does not fit
@@ -183,9 +191,11 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
         /**
          * This modifier is necessary in order to render the pointer. Refs are resolved in effects, so it can't be
          * placed under computed modifiers. Deep merge is not required as this modifier has only these properties.
+         * `arrow` modifier also requires `keepTogether`.
          */
+        keepTogether: { enabled: hasPointer },
         arrow: {
-          enabled: !!(pointerTargetRef && pointerTargetRef.current),
+          enabled: hasPointer,
           element: pointerTargetRef && pointerTargetRef.current,
         },
       },
@@ -205,7 +215,7 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
     unstable_pinned,
   ])
 
-  React.useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     createInstance()
     return destroyInstance
   }, [createInstance])
@@ -217,7 +227,7 @@ const Popper: React.FunctionComponent<PopperProps> = props => {
       ? children({ placement: computedPlacement, scheduleUpdate })
       : (children as React.ReactElement)
 
-  return <Ref innerRef={contentRef}>{React.Children.only(child)}</Ref>
+  return child ? <Ref innerRef={contentRef}>{React.Children.only(child)}</Ref> : null
 }
 
 Popper.defaultProps = {
