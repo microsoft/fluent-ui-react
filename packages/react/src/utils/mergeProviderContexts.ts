@@ -62,6 +62,7 @@ const mergeProviderContexts = (
     disableAnimations: false,
     target: isBrowser() ? document : undefined, // eslint-disable-line no-undef
     performance: {
+      enableSanitizeCssPlugin: process.env.NODE_ENV !== 'production',
       enableStylesCaching: true,
       enableVariablesCaching: true,
     },

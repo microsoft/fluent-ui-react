@@ -46,6 +46,7 @@ type InlineStyleProps<StyleProps> = {
 const defaultContext: StylesContextValue<{ renderRule: RendererRenderRule }> = {
   disableAnimations: false,
   performance: {
+    enableSanitizeCssPlugin: process.env.NODE_ENV !== 'production',
     enableStylesCaching: true,
     enableVariablesCaching: true,
   },
@@ -59,8 +60,6 @@ const useStyles = <StyleProps extends PrimitiveProps>(
 ): UseStylesResult => {
   const context: StylesContextValue<{ renderRule: RendererRenderRule }> =
     React.useContext(ThemeContext) || defaultContext
-
-  const { enableStylesCaching = true, enableVariablesCaching = true } = context.performance || {}
 
   const {
     className = process.env.NODE_ENV === 'production' ? '' : 'no-classname-🙉',
@@ -86,10 +85,7 @@ const useStyles = <StyleProps extends PrimitiveProps>(
     rtl,
     saveDebug: fluentUIDebug => (debug.current = { fluentUIDebug }),
     theme: context.theme,
-    performance: {
-      enableStylesCaching,
-      enableVariablesCaching,
-    },
+    performance: context.performance,
   })
 
   return { classes, styles: resolvedStyles }

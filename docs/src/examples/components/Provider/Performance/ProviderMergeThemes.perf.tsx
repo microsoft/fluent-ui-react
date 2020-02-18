@@ -20,6 +20,7 @@ const providerMergeThemesPerf = () => {
       theme: merged,
       rtl: false,
       disableAnimations: false,
+      sanitizeCss: true,
     }
     return _.mapValues(componentStyle, (partStyle, partName) => {
       if (partName === '_debug') {

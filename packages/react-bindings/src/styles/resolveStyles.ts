@@ -51,7 +51,7 @@ const resolveStyles = (
     rtl,
     disableAnimations,
     renderer,
-    performance = {},
+    performance,
   } = options || {}
 
   const { className, design, styles, variables, ...stylesProps } = props
@@ -81,6 +81,7 @@ const resolveStyles = (
     theme,
     rtl,
     disableAnimations,
+    sanitizeCss: performance.enableSanitizeCssPlugin,
   }
 
   // Fela plugins rely on `direction` param in `theme` prop instead of RTL
