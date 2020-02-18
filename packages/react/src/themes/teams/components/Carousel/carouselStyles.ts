@@ -16,10 +16,11 @@ const carouselStyles: ComponentSlotStylesPrepared<
     overflowX: 'hidden',
     border: '1px solid transparent',
 
-    ...(p.shouldFocusContainer && p.isFromKeyboard && {
-      border: `1px solid ${v.focusOuterBorderColor}`,
-      borderRadius: v.focusOuterBorderRadius,
-    }),
+    ...(p.shouldFocusContainer &&
+      p.isFromKeyboard && {
+        border: `1px solid ${v.focusOuterBorderColor}`,
+        borderRadius: v.focusOuterBorderRadius,
+      }),
   }),
   itemsContainer: (): ICSSInJSStyle => ({
     padding: 0,
