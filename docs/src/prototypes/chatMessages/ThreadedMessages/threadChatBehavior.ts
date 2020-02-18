@@ -1,7 +1,7 @@
-import { chatBehavior, Accessibility } from '@fluentui/react'
+import { chatBehavior, Accessibility, ChatBehaviorProps } from '@fluentui/react'
 import classNames from './classNames'
 
-const threadChatBehavior: Accessibility = props => {
+const threadChatBehavior: Accessibility<ChatBehaviorProps> = props => {
   const behaviorData = chatBehavior(props)
 
   behaviorData.focusZone.props = {
