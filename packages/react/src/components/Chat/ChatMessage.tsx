@@ -204,7 +204,7 @@ const ChatMessage: React.FC<WithAsProp<ChatMessageProps>> &
   )
 
   const handleFocus = (e: React.SyntheticEvent) => {
-    updateActionsMenuPosition?.current()
+    if (updateActionsMenuPosition.current) updateActionsMenuPosition.current()
 
     setFocused(true)
     _.invoke(props, 'onFocus', e, props)
@@ -220,7 +220,8 @@ const ChatMessage: React.FC<WithAsProp<ChatMessageProps>> &
   }
 
   const handleMouseEnter = (e: React.SyntheticEvent) => {
-    updateActionsMenuPosition?.current()
+    if (updateActionsMenuPosition.current) updateActionsMenuPosition.current()
+
     _.invoke(props, 'onMouseEnter', e, props)
   }
 
@@ -328,34 +329,36 @@ const ChatMessage: React.FC<WithAsProp<ChatMessageProps>> &
     }),
   })
 
-  const element = getA11Props.unstable_wrapWithFocusZone(
+  const element = (
     <Ref innerRef={setMessageNode}>
-      <ElementType
-        {...getA11Props('root', {
-          className: rootClasses,
-          onBlur: handleBlur,
-          onFocus: handleFocus,
-          onMouseEnter: handleMouseEnter,
-          ...rtlTextContainer.getAttributes({ forElements: [children] }),
-          ...unhandledProps,
-        })}
-      >
-        {childrenPropExists ? (
-          children
-        ) : (
-          <>
-            {actionMenuElement}
-            {badgePosition === 'start' && badgeElement}
-            {authorElement}
-            {timestampElement}
-            {reactionGroupPosition === 'start' && reactionGroupElement}
-            {messageContent}
-            {reactionGroupPosition === 'end' && reactionGroupElement}
-            {badgePosition === 'end' && badgeElement}
-          </>
-        )}
-      </ElementType>
-    </Ref>,
+      {getA11Props.unstable_wrapWithFocusZone(
+        <ElementType
+          {...getA11Props('root', {
+            className: rootClasses,
+            onBlur: handleBlur,
+            onFocus: handleFocus,
+            onMouseEnter: handleMouseEnter,
+            ...rtlTextContainer.getAttributes({ forElements: [children] }),
+            ...unhandledProps,
+          })}
+        >
+          {childrenPropExists ? (
+            children
+          ) : (
+            <>
+              {actionMenuElement}
+              {badgePosition === 'start' && badgeElement}
+              {authorElement}
+              {timestampElement}
+              {reactionGroupPosition === 'start' && reactionGroupElement}
+              {messageContent}
+              {reactionGroupPosition === 'end' && reactionGroupElement}
+              {badgePosition === 'end' && badgeElement}
+            </>
+          )}
+        </ElementType>,
+      )}
+    </Ref>
   )
   setEnd()
 
