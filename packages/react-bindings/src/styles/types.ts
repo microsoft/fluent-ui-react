@@ -68,7 +68,6 @@ export type Renderer = Omit<FelaRenderer, 'renderRule'> & {
 }
 
 export interface StylesContextPerformance {
-  enableSanitizeCssPlugin: boolean
   enableStylesCaching: boolean
   enableVariablesCaching: boolean
 }
