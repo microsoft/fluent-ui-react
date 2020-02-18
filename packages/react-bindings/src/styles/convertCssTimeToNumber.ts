@@ -1,6 +1,6 @@
 import * as _ from 'lodash'
 
-const convertCssTimeToNumber = (time: string): number => {
+const convertCssTimeToNumber = (time: string | undefined): number => {
   if (_.isNil(time) || time === 'initial' || time === 'inherit') {
     return 0
   }
