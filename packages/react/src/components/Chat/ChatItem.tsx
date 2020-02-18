@@ -28,6 +28,7 @@ import {
   rtlTextContainer,
 } from '../../utils'
 import Box, { BoxProps } from '../Box/Box'
+import { ChatItemContextProvider } from './chatItemContext'
 
 export interface ChatItemSlotClassNames {
   message: string
@@ -112,11 +113,11 @@ const ChatItem: React.FC<WithAsProp<ChatItemProps>> &
     })
 
     return (
-      <>
+      <ChatItemContextProvider value={{ attached }}>
         {contentPosition === 'start' && gutterElement}
         {messageElement}
         {contentPosition === 'end' && gutterElement}
-      </>
+      </ChatItemContextProvider>
     )
   }
 
