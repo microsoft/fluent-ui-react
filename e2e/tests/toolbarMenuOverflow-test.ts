@@ -5,7 +5,7 @@ const toolbarItemWrapped = (index: number) =>
   `.${selectors.toolbarItemWrapper}:nth-child(${index + 1}) .${selectors.toolbarItem}`
 const toolbar = `.${selectors.toolbar}`
 
-describe('Toolbar menu overflow with wrapped first item', () => {
+describe('Toolbar menu overflow', () => {
   let itemWidth
 
   beforeEach(async () => {
@@ -22,7 +22,7 @@ describe('Toolbar menu overflow with wrapped first item', () => {
     await e2e.wait(500)
   })
 
-  it("hiding focused item will set focus to first focusable element, even if it's wrapped", async () => {
+  it('hiding focused item will set focus to first focusable element', async () => {
     const itemToBeHiddenIndex = itemsCount / 2 - 1 // last un-wrapped item.
     const itemToReceiveFocusIndex = 0 // first item is not wrapped.
 
@@ -39,7 +39,7 @@ describe('Toolbar menu overflow with wrapped first item', () => {
     expect(await e2e.isFocused(toolbarItem(itemToReceiveFocusIndex))).toBe(true)
   })
 
-  it("hiding focused wrapped item will set focus to first focusable element, even if it's wrapped", async () => {
+  it('hiding focused wrapped item will set focus to first focusable element', async () => {
     const itemToBeHiddenIndex = itemsCount / 2 // first wrapped item (not accounting the very first).
     const itemToReceiveFocusIndex = 0 // first item is not wrapped.
 
