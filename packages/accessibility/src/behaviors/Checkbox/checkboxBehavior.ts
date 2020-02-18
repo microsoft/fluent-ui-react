@@ -31,9 +31,9 @@ const checkboxBehavior: Accessibility<CheckboxBehaviorProps> = props => ({
 
 export default checkboxBehavior
 
-type CheckboxBehaviorProps = {
+export type CheckboxBehaviorProps = {
   /** Whether or not item is checked. */
-  checked: boolean
+  checked?: boolean
   /** If the checkbox is in disabled state. */
   disabled?: boolean
 }
