@@ -133,7 +133,7 @@ const ChatItem: React.FC<WithAsProp<ChatItemProps>> &
     return messageElement
   }
 
-  const renderChatItem = () => {
+  const renderContent = () => {
     const gutterElement = Box.create(gutter, {
       defaultProps: () =>
         getA11Props('gutter', {
