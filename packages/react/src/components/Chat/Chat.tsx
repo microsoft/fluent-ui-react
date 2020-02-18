@@ -1,4 +1,4 @@
-import { Accessibility, chatBehavior } from '@fluentui/accessibility'
+import { Accessibility, chatBehavior, ChatBehaviorProps } from '@fluentui/accessibility'
 import {
   getElementType,
   getUnhandledProps,
@@ -37,7 +37,7 @@ export interface ChatSlotClassNames {
 
 export interface ChatProps extends UIComponentProps, ChildrenComponentProps {
   /** Accessibility behavior if overridden by the user. */
-  accessibility?: Accessibility<never>
+  accessibility?: Accessibility<ChatBehaviorProps>
 
   /** Shorthand array of the items inside the chat. */
   items?: ShorthandCollection<ChatItemProps>

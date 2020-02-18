@@ -1,6 +1,6 @@
-import { chatBehavior, Accessibility } from '@fluentui/react'
+import { chatBehavior, Accessibility, ChatBehaviorProps } from '@fluentui/react'
 
-const controlMessagesGroupBehavior: Accessibility<never> = props => {
+const controlMessagesGroupBehavior: Accessibility<ChatBehaviorProps> = props => {
   const behaviorData = chatBehavior(props)
 
   behaviorData.attributes.root = {

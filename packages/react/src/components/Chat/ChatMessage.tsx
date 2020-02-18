@@ -3,6 +3,7 @@ import {
   IS_FOCUSABLE_ATTRIBUTE,
   chatMessageBehavior,
   menuAsToolbarBehavior,
+  ChatMessageBehaviorProps,
 } from '@fluentui/accessibility'
 import {
   getElementType,
@@ -63,7 +64,7 @@ export interface ChatMessageProps
     ChildrenComponentProps,
     ContentComponentProps<ShorthandValue<BoxProps>> {
   /** Accessibility behavior if overridden by the user. */
-  accessibility?: Accessibility<never>
+  accessibility?: Accessibility<ChatMessageBehaviorProps>
 
   /** Menu with actions of the message. */
   actionMenu?: ShorthandValue<MenuProps> | ShorthandCollection<MenuItemProps>
