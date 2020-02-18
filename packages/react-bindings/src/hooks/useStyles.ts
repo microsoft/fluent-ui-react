@@ -48,6 +48,7 @@ const defaultContext: StylesContextValue<{ renderRule: RendererRenderRule }> = {
   performance: {
     enableStylesCaching: true,
     enableVariablesCaching: true,
+    enableHardVariablesCaching: false,
   },
   renderer: { renderRule: () => '' },
   theme: emptyTheme,
@@ -60,7 +61,11 @@ const useStyles = <StyleProps extends PrimitiveProps>(
   const context: StylesContextValue<{ renderRule: RendererRenderRule }> =
     React.useContext(ThemeContext) || defaultContext
 
-  const { enableStylesCaching = true, enableVariablesCaching = true } = context.performance || {}
+  const {
+    enableStylesCaching = true,
+    enableVariablesCaching = true,
+    enableHardVariablesCaching = false,
+  } = context.performance || {}
 
   const {
     className = process.env.NODE_ENV === 'production' ? '' : 'no-classname-🙉',
@@ -89,6 +94,7 @@ const useStyles = <StyleProps extends PrimitiveProps>(
     performance: {
       enableStylesCaching,
       enableVariablesCaching,
+      enableHardVariablesCaching,
     },
   })
 

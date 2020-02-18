@@ -70,6 +70,7 @@ export type Renderer = Omit<FelaRenderer, 'renderRule'> & {
 export interface StylesContextPerformance {
   enableStylesCaching?: boolean
   enableVariablesCaching?: boolean
+  enableHardVariablesCaching?: boolean
 }
 
 export type StylesContextInputValue<R = Renderer> = {
