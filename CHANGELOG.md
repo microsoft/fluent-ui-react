@@ -33,7 +33,6 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix missing aria-describedby in AlertBehavior @delprzemo ([#2208](https://github.com/microsoft/fluent-ui-react/pull/2208))
 - Fix page crash when `Tooltip` content is null @delprzemo ([#2332](https://github.com/microsoft/fluent-ui-react/pull/2332))
 - Fix `document` usage in `mergeProviderContexts` to get SSR working @layershifter ([#2330](https://github.com/microsoft/fluent-ui-react/pull/2330))
-- Fix `Toolbar` not being tabbable on wrapped focused item disappear @silviuavram ([#2321](https://github.com/microsoft/fluent-ui-react/pull/2321))
 - Fix `input` descenders being cropped in the Teams theme @bcalvery ([#2335](https://github.com/microsoft/fluent-ui-react/pull/2335))
 - Use referentially equal objects for `actions` in `useStateManager` @layershifter ([#2347](https://github.com/microsoft/fluent-ui-react/pull/2347))
 - Fix `Animation` component not to throw when `children` is not provided @mnajdova ([#2345](https://github.com/microsoft/fluent-ui-react/pull/2345))
