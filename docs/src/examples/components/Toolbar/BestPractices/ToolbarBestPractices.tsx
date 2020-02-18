@@ -9,7 +9,7 @@ const doList = [
     `aria-labelledby` props). Refer to{' '}
     {link('toolbar(role)', 'https://www.w3.org/WAI/PF/aria/roles#toolbar')} for details.
   </Text>,
-  'If `Toolbar` contains menu, then focus will need be handled after `onClick` is executed on `menuItem`.'
+  'If `Toolbar` contains menu, the menu closes after clicking on one of the menu items. To prevent losing focus, move it manually in the `onClick` handler.',
 ]
 
 const ToolbarBestPractices: React.FunctionComponent<{}> = () => {
