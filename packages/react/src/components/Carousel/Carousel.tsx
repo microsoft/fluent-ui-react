@@ -312,6 +312,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
 
               return (
                 <Animation
+                  key={item['key'] || index}
                   mountOnEnter
                   unmountOnExit
                   visible={active}
@@ -327,7 +328,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
                       : 'carousel-slide-to-previous-exit'
                   }
                 >
-                  <Ref key={item['key'] || index} innerRef={itemRef}>
+                  <Ref innerRef={itemRef}>
                     {CarouselItem.create(item, {
                       defaultProps: () => ({
                         active,
