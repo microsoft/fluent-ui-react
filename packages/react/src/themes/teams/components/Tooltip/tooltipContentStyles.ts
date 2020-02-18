@@ -5,6 +5,8 @@ import getPointerStyles from '../../getPointerStyles'
 import pointerSvg from '../../pointerSvgUrl'
 import { PopperChildrenProps } from '../../../../utils/positioner'
 
+type TooltipContentStylesProps = Pick<TooltipContentProps, 'placement' | 'pointing' | 'open'>
+
 const getPointerOffset = (
   placement: PopperChildrenProps['placement'],
   v: TooltipContentVariables,
@@ -19,7 +21,7 @@ const getPointerOffset = (
     : v.pointerHorizontalOffset
 
 const tooltipContentStyles: ComponentSlotStylesPrepared<
-  TooltipContentProps,
+  TooltipContentStylesProps,
   TooltipContentVariables
 > = {
   root: ({ props: p, variables: v, rtl }): ICSSInJSStyle => {
