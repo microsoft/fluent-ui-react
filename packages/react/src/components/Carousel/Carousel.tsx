@@ -3,7 +3,9 @@ import { Accessibility, carouselBehavior } from '@fluentui/accessibility'
 import * as React from 'react'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
+import cx from 'classnames'
 import { Ref } from '@fluentui/react-component-ref'
+import Animation from '../Animation/Animation'
 
 import {
   UIComponentProps,
@@ -15,10 +17,12 @@ import {
   ChildrenComponentProps,
   getOrGenerateIdFromShorthand,
   AutoControlledComponent,
+  isFromKeyboard,
 } from '../../utils'
 import {
   WithAsProp,
   withSafeTypeForAs,
+  DebounceResultFn,
   ShorthandCollection,
   ShorthandValue,
   ComponentEventHandler,
@@ -108,8 +112,11 @@ export interface CarouselProps extends UIComponentProps, ChildrenComponentProps 
 
 export interface CarouselState {
   activeIndex: number
+  prevActiveIndex: number
   ariaLiveOn: boolean
   itemIds: string[]
+  shouldFocusContainer: boolean
+  isFromKeyboard: boolean
 }
 
 class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, CarouselState> {
@@ -200,13 +207,20 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
   }
 
   getInitialAutoControlledState(): CarouselState {
-    return { activeIndex: 0, ariaLiveOn: false, itemIds: [] as string[] }
+    return {
+      activeIndex: 0,
+      prevActiveIndex: -1,
+      ariaLiveOn: false,
+      itemIds: [] as string[],
+      shouldFocusContainer: false,
+      isFromKeyboard: false,
+    }
   }
 
   itemRefs = [] as React.RefObject<HTMLElement>[]
   paddleNextRef = React.createRef<HTMLElement>()
   paddlePreviousRef = React.createRef<HTMLElement>()
-  focusItemAtIndex = _.debounce((index: number) => {
+  focusItemAtIndex: DebounceResultFn<(index: number) => void> = _.debounce((index: number) => {
     this.itemRefs[index].current.focus()
   }, 400)
 
@@ -230,6 +244,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
     }
 
     this.setState({
+      prevActiveIndex: this.state.activeIndex,
       activeIndex,
     })
 
@@ -240,17 +255,36 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
     }
   }
 
-  renderContent = (accessibility, styles, unhandledProps) => {
-    const { getItemPositionText, items } = this.props
-    const { activeIndex, itemIds } = this.state
+  overrideItemProps = predefinedProps => ({
+    onFocus: (e, itemProps) => {
+      this.setState({
+        shouldFocusContainer: e.currentTarget === e.target,
+        isFromKeyboard: isFromKeyboard(),
+      })
+      _.invoke(predefinedProps, 'onFocus', e, itemProps)
+    },
+    onBlur: (e, itemProps) => {
+      this.setState({
+        shouldFocusContainer: e.currentTarget.contains(e.relatedTarget),
+        isFromKeyboard: false,
+      })
+      _.invoke(predefinedProps, 'onBlur', e, itemProps)
+    },
+  })
+
+  renderContent = (accessibility, classes, unhandledProps) => {
+    const { getItemPositionText, items, circular } = this.props
+    const { activeIndex, itemIds, prevActiveIndex } = this.state
 
     this.itemRefs = []
 
     return (
-      <div style={styles.itemsContainerWrapper} {...accessibility.attributes.itemsContainerWrapper}>
+      <div
+        className={classes.itemsContainerWrapper}
+        {...accessibility.attributes.itemsContainerWrapper}
+      >
         <div
-          className={Carousel.slotClassNames.itemsContainer}
-          style={styles.itemsContainer}
+          className={cx(Carousel.slotClassNames.itemsContainer, classes.itemsContainer)}          
           {...accessibility.attributes.itemsContainer}
           {...applyAccessibilityKeyHandlers(
             accessibility.keyHandlers.itemsContainer,
@@ -261,19 +295,49 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
             items.map((item, index) => {
               const itemRef = React.createRef<HTMLElement>()
               this.itemRefs.push(itemRef)
+              const active = activeIndex === index
+              let slideToNext = prevActiveIndex < activeIndex
+
+              const initialMounting = prevActiveIndex === -1
+
+              if (circular && prevActiveIndex === items.length - 1 && activeIndex === 0) {
+                slideToNext = true
+              } else if (circular && prevActiveIndex === 0 && activeIndex === items.length - 1) {
+                slideToNext = false
+              }
+
               return (
-                <Ref key={item['key'] || index} innerRef={itemRef}>
-                  {CarouselItem.create(item, {
-                    defaultProps: () => ({
-                      active: activeIndex === index,
-                      id: itemIds[index],
-                      navigation: !!this.props.navigation,
-                      ...(getItemPositionText && {
-                        itemPositionText: getItemPositionText(index, items.length),
+                <Animation
+                  key={item['key'] || index}
+                  mountOnEnter
+                  unmountOnExit
+                  visible={active}
+                  name={
+                    initialMounting
+                      ? ''
+                      : active
+                      ? slideToNext
+                        ? 'carousel-slide-to-next-enter'
+                        : 'carousel-slide-to-previous-enter'
+                      : slideToNext
+                      ? 'carousel-slide-to-next-exit'
+                      : 'carousel-slide-to-previous-exit'
+                  }
+                >
+                  <Ref innerRef={itemRef}>
+                    {CarouselItem.create(item, {
+                      defaultProps: () => ({
+                        active,
+                        id: itemIds[index],
+                        navigation: !!this.props.navigation,
+                        ...(getItemPositionText && {
+                          itemPositionText: getItemPositionText(index, items.length),
+                        }),
                       }),
-                    }),
-                  })}
-                </Ref>
+                      overrideProps: this.overrideItemProps,
+                    })}
+                  </Ref>
+                </Animation>
               )
             })}
         </div>
@@ -411,7 +475,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
           children
         ) : (
           <>
-            {this.renderContent(accessibility, styles, unhandledProps)}
+            {this.renderContent(accessibility, classes, unhandledProps)}
             {this.renderPaddles(accessibility, styles)}
             {this.renderNavigation()}
           </>
