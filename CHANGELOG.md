@@ -39,6 +39,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix `loader` - adding labeling when loader get focus @kolaps33 ([#2352](https://github.com/microsoft/fluent-ui-react/pull/2352))
 - `setWhatInputSource()` changes DOM attribute in `whatInput` @layershifter ([#2359](https://github.com/microsoft/fluent-ui-react/pull/2359))
 - Styles from `Provider` are applied to components that rendered out of it in DOM @layershifter ([#2192](https://github.com/microsoft/fluent-ui-react/pull/2192))
+- Fix `Carousel` remove `CarouselItem` elements which are not visible @mnajdova ([#2356](https://github.com/microsoft/fluent-ui-react/pull/2356))
 
 ### Features
 - Added sourcemaps to the dist output to simplify debugging @miroslavstastny ([#2329](https://github.com/microsoft/fluent-ui-react/pull/2329))
