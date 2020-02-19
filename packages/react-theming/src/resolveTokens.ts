@@ -1,5 +1,6 @@
 import { ITheme } from './theme.types';
 
+export type TokenDictShorthand = { [name: string]: any };
 type TokenDict = { [name: string]: IToken };
 
 interface IToken {
@@ -13,7 +14,7 @@ class LiteralToken implements IToken {
   public isResolvable = true;
   public isResolved = true;
 
-  constructor(public name: string, public value: string | number) {}
+  constructor(public name: string, public value: string | number | boolean) {}
   resolve(theme: any): void {}
 }
 
@@ -60,6 +61,7 @@ class TokenFactory {
     switch (typeof rawToken) {
       case 'string':
       case 'number':
+      case 'boolean':
         return new LiteralToken(name, rawToken);
       case 'function':
         return FunctionToken.fromFunction(tokens, name, rawToken);
@@ -79,14 +81,12 @@ class TokenFactory {
  * @param sourceTokensSet
  * @internal
  */
-export const resolveTokens = (name: string | undefined, theme: ITheme, sourceTokensSet: any[]) => {
+export const resolveTokens = (name: string | undefined, theme: ITheme, sourceTokens: any) => {
   const tokens: TokenDict = {};
 
-  sourceTokensSet.forEach(sourceTokens => {
-    for (const tokenName in sourceTokens) {
-      tokens[tokenName] = TokenFactory.from(tokens, sourceTokens[tokenName], tokenName);
-    }
-  });
+  for (const tokenName in sourceTokens) {
+    tokens[tokenName] = TokenFactory.from(tokens, sourceTokens[tokenName], tokenName);
+  }
 
   if (name && theme.components[name] && theme.components[name].tokens) {
     const sourceTokens = theme.components[name].tokens;

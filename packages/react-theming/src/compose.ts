@@ -1,16 +1,20 @@
-import { useTheme } from './themeContext';
-import { resolveTokens } from './resolveTokens';
 import jss from 'jss';
+
+import { resolveTokens } from './resolveTokens';
 import { ITheme } from './theme.types';
+import { useTheme } from './themeContext';
+import { Variant } from './variant';
 
 type Options = ComposeOptions[];
 type SlotsAssignment = any;
+type Variants = { [variantName: string]: Variant };
 
 interface ComposeOptions {
   name?: string;
   slots?: any;
   tokens?: any;
   styles?: any;
+  variants?: Variants;
 }
 
 export interface Composeable {
@@ -26,6 +30,7 @@ export type ForwardRefComponent<TProps, TElement> = React.FunctionComponent<
 interface ComposedFunctionComponent<TProps> extends React.FunctionComponent<TProps> {
   __optionsSet?: ComposeOptions[];
   __directRender?: React.FunctionComponent<TProps>;
+  variants?: Variants;
 
   // Needed for components using forwardRef (See https://github.com/facebook/react/issues/12453).
   render?: React.FunctionComponent<TProps>;
@@ -60,7 +65,7 @@ export const _composeFactory = (useThemeHook: any = useTheme) => {
 
       return renderFn({
         ...props,
-        classes: _getClasses(componentName, theme, classNamesCache, optionsSet),
+        classes: _getClasses(componentName, theme, classNamesCache, optionsSet, props),
         slots,
       });
     };
@@ -70,6 +75,7 @@ export const _composeFactory = (useThemeHook: any = useTheme) => {
     }
 
     Component.propTypes = baseComponent.propTypes;
+    Component.variants = options.variants;
 
     Component.__optionsSet = optionsSet;
     Component.__directRender = renderFn;
@@ -130,20 +136,39 @@ const _mergeOptions = (options: ComposeOptions, baseOptions?: Options): Options 
   return optionsSet;
 };
 
+/**
+ * _tokensFromOptions returns the accurate set of tokens
+ * based on the currently rendered props.
+ *
+ * @internal
+ *
+ * @param options A set of options
+ * @param props Props for this render
+ */
+export const _tokensFromOptions = (options: any[], props: any) => {
+  let result = options.reduce((acc, option) => {
+    return { ...acc, ...(option.tokens || {}) };
+  }, {});
+  options.forEach(option => {
+    Object.keys(option.variants || {}).forEach(variantName => {
+      const v: Variant = option.variants[variantName];
+      result = { ...result, ...v.tokens(props[variantName]) };
+    });
+  });
+  return result;
+};
+
 const _getClasses = (
   name: string | undefined,
   theme: ITheme,
   classNamesCache: WeakMap<any, any>,
   optionsSet: any[],
+  props: any,
 ) => {
-  let classes = classNamesCache.get(theme);
+  let classes = null; // classNamesCache.get(theme);
 
   if (!classes) {
-    const tokens = resolveTokens(
-      name,
-      theme,
-      optionsSet.map(o => o.tokens || {}),
-    );
+    const tokens = resolveTokens(name, theme, _tokensFromOptions(optionsSet, props));
     let styles: any = {};
 
     optionsSet.forEach((options: any) => {
