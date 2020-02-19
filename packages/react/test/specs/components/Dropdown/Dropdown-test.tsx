@@ -1318,7 +1318,7 @@ describe('Dropdown', () => {
 
       expect(getSelectedItems()).toHaveLength(0)
 
-      wrapper.setProps({ multiple: true } as any)
+      wrapper.setProps({ multiple: true })
       expect(getSelectedItems()).toHaveLength(1)
     })
 
@@ -1392,8 +1392,7 @@ describe('Dropdown', () => {
     it('have onClick called when passed stop event from being propagated', () => {
       const onClick = jest.fn()
       const stopPropagation = jest.fn()
-      const stopImmediatePropagation = jest.fn()
-      const mockedEvent = { stopPropagation, nativeEvent: { stopImmediatePropagation } }
+      const mockedEvent = { stopPropagation }
       const items = [{ header: 'Venom', onClick }]
       const { clickOnItemAtIndex } = renderDropdown({ items, defaultOpen: true })
 
@@ -1407,14 +1406,12 @@ describe('Dropdown', () => {
         }),
       )
       expect(stopPropagation).toBeCalledTimes(1)
-      expect(stopImmediatePropagation).toBeCalledTimes(1)
     })
 
     it('when selected have onClick called when passed stop event from being propagated', () => {
       const onClick = jest.fn()
       const stopPropagation = jest.fn()
-      const stopImmediatePropagation = jest.fn()
-      const mockedEvent = { stopPropagation, nativeEvent: { stopImmediatePropagation } }
+      const mockedEvent = { stopPropagation }
       const items = [{ header: 'Venom', onClick }]
       const { clickOnSelectedItemAtIndex } = renderDropdown({
         items,
