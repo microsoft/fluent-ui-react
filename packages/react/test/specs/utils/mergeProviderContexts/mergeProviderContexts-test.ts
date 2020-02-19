@@ -1,4 +1,7 @@
-import mergeProviderContexts, { mergeRenderers } from 'src/utils/mergeProviderContexts'
+import mergeProviderContexts, {
+  mergePerformanceOptions,
+  mergeRenderers,
+} from 'src/utils/mergeProviderContexts'
 import { felaRenderer } from 'src/utils/felaRenderer'
 
 describe('mergeRenderers', () => {
@@ -21,6 +24,30 @@ describe('mergeRenderers', () => {
 
     expect(renderer).toHaveProperty('renderRule')
     expect(mergeRenderers(jest.fn() as any, null, target)).toBe(renderer)
+  })
+})
+
+describe('mergePerformanceOptions', () => {
+  test(`options from "sources" always override`, () => {
+    expect(mergePerformanceOptions({ enableVariablesCaching: true }, {})).toMatchObject({
+      enableVariablesCaching: true,
+    })
+    expect(mergePerformanceOptions({ enableVariablesCaching: true }, undefined)).toMatchObject({
+      enableVariablesCaching: true,
+    })
+
+    expect(
+      mergePerformanceOptions(
+        { enableVariablesCaching: true, enableStylesCaching: true },
+        { enableStylesCaching: false },
+      ),
+    ).toMatchObject({})
+    expect(
+      mergePerformanceOptions(
+        { enableVariablesCaching: true, enableStylesCaching: true },
+        { enableStylesCaching: undefined },
+      ),
+    ).toMatchObject({})
   })
 })
 

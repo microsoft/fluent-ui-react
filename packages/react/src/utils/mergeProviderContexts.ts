@@ -4,6 +4,10 @@ import { mergeThemes } from '@fluentui/styles'
 import { ProviderContextPrepared, ProviderContextInput } from '../types'
 import { createRenderer, felaRenderer } from './felaRenderer'
 import isBrowser from './isBrowser'
+import {
+  StylesContextPerformance,
+  StylesContextPerformanceInput,
+} from '@fluentui/react-bindings/src'
 
 const registeredRenderers = new WeakMap<Document, Renderer>()
 
@@ -33,7 +37,10 @@ export const mergeRenderers = (current: Renderer, next?: Renderer, target?: Docu
   return createdRenderer
 }
 
-export const mergePerformanceOptions = (target, ...sources) => {
+export const mergePerformanceOptions = (
+  target: StylesContextPerformance | StylesContextPerformanceInput,
+  ...sources: StylesContextPerformanceInput[]
+) => {
   return Object.assign(target, ...sources)
 }
 
