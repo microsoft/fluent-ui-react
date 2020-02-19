@@ -17,14 +17,13 @@ import * as React from 'react'
 import { ThemeContext } from 'react-fela'
 
 import { createShorthandFactory, UIComponentProps, commonPropTypes } from '../../utils'
-import {
-  FluentComponentStaticProps,
-  ProviderContextPrepared,
-  WithAsProp,
-  withSafeTypeForAs,
-} from '../../types'
+import { PropsOfElement, ProviderContextPrepared } from '../../types'
 
-export interface ImageProps extends UIComponentProps, ImageBehaviorProps {
+export interface ImageOwnProps<E extends React.ElementType = React.ElementType>
+  extends UIComponentProps,
+    ImageBehaviorProps {
+  as?: E
+
   /** Alternative text. */
   alt?: string
 
@@ -46,7 +45,10 @@ export interface ImageProps extends UIComponentProps, ImageBehaviorProps {
   src?: string
 }
 
-const Image: React.FC<WithAsProp<ImageProps>> & FluentComponentStaticProps<ImageProps> = props => {
+export type ImageProps<E extends React.ElementType> = ImageOwnProps<E> &
+  Omit<PropsOfElement<E>, keyof ImageOwnProps>
+
+function Image<E extends React.ElementType = 'img'>(props: ImageProps<E>): React.ReactElement {
   const context: ProviderContextPrepared = React.useContext(ThemeContext)
   const { setStart, setEnd } = useTelemetry(Image.displayName, context.telemetry)
   setStart()
@@ -102,11 +104,11 @@ const Image: React.FC<WithAsProp<ImageProps>> & FluentComponentStaticProps<Image
 
 Image.className = 'ui-image'
 Image.displayName = 'Image'
+
 Image.defaultProps = {
   as: 'img',
   accessibility: imageBehavior,
 }
-
 Image.propTypes = {
   ...commonPropTypes.createCommon({
     children: false,
@@ -116,7 +118,6 @@ Image.propTypes = {
   circular: PropTypes.bool,
   fluid: PropTypes.bool,
 }
-
 Image.handledProps = Object.keys(Image.propTypes) as any
 
 Image.create = createShorthandFactory({ Component: Image, mappedProp: 'src', allowsJSX: false })
@@ -132,4 +133,4 @@ Image.create = createShorthandFactory({ Component: Image, mappedProp: 'src', all
  *  - when image has role='presentation' then screen readers navigate to the element in scan/virtual mode. To avoid this, the attribute "aria-hidden='true'" is applied by the default image behavior.
  *  - when alt property is used in combination with aria-label, arialabbeledby or title, additional screen readers verification is needed as each screen reader handles this combination differently.
  */
-export default withSafeTypeForAs<typeof Image, ImageProps, 'img'>(Image)
+export default Image

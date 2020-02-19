@@ -60,7 +60,7 @@ export interface LabelProps
   iconPosition?: 'start' | 'end'
 
   /** A Label can contain an image. */
-  image?: ShorthandValue<ImageProps>
+  image?: ShorthandValue<ImageProps<any>>
 
   /** A Label can position its image at the start or end of the layout. */
   imagePosition?: 'start' | 'end'

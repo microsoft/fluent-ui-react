@@ -42,7 +42,7 @@ export interface DropdownSelectedItemProps extends UIComponentProps<DropdownSele
   icon?: ShorthandValue<IconProps>
 
   /** Image of the selected item. */
-  image?: ShorthandValue<ImageProps>
+  image?: ShorthandValue<ImageProps<any>>
 
   /**
    * Called on selected item click.

@@ -19,6 +19,12 @@ export type DebounceResultFn<T> = T & {
 // Utilities
 // ========================================================
 
+// Source: https://github.com/emotion-js/emotion/blob/master/packages/styled-base/types/helper.d.ts
+export type PropsOfElement<
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  E extends keyof JSX.IntrinsicElements | React.JSXElementConstructor<any>
+> = JSX.LibraryManagedAttributes<E, React.ComponentPropsWithRef<E>>
+
 export type ResultOf<T> = T extends (...arg: any[]) => infer TResult ? TResult : never
 
 export type ObjectOf<T> = { [key: string]: T }
