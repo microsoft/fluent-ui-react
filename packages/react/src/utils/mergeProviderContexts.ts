@@ -1,4 +1,8 @@
-import { Renderer, StylesContextPerformance, StylesContextPerformanceInput } from '@fluentui/react-bindings'
+import {
+  Renderer,
+  StylesContextPerformance,
+  StylesContextPerformanceInput
+} from '@fluentui/react-bindings'
 import { mergeThemes } from '@fluentui/styles'
 
 import { ProviderContextPrepared, ProviderContextInput } from '../types'
