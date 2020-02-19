@@ -121,13 +121,14 @@ class Embed extends AutoControlledComponent<WithAsProp<EmbedProps>, EmbedState> 
     e.preventDefault()
 
     const iframeNil = _.isNil(this.props.iframe)
+    const newActive = !this.state.active
 
-    if (iframeNil || (!iframeNil && !this.state.active)) {
-      this.setState({ active: !this.state.active })
-      _.invoke(this.props, 'onActiveChange', e, { ...this.props, active: !this.state.active })
+    if (iframeNil || (!iframeNil && newActive)) {
+      this.setState({ active: newActive })
+      _.invoke(this.props, 'onActiveChange', e, { ...this.props, active: newActive })
     }
 
-    _.invoke(this.props, 'onClick', e, { ...this.props, active: !this.state.active })
+    _.invoke(this.props, 'onClick', e, { ...this.props, active: newActive })
   }
 
   handleFrameOverrides = predefinedProps => ({
