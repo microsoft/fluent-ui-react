@@ -64,6 +64,7 @@ const mergeProviderContexts = (
     performance: {
       enableStylesCaching: true,
       enableVariablesCaching: true,
+      enableHardVariablesCaching: true,
     },
     telemetry: undefined,
     renderer: undefined,

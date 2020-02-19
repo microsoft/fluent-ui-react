@@ -198,7 +198,7 @@ const Provider: React.FC<WithAsProp<ProviderProps>> & {
           ...rtlProps,
           ...unhandledProps,
         }
-
+  console.log(outgoingContext.performance)
   // rehydration disabled to avoid leaking styles between renderers
   // https://github.com/rofrischmann/fela/blob/master/docs/api/fela-dom/rehydrate.md
   return (

@@ -56,27 +56,39 @@ const resolveStyles = (
 
   const { className, design, styles, variables, ...stylesProps } = props
 
+  const noInlineStylesOverrides = !(design || styles)
+  const noVariableOverrides = performance.enableHardVariablesCaching || !variables
+
+  /* istanbul ignore else */
   if (process.env.NODE_ENV !== 'production') {
-    if (!performance.enableStylesCaching && performance.enabledHardVariablesCaching) {
-      throw new Error('111')
+    if (!performance.enableStylesCaching && performance.enableHardVariablesCaching) {
+      throw new Error(
+        '@fluentui/react: Please check your "performance" settings on "Provider", to enable "enableHardVariablesCaching" you need to enable "enableStylesCaching"',
+      )
     }
 
-    if (performance.enabledHardVariablesCaching) {
+    if (performance.enableHardVariablesCaching && variables) {
       if (!_.isPlainObject(variables)) {
-        throw new Error()
+        throw new Error(
+          '@fluentui/react: With "enableHardVariablesCaching" only plain objects can be passed to "variables" prop.',
+        )
       }
 
-      if (
-        !Object.keys(variables).every(variableName => {
-          return variables[variableName] // TODO
-        })
-      ) {
+      const hasOnlyBooleanVariables = Object.keys(variables).every(variableName => {
+        return (
+          variables[variableName] === null ||
+          typeof variables[variableName] === 'boolean' ||
+          typeof variables[variableName] === 'undefined'
+        )
+      })
+
+      if (!hasOnlyBooleanVariables) {
+        throw new Error(
+          '@fluentui/react: With "enableHardVariablesCaching" only boolean or nil properties can bepassed to "variables" prop.',
+        )
       }
     }
   }
-
-  const noInlineStylesOverrides = !(design || styles || variables)
-  const noVariableOverrides = performance.enabledHardVariablesCaching || !variables
 
   const cacheEnabled =
     performance.enableStylesCaching && noInlineStylesOverrides && noVariableOverrides
@@ -85,9 +97,8 @@ const resolveStyles = (
   let mergedStyles: ComponentSlotStylesPrepared = theme.componentStyles[displayName] || {
     root: () => ({}),
   }
-  const hasInlineStylesOverrides = !_.isNil(props.design) || !_.isNil(props.styles)
 
-  if (hasInlineStylesOverrides) {
+  if (!noInlineStylesOverrides) {
     mergedStyles = mergeComponentStyles(
       mergedStyles,
       props.design && withDebugId({ root: props.design }, 'props.design'),
@@ -131,11 +142,10 @@ const resolveStyles = (
     }
   }
 
-  const propsCacheKey = cacheEnabled
-    ? `${JSON.stringify(stylesProps)}:${JSON.stringify(variables)}`
-    : ''
+  const propsCacheKey = cacheEnabled ? JSON.stringify(stylesProps) : ''
+  const variablesCacheKey = performance.enableHardVariablesCaching ? JSON.stringify(variables) : ''
   const componentCacheKey = cacheEnabled
-    ? `${displayName}:${propsCacheKey}${styleParam.rtl}${styleParam.disableAnimations}`
+    ? `${displayName}:${propsCacheKey}:${variablesCacheKey}:${styleParam.rtl}${styleParam.disableAnimations}`
     : ''
 
   Object.keys(mergedStyles).forEach(slotName => {
