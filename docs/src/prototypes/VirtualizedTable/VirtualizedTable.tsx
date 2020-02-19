@@ -20,8 +20,7 @@ const VirtualizedTablePrototype = () => {
     'aria-label': '',
     'aria-readonly': undefined,
     containerRole: 'presentation',
-    role: 'presentation',
-    tabIndex: null,
+    role: 'presentation',    
   }
 
   const rowRenderer = ({ index, style }) => {
@@ -52,7 +51,7 @@ const VirtualizedTablePrototype = () => {
 
   return (
     <Table accessibility={gridNestedBehavior} aria-rowcount={rows.length}>
-      <Table.Row header>
+      <Table.Row header accessibility={gridRowBehavior}>
         <Table.Cell content="id" key="id" accessibility={gridHeaderCellBehavior} />
         <Table.Cell content="Name" key="name" accessibility={gridHeaderCellBehavior} />
         <Table.Cell content="Picture" key="pic" accessibility={gridHeaderCellBehavior} />
