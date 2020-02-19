@@ -27,6 +27,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Styles and variables from `ProviderBox` are moved to `Provider` @layershifter ([#2192](https://github.com/microsoft/fluent-ui-react/pull/2192))
 - Fix an issue with `offset` and `pointing` in `Popup` @layershifter ([#2361](https://github.com/microsoft/fluent-ui-react/pull/2361))
 - Restricted prop set in the `TooltipContent` component which is passed to styles functions @layershifter ([#2357](https://github.com/microsoft/fluent-ui-react/pull/2357))
+- Restricted prop sets in the `Chat`, `ChatItem`, `ChatMessage` components which are passed to styles functions @layershifter ([#2366](https://github.com/microsoft/fluent-ui-react/pull/2366))
 
 ### Fixes
 - Remove dependency on Lodash in TypeScript typings @layershifter ([#2323](https://github.com/microsoft/fluent-ui-react/pull/2323))
@@ -39,6 +40,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix `loader` - adding labeling when loader get focus @kolaps33 ([#2352](https://github.com/microsoft/fluent-ui-react/pull/2352))
 - `setWhatInputSource()` changes DOM attribute in `whatInput` @layershifter ([#2359](https://github.com/microsoft/fluent-ui-react/pull/2359))
 - Styles from `Provider` are applied to components that rendered out of it in DOM @layershifter ([#2192](https://github.com/microsoft/fluent-ui-react/pull/2192))
+- Fix `Carousel` remove `CarouselItem` elements which are not visible @mnajdova ([#2356](https://github.com/microsoft/fluent-ui-react/pull/2356))
+- Fix selected item being wrongly removed on Backspace in `search` `Dropdown` @silviuavram ([#2349](https://github.com/microsoft/fluent-ui-react/pull/2349))
 - Fix `Toolbar` not being tabbable on wrapped focused item disappear @silviuavram ([#2321](https://github.com/microsoft/fluent-ui-react/pull/2321))
 
 ### Features
