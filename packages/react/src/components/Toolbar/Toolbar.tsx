@@ -10,6 +10,7 @@ import * as customPropTypes from '@fluentui/react-proptypes'
 import * as PropTypes from 'prop-types'
 import { Ref } from '@fluentui/react-component-ref'
 import { EventListener } from '@fluentui/react-component-event-listener'
+import { getFirstFocusable } from '@fluentui/react-bindings'
 
 import {
   childrenExist,
@@ -142,6 +143,7 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
   overflowContainerRef = React.createRef<HTMLDivElement>()
   overflowItemRef = React.createRef<HTMLElement>()
   offsetMeasureRef = React.createRef<HTMLDivElement>()
+  containerRef = React.createRef<HTMLElement>()
 
   // index of the last visible item in Toolbar, the rest goes to overflow menu
   lastVisibleItemIndex: number
@@ -182,6 +184,22 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
   hide(el: HTMLElement) {
     if (el.style.visibility === 'hidden') {
       return
+    }
+
+    if (
+      this.context.target.activeElement === el ||
+      el.contains(this.context.target.activeElement)
+    ) {
+      if (this.containerRef.current) {
+        const firstFocusableItem = getFirstFocusable(
+          this.containerRef.current,
+          this.containerRef.current.firstElementChild as HTMLElement,
+        )
+
+        if (firstFocusableItem) {
+          firstFocusableItem.focus()
+        }
+      }
     }
 
     el.style.visibility = 'hidden'
@@ -503,31 +521,35 @@ class Toolbar extends UIComponent<WithAsProp<ToolbarProps>> {
 
     if (!overflow) {
       return (
-        <ElementType
-          className={classes.root}
-          {...accessibility.attributes.root}
-          {...unhandledProps}
-        >
-          {childrenExist(children) ? children : this.renderItems(items, variables)}
-        </ElementType>
+        <Ref innerRef={this.containerRef}>
+          <ElementType
+            className={classes.root}
+            {...accessibility.attributes.root}
+            {...unhandledProps}
+          >
+            {childrenExist(children) ? children : this.renderItems(items, variables)}
+          </ElementType>
+        </Ref>
       )
     }
 
     return (
       <>
-        <ElementType
-          className={classes.root}
-          {...accessibility.attributes.root}
-          {...unhandledProps}
-        >
-          <div className={classes.overflowContainer} ref={this.overflowContainerRef}>
-            {childrenExist(children)
-              ? children
-              : this.renderItems(this.getVisibleItems(), variables)}
-            {this.renderOverflowItem(overflowItem)}
-          </div>
-          <div className={classes.offsetMeasure} ref={this.offsetMeasureRef} />
-        </ElementType>
+        <Ref innerRef={this.containerRef}>
+          <ElementType
+            className={classes.root}
+            {...accessibility.attributes.root}
+            {...unhandledProps}
+          >
+            <div className={classes.overflowContainer} ref={this.overflowContainerRef}>
+              {childrenExist(children)
+                ? children
+                : this.renderItems(this.getVisibleItems(), variables)}
+              {this.renderOverflowItem(overflowItem)}
+            </div>
+            <div className={classes.offsetMeasure} ref={this.offsetMeasureRef} />
+          </ElementType>
+        </Ref>
         <EventListener
           listener={this.handleWindowResize}
           target={this.context.target.defaultView}

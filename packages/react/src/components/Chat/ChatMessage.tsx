@@ -12,6 +12,7 @@ import {
   useStyles,
   useTelemetry,
 } from '@fluentui/react-bindings'
+import { useContextSelector } from '@fluentui/react-context-selector'
 import { Ref } from '@fluentui/react-component-ref'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import cx from 'classnames'
@@ -23,7 +24,6 @@ import * as React from 'react'
 import { ThemeContext } from 'react-fela'
 
 import { Popper } from '../../utils/positioner'
-
 import {
   childrenExist,
   createShorthandFactory,
@@ -42,7 +42,6 @@ import {
   FluentComponentStaticProps,
   ProviderContextPrepared,
 } from '../../types'
-
 import Box, { BoxProps } from '../Box/Box'
 import Label, { LabelProps } from '../Label/Label'
 import Menu, { MenuProps } from '../Menu/Menu'
@@ -50,6 +49,7 @@ import { MenuItemProps } from '../Menu/MenuItem'
 import Text, { TextProps } from '../Text/Text'
 import Reaction, { ReactionProps } from '../Reaction/Reaction'
 import { ReactionGroupProps } from '../Reaction/ReactionGroup'
+import { ChatItemContext } from './chatItemContext'
 
 export interface ChatMessageSlotClassNames {
   actionMenu: string
@@ -129,18 +129,17 @@ export type ChatMessageStylesProps = Pick<
 
 const ChatMessage: React.FC<WithAsProp<ChatMessageProps>> &
   FluentComponentStaticProps<ChatMessageProps> & {
-    __isChatMessage: boolean
-    isTypeOfElement: Function
     slotClassNames: ChatMessageSlotClassNames
   } = props => {
   const context: ProviderContextPrepared = React.useContext(ThemeContext)
   const { setStart, setEnd } = useTelemetry(ChatMessage.displayName, context.telemetry)
   setStart()
 
+  const parentAttached = useContextSelector(ChatItemContext, v => v.attached)
   const {
     accessibility,
     actionMenu,
-    attached,
+    attached = parentAttached,
     author,
     badge,
     badgePosition,
@@ -395,10 +394,6 @@ ChatMessage.propTypes = {
   unstable_overflow: PropTypes.bool,
 }
 ChatMessage.handledProps = Object.keys(ChatMessage.propTypes) as any
-
-// TODO: remove this magic static
-ChatMessage.__isChatMessage = true
-ChatMessage.isTypeOfElement = element => _.get(element, `type.__isChatMessage`)
 
 ChatMessage.create = createShorthandFactory({ Component: ChatMessage, mappedProp: 'content' })
 ChatMessage.slotClassNames = {
