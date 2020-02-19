@@ -48,6 +48,17 @@ export interface ImageOwnProps<E extends React.ElementType = React.ElementType>
 export type ImageProps<E extends React.ElementType = React.ElementType> = ImageOwnProps<E> &
   Omit<PropsOfElement<E>, keyof ImageOwnProps>
 
+/**
+ * An Image is a graphic representation of something.
+ *
+ * @accessibility
+ * If image should be visible to screen readers, textual representation needs to be provided in 'alt' property.
+ *
+ * Other considerations:
+ *  - when alt property is empty, then Narrator in scan mode navigates to image and narrates it as empty paragraph.
+ *  - when image has role='presentation' then screen readers navigate to the element in scan/virtual mode. To avoid this, the attribute "aria-hidden='true'" is applied by the default image behavior.
+ *  - when alt property is used in combination with aria-label, arialabbeledby or title, additional screen readers verification is needed as each screen reader handles this combination differently.
+ */
 function Image<E extends React.ElementType = 'img'>(props: ImageProps<E>): React.ReactElement {
   const context: ProviderContextPrepared = React.useContext(ThemeContext)
   const { setStart, setEnd } = useTelemetry(Image.displayName, context.telemetry)
@@ -122,15 +133,4 @@ Image.handledProps = Object.keys(Image.propTypes) as any
 
 Image.create = createShorthandFactory({ Component: Image, mappedProp: 'src', allowsJSX: false })
 
-/**
- * An Image is a graphic representation of something.
- *
- * @accessibility
- * If image should be visible to screen readers, textual representation needs to be provided in 'alt' property.
- *
- * Other considerations:
- *  - when alt property is empty, then Narrator in scan mode navigates to image and narrates it as empty paragraph.
- *  - when image has role='presentation' then screen readers navigate to the element in scan/virtual mode. To avoid this, the attribute "aria-hidden='true'" is applied by the default image behavior.
- *  - when alt property is used in combination with aria-label, arialabbeledby or title, additional screen readers verification is needed as each screen reader handles this combination differently.
- */
 export default Image
