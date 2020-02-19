@@ -1,13 +1,9 @@
-import { Renderer } from '@fluentui/react-bindings'
+import { Renderer, StylesContextPerformance, StylesContextPerformanceInput } from '@fluentui/react-bindings'
 import { mergeThemes } from '@fluentui/styles'
 
 import { ProviderContextPrepared, ProviderContextInput } from '../types'
 import { createRenderer, felaRenderer } from './felaRenderer'
 import isBrowser from './isBrowser'
-import {
-  StylesContextPerformance,
-  StylesContextPerformanceInput,
-} from '@fluentui/react-bindings/src'
 
 const registeredRenderers = new WeakMap<Document, Renderer>()
 
