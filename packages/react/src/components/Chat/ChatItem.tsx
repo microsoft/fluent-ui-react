@@ -26,10 +26,9 @@ import {
   ChildrenComponentProps,
   commonPropTypes,
   rtlTextContainer,
-  getElementProp,
 } from '../../utils'
 import Box, { BoxProps } from '../Box/Box'
-import ChatMessage from './ChatMessage'
+import { ChatItemContextProvider } from './chatItemContext'
 
 export interface ChatItemSlotClassNames {
   message: string
@@ -56,15 +55,6 @@ export interface ChatItemProps extends UIComponentProps, ChildrenComponentProps 
 }
 
 export type ChatItemStylesProps = Pick<ChatItemProps, 'attached' | 'contentPosition'>
-
-const cloneElementWithCustomProps = (element, props, prop?) => {
-  if (!prop) {
-    return React.cloneElement(element, props)
-  }
-  return React.cloneElement(element, {
-    [prop]: React.cloneElement(getElementProp(element, prop), props),
-  })
-}
 
 const ChatItem: React.FC<WithAsProp<ChatItemProps>> &
   FluentComponentStaticProps<ChatItemProps> & {
@@ -106,33 +96,6 @@ const ChatItem: React.FC<WithAsProp<ChatItemProps>> &
     rtl: context.rtl,
   })
 
-  const setAttachedPropValueForChatMessage = () => {
-    const messageElement = Box.create(message, {
-      defaultProps: () =>
-        getA11Props('message', {
-          className: ChatItem.slotClassNames.message,
-          styles: resolvedStyles.message,
-        }),
-    })
-
-    // the element is ChatMessage
-    if (ChatMessage.isTypeOfElement(messageElement)) {
-      return cloneElementWithCustomProps(messageElement, { attached })
-    }
-
-    // the children is ChatMessage
-    if (ChatMessage.isTypeOfElement(getElementProp(messageElement, 'children'))) {
-      return cloneElementWithCustomProps(messageElement, { attached }, 'children')
-    }
-
-    // the content is ChatMessage
-    if (ChatMessage.isTypeOfElement(getElementProp(messageElement, 'content'))) {
-      return cloneElementWithCustomProps(messageElement, { attached }, 'content')
-    }
-
-    return messageElement
-  }
-
   const renderContent = () => {
     const gutterElement = Box.create(gutter, {
       defaultProps: () =>
@@ -141,14 +104,20 @@ const ChatItem: React.FC<WithAsProp<ChatItemProps>> &
           styles: resolvedStyles.gutter,
         }),
     })
-    const messageElement = setAttachedPropValueForChatMessage()
+    const messageElement = Box.create(message, {
+      defaultProps: () =>
+        getA11Props('message', {
+          className: ChatItem.slotClassNames.message,
+          styles: resolvedStyles.message,
+        }),
+    })
 
     return (
-      <>
+      <ChatItemContextProvider value={{ attached }}>
         {contentPosition === 'start' && gutterElement}
         {messageElement}
         {contentPosition === 'end' && gutterElement}
-      </>
+      </ChatItemContextProvider>
     )
   }
 
