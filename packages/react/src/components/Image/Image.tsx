@@ -19,7 +19,7 @@ import { ThemeContext } from 'react-fela'
 import { createShorthandFactory, UIComponentProps, commonPropTypes } from '../../utils'
 import { PropsOfElement, ProviderContextPrepared } from '../../types'
 
-export interface ImageOwnProps<E extends React.ElementType = React.ElementType>
+export interface ImageOwnProps<E extends React.ElementType>
   extends UIComponentProps,
     ImageBehaviorProps {
   as?: E
@@ -45,8 +45,10 @@ export interface ImageOwnProps<E extends React.ElementType = React.ElementType>
   src?: string
 }
 
-export type ImageProps<E extends React.ElementType = React.ElementType> = ImageOwnProps<E> &
-  Omit<PropsOfElement<E>, keyof ImageOwnProps>
+export type ImageStrictProps<E extends React.ElementType> = ImageOwnProps<E> &
+  Omit<PropsOfElement<E>, keyof ImageOwnProps<E>>
+
+export type ImageProps = ImageStrictProps<any>
 
 /**
  * An Image is a graphic representation of something.
@@ -59,7 +61,9 @@ export type ImageProps<E extends React.ElementType = React.ElementType> = ImageO
  *  - when image has role='presentation' then screen readers navigate to the element in scan/virtual mode. To avoid this, the attribute "aria-hidden='true'" is applied by the default image behavior.
  *  - when alt property is used in combination with aria-label, arialabbeledby or title, additional screen readers verification is needed as each screen reader handles this combination differently.
  */
-function Image<E extends React.ElementType = 'img'>(props: ImageProps<E>): React.ReactElement {
+function Image<E extends React.ElementType = 'img'>(
+  props: ImageStrictProps<E>,
+): React.ReactElement {
   const context: ProviderContextPrepared = React.useContext(ThemeContext)
   const { setStart, setEnd } = useTelemetry(Image.displayName, context.telemetry)
   setStart()
