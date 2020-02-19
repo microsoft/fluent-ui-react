@@ -51,8 +51,9 @@ const resolveStyles = (
     rtl,
     disableAnimations,
     renderer,
-    performance = {},
+    performance,
   } = options
+
   const { className, design, styles, variables, ...stylesProps } = props
 
   if (process.env.NODE_ENV !== 'production') {

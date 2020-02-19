@@ -62,12 +62,6 @@ const useStyles = <StyleProps extends PrimitiveProps>(
     React.useContext(ThemeContext) || defaultContext
 
   const {
-    enableStylesCaching = true,
-    enableVariablesCaching = true,
-    enableHardVariablesCaching = false,
-  } = context.performance || {}
-
-  const {
     className = process.env.NODE_ENV === 'production' ? '' : 'no-classname-🙉',
     mapPropsToStyles = () => ({} as StyleProps),
     mapPropsToInlineStyles = () => ({} as InlineStyleProps<StyleProps>),
@@ -91,11 +85,7 @@ const useStyles = <StyleProps extends PrimitiveProps>(
     rtl,
     saveDebug: fluentUIDebug => (debug.current = { fluentUIDebug }),
     theme: context.theme,
-    performance: {
-      enableStylesCaching,
-      enableVariablesCaching,
-      enableHardVariablesCaching,
-    },
+    performance: context.performance,
   })
 
   return { classes, styles: resolvedStyles }
