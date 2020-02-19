@@ -44,7 +44,7 @@ export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
   header?: ShorthandValue<BoxProps>
 
   /** Item's image. */
-  image?: ShorthandValue<ImageProps<any>>
+  image?: ShorthandValue<ImageProps>
 
   /** Indicated whether the item has been set active by keyboard. */
   isFromKeyboard?: boolean

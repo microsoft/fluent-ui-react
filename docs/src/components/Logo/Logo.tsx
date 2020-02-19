@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Image, ImageProps } from '@fluentui/react'
 
-export type LogoProps = ImageProps<any> & {
+export type LogoProps = ImageProps & {
   flavor?: 'black' | 'white' | 'inverted'
 }
 

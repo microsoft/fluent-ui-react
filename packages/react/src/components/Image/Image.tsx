@@ -45,7 +45,7 @@ export interface ImageOwnProps<E extends React.ElementType = React.ElementType>
   src?: string
 }
 
-export type ImageProps<E extends React.ElementType> = ImageOwnProps<E> &
+export type ImageProps<E extends React.ElementType = any> = ImageOwnProps<E> &
   Omit<PropsOfElement<E>, keyof ImageOwnProps>
 
 function Image<E extends React.ElementType = 'img'>(props: ImageProps<E>): React.ReactElement {

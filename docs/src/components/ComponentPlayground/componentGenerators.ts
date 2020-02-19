@@ -71,7 +71,7 @@ export const Icon: KnobComponentGenerators<IconProps> = {
   },
 }
 
-export const Image: KnobComponentGenerators<ImageProps<any>> = {
+export const Image: KnobComponentGenerators<ImageProps> = {
   src: ({ propName }) => ({
     hook: useStringKnob,
     name: propName,
