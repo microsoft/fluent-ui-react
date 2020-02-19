@@ -1,7 +1,7 @@
 import {
   Renderer,
   StylesContextPerformance,
-  StylesContextPerformanceInput
+  StylesContextPerformanceInput,
 } from '@fluentui/react-bindings'
 import { mergeThemes } from '@fluentui/styles'
 
