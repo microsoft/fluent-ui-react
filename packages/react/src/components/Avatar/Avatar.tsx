@@ -31,7 +31,7 @@ export interface AvatarProps extends UIComponentProps {
   accessibility?: Accessibility<never>
 
   /** Shorthand for the image. */
-  image?: ShorthandValue<ImageProps<any>>
+  image?: ShorthandValue<ImageProps>
 
   /** Shorthand for the label. */
   label?: ShorthandValue<LabelProps>
