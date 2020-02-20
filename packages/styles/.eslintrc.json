@@ -1,0 +1,4 @@
+{
+  "extends": ["../../build/eslint/index.js"],
+  "root": true
+}
