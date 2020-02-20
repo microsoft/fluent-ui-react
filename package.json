@@ -61,7 +61,7 @@
     ]
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/jest-dom": "^5.1.1",
     "@types/enzyme": "^3.9.3",
     "@types/gulp": "^4.0.6",
     "@types/lodash": "^4.14.118",
@@ -91,6 +91,13 @@
     "typescript": "~3.7.2"
   },
   "workspaces": {
-    "packages": ["packages/*", "scripts", "build", "docs", "e2e", "perf"]
+    "packages": [
+      "packages/*",
+      "scripts",
+      "build",
+      "docs",
+      "e2e",
+      "perf"
+    ]
   }
 }
