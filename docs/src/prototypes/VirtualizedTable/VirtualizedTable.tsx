@@ -20,7 +20,7 @@ const VirtualizedTablePrototype = () => {
     'aria-label': '',
     'aria-readonly': undefined,
     containerRole: 'presentation',
-    role: 'presentation',    
+    role: 'presentation',
   }
 
   const rowRenderer = ({ index, style }) => {
@@ -50,15 +50,16 @@ const VirtualizedTablePrototype = () => {
   }
 
   return (
-    <Table accessibility={gridNestedBehavior} aria-rowcount={rows.length}>
-      <Table.Row header accessibility={gridRowBehavior}>
-        <Table.Cell content="id" key="id" accessibility={gridHeaderCellBehavior} />
-        <Table.Cell content="Name" key="name" accessibility={gridHeaderCellBehavior} />
-        <Table.Cell content="Picture" key="pic" accessibility={gridHeaderCellBehavior} />
-        <Table.Cell content="Age" key="age" accessibility={gridHeaderCellBehavior} />
-      </Table.Row>
-      <AutoSizer disableHeight>
-        {({ width }) => (
+    <AutoSizer disableHeight>
+      {({ width }) => (
+        <Table accessibility={gridNestedBehavior} aria-rowcount={rows.length}>
+          <Table.Row header accessibility={gridRowBehavior} styles={{ width: `${width}px` }}>
+            <Table.Cell content="id" key="id" accessibility={gridHeaderCellBehavior} />
+            <Table.Cell content="Name" key="name" accessibility={gridHeaderCellBehavior} />
+            <Table.Cell content="Picture" key="pic" accessibility={gridHeaderCellBehavior} />
+            <Table.Cell content="Age" key="age" accessibility={gridHeaderCellBehavior} />
+          </Table.Row>
+
           <ReactVirtualizedList
             disableHeader={true}
             height={400}
@@ -70,9 +71,9 @@ const VirtualizedTablePrototype = () => {
             overscanRowCount={5}
             {...accessibilityListProperties}
           />
-        )}
-      </AutoSizer>
-    </Table>
+        </Table>
+      )}
+    </AutoSizer>
   )
 }
 

@@ -18,17 +18,22 @@ function VirtualizedTablesPrototype() {
     {
       key: 'table1',
       title: <div>Table one</div>,
-      content: <VirtualizedTable scrollElementRef={ref} />,
+      content: <VirtualizedTable scrollElementRef={ref} label={'table1'} />,
     },
     {
       key: 'table2',
       title: <div>Custom table title</div>,
-      content: <VirtualizedTable scrollElementRef={ref} />,
+      content: <VirtualizedTable scrollElementRef={ref} label={'table2'} />,
     },
   ]
 
   return (
-    <div id="scrollParent" style={{ height: '700px', overflowY: 'auto' }} ref={setRef}>
+    <div
+      id="scrollParent"
+      style={{ height: '700px', overflowY: 'auto' }}
+      ref={setRef}
+      tabIndex={-1}
+    >
       {ref != null ? <Accordion panels={tables} /> : null}
     </div>
   )
@@ -36,6 +41,7 @@ function VirtualizedTablesPrototype() {
 
 interface VirtualizedTableProps {
   scrollElementRef: React.RefObject<HTMLDivElement>
+  label: string
 }
 
 function VirtualizedTable(props: VirtualizedTableProps) {
@@ -48,7 +54,12 @@ function VirtualizedTable(props: VirtualizedTableProps) {
     'aria-readonly': undefined,
     containerRole: 'presentation',
     role: 'presentation',
-    tabIndex: null,
+  }
+
+  const accessibilityWrapperProperties = {
+    'aria-label': '',
+    'aria-readonly': undefined,
+    role: 'presentation',
   }
 
   const rowGetter = ({ index }) => {
@@ -73,7 +84,7 @@ function VirtualizedTable(props: VirtualizedTableProps) {
         key={row.key}
         accessibility={gridRowBehavior}
         aria-rowindex={index + 1}
-        header = {header}
+        header={header}
       >
         <Table.Cell
           {...row.items[0]}
@@ -96,13 +107,17 @@ function VirtualizedTable(props: VirtualizedTableProps) {
   }
 
   return (
-    <Table accessibility={gridNestedBehavior} aria-rowcount={itemsCount}>
-      <WindowScroller scrollElement={props.scrollElementRef} key={props.scrollElementRef}>
-        {({ height, isScrolling, registerChild, onChildScroll, scrollTop }) => (
-          <AutoSizer disableHeight>
-            {({ width }) => {
-              return height ? (
-                <div ref={el => registerChild(el)} {...accessibilityListProperties}>
+    <WindowScroller scrollElement={props.scrollElementRef} key={props.scrollElementRef}>
+      {({ height, isScrolling, registerChild, onChildScroll, scrollTop }) => (
+        <AutoSizer disableHeight>
+          {({ width }) => {
+            return height ? (
+              <Table
+                accessibility={gridNestedBehavior}
+                aria-rowcount={itemsCount}
+                aria-label={props.label}
+              >
+                <div ref={el => registerChild(el)} {...accessibilityWrapperProperties}>
                   <ReactVirtualizedList
                     autoHeight
                     disableHeader={true}
@@ -119,12 +134,12 @@ function VirtualizedTable(props: VirtualizedTableProps) {
                     {...accessibilityListProperties}
                   />
                 </div>
-              ) : null
-            }}
-          </AutoSizer>
-        )}
-      </WindowScroller>
-    </Table>
+              </Table>
+            ) : null
+          }}
+        </AutoSizer>
+      )}
+    </WindowScroller>
   )
 }
 
