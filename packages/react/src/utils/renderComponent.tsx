@@ -91,7 +91,10 @@ const renderComponent = <P extends {}>(
     rtl,
     saveDebug,
     theme: context.theme || emptyTheme,
-    _internal_resolvedComponentVariables: context._internal_resolvedComponentVariables || {},
+    performance: {
+      ...context.performance,
+      enableStylesCaching: false, // we cannot enable caching for class components
+    },
   })
 
   const resolvedConfig: RenderResultConfig<P> = {

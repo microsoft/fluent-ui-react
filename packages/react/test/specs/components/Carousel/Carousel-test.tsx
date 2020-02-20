@@ -262,13 +262,12 @@ describe('Carousel', () => {
     it('should show and focus the appropriate slide when clicked', () => {
       const wrapper = renderCarousel({ navigation })
       const secondNavigationItemWrapper = getNavigationNavigationItemAtIndexWrapper(wrapper, 1)
-      const secondItemWrapper = getItemAtIndexWrapper(wrapper, 1)
 
       secondNavigationItemWrapper.simulate('click')
       jest.runAllTimers()
 
       expect(wrapper.state('activeIndex')).toEqual(1)
-      expect(document.activeElement).toEqual(secondItemWrapper.getDOMNode())
+      expect(document.activeElement.firstElementChild.innerHTML).toEqual('item2')
     })
   })
 })
