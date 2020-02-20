@@ -1,5 +1,5 @@
-import { ICSSInJSStyle, ComponentStyleFunctionParam } from '@fluentui/styles'
-import { Renderer } from '@fluentui/react-bindings'
+import { ICSSInJSStyle } from '@fluentui/styles'
+import { Renderer, RendererParam } from '@fluentui/react-bindings'
 import { TRuleType } from 'fela-utils'
 
 /**
@@ -46,7 +46,7 @@ export default (config?: { skip?: string[] }) => {
     styles: ICSSInJSStyle,
     type: TRuleType,
     renderer: Renderer,
-    params: ComponentStyleFunctionParam,
+    params: RendererParam,
   ) => {
     if (!params.sanitizeCss) {
       return styles

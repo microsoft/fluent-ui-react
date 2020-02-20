@@ -200,7 +200,6 @@ export interface ComponentStyleFunctionParam<
   theme: ThemePrepared
   rtl: boolean
   disableAnimations: boolean
-  sanitizeCss: boolean
 }
 
 export type ComponentSlotStyleFunction<TProps = {}, TVars = {}> = (

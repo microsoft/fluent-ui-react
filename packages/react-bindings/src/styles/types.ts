@@ -60,6 +60,7 @@ export type RendererParam = {
   theme: { direction: 'ltr' | 'rtl' }
   disableAnimations: boolean
   displayName: string
+  sanitizeCss: boolean
 }
 
 export type RendererRenderRule = (rule: () => ICSSInJSStyle, param: RendererParam) => string

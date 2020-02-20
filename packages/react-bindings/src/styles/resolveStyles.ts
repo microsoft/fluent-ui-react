@@ -81,7 +81,6 @@ const resolveStyles = (
     theme,
     rtl,
     disableAnimations,
-    sanitizeCss: performance.enableSanitizeCssPlugin,
   }
 
   // Fela plugins rely on `direction` param in `theme` prop instead of RTL
@@ -92,6 +91,7 @@ const resolveStyles = (
     theme: { direction },
     disableAnimations,
     displayName, // does not affect styles, only used by useEnhancedRenderer in docs
+    sanitizeCss: performance.enableSanitizeCssPlugin,
   }
 
   const renderStyles =
