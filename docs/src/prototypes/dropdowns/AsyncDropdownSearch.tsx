@@ -42,7 +42,7 @@ class AsyncDropdownSearch extends React.Component<{}, SearchPageState> {
 
   searchTimer: number
 
-  handleSelectedChange = (e: React.SyntheticEvent, { searchQuery, value }: DropdownProps) => {
+  handleChange = (e: React.SyntheticEvent, { searchQuery, value }: DropdownProps) => {
     this.setState({ value: value as Entry[], searchQuery })
   }
 
@@ -77,7 +77,7 @@ class AsyncDropdownSearch extends React.Component<{}, SearchPageState> {
             loadingMessage={<Loader label="Loading..." labelPosition="end" />}
             multiple
             onSearchQueryChange={this.handleSearchQueryChange}
-            onSelectedChange={this.handleSelectedChange}
+            onChange={this.handleChange}
             placeholder="Try to enter something..."
             search
             searchQuery={searchQuery}

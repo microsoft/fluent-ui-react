@@ -45,7 +45,7 @@ export default () => {
             ]}
             defaultValue={'brand'}
             placeholder="Select the color"
-            onSelectedChange={(e, { value }) => setColor(value as string)}
+            onChange={(e, { value }) => setColor(value as string)}
           />
           <ColorSchemes
             themes={[themes.teams, themes.teamsHighContrast, themes.teamsDark]}

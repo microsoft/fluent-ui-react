@@ -83,7 +83,7 @@ export interface AlertProps
    * @param event - React's original SyntheticEvent.
    * @param data - All props.
    */
-  onDismiss?: ComponentEventHandler<AlertProps>
+  onVisibleChange?: ComponentEventHandler<AlertProps>
 
   /**
    * Called after the alert is focused.
@@ -138,7 +138,7 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
     dismissible: PropTypes.bool,
     dismissAction: customPropTypes.itemShorthand,
     info: PropTypes.bool,
-    onDismiss: PropTypes.func,
+    onVisibleChange: PropTypes.func,
     onFocus: PropTypes.func,
     success: PropTypes.bool,
     visible: PropTypes.bool,
@@ -165,7 +165,7 @@ class Alert extends AutoControlledComponent<WithAsProp<AlertProps>, AlertState> 
     onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
       _.invoke(predefinedProps, 'onClick', e, buttonProps)
 
-      _.invoke(this.props, 'onDismiss', e, { ...this.props, visible: false })
+      _.invoke(this.props, 'onVisibleChange', e, { ...this.props, visible: false })
       this.setState({ visible: false })
     },
   })

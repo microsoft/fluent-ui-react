@@ -70,7 +70,9 @@ const checkOpenTitles = (wrapper: ReactWrapper, expected: string[]): void => {
 }
 
 describe('HierarchialTree', () => {
-  isConformant(HierarchicalTree)
+  isConformant(HierarchicalTree, {
+    autoControlledProps: ['activeIndex'],
+  })
 
   describe('activeIndex', () => {
     it('should contain index of item open at click', () => {
