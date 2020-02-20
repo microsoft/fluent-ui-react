@@ -7,7 +7,9 @@ import ChatItem from 'src/components/Chat/ChatItem'
 const chatImplementsCollectionShorthandProp = implementsCollectionShorthandProp(Chat)
 
 describe('Chat', () => {
-  isConformant(Chat)
+  isConformant(Chat, {
+    constructorName: 'Chat',
+  })
   chatImplementsCollectionShorthandProp('items', ChatItem, { mapsValueToProp: 'message' })
 
   describe('accessibility', () => {
