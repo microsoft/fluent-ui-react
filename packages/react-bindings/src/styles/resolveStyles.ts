@@ -91,6 +91,7 @@ const resolveStyles = (
     theme: { direction },
     disableAnimations,
     displayName, // does not affect styles, only used by useEnhancedRenderer in docs
+    sanitizeCss: performance.enableSanitizeCssPlugin,
   }
 
   const renderStyles =

@@ -60,6 +60,7 @@ export type RendererParam = {
   theme: { direction: 'ltr' | 'rtl' }
   disableAnimations: boolean
   displayName: string
+  sanitizeCss: boolean
 }
 
 export type RendererRenderRule = (rule: () => ICSSInJSStyle, param: RendererParam) => string
@@ -68,6 +69,7 @@ export type Renderer = Omit<FelaRenderer, 'renderRule'> & {
 }
 
 export interface StylesContextPerformance {
+  enableSanitizeCssPlugin: boolean
   enableStylesCaching: boolean
   enableVariablesCaching: boolean
 }
@@ -83,7 +85,7 @@ export type StylesContextInputValue<R = Renderer> = {
 
 export type StylesContextValue<R = Renderer> = {
   disableAnimations: boolean
-  performance: StylesContextPerformanceInput
+  performance: StylesContextPerformance
   renderer: R
   theme: ThemePrepared
 }

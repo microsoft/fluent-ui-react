@@ -28,6 +28,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix an issue with `offset` and `pointing` in `Popup` @layershifter ([#2361](https://github.com/microsoft/fluent-ui-react/pull/2361))
 - Restricted prop set in the `TooltipContent` component which is passed to styles functions @layershifter ([#2357](https://github.com/microsoft/fluent-ui-react/pull/2357))
 - Restricted prop sets in the `Chat`, `ChatItem`, `ChatMessage` components which are passed to styles functions @layershifter ([#2366](https://github.com/microsoft/fluent-ui-react/pull/2366))
+- `sanitize-css` plugin is disabled for production mode by default @layershifter ([#2340](https://github.com/microsoft/fluent-ui-react/pull/2340))
 - Standardise component onChange callback names and test them in `isConformant` @silviuavram ([#2293](https://github.com/microsoft/fluent-ui-react/pull/2293))
 
 ### Fixes

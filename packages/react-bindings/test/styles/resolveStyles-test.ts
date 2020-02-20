@@ -19,6 +19,7 @@ const resolvedVariables: ComponentVariablesObject = {
 }
 
 const defaultPerformanceOptions: StylesContextPerformance = {
+  enableSanitizeCssPlugin: true,
   enableStylesCaching: true,
   enableVariablesCaching: true,
 }

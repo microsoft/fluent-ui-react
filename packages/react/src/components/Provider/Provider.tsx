@@ -255,6 +255,7 @@ Provider.propTypes = {
   // Heads Up!
   // Keep in sync with packages/react-bindings/src/styles/types.ts
   performance: PropTypes.shape({
+    enableSanitizeCssPlugin: PropTypes.bool,
     enableStylesCaching: PropTypes.bool,
     enableVariablesCaching: PropTypes.bool,
   }),
