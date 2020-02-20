@@ -33,6 +33,7 @@ function VirtualizedTablesPrototype() {
       style={{ height: '700px', overflowY: 'auto' }}
       ref={setRef}
       tabIndex={-1}
+      role="none"     
     >
       {ref != null ? <Accordion panels={tables} /> : null}
     </div>
@@ -54,6 +55,7 @@ function VirtualizedTable(props: VirtualizedTableProps) {
     'aria-readonly': undefined,
     containerRole: 'presentation',
     role: 'presentation',
+    tabIndex: null,
   }
 
   const accessibilityWrapperProperties = {
