@@ -5,7 +5,9 @@ import { isConformant } from 'test/specs/commonTests'
 import * as faker from 'faker'
 
 describe('TextArea', () => {
-  isConformant(TextArea)
+  isConformant(TextArea, {
+    autoControlledProps: ['value'],
+  })
 
   describe('defaultValue', () => {
     test('sets "defaultValue" as initial "value"', () => {

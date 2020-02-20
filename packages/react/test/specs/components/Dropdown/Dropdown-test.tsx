@@ -41,18 +41,27 @@ const getSelectedItemHeaderAtIndexWrapper = (
 
 describe('Dropdown', () => {
   const items = ['item1', 'item2', 'item3', 'item4', 'item5']
-  isConformant(Dropdown, { hasAccessibilityProp: false })
+  isConformant(Dropdown, {
+    hasAccessibilityProp: false,
+    autoControlledProps: [
+      'highlightedIndex',
+      'open',
+      'searchQuery',
+      'activeSelectedIndex',
+      'value',
+    ],
+  })
 
   describe('clearable', () => {
     it('calls onChange on Icon click with an `empty` value', () => {
-      const onSelectedChange = jest.fn()
+      const onChange = jest.fn()
       const wrapper = mountWithProvider(
-        <Dropdown clearable onSelectedChange={onSelectedChange} items={items} value={items[0]} />,
+        <Dropdown clearable onChange={onChange} items={items} value={items[0]} />,
       )
 
       wrapper.find({ className: Dropdown.slotClassNames.clearIndicator }).simulate('click')
-      expect(onSelectedChange).toBeCalledTimes(1)
-      expect(onSelectedChange).toHaveBeenCalledWith(
+      expect(onChange).toBeCalledTimes(1)
+      expect(onChange).toHaveBeenCalledWith(
         expect.objectContaining({ type: 'click' }),
         expect.objectContaining({
           activeSelectedIndex: undefined,
@@ -755,18 +764,16 @@ describe('Dropdown', () => {
   describe('value', () => {
     it('is set by clicking on item', () => {
       const itemSelectedIndex = 2
-      const onSelectedChange = jest.fn()
-      const wrapper = mountWithProvider(
-        <Dropdown onSelectedChange={onSelectedChange} items={items} />,
-      )
+      const onChange = jest.fn()
+      const wrapper = mountWithProvider(<Dropdown onChange={onChange} items={items} />)
       const triggerButton = getTriggerButtonWrapper(wrapper)
 
       triggerButton.simulate('click')
       const item = getItemAtIndexWrapper(wrapper, itemSelectedIndex)
       item.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
 
-      expect(onSelectedChange).toHaveBeenCalledTimes(1)
-      expect(onSelectedChange).toHaveBeenCalledWith(
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(onChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
           value: items[itemSelectedIndex],
@@ -775,10 +782,8 @@ describe('Dropdown', () => {
     })
 
     it('is set by using Enter on highlighted item', () => {
-      const onSelectedChange = jest.fn()
-      const wrapper = mountWithProvider(
-        <Dropdown onSelectedChange={onSelectedChange} items={items} />,
-      )
+      const onChange = jest.fn()
+      const wrapper = mountWithProvider(<Dropdown onChange={onChange} items={items} />)
       const triggerButton = getTriggerButtonWrapper(wrapper)
       triggerButton.simulate('click')
       const itemsList = getItemsListWrapper(wrapper)
@@ -786,8 +791,8 @@ describe('Dropdown', () => {
         .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
         .simulate('keydown', { keyCode: keyboardKey.Enter, key: 'Enter' })
 
-      expect(onSelectedChange).toHaveBeenCalledTimes(1)
-      expect(onSelectedChange).toHaveBeenCalledWith(
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(onChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
           value: items[0],
@@ -796,10 +801,8 @@ describe('Dropdown', () => {
     })
 
     it('is set by using Tab on highlighted item', () => {
-      const onSelectedChange = jest.fn()
-      const wrapper = mountWithProvider(
-        <Dropdown onSelectedChange={onSelectedChange} items={items} />,
-      )
+      const onChange = jest.fn()
+      const wrapper = mountWithProvider(<Dropdown onChange={onChange} items={items} />)
       const triggerButton = getTriggerButtonWrapper(wrapper)
 
       triggerButton.simulate('click')
@@ -808,8 +811,8 @@ describe('Dropdown', () => {
         .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
         .simulate('keydown', { keyCode: keyboardKey.Tab, key: 'Tab' })
 
-      expect(onSelectedChange).toHaveBeenCalledTimes(1)
-      expect(onSelectedChange).toHaveBeenCalledWith(
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(onChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
           value: items[0],
@@ -818,10 +821,8 @@ describe('Dropdown', () => {
     })
 
     it('is set by using Shift+Tab on highlighted item', () => {
-      const onSelectedChange = jest.fn()
-      const wrapper = mountWithProvider(
-        <Dropdown onSelectedChange={onSelectedChange} items={items} />,
-      )
+      const onChange = jest.fn()
+      const wrapper = mountWithProvider(<Dropdown onChange={onChange} items={items} />)
       const triggerButton = getTriggerButtonWrapper(wrapper)
 
       triggerButton.simulate('click')
@@ -830,8 +831,8 @@ describe('Dropdown', () => {
         .simulate('keydown', { keyCode: keyboardKey.ArrowDown, key: 'ArrowDown' })
         .simulate('keydown', { keyCode: keyboardKey.Tab, key: 'Tab', shiftKey: true })
 
-      expect(onSelectedChange).toHaveBeenCalledTimes(1)
-      expect(onSelectedChange).toHaveBeenCalledWith(
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(onChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
           value: items[0],
@@ -841,10 +842,8 @@ describe('Dropdown', () => {
 
     it('is replaced when another item is selected', () => {
       const itemSelectedIndex = 3
-      const onSelectedChange = jest.fn()
-      const wrapper = mountWithProvider(
-        <Dropdown onSelectedChange={onSelectedChange} items={items} />,
-      )
+      const onChange = jest.fn()
+      const wrapper = mountWithProvider(<Dropdown onChange={onChange} items={items} />)
       const triggerButton = getTriggerButtonWrapper(wrapper)
 
       triggerButton.simulate('click')
@@ -854,8 +853,8 @@ describe('Dropdown', () => {
       const itemAtIndex = getItemAtIndexWrapper(wrapper, itemSelectedIndex)
       itemAtIndex.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
 
-      expect(onSelectedChange).toHaveBeenCalledTimes(2)
-      expect(onSelectedChange).toHaveBeenLastCalledWith(
+      expect(onChange).toHaveBeenCalledTimes(2)
+      expect(onChange).toHaveBeenLastCalledWith(
         null,
         expect.objectContaining({
           value: items[itemSelectedIndex],
@@ -864,10 +863,8 @@ describe('Dropdown', () => {
     })
 
     it('has an array of items if more items are selected and the multiple prop is supplied', () => {
-      const onSelectedChange = jest.fn()
-      const wrapper = mountWithProvider(
-        <Dropdown onSelectedChange={onSelectedChange} multiple items={items} />,
-      )
+      const onChange = jest.fn()
+      const wrapper = mountWithProvider(<Dropdown onChange={onChange} multiple items={items} />)
       const triggerButton = getTriggerButtonWrapper(wrapper)
 
       triggerButton.simulate('click')
@@ -877,8 +874,8 @@ describe('Dropdown', () => {
       const itemAtIndex2 = getItemAtIndexWrapper(wrapper, 3)
       itemAtIndex2.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
 
-      expect(onSelectedChange).toHaveBeenCalledTimes(2)
-      expect(onSelectedChange).toHaveBeenLastCalledWith(
+      expect(onChange).toHaveBeenCalledTimes(2)
+      expect(onChange).toHaveBeenLastCalledWith(
         null,
         expect.objectContaining({
           value: ['item2', 'item5'],
@@ -887,9 +884,9 @@ describe('Dropdown', () => {
     })
 
     it('has items removed on empty search query backspace', () => {
-      const onSelectedChange = jest.fn()
+      const onChange = jest.fn()
       const wrapper = mountWithProvider(
-        <Dropdown onSelectedChange={onSelectedChange} multiple items={items} search />,
+        <Dropdown onChange={onChange} multiple items={items} search />,
       )
       const searchInput = getSearchInputWrapper(wrapper)
       const toggleIndicator = getToggleIndicatorWrapper(wrapper)
@@ -904,8 +901,8 @@ describe('Dropdown', () => {
         .simulate('click')
         .simulate('keydown', { keyCode: keyboardKey.Backspace, key: 'Backspace' })
 
-      expect(onSelectedChange).toHaveBeenCalledTimes(3)
-      expect(onSelectedChange).toHaveBeenLastCalledWith(
+      expect(onChange).toHaveBeenCalledTimes(3)
+      expect(onChange).toHaveBeenLastCalledWith(
         null,
         expect.objectContaining({
           value: [items[0]],
@@ -914,9 +911,9 @@ describe('Dropdown', () => {
     })
 
     it('has the item removed if it receives delete key down', () => {
-      const onSelectedChange = jest.fn()
+      const onChange = jest.fn()
       const wrapper = mountWithProvider(
-        <Dropdown multiple items={items} onSelectedChange={onSelectedChange} value={items} />,
+        <Dropdown multiple items={items} onChange={onChange} value={items} />,
       )
       const selectedItemHeader = getSelectedItemHeaderAtIndexWrapper(wrapper, items.length - 1)
       selectedItemHeader.simulate('click')
@@ -926,8 +923,8 @@ describe('Dropdown', () => {
         key: 'Delete',
       })
 
-      expect(onSelectedChange).toHaveBeenCalledTimes(1)
-      expect(onSelectedChange).toHaveBeenCalledWith(
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(onChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
           value: items.slice(0, items.length - 1),
@@ -936,17 +933,17 @@ describe('Dropdown', () => {
     })
 
     it('has the item removed if it receives click on remove icon', () => {
-      const onSelectedChange = jest.fn()
+      const onChange = jest.fn()
       const wrapper = mountWithProvider(
-        <Dropdown multiple items={items} onSelectedChange={onSelectedChange} value={items} />,
+        <Dropdown multiple items={items} onChange={onChange} value={items} />,
       )
       const selectedItemIcon = wrapper
         .find(`span.${DropdownSelectedItem.slotClassNames.icon}`)
         .at(items.length - 1)
       selectedItemIcon.simulate('click')
 
-      expect(onSelectedChange).toHaveBeenCalledTimes(1)
-      expect(onSelectedChange).toHaveBeenCalledWith(
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(onChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
           value: items.slice(0, items.length - 1),
@@ -1041,18 +1038,16 @@ describe('Dropdown', () => {
 
     it('is the string equivalent of selected item in single search', () => {
       const itemSelectedIndex = 2
-      const onSelectedChange = jest.fn()
-      const wrapper = mountWithProvider(
-        <Dropdown onSelectedChange={onSelectedChange} search items={items} />,
-      )
+      const onChange = jest.fn()
+      const wrapper = mountWithProvider(<Dropdown onChange={onChange} search items={items} />)
       const toggleIndicator = getToggleIndicatorWrapper(wrapper)
 
       toggleIndicator.simulate('click')
       const itemAtIndex = getItemAtIndexWrapper(wrapper, itemSelectedIndex)
       itemAtIndex.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
 
-      expect(onSelectedChange).toHaveBeenCalledTimes(1)
-      expect(onSelectedChange).toHaveBeenCalledWith(
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(onChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
           value: items[itemSelectedIndex],
@@ -1084,9 +1079,9 @@ describe('Dropdown', () => {
 
     it('is set to empty when item is selected in multiple search', () => {
       const itemSelectedIndex = 2
-      const onSelectedChange = jest.fn()
+      const onChange = jest.fn()
       const wrapper = mountWithProvider(
-        <Dropdown onSelectedChange={onSelectedChange} search multiple items={items} />,
+        <Dropdown onChange={onChange} search multiple items={items} />,
       )
       const toggleIndicator = getToggleIndicatorWrapper(wrapper)
 
@@ -1094,8 +1089,8 @@ describe('Dropdown', () => {
       const itemAtIndex = getItemAtIndexWrapper(wrapper, itemSelectedIndex)
       itemAtIndex.simulate('click', { nativeEvent: { stopImmediatePropagation: jest.fn() } })
 
-      expect(onSelectedChange).toHaveBeenCalledTimes(1)
-      expect(onSelectedChange).toHaveBeenCalledWith(
+      expect(onChange).toHaveBeenCalledTimes(1)
+      expect(onChange).toHaveBeenCalledWith(
         null,
         expect.objectContaining({
           value: [items[itemSelectedIndex]],
