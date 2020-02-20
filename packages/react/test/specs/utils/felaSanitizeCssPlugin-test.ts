@@ -1,11 +1,28 @@
+import { RendererParam } from '@fluentui/react-bindings'
 import { ICSSInJSStyle } from '@fluentui/styles'
 
-import sanitizeCss from 'src/utils/felaSanitizeCssPlugin'
+import felaSanitizeCss from 'src/utils/felaSanitizeCssPlugin'
+import { consoleUtil } from 'test/utils'
+
+const sanitize = (
+  styles: ICSSInJSStyle,
+  options: { sanitizeCss?: boolean; skip?: string[] } = {},
+): ICSSInJSStyle => {
+  const { sanitizeCss = true, skip = [] } = options
+
+  const felaParam: RendererParam = {
+    displayName: 'Test',
+    disableAnimations: false,
+    theme: {} as any,
+    sanitizeCss,
+  }
+  const renderer = (() => {}) as any
+
+  return felaSanitizeCss({ skip })(styles, 'RULE', renderer, felaParam)
+}
 
 const assertCssPropertyValue = (value: string, isValid: boolean) => {
   test(`assert that '${value}' is ${isValid ? 'valid' : 'invalid'}`, () => {
-    const sanitize = sanitizeCss()
-
     const style = { display: value }
     const sanitizedStyle = sanitize(style)
 
@@ -13,20 +30,13 @@ const assertCssPropertyValue = (value: string, isValid: boolean) => {
   })
 }
 
-const sanitize = sanitizeCss()
-
 describe('felaSanitizeCssPlugin', () => {
-  const OLD_ENV = process.env
-
   beforeEach(() => {
-    jest.resetModules() // this is important - it clears the cache
-
-    process.env = { ...OLD_ENV }
-    process.env.NODE_ENV = 'production'
+    consoleUtil.disable()
   })
 
   afterEach(() => {
-    process.env = OLD_ENV
+    consoleUtil.enable()
   })
 
   test('should ensure there are no non-closed brackets in CSS property value', () => {
@@ -57,17 +67,13 @@ describe('felaSanitizeCssPlugin', () => {
   })
 
   test('should skip excluded CSS props', () => {
-    const withSkip = sanitizeCss({
-      skip: ['propertyWithInvalidValue'],
-    })
-
     const style = {
       display: 'block',
       margin: '0 0 0 0',
       propertyWithInvalidValue: 'rgba(',
     }
 
-    expect(withSkip(style)).toEqual(style)
+    expect(sanitize(style, { skip: ['propertyWithInvalidValue'] })).toEqual(style)
   })
 
   describe('should properly filter invalid bracket sequences', () => {
@@ -101,24 +107,10 @@ describe('felaSanitizeCssPlugin', () => {
     })
   })
 
-  describe('env', () => {
-    test('throws in "test" environment', () => {
-      process.env.NODE_ENV = 'test'
+  test('warns if is disabled', () => {
+    const onWarn = jest.spyOn(console, 'warn').mockImplementation(() => {})
 
-      expect(() => sanitize({ backgroundImage: 'url(../../' })).toThrowError(
-        /was passed to property/,
-      )
-    })
-
-    test('warns in "development" environment', () => {
-      const onWarn = jest.spyOn(console, 'warn').mockImplementation(() => {})
-      process.env.NODE_ENV = 'development'
-
-      sanitize({ backgroundImage: 'url(../../' })
-      expect(onWarn).toBeCalledWith(expect.stringMatching(/was passed to property/))
-
-      // We need to clean up mocks to avoid errors reported by React
-      ;(console.warn as any).mockClear()
-    })
+    sanitize({ backgroundImage: 'url(../../' })
+    expect(onWarn).toBeCalledWith(expect.stringMatching(/was passed to property/))
   })
 })
