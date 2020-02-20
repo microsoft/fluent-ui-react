@@ -85,7 +85,7 @@ export type StylesContextInputValue<R = Renderer> = {
 
 export type StylesContextValue<R = Renderer> = {
   disableAnimations: boolean
-  performance: StylesContextPerformanceInput
+  performance: StylesContextPerformance
   renderer: R
   theme: ThemePrepared
 }
