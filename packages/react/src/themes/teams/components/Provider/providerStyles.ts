@@ -1,10 +1,10 @@
 import { ComponentStyleFunctionParam, ICSSInJSStyle } from '@fluentui/styles'
-import { ProviderBoxVariables } from './providerBoxVariables'
+import { ProviderVariables } from './providerVariables'
 
 export default {
   root: ({
     variables: v,
-  }: ComponentStyleFunctionParam<never, ProviderBoxVariables>): ICSSInJSStyle => ({
+  }: ComponentStyleFunctionParam<never, ProviderVariables>): ICSSInJSStyle => ({
     background: v.background,
     color: v.color,
     textAlign: 'left',

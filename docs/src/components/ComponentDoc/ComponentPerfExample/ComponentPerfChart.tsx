@@ -27,7 +27,7 @@ export const ComponentPerfChart = ({ perfTestName }) => {
     case FILTER_BY.RELEASE:
       filteredData = data.filter(entry => entry.tag)
 
-      if (!data[0].tag) {
+      if (!data[0]?.tag) {
         const unreleased = { ...data[0], tag: 'UNRELEASED' }
         filteredData.unshift(unreleased)
       }
@@ -93,7 +93,7 @@ export const ComponentPerfChart = ({ perfTestName }) => {
         {process.env.NODE_ENV !== 'production' && (
           <RadioGroup
             defaultCheckedValue={FILTER_BY.CI_BUILD}
-            checkedValueChanged={handleFilterChange}
+            onCheckedValueChange={handleFilterChange}
             items={[
               { key: 'ci-build', label: FILTER_BY.CI_BUILD, value: FILTER_BY.CI_BUILD },
               { key: 'release', label: FILTER_BY.RELEASE, value: FILTER_BY.RELEASE },
