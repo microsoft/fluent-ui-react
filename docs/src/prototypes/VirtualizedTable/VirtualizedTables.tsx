@@ -73,7 +73,7 @@ function VirtualizedTable(props: VirtualizedTableProps) {
         key={row.key}
         accessibility={gridRowBehavior}
         aria-rowindex={index + 1}
-        header
+        header = {header}
       >
         <Table.Cell
           {...row.items[0]}
