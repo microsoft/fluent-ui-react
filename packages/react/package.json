@@ -60,7 +60,11 @@
     "build": "gulp bundle:package",
     "clean": "gulp bundle:package:clean",
     "test": "gulp test",
-    "test:watch": "gulp test:watch"
+    "test:watch": "gulp test:watch",
+    "lint": "yarn lint:eslint && yarn lint:old",
+    "lint:fix": "yarn lint:eslint --fix && yarn lint:old --fix",
+    "lint:eslint": "eslint --ext .js,.ts,.tsx .",
+    "lint:old": "tslint -t stylish -p ."
   },
   "sideEffects": false,
   "types": "dist/es/index.d.ts"
