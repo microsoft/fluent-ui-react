@@ -62,6 +62,8 @@ const handleVariablesOverrides = variables => predefinedProps => ({
  * [JAWS narrate grid name twice, once as table and second time as grid](https://github.com/FreedomScientific/VFO-standards-support/issues/346)
  * [JAWS doesn't narrate grid column name, when focus is on actionable element in the cell] (https://github.com/FreedomScientific/VFO-standards-support/issues/348)
  * [aria-sort is not output at child elements](https://github.com/FreedomScientific/VFO-standards-support/issues/319)
+ * [VoiceOver not announcing rows correctly for a grid with presentation elements inside](https://bugs.chromium.org/p/chromium/issues/detail?id=1054424)
+ * VoiceOver doesn't narrate aria-rowcount value in table or grid
  */
 class Table extends UIComponent<WithAsProp<TableProps>> {
   static displayName = 'Table'
