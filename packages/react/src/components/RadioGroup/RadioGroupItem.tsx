@@ -30,7 +30,7 @@ export interface RadioGroupItemProps extends UIComponentProps, ChildrenComponent
    * @param event - React's original SyntheticEvent.
    * @param data - All props.
    */
-  checkedChanged?: ComponentEventHandler<RadioGroupItemProps>
+  onChange?: ComponentEventHandler<RadioGroupItemProps>
 
   /** The label of the radio item. */
   label?: ShorthandValue<BoxProps>
@@ -91,7 +91,7 @@ class RadioGroupItem extends AutoControlledComponent<
     label: customPropTypes.itemShorthand,
     name: PropTypes.string,
     onClick: PropTypes.func,
-    checkedChanged: PropTypes.func,
+    onChange: PropTypes.func,
     shouldFocus: PropTypes.bool,
     value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     vertical: PropTypes.bool,
@@ -115,11 +115,17 @@ class RadioGroupItem extends AutoControlledComponent<
     _.invoke(this.props, 'onClick', e, this.props)
   }
 
+  handleChange = (e: React.ChangeEvent) => {
+    // RadioGroupItem component doesn't present any `input` component in markup, however all of our
+    // components should handle events transparently.
+    _.invoke(this.props, 'onChange', e, { ...this.props, checked: this.state.checked })
+  }
+
   componentDidUpdate(prevProps, prevState) {
     const checked = this.state.checked
     if (checked !== prevState.checked) {
       checked && this.props.shouldFocus && this.elementRef.current.focus()
-      _.invoke(this.props, 'checkedChanged', undefined, { ...this.props, checked })
+      _.invoke(this.props, 'onChange', undefined, { ...this.props, checked })
     }
   }
 
@@ -130,6 +136,7 @@ class RadioGroupItem extends AutoControlledComponent<
       <Ref innerRef={this.elementRef}>
         <ElementType
           onClick={this.handleClick}
+          onChange={this.handleChange}
           className={classes.root}
           {...accessibility.attributes.root}
           {...unhandledProps}
