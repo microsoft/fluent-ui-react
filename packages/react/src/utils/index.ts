@@ -14,8 +14,6 @@ export { default as mergeProviderContexts } from './mergeProviderContexts'
 export * from './renderComponent'
 export { default as renderComponent } from './renderComponent'
 
-export { default as getElementProp } from './getElementProp'
-
 export {
   htmlImageProps,
   htmlInputAttrs,
