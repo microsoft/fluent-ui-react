@@ -46,6 +46,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix selected item being wrongly removed on Backspace in `search` `Dropdown` @silviuavram ([#2349](https://github.com/microsoft/fluent-ui-react/pull/2349))
 - Fix `Toolbar` not being tabbable on wrapped focused item disappear @silviuavram ([#2321](https://github.com/microsoft/fluent-ui-react/pull/2321))
 - Fix positioning with `unstable_overflow` in `ChatMessage` @layershifter ([#2363](https://github.com/microsoft/fluent-ui-react/pull/2363))
+- Fix wrong positioning of pointing beak on content edges in `Popup` and `Tooltip` @layershifter ([#2364](https://github.com/microsoft/fluent-ui-react/pull/2364))
 
 ### Features
 - Added sourcemaps to the dist output to simplify debugging @miroslavstastny ([#2329](https://github.com/microsoft/fluent-ui-react/pull/2329))
