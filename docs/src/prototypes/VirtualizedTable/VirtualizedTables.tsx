@@ -7,10 +7,18 @@ import {
   Table,
 } from '@fluentui/react'
 import * as React from 'react'
-import { AutoSizer, List as ReactVirtualizedList, WindowScroller } from 'react-virtualized'
+import {
+  AutoSizer,
+  List as ReactVirtualizedList,
+  WindowScroller,
+  ListProps,
+  ListRowRenderer,
+} from 'react-virtualized'
 import getItems from './itemsGenerator'
 
+// Magic offset for native scrollbar in Edge on Mac
 const scrollbarOffset = 10
+
 function VirtualizedTablesPrototype() {
   const [ref, setRef] = React.useState(null)
 
@@ -35,14 +43,28 @@ function VirtualizedTablesPrototype() {
       tabIndex={-1}
       role="none"
     >
-      {ref != null ? <Accordion panels={tables} /> : null}
+      {ref && <Accordion panels={tables} />}
     </div>
   )
 }
 
 interface VirtualizedTableProps {
-  scrollElementRef: React.RefObject<HTMLDivElement>
+  scrollElementRef: HTMLDivElement
   label: string
+}
+
+const accessibilityListProperties: Partial<ListProps> = {
+  'aria-label': '',
+  'aria-readonly': undefined,
+  containerRole: 'presentation',
+  role: 'presentation',
+  tabIndex: null,
+}
+
+const accessibilityWrapperProperties: React.HTMLAttributes<HTMLDivElement> = {
+  'aria-label': '',
+  'aria-readonly': undefined,
+  role: 'presentation',
 }
 
 function VirtualizedTable(props: VirtualizedTableProps) {
@@ -50,39 +72,16 @@ function VirtualizedTable(props: VirtualizedTableProps) {
   const renderedItems = [header, ...rows]
   const itemsCount = renderedItems.length
 
-  const accessibilityListProperties = {
-    'aria-label': '',
-    'aria-readonly': undefined,
-    containerRole: 'presentation',
-    role: 'presentation',
-    tabIndex: null,
-  }
-
-  const accessibilityWrapperProperties = {
-    'aria-label': '',
-    'aria-readonly': undefined,
-    role: 'presentation',
-  }
-
   const rowGetter = ({ index }) => {
     return renderedItems[index]
   }
 
-  const rowRenderer = ({ index, style }) => {
+  const rowRenderer: ListRowRenderer = ({ index, style }) => {
     const row = renderedItems[index]
-    const topOffset = `${style.top}px`
-    const leftOffset = `${style.left}px`
-    const height = `${style.height}px`
     const header = row.key === 'header'
     return (
       <Table.Row
-        design={{
-          top: topOffset,
-          left: leftOffset,
-          width: style.width,
-          height,
-          position: style.position,
-        }}
+        style={style}
         key={row.key}
         accessibility={gridRowBehavior}
         aria-rowindex={index + 1}
@@ -109,7 +108,7 @@ function VirtualizedTable(props: VirtualizedTableProps) {
   }
 
   return (
-    <WindowScroller scrollElement={props.scrollElementRef} key={props.scrollElementRef}>
+    <WindowScroller scrollElement={props.scrollElementRef} key={`${props.scrollElementRef}`}>
       {({ height, isScrolling, registerChild, onChildScroll, scrollTop }) => (
         <AutoSizer disableHeight>
           {({ width }) => {

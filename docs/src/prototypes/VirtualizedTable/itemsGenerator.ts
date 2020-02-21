@@ -24,24 +24,19 @@ function getItems(minItems = 20, maxItems = 40) {
         { content: 'Age', key: 'action' },
       ],
     }
-    const rowsPlain = []
-    _.times(getRandomNumber(minItems, maxItems), index => {
-      const randomNumber = getRandomNumber(10, 1000)
-      const item = {
-        key: `${index}`,
-        items: [
-          { content: `${index}`, key: `${index}-1` },
-          {
-            content: getRandomName(),
-            truncateContent: true,
-            key: `${index}-2`,
-          },
-          { content: 'None', key: `${index}-3` },
-          { content: `${randomNumber} years`, key: `${index}-4` },
-        ],
-      }
-      rowsPlain.push(item)
-    })
+    const rowsPlain = _.times(getRandomNumber(minItems, maxItems), index => ({
+      key: `${index}`,
+      items: [
+        { content: `${index}`, key: `${index}-1` },
+        {
+          content: getRandomName(),
+          truncateContent: true,
+          key: `${index}-2`,
+        },
+        { content: 'None', key: `${index}-3` },
+        { content: `${getRandomNumber(10, 1000)} years`, key: `${index}-4` },
+      ],
+    }))
 
     return { header, rows: rowsPlain }
   }
