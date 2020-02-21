@@ -1,0 +1,19 @@
+{
+  "installCommand": "install",
+  "buildCommand": "build",
+  "packages": [
+    "packages/accessibility",
+    "packages/code-sandbox",
+    "packages/docs-components",
+    "packages/react",
+    "packages/react-bindings",
+    "packages/react-component-event-listener",
+    "packages/react-component-nesting-registry",
+    "packages/react-component-ref",
+    "packages/react-context-selector",
+    "packages/react-proptypes",
+    "packages/state",
+    "packages/styles"
+  ],
+  "sandboxes": ["vanilla", "fluent-ui-template-8ismt"]
+}
