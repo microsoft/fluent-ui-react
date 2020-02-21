@@ -46,14 +46,16 @@ export interface DropdownVariables {
   toggleIndicatorSize: string
   width: string
   overlayZIndex: number
+  backgroundColorHoverInverted: string
 }
 
 const [cornerRadius, _12px_asRem] = [3, 12].map(v => pxToRem(v))
 
 export default (siteVars): DropdownVariables => ({
   backgroundColor: siteVars.colorScheme.default.background2,
+  backgroundColorHover: siteVars.colorScheme.default.backgroundHover3,
   backgroundColorInverted: siteVars.colorScheme.default.background,
-  backgroundColorHover: siteVars.colorScheme.default.background3,
+  backgroundColorHoverInverted: siteVars.colorScheme.default.backgroundHover4,
   borderColor: 'transparent',
   borderColorHover: 'transparent',
   borderColorFocus: siteVars.colorScheme.brand.borderFocus1,

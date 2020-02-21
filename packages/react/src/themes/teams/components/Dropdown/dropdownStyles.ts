@@ -46,7 +46,7 @@ const getIndicatorStyles: ComponentSlotStyleFunction<DropdownPropsAndState, Drop
     backgroundColor: v.backgroundColorInverted,
 
     ':hover': {
-      backgroundColor: v.backgroundColorInverted,
+      backgroundColor: v.backgroundColorHoverInverted,
     },
   }),
 })
@@ -106,13 +106,13 @@ const dropdownStyles: ComponentSlotStylesPrepared<DropdownPropsAndState, Dropdow
     ...(p.inverted && {
       backgroundColor: v.backgroundColorInverted,
       ':hover': {
-        backgroundColor: v.backgroundColorInverted,
+        backgroundColor: v.backgroundColorHoverInverted,
       },
       ':active': {
-        backgroundColor: v.backgroundColorInverted,
+        backgroundColor: v.backgroundColorHoverInverted,
       },
       ':focus': {
-        backgroundColor: v.backgroundColorInverted,
+        backgroundColor: v.backgroundColorHoverInverted,
       },
     }),
   }),
