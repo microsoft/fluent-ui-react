@@ -1,4 +1,8 @@
-import { Renderer } from '@fluentui/react-bindings'
+import {
+  Renderer,
+  StylesContextPerformance,
+  StylesContextPerformanceInput,
+} from '@fluentui/react-bindings'
 import { mergeThemes } from '@fluentui/styles'
 
 import { ProviderContextPrepared, ProviderContextInput } from '../types'
@@ -33,7 +37,10 @@ export const mergeRenderers = (current: Renderer, next?: Renderer, target?: Docu
   return createdRenderer
 }
 
-export const mergePerformanceOptions = (target, ...sources) => {
+export const mergePerformanceOptions = (
+  target: StylesContextPerformance | StylesContextPerformanceInput,
+  ...sources: StylesContextPerformanceInput[]
+) => {
   return Object.assign(target, ...sources)
 }
 

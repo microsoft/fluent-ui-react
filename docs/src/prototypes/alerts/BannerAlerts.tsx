@@ -75,7 +75,7 @@ class BannerAlerts extends React.Component<{}, BannerAlertsState> {
           <RadioGroup
             checkedValue={selectedBannerName}
             items={bannerRadioItems}
-            checkedValueChanged={(e, { value }) =>
+            onCheckedValueChange={(e, { value }) =>
               this.setState({ selectedBannerName: value as BannerName, open: true })
             }
           />

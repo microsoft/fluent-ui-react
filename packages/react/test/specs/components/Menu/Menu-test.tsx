@@ -17,7 +17,7 @@ import * as keyboardKey from 'keyboard-key'
 const menuImplementsCollectionShorthandProp = implementsCollectionShorthandProp(Menu)
 
 describe('Menu', () => {
-  isConformant(Menu)
+  isConformant(Menu, { autoControlledProps: ['activeIndex'] })
   menuImplementsCollectionShorthandProp('items', MenuItem)
 
   const getItems = () => [

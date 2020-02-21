@@ -40,7 +40,7 @@ export interface RadioGroupProps extends UIComponentProps, ChildrenComponentProp
    * @param event - React's original SyntheticEvent.
    * @param data - All value props.
    */
-  checkedValueChanged?: ComponentEventHandler<RadioGroupItemProps>
+  onCheckedValueChange?: ComponentEventHandler<RadioGroupItemProps>
 
   /** Initial checkedValue value. */
   defaultCheckedValue?: number | string
@@ -70,7 +70,7 @@ class RadioGroup extends AutoControlledComponent<WithAsProp<RadioGroupProps>, an
     checkedValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     defaultCheckedValue: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     items: customPropTypes.collectionShorthand,
-    checkedValueChanged: PropTypes.func,
+    onCheckedValueChange: PropTypes.func,
     vertical: PropTypes.bool,
   }
 
@@ -200,7 +200,7 @@ class RadioGroup extends AutoControlledComponent<WithAsProp<RadioGroupProps>, an
     props: RadioGroupItemProps
   }) {
     this.setState({ checkedValue, shouldFocus })
-    _.invoke(this.props, 'checkedValueChanged', event, props)
+    _.invoke(this.props, 'onCheckedValueChange', event, props)
   }
 }
 
