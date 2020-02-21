@@ -15,4 +15,5 @@ export default (siteVars): Partial<DropdownVariablesHC> => ({
   listBorderWidth: pxToRem(1),
   listItemFocusBorderWidth: pxToRem(2),
   listItemSelectedColor: siteVars.accessibleCyan,
+  selectedItemBorder: `1px solid ${siteVars.colors.white}`,
 })

@@ -35,10 +35,11 @@ export interface DropdownVariables {
   listItemColorActive: string
   listItemSelectedFontWeight: number
   listItemSelectedColor: string
-  selectedItemColor: string
-  selectedItemColorHover: string
   selectedItemBackgroundColor: string
   selectedItemBackgroundColorHover: string
+  selectedItemBorder: string
+  selectedItemColor: string
+  selectedItemColorHover: string
   selectedItemIconColor: string
   selectedItemIconColorHover: string
   selectedItemsMaxHeight: string
@@ -85,6 +86,7 @@ export default (siteVars): DropdownVariables => ({
 
   selectedItemBackgroundColor: siteVars.colorScheme.default.background,
   selectedItemBackgroundColorHover: siteVars.colorScheme.brand.background1,
+  selectedItemBorder: 'none',
   selectedItemColorHover: siteVars.colorScheme.default.foreground,
   selectedItemIconColor: siteVars.colorScheme.default.foreground1,
   selectedItemIconColorHover: siteVars.colorScheme.brand.foregroundHover,

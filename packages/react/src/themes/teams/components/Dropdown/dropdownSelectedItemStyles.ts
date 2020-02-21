@@ -12,6 +12,7 @@ const dropdownSelectedItemStyles: ComponentSlotStylesPrepared<
     margin: '.4rem 0 0 .4rem',
     color: v.selectedItemColor,
     position: 'relative',
+    border: v.selectedItemBorder,
     ...(v.selectedItemBackgroundColor && {
       backgroundColor: v.selectedItemBackgroundColor,
     }),
