@@ -28,7 +28,7 @@ const inputStyles: ComponentSlotStylesPrepared<InputProps, InputVariables> = {
     borderStyle: 'solid',
     borderWidth: v.borderWidth,
 
-    outline: 0,
+    outline: 'none',
     padding: v.inputPadding,
     position: 'relative',
 
