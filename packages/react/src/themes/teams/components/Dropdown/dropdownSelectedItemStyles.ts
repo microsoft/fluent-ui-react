@@ -2,7 +2,6 @@ import { DropdownSelectedItemProps } from '../../../../components/Dropdown/Dropd
 import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import { DropdownVariables } from './dropdownVariables'
 import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
-import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 const dropdownSelectedItemStyles: ComponentSlotStylesPrepared<
   DropdownSelectedItemProps,
@@ -12,13 +11,10 @@ const dropdownSelectedItemStyles: ComponentSlotStylesPrepared<
     cursor: 'pointer',
     margin: '.4rem 0 0 .4rem',
     color: v.selectedItemColor,
-    outline: '0',
+    position: 'relative',
     ...(v.selectedItemBackgroundColor && {
       backgroundColor: v.selectedItemBackgroundColor,
     }),
-    ':focus': {
-      ...getBorderFocusStyles({ siteVariables }),
-    },
     ':hover': {
       color: v.selectedItemColorHover,
       backgroundColor: v.selectedItemBackgroundColorHover,
