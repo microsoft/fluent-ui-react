@@ -1,4 +1,4 @@
-import { ComponentSlotStylesPrepared } from '../../../types'
+import { ComponentSlotStylesPrepared } from '@fluentui/styles'
 import { FlexItemProps } from '../../../../components/Flex/FlexItem'
 
 import { toFlexAlignment, toFlexItemSizeValues } from './utils'
@@ -9,7 +9,7 @@ const flexItemStyles: ComponentSlotStylesPrepared<FlexItemProps, FlexItemVariabl
     return {
       ...(p.align && { alignSelf: toFlexAlignment(p.align) }),
 
-      ...(p.size && toFlexItemSizeValues(v[p.size])),
+      ...(p.size && toFlexItemSizeValues(v.hasOwnProperty(p.size) ? v[p.size] : p.size)),
 
       ...(typeof p.shrink === 'number' && { flexShrink: p.shrink }),
       ...(p.shrink === false && { flexShrink: 0 }),
@@ -17,7 +17,6 @@ const flexItemStyles: ComponentSlotStylesPrepared<FlexItemProps, FlexItemVariabl
       ...(p.grow && { flexGrow: p.grow }),
       ...(p.grow === true && { flexGrow: 1 }),
 
-      ...p.itemStyles,
       ...(p.push &&
         (p.flexDirection === 'column' ? { marginTop: 'auto' } : { marginLeft: 'auto' })),
     }

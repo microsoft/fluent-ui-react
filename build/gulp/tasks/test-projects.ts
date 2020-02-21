@@ -6,9 +6,9 @@ import path from 'path'
 import portfinder from 'portfinder'
 import puppeteer from 'puppeteer'
 import sh from '../sh'
-import rimraf from 'rimraf'
+import del from 'del'
 
-import config from '../../../config'
+import config from '../../config'
 import tmp from 'tmp'
 import http from 'http'
 import { safeLaunchOptions } from 'build/puppeteer.config'
@@ -24,7 +24,7 @@ const log = (context: string) => (message: string) => {
   console.log('='.repeat(80))
 }
 
-export const runIn = targetPath => cmd => sh(`cd ${targetPath} && ${cmd}`)
+export const runIn = targetPath => cmd => sh(cmd, targetPath)
 
 const addResolutionPathsForProjectPackages = async (
   testProjectDir: string,
@@ -47,11 +47,14 @@ const packProjectPackages = async (logger: Function): Promise<PackedPackages> =>
   const projectPackages = lernaAliases({ sourceDirectory: false })
 
   // We don't want to pack a package with our dev tools
+  delete projectPackages['@fluentui/digest']
+  delete projectPackages['@fluentui/docs']
+  delete projectPackages['@fluentui/e2e']
   delete projectPackages['@fluentui/eslint-plugin']
   delete projectPackages['@fluentui/internal-tooling']
-  delete projectPackages['@fluentui/scripts']
-  delete projectPackages['@fluentui/digest']
+  delete projectPackages['@fluentui/perf']
   delete projectPackages['@fluentui/perf-test']
+  delete projectPackages['@fluentui/scripts']
 
   await Promise.all(
     Object.keys(projectPackages).map(async (packageName: string) => {
@@ -87,7 +90,7 @@ const createReactApp = async (atTempDirectory: string, appName: string): Promise
     await runIn(tempUtilProjectPath)(`yarn create-react-app ${appProjectPath} --typescript`)
   } finally {
     // remove temp util directory
-    rimraf.sync(tempUtilProjectPath)
+    del.sync(tempUtilProjectPath, { force: true })
   }
 
   return appProjectPath
@@ -202,6 +205,35 @@ task('test:projects:rollup', async () => {
   logger(`✔️Browser test was passed`)
 })
 
+task('test:projects:nextjs', async () => {
+  const logger = log('test:projects:nextjs')
+
+  const scaffoldPath = paths.base.bind(null, 'build/gulp/tasks/test-projects/nextjs')
+  const tmpDirectory = tmp.dirSync({ prefix: 'project-' }).name
+
+  logger(`✔️Temporary directory was created: ${tmpDirectory}`)
+
+  const dependencies = ['next', 'react', 'react-dom'].join(' ')
+  await runIn(tmpDirectory)(`yarn add ${dependencies}`)
+  logger(`✔️Dependencies were installed`)
+
+  const packedPackages = await packProjectPackages(logger)
+  await addResolutionPathsForProjectPackages(tmpDirectory, packedPackages)
+  await runIn(tmpDirectory)(`yarn add ${packedPackages['@fluentui/react']}`)
+  logger(`✔️Fluent UI packages were added to dependencies`)
+
+  fs.mkdirSync(path.resolve(tmpDirectory, 'pages'))
+  fs.copyFileSync(scaffoldPath('index.js'), path.resolve(tmpDirectory, 'pages', 'index.js'))
+  logger(`✔️Source and bundler's config were created`)
+
+  await runIn(tmpDirectory)(`yarn next build`)
+  await runIn(tmpDirectory)(`yarn next export`)
+  logger(`✔️Example project was successfully built: ${tmpDirectory}`)
+
+  await performBrowserTest(path.resolve(tmpDirectory, 'out'), await portfinder.getPortPromise())
+  logger(`✔️Browser test was passed`)
+})
+
 task('test:projects:typings', async () => {
   const logger = log('test:projects:typings')
 
@@ -239,6 +271,7 @@ task(
   series(
     'bundle:all-packages',
     'test:projects:cra-ts',
+    'test:projects:nextjs',
     'test:projects:rollup',
     'test:projects:typings',
   ),

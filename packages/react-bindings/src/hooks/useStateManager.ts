@@ -7,6 +7,11 @@ type UseStateManagerOptions<State> = {
   sideEffects?: SideEffect<State>[]
 }
 
+type UseStateManagerResult<State, Actions> = {
+  state: Readonly<State>
+  actions: Readonly<Actions>
+}
+
 const getDefinedProps = <Props extends Record<string, any>>(props: Props): Partial<Props> => {
   const definedProps: Partial<Props> = {}
 
@@ -25,20 +30,17 @@ const useStateManager = <
 >(
   managerFactory: ManagerFactory<State, Actions>,
   options: UseStateManagerOptions<State> = {},
-): [Readonly<State>, Readonly<Actions>] => {
+): UseStateManagerResult<State, Actions> => {
   const {
     mapPropsToInitialState = () => ({} as Partial<State>),
     mapPropsToState = () => ({} as Partial<State>),
     sideEffects = [],
   } = options
+  const latestActions = React.useMemo<Actions>(() => ({} as Actions), [managerFactory])
   const latestManager = React.useRef<Manager<State, Actions> | null>(null)
 
-  // Heads up! forceUpdate() is used only for triggering rerenders stateManager is SSOT()
-  const [, forceUpdate] = React.useState()
-  const syncState = React.useCallback(
-    (_prevState: State, nextState: State) => forceUpdate(nextState),
-    [],
-  )
+  // Heads up! forceUpdate() is used only for triggering rerenders, stateManager is SSOT
+  const [, forceUpdate] = React.useReducer((c: number) => c + 1, 0) as [never, () => void]
 
   // If manager exists, the current state will be used
   const initialState = latestManager.current
@@ -49,20 +51,37 @@ const useStateManager = <
     // Factory has already configured actions
     actions: {} as EnhancedActions<State, Actions>,
     state: { ...initialState, ...getDefinedProps(mapPropsToState()) },
-    sideEffects: [...sideEffects, syncState],
+    sideEffects: [
+      ...sideEffects,
+      // `sideEffect` is called with two arguments, but hooks don't support the second callback
+      // argument
+      () => forceUpdate(),
+    ],
   })
+
+  // We need to keep the same reference to an object with actions to allow usage them as
+  // a dependency in useCallback() hook
+  Object.assign(latestActions, latestManager.current.actions)
+
+  // For development environments we disallow ability to extend object with other properties to
+  // avoid misusage
+  if (process.env.NODE_ENV !== 'production') {
+    if (Object.isExtensible(latestActions)) Object.preventExtensions(latestActions)
+  }
 
   // We need to pass exactly `manager.state` to provide the same state object during the same render
   // frame.
   // It keeps behavior consistency between React state tools and our managers
   // https://github.com/facebook/react/issues/11527#issuecomment-360199710
-
-  if (process.env.NODE_ENV === 'production') {
-    return [latestManager.current.state, latestManager.current.actions]
-  }
-
   // Object.freeze() is used only in dev-mode to avoid usage mistakes
-  return [Object.freeze(latestManager.current.state), Object.freeze(latestManager.current.actions)]
+
+  return {
+    state:
+      process.env.NODE_ENV === 'production'
+        ? latestManager.current.state
+        : Object.freeze(latestManager.current.state),
+    actions: latestActions,
+  }
 }
 
 export default useStateManager

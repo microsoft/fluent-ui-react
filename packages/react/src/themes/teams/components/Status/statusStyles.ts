@@ -1,7 +1,9 @@
 import { pxToRem, SizeValue } from '../../../../utils'
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import { StatusProps } from '../../../../components/Status/Status'
 import { StatusVariables } from './statusVariables'
+
+export type StatusStylesProps = Pick<StatusProps, 'color' | 'size' | 'state'>
 
 const getBackgroundColor = (state: string, variables: StatusVariables) => {
   switch (state) {
@@ -55,7 +57,7 @@ export const getSizeStyles = (sizeInPx: number, variables: StatusVariables) => {
   }
 }
 
-const statusStyles: ComponentSlotStylesPrepared<StatusProps, StatusVariables> = {
+const statusStyles: ComponentSlotStylesPrepared<StatusStylesProps, StatusVariables> = {
   root: ({ props: { color, size, state }, variables }): ICSSInJSStyle => {
     return {
       display: 'inline-flex',

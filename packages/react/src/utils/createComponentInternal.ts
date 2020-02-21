@@ -1,10 +1,10 @@
+import { AccessibilityActionHandlers } from '@fluentui/react-bindings'
 import * as React from 'react'
 import * as _ from 'lodash'
 // @ts-ignore
 import { ThemeContext } from 'react-fela'
 
 import renderComponent, { RenderResultConfig } from './renderComponent'
-import { AccessibilityActionHandlers } from './accessibility/reactTypes'
 import { createShorthandFactory, ShorthandFactory } from './factories'
 import { ObjectOf, ProviderContextPrepared } from '../types'
 

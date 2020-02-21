@@ -1,12 +1,14 @@
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
-import Checkbox, { CheckboxProps, CheckboxState } from '../../../../components/Checkbox/Checkbox'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
+import Checkbox, { CheckboxProps } from '../../../../components/Checkbox/Checkbox'
 import { CheckboxVariables } from './checkboxVariables'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 
-const checkboxStyles: ComponentSlotStylesPrepared<
-  CheckboxProps & CheckboxState,
-  CheckboxVariables
-> = {
+export type CheckboxStylesProps = Pick<
+  CheckboxProps,
+  'checked' | 'disabled' | 'labelPosition' | 'toggle'
+>
+
+const checkboxStyles: ComponentSlotStylesPrepared<CheckboxStylesProps, CheckboxVariables> = {
   root: ({ props: p, variables: v, theme: t }): ICSSInJSStyle => ({
     position: 'relative',
 

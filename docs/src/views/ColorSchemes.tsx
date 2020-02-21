@@ -1,12 +1,12 @@
 import * as React from 'react'
 import DocPage from '../components/DocPage/DocPage'
 import GuidesNavigationFooter from '../components/GuidesNavigationFooter'
-import ColorSchemes from 'docs/src/components/ColorSchemes'
+import ColorSchemes from '../components/ColorSchemes'
 
 import { Dropdown, themes, Flex, Provider } from '@fluentui/react'
-import { faderStyles } from 'docs/src/components/Fader'
-import { colorVariantsStyles } from 'docs/src/components/ColorVariants'
-import { colorBoxStyles, colorBoxVariables } from 'docs/src/components/ColorBox'
+import { faderStyles } from '../components/Fader'
+import { colorVariantsStyles } from '../components/ColorVariants'
+import { colorBoxStyles, colorBoxVariables } from '../components/ColorBox'
 
 export default () => {
   const [color, setColor] = React.useState('brand')
@@ -45,7 +45,7 @@ export default () => {
             ]}
             defaultValue={'brand'}
             placeholder="Select the color"
-            onSelectedChange={(e, { value }) => setColor(value as string)}
+            onChange={(e, { value }) => setColor(value as string)}
           />
           <ColorSchemes
             themes={[themes.teams, themes.teamsHighContrast, themes.teamsDark]}

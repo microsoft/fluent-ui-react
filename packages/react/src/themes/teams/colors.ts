@@ -228,6 +228,7 @@ export const colorScheme: ColorSchemeMapping<ColorScheme, TeamsColorNames> = {
     background2: colors.grey[100],
     background3: colors.grey[150],
     background4: colors.grey[100],
+    background5: colors.grey[350],
 
     border: colors.grey[200], // buttons
     border1: colors.grey[150],
@@ -243,6 +244,7 @@ export const colorScheme: ColorSchemeMapping<ColorScheme, TeamsColorNames> = {
 
     backgroundHover: colors.grey[100],
     backgroundHover1: colors.grey[150],
+    backgroundHover2: 'transparent',
 
     borderHover: colors.grey[250], // buttons
 
@@ -439,8 +441,11 @@ export const colorScheme: ColorSchemeMapping<ColorScheme, TeamsColorNames> = {
     background2: colors.ruby[500],
     background3: colors.red[400],
     border: colors.red[100],
+
     foregroundHover: colors.white,
     backgroundHover: colors.ruby[600],
+    backgroundHover1: colors.red[400],
+
     foregroundPressed: colors.white,
     backgroundPressed: colors.ruby[700],
   }),

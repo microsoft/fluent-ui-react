@@ -1,4 +1,4 @@
-import { ICSSInJSStyle } from '../../../types'
+import { ICSSInJSStyle } from '@fluentui/styles'
 import { pxToRem } from '../../../../utils'
 
 const hierarchicalTreeStyles = {

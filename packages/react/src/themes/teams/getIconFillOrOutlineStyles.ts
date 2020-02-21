@@ -1,7 +1,7 @@
-import * as React from 'react'
+import { ICSSInJSStyle } from '@fluentui/styles'
 import { teamsIconClassNames } from './components/Icon/svg'
 
-const getIconFillOrOutlineStyles = ({ outline }: { outline: boolean }): React.CSSProperties => ({
+const getIconFillOrOutlineStyles = ({ outline }: { outline: boolean }): ICSSInJSStyle => ({
   [`& .${teamsIconClassNames.filled}`]: {
     display: outline ? 'none' : 'block',
   },

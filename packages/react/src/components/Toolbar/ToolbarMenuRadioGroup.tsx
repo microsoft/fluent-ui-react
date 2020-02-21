@@ -26,7 +26,7 @@ import {
   toolbarMenuItemRadioBehavior,
 } from '@fluentui/accessibility'
 import ToolbarMenuItem, { ToolbarMenuItemProps } from './ToolbarMenuItem'
-import { mergeComponentVariables } from '../../utils/mergeThemes'
+import { mergeComponentVariables } from '@fluentui/styles'
 import Box, { BoxProps } from '../Box/Box'
 
 export interface ToolbarMenuRadioGroupProps

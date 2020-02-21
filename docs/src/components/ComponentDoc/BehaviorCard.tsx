@@ -1,16 +1,16 @@
 import * as React from 'react'
-import { Divider, Segment, Text } from '@fluentui/react'
+import { Divider, ICSSInJSStyle, Segment, Text } from '@fluentui/react'
 import * as _ from 'lodash'
 import ComponentExampleTitle from './ComponentExample/ComponentExampleTitle'
 import BehaviorDescription from './BehaviorDescription'
-import { BehaviorVariantionInfo } from 'docs/src/types'
+import { BehaviorVariantionInfo } from '../../types'
 
 export const behaviorVariantDisplayName = (fileName: string) => {
   const divided = _.startCase(fileName.replace(/Behavior\.ts$/, ''))
   return _.upperFirst(_.lowerCase(divided))
 }
 
-export const exampleStyle: React.CSSProperties = {
+export const exampleStyle: ICSSInJSStyle = {
   boxShadow: '0 1px 2px rgba(0, 0, 0, 0.2)',
 }
 

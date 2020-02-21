@@ -6,7 +6,6 @@ import { mountWithProvider, mountWithProviderAndGetComponent } from 'test/utils'
 import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
 import MenuItem from 'src/components/Menu/MenuItem'
 import {
-  AccessibilityDefinition,
   menuBehavior,
   menuAsToolbarBehavior,
   tabListBehavior,
@@ -18,7 +17,7 @@ import * as keyboardKey from 'keyboard-key'
 const menuImplementsCollectionShorthandProp = implementsCollectionShorthandProp(Menu)
 
 describe('Menu', () => {
-  isConformant(Menu)
+  isConformant(Menu, { autoControlledProps: ['activeIndex'] })
   menuImplementsCollectionShorthandProp('items', MenuItem)
 
   const getItems = () => [
@@ -209,7 +208,6 @@ describe('Menu', () => {
     describe('accessibility', () => {
       handlesAccessibility(Menu, {
         defaultRootRole: 'menu',
-        focusZoneDefinition: (menuBehavior as AccessibilityDefinition).focusZone,
       })
 
       test('aria-label should be added to the menu', () => {

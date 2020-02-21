@@ -2,7 +2,7 @@ import * as React from 'react'
 import { hot } from 'react-hot-loader/root'
 import { Provider, Debug, themes } from '@fluentui/react'
 
-import { mergeThemes } from '@fluentui/react/src/utils'
+import { mergeThemes } from '@fluentui/styles'
 import { ThemeContext, ThemeContextData, themeContextDefaults } from './context/ThemeContext'
 import Routes from './routes'
 import { PerfDataProvider } from './components/ComponentDoc/PerfChart'

@@ -1,8 +1,10 @@
 import * as React from 'react'
 import { SliderVariables } from './sliderVariables'
-import Slider, { SliderProps, SliderState } from '../../../../components/Slider/Slider'
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import Slider, { SliderProps } from '../../../../components/Slider/Slider'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
+
+export type SliderStylesProps = Pick<SliderProps, 'fluid' | 'disabled' | 'vertical'>
 
 const selectors = {
   WEBKIT_THUMB: '::-webkit-slider-thumb',
@@ -26,7 +28,7 @@ const thumbFromPreviousSiblingSelector = `&+ .${Slider.slotClassNames.thumb}`
 
 const getFluidStyles = (p: SliderProps) => p.fluid && !p.vertical && { width: '100%' }
 
-const sliderStyles: ComponentSlotStylesPrepared<SliderProps & SliderState, SliderVariables> = {
+const sliderStyles: ComponentSlotStylesPrepared<SliderStylesProps, SliderVariables> = {
   root: ({ props: p, variables: v }): ICSSInJSStyle => ({
     height: v.height,
 

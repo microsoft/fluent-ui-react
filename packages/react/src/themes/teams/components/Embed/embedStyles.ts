@@ -1,4 +1,4 @@
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import { pxToRem } from '../../../../utils'
 import Embed, { EmbedProps, EmbedState } from '../../../../components/Embed/Embed'
 import { EmbedVariables } from './embedVariables'
@@ -29,7 +29,7 @@ export default {
       ':hover': {
         [`& .${Embed.slotClassNames.control}`]: {
           opacity: 1,
-          zIndex: 1,
+          zIndex: v.zIndex,
         },
       },
     }

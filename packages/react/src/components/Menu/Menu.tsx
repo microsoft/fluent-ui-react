@@ -1,5 +1,11 @@
 import { Accessibility, menuBehavior } from '@fluentui/accessibility'
+import { ReactAccessibilityBehavior } from '@fluentui/react-bindings'
 import * as customPropTypes from '@fluentui/react-proptypes'
+import {
+  ComponentVariablesObject,
+  ComponentSlotStylesPrepared,
+  mergeComponentVariables,
+} from '@fluentui/styles'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
 import * as React from 'react'
@@ -15,11 +21,8 @@ import {
   rtlTextContainer,
   ShorthandFactory,
 } from '../../utils'
-import { mergeComponentVariables } from '../../utils/mergeThemes'
 
 import MenuItem, { MenuItemProps } from './MenuItem'
-import { ReactAccessibilityBehavior } from '../../utils/accessibility/reactTypes'
-import { ComponentVariablesObject, ComponentSlotStylesPrepared } from '../../themes/types'
 import {
   WithAsProp,
   ShorthandCollection,
@@ -66,6 +69,13 @@ export interface MenuProps extends UIComponentProps, ChildrenComponentProps {
    * @param data - All item props.
    */
   onItemClick?: ComponentEventHandler<MenuItemProps>
+
+  /**
+   * Called when the active index of the Menu changes.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props, with `activeIndex` reflecting the new state.
+   */
+  onActiveIndexChange?: ComponentEventHandler<MenuProps>
 
   /** A menu can adjust its appearance to de-emphasize its contents. */
   pills?: boolean
@@ -121,6 +131,7 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
     iconOnly: PropTypes.bool,
     items: customPropTypes.collectionShorthandWithKindProp(['divider', 'item']),
     onItemClick: PropTypes.func,
+    onActiveIndexChange: PropTypes.func,
     pills: PropTypes.bool,
     pointing: PropTypes.oneOfType([PropTypes.bool, PropTypes.oneOf(['start', 'end'])]),
     primary: customPropTypes.every([customPropTypes.disallow(['secondary']), PropTypes.bool]),
@@ -141,11 +152,16 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
   static Item = MenuItem
   static Divider = MenuDivider
 
+  setActiveIndex = (e: React.SyntheticEvent, activeIndex: number) => {
+    _.invoke(this.props, 'onActiveIndexChange', e, { ...this.props, activeIndex })
+    this.setState({ activeIndex })
+  }
+
   handleItemOverrides = variables => predefinedProps => ({
     onClick: (e, itemProps) => {
       const { index } = itemProps
 
-      this.setState({ activeIndex: index })
+      this.setActiveIndex(e, index)
 
       _.invoke(this.props, 'onItemClick', e, itemProps)
       _.invoke(predefinedProps, 'onClick', e, itemProps)
@@ -153,9 +169,9 @@ class Menu extends AutoControlledComponent<WithAsProp<MenuProps>, MenuState> {
     onActiveChanged: (e, props) => {
       const { index, active } = props
       if (active) {
-        this.setState({ activeIndex: index })
+        this.setActiveIndex(e, index)
       } else if (this.state.activeIndex === index) {
-        this.setState({ activeIndex: null })
+        this.setActiveIndex(e, null)
       }
       _.invoke(predefinedProps, 'onActiveChanged', e, props)
     },

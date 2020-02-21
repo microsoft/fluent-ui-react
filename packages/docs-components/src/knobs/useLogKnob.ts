@@ -1,7 +1,7 @@
 import * as React from 'react'
 
-import { LogContext } from './KnobContexts'
-import { LogFormatter } from '@fluentui/docs-components'
+import { LogContextFunctions } from './KnobContexts'
+import { LogFormatter } from './types'
 
 const defaultFormatter: LogFormatter = (name: string) =>
   `${new Date().toLocaleTimeString()}: ${name}`
@@ -11,12 +11,17 @@ const useLogKnob = <T = (...args: any[]) => any>(
   callback?: T,
   formatter: LogFormatter = defaultFormatter,
 ): T => {
-  const { appendLog } = React.useContext(LogContext)
+  const { appendLog } = React.useContext(LogContextFunctions)
 
   const proxy = React.useCallback<any>(
     (...a) => {
       appendLog(formatter(name, ...a))
-      return (callback as any)(...a)
+
+      if (typeof callback === 'function') {
+        return (callback as any)(...a)
+      }
+
+      return null
     },
     [appendLog, callback, name, formatter],
   )

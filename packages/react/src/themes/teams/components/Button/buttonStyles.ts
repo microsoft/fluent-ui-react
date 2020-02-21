@@ -1,13 +1,29 @@
 import * as _ from 'lodash'
-import { pxToRem, createAnimationStyles } from '../../../../utils'
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { unstable_createAnimationStyles as createAnimationStyles } from '@fluentui/react-bindings'
+import { pxToRem } from '../../../../utils'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import Loader from '../../../../components/Loader/Loader'
 import { ButtonProps } from '../../../../components/Button/Button'
 import { ButtonVariables } from './buttonVariables'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 
-const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = {
+export type ButtonStylesProps = Pick<
+  ButtonProps,
+  | 'text'
+  | 'primary'
+  | 'disabled'
+  | 'circular'
+  | 'size'
+  | 'loading'
+  | 'inverted'
+  | 'iconOnly'
+  | 'fluid'
+> & {
+  hasContent?: boolean
+}
+
+const buttonStyles: ComponentSlotStylesPrepared<ButtonStylesProps, ButtonVariables> = {
   root: ({ props: p, variables: v, theme }): ICSSInJSStyle => {
     const { siteVariables } = theme
     const { borderWidth } = siteVariables
@@ -116,7 +132,6 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
 
         ':focus-visible': {
           ...borderFocusStyles[':focus-visible'],
-          ...getIconFillOrOutlineStyles({ outline: false }),
         },
 
         ...(p.primary && {
@@ -213,6 +228,12 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
         minWidth: v.height,
         padding: 0,
 
+        ':hover': {
+          ...getIconFillOrOutlineStyles({ outline: false }),
+          color: v.textColorIconOnlyHover,
+          background: v.backgroundColorIconOnlyHover,
+        },
+
         ...(p.size === 'small' && {
           minWidth: v.sizeSmallHeight,
         }),
@@ -235,7 +256,7 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
     }),
   }),
 
-  icon: ({ props: p, variables: v }) => ({
+  icon: ({ props: p }) => ({
     // when loading, hide the icon
     ...(p.loading && {
       margin: 0,
@@ -264,7 +285,7 @@ const buttonStyles: ComponentSlotStylesPrepared<ButtonProps, ButtonVariables> = 
       },
     },
 
-    ...(p.content && {
+    ...(p.hasContent && {
       marginRight: pxToRem(4),
     }),
   }),

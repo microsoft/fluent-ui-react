@@ -16,7 +16,9 @@ import Icon from 'src/components/Icon/Icon'
 const buttonImplementsShorthandProp = implementsShorthandProp(Button)
 
 describe('Button', () => {
-  isConformant(Button)
+  isConformant(Button, {
+    constructorName: 'Button',
+  })
   buttonImplementsShorthandProp('icon', Icon, {
     mapsValueToProp: 'name',
     requiredShorthandProps: { name: 'at' },
@@ -97,6 +99,7 @@ describe('Button', () => {
         test('is set to true, if active attribute is provided', () => {
           const renderedComponent = mountWithProviderAndGetComponent(
             Button,
+            // @ts-ignore
             <Button active="true" accessibility={toggleButtonBehavior} />,
           )
           expect(getRenderedAttribute(renderedComponent, 'aria-pressed', '')).toBe('true')

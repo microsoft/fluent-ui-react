@@ -1,17 +1,17 @@
-import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '../../../types'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import * as _ from 'lodash'
 import {
   default as ChatMessage,
-  ChatMessageProps,
-  ChatMessageState,
+  ChatMessageStylesProps,
 } from '../../../../components/Chat/ChatMessage'
 import { ChatMessageVariables } from './chatMessageVariables'
 import { screenReaderContainerStyles } from '../../../../utils/accessibility/Styles/accessibilityStyles'
 import { pxToRem } from '../../../../utils'
+import initialPopperStyles from '../../../../utils/positioner/initialStyles'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
 
 const chatMessageStyles: ComponentSlotStylesPrepared<
-  ChatMessageProps & ChatMessageState,
+  ChatMessageStylesProps,
   ChatMessageVariables
 > = {
   root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
@@ -93,7 +93,9 @@ const chatMessageStyles: ComponentSlotStylesPrepared<
     borderRadius: v.borderRadius,
     boxShadow: v.actionMenuBoxShadow,
     // we need higher zIndex for the action menu in order to be displayed above the focus border of the chat message
-    zIndex: 1000,
+    zIndex: v.overlayZIndex,
+
+    ...(initialPopperStyles as ICSSInJSStyle),
 
     ...(_.isNil(v.showActionMenu) && {
       overflow: p.focused ? 'visible' : 'hidden',
@@ -115,7 +117,8 @@ const chatMessageStyles: ComponentSlotStylesPrepared<
     },
   }),
   author: ({ props: p, variables: v }): ICSSInJSStyle => ({
-    ...((p.mine || p.attached === 'bottom' || p.attached === true) && screenReaderContainerStyles),
+    ...((p.mine || p.attached === 'bottom' || p.attached === true) &&
+      (screenReaderContainerStyles as ICSSInJSStyle)),
     color: v.authorColor,
     marginRight: v.authorMarginRight,
     marginBottom: v.headerMarginBottom,
@@ -128,8 +131,8 @@ const chatMessageStyles: ComponentSlotStylesPrepared<
       color: v.timestampColorMine,
     }),
     ...((p.attached === 'bottom' || p.attached === true) &&
-      !p.reactionGroup &&
-      screenReaderContainerStyles),
+      !p.hasReactionGroup &&
+      (screenReaderContainerStyles as ICSSInJSStyle)),
   }),
 
   content: ({ props: p, variables: v }): ICSSInJSStyle => ({
@@ -142,7 +145,7 @@ const chatMessageStyles: ComponentSlotStylesPrepared<
         textDecoration: 'underline',
       },
     },
-    ...(p.badge &&
+    ...(p.hasBadge &&
       p.badgePosition === 'end' && {
         marginRight: pxToRem(4),
       }),
@@ -159,14 +162,14 @@ const chatMessageStyles: ComponentSlotStylesPrepared<
       width: 'auto',
       borderRadius: '50%',
       top: pxToRem(4),
-      zIndex: 1,
+      zIndex: v.zIndex,
       [sidePosition]: 0,
       transform: p.badgePosition === 'start' ? 'translateX(-50%)' : 'translateX(50%)',
     }
   },
   reactionGroup: ({ props: p, variables: v }) => ({
     marginLeft: v.reactionGroupMarginLeft,
-    ...(p.badge &&
+    ...(p.hasBadge &&
       p.badgePosition === 'end' && {
         marginRight: pxToRem(2),
       }),

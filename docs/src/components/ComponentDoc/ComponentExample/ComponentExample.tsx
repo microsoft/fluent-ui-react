@@ -5,7 +5,16 @@ import {
   KnobProvider,
   LogInspector,
 } from '@fluentui/docs-components'
-import { Flex, ICSSInJSStyle, Menu, Provider, Segment } from '@fluentui/react'
+import {
+  ComponentVariablesInput,
+  constants,
+  Flex,
+  ICSSInJSStyle,
+  Menu,
+  Provider,
+  Segment,
+  ThemeInput,
+} from '@fluentui/react'
 import * as _ from 'lodash'
 import * as React from 'react'
 import { RouteComponentProps, withRouter } from 'react-router-dom'
@@ -13,19 +22,17 @@ import * as copyToClipboard from 'copy-to-clipboard'
 import qs from 'qs'
 import SourceRender from 'react-source-render'
 
-import { examplePathToHash, getFormattedHash, scrollToAnchor } from 'docs/src/utils'
-import { constants } from '@fluentui/react/src/utils'
-import Editor, { EDITOR_BACKGROUND_COLOR, EDITOR_GUTTER_COLOR } from 'docs/src/components/Editor'
-import { babelConfig, importResolver } from 'docs/src/components/Playground/renderConfig'
-import ExampleContext, { ExampleContextValue } from 'docs/src/context/ExampleContext'
+import { examplePathToHash, getFormattedHash, scrollToAnchor } from '../../../utils'
+import Editor, { EDITOR_BACKGROUND_COLOR, EDITOR_GUTTER_COLOR } from '../../Editor'
+import { babelConfig, importResolver } from '../../Playground/renderConfig'
+import ExampleContext, { ExampleContextValue } from '../../../context/ExampleContext'
 import ComponentControls from '../ComponentControls'
 import ComponentExampleTitle from './ComponentExampleTitle'
 import ComponentSourceManager, {
   ComponentSourceManagerRenderProps,
 } from '../ComponentSourceManager'
-import { ThemeInput } from 'packages/react/src/themes/types'
-import VariableResolver from 'docs/src/components/VariableResolver/VariableResolver'
-import ComponentExampleVariables from 'docs/src/components/ComponentDoc/ComponentExample/ComponentExampleVariables'
+import VariableResolver from '../../VariableResolver/VariableResolver'
+import ComponentExampleVariables from './ComponentExampleVariables'
 
 const ERROR_COLOR = '#D34'
 
@@ -43,7 +50,7 @@ export interface ComponentExampleProps
 
 interface ComponentExampleState {
   anchorName: string
-  componentVariables: Object
+  componentVariables: ComponentVariablesInput
   isActive: boolean
   isActiveHash: boolean
   usedVariables: Record<string, string[]>
@@ -53,7 +60,7 @@ interface ComponentExampleState {
   showVariables: boolean
 }
 
-const childrenStyle: React.CSSProperties = {
+const childrenStyle: ICSSInJSStyle = {
   paddingTop: 0,
   paddingBottom: '10px',
 }
@@ -422,8 +429,8 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   }
 
   handleVariableResolve = variables => {
-    // Remove ProviderBox to hide it in variables
-    delete variables['ProviderBox']
+    // Remove Provider to hide it in variables
+    delete variables['Provider']
     this.setState({ usedVariables: variables })
   }
 
@@ -454,7 +461,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     const newTheme: ThemeInput = {
       componentVariables: {
         ...componentVariables,
-        ProviderBox: { background: showTransparent ? 'initial' : undefined },
+        Provider: { background: showTransparent ? 'initial' : undefined },
       },
     }
     const exampleStyles = {
@@ -506,7 +513,13 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
               className={`rendered-example ${this.getKebabExamplePath()}`}
               styles={exampleStyles}
             >
-              <Provider theme={newTheme} rtl={showRtl}>
+              <Provider
+                performance={{
+                  enableSanitizeCssPlugin: true /* Force always for website to avoid issues with live editor */,
+                }}
+                theme={newTheme}
+                rtl={showRtl}
+              >
                 <VariableResolver onResolve={this.handleVariableResolve}>
                   {showCode || wasCodeChanged ? (
                     <SourceRender

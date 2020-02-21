@@ -2,7 +2,7 @@ import { KnobProvider } from '@fluentui/docs-components'
 import * as _ from 'lodash'
 import * as React from 'react'
 
-import { examplePlaygroundContext } from 'docs/src/utils'
+import { examplePlaygroundContext } from '../../utils'
 import ComponentPlaygroundTemplate from './ComponentPlaygroundTemplate'
 import usePlaygroundComponent from './usePlaygroundComponent'
 

@@ -5,7 +5,7 @@ import cx from 'classnames'
 import * as PropTypes from 'prop-types'
 
 import { EventListener } from '@fluentui/react-component-event-listener'
-import { Ref, toRefObject } from '@fluentui/react-component-ref'
+import { Ref } from '@fluentui/react-component-ref'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import { focusAsync } from '@fluentui/react-bindings'
 import { GetRefs, NodeRef, Unstable_NestingAuto } from '@fluentui/react-component-nesting-registry'
@@ -91,6 +91,13 @@ export interface ToolbarMenuItemProps
   onClick?: ComponentEventHandler<ToolbarMenuItemProps>
 
   /**
+   * Called when the menu inside the item opens or closes.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props, with `menuOpen` reflecting the new state.
+   */
+  onMenuOpenChange?: ComponentEventHandler<ToolbarMenuItemProps>
+
+  /**
    * Attaches a `Popup` component to the ToolbarMenuItem.
    * Accepts all props as a `Popup`, except `trigger` and `children`.
    * Traps focus by default.
@@ -141,6 +148,7 @@ class ToolbarMenuItem extends AutoControlledComponent<
     menu: PropTypes.oneOfType([customPropTypes.itemShorthand, customPropTypes.collectionShorthand]),
     menuOpen: PropTypes.bool,
     onClick: PropTypes.func,
+    onMenuOpenChange: PropTypes.func,
     popup: PropTypes.oneOfType([
       PropTypes.shape({
         ...Popup.propTypes,
@@ -281,8 +289,6 @@ class ToolbarMenuItem extends AutoControlledComponent<
     } = this.props
     const { menuOpen } = this.state
 
-    const targetRef = toRefObject(this.context.target)
-
     const elementType = (
       <ElementType
         {...accessibility.attributes.root}
@@ -363,7 +369,7 @@ class ToolbarMenuItem extends AutoControlledComponent<
               </Ref>
               <EventListener
                 listener={this.outsideClickHandler(getRefs)}
-                targetRef={targetRef}
+                target={this.context.target}
                 type="click"
               />
             </>

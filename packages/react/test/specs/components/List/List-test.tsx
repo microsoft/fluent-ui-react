@@ -5,17 +5,19 @@ import { mountWithProvider } from 'test/utils'
 
 import List from 'src/components/List/List'
 import implementsCollectionShorthandProp from '../../commonTests/implementsCollectionShorthandProp'
-import ListItem from 'src/components/List/ListItem'
+import ListItem, { ListItemProps } from 'src/components/List/ListItem'
 
 const listImplementsCollectionShorthandProp = implementsCollectionShorthandProp(List)
 
 describe('List', () => {
-  isConformant(List)
+  isConformant(List, {
+    constructorName: 'List',
+  })
   handlesAccessibility(List, { defaultRootRole: 'list' })
   listImplementsCollectionShorthandProp('items', ListItem, { mapsValueToProp: 'content' })
 
-  const getItems = (onClick?: Function) => [
-    { key: 'irving', content: 'Irving', onClick },
+  const getItems = (onClick?: Function): (ListItemProps & { key: string })[] => [
+    { key: 'irving', content: 'Irving', onClick } as any,
     { key: 'skyler', content: 'Skyler' },
     { key: 'dante', content: 'Dante' },
   ]
@@ -43,34 +45,54 @@ describe('List', () => {
 
   describe('selectedIndex', () => {
     it('should not be set by default', () => {
-      const listItems = mountWithProvider(<List selectable items={getItems()} />).find('ListItem')
-      expect(listItems.everyWhere(item => !item.props().selected)).toBe(true)
+      const wrapper = mountWithProvider(<List selectable items={getItems()} />)
+
+      expect(
+        wrapper.find('li').filterWhere(item => Boolean(item.prop('aria-selected'))),
+      ).toHaveLength(0)
     })
 
     it('can be set a default value', () => {
-      const listItems = mountWithProvider(
+      const wrapper = mountWithProvider(
         <List selectable defaultSelectedIndex={0} items={getItems()} />,
-      ).find('ListItem')
-      expect(listItems.first().props().selected).toBe(true)
+      )
+      expect(
+        wrapper
+          .find('li')
+          .at(0)
+          .prop('aria-selected'),
+      ).toBe(true)
     })
 
     it('should be set when item is clicked', () => {
       const wrapper = mountWithProvider(
         <List selectable defaultSelectedIndex={0} items={getItems()} />,
       )
-      const listItems = wrapper.find('ListItem')
-      expect(listItems.at(0).props().selected).toBe(true)
 
-      listItems
-        .at(1)
+      expect(
+        wrapper
+          .find('li')
+          .at(0)
+          .prop('aria-selected'),
+      ).toBe(true)
+
+      wrapper
         .find('li')
-        .first()
+        .at(1)
         .simulate('click')
 
-      const updatedItems = wrapper.find('ListItem')
-
-      expect(updatedItems.at(0).props().selected).toBe(false)
-      expect(updatedItems.at(1).props().selected).toBe(true)
+      expect(
+        wrapper
+          .find('li')
+          .at(0)
+          .prop('aria-selected'),
+      ).toBe(false)
+      expect(
+        wrapper
+          .find('li')
+          .at(1)
+          .prop('aria-selected'),
+      ).toBe(true)
     })
 
     it('calls onClick handler for item if `selectable`', () => {

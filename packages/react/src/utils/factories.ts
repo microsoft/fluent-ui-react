@@ -9,7 +9,7 @@ import {
   ShorthandRenderFunction,
   ShorthandRenderer,
 } from '../types'
-import { mergeStyles } from './mergeThemes'
+import { mergeStyles } from '@fluentui/styles'
 
 type HTMLTag = 'iframe' | 'img' | 'input'
 type ShorthandProp = 'children' | 'src' | 'type'

@@ -2,7 +2,7 @@ import { Accessibility, dialogBehavior } from '@fluentui/accessibility'
 import { FocusTrapZoneProps } from '@fluentui/react-bindings'
 import { Unstable_NestingAuto } from '@fluentui/react-component-nesting-registry'
 import { EventListener } from '@fluentui/react-component-event-listener'
-import { Ref, toRefObject } from '@fluentui/react-component-ref'
+import { Ref } from '@fluentui/react-component-ref'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import * as _ from 'lodash'
 import * as PropTypes from 'prop-types'
@@ -287,8 +287,6 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       <Ref innerRef={this.contentRef}>
         <ElementType
           className={classes.root}
-          // it's required to have an `rtl` attribute there as Dialog is rendered outside the main DOM tree
-          dir={rtl ? 'rtl' : undefined}
           {...accessibility.attributes.popup}
           {...unhandledProps}
           {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.popup, unhandledProps)}
@@ -330,7 +328,6 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
       </Ref>
     )
 
-    const targetRef = toRefObject(this.context.target)
     const triggerAccessibility: TriggerAccessibility = {
       attributes: accessibility.attributes.trigger,
       keyHandlers: accessibility.keyHandlers.trigger,
@@ -366,14 +363,14 @@ class Dialog extends AutoControlledComponent<WithAsProp<DialogProps>, DialogStat
               {closeOnOutsideClick && (
                 <EventListener
                   listener={this.handleOverlayClick}
-                  targetRef={targetRef}
+                  target={this.context.target}
                   type="click"
                   capture
                 />
               )}
               <EventListener
                 listener={this.handleDocumentKeydown(getRefs)}
-                targetRef={targetRef}
+                target={this.context.target}
                 type="keydown"
                 capture
               />

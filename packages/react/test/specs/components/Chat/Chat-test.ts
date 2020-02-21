@@ -1,4 +1,3 @@
-import { chatBehavior, AccessibilityDefinition } from '@fluentui/accessibility'
 import { handlesAccessibility, isConformant } from 'test/specs/commonTests'
 
 import Chat from 'src/components/Chat/Chat'
@@ -8,12 +7,12 @@ import ChatItem from 'src/components/Chat/ChatItem'
 const chatImplementsCollectionShorthandProp = implementsCollectionShorthandProp(Chat)
 
 describe('Chat', () => {
-  isConformant(Chat)
+  isConformant(Chat, {
+    constructorName: 'Chat',
+  })
   chatImplementsCollectionShorthandProp('items', ChatItem, { mapsValueToProp: 'message' })
 
   describe('accessibility', () => {
-    handlesAccessibility(Chat, {
-      focusZoneDefinition: (chatBehavior as AccessibilityDefinition).focusZone,
-    })
+    handlesAccessibility(Chat)
   })
 })

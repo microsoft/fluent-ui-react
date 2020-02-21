@@ -1,33 +1,42 @@
-import { Accessibility, listBehavior } from '@fluentui/accessibility'
+import { Accessibility, listBehavior, ListBehaviorProps } from '@fluentui/accessibility'
+import {
+  getElementType,
+  getUnhandledProps,
+  useAccessibility,
+  useAutoControlled,
+  useStyles,
+  useTelemetry,
+} from '@fluentui/react-bindings'
 import * as customPropTypes from '@fluentui/react-proptypes'
 import * as _ from 'lodash'
-import * as React from 'react'
 import * as PropTypes from 'prop-types'
+import * as React from 'react'
+// @ts-ignore
+import { ThemeContext } from 'react-fela'
 
-import {
-  childrenExist,
-  AutoControlledComponent,
-  UIComponentProps,
-  ChildrenComponentProps,
-  commonPropTypes,
-  rtlTextContainer,
-  applyAccessibilityKeyHandlers,
-} from '../../utils'
-import ListItem, { ListItemProps } from './ListItem'
 import {
   WithAsProp,
   ComponentEventHandler,
   withSafeTypeForAs,
   ShorthandCollection,
+  ReactChildren,
+  ProviderContextPrepared,
+  FluentComponentStaticProps,
 } from '../../types'
-
-export interface ListSlotClassNames {
-  item: string
-}
+import {
+  childrenExist,
+  UIComponentProps,
+  ChildrenComponentProps,
+  commonPropTypes,
+  rtlTextContainer,
+  createShorthandFactory,
+} from '../../utils'
+import { ListContextProvider, ListContextValue } from './listContext'
+import ListItem, { ListItemProps } from './ListItem'
 
 export interface ListProps extends UIComponentProps, ChildrenComponentProps {
   /** Accessibility behavior if overridden by the user. */
-  accessibility?: Accessibility
+  accessibility?: Accessibility<ListBehaviorProps>
 
   /** Toggle debug mode */
   debug?: boolean
@@ -62,119 +71,138 @@ export interface ListProps extends UIComponentProps, ChildrenComponentProps {
 
   /** A horizontal list displays elements horizontally. */
   horizontal?: boolean
+
+  /** An optional wrapper function. */
+  wrap?: (children: ReactChildren) => React.ReactNode
 }
 
-export interface ListState {
-  selectedIndex?: number
-}
+const List: React.FC<WithAsProp<ListProps>> &
+  FluentComponentStaticProps<ListProps> & {
+    Item: typeof ListItem
+  } = props => {
+  const context: ProviderContextPrepared = React.useContext(ThemeContext)
+  const { setStart, setEnd } = useTelemetry(List.displayName, context.telemetry)
+  setStart()
 
-class List extends AutoControlledComponent<WithAsProp<ListProps>, ListState> {
-  static displayName = 'List'
+  const {
+    accessibility,
+    as,
+    children,
+    className,
+    debug,
+    design,
+    horizontal,
+    items,
+    navigable,
+    selectable,
+    styles,
+    truncateContent,
+    truncateHeader,
+    variables,
+    wrap,
+  } = props
 
-  static className = 'ui-list'
-
-  static slotClassNames: ListSlotClassNames = {
-    item: `${List.className}__item`,
-  }
-
-  static propTypes = {
-    ...commonPropTypes.createCommon({
-      content: false,
+  const [selectedIndex, setSelectedIndex] = useAutoControlled({
+    defaultValue: props.defaultSelectedIndex,
+    value: props.selectedIndex,
+    initialValue: -1,
+  })
+  const getA11Props = useAccessibility(accessibility, {
+    debugName: List.displayName,
+    mapPropsToBehavior: () => ({
+      horizontal,
+      navigable,
+      selectable,
     }),
-    debug: PropTypes.bool,
-    items: customPropTypes.collectionShorthand,
-    selectable: customPropTypes.every([customPropTypes.disallow(['navigable']), PropTypes.bool]),
-    navigable: customPropTypes.every([customPropTypes.disallow(['selectable']), PropTypes.bool]),
-    truncateContent: PropTypes.bool,
-    truncateHeader: PropTypes.bool,
-    selectedIndex: PropTypes.number,
-    defaultSelectedIndex: PropTypes.number,
-    onSelectedIndexChange: PropTypes.func,
-    horizontal: PropTypes.bool,
-  }
+    rtl: context.rtl,
+  })
+  const { classes } = useStyles(List.displayName, {
+    className: List.className,
+    mapPropsToStyles: () => ({ isListTag: as === 'ol' || as === 'ul', debug, horizontal }),
+    mapPropsToInlineStyles: () => ({ className, design, styles, variables }),
+    rtl: context.rtl,
+  })
 
-  static defaultProps = {
-    as: 'ul',
-    accessibility: listBehavior as Accessibility,
-  }
+  const latestProps = React.useRef<ListProps>(props)
+  latestProps.current = props
 
-  static autoControlledProps = ['selectedIndex']
+  const ElementType = getElementType(props)
+  const unhandledProps = getUnhandledProps(List.handledProps, props)
 
-  getInitialAutoControlledState() {
-    return { selectedIndex: -1 }
-  }
-
-  static Item = ListItem
-
-  // List props that are passed to each individual Item props
-  static itemProps = [
-    'debug',
-    'selectable',
-    'navigable',
-    'truncateContent',
-    'truncateHeader',
-    'variables',
-  ]
-
-  handleItemOverrides = (predefinedProps: ListItemProps) => {
-    const { selectable } = this.props
-
-    return {
-      onClick: (e: React.SyntheticEvent, itemProps: ListItemProps) => {
-        _.invoke(predefinedProps, 'onClick', e, itemProps)
-
-        if (selectable) {
-          this.setState({ selectedIndex: itemProps.index })
-          _.invoke(this.props, 'onSelectedIndexChange', e, {
-            ...this.props,
-            ...{ selectedIndex: itemProps.index },
-          })
-        }
-      },
-    }
-  }
-
-  renderComponent({ ElementType, classes, accessibility, unhandledProps }) {
-    const { children } = this.props
-
-    return (
-      <ElementType
-        {...accessibility.attributes.root}
-        {...rtlTextContainer.getAttributes({ forElements: [children] })}
-        {...unhandledProps}
-        {...applyAccessibilityKeyHandlers(accessibility.keyHandlers.root, unhandledProps)}
-        className={classes.root}
-      >
-        {childrenExist(children) ? children : this.renderItems()}
-      </ElementType>
-    )
-  }
-
-  renderItems() {
-    const { items, selectable } = this.props
-    const { selectedIndex } = this.state
-
-    return _.map(items, (item, index) => {
-      const maybeSelectableItemProps = {} as any
-
+  const hasContent = childrenExist(children) || (items && items.length > 0)
+  const onItemClick = React.useCallback(
+    (e, itemIndex) => {
       if (selectable) {
-        maybeSelectableItemProps.selected = index === selectedIndex
+        setSelectedIndex(itemIndex)
+        _.invoke(latestProps.current, 'onSelectedIndexChange', e, {
+          ...latestProps.current,
+          selectedIndex: itemIndex,
+        })
       }
+    },
+    [latestProps, setSelectedIndex],
+  )
 
-      const itemProps = () => ({
-        className: List.slotClassNames.item,
-        ..._.pick(this.props, List.itemProps),
-        ...maybeSelectableItemProps,
-        index,
-      })
-
-      return ListItem.create(item, {
-        defaultProps: itemProps,
-        overrideProps: this.handleItemOverrides,
-      })
-    })
+  const childProps: ListContextValue = {
+    debug,
+    navigable,
+    onItemClick,
+    selectable,
+    selectedIndex,
+    truncateContent,
+    truncateHeader,
+    variables,
   }
+  const renderItems = () =>
+    _.map(items, (item, index) => ListItem.create(item, { defaultProps: () => ({ index }) }))
+
+  const element = getA11Props.unstable_wrapWithFocusZone(
+    <ElementType
+      {...getA11Props('root', {
+        className: classes.root,
+        ...rtlTextContainer.getAttributes({ forElements: [children] }),
+        ...unhandledProps,
+      })}
+    >
+      <ListContextProvider value={childProps}>
+        {hasContent && wrap(childrenExist(children) ? children : renderItems())}
+      </ListContextProvider>
+    </ElementType>,
+  )
+  setEnd()
+
+  return element
 }
+
+List.className = 'ui-list'
+List.displayName = 'List'
+
+List.defaultProps = {
+  as: 'ul',
+  accessibility: listBehavior,
+  wrap: children => children,
+}
+List.propTypes = {
+  ...commonPropTypes.createCommon({
+    content: false,
+  }),
+  debug: PropTypes.bool,
+  items: customPropTypes.collectionShorthand,
+  selectable: customPropTypes.every([customPropTypes.disallow(['navigable']), PropTypes.bool]),
+  navigable: customPropTypes.every([customPropTypes.disallow(['selectable']), PropTypes.bool]),
+  truncateContent: PropTypes.bool,
+  truncateHeader: PropTypes.bool,
+  selectedIndex: PropTypes.number,
+  defaultSelectedIndex: PropTypes.number,
+  onSelectedIndexChange: PropTypes.func,
+  horizontal: PropTypes.bool,
+  wrap: PropTypes.func,
+}
+
+List.handledProps = Object.keys(List.propTypes) as any
+List.Item = ListItem
+
+List.create = createShorthandFactory({ Component: List, mappedArrayProp: 'items' })
 
 /**
  * A List displays a group of related sequential items.

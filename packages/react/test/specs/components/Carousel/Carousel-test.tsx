@@ -2,6 +2,7 @@ import * as React from 'react'
 
 import { isConformant } from 'test/specs/commonTests'
 import Carousel, { CarouselProps } from 'src/components/Carousel/Carousel'
+import Button from 'src/components/Button/Button'
 import CarouselItem from 'src/components/Carousel/CarouselItem'
 import CarouselNavigation from 'src/components/Carousel/CarouselNavigation'
 import CarouselNavigationItem from 'src/components/Carousel/CarouselNavigationItem'
@@ -9,10 +10,16 @@ import Text from 'src/components/Text/Text'
 import { ReactWrapper, CommonWrapper } from 'enzyme'
 import { findIntrinsicElement, mountWithProvider } from 'test/utils'
 
+const buttonName = 'button-to-test'
+
 const items = [
   {
     key: 'item1',
-    content: <Text content={'item1'} />,
+    content: (
+      <div>
+        <Text content={'item1'} /> <Button id={buttonName} content={buttonName} />
+      </div>
+    ),
   },
   {
     key: 'item2',
@@ -54,11 +61,13 @@ const getNavigationNavigationItemAtIndexWrapper = (
 ): CommonWrapper => findIntrinsicElement(wrapper, `.${CarouselNavigationItem.className}`).at(index)
 const getItemAtIndexWrapper = (wrapper: ReactWrapper, index: number): CommonWrapper =>
   findIntrinsicElement(wrapper, `.${CarouselItem.className}`).at(index)
+const getButtonWrapper = (wrapper: ReactWrapper): CommonWrapper =>
+  findIntrinsicElement(wrapper, `#${buttonName}`)
 
 jest.useFakeTimers()
 
 describe('Carousel', () => {
-  isConformant(Carousel)
+  isConformant(Carousel, { autoControlledProps: ['activeIndex'] })
 
   it('id for items is generated if not passed as prop', () => {
     const wrapper = renderCarousel()
@@ -150,6 +159,26 @@ describe('Carousel', () => {
 
       expect(pagination.getDOMNode().textContent).toBe(`1 of ${items.length}`)
     })
+
+    it('should not change at arrow left if event is invoked on child element', () => {
+      const wrapper = renderCarousel({ circular: true })
+      const button = getButtonWrapper(wrapper)
+      const pagination = getPaginationWrapper(wrapper)
+
+      button.simulate('keydown', { key: 'ArrowLeft' })
+
+      expect(pagination.getDOMNode().textContent).toBe(`1 of ${items.length}`)
+    })
+
+    it('should not change at arrow right if event is invoked on child element', () => {
+      const wrapper = renderCarousel()
+      const button = getButtonWrapper(wrapper)
+      const pagination = getPaginationWrapper(wrapper)
+
+      button.simulate('keydown', { key: 'ArrowRight' })
+
+      expect(pagination.getDOMNode().textContent).toBe(`1 of ${items.length}`)
+    })
   })
 
   describe('paddle', () => {
@@ -233,13 +262,12 @@ describe('Carousel', () => {
     it('should show and focus the appropriate slide when clicked', () => {
       const wrapper = renderCarousel({ navigation })
       const secondNavigationItemWrapper = getNavigationNavigationItemAtIndexWrapper(wrapper, 1)
-      const secondItemWrapper = getItemAtIndexWrapper(wrapper, 1)
 
       secondNavigationItemWrapper.simulate('click')
       jest.runAllTimers()
 
       expect(wrapper.state('activeIndex')).toEqual(1)
-      expect(document.activeElement).toEqual(secondItemWrapper.getDOMNode())
+      expect(document.activeElement.firstElementChild.innerHTML).toEqual('item2')
     })
   })
 })

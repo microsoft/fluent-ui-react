@@ -1,5 +1,5 @@
 {
-  "extends": ["../packages/internal-tooling/eslint/index.js"],
+  "extends": ["./eslint/index.js"],
   "rules": {
     "no-console": "off"
   },
