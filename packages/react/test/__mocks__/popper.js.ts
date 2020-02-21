@@ -1,8 +1,8 @@
-import * as PopperJs from 'popper.js'
+import { placements } from '@popperjs/core'
 
 // Popper.js does not work with JSDOM: https://github.com/FezVrasta/popper.js/issues/478
 export default class Popper {
-  static placements = (PopperJs as any).placements
+  static placements = placements
 
   constructor() {
     return {

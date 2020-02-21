@@ -1,4 +1,4 @@
-import { Placement } from 'popper.js'
+import { Placement } from '@popperjs/core'
 
 import { Alignment, Position } from 'src/utils/positioner'
 import { getPlacement, applyRtlToOffset } from 'src/utils/positioner/positioningHelper'

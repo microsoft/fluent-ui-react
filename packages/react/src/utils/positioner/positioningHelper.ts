@@ -1,5 +1,4 @@
-import { Placement } from 'popper.js'
-
+import { Placement } from '@popperjs/core'
 import { Alignment, Position } from './types'
 
 enum PlacementParts {
