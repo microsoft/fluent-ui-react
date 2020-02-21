@@ -16,6 +16,7 @@ describe('MenuItem', () => {
       onClick: '.ui-menu__item__wrapper',
     },
     wrapperComponent: Box,
+    autoControlledProps: ['menuOpen'],
   })
 
   it('content renders as `li > a`', () => {

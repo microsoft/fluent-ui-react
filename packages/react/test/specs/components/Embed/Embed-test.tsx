@@ -4,7 +4,7 @@ import { isConformant, handlesAccessibility } from 'test/specs/commonTests'
 import { mountWithProviderAndGetComponent } from 'test/utils'
 
 describe('Embed', () => {
-  isConformant(Embed)
+  isConformant(Embed, { autoControlledProps: ['active'] })
 
   describe('accessibility', () => {
     handlesAccessibility(Embed, { defaultRootRole: 'presentation' })
@@ -25,20 +25,20 @@ describe('Embed', () => {
     })
   })
 
-  describe('onActiveChanged', () => {
+  describe('onActiveChange', () => {
     test('is called with (e, props) on a click', () => {
-      const onActiveChanged = jest.fn()
+      const onActiveChange = jest.fn()
       const embed = mountWithProviderAndGetComponent(
         Embed,
-        <Embed onActiveChanged={onActiveChanged} />,
+        <Embed onActiveChange={onActiveChange} />,
       )
 
       embed.simulate('click')
 
-      expect(onActiveChanged).toHaveBeenCalledTimes(1)
-      expect(onActiveChanged).toHaveBeenCalledWith(
+      expect(onActiveChange).toHaveBeenCalledTimes(1)
+      expect(onActiveChange).toHaveBeenCalledWith(
         expect.objectContaining({ type: 'click' }),
-        expect.objectContaining({ onActiveChanged, active: true }),
+        expect.objectContaining({ onActiveChange, active: true }),
       )
     })
   })

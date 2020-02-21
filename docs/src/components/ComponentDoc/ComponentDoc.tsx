@@ -158,7 +158,7 @@ class ComponentDoc extends React.Component<ComponentDocProps, ComponentDocState>
                 getA11ySelectionMessage={getA11ySelectionMessage}
                 noResultsMessage="We couldn't find any matches."
                 placeholder="Theme"
-                onSelectedChange={changeTheme}
+                onChange={changeTheme}
                 items={themeOptions.map(({ text, value }) => ({ header: text, value }))}
               />
             )}

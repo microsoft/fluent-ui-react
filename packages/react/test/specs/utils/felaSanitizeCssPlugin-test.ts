@@ -1,9 +1,28 @@
-import sanitizeCss from 'src/utils/felaSanitizeCssPlugin'
+import { RendererParam } from '@fluentui/react-bindings'
+import { ICSSInJSStyle } from '@fluentui/styles'
+
+import felaSanitizeCss from 'src/utils/felaSanitizeCssPlugin'
+import { consoleUtil } from 'test/utils'
+
+const sanitize = (
+  styles: ICSSInJSStyle,
+  options: { sanitizeCss?: boolean; skip?: string[] } = {},
+): ICSSInJSStyle => {
+  const { sanitizeCss = true, skip = [] } = options
+
+  const felaParam: RendererParam = {
+    displayName: 'Test',
+    disableAnimations: false,
+    theme: {} as any,
+    sanitizeCss,
+  }
+  const renderer = (() => {}) as any
+
+  return felaSanitizeCss({ skip })(styles, 'RULE', renderer, felaParam)
+}
 
 const assertCssPropertyValue = (value: string, isValid: boolean) => {
   test(`assert that '${value}' is ${isValid ? 'valid' : 'invalid'}`, () => {
-    const sanitize = sanitizeCss()
-
     const style = { display: value }
     const sanitizedStyle = sanitize(style)
 
@@ -11,9 +30,15 @@ const assertCssPropertyValue = (value: string, isValid: boolean) => {
   })
 }
 
-const sanitize = sanitizeCss()
-
 describe('felaSanitizeCssPlugin', () => {
+  beforeEach(() => {
+    consoleUtil.disable()
+  })
+
+  afterEach(() => {
+    consoleUtil.enable()
+  })
+
   test('should ensure there are no non-closed brackets in CSS property value', () => {
     const style = {
       display: 'block',
@@ -42,17 +67,13 @@ describe('felaSanitizeCssPlugin', () => {
   })
 
   test('should skip excluded CSS props', () => {
-    const withSkip = sanitizeCss({
-      skip: ['propertyWithInvalidValue'],
-    })
-
     const style = {
       display: 'block',
       margin: '0 0 0 0',
       propertyWithInvalidValue: 'rgba(',
     }
 
-    expect(withSkip(style)).toEqual(style)
+    expect(sanitize(style, { skip: ['propertyWithInvalidValue'] })).toEqual(style)
   })
 
   describe('should properly filter invalid bracket sequences', () => {
@@ -65,8 +86,8 @@ describe('felaSanitizeCssPlugin', () => {
 
   describe('if array is passed', () => {
     test('should process the array without conversion to an object', () => {
-      const style = {
-        color: ['red', 'blue'],
+      const style: ICSSInJSStyle = {
+        color: ['red', 'blue'] as any,
         ':hover': { color: 'red' },
         display: 'block',
       }
@@ -75,8 +96,8 @@ describe('felaSanitizeCssPlugin', () => {
     })
 
     test('should sanitize its items and remove invalid ones', () => {
-      const style = {
-        color: ['red', 'blue', 'rgba('],
+      const style: ICSSInJSStyle = {
+        color: ['red', 'blue', 'rgba('] as any,
         display: 'block',
       }
       expect(sanitize(style)).toEqual({
@@ -84,5 +105,12 @@ describe('felaSanitizeCssPlugin', () => {
         display: 'block',
       })
     })
+  })
+
+  test('warns if is disabled', () => {
+    const onWarn = jest.spyOn(console, 'warn').mockImplementation(() => {})
+
+    sanitize({ backgroundImage: 'url(../../' })
+    expect(onWarn).toBeCalledWith(expect.stringMatching(/was passed to property/))
   })
 })
