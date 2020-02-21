@@ -383,6 +383,7 @@ Tree.create = createShorthandFactory({
  * Implements [ARIA TreeView](https://www.w3.org/TR/wai-aria-practices-1.1/#TreeView) design pattern.
  * @accessibilityIssues
  * [Treeview - JAWS doesn't narrate position for each tree item](https://github.com/FreedomScientific/VFO-standards-support/issues/338)
+ * [Aria compliant trees are read as empty tables](https://bugs.chromium.org/p/chromium/issues/detail?id=1048770)
  */
 
 export default withSafeTypeForAs<typeof Tree, TreeProps, 'ul'>(Tree)

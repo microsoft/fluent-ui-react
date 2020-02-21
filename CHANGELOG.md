@@ -52,6 +52,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Added sourcemaps to the dist output to simplify debugging @miroslavstastny ([#2329](https://github.com/microsoft/fluent-ui-react/pull/2329))
 - Adding 'expand', 'collapse', 'companion', 'share-to' and 'settings-audio' icons @TanelVari ([#2343](https://github.com/microsoft/fluent-ui-react/pull/2343))
 - Add support for Children API in `List` component @layershifter ([#2207](https://github.com/microsoft/fluent-ui-react/pull/2207))
+- Added virtualized table prototype using `react-virtualized` and `Table` components @pompomon ([#2339](https://github.com/microsoft/fluent-ui-react/pull/2339))
 
 ### Performance
 - Add styles caching when there aren't inline overrides defined @mnajdova ([#2309](https://github.com/microsoft/fluent-ui-react/pull/2309))
