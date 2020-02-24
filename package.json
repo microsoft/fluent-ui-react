@@ -62,7 +62,7 @@
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.1.1",
-    "@types/enzyme": "^3.9.3",
+    "@types/enzyme": "^3.10.5",
     "@types/gulp": "^4.0.6",
     "@types/lodash": "^4.14.118",
     "@types/node": "^10.3.2",
