@@ -25,14 +25,14 @@ describe('Dropdown', () => {
 
   describe('clearable', () => {
     it('value is cleared at Icon click', () => {
-      const { triggerButton, clickOnClearIndicator } = renderDropdown({
+      const { triggerButtonNode, clickOnClearIndicator } = renderDropdown({
         clearable: true,
         defaultValue: items[0],
       })
 
       clickOnClearIndicator()
 
-      expect(triggerButton).toHaveTextContent('')
+      expect(triggerButtonNode).toHaveTextContent('')
     })
 
     it('calls onChange on Icon click with an `empty` value', () => {
@@ -61,41 +61,41 @@ describe('Dropdown', () => {
 
   describe('open', () => {
     it('it takes the value of the controlled prop', () => {
-      const { getItems, clickOnItemAtIndex } = renderDropdown({ open: true })
+      const { getItemNodes, clickOnItemAtIndex } = renderDropdown({ open: true })
 
-      expect(getItems()).toHaveLength(items.length)
+      expect(getItemNodes()).toHaveLength(items.length)
 
       clickOnItemAtIndex(0)
 
-      expect(getItems()).toHaveLength(items.length)
+      expect(getItemNodes()).toHaveLength(items.length)
     })
 
     it('it takes the value of the default prop but can be changed', () => {
-      const { getItems, clickOnItemAtIndex } = renderDropdown({ defaultOpen: true })
+      const { getItemNodes, clickOnItemAtIndex } = renderDropdown({ defaultOpen: true })
 
-      expect(getItems()).toHaveLength(items.length)
+      expect(getItemNodes()).toHaveLength(items.length)
 
       clickOnItemAtIndex(0)
 
-      expect(getItems()).toHaveLength(0)
+      expect(getItemNodes()).toHaveLength(0)
     })
 
     it('is "true" when opened by trigger button click', () => {
-      const { getItems, clickOnTriggerButton } = renderDropdown()
+      const { getItemNodes, clickOnTriggerButton } = renderDropdown()
 
       clickOnTriggerButton()
 
-      expect(getItems()).toHaveLength(items.length)
+      expect(getItemNodes()).toHaveLength(items.length)
     })
 
     it('is "false" when closed by trigger button click', () => {
-      const { clickOnTriggerButton, getItems } = renderDropdown({
+      const { clickOnTriggerButton, getItemNodes } = renderDropdown({
         defaultOpen: true,
       })
 
       clickOnTriggerButton()
 
-      expect(getItems()).toHaveLength(0)
+      expect(getItemNodes()).toHaveLength(0)
     })
 
     it('calls onOpenChange with a value that represents the open state', () => {
@@ -126,93 +126,96 @@ describe('Dropdown', () => {
     })
 
     it('is "true" when opened by toggle indicator click', () => {
-      const { clickOnToggleIndicator, getItems } = renderDropdown()
+      const { clickOnToggleIndicator, getItemNodes } = renderDropdown()
 
       clickOnToggleIndicator()
 
-      expect(getItems()).toHaveLength(items.length)
+      expect(getItemNodes()).toHaveLength(items.length)
     })
 
     it('is "false" when closed by toggle indicator click', () => {
-      const { clickOnToggleIndicator, getItems } = renderDropdown({
+      const { clickOnToggleIndicator, getItemNodes } = renderDropdown({
         defaultOpen: true,
       })
 
       clickOnToggleIndicator()
 
-      expect(getItems()).toHaveLength(0)
+      expect(getItemNodes()).toHaveLength(0)
     })
 
     it('is "false" when closed by hitting Escape in search input', () => {
-      const { keyDownOnSearchInput, getItems } = renderDropdown({
+      const { keyDownOnSearchInput, getItemNodes } = renderDropdown({
         search: true,
         defaultOpen: true,
       })
 
       keyDownOnSearchInput('Escape')
 
-      expect(getItems()).toHaveLength(0)
+      expect(getItemNodes()).toHaveLength(0)
     })
 
     it('is "false" when closed by hitting Escape in items list', () => {
-      const { keyDownOnItemsList, getItems } = renderDropdown({ defaultOpen: true })
+      const { keyDownOnItemsList, getItemNodes } = renderDropdown({ defaultOpen: true })
 
       expect(items).toHaveLength(items.length)
 
       keyDownOnItemsList('Escape')
 
-      expect(getItems()).toHaveLength(0)
+      expect(getItemNodes()).toHaveLength(0)
     })
 
     it('is "false" when an item has been selected', () => {
-      const { clickOnItemAtIndex, getItems } = renderDropdown({ defaultOpen: true })
+      const { clickOnItemAtIndex, getItemNodes } = renderDropdown({ defaultOpen: true })
 
       clickOnItemAtIndex(0)
 
-      expect(getItems()).toHaveLength(0)
+      expect(getItemNodes()).toHaveLength(0)
     })
 
     it('when set to "true" by trigger button click will move focus to the items list', () => {
-      const { clickOnTriggerButton, itemsList } = renderDropdown()
+      const { clickOnTriggerButton, itemsListNode } = renderDropdown()
 
       clickOnTriggerButton()
 
-      expect(document.activeElement).toEqual(itemsList)
+      expect(document.activeElement).toEqual(itemsListNode)
     })
 
     it('is "false" when blurred by Tab on items list', () => {
-      const { getItems, keyDownOnItemsList } = renderDropdown({ defaultOpen: true })
+      const { getItemNodes, keyDownOnItemsList } = renderDropdown({ defaultOpen: true })
 
       keyDownOnItemsList('Tab')
 
-      expect(getItems()).toHaveLength(0)
+      expect(getItemNodes()).toHaveLength(0)
     })
 
     it('is "false" when blurred by Shift+Tab on items list', () => {
-      const { getItems, keyDownOnItemsList } = renderDropdown({ defaultOpen: true })
+      const { getItemNodes, keyDownOnItemsList } = renderDropdown({ defaultOpen: true })
 
       keyDownOnItemsList('Tab', { shiftKey: true })
 
-      expect(getItems()).toHaveLength(0)
+      expect(getItemNodes()).toHaveLength(0)
     })
 
-    it('is "false" when blurred by Tab on searchInput', () => {
-      const { getItems, keyDownOnSearchInput } = renderDropdown({
+    it('is "false" when blurred by Tab on search input', () => {
+      const { getItemNodes, keyDownOnSearchInput } = renderDropdown({
         defaultOpen: true,
         search: true,
       })
 
       keyDownOnSearchInput('Tab')
 
-      expect(getItems()).toHaveLength(0)
+      expect(getItemNodes()).toHaveLength(0)
     })
 
     it('is "false" when blurred by Shift+Tab on items list', () => {
-      const { getItems, keyDownOnSearchInput } = renderDropdown({ defaultOpen: true, search: true })
+      const { getItemNodes, keyDownOnSearchInput } = renderDropdown({
+        defaultOpen: true,
+        search: true,
+      })
 
       keyDownOnSearchInput('Tab', { shiftKey: true })
 
-      expect(getItems()).toHaveLength(0)
+      expect(getItemNodes()).toHaveLength(0)
     })
   })
 
@@ -222,38 +225,38 @@ describe('Dropdown', () => {
     })
 
     it('is null when opened by click', () => {
-      const { clickOnTriggerButton, itemsList } = renderDropdown()
+      const { clickOnTriggerButton, itemsListNode } = renderDropdown()
 
       clickOnTriggerButton()
 
-      expect(itemsList).not.toHaveAttribute('aria-activedescendant')
+      expect(itemsListNode).not.toHaveAttribute('aria-activedescendant')
     })
 
     it('is null when opened by toggle indicator click', () => {
-      const { clickOnToggleIndicator, itemsList } = renderDropdown()
+      const { clickOnToggleIndicator, itemsListNode } = renderDropdown()
 
       clickOnToggleIndicator()
 
-      expect(itemsList).not.toHaveAttribute('aria-activedescendant')
+      expect(itemsListNode).not.toHaveAttribute('aria-activedescendant')
     })
 
     it('is first item index when opened by arrow down key', () => {
-      const { keyDownOnTriggerButton, itemsList } = renderDropdown()
+      const { keyDownOnTriggerButton, itemsListNode } = renderDropdown()
 
       keyDownOnTriggerButton('ArrowDown')
 
-      expect(itemsList).toHaveAttribute(
+      expect(itemsListNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(0)),
       )
     })
 
     it('is last item index when opened by arrow up key', () => {
-      const { keyDownOnTriggerButton, itemsList } = renderDropdown()
+      const { keyDownOnTriggerButton, itemsListNode } = renderDropdown()
 
       keyDownOnTriggerButton('ArrowUp')
 
-      expect(itemsList).toHaveAttribute(
+      expect(itemsListNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(items.length - 1)),
       )
@@ -261,13 +264,13 @@ describe('Dropdown', () => {
 
     it('has the provided prop value when opened by click', () => {
       const highlightedIndex = 2
-      const { clickOnTriggerButton, itemsList } = renderDropdown({
+      const { clickOnTriggerButton, itemsListNode } = renderDropdown({
         highlightedIndex,
       })
 
       clickOnTriggerButton()
 
-      expect(itemsList).toHaveAttribute(
+      expect(itemsListNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(highlightedIndex)),
       )
@@ -275,13 +278,13 @@ describe('Dropdown', () => {
 
     it('has the provided prop value when opened by arrow down key', () => {
       const highlightedIndex = 1
-      const { keyDownOnTriggerButton, itemsList } = renderDropdown({
+      const { keyDownOnTriggerButton, itemsListNode } = renderDropdown({
         highlightedIndex,
       })
 
       keyDownOnTriggerButton('ArrowDown')
 
-      expect(itemsList).toHaveAttribute(
+      expect(itemsListNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(highlightedIndex)),
       )
@@ -289,13 +292,13 @@ describe('Dropdown', () => {
 
     it('has the provided prop value when opened by arrow up key', () => {
       const highlightedIndex = 1
-      const { keyDownOnTriggerButton, itemsList } = renderDropdown({
+      const { keyDownOnTriggerButton, itemsListNode } = renderDropdown({
         highlightedIndex,
       })
 
       keyDownOnTriggerButton('ArrowUp')
 
-      expect(itemsList).toHaveAttribute(
+      expect(itemsListNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(highlightedIndex)),
       )
@@ -303,13 +306,13 @@ describe('Dropdown', () => {
 
     it('is defaultHighlightedIndex prop value at first opening, then null', () => {
       const defaultHighlightedIndex = 2
-      const { clickOnTriggerButton, itemsList } = renderDropdown({
+      const { clickOnTriggerButton, itemsListNode } = renderDropdown({
         defaultHighlightedIndex,
       })
 
       clickOnTriggerButton()
 
-      expect(itemsList).toHaveAttribute(
+      expect(itemsListNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(defaultHighlightedIndex)),
       )
@@ -317,17 +320,17 @@ describe('Dropdown', () => {
       clickOnTriggerButton()
       clickOnTriggerButton()
 
-      expect(itemsList).not.toHaveAttribute('aria-activedescendant')
+      expect(itemsListNode).not.toHaveAttribute('aria-activedescendant')
     })
 
     it('is 0 on every open when highlightFirstItemOnOpen prop is provided', () => {
-      const { clickOnTriggerButton, itemsList } = renderDropdown({
+      const { clickOnTriggerButton, itemsListNode } = renderDropdown({
         highlightFirstItemOnOpen: true,
       })
 
       clickOnTriggerButton()
 
-      expect(itemsList).toHaveAttribute(
+      expect(itemsListNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(0)),
       )
@@ -335,70 +338,70 @@ describe('Dropdown', () => {
       clickOnTriggerButton()
       clickOnTriggerButton()
 
-      expect(itemsList).toHaveAttribute(
+      expect(itemsListNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(0)),
       )
     })
 
     it('is set to 0 on searchQuery change and when highlightFirstItemOnOpen prop is provided', () => {
-      const { changeSearchInput, keyDownOnSearchInput, searchInput } = renderDropdown({
+      const { changeSearchInput, keyDownOnSearchInput, searchInputNode } = renderDropdown({
         highlightFirstItemOnOpen: true,
         search: true,
       })
 
       changeSearchInput('i')
 
-      expect(searchInput).toHaveAttribute(
+      expect(searchInputNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(0)),
       )
 
       keyDownOnSearchInput('ArrowDown')
 
-      expect(searchInput).toHaveAttribute(
+      expect(searchInputNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(1)),
       )
 
       changeSearchInput('it')
 
-      expect(searchInput).toHaveAttribute(
+      expect(searchInputNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(0)),
       )
     })
 
     it('is null on searchQuery change and when highlightFirstItemOnOpen prop is not provided', () => {
-      const { changeSearchInput, keyDownOnSearchInput, searchInput } = renderDropdown({
+      const { changeSearchInput, keyDownOnSearchInput, searchInputNode } = renderDropdown({
         search: true,
       })
 
       changeSearchInput('i')
 
-      expect(searchInput).not.toHaveAttribute('aria-activedescendant')
+      expect(searchInputNode).not.toHaveAttribute('aria-activedescendant')
 
       keyDownOnSearchInput('ArrowDown')
 
-      expect(searchInput).toHaveAttribute(
+      expect(searchInputNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(0)),
       )
 
       changeSearchInput('it')
 
-      expect(searchInput).not.toHaveAttribute('aria-activedescendant')
+      expect(searchInputNode).not.toHaveAttribute('aria-activedescendant')
     })
 
     it('is the index of the value previously selected when opened', () => {
       const highlightedIndex = 2
-      const { clickOnTriggerButton, itemsList } = renderDropdown({
+      const { clickOnTriggerButton, itemsListNode } = renderDropdown({
         value: items[highlightedIndex],
       })
 
       clickOnTriggerButton()
 
-      expect(itemsList).toHaveAttribute(
+      expect(itemsListNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(highlightedIndex)),
       )
@@ -406,13 +409,13 @@ describe('Dropdown', () => {
 
     it('is the index of the (value previously selected + 1) when opened by arrow down', () => {
       const highlightedIndex = 2
-      const { keyDownOnTriggerButton, itemsList } = renderDropdown({
+      const { keyDownOnTriggerButton, itemsListNode } = renderDropdown({
         value: items[highlightedIndex],
       })
 
       keyDownOnTriggerButton('ArrowDown')
 
-      expect(itemsList).toHaveAttribute(
+      expect(itemsListNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(highlightedIndex + 1)),
       )
@@ -420,25 +423,25 @@ describe('Dropdown', () => {
 
     it('is the index of the (value previously selected - 1) when opened by arrow up', () => {
       const highlightedIndex = 2
-      const { keyDownOnTriggerButton, itemsList } = renderDropdown({
+      const { keyDownOnTriggerButton, itemsListNode } = renderDropdown({
         value: items[highlightedIndex],
       })
 
       keyDownOnTriggerButton('ArrowUp')
 
-      expect(itemsList).toHaveAttribute(
+      expect(itemsListNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(highlightedIndex - 1)),
       )
     })
 
     it('is changed correctly on arrow down navigation', () => {
-      const { keyDownOnTriggerButton, itemsList } = renderDropdown()
+      const { keyDownOnTriggerButton, itemsListNode } = renderDropdown()
 
       for (let index = 0; index < items.length; index++) {
         keyDownOnTriggerButton('ArrowDown')
 
-        expect(itemsList).toHaveAttribute(
+        expect(itemsListNode).toHaveAttribute(
           'aria-activedescendant',
           expect.stringMatching(getItemIdRegexByIndex(index)),
         )
@@ -446,121 +449,121 @@ describe('Dropdown', () => {
     })
 
     it('is changed correctly on arrow up navigation', () => {
-      const { keyDownOnTriggerButton, itemsList } = renderDropdown()
+      const { keyDownOnTriggerButton, itemsListNode } = renderDropdown()
 
-      for (let index = 0; index < items.length; index++) {
+      for (let index = items.length - 1; index >= 0; index--) {
         keyDownOnTriggerButton('ArrowUp')
 
-        expect(itemsList).toHaveAttribute(
+        expect(itemsListNode).toHaveAttribute(
           'aria-activedescendant',
-          expect.stringMatching(getItemIdRegexByIndex(items.length - 1 - index)),
+          expect.stringMatching(getItemIdRegexByIndex(index)),
         )
       }
     })
 
     it('is changed correctly on arrow down and shift navigation', () => {
-      const { keyDownOnTriggerButton, itemsList } = renderDropdown({ defaultOpen: true })
+      const { keyDownOnTriggerButton, itemsListNode } = renderDropdown({ defaultOpen: true })
 
       keyDownOnTriggerButton('ArrowDown', { shiftKey: true })
 
-      expect(itemsList).toHaveAttribute(
+      expect(itemsListNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(4)),
       )
     })
 
     it('is changed correctly on arrow up and shift navigation', () => {
-      const { keyDownOnTriggerButton, itemsList } = renderDropdown({
+      const { keyDownOnTriggerButton, itemsListNode } = renderDropdown({
         defaultHighlightedIndex: items.length - 1,
         defaultOpen: true,
       })
 
       keyDownOnTriggerButton('ArrowUp', { shiftKey: true })
 
-      expect(itemsList).toHaveAttribute(
+      expect(itemsListNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(0)),
       )
     })
 
     it('is changed correctly on home key navigation', () => {
-      const { keyDownOnItemsList, itemsList } = renderDropdown({
+      const { keyDownOnItemsList, itemsListNode } = renderDropdown({
         defaultHighlightedIndex: 2,
         defaultOpen: true,
       })
 
       keyDownOnItemsList('Home')
 
-      expect(itemsList).toHaveAttribute(
+      expect(itemsListNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(0)),
       )
     })
 
     it('is changed correctly on end key navigation', () => {
-      const { keyDownOnItemsList, itemsList } = renderDropdown({
+      const { keyDownOnItemsList, itemsListNode } = renderDropdown({
         defaultHighlightedIndex: 2,
         defaultOpen: true,
       })
 
       keyDownOnItemsList('End')
 
-      expect(itemsList).toHaveAttribute(
+      expect(itemsListNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(items.length - 1)),
       )
     })
 
     it('wraps to start and end on navigation', () => {
-      const { keyDownOnItemsList, itemsList } = renderDropdown({
+      const { keyDownOnItemsList, itemsListNode } = renderDropdown({
         defaultHighlightedIndex: 0,
         defaultOpen: true,
       })
 
       keyDownOnItemsList('ArrowUp')
 
-      expect(itemsList).toHaveAttribute(
+      expect(itemsListNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(items.length - 1)),
       )
 
       keyDownOnItemsList('ArrowDown')
 
-      expect(itemsList).toHaveAttribute(
+      expect(itemsListNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(0)),
       )
     })
 
     it('is updated correctly when hovering over items', () => {
-      const { mouseOverItemAtIndex, itemsList } = renderDropdown({
+      const { mouseOverItemAtIndex, itemsListNode } = renderDropdown({
         defaultOpen: true,
       })
 
       mouseOverItemAtIndex(1)
 
-      expect(itemsList).toHaveAttribute(
+      expect(itemsListNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(1)),
       )
 
       mouseOverItemAtIndex(3)
 
-      expect(itemsList).toHaveAttribute(
+      expect(itemsListNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(3)),
       )
     })
 
     it('is updated correctly when hovering over items and using arrow keys to navigate', () => {
-      const { mouseOverItemAtIndex, keyDownOnItemsList, itemsList } = renderDropdown({
+      const { mouseOverItemAtIndex, keyDownOnItemsList, itemsListNode } = renderDropdown({
         defaultOpen: true,
       })
 
       mouseOverItemAtIndex(1)
       keyDownOnItemsList('ArrowDown')
 
-      expect(itemsList).toHaveAttribute(
+      expect(itemsListNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(2)),
       )
@@ -568,7 +571,7 @@ describe('Dropdown', () => {
       mouseOverItemAtIndex(4)
       keyDownOnItemsList('ArrowUp')
 
-      expect(itemsList).toHaveAttribute(
+      expect(itemsListNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(3)),
       )
@@ -576,14 +579,14 @@ describe('Dropdown', () => {
 
     it('jumps to the item starting with the character key pressed', () => {
       const items = ['Athos', 'Porthos', 'Aramis', `D'Artagnan`]
-      const { keyDownOnItemsList, itemsList } = renderDropdown({
+      const { keyDownOnItemsList, itemsListNode } = renderDropdown({
         items,
         defaultOpen: true,
       })
 
       keyDownOnItemsList('P')
 
-      expect(itemsList).toHaveAttribute(
+      expect(itemsListNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(1)),
       )
@@ -591,7 +594,7 @@ describe('Dropdown', () => {
 
     it('jumps starting from the current highlightedIndex on character key press', () => {
       const items = ['Athos', 'Porthos', 'Aramis', `D'Artagnan`]
-      const { keyDownOnItemsList, itemsList } = renderDropdown({
+      const { keyDownOnItemsList, itemsListNode } = renderDropdown({
         items,
         defaultHighlightedIndex: 1,
         defaultOpen: true,
@@ -599,7 +602,7 @@ describe('Dropdown', () => {
 
       keyDownOnItemsList('A')
 
-      expect(itemsList).toHaveAttribute(
+      expect(itemsListNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(2)),
       )
@@ -607,7 +610,7 @@ describe('Dropdown', () => {
 
     it('wraps to the start of the list when no options remain', () => {
       const items = ['Athos', 'Porthos', 'Aramis', `D'Artagnan`]
-      const { keyDownOnItemsList, itemsList } = renderDropdown({
+      const { keyDownOnItemsList, itemsListNode } = renderDropdown({
         items,
         defaultHighlightedIndex: 2,
         defaultOpen: true,
@@ -615,7 +618,7 @@ describe('Dropdown', () => {
 
       keyDownOnItemsList('A')
 
-      expect(itemsList).toHaveAttribute(
+      expect(itemsListNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(0)),
       )
@@ -623,14 +626,14 @@ describe('Dropdown', () => {
 
     it('jumps from item to item when pressing the same key with enough time in between', () => {
       const items = ['Athos', 'Porthos', 'Aramis', `D'Artagnan`]
-      const { keyDownOnItemsList, itemsList } = renderDropdown({
+      const { keyDownOnItemsList, itemsListNode } = renderDropdown({
         items,
         defaultOpen: true,
       })
 
       keyDownOnItemsList('A')
 
-      expect(itemsList).toHaveAttribute(
+      expect(itemsListNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(0)),
       )
@@ -638,7 +641,7 @@ describe('Dropdown', () => {
       jest.runAllTimers()
       keyDownOnItemsList('A')
 
-      expect(itemsList).toHaveAttribute(
+      expect(itemsListNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(2)),
       )
@@ -646,7 +649,7 @@ describe('Dropdown', () => {
       jest.runAllTimers()
       keyDownOnItemsList('A')
 
-      expect(itemsList).toHaveAttribute(
+      expect(itemsListNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(0)),
       )
@@ -654,14 +657,14 @@ describe('Dropdown', () => {
 
     it('jumps to the item starting with the keys tapped in rapid succession', () => {
       const items = ['Albert', 'Alfred', 'Alena', 'Ali']
-      const { keyDownOnItemsList, itemsList } = renderDropdown({
+      const { keyDownOnItemsList, itemsListNode } = renderDropdown({
         items,
         defaultOpen: true,
       })
 
       keyDownOnItemsList('A')
 
-      expect(itemsList).toHaveAttribute(
+      expect(itemsListNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(0)),
       )
@@ -669,7 +672,7 @@ describe('Dropdown', () => {
       jest.advanceTimersByTime(Dropdown.charKeyPressedCleanupTime / 2)
       keyDownOnItemsList('L')
 
-      expect(itemsList).toHaveAttribute(
+      expect(itemsListNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(0)),
       )
@@ -677,7 +680,7 @@ describe('Dropdown', () => {
       jest.advanceTimersByTime(Dropdown.charKeyPressedCleanupTime / 2)
       keyDownOnItemsList('E')
 
-      expect(itemsList).toHaveAttribute(
+      expect(itemsListNode).toHaveAttribute(
         'aria-activedescendant',
         expect.stringMatching(getItemIdRegexByIndex(2)),
       )
@@ -687,28 +690,28 @@ describe('Dropdown', () => {
   describe('value', () => {
     it('it takes the value of the controlled prop', () => {
       const value = items[2]
-      const { triggerButton, clickOnItemAtIndex } = renderDropdown({ value, defaultOpen: true })
+      const { triggerButtonNode, clickOnItemAtIndex } = renderDropdown({ value, defaultOpen: true })
 
-      expect(triggerButton).toHaveTextContent(value)
+      expect(triggerButtonNode).toHaveTextContent(value)
 
       clickOnItemAtIndex(0)
 
-      expect(triggerButton).toHaveTextContent(value)
+      expect(triggerButtonNode).toHaveTextContent(value)
     })
 
     it('it takes the value of the default prop but can be changed', () => {
       const defaultValue = items[2]
       const itemToBeClickedIndex = 1
-      const { triggerButton, clickOnItemAtIndex } = renderDropdown({
+      const { triggerButtonNode, clickOnItemAtIndex } = renderDropdown({
         defaultValue,
         defaultOpen: true,
       })
 
-      expect(triggerButton).toHaveTextContent(defaultValue)
+      expect(triggerButtonNode).toHaveTextContent(defaultValue)
 
       clickOnItemAtIndex(itemToBeClickedIndex)
 
-      expect(triggerButton).toHaveTextContent(items[itemToBeClickedIndex])
+      expect(triggerButtonNode).toHaveTextContent(items[itemToBeClickedIndex])
     })
 
     it('has onChange called when item is added', () => {
@@ -763,77 +766,81 @@ describe('Dropdown', () => {
 
     it('is set by clicking on item', () => {
       const itemSelectedIndex = 2
-      const { triggerButton, clickOnItemAtIndex } = renderDropdown({ defaultOpen: true })
+      const { triggerButtonNode, clickOnItemAtIndex } = renderDropdown({ defaultOpen: true })
 
       clickOnItemAtIndex(itemSelectedIndex)
 
-      expect(triggerButton).toHaveTextContent(items[itemSelectedIndex])
+      expect(triggerButtonNode).toHaveTextContent(items[itemSelectedIndex])
     })
 
     it('is set by using Enter on highlighted item', () => {
       const itemSelectedIndex = 1
-      const { triggerButton, keyDownOnItemsList } = renderDropdown({
+      const { triggerButtonNode, keyDownOnItemsList } = renderDropdown({
         defaultOpen: true,
         defaultHighlightedIndex: itemSelectedIndex,
       })
 
       keyDownOnItemsList('Enter')
 
-      expect(triggerButton).toHaveTextContent(items[itemSelectedIndex])
+      expect(triggerButtonNode).toHaveTextContent(items[itemSelectedIndex])
     })
 
     it('is set by using Tab on highlighted item', () => {
       const itemSelectedIndex = 3
-      const { triggerButton, keyDownOnItemsList } = renderDropdown({
+      const { triggerButtonNode, keyDownOnItemsList } = renderDropdown({
         defaultOpen: true,
         defaultHighlightedIndex: itemSelectedIndex,
       })
 
       keyDownOnItemsList('Tab')
 
-      expect(triggerButton).toHaveTextContent(items[itemSelectedIndex])
+      expect(triggerButtonNode).toHaveTextContent(items[itemSelectedIndex])
     })
 
     it('is set by using Shift+Tab on highlighted item', () => {
       const itemSelectedIndex = 2
-      const { triggerButton, keyDownOnItemsList } = renderDropdown({
+      const { triggerButtonNode, keyDownOnItemsList } = renderDropdown({
         defaultOpen: true,
         defaultHighlightedIndex: itemSelectedIndex,
       })
 
       keyDownOnItemsList('Tab', { shiftKey: true })
 
-      expect(triggerButton).toHaveTextContent(items[itemSelectedIndex])
+      expect(triggerButtonNode).toHaveTextContent(items[itemSelectedIndex])
     })
 
     it('is replaced when another item is selected', () => {
       const defaultSelectedIndex = 0
       const itemSelectedIndex = 2
-      const { triggerButton, clickOnItemAtIndex } = renderDropdown({
+      const { triggerButtonNode, clickOnItemAtIndex } = renderDropdown({
         defaultOpen: true,
         defaultValue: items[defaultSelectedIndex],
       })
 
-      expect(triggerButton).toHaveTextContent(items[defaultSelectedIndex])
+      expect(triggerButtonNode).toHaveTextContent(items[defaultSelectedIndex])
 
       clickOnItemAtIndex(itemSelectedIndex)
 
-      expect(triggerButton).toHaveTextContent(items[itemSelectedIndex])
+      expect(triggerButtonNode).toHaveTextContent(items[itemSelectedIndex])
     })
 
     it('has an array of items if more items are selected and the multiple prop is supplied', () => {
-      const { getSelectedItems, getSelectedItemAtIndex } = renderDropdown({
+      const { getSelectedItemNodes, getSelectedItemNodeAtIndex } = renderDropdown({
         multiple: true,
         defaultValue: [items[0], items[1]],
       })
 
-      expect(getSelectedItems()).toHaveLength(2)
-      expect(getSelectedItemAtIndex(0)).toHaveTextContent(items[0])
-      expect(getSelectedItemAtIndex(1)).toHaveTextContent(items[1])
+      expect(getSelectedItemNodes()).toHaveLength(2)
+      expect(getSelectedItemNodeAtIndex(0)).toHaveTextContent(items[0])
+      expect(getSelectedItemNodeAtIndex(1)).toHaveTextContent(items[1])
     })
 
     it('emoves last item on backspace when query is emtpy', () => {
-      const { getSelectedItems, getSelectedItemAtIndex, keyDownOnSearchInput } = renderDropdown({
+      const {
+        getSelectedItemNodes,
+        getSelectedItemNodeAtIndex,
+        keyDownOnSearchInput,
+      } = renderDropdown({
         multiple: true,
         search: true,
         defaultValue: [items[0], items[1]],
@@ -841,30 +848,30 @@ describe('Dropdown', () => {
 
       keyDownOnSearchInput('Backspace')
 
-      expect(getSelectedItems()).toHaveLength(1)
-      expect(getSelectedItemAtIndex(0)).toHaveTextContent(items[0])
+      expect(getSelectedItemNodes()).toHaveLength(1)
+      expect(getSelectedItemNodeAtIndex(0)).toHaveTextContent(items[0])
     })
 
     it('does not rempve last item on backspace when query is not empty', () => {
-      const { getSelectedItems, keyDownOnSearchInput, searchInput } = renderDropdown({
+      const { getSelectedItemNodes, keyDownOnSearchInput, searchInputNode } = renderDropdown({
         multiple: true,
         search: true,
         defaultSearchQuery: 'bla',
         defaultValue: [items[0], items[1]],
       })
 
-      searchInput.setSelectionRange(1, 2)
+      searchInputNode.setSelectionRange(1, 2)
       keyDownOnSearchInput('Backspace')
 
-      expect(getSelectedItems()).toHaveLength(2)
+      expect(getSelectedItemNodes()).toHaveLength(2)
     })
 
     it('removes last item on backspace when selection range is 0, 0', () => {
       const {
-        getSelectedItems,
-        getSelectedItemAtIndex,
+        getSelectedItemNodes,
+        getSelectedItemNodeAtIndex,
         keyDownOnSearchInput,
-        searchInput,
+        searchInputNode,
       } = renderDropdown({
         multiple: true,
         search: true,
@@ -872,31 +879,31 @@ describe('Dropdown', () => {
         defaultValue: [items[0], items[1]],
       })
 
-      searchInput.setSelectionRange(0, 0)
+      searchInputNode.setSelectionRange(0, 0)
       keyDownOnSearchInput('Backspace')
 
-      expect(getSelectedItems()).toHaveLength(1)
-      expect(getSelectedItemAtIndex(0)).toHaveTextContent(items[0])
+      expect(getSelectedItemNodes()).toHaveLength(1)
+      expect(getSelectedItemNodeAtIndex(0)).toHaveTextContent(items[0])
     })
 
     it('does not rempve last item on backspace when selection range is 0, (y>0)', () => {
-      const { getSelectedItems, keyDownOnSearchInput, searchInput } = renderDropdown({
+      const { getSelectedItemNodes, keyDownOnSearchInput, searchInputNode } = renderDropdown({
         multiple: true,
         search: true,
         defaultSearchQuery: 'bla',
         defaultValue: [items[0], items[1]],
       })
 
-      searchInput.setSelectionRange(0, 1)
+      searchInputNode.setSelectionRange(0, 1)
       keyDownOnSearchInput('Backspace')
 
-      expect(getSelectedItems()).toHaveLength(2)
+      expect(getSelectedItemNodes()).toHaveLength(2)
     })
 
     it('has the item removed if it receives delete key down', () => {
       const {
-        getSelectedItems,
-        getSelectedItemAtIndex,
+        getSelectedItemNodes,
+        getSelectedItemNodeAtIndex,
         keyDownOnSelectedItemAtIndex,
       } = renderDropdown({
         multiple: true,
@@ -906,12 +913,12 @@ describe('Dropdown', () => {
 
       keyDownOnSelectedItemAtIndex(0, 'Delete')
 
-      expect(getSelectedItems()).toHaveLength(1)
-      expect(getSelectedItemAtIndex(0)).toHaveTextContent(items[1])
+      expect(getSelectedItemNodes()).toHaveLength(1)
+      expect(getSelectedItemNodeAtIndex(0)).toHaveTextContent(items[1])
     })
 
     it('has the item removed if it receives click on remove icon', () => {
-      const { getSelectedItems, getSelectedItemAtIndex, wrapper } = renderDropdown({
+      const { getSelectedItemNodes, getSelectedItemNodeAtIndex, wrapper } = renderDropdown({
         multiple: true,
         search: true,
         defaultValue: [items[0], items[1]],
@@ -921,8 +928,8 @@ describe('Dropdown', () => {
         .at(0)
         .simulate('click')
 
-      expect(getSelectedItems()).toHaveLength(1)
-      expect(getSelectedItemAtIndex(0)).toHaveTextContent(items[1])
+      expect(getSelectedItemNodes()).toHaveLength(1)
+      expect(getSelectedItemNodeAtIndex(0)).toHaveTextContent(items[1])
     })
   })
 
@@ -932,9 +939,9 @@ describe('Dropdown', () => {
     })
 
     it('creates message container element', () => {
-      const { getA11yMessageContainer } = renderDropdown({ getA11ySelectionMessage: {} })
+      const { getA11yMessageContainerNode } = renderDropdown({ getA11ySelectionMessage: {} })
 
-      expect(getA11yMessageContainer()).toMatchInlineSnapshot(`
+      expect(getA11yMessageContainerNode()).toMatchInlineSnapshot(`
         <div
           aria-live="polite"
           aria-relevant="additions text"
@@ -946,25 +953,25 @@ describe('Dropdown', () => {
 
     it('has the onAdd message inserted and cleared after an item has been added to selection', () => {
       const itemToBeClickedIndex = 1
-      const { getA11yMessageContainer, clickOnItemAtIndex } = renderDropdown({
+      const { getA11yMessageContainerNode, clickOnItemAtIndex } = renderDropdown({
         defaultOpen: true,
         getA11ySelectionMessage: { onAdd: item => `${item} has been added` },
       })
 
       clickOnItemAtIndex(itemToBeClickedIndex)
 
-      expect(getA11yMessageContainer()).toHaveTextContent(
+      expect(getA11yMessageContainerNode()).toHaveTextContent(
         `${items[itemToBeClickedIndex]} has been added`,
       )
 
       jest.runAllTimers()
 
-      expect(getA11yMessageContainer()).toHaveTextContent('')
+      expect(getA11yMessageContainerNode()).toHaveTextContent('')
     })
 
     it('has the onRemove message inserted and cleared after an item has been removed from selection', () => {
       const itemSelectedByDefaultIndex = 2
-      const { getA11yMessageContainer, keyDownOnSelectedItemAtIndex } = renderDropdown({
+      const { getA11yMessageContainerNode, keyDownOnSelectedItemAtIndex } = renderDropdown({
         defaultOpen: true,
         multiple: true,
         defaultValue: [items[itemSelectedByDefaultIndex]],
@@ -973,56 +980,56 @@ describe('Dropdown', () => {
 
       keyDownOnSelectedItemAtIndex(0, 'Delete')
 
-      expect(getA11yMessageContainer()).toHaveTextContent(
+      expect(getA11yMessageContainerNode()).toHaveTextContent(
         `${items[itemSelectedByDefaultIndex]} has been removed`,
       )
 
       jest.runAllTimers()
 
-      expect(getA11yMessageContainer()).toHaveTextContent('')
+      expect(getA11yMessageContainerNode()).toHaveTextContent('')
     })
   })
 
   describe('searchQuery', () => {
     it('it takes the value of the controlled prop', () => {
       const searchQuery = "can't touch this"
-      const { changeSearchInput, searchInput } = renderDropdown({ searchQuery, search: true })
+      const { changeSearchInput, searchInputNode } = renderDropdown({ searchQuery, search: true })
 
-      expect(searchInput).toHaveValue(searchQuery)
+      expect(searchInputNode).toHaveValue(searchQuery)
 
       changeSearchInput('but I can try!')
 
-      expect(searchInput).toHaveValue(searchQuery)
+      expect(searchInputNode).toHaveValue(searchQuery)
     })
 
     it('it takes the value of the default prop but can be changed', () => {
       const defaultSearchQuery = "maybe you can't touch this"
       const finalSearchQuery = 'you underestimate my power'
-      const { changeSearchInput, searchInput } = renderDropdown({
+      const { changeSearchInput, searchInputNode } = renderDropdown({
         defaultSearchQuery,
         search: true,
       })
 
-      expect(searchInput).toHaveValue(defaultSearchQuery)
+      expect(searchInputNode).toHaveValue(defaultSearchQuery)
 
       changeSearchInput(finalSearchQuery)
 
-      expect(searchInput).toHaveValue(finalSearchQuery)
+      expect(searchInputNode).toHaveValue(finalSearchQuery)
     })
 
     it("updates component's state on props updates", () => {
       const newSearchQueryProp = 'bar'
-      const { wrapper, searchInput } = renderDropdown({
+      const { wrapper, searchInputNode } = renderDropdown({
         searchQuery: 'foo',
         search: true,
       })
 
       wrapper.setProps({ searchQuery: newSearchQueryProp })
-      expect(searchInput).toHaveValue(newSearchQueryProp)
+      expect(searchInputNode).toHaveValue(newSearchQueryProp)
     })
 
     it('closes dropdown when changed to empty string', () => {
-      const { getItems, changeSearchInput } = renderDropdown({
+      const { getItemNodes, changeSearchInput } = renderDropdown({
         defaultSearchQuery: 'foo',
         defaultOpen: true,
         search: true,
@@ -1030,13 +1037,13 @@ describe('Dropdown', () => {
 
       changeSearchInput('')
 
-      expect(getItems()).toHaveLength(0)
+      expect(getItemNodes()).toHaveLength(0)
     })
 
     it('is the string equivalent of selected item in single search', () => {
       const itemSelectedIndex = 2
       const itemsAsObjects = items.map(item => ({ value: item, key: item }))
-      const { searchInput, clickOnItemAtIndex } = renderDropdown({
+      const { searchInputNode, clickOnItemAtIndex } = renderDropdown({
         search: true,
         defaultOpen: true,
         items: itemsAsObjects,
@@ -1045,22 +1052,22 @@ describe('Dropdown', () => {
 
       clickOnItemAtIndex(itemSelectedIndex)
 
-      expect(searchInput).toHaveValue(itemsAsObjects[itemSelectedIndex].value)
+      expect(searchInputNode).toHaveValue(itemsAsObjects[itemSelectedIndex].value)
     })
 
     it('is set to empty by hitting Escape in search input', () => {
-      const { keyDownOnSearchInput, searchInput } = renderDropdown({
+      const { keyDownOnSearchInput, searchInputNode } = renderDropdown({
         defaultSearchQuery: 'foo',
         search: true,
       })
 
       keyDownOnSearchInput('Escape')
 
-      expect(searchInput).toHaveValue('')
+      expect(searchInputNode).toHaveValue('')
     })
 
     it('is set to empty when item is selected in multiple search', () => {
-      const { clickOnItemAtIndex, searchInput, getSelectedItems } = renderDropdown({
+      const { clickOnItemAtIndex, searchInputNode, getSelectedItemNodes } = renderDropdown({
         search: true,
         multiple: true,
         defaultOpen: true,
@@ -1068,25 +1075,25 @@ describe('Dropdown', () => {
 
       clickOnItemAtIndex(2)
 
-      expect(searchInput).toHaveValue('')
-      expect(getSelectedItems()).toHaveLength(1)
+      expect(searchInputNode).toHaveValue('')
+      expect(getSelectedItemNodes()).toHaveLength(1)
     })
   })
 
   describe('activeSelectedIndex', () => {
     it('is set on active item click', () => {
-      const { getSelectedItemAtIndex, clickOnSelectedItemAtIndex } = renderDropdown({
+      const { getSelectedItemNodeAtIndex, clickOnSelectedItemAtIndex } = renderDropdown({
         multiple: true,
         value: [items[2]],
       })
 
       clickOnSelectedItemAtIndex(0)
 
-      expect(document.activeElement).toBe(getSelectedItemAtIndex(0))
+      expect(document.activeElement).toBe(getSelectedItemNodeAtIndex(0))
     })
 
     it('is set as last index on left arrow from the search query', () => {
-      const { getSelectedItemAtIndex, keyDownOnSearchInput } = renderDropdown({
+      const { getSelectedItemNodeAtIndex, keyDownOnSearchInput } = renderDropdown({
         multiple: true,
         value: [items[0], items[1], items[2]],
         search: true,
@@ -1094,23 +1101,23 @@ describe('Dropdown', () => {
 
       keyDownOnSearchInput('ArrowLeft')
 
-      expect(document.activeElement).toBe(getSelectedItemAtIndex(2))
+      expect(document.activeElement).toBe(getSelectedItemNodeAtIndex(2))
     })
 
     it('is set as last index on left arrow from the trigger button', () => {
-      const { getSelectedItemAtIndex, keyDownOnTriggerButton } = renderDropdown({
+      const { getSelectedItemNodeAtIndex, keyDownOnTriggerButton } = renderDropdown({
         multiple: true,
         value: [items[0], items[1], items[2]],
       })
 
       keyDownOnTriggerButton('ArrowLeft')
 
-      expect(document.activeElement).toBe(getSelectedItemAtIndex(2))
+      expect(document.activeElement).toBe(getSelectedItemNodeAtIndex(2))
     })
 
     it('is updated on arrow navigation after being set by click', () => {
       const {
-        getSelectedItemAtIndex,
+        getSelectedItemNodeAtIndex,
         keyDownOnSelectedItemAtIndex,
         clickOnSelectedItemAtIndex,
       } = renderDropdown({
@@ -1121,12 +1128,12 @@ describe('Dropdown', () => {
       clickOnSelectedItemAtIndex(2)
       keyDownOnSelectedItemAtIndex(2, 'ArrowLeft')
 
-      expect(document.activeElement).toBe(getSelectedItemAtIndex(1))
+      expect(document.activeElement).toBe(getSelectedItemNodeAtIndex(1))
     })
 
     it('stays as "0" on left arrow from the first selected item', () => {
       const {
-        getSelectedItemAtIndex,
+        getSelectedItemNodeAtIndex,
         keyDownOnSelectedItemAtIndex,
         clickOnSelectedItemAtIndex,
       } = renderDropdown({
@@ -1137,12 +1144,12 @@ describe('Dropdown', () => {
       clickOnSelectedItemAtIndex(0)
       keyDownOnSelectedItemAtIndex(0, 'ArrowLeft')
 
-      expect(document.activeElement).toBe(getSelectedItemAtIndex(0))
+      expect(document.activeElement).toBe(getSelectedItemNodeAtIndex(0))
     })
 
     it('gets unset on right arrow from the last selected item and moves focus to trigger button', () => {
       const {
-        triggerButton,
+        triggerButtonNode,
         keyDownOnSelectedItemAtIndex,
         clickOnSelectedItemAtIndex,
       } = renderDropdown({
@@ -1153,12 +1160,12 @@ describe('Dropdown', () => {
       clickOnSelectedItemAtIndex(2)
       keyDownOnSelectedItemAtIndex(2, 'ArrowRight')
 
-      expect(document.activeElement).toBe(triggerButton)
+      expect(document.activeElement).toBe(triggerButtonNode)
     })
 
     it('gets unset on the removal of selected item and moves focus to trigger button', () => {
       const {
-        triggerButton,
+        triggerButtonNode,
         keyDownOnSelectedItemAtIndex,
         clickOnSelectedItemAtIndex,
       } = renderDropdown({
@@ -1169,12 +1176,12 @@ describe('Dropdown', () => {
       clickOnSelectedItemAtIndex(2)
       keyDownOnSelectedItemAtIndex(2, 'Delete')
 
-      expect(document.activeElement).toBe(triggerButton)
+      expect(document.activeElement).toBe(triggerButtonNode)
     })
 
     it('gets unset on right arrow from the last selected item and moves focus to search input', () => {
       const {
-        searchInput,
+        searchInputNode,
         keyDownOnSelectedItemAtIndex,
         clickOnSelectedItemAtIndex,
       } = renderDropdown({
@@ -1186,12 +1193,12 @@ describe('Dropdown', () => {
       clickOnSelectedItemAtIndex(2)
       keyDownOnSelectedItemAtIndex(2, 'ArrowRight')
 
-      expect(document.activeElement).toBe(searchInput)
+      expect(document.activeElement).toBe(searchInputNode)
     })
 
     it('gets unset on the removal of selected item and moves focus to search input', () => {
       const {
-        searchInput,
+        searchInputNode,
         keyDownOnSelectedItemAtIndex,
         clickOnSelectedItemAtIndex,
       } = renderDropdown({
@@ -1203,7 +1210,7 @@ describe('Dropdown', () => {
       clickOnSelectedItemAtIndex(2)
       keyDownOnSelectedItemAtIndex(2, 'Delete')
 
-      expect(document.activeElement).toBe(searchInput)
+      expect(document.activeElement).toBe(searchInputNode)
     })
   })
 
@@ -1233,21 +1240,21 @@ describe('Dropdown', () => {
     })
   })
 
-  describe('toggleIndicator', () => {
+  describe('toggleIndicatorNode', () => {
     it('moves focus to list at click', () => {
-      const { clickOnToggleIndicator, itemsList } = renderDropdown()
+      const { clickOnToggleIndicator, itemsListNode } = renderDropdown()
 
       clickOnToggleIndicator()
 
-      expect(document.activeElement).toBe(itemsList)
+      expect(document.activeElement).toBe(itemsListNode)
     })
 
     it('moves focus to input in search mode', () => {
-      const { clickOnToggleIndicator, searchInput } = renderDropdown({ search: true })
+      const { clickOnToggleIndicator, searchInputNode } = renderDropdown({ search: true })
 
       clickOnToggleIndicator()
 
-      expect(document.activeElement).toBe(searchInput)
+      expect(document.activeElement).toBe(searchInputNode)
     })
   })
 
@@ -1314,55 +1321,55 @@ describe('Dropdown', () => {
 
   describe('multiple', () => {
     it('can be switched to "multiple"', () => {
-      const { wrapper, getSelectedItems } = renderDropdown({ value: items[0] })
+      const { wrapper, getSelectedItemNodes } = renderDropdown({ value: items[0] })
 
-      expect(getSelectedItems()).toHaveLength(0)
+      expect(getSelectedItemNodes()).toHaveLength(0)
 
       wrapper.setProps({ multiple: true })
-      expect(getSelectedItems()).toHaveLength(1)
+      expect(getSelectedItemNodes()).toHaveLength(1)
     })
 
     it('does not contain duplicates after an item is selected', () => {
-      const { getSelectedItems, getItems, clickOnItemAtIndex } = renderDropdown({
+      const { getSelectedItemNodes, getItemNodes, clickOnItemAtIndex } = renderDropdown({
         multiple: true,
         open: true,
       })
 
       clickOnItemAtIndex(0)
 
-      expect(getSelectedItems()).toHaveLength(1)
-      expect(getItems()).toHaveLength(items.length - 1)
+      expect(getSelectedItemNodes()).toHaveLength(1)
+      expect(getItemNodes()).toHaveLength(items.length - 1)
 
       clickOnItemAtIndex(0)
 
-      expect(getSelectedItems()).toHaveLength(2)
-      expect(getItems()).toHaveLength(items.length - 2)
+      expect(getSelectedItemNodes()).toHaveLength(2)
+      expect(getItemNodes()).toHaveLength(items.length - 2)
     })
 
     it('does not contain duplicates when value is set', () => {
-      const { getSelectedItems, getItems } = renderDropdown({
+      const { getSelectedItemNodes, getItemNodes } = renderDropdown({
         multiple: true,
         open: true,
         value: items[0],
       })
 
-      expect(getSelectedItems()).toHaveLength(1)
-      expect(getItems()).toHaveLength(items.length - 1)
+      expect(getSelectedItemNodes()).toHaveLength(1)
+      expect(getItemNodes()).toHaveLength(items.length - 1)
     })
 
     it('contains duplicates by default', () => {
       const items = [{ key: '1', header: 'James Smith' }]
       const value = [{ key: '1', header: 'John Locke' }]
 
-      const { getSelectedItems, getItems } = renderDropdown({
+      const { getSelectedItemNodes, getItemNodes } = renderDropdown({
         multiple: true,
         open: true,
         value,
         items,
       })
 
-      expect(getSelectedItems()).toHaveLength(1)
-      expect(getItems()).toHaveLength(items.length)
+      expect(getSelectedItemNodes()).toHaveLength(1)
+      expect(getItemNodes()).toHaveLength(items.length)
     })
 
     it('does not contain duplicates when proper itemToValue prop is used', () => {
@@ -1375,7 +1382,7 @@ describe('Dropdown', () => {
         return (item as any).id
       }
 
-      const { getSelectedItems, getItems } = renderDropdown({
+      const { getSelectedItemNodes, getItemNodes } = renderDropdown({
         multiple: true,
         open: true,
         value,
@@ -1383,8 +1390,8 @@ describe('Dropdown', () => {
         itemToValue,
       })
 
-      expect(getSelectedItems()).toHaveLength(1)
-      expect(getItems()).toHaveLength(items.length - 1)
+      expect(getSelectedItemNodes()).toHaveLength(1)
+      expect(getItemNodes()).toHaveLength(items.length - 1)
     })
   })
 

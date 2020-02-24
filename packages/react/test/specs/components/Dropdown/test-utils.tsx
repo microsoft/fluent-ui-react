@@ -30,17 +30,18 @@ const renderDropdown = (props: DropdownProps = {}) => {
 
   return {
     wrapper,
-    triggerButton: triggerButtonWrapper.length ? triggerButtonWrapper.getDOMNode() : null,
-    toggleIndicator: toggleIndicatorWrapper.length ? toggleIndicatorWrapper.getDOMNode() : null,
-    itemsList: itemsListWrapper.getDOMNode(),
-    searchInput: searchInputWrapper.length
+    triggerButtonNode: triggerButtonWrapper.length ? triggerButtonWrapper.getDOMNode() : null,
+    toggleIndicatorNode: toggleIndicatorWrapper.length ? toggleIndicatorWrapper.getDOMNode() : null,
+    itemsListNode: itemsListWrapper.getDOMNode(),
+    searchInputNode: searchInputWrapper.length
       ? searchInputWrapper.getDOMNode<HTMLInputElement>()
       : null,
-    getA11yMessageContainer: () => findIntrinsicElement(wrapper, '[role="status"]').getDOMNode(),
-    getItems: () => getItemsWrapper().map(nodeWrapper => nodeWrapper.getDOMNode()),
-    getSelectedItems: () => getSelectedItemsWrapper().map(nodeWrapper => nodeWrapper.getDOMNode()),
-    getItemAtIndex: index => getItemWrapperAtIndex(index).getDOMNode(),
-    getSelectedItemAtIndex: index => getSelectedItemWrapperAtIndex(index).getDOMNode(),
+    getA11yMessageContainerNode: () =>
+      findIntrinsicElement(wrapper, '[role="status"]').getDOMNode(),
+    getItemNodes: () => getItemsWrapper().map(nodeWrapper => nodeWrapper.getDOMNode()),
+    getSelectedItemNodes: () =>
+      getSelectedItemsWrapper().map(nodeWrapper => nodeWrapper.getDOMNode()),
+    getSelectedItemNodeAtIndex: index => getSelectedItemWrapperAtIndex(index).getDOMNode(),
     mouseOverItemAtIndex: index => getItemWrapperAtIndex(index).simulate('mousemove'),
     changeSearchInput: value => {
       searchInputWrapper.simulate('change', { target: { value } })
