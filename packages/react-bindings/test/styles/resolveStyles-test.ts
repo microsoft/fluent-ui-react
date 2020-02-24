@@ -9,8 +9,9 @@ import resolveStyles from '../../src/styles/resolveStyles'
 import { ResolveStylesOptions, StylesContextPerformance } from '../../src/styles/types'
 
 const componentStyles: ComponentSlotStylesPrepared<{}, { color: string }> = {
-  root: ({ variables: v }): ICSSInJSStyle => ({
+  root: ({ variables: v, rtl }): ICSSInJSStyle => ({
     color: v.color,
+    content: `"rtl:${rtl.toString()}"`,
   }),
 }
 
@@ -29,8 +30,9 @@ const resolveStylesOptions = (options?: {
   displayName?: ResolveStylesOptions['displayName']
   performance?: ResolveStylesOptions['performance']
   props?: ResolveStylesOptions['props']
+  rtl?: ResolveStylesOptions['rtl']
 }): ResolveStylesOptions => {
-  const { displayName = 'Test', performance, props = {} } = options || {}
+  const { displayName = 'Test', performance, props = {}, rtl = false } = options || {}
 
   return {
     theme: {
@@ -41,7 +43,7 @@ const resolveStylesOptions = (options?: {
     },
     displayName,
     props,
-    rtl: false,
+    rtl,
     disableAnimations: false,
     renderer: {
       renderRule: () => '',
@@ -85,7 +87,7 @@ describe('resolveStyles', () => {
     const { classes } = resolveStyles(resolveStylesOptions(), resolvedVariables, renderStyles)
 
     expect(classes['root']).toBeDefined()
-    expect(renderStyles).toHaveBeenCalledWith({ color: 'red' })
+    expect(renderStyles).toHaveBeenCalledWith(expect.objectContaining({ color: 'red' }))
   })
 
   test('caches rendered classes', () => {
@@ -93,7 +95,7 @@ describe('resolveStyles', () => {
     const { classes } = resolveStyles(resolveStylesOptions(), resolvedVariables, renderStyles)
 
     expect(classes['root']).toBeDefined()
-    expect(renderStyles).toHaveBeenCalledWith({ color: 'red' })
+    expect(renderStyles).toHaveBeenCalledWith(expect.objectContaining({ color: 'red' }))
     expect(classes['root']).toBeDefined()
     expect(renderStyles).toHaveBeenCalledTimes(1)
   })
@@ -104,9 +106,9 @@ describe('resolveStyles', () => {
     const { resolvedStyles } = resolveStyles(options, resolvedVariables)
     const { resolvedStyles: secondResolvedStyles } = resolveStyles(options, resolvedVariables)
 
-    expect(resolvedStyles.root).toMatchObject({ color: 'red' })
+    expect(resolvedStyles.root).toMatchObject(expect.objectContaining({ color: 'red' }))
     expect(componentStyles.root).toHaveBeenCalledTimes(1)
-    expect(secondResolvedStyles.root).toMatchObject({ color: 'red' })
+    expect(secondResolvedStyles.root).toMatchObject(expect.objectContaining({ color: 'red' }))
     expect(componentStyles.root).toHaveBeenCalledTimes(1)
   })
 
@@ -117,7 +119,7 @@ describe('resolveStyles', () => {
     const { classes: secondClasses } = resolveStyles(options, resolvedVariables, renderStyles)
 
     expect(classes['root']).toBeDefined()
-    expect(renderStyles).toHaveBeenCalledWith({ color: 'red' })
+    expect(renderStyles).toHaveBeenCalledWith(expect.objectContaining({ color: 'red' }))
     expect(secondClasses['root']).toBeDefined()
     expect(renderStyles).toHaveBeenCalledTimes(1)
   })
@@ -131,9 +133,9 @@ describe('resolveStyles', () => {
     const { resolvedStyles } = resolveStyles(options, resolvedVariables)
     const { resolvedStyles: secondResolvedStyles } = resolveStyles(options, resolvedVariables)
 
-    expect(resolvedStyles.root).toMatchObject({ color: 'red' })
+    expect(resolvedStyles.root).toMatchObject(expect.objectContaining({ color: 'red' }))
     expect(componentStyles.root).toHaveBeenCalledTimes(1)
-    expect(secondResolvedStyles.root).toMatchObject({ color: 'red' })
+    expect(secondResolvedStyles.root).toMatchObject(expect.objectContaining({ color: 'red' }))
     expect(componentStyles.root).toHaveBeenCalledTimes(1)
   })
 
@@ -147,7 +149,7 @@ describe('resolveStyles', () => {
     const { classes: secondClasses } = resolveStyles(options, resolvedVariables, renderStyles)
 
     expect(classes['root']).toBeDefined()
-    expect(renderStyles).toHaveBeenCalledWith({ color: 'red' })
+    expect(renderStyles).toHaveBeenCalledWith(expect.objectContaining({ color: 'red' }))
     expect(secondClasses['root']).toBeDefined()
     expect(renderStyles).toHaveBeenCalledTimes(1)
   })
@@ -164,9 +166,9 @@ describe('resolveStyles', () => {
       resolvedVariables,
     )
 
-    expect(resolvedStyles.root).toMatchObject({ color: 'red' })
+    expect(resolvedStyles.root).toMatchObject(expect.objectContaining({ color: 'red' }))
     expect(componentStyles.root).toHaveBeenCalledTimes(1)
-    expect(secondResolvedStyles.root).toMatchObject({ color: 'red' })
+    expect(secondResolvedStyles.root).toMatchObject(expect.objectContaining({ color: 'red' }))
     expect(componentStyles.root).toHaveBeenCalledTimes(2)
   })
 
@@ -182,7 +184,7 @@ describe('resolveStyles', () => {
     const { classes: secondClasses } = resolveStyles(options, resolvedVariables, renderStyles)
 
     expect(classes['root']).toBeDefined()
-    expect(renderStyles).toHaveBeenCalledWith({ color: 'red' })
+    expect(renderStyles).toHaveBeenCalledWith(expect.objectContaining({ color: 'red' }))
     expect(secondClasses['root']).toBeDefined()
     expect(renderStyles).toHaveBeenCalledTimes(2)
   })
@@ -195,8 +197,8 @@ describe('resolveStyles', () => {
     const { resolvedStyles } = resolveStyles(options, resolvedVariables)
     const { resolvedStyles: secondResolvedStyles } = resolveStyles(options, resolvedVariables)
 
-    expect(resolvedStyles.root).toMatchObject({ color: 'red' })
-    expect(secondResolvedStyles.root).toMatchObject({ color: 'red' })
+    expect(resolvedStyles.root).toMatchObject(expect.objectContaining({ color: 'red' }))
+    expect(secondResolvedStyles.root).toMatchObject(expect.objectContaining({ color: 'red' }))
     expect(componentStyles.root).toHaveBeenCalledTimes(2)
   })
 
@@ -209,7 +211,7 @@ describe('resolveStyles', () => {
     const { classes: secondClasses } = resolveStyles(options, resolvedVariables, renderStyles)
 
     expect(classes['root']).toBeDefined()
-    expect(renderStyles).toHaveBeenCalledWith({ color: 'red' })
+    expect(renderStyles).toHaveBeenCalledWith(expect.objectContaining({ color: 'red' }))
     expect(secondClasses['root']).toBeDefined()
     expect(renderStyles).toHaveBeenCalledTimes(2)
   })
@@ -270,6 +272,30 @@ describe('resolveStyles', () => {
     })
 
     expect(renderStyles).toHaveBeenCalledTimes(propsInlineOverridesSize * 2)
+  })
+
+  test('computes new styles when "rtl" changes', () => {
+    const renderStyles = jest.fn().mockImplementation((style: ICSSInJSStyle) => style.content)
+
+    const ltrOptions = resolveStylesOptions({ rtl: false })
+    const rtlOptions = resolveStylesOptions({ rtl: true })
+
+    const ltrStyles = resolveStyles(ltrOptions, resolvedVariables, renderStyles)
+    const rtlStyles = resolveStyles(rtlOptions, resolvedVariables, renderStyles)
+
+    expect(ltrStyles).toHaveProperty(
+      'resolvedStyles.root.content',
+      expect.stringMatching(/rtl:false/),
+    )
+    expect(ltrStyles).toHaveProperty('classes.root', expect.stringMatching(/rtl:false/))
+    expect(renderStyles).toHaveBeenCalledTimes(1)
+
+    expect(rtlStyles).toHaveProperty(
+      'resolvedStyles.root.content',
+      expect.stringMatching(/rtl:true/),
+    )
+    expect(rtlStyles).toHaveProperty('classes.root', expect.stringMatching(/rtl:true/))
+    expect(renderStyles).toHaveBeenCalledTimes(2)
   })
 
   describe('enableHardVariablesCaching', () => {
