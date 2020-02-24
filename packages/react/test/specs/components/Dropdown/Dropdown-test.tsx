@@ -177,7 +177,7 @@ describe('Dropdown', () => {
 
       clickOnTriggerButton()
 
-      expect(document.activeElement).toEqual(itemsListNode)
+      expect(itemsListNode).toHaveFocus()
     })
 
     it('is "false" when blurred by Tab on items list', () => {
@@ -207,7 +207,7 @@ describe('Dropdown', () => {
       expect(getItemNodes()).toHaveLength(0)
     })
 
-    it('is "false" when blurred by Shift+Tab on items list', () => {
+    it('is "false" when blurred by Shift+Tab on search input', () => {
       const { getItemNodes, keyDownOnSearchInput } = renderDropdown({
         defaultOpen: true,
         search: true,
@@ -1089,7 +1089,7 @@ describe('Dropdown', () => {
 
       clickOnSelectedItemAtIndex(0)
 
-      expect(document.activeElement).toBe(getSelectedItemNodeAtIndex(0))
+      expect(getSelectedItemNodeAtIndex(0)).toHaveFocus()
     })
 
     it('is set as last index on left arrow from the search query', () => {
@@ -1101,7 +1101,7 @@ describe('Dropdown', () => {
 
       keyDownOnSearchInput('ArrowLeft')
 
-      expect(document.activeElement).toBe(getSelectedItemNodeAtIndex(2))
+      expect(getSelectedItemNodeAtIndex(2)).toHaveFocus()
     })
 
     it('is set as last index on left arrow from the trigger button', () => {
@@ -1112,7 +1112,7 @@ describe('Dropdown', () => {
 
       keyDownOnTriggerButton('ArrowLeft')
 
-      expect(document.activeElement).toBe(getSelectedItemNodeAtIndex(2))
+      expect(getSelectedItemNodeAtIndex(2)).toHaveFocus()
     })
 
     it('is updated on arrow navigation after being set by click', () => {
@@ -1128,7 +1128,7 @@ describe('Dropdown', () => {
       clickOnSelectedItemAtIndex(2)
       keyDownOnSelectedItemAtIndex(2, 'ArrowLeft')
 
-      expect(document.activeElement).toBe(getSelectedItemNodeAtIndex(1))
+      expect(getSelectedItemNodeAtIndex(1)).toHaveFocus()
     })
 
     it('stays as "0" on left arrow from the first selected item', () => {
@@ -1144,7 +1144,7 @@ describe('Dropdown', () => {
       clickOnSelectedItemAtIndex(0)
       keyDownOnSelectedItemAtIndex(0, 'ArrowLeft')
 
-      expect(document.activeElement).toBe(getSelectedItemNodeAtIndex(0))
+      expect(getSelectedItemNodeAtIndex(0)).toHaveFocus()
     })
 
     it('gets unset on right arrow from the last selected item and moves focus to trigger button', () => {
@@ -1160,7 +1160,7 @@ describe('Dropdown', () => {
       clickOnSelectedItemAtIndex(2)
       keyDownOnSelectedItemAtIndex(2, 'ArrowRight')
 
-      expect(document.activeElement).toBe(triggerButtonNode)
+      expect(triggerButtonNode).toHaveFocus()
     })
 
     it('gets unset on the removal of selected item and moves focus to trigger button', () => {
@@ -1176,7 +1176,7 @@ describe('Dropdown', () => {
       clickOnSelectedItemAtIndex(2)
       keyDownOnSelectedItemAtIndex(2, 'Delete')
 
-      expect(document.activeElement).toBe(triggerButtonNode)
+      expect(triggerButtonNode).toHaveFocus()
     })
 
     it('gets unset on right arrow from the last selected item and moves focus to search input', () => {
@@ -1193,7 +1193,7 @@ describe('Dropdown', () => {
       clickOnSelectedItemAtIndex(2)
       keyDownOnSelectedItemAtIndex(2, 'ArrowRight')
 
-      expect(document.activeElement).toBe(searchInputNode)
+      expect(searchInputNode).toHaveFocus()
     })
 
     it('gets unset on the removal of selected item and moves focus to search input', () => {
@@ -1210,7 +1210,7 @@ describe('Dropdown', () => {
       clickOnSelectedItemAtIndex(2)
       keyDownOnSelectedItemAtIndex(2, 'Delete')
 
-      expect(document.activeElement).toBe(searchInputNode)
+      expect(searchInputNode).toHaveFocus()
     })
   })
 
@@ -1246,7 +1246,7 @@ describe('Dropdown', () => {
 
       clickOnToggleIndicator()
 
-      expect(document.activeElement).toBe(itemsListNode)
+      expect(itemsListNode).toHaveFocus()
     })
 
     it('moves focus to input in search mode', () => {
@@ -1254,7 +1254,7 @@ describe('Dropdown', () => {
 
       clickOnToggleIndicator()
 
-      expect(document.activeElement).toBe(searchInputNode)
+      expect(searchInputNode).toHaveFocus()
     })
   })
 
@@ -1326,6 +1326,7 @@ describe('Dropdown', () => {
       expect(getSelectedItemNodes()).toHaveLength(0)
 
       wrapper.setProps({ multiple: true })
+
       expect(getSelectedItemNodes()).toHaveLength(1)
     })
 
