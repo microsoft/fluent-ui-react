@@ -28,7 +28,7 @@ const defaultPerformanceOptions: StylesContextPerformance = {
 
 const resolveStylesOptions = (options?: {
   displayName?: ResolveStylesOptions['displayName']
-  performance?: ResolveStylesOptions['performance']
+  performance?: Partial<ResolveStylesOptions['performance']>
   props?: ResolveStylesOptions['props']
   rtl?: ResolveStylesOptions['rtl']
 }): ResolveStylesOptions => {
