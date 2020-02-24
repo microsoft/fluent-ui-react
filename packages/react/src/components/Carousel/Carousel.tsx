@@ -306,12 +306,9 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
                 slideToNext = false
               }
 
-              return (
+              return active ?  (
                 <Animation
                   key={item['key'] || index}
-                  mountOnEnter
-                  unmountOnExit
-                  visible={active}
                   name={
                     initialMounting
                       ? ''
@@ -337,8 +334,8 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
                       overrideProps: this.overrideItemProps,
                     })}
                   </Ref>
-                </Animation>
-              )
+                </Animation> 
+              ) : null
             })}
         </div>
       </div>

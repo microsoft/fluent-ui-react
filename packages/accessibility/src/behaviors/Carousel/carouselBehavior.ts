@@ -25,17 +25,13 @@ import * as keyboardKey from 'keyboard-key'
 const carouselBehavior: Accessibility<CarouselBehaviorProps> = props => ({
   attributes: {
     root: {
-      role: props.navigation ? undefined : 'region',
-      'aria-roledescription': props.navigation ? undefined : props.ariaRoleDescription,
-      'aria-label': props.navigation ? undefined : props.ariaLabel,
+      ...(!props.navigation && { role: 'region', 'aria-roledescription': props.ariaRoleDescription, 'aria-label': props.ariaLabel }),      
     },
     itemsContainerWrapper: {
       'aria-live': props.ariaLiveOn ? 'polite' : 'off',
     },
     itemsContainer: {
-      role: props.navigation ? 'group' : undefined,
-      'aria-roledescription': props.navigation ? props.ariaRoleDescription : undefined,
-      'aria-label': props.navigation ? props.ariaLabel : undefined,
+      ...(props.navigation && { role: 'region', 'aria-roledescription': props.ariaRoleDescription, 'aria-label': props.ariaLabel }),          
     },
 
     paddleNext: {
