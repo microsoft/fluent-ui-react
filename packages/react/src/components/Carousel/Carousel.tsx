@@ -80,8 +80,8 @@ export interface CarouselProps extends UIComponentProps, ChildrenComponentProps 
 
   /** Shorthand array of props for the buttons of the CarouselNavigation. */
   navigation?:
-    | ShorthandValue<CarouselNavigationProps>
-    | ShorthandCollection<CarouselNavigationItemProps>
+  | ShorthandValue<CarouselNavigationProps>
+  | ShorthandCollection<CarouselNavigationItemProps>
 
   /**
    * A Carousel can position its navigation below the content by default,
@@ -199,10 +199,12 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
     showNextSlideByPaddlePress: e => {
       e.preventDefault()
       this.showNextSlide(e, false)
+      this.handleNextPaddleFocus()
     },
     showPreviousSlideByPaddlePress: e => {
       e.preventDefault()
       this.showPreviousSlide(e, false)
+      this.handlePreviousPaddleFocus()
     },
   }
 
@@ -284,7 +286,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
         {...accessibility.attributes.itemsContainerWrapper}
       >
         <div
-          className={cx(Carousel.slotClassNames.itemsContainer, classes.itemsContainer)}          
+          className={cx(Carousel.slotClassNames.itemsContainer, classes.itemsContainer)}
           {...accessibility.attributes.itemsContainer}
           {...applyAccessibilityKeyHandlers(
             accessibility.keyHandlers.itemsContainer,
@@ -306,19 +308,19 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
                 slideToNext = false
               }
 
-              return active ?  (
+              return active ? (
                 <Animation
                   key={item['key'] || index}
                   name={
                     initialMounting
                       ? ''
                       : active
-                      ? slideToNext
-                        ? 'carousel-slide-to-next-enter'
-                        : 'carousel-slide-to-previous-enter'
-                      : slideToNext
-                      ? 'carousel-slide-to-next-exit'
-                      : 'carousel-slide-to-previous-exit'
+                        ? slideToNext
+                          ? 'carousel-slide-to-next-enter'
+                          : 'carousel-slide-to-previous-enter'
+                        : slideToNext
+                          ? 'carousel-slide-to-next-exit'
+                          : 'carousel-slide-to-previous-exit'
                   }
                 >
                   <Ref innerRef={itemRef}>
@@ -334,7 +336,7 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
                       overrideProps: this.overrideItemProps,
                     })}
                   </Ref>
-                </Animation> 
+                </Animation>
               ) : null
             })}
         </div>
@@ -344,14 +346,13 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
 
   showPreviousSlide = (e: React.SyntheticEvent, focusItem: boolean) => {
     this.setActiveIndex(e, this.state.activeIndex - 1, focusItem)
-    // if 'previous' paddle will disappear, will focus 'next' one.
-    if (!this.props.navigation && this.state.activeIndex <= 1 && !this.props.circular) {
-      this.paddleNextRef.current.focus()
-    }
   }
 
   showNextSlide = (e: React.SyntheticEvent, focusItem: boolean) => {
     this.setActiveIndex(e, this.state.activeIndex + 1, focusItem)
+  }
+
+  handleNextPaddleFocus = () => {
     // if 'next' paddle will disappear, will focus 'previous' one.
     if (
       !this.props.navigation &&
@@ -362,13 +363,22 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
     }
   }
 
+  handlePreviousPaddleFocus = () => {
+    // if 'previous' paddle will disappear, will focus 'next' one.
+    if (!this.props.navigation && this.state.activeIndex <= 1 && !this.props.circular) {
+      this.paddleNextRef.current.focus()
+    }
+  }
+
   handlePaddleOverrides = (predefinedProps: ButtonProps, paddleName: string) => ({
     onClick: (e: React.SyntheticEvent, buttonProps: ButtonProps) => {
       _.invoke(predefinedProps, 'onClick', e, buttonProps)
       if (paddleName === 'paddleNext') {
         this.showNextSlide(e, false)
+        this.handleNextPaddleFocus()
       } else if (paddleName === 'paddlePrevious') {
         this.showPreviousSlide(e, false)
+        this.handlePreviousPaddleFocus()
       }
     },
     onBlur: (e: React.FocusEvent, buttonProps: ButtonProps) => {
@@ -451,12 +461,12 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
         }),
       })
     ) : (
-      <Text
-        aria-hidden="true"
-        className={Carousel.slotClassNames.pagination}
-        content={getItemPositionText(activeIndex, items.length)}
-      />
-    )
+        <Text
+          aria-hidden="true"
+          className={Carousel.slotClassNames.pagination}
+          content={getItemPositionText(activeIndex, items.length)}
+        />
+      )
   }
 
   renderComponent({ ElementType, classes, styles, accessibility, unhandledProps }) {
@@ -471,12 +481,12 @@ class Carousel extends AutoControlledComponent<WithAsProp<CarouselProps>, Carous
         {childrenExist(children) ? (
           children
         ) : (
-          <>
-            {this.renderContent(accessibility, classes, unhandledProps)}
-            {this.renderPaddles(accessibility, styles)}
-            {this.renderNavigation()}
-          </>
-        )}
+            <>
+              {this.renderContent(accessibility, classes, unhandledProps)}
+              {this.renderPaddles(accessibility, styles)}
+              {this.renderNavigation()}
+            </>
+          )}
       </ElementType>
     )
   }
