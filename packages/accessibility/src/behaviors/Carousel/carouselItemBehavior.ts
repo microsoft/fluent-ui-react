@@ -13,7 +13,7 @@ import * as keyboardKey from 'keyboard-key'
 const carouselItemBehavior: Accessibility<CarouselItemProps> = props => ({
   attributes: {
     root: {
-      role: props.navigation ? 'tabpanel' : 'group',
+      role: props.navigation ? 'tabpanel' : 'none',
       'aria-hidden': props.active ? 'false' : 'true',      
        tabIndex: (props.navigation && props.active) ? 0 : -1,       
     },
