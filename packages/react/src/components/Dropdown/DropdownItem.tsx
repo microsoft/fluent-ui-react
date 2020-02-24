@@ -32,7 +32,6 @@ export interface DropdownItemSlotClassNames {
   image: string
   checkableIndicator: string
   wrapper: string
-  checkableIndicatorWrapper: string
 }
 
 export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
@@ -82,6 +81,7 @@ const DropdownItem: React.FC<WithAsProp<DropdownItemProps> & { index: number }> 
   setStart()
 
   const {
+    accessibilityItemProps,
     className,
     content,
     design,
@@ -128,20 +128,12 @@ const DropdownItem: React.FC<WithAsProp<DropdownItemProps> & { index: number }> 
   })
   const endMediaElement =
     selected && checkable
-      ? Box.create(
-          Icon.create(checkableIndicator, {
-            defaultProps: () => ({
-              className: DropdownItem.slotClassNames.checkableIndicator,
-              styles: resolvedStyles.checkableIndicator,
-            }),
+      ? Icon.create(checkableIndicator, {
+          defaultProps: () => ({
+            className: DropdownItem.slotClassNames.checkableIndicator,
+            styles: resolvedStyles.checkableIndicator,
           }),
-          {
-            defaultProps: () => ({
-              className: DropdownItem.slotClassNames.checkableIndicatorWrapper,
-              styles: resolvedStyles.endMedia,
-            }),
-          },
-        )
+        })
       : null
   const imageElement = Box.create(
     Image.create(image, {
@@ -160,7 +152,12 @@ const DropdownItem: React.FC<WithAsProp<DropdownItemProps> & { index: number }> 
   )
 
   const element = (
-    <ElementType className={classes.root} onClick={handleClick} {...unhandledProps}>
+    <ElementType
+      className={classes.root}
+      onClick={handleClick}
+      {...accessibilityItemProps}
+      {...unhandledProps}
+    >
       {imageElement}
 
       <div className={cx(DropdownItem.slotClassNames.wrapper, classes.main)}>
@@ -208,7 +205,6 @@ DropdownItem.slotClassNames = {
   content: `${DropdownItem.className}__content`,
   header: `${DropdownItem.className}__header`,
   image: `${DropdownItem.className}__image`,
-  checkableIndicatorWrapper: `${DropdownItem.className}__checkable-indicator-wrapper`,
   checkableIndicator: `${DropdownItem.className}__checkable-indicator`,
 }
 
