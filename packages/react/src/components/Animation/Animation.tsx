@@ -206,6 +206,7 @@ const Animation: React.FC<AnimationProps> & {
       renderer: context.renderer,
       rtl: context.rtl,
       performance: {
+        enableSanitizeCssPlugin: false,
         enableStylesCaching: false,
         enableVariablesCaching: false,
       },

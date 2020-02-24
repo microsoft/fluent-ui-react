@@ -17,7 +17,7 @@ import {
   applyAccessibilityKeyHandlers,
 } from '../../utils'
 import Box, { BoxProps } from '../Box/Box'
-import { WithAsProp, ShorthandValue } from '../../types'
+import { WithAsProp, ShorthandValue, withSafeTypeForAs } from '../../types'
 
 export interface TableCellProps
   extends UIComponentProps,
@@ -39,11 +39,7 @@ export interface TableCellSlotClassNames {
   content: string
 }
 
-/**
- * Component represents a table cell
- *
- */
-class TableCell extends UIComponent<WithAsProp<any>, any> {
+class TableCell extends UIComponent<WithAsProp<TableCellProps>> {
   static displayName = 'TableCell'
 
   static className = 'ui-table__cell'
@@ -69,7 +65,6 @@ class TableCell extends UIComponent<WithAsProp<any>, any> {
   }
 
   static defaultProps = {
-    as: 'div',
     accessibility: tableCellBehavior as Accessibility,
   }
 
@@ -123,4 +118,7 @@ class TableCell extends UIComponent<WithAsProp<any>, any> {
 
 TableCell.create = createShorthandFactory({ Component: TableCell, mappedProp: 'content' })
 
-export default TableCell
+/**
+ * Component represents a table cell
+ */
+export default withSafeTypeForAs<typeof TableCell, TableCellProps, 'div'>(TableCell)

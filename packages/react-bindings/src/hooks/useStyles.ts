@@ -46,6 +46,7 @@ type InlineStyleProps<StyleProps> = {
 const defaultContext: StylesContextValue<{ renderRule: RendererRenderRule }> = {
   disableAnimations: false,
   performance: {
+    enableSanitizeCssPlugin: process.env.NODE_ENV !== 'production',
     enableStylesCaching: true,
     enableVariablesCaching: true,
     enableHardVariablesCaching: false,

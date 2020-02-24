@@ -1,3 +1,7 @@
+import { ICSSInJSStyle } from '@fluentui/styles'
+import { Renderer, RendererParam } from '@fluentui/react-bindings'
+import { TRuleType } from 'fela-utils'
+
 /**
  * Checks whether provided CSS property value is safe for being rendered by Fela engine.
  */
@@ -38,22 +42,46 @@ const isValidCssValue = (value: any) => {
 export default (config?: { skip?: string[] }) => {
   const cssPropertiesToSkip = [...((config && config.skip) || [])]
 
-  const sanitizeCssStyleObject = styles => {
+  const sanitizeCssStyleObject = (
+    styles: ICSSInJSStyle,
+    type: TRuleType,
+    renderer: Renderer,
+    params: RendererParam,
+  ) => {
+    if (!params.sanitizeCss) {
+      return styles
+    }
+
     const processedStyles = Array.isArray(styles) ? [] : {}
 
     Object.keys(styles).forEach(cssPropertyNameOrIndex => {
       const cssPropertyValue = styles[cssPropertyNameOrIndex]
 
       if (typeof cssPropertyValue === 'object') {
-        processedStyles[cssPropertyNameOrIndex] = sanitizeCssStyleObject(cssPropertyValue)
+        processedStyles[cssPropertyNameOrIndex] = sanitizeCssStyleObject(
+          cssPropertyValue,
+          type,
+          renderer,
+          params,
+        )
         return
       }
 
       const isPropertyToSkip = cssPropertiesToSkip.some(
         propToExclude => propToExclude === cssPropertyNameOrIndex,
       )
-      if (isPropertyToSkip || isValidCssValue(cssPropertyValue)) {
+
+      if (isPropertyToSkip) {
         processedStyles[cssPropertyNameOrIndex] = cssPropertyValue
+        return
+      }
+
+      if (isValidCssValue(cssPropertyValue)) {
+        processedStyles[cssPropertyNameOrIndex] = cssPropertyValue
+      } else if (process.env.NODE_ENV !== 'production') {
+        console.warn(
+          `fela-sanitize-css: An invalid value "${cssPropertyValue}" was passed to property "${cssPropertyNameOrIndex}"`,
+        )
       }
     })
 

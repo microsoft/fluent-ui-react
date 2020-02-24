@@ -27,6 +27,7 @@ const tooltipContentStyles: ComponentSlotStylesPrepared<
   root: ({ props: p, variables: v, rtl }): ICSSInJSStyle => {
     const svgPointerStyles = getPointerStyles(
       getPointerOffset(p.placement, v),
+      v.pointerGap,
       v.pointerMargin,
       rtl,
       p.placement,
@@ -54,6 +55,7 @@ const tooltipContentStyles: ComponentSlotStylesPrepared<
   pointer: ({ props: p, variables: v, rtl }): ICSSInJSStyle => {
     const svgPointerStyles = getPointerStyles(
       getPointerOffset(p.placement, v),
+      v.pointerGap,
       v.pointerMargin,
       rtl,
       p.placement,

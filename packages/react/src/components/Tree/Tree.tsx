@@ -25,6 +25,7 @@ import {
   withSafeTypeForAs,
   ShorthandCollection,
   ShorthandValue,
+  ComponentEventHandler,
 } from '../../types'
 import { hasSubtree, removeItemAtIndex } from './utils'
 
@@ -56,6 +57,13 @@ export interface TreeProps extends UIComponentProps, ChildrenComponentProps {
    * @param children - The computed children for this slot.
    */
   renderItemTitle?: ShorthandRenderFunction<TreeTitleProps>
+
+  /**
+   * Called when active item ids change.
+   * @param event - React's original SyntheticEvent.
+   * @param data - All props, with `activeItemIds` reflecting the new state.
+   */
+  onActiveItemIdsChange?: ComponentEventHandler<TreeProps>
 
   /**
    * Callback that provides rendered tree items to be used by react-virtualized for instance.
@@ -100,6 +108,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
     defaultActiveItemIds: customPropTypes.collectionShorthand,
     exclusive: PropTypes.bool,
     items: customPropTypes.collectionShorthand,
+    onActiveItemIdsChange: PropTypes.func,
     renderItemTitle: PropTypes.func,
     renderedItems: PropTypes.func,
   }
@@ -217,9 +226,7 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
         activeItemIds = [...activeItemIds, id]
       }
 
-      this.setState({
-        activeItemIds,
-      })
+      this.setActiveItemIds(e, activeItemIds)
 
       _.invoke(predefinedProps, 'onTitleClick', e, treeItemProps)
     },
@@ -281,13 +288,19 @@ class Tree extends AutoControlledComponent<WithAsProp<TreeProps>, TreeState> {
         activeItemIds.push(id)
       }
 
-      this.setState({
-        activeItemIds,
-      })
+      this.setActiveItemIds(e, activeItemIds)
 
       _.invoke(predefinedProps, 'onSiblingsExpand', e, treeItemProps)
     },
   })
+
+  setActiveItemIds = (e: React.SyntheticEvent, activeItemIds: string[]) => {
+    _.invoke(this.props, 'onActiveItemIds', e, { ...this.props, activeItemIds })
+
+    this.setState({
+      activeItemIds,
+    })
+  }
 
   renderContent(accessibility: ReactAccessibilityBehavior): React.ReactElement[] {
     const { itemsForRender } = this.state
@@ -370,6 +383,7 @@ Tree.create = createShorthandFactory({
  * Implements [ARIA TreeView](https://www.w3.org/TR/wai-aria-practices-1.1/#TreeView) design pattern.
  * @accessibilityIssues
  * [Treeview - JAWS doesn't narrate position for each tree item](https://github.com/FreedomScientific/VFO-standards-support/issues/338)
+ * [Aria compliant trees are read as empty tables](https://bugs.chromium.org/p/chromium/issues/detail?id=1048770)
  */
 
 export default withSafeTypeForAs<typeof Tree, TreeProps, 'ul'>(Tree)
