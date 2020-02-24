@@ -31,7 +31,7 @@ export interface DropdownItemSlotClassNames {
   header: string
   image: string
   checkableIndicator: string
-  wrapper: string
+  main: string
 }
 
 export interface DropdownItemProps extends UIComponentProps<DropdownItemProps> {
@@ -81,12 +81,14 @@ const DropdownItem: React.FC<WithAsProp<DropdownItemProps> & { index: number }> 
   setStart()
 
   const {
+    active,
     accessibilityItemProps,
     className,
     content,
     design,
     header,
     image,
+    isFromKeyboard,
     styles,
     checkable,
     checkableIndicator,
@@ -97,11 +99,11 @@ const DropdownItem: React.FC<WithAsProp<DropdownItemProps> & { index: number }> 
   const { classes, styles: resolvedStyles } = useStyles(DropdownItem.displayName, {
     className: DropdownItem.className,
     mapPropsToStyles: () => ({
+      active,
+      isFromKeyboard,
       selected,
       hasContent: !!content,
-      hasContentMedia: false,
       hasHeader: !!header,
-      hasHeaderMedia: false,
     }),
     mapPropsToInlineStyles: () => ({ className, design, styles, variables }),
     rtl: context.rtl,
@@ -160,7 +162,7 @@ const DropdownItem: React.FC<WithAsProp<DropdownItemProps> & { index: number }> 
     >
       {imageElement}
 
-      <div className={cx(DropdownItem.slotClassNames.wrapper, classes.main)}>
+      <div className={cx(DropdownItem.slotClassNames.main, classes.main)}>
         {headerElement}
         {contentElement}
       </div>
@@ -201,7 +203,7 @@ DropdownItem.propTypes = {
 DropdownItem.handledProps = Object.keys(DropdownItem.propTypes) as any
 
 DropdownItem.slotClassNames = {
-  wrapper: `${DropdownItem.className}__wrapper`,
+  main: `${DropdownItem.className}__main`,
   content: `${DropdownItem.className}__content`,
   header: `${DropdownItem.className}__header`,
   image: `${DropdownItem.className}__image`,
