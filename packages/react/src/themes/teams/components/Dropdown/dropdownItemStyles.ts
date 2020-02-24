@@ -12,7 +12,10 @@ export type DropdownItemStylesProps = Pick<
   hasHeader?: boolean
 }
 
-const dropdownItemStyles: ComponentSlotStylesPrepared<DropdownItemProps, DropdownVariables> = {
+const dropdownItemStyles: ComponentSlotStylesPrepared<
+  DropdownItemStylesProps,
+  DropdownVariables
+> = {
   root: ({ props: p, variables: v, theme: { siteVariables } }): ICSSInJSStyle => ({
     display: 'flex',
     alignItems: 'center',
@@ -50,7 +53,7 @@ const dropdownItemStyles: ComponentSlotStylesPrepared<DropdownItemProps, Dropdow
   }),
   header: ({ props: p, variables: v }): ICSSInJSStyle => ({
     flexGrow: 1,
-    lineHeight: v.headerLineHeight,
+    lineHeight: v.listItemHeaderLineHeight,
 
     fontSize: v.listItemHeaderFontSize,
     // if the item doesn't have content - i.e. it is header only - then it should use the content color
@@ -67,7 +70,7 @@ const dropdownItemStyles: ComponentSlotStylesPrepared<DropdownItemProps, Dropdow
   }),
   content: ({ variables: v }): ICSSInJSStyle => ({
     flexGrow: 1,
-    lineHeight: v.contentLineHeight,
+    lineHeight: v.listItemContentLineHeight,
     fontSize: v.listItemContentFontSize,
     color: v.listItemContentColor,
   }),
