@@ -15,7 +15,7 @@ import {
   applyAccessibilityKeyHandlers,
   childrenExist,
 } from '../../utils'
-import { ShorthandCollection, WithAsProp } from '../../types'
+import { ShorthandCollection, WithAsProp, withSafeTypeForAs } from '../../types'
 import { Accessibility, tableRowBehavior } from '@fluentui/accessibility'
 import { ComponentVariablesObject, mergeComponentVariables } from '@fluentui/styles'
 
@@ -45,10 +45,7 @@ const handleVariablesOverrides = variables => predefinedProps => ({
   variables: mergeComponentVariables(variables, predefinedProps.variables),
 })
 
-/**
- * Component represents a single row in a tabular structure
- */
-class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
+class TableRow extends UIComponent<WithAsProp<TableRowProps>> {
   static displayName = 'TableRow'
 
   static className = 'ui-table__row'
@@ -72,7 +69,6 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
   }
 
   static defaultProps = {
-    as: 'div',
     accessibility: tableRowBehavior as Accessibility,
   }
 
@@ -144,4 +140,7 @@ class TableRow extends UIComponent<WithAsProp<TableRowProps>, any> {
 
 TableRow.create = createShorthandFactory({ Component: TableRow, mappedArrayProp: 'items' })
 
-export default TableRow
+/**
+ * Component represents a single row in a tabular structure
+ */
+export default withSafeTypeForAs<typeof TableRow, TableRowProps, 'div'>(TableRow)

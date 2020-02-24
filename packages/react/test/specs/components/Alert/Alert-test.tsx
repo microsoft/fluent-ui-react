@@ -14,7 +14,7 @@ import Button from 'src/components/Button/Button'
 const alertImplementsShorthandProp = implementsShorthandProp(Alert)
 
 describe('Alert', () => {
-  isConformant(Alert)
+  isConformant(Alert, { autoControlledProps: ['visible'] })
   handlesAccessibility(Alert, { defaultRootRole: undefined, requiredProps: { content: 'test' } })
   handlesAccessibility(Alert, {
     defaultRootRole: undefined,

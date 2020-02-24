@@ -16,9 +16,9 @@ import { AttachmentProps } from '../../components/Attachment/Attachment'
 import { AvatarStylesProps } from './components/Avatar/avatarStyles'
 import { ButtonGroupProps } from '../../components/Button/ButtonGroup'
 import { ButtonStylesProps } from './components/Button/buttonStyles'
-import { ChatItemProps } from '../../components/Chat/ChatItem'
-import { ChatMessageProps } from '../../components/Chat/ChatMessage'
-import { ChatProps } from '../../components/Chat/Chat'
+import { ChatItemStylesProps } from '../../components/Chat/ChatItem'
+import { ChatMessageStylesProps } from '../../components/Chat/ChatMessage'
+import { ChatStylesProps } from '../../components/Chat/Chat'
 import { CheckboxStylesProps } from './components/Checkbox/checkboxStyles'
 import { DividerProps } from '../../components/Divider/Divider'
 import { DropdownProps } from '../../components/Dropdown/Dropdown'
@@ -42,7 +42,6 @@ import { LoaderProps } from '../../components/Loader/Loader'
 import { MenuItemProps } from '../../components/Menu/MenuItem'
 import { MenuProps } from '../../components/Menu/Menu'
 import { PopupContentProps } from '../../components/Popup/PopupContent'
-import { PopupProps } from '../../components/Popup/Popup'
 import { PortalProps } from '../../components/Portal/Portal'
 import { RadioGroupItemProps } from '../../components/RadioGroup/RadioGroupItem'
 import { RadioGroupProps } from '../../components/RadioGroup/RadioGroup'
@@ -57,7 +56,6 @@ import { ToolbarItemProps } from '../../components/Toolbar/ToolbarItem'
 import { ToolbarProps } from '../../components/Toolbar/Toolbar'
 import { ToolbarRadioGroupProps } from '../../components/Toolbar/ToolbarRadioGroup'
 import { TooltipContentProps } from '../../components/Tooltip/TooltipContent'
-import { TooltipProps } from '../../components/Tooltip/Tooltip'
 import { HierarchicalTreeItemProps } from '../../components/HierarchicalTree/HierarchicalTreeItem'
 import { HierarchicalTreeProps } from '../../components/HierarchicalTree/HierarchicalTree'
 import { HierarchicalTreeTitleProps } from '../../components/HierarchicalTree/HierarchicalTreeTitle'
@@ -73,9 +71,9 @@ export type TeamsThemeStylesProps = {
   Avatar?: AvatarStylesProps
   Button?: ButtonStylesProps
   ButtonGroup?: ButtonGroupProps
-  Chat?: ChatProps
-  ChatItem?: ChatItemProps
-  ChatMessage?: ChatMessageProps
+  Chat?: ChatStylesProps
+  ChatItem?: ChatItemStylesProps
+  ChatMessage?: ChatMessageStylesProps
   Checkbox?: CheckboxStylesProps
   Divider?: DividerProps
   Dropdown?: DropdownProps
@@ -99,7 +97,6 @@ export type TeamsThemeStylesProps = {
   Menu?: MenuProps
   MenuItem?: MenuItemProps
   Portal?: PortalProps
-  Popup?: PopupProps
   PopupContent?: PopupContentProps
   RadioGroup?: RadioGroupProps
   RadioGroupItem?: RadioGroupItemProps
@@ -112,7 +109,6 @@ export type TeamsThemeStylesProps = {
   ToolbarItem?: ToolbarItemProps
   ToolbarDivider?: ToolbarDividerProps
   ToolbarRadioGroup?: ToolbarRadioGroupProps
-  Tooltip?: TooltipProps
   TooltipContent?: TooltipContentProps
   Text?: TextStylesProps
   HierarchicalTree?: HierarchicalTreeProps

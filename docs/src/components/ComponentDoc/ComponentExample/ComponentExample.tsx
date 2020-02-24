@@ -429,8 +429,8 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
   }
 
   handleVariableResolve = variables => {
-    // Remove ProviderBox to hide it in variables
-    delete variables['ProviderBox']
+    // Remove Provider to hide it in variables
+    delete variables['Provider']
     this.setState({ usedVariables: variables })
   }
 
@@ -461,7 +461,7 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
     const newTheme: ThemeInput = {
       componentVariables: {
         ...componentVariables,
-        ProviderBox: { background: showTransparent ? 'initial' : undefined },
+        Provider: { background: showTransparent ? 'initial' : undefined },
       },
     }
     const exampleStyles = {
@@ -513,7 +513,13 @@ class ComponentExample extends React.Component<ComponentExampleProps, ComponentE
               className={`rendered-example ${this.getKebabExamplePath()}`}
               styles={exampleStyles}
             >
-              <Provider theme={newTheme} rtl={showRtl}>
+              <Provider
+                performance={{
+                  enableSanitizeCssPlugin: true /* Force always for website to avoid issues with live editor */,
+                }}
+                theme={newTheme}
+                rtl={showRtl}
+              >
                 <VariableResolver onResolve={this.handleVariableResolve}>
                   {showCode || wasCodeChanged ? (
                     <SourceRender

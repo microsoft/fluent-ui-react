@@ -55,7 +55,7 @@ const SandboxApp: React.FunctionComponent = props => {
           <Flex>
             Select theme:
             <RadioGroup
-              checkedValueChanged={(e, data) => setTheme(data.value as string)}
+              onCheckedValueChange={(e, data) => setTheme(data.value as string)}
               checkedValue={theme}
               items={items}
             />

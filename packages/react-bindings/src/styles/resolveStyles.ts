@@ -51,7 +51,7 @@ const resolveStyles = (
     rtl,
     disableAnimations,
     renderer,
-    performance = {},
+    performance,
   } = options || {}
 
   const { className, design, styles, variables, ...stylesProps } = props
@@ -91,6 +91,7 @@ const resolveStyles = (
     theme: { direction },
     disableAnimations,
     displayName, // does not affect styles, only used by useEnhancedRenderer in docs
+    sanitizeCss: performance.enableSanitizeCssPlugin,
   }
 
   const renderStyles =
