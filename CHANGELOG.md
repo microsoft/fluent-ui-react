@@ -50,6 +50,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Fix wrong positioning of pointing beak on content edges in `Popup` and `Tooltip` @layershifter ([#2364](https://github.com/microsoft/fluent-ui-react/pull/2364))
 
 ### Features
+- Added 'survey' and 'survey20px' icons @TanelVari ([#2383](https://github.com/microsoft/fluent-ui-react/pull/2383))
 - Added sourcemaps to the dist output to simplify debugging @miroslavstastny ([#2329](https://github.com/microsoft/fluent-ui-react/pull/2329))
 - Adding 'expand', 'collapse', 'companion', 'share-to' and 'settings-audio' icons @TanelVari ([#2343](https://github.com/microsoft/fluent-ui-react/pull/2343))
 - Add support for Children API in `List` component @layershifter ([#2207](https://github.com/microsoft/fluent-ui-react/pull/2207))
