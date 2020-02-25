@@ -94,6 +94,7 @@ const renderComponent = <P extends {}>(
     performance: {
       ...context.performance,
       enableStylesCaching: false, // we cannot enable caching for class components
+      enableHardVariablesCaching: false, // we cannot enable caching for class components
     },
   })
 

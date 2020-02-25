@@ -72,6 +72,7 @@ const mergeProviderContexts = (
       enableSanitizeCssPlugin: process.env.NODE_ENV !== 'production',
       enableStylesCaching: true,
       enableVariablesCaching: true,
+      enableHardVariablesCaching: false,
     },
     telemetry: undefined,
     renderer: undefined,
