@@ -34,6 +34,12 @@ const jest = (config: JestPluginConfig) => cb => {
     .join(' ')
 
   console.log(command)
+
+  // In watch mode, you don't want the terminal to exit the gulp task on fail
+  if (config.watchAll) {
+    return sh(command).catch(console.error)
+  }
+
   return sh(command)
 }
 

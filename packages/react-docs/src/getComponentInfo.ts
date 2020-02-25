@@ -30,7 +30,10 @@ const getAvailableBehaviors = (accessibilityProp: ComponentProp): BehaviorInfo[]
     }))
 }
 
-const getComponentInfo = (filepath: string, ignoredParentInterfaces: string[]): ComponentInfo => {
+const getComponentInfo = (
+  filepath: string,
+  ignoredParentInterfaces: string[] = [],
+): ComponentInfo => {
   const absPath = path.resolve(process.cwd(), filepath)
 
   const dir = path.dirname(absPath)

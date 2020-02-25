@@ -59,5 +59,5 @@ if (config.isRoot) {
   )
 } else {
   task('test', series('test:jest'))
-  task('test:watch', series('test:jest', 'test:jest:watch'))
+  task('test:watch', series('test:jest:watch'))
 }
