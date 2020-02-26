@@ -24,7 +24,7 @@ class RadioGroupColorPickerExample extends React.Component {
               },
             },
           }))}
-          checkedValueChanged={(e, props) => this.setState({ selectedValue: props.value })}
+          onCheckedValueChange={(e, props) => this.setState({ selectedValue: props.value })}
         />
       </div>
     )

@@ -1,25 +1,34 @@
-import * as PropTypes from 'prop-types'
-import * as React from 'react'
+import {
+  ComponentAnimationProp,
+  getUnhandledProps,
+  unstable_createAnimationStyles as createAnimationStyles,
+  unstable_calculateAnimationTimeout as calculateAnimationTimeout,
+  unstable_getStyles as getStyles,
+  useTelemetry,
+} from '@fluentui/react-bindings'
 import cx from 'classnames'
 import * as _ from 'lodash'
+import * as PropTypes from 'prop-types'
+import * as React from 'react'
+// @ts-ignore
+import { ThemeContext } from 'react-fela'
 import { Transition } from 'react-transition-group'
 
 import {
-  UIComponent,
   childrenExist,
   StyledComponentProps,
   commonPropTypes,
-  ShorthandFactory,
+  ChildrenComponentProps,
 } from '../../utils'
-import { ComponentEventHandler } from '../../types'
+import { ComponentEventHandler, ProviderContextPrepared } from '../../types'
 
 export type AnimationChildrenProp = (props: { classes: string }) => React.ReactNode
 
-export interface AnimationProps extends StyledComponentProps {
+export interface AnimationProps
+  extends StyledComponentProps,
+    ChildrenComponentProps<AnimationChildrenProp | React.ReactChild> {
   /** Additional CSS class name(s) to apply.  */
   className?: string
-
-  children: AnimationChildrenProp | React.ReactChild
 
   /** The name for the animation that should be applied, defined in the theme. */
   name?: string
@@ -139,92 +148,166 @@ export interface AnimationProps extends StyledComponentProps {
 /**
  * An Animation provides animation effects to rendered elements.
  */
-class Animation extends UIComponent<AnimationProps, any> {
-  static create: ShorthandFactory<AnimationProps>
+const Animation: React.FC<AnimationProps> & {
+  className: string
+  handledProps: (keyof AnimationProps)[]
+} = props => {
+  const context: ProviderContextPrepared = React.useContext(ThemeContext)
+  const { setStart, setEnd } = useTelemetry(Animation.displayName, context.telemetry)
+  setStart()
 
-  static className = 'ui-animation'
+  const {
+    appear,
+    children,
+    className,
+    delay,
+    direction,
+    duration,
+    fillMode,
+    iterationCount,
+    keyframeParams,
+    mountOnEnter,
+    name,
+    playState,
+    timeout,
+    timingFunction,
+    visible,
+    unmountOnExit,
+  } = props
 
-  static displayName = 'Animation'
-
-  static propTypes = {
-    ...commonPropTypes.createCommon({
-      accessibility: false,
-      as: false,
-      content: false,
-      children: false,
-    }),
-    children: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
-    name: PropTypes.string,
-    delay: PropTypes.string,
-    direction: PropTypes.string,
-    duration: PropTypes.string,
-    fillMode: PropTypes.string,
-    iterationCount: PropTypes.string,
-    keyframeParams: PropTypes.object,
-    playState: PropTypes.string,
-    timingFunction: PropTypes.string,
-    visible: PropTypes.bool,
-    appear: PropTypes.bool,
-    mountOnEnter: PropTypes.bool,
-    unmountOnExit: PropTypes.bool,
-    timeout: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.shape({
-        appear: PropTypes.number,
-        enter: PropTypes.number,
-        exit: PropTypes.number,
-      }),
-    ]),
-    onEnter: PropTypes.func,
-    onEntering: PropTypes.func,
-    onEntered: PropTypes.func,
-    onExit: PropTypes.func,
-    onExiting: PropTypes.func,
-    onExited: PropTypes.func,
-  }
-
-  static defaultProps = {
-    timeout: 0,
-  }
-
-  handleAnimationEvent = (
+  const handleAnimationEvent = (
     event: 'onEnter' | 'onEntering' | 'onEntered' | 'onExit' | 'onExiting' | 'onExited',
   ) => () => {
-    _.invoke(this.props, event, null, this.props)
+    _.invoke(props, event, null, props)
   }
 
-  renderComponent({ ElementType, classes, unhandledProps }) {
-    const { children, mountOnEnter, unmountOnExit, timeout, appear, visible } = this.props
+  const { classes, styles: animationStyles } = React.useMemo(() => {
+    const animation: ComponentAnimationProp = {
+      name,
+      keyframeParams,
+      duration,
+      delay,
+      iterationCount,
+      direction,
+      fillMode,
+      playState,
+      timingFunction,
+    }
 
-    const isChildrenFunction = typeof children === 'function'
+    return getStyles({
+      className: Animation.className,
+      displayName: Animation.displayName,
+      props: {
+        className,
+        styles: createAnimationStyles(animation, context.theme),
+      },
 
-    const child =
-      childrenExist(children) &&
-      !isChildrenFunction &&
-      (React.Children.only(children) as React.ReactElement<any>)
+      disableAnimations: context.disableAnimations,
+      renderer: context.renderer,
+      rtl: context.rtl,
+      performance: {
+        enableSanitizeCssPlugin: false,
+        enableStylesCaching: false,
+        enableVariablesCaching: false,
+      },
+      saveDebug: _.noop,
+      theme: context.theme,
+    })
+  }, [
+    className,
+    context,
+    name,
+    delay,
+    direction,
+    duration,
+    fillMode,
+    iterationCount,
+    keyframeParams,
+    playState,
+    timingFunction,
+  ])
 
-    return (
-      <Transition
-        in={visible}
-        appear={appear}
-        mountOnEnter={mountOnEnter}
-        unmountOnExit={unmountOnExit}
-        timeout={timeout}
-        onEnter={this.handleAnimationEvent('onEnter')}
-        onEntering={this.handleAnimationEvent('onEntering')}
-        onEntered={this.handleAnimationEvent('onEntered')}
-        onExit={this.handleAnimationEvent('onExit')}
-        onExiting={this.handleAnimationEvent('onExiting')}
-        onExited={this.handleAnimationEvent('onExited')}
-        {...unhandledProps}
-        className={!isChildrenFunction ? cx(classes.root, (child as any).props.className) : ''}
-      >
-        {isChildrenFunction
-          ? () => (children as AnimationChildrenProp)({ classes: classes.root })
-          : child}
-      </Transition>
-    )
+  if (_.isNil(children)) {
+    setEnd()
+    return null
   }
+
+  const { animationDuration, animationDelay } = animationStyles.root
+  const timeoutResult = timeout || calculateAnimationTimeout(animationDuration, animationDelay) || 0
+
+  const unhandledProps = getUnhandledProps(Animation.handledProps, props)
+
+  const isChildrenFunction = typeof children === 'function'
+  const child =
+    childrenExist(children) &&
+    !isChildrenFunction &&
+    (React.Children.only(children) as React.ReactElement)
+
+  const element = (
+    <Transition
+      in={visible}
+      appear={appear}
+      mountOnEnter={mountOnEnter}
+      unmountOnExit={unmountOnExit}
+      timeout={timeoutResult}
+      onEnter={handleAnimationEvent('onEnter')}
+      onEntering={handleAnimationEvent('onEntering')}
+      onEntered={handleAnimationEvent('onEntered')}
+      onExit={handleAnimationEvent('onExit')}
+      onExiting={handleAnimationEvent('onExiting')}
+      onExited={handleAnimationEvent('onExited')}
+      {...unhandledProps}
+      className={!isChildrenFunction ? cx(classes.root, (child as any)?.props?.className) : ''}
+    >
+      {isChildrenFunction
+        ? () => (children as AnimationChildrenProp)({ classes: classes.root })
+        : child}
+    </Transition>
+  )
+  setEnd()
+
+  return element
 }
+
+Animation.className = 'ui-animation'
+Animation.displayName = 'Animation'
+
+Animation.propTypes = {
+  ...commonPropTypes.createCommon({
+    accessibility: false,
+    as: false,
+    content: false,
+    children: false,
+  }),
+  children: PropTypes.oneOfType([PropTypes.func, PropTypes.element]),
+  name: PropTypes.string,
+  delay: PropTypes.string,
+  direction: PropTypes.string,
+  duration: PropTypes.string,
+  fillMode: PropTypes.string,
+  iterationCount: PropTypes.string,
+  keyframeParams: PropTypes.object,
+  playState: PropTypes.string,
+  timingFunction: PropTypes.string,
+  visible: PropTypes.bool,
+  appear: PropTypes.bool,
+  mountOnEnter: PropTypes.bool,
+  unmountOnExit: PropTypes.bool,
+  timeout: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.shape({
+      appear: PropTypes.number,
+      enter: PropTypes.number,
+      exit: PropTypes.number,
+    }),
+  ]),
+  onEnter: PropTypes.func,
+  onEntering: PropTypes.func,
+  onEntered: PropTypes.func,
+  onExit: PropTypes.func,
+  onExiting: PropTypes.func,
+  onExited: PropTypes.func,
+}
+Animation.handledProps = Object.keys(Animation.propTypes) as any
 
 export default Animation

@@ -28,10 +28,17 @@
     "@types/node": "^10.3.2",
     "@types/react-custom-scrollbars": "^4.0.5",
     "@types/react-router-dom": "^4.3.4",
+    "@types/react-virtualized": "^9.21.8",
     "@types/webpack-env": "^1.14.1",
     "gulp": "^4.0.2"
   },
   "publishConfig": {
     "access": "public"
+  },
+  "scripts": {
+    "lint": "yarn lint:eslint && yarn lint:old",
+    "lint:eslint": "eslint --ext .js,.ts,.tsx .",
+    "lint:fix": "yarn lint:eslint --fix && yarn lint:old --fix",
+    "lint:old": "tslint -t stylish -p ."
   }
 }

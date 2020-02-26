@@ -13,7 +13,7 @@ class RadioGroupVerticalExample extends React.Component {
         <RadioGroup
           defaultCheckedValue="capricciosa"
           items={this.getItems()}
-          checkedValueChanged={this.handleChange}
+          onCheckedValueChange={this.handleChange}
         />
       </div>
     )
