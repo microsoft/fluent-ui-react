@@ -1,9 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <!-- Hack to redirect SPA routes back to the index.html -->
-  <meta http-equiv="refresh" content="0;URL='https://microsoft.github.io/fluent-ui-react'" />
-  <script>sessionStorage.redirect = location.href</script>
-</head>
-<body></body>
+  <head>
+    <script>
+      const meta = document.createElement('meta')
+
+      meta.setAttribute('http-equiv', 'refresh')
+      meta.setAttribute(
+        'content',
+        "0;URL='" +
+          'https://fluentsite.z22.web.core.windows.net/' +
+          location.pathname.slice(17) +
+          location.search +
+          "'",
+      )
+
+      document.head.append(meta)
+    </script>
+  </head>
+  <body></body>
 </html>
