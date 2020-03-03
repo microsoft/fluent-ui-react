@@ -1,5 +1,3 @@
-# Draft: fluent-ui-react readme
-
 <!-- Logo -->
 <p align="center">
   <a href="https://microsoft.github.io/fluent-ui-react">
