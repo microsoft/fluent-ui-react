@@ -12,7 +12,7 @@
 
 ><!-- Repo archived -->
 :point_right: `microsoft/fluent-ui-react` has moved to
-`officedev/office-ui-fabric-react/src/packages/fluentui`.
+[`OfficeDev/office-ui-fabric-react/packages/fluentui`](https://github.com/OfficeDev/office-ui-fabric-react/tree/master/packages/fluentui).
 
 This does not affect the packages of `fluent-ui-react`, which will continue to be developed and published under https://www.npmjs.com/package/@fluentui/react.
 
@@ -31,7 +31,7 @@ The Fabric packages will also be renamed to `@fluentui/react v7.x.x`. The `offic
 
 **Where did the `fluent-ui-react` docs go?**
 
-For documentation on the `fluent-ui-react` code, please go here: https://aka.ms/fluent-ui
+For documentation on the `fluent-ui-react` code, please go here: https://aka.ms/fluent-ui.
 
 **Where do I log issues?**
 
@@ -39,4 +39,4 @@ Log them here: https://github.com/OfficeDev/office-ui-fabric-react/issues. The `
 
 **Where do I commit PRs?**
 
-Submit PRs here: https://github.com/OfficeDev/office-ui-fabric-react/pulls
+Submit PRs here: https://github.com/OfficeDev/office-ui-fabric-react/pulls.
