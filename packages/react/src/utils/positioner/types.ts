@@ -1,5 +1,5 @@
 import * as React from 'react'
-import PopperJS from 'popper.js'
+import { Placement, VirtualElement } from '@popperjs/core'
 
 export type Position = 'above' | 'below' | 'before' | 'after'
 export type Alignment = 'top' | 'bottom' | 'start' | 'end' | 'center'
@@ -59,7 +59,7 @@ export interface PopperProps extends PositioningProps {
    * List of modifiers used to modify the offsets before they are applied to the Popper box.
    * They provide most of the functionality of Popper.js.
    */
-  modifiers?: PopperJS.Modifiers
+  modifiers?: any /* TODO */
 
   /**
    * Array of conditions to be met in order to trigger a subsequent render to reposition the elements.
@@ -75,7 +75,7 @@ export interface PopperProps extends PositioningProps {
   /**
    * Ref object containing the target node (the element that we're using as reference for Popper box).
    */
-  targetRef: React.RefObject<Element> | PopperJS.ReferenceObject
+  targetRef: React.RefObject<Element> | VirtualElement
 
   /**
    * Rtl attribute for the component.
@@ -87,7 +87,7 @@ export interface PopperChildrenProps {
   /**
    * Popper's placement.
    */
-  placement: PopperJS.Placement
+  placement: Placement
 
   /**
    * Function that updates the position of the Popper box, computing the new offsets and applying the new style.
