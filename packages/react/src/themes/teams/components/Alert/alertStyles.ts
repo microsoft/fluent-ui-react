@@ -1,4 +1,4 @@
-import { ComponentSlotStylesPrepared, ICSSInJSStyle, SiteVariablesPrepared } from '@fluentui/styles'
+import { ComponentSlotStylesPrepared, ICSSInJSStyle } from '@fluentui/styles'
 import { AlertProps } from '../../../../components/Alert/Alert'
 import { AlertVariables } from './alertVariables'
 import getBorderFocusStyles from '../../getBorderFocusStyles'
@@ -7,9 +7,7 @@ import getIconFillOrOutlineStyles from '../../getIconFillOrOutlineStyles'
 const getIntentColorsFromProps = (
   p: AlertProps,
   v: AlertVariables,
-  siteVars: SiteVariablesPrepared,
 ): ICSSInJSStyle => {
-  const { colors } = siteVars
 
   if (p.danger) {
     return {
@@ -45,17 +43,17 @@ const getIntentColorsFromProps = (
 
   if (p.success) {
     return {
-      color: colors.green[600], // $app-green-04
-      backgroundColor: colors.grey[50], // $app-white
-      borderColor: colors.green[200], // $app-green
+      color: v.successColor,
+      backgroundColor: v.successBackgroundColor,
+      borderColor: v.successBorderColor,
     }
   }
 
   if (p.warning) {
     return {
-      color: siteVars.colors.grey[450],
-      backgroundColor: colors.grey[50], // $app-white
-      borderColor: colors.yellow[400], // $app-yellow
+      color: v.warningColor,
+      backgroundColor: v.warningBackgroundColor,
+      borderColor: v.warningBorderColor,
     }
   }
 
@@ -79,7 +77,7 @@ const alertStyles: ComponentSlotStylesPrepared<AlertProps, AlertVariables> = {
     fontWeight: v.fontWeight,
     visibility: 'visible',
 
-    ...getIntentColorsFromProps(p, v, siteVariables),
+    ...getIntentColorsFromProps(p, v),
 
     ...((p.attached === 'top' || p.attached === true) && {
       borderRadius: `${v.borderRadius} ${v.borderRadius} 0 0`,
