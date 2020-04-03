@@ -1,10 +1,17 @@
 ---
-name: 🐛 Bug Report
-about: If something isn't working as expected 🔧.
+name: "\U0001F41B Bug Report"
+about: "If something isn't working as expected \U0001F527."
+title: ''
+labels: ''
+assignees: ''
 
 ---
-
 ## Bug Report
+
+<!----
+**Attention Microsoft engineers:**
+To track feature requests or issues for Microsoft Teams, create a bug in the `MSTeams\Stardust Common Controls` area path in Azure DevOps. Do not link to, screenshot, or reference a Microsoft product in this description.
+-->
 
 ### Steps
 A clear and concise description of steps to reproduce the problem.

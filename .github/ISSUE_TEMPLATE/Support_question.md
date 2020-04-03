@@ -1,6 +1,9 @@
 ---
-name: 📓 Support Question
-about: If you have a question 💬, please check out our Gitter or StackOverflow!
+name: "\U0001F4D3 Support Question"
+about: "If you have a question \U0001F4AC, please check out our Gitter or StackOverflow!"
+title: ''
+labels: ''
+assignees: ''
 
 ---
 
