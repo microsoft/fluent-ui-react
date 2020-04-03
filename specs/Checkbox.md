@@ -12,11 +12,11 @@ The `Checkbox` component allows a user to choose between two mutually exclusive 
 
 https://codesandbox.io/s/checkboxes-ggpx1
 
-Note about the Stardust example: there's some weirdness with how the theme providers are interacting with each other, the Stardust checkbox's styling is messing up as a result.
+Note about the Fluent UI example: there's some weirdness with how the theme providers are interacting with each other, the Fluent UI checkbox's styling is messing up as a result.
 
 Fabric Checkbox [docs](https://developer.microsoft.com/en-us/fabric#/controls/web/Checkbox)
 
-Stardust Checkbox [docs](https://microsoft.github.io/fluent-ui-react/components/checkbox/definition)
+Fluent UI Checkbox [docs](https://microsoft.github.io/fluent-ui-react/components/checkbox/definition)
 
 Open UI Checkbox [docs](https://open-ui.org/components/checkbox)
 
@@ -69,7 +69,7 @@ https://developer.microsoft.com/en-us/fabric#/controls/web/checkbox
 | styles               | IStyleFunctionOrObject<ICheckboxStyleProps, ICheckboxStyles>|                                                                                |
 | theme                | ITheme                                                      |                                                                                |
 
-### Stardust Checkbox props
+### Fluent UI Checkbox props
 
 
 | Name                 | Type                                                        | Notes                                                                          |
@@ -91,7 +91,7 @@ https://developer.microsoft.com/en-us/fabric#/controls/web/checkbox
 | toggle               | boolean                                                     | default false                                                                   |
 | variables            | any                                                         |                                                                                 |
 
-### Differences of Fabric/Stardust to resolve
+### Differences of Fabric/Fluent UI to resolve
 
 | Name                 | Type                                                        | Notes                                                                          |
 | -------------------- | --------------------------------------------------------    | -------------------------------------------------------------------------------|
@@ -147,7 +147,7 @@ Removing the following two props because the ARIA spec dictates role='checkbox' 
 
 ### Conversion process from Fabric 7 to Fluent UI Checkbox
 
-#### Fluent Checkbox recommended props interface
+#### Fluent UI Checkbox recommended props interface
 
 | Name                         | To transition or not?| Property transitioned? | Breaking change? | Codemod/Shim created? |
 | -----------------------------| -------------------- | :--------------------: | :--------------: | :-------------------: |
@@ -222,7 +222,7 @@ Could consider supporting an invalid state/error state but this might just be su
 </div>
 ```
 
-### Stardust Checkbox example DOM
+### Fluent UI Checkbox example DOM
 
 ```html
 <div class="ui-checkbox dd ol om gz de nb on cd oo op cb oq ha hb hc hd he hf hg hh hi hj hk hl hm hn ho hp or os ot ou hu hv hw hx ov ow ox oy ic id ie if ig ih ii ij ik il im oz pa pb pc ir is it iu pd pe pf pg lu ph pi pj pk" aria-checked="false" role="checkbox" tabindex="0">
@@ -316,7 +316,7 @@ If there's additional static text representing that is descriptive, `aria-descri
 
 ### Themability and customization
 
-Both Fluent and Teams themes and other custom themes will be made with compose and the design tokens specified below. Screenshots of themed variants will be posted here soon after that work is done like the example code below.
+Both Fluent UI and Teams themes and other custom themes will be made with compose and the design tokens specified below. Screenshots of themed variants will be posted here soon after that work is done like the example code below.
 
 The `Checkbox` uses `react-texture` to provide a recomposable implementation that has no runtime performance penalties. The `BaseCheckbox` implementation can be used to provide new `slots` and default `props`:
 
@@ -372,7 +372,7 @@ TBD
 | iconColorPressed    |                |
 | iconSize            |                |
 
-NOTE! Stardust does not follow this convention. Their Checkbox currently uses these tokens:
+NOTE! Fluent UI does not follow this convention. Their Checkbox currently uses these tokens:
 
 ```
 background: string
